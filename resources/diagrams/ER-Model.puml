@@ -17,7 +17,11 @@ class Post {
     - <color:#green>?Post parent
     - Campaign campaign 
     - PostType type
+    - <color:#red>?Playlist playlist
     - string body
+    - int upvotes
+    - int downvotes
+    - int votestotal
 }
 
 class Notification {
@@ -92,6 +96,9 @@ class PostFeedback {
 class Badge {
     - int id
     - MediaObject picture
+    - BadgeType type
+    - ?PostType postType
+    - int threshold
     - Campaign campaign
     - string title
     - string description
@@ -151,12 +158,18 @@ enum PostType {
     VIDEO
     AUDIO
     POLL
+    PLAYLIST
 }
 enum NotificationTypes {
     NONE
     PERSONAL
     PLATFORM
     ALL
+}
+enum BadgeType {
+    SCORING
+    POSTCOUNT
+    LIKES
 }
 endlegend
 
@@ -175,6 +188,7 @@ PostFeedback }o--|| Post
 
 Post ||-[#green]-o{ Post : comments
 Post ||--o{ Votes
+Post |o-[#red]-o| Playlist
 
 CampaignMember }o--|| Campaign
 
