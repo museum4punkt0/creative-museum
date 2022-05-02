@@ -1,0 +1,198 @@
+@startuml
+
+skinparam padding 6
+
+class Votes {
+    - int id
+    - VoteDirection direction
+    - User voter
+    - Post post
+}
+
+class Post {
+    - int id
+    - DateTime created
+    - DateTime updatedAt
+    - User author
+    - <color:#green>?Post parent
+    - Campaign campaign 
+    - PostType type
+    - string body
+}
+
+class Notification {
+    - int id
+    - User receiver
+    - string text
+    - ?Post post
+}
+
+class Campaign {
+    - int id
+    - bool active
+    - DateTime created
+    - DateTime start
+    - DateTime stop
+    - DateTime updatedAt
+    - string title
+    - string shortDescription
+    - string description
+    - Award[] awards
+    - Badge[] badges
+    - Partner[] partners
+}
+
+class CampaignMember {
+    - int id
+    - User user
+    - Campaign campaign
+    - int score
+}
+
+class Partner {
+    - int id
+    - string title
+    - MediaObject logo
+    - string url
+}
+
+class User {
+    - int id
+    - Uuid uuid
+    - string username
+    - string email
+    - string password
+    - bool tutorial
+    - bool active
+    - int score
+    - NotificationTypes notifications
+    - string[] roles
+    - MediaObject profilePicture
+    - <color:#red>CampaignMember[] memberships
+    - Badge[] achievements
+    - Playlist[] playlists
+    - Post[] bookmarks
+    - Post[] posts
+}
+
+class CampaignFeedbackOption {
+    - int id
+    - Campaign campaign
+    - string text
+    - <color:#purple>User[] votes
+}
+
+class PostFeedback {
+    - int id
+    - User user
+    - Post post
+    - CampaignFeedbackOption selection
+}
+
+class Badge {
+    - int id
+    - MediaObject picture
+    - Campaign campaign
+    - string title
+    - string description
+}
+
+class Award {
+    - int id
+    - MediaObject picture
+    - Campaign campaign
+    - string title
+    - string description
+    - int price
+}
+
+class Awarded {
+    - int id
+    - Award award 
+    - <color:#blue>User giver
+    - <color:#green>User winner
+}
+
+class Playlist {
+    - int id
+    - string title
+    - Post[] posts
+}
+
+class MediaObject {
+    - int id
+    - string contentUrl
+    - File file
+    - string filepath
+    - DateTime updatedAt
+}
+
+class PollOption {
+    - int id
+    - Post post
+    - string title
+}
+
+class PollOptionChoice {
+    - int id
+    - PollOption pollOption
+    - User user
+}
+
+legend top right
+enum VoteDirection {
+    UP
+    DOWN
+}
+
+enum PostType {
+    TEXT
+    IMAGE
+    VIDEO
+    AUDIO
+    POLL
+}
+enum NotificationTypes {
+    NONE
+    PERSONAL
+    PLATFORM
+    ALL
+}
+endlegend
+
+User ||--o{ Post
+User ||--o{ Playlist
+User ||--o{ Notification
+User ||-[#red]-o{ CampaignMember
+User ||--o{ PollOptionChoice
+User ||--o{ Badge
+User ||-[#green]-o{ Awarded
+User ||-[#blue]-o{ Awarded
+User ||--o{ Votes
+User ||--o{ PostFeedback
+
+PostFeedback }o--|| Post
+
+Post ||-[#green]-o{ Post : comments
+Post ||--o{ Votes
+
+CampaignMember }o--|| Campaign
+
+Campaign ||--o{ Post
+Campaign ||--o{ Award
+Campaign ||--o{ Badge
+Campaign ||--o{ CampaignFeedbackOption
+Campaign }o--o{ Partner
+
+Award ||--o{ Awarded
+
+Post ||--o{ MediaObject
+Post ||--o{ PollOption
+
+Notification |o--o| Post
+
+Playlist ||--o{ Post
+
+PollOptionChoice }o--|| PollOption
+
+@enduml
