@@ -51,6 +51,7 @@ class CampaignMember {
     - User user
     - Campaign campaign
     - int score
+    - int pointsEarned
 }
 
 class Partner {
