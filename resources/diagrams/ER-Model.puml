@@ -69,7 +69,7 @@ class User {
     - bool tutorial
     - bool active
     - int score
-    - NotificationTypes notifications
+    - NotificationTypes notificationSettings
     - string[] roles
     - MediaObject profilePicture
     - <color:#red>CampaignMember[] memberships
@@ -124,6 +124,7 @@ class Playlist {
     - int id
     - string title
     - Post[] posts
+    - User creator
 }
 
 class MediaObject {

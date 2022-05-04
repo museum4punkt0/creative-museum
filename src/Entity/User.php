@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\NotificationType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,9 +30,16 @@ class User implements UserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, orphanRemoval: true)]
     private $posts;
 
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
+    private $playlists;
+
+    #[ORM\Column(type: 'notficationtype')]
+    private NotificationType $notificationSettings;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,6 +163,66 @@ class User implements UserInterface
                 $post->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Playlist>
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): self
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists[] = $playlist;
+            $playlist->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): self
+    {
+        if ($this->playlists->removeElement($playlist)) {
+            // set the owning side to null (unless already changed)
+            if ($playlist->getCreator() === $this) {
+                $playlist->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCampaignFeedbackOption(): ?CampaignFeedbackOption
+    {
+        return $this->campaignFeedbackOption;
+    }
+
+    public function setCampaignFeedbackOption(?CampaignFeedbackOption $campaignFeedbackOption): self
+    {
+        $this->campaignFeedbackOption = $campaignFeedbackOption;
+
+        return $this;
+    }
+
+    /**
+     * @return NotificationType
+     */
+    public function getNotificationSettings(): NotificationType
+    {
+        return $this->notificationSettings;
+    }
+
+    /**
+     * @param NotificationType $notificationSettings
+     */
+    public function setNotificationSettings(NotificationType $notificationSettings): self
+    {
+        $this->notificationSettings = $notificationSettings;
 
         return $this;
     }

@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Enum\PostType;
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
@@ -26,8 +29,8 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private $author;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $type;
+    #[ORM\Column(type: 'posttype')]
+    private PostType $type;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $body;
@@ -40,6 +43,22 @@ class Post
 
     #[ORM\Column(type: 'integer')]
     private $votestotal;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, orphanRemoval: true)]
+    private $pollOptions;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Award::class, orphanRemoval: true)]
+    private $awards;
+
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Partner::class, orphanRemoval: true)]
+    private $partners;
+
+    public function __construct()
+    {
+        $this->pollOptions = new ArrayCollection();
+        $this->awards = new ArrayCollection();
+        $this->partners = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -82,12 +101,18 @@ class Post
         return $this;
     }
 
-    public function getType(): ?string
+    /**
+     * @return PostType
+     */
+    public function getPostType(): PostType
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    /**
+     * @param PostType $type
+     */
+    public function setPostType(PostType $type): self
     {
         $this->type = $type;
 
@@ -160,5 +185,95 @@ class Post
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime("now");
+    }
+
+    /**
+     * @return Collection<int, PollOption>
+     */
+    public function getPollOptions(): Collection
+    {
+        return $this->pollOptions;
+    }
+
+    public function addPollOption(PollOption $pollOption): self
+    {
+        if (!$this->pollOptions->contains($pollOption)) {
+            $this->pollOptions[] = $pollOption;
+            $pollOption->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePollOption(PollOption $pollOption): self
+    {
+        if ($this->pollOptions->removeElement($pollOption)) {
+            // set the owning side to null (unless already changed)
+            if ($pollOption->getPost() === $this) {
+                $pollOption->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Award>
+     */
+    public function getAwards(): Collection
+    {
+        return $this->awards;
+    }
+
+    public function addAward(Award $award): self
+    {
+        if (!$this->awards->contains($award)) {
+            $this->awards[] = $award;
+            $award->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAward(Award $award): self
+    {
+        if ($this->awards->removeElement($award)) {
+            // set the owning side to null (unless already changed)
+            if ($award->getPost() === $this) {
+                $award->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Partner>
+     */
+    public function getPartners(): Collection
+    {
+        return $this->partners;
+    }
+
+    public function addPartner(Partner $partner): self
+    {
+        if (!$this->partners->contains($partner)) {
+            $this->partners[] = $partner;
+            $partner->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePartner(Partner $partner): self
+    {
+        if ($this->partners->removeElement($partner)) {
+            // set the owning side to null (unless already changed)
+            if ($partner->getPost() === $this) {
+                $partner->setPost(null);
+            }
+        }
+
+        return $this;
     }
 }
