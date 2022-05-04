@@ -53,10 +53,10 @@ class UserRepository extends ServiceEntityRepository
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
+            ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -67,8 +67,8 @@ class UserRepository extends ServiceEntityRepository
     /*
     public function findOneBySomeField($value): ?User
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
