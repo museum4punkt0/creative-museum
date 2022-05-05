@@ -53,6 +53,21 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Partner::class, orphanRemoval: true)]
     private $partners;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookmarks')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $user;
+
+    #[ORM\ManyToOne(targetEntity: self::class)]
+    private $parent;
+
+    #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $campaign;
+
+    #[ORM\ManyToOne(targetEntity: Playlist::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $playlist;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -273,6 +288,54 @@ class Post
                 $partner->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): self
+    {
+        $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    public function getPlaylist(): ?Playlist
+    {
+        return $this->playlist;
+    }
+
+    public function setPlaylist(?Playlist $playlist): self
+    {
+        $this->playlist = $playlist;
 
         return $this;
     }

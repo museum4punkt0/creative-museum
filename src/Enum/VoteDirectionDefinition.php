@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Enum;
 
 use App\DoctrineType\AbstractEnumType;
+use App\Entity\VoteDirection;
 
 class VoteDirectionDefinition extends AbstractEnumType
 {
