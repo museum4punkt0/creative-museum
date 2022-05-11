@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Enum\BadgeType;
+use App\Enum\VoteDirection;
 use App\Repository\VotesRepository;
 use Doctrine\ORM\Mapping as ORM;
 

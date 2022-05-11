@@ -20,8 +20,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
     _instanceof:
-        App\DoctrineType\AbstractEnumType:
+        App\Doctrine\Type\AbstractEnumType:
             tags: [ 'app.doctrine_enum_type' ]
+
+    App\Serializer\Normalizer\EnumNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: -916 }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

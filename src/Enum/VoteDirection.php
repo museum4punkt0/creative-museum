@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Entity;
+namespace App\Enum;
 
 enum VoteDirection: string
 {

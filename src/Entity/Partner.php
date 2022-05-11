@@ -21,10 +21,6 @@ class Partner
     #[ORM\Column(type: 'string', length: 255)]
     private $url;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'partners')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $post;
-
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]
     private $campaign;
 
@@ -53,18 +49,6 @@ class Partner
     public function setUrl(string $url): self
     {
         $this->url = $url;
-
-        return $this;
-    }
-
-    public function getPost(): ?Post
-    {
-        return $this->post;
-    }
-
-    public function setPost(?Post $post): self
-    {
-        $this->post = $post;
 
         return $this;
     }

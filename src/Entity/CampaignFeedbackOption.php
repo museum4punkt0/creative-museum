@@ -24,7 +24,7 @@ class CampaignFeedbackOption
     #[ORM\Column(type: 'string', length: 255)]
     private $text;
 
-    #[ORM\OneToMany(mappedBy: 'campaignFeedbackOption', targetEntity: User::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: User::class)]
     private $votes;
 
     public function __construct()
@@ -73,7 +73,6 @@ class CampaignFeedbackOption
     {
         if (!$this->votes->contains($vote)) {
             $this->votes[] = $vote;
-            $vote->setCampaignFeedbackOption($this);
         }
 
         return $this;
@@ -81,12 +80,7 @@ class CampaignFeedbackOption
 
     public function removeVote(User $vote): self
     {
-        if ($this->votes->removeElement($vote)) {
-            // set the owning side to null (unless already changed)
-            if ($vote->getCampaignFeedbackOption() === $this) {
-                $vote->setCampaignFeedbackOption(null);
-            }
-        }
+        $this->votes->removeElement($vote);
 
         return $this;
     }

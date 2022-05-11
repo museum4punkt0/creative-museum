@@ -11,7 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(security: "is_granted('ROLE_USER')")]
+#[Get]
+#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+#[GetCollection]
+#[Post(security: "is_granted('ROLE_ADMIN')")]
 class Post
 {
     #[ORM\Id]
@@ -36,26 +40,16 @@ class Post
     private $body;
 
     #[ORM\Column(type: 'integer')]
-    private $upvotes;
+    private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    private $downvotes;
+    private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    private $votestotal;
+    private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, orphanRemoval: true)]
     private $pollOptions;
-
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Award::class, orphanRemoval: true)]
-    private $awards;
-
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Partner::class, orphanRemoval: true)]
-    private $partners;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookmarks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $user;
 
     #[ORM\ManyToOne(targetEntity: self::class)]
     private $parent;
@@ -228,78 +222,6 @@ class Post
                 $pollOption->setPost(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Award>
-     */
-    public function getAwards(): Collection
-    {
-        return $this->awards;
-    }
-
-    public function addAward(Award $award): self
-    {
-        if (!$this->awards->contains($award)) {
-            $this->awards[] = $award;
-            $award->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAward(Award $award): self
-    {
-        if ($this->awards->removeElement($award)) {
-            // set the owning side to null (unless already changed)
-            if ($award->getPost() === $this) {
-                $award->setPost(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Partner>
-     */
-    public function getPartners(): Collection
-    {
-        return $this->partners;
-    }
-
-    public function addPartner(Partner $partner): self
-    {
-        if (!$this->partners->contains($partner)) {
-            $this->partners[] = $partner;
-            $partner->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removePartner(Partner $partner): self
-    {
-        if ($this->partners->removeElement($partner)) {
-            // set the owning side to null (unless already changed)
-            if ($partner->getPost() === $this) {
-                $partner->setPost(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-use App\DoctrineType\AbstractEnumType;
+use App\Doctrine\Type\AbstractEnumType;
 
 class NotficationTypeDefinition extends AbstractEnumType
 {

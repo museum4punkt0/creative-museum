@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,7 +36,7 @@ class User implements UserInterface
     private $playlists;
 
     #[ORM\Column(type: 'notficationtype')]
-    private NotificationType $notificationSettings;
+    private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $username;
@@ -45,13 +45,13 @@ class User implements UserInterface
     private $password;
 
     #[ORM\Column(type: 'boolean')]
-    private $tutorial;
+    private $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
-    private $active;
+    private $active = true;
 
     #[ORM\Column(type: 'integer')]
-    private $score;
+    private $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
     private $memberships;
@@ -59,7 +59,7 @@ class User implements UserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badge::class, orphanRemoval: true)]
     private $achievements;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Post::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: Post::class)]
     private $bookmarks;
 
     public function __construct()
@@ -132,7 +132,7 @@ class User implements UserInterface
      */
     public function getPassword(): ?string
     {
-        return null;
+        return $this->password;
     }
 
     /**
@@ -222,18 +222,6 @@ class User implements UserInterface
                 $playlist->setCreator(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCampaignFeedbackOption(): ?CampaignFeedbackOption
-    {
-        return $this->campaignFeedbackOption;
-    }
-
-    public function setCampaignFeedbackOption(?CampaignFeedbackOption $campaignFeedbackOption): self
-    {
-        $this->campaignFeedbackOption = $campaignFeedbackOption;
 
         return $this;
     }
@@ -378,7 +366,6 @@ class User implements UserInterface
     {
         if (!$this->bookmarks->contains($bookmark)) {
             $this->bookmarks[] = $bookmark;
-            $bookmark->setUser($this);
         }
 
         return $this;
@@ -386,12 +373,7 @@ class User implements UserInterface
 
     public function removeBookmark(Post $bookmark): self
     {
-        if ($this->bookmarks->removeElement($bookmark)) {
-            // set the owning side to null (unless already changed)
-            if ($bookmark->getUser() === $this) {
-                $bookmark->setUser(null);
-            }
-        }
+        $this->bookmarks->removeElement($bookmark);
 
         return $this;
     }
