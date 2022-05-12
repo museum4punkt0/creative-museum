@@ -20,7 +20,7 @@ class CampaignMember
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    private $score;
+    private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
     #[ORM\JoinColumn(nullable: false)]
