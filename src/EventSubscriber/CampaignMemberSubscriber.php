@@ -6,6 +6,7 @@ namespace App\EventSubscriber;
 use App\Entity\CampaignMember;
 use App\Entity\Post;
 use App\Repository\CampaignMemberRepository;
+use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -25,7 +26,8 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         $this->campaignMemberRepository = $campaignMemberRepository;
     }
 
-    public static function getSubscribedEvents()
+    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::VIEW => ['addCampaignMember', EventPriorities::POST_WRITE],
