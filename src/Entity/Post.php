@@ -9,13 +9,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
+/**
+ * Secured resource.
+ *
+ */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
-#[ORM\HasLifecycleCallbacks]
-#[ApiResource(security: "is_granted('ROLE_USER')")]
-#[Get]
-#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
-#[GetCollection]
-#[Post(security: "is_granted('ROLE_ADMIN')")]
+#[ApiResource(
+    attributes: ["security" => "is_granted('ROLE_USER')"],
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user"],
+    ],
+    itemOperations: [
+        "get",
+        "put" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+    ],
+)]
 class Post
 {
     #[ORM\Id]
@@ -31,7 +41,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    private $author;
+    public $author;
 
     #[ORM\Column(type: 'posttype')]
     private PostType $type;
@@ -58,8 +68,7 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
-    #[ORM\ManyToOne(targetEntity: Playlist::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToMany(targetEntity: Playlist::class)]
     private $playlist;
 
     public function __construct()
@@ -67,6 +76,7 @@ class Post
         $this->pollOptions = new ArrayCollection();
         $this->awards = new ArrayCollection();
         $this->partners = new ArrayCollection();
+        $this->playlist = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,14 +260,26 @@ class Post
         return $this;
     }
 
-    public function getPlaylist(): ?Playlist
+    /**
+     * @return Collection<int, Playlist>
+     */
+    public function getPlaylist(): Collection
     {
         return $this->playlist;
     }
 
-    public function setPlaylist(?Playlist $playlist): self
+    public function addPlaylist(Playlist $playlist): self
     {
-        $this->playlist = $playlist;
+        if (!$this->playlist->contains($playlist)) {
+            $this->playlist[] = $playlist;
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): self
+    {
+        $this->playlist->removeElement($playlist);
 
         return $this;
     }
