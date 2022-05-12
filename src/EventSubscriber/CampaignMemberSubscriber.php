@@ -18,7 +18,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 class CampaignMemberSubscriber implements EventSubscriberInterface
 {
 
-    private $campaignMemberRepository;
+    private CampaignMemberRepository $campaignMemberRepository;
 
 
     public function __construct(CampaignMemberRepository $campaignMemberRepository)
