@@ -14,12 +14,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use ApiPlatform\Core\EventListener\EventPriorities;
 
 
-
 class CampaignMemberSubscriber implements EventSubscriberInterface
 {
 
     private CampaignMemberRepository $campaignMemberRepository;
-
 
     public function __construct(CampaignMemberRepository $campaignMemberRepository)
     {
@@ -34,7 +32,7 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function addCampaignMember(ViewEvent $event)
+    public function addCampaignMember(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

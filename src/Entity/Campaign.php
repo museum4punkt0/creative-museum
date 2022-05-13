@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
-#[ApiResource]
+#[ApiResource(attributes: ['filters' => ['campaign.date_filter']], order: ["start" => "DESC"])]
+#[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
 class Campaign
 {
     #[ORM\Id]
@@ -49,7 +52,6 @@ class Campaign
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
     private $partners;
-
 
     public function __construct()
     {
