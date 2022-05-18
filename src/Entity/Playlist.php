@@ -9,7 +9,17 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    attributes: ["security" => "is_granted('ROLE_USER')"],
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.creator == user"],
+    ],
+    itemOperations: [
+        "get",
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.creator == user and previous_object.creator == user)"]
+    ],
+)]
 class Playlist
 {
     #[ORM\Id]
@@ -25,7 +35,7 @@ class Playlist
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'playlists')]
     #[ORM\JoinColumn(nullable: false)]
-    private $creator;
+    public $creator;
 
     public function __construct()
     {
