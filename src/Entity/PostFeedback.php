@@ -23,7 +23,7 @@ class PostFeedback
     #[ORM\JoinColumn(nullable: false)]
     private $post;
 
-    #[ORM\OneToOne(targetEntity: CampaignFeedbackOption::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: CampaignFeedbackOption::class, inversedBy: 'votes')]
     #[ORM\JoinColumn(nullable: false)]
     private $selection;
 
@@ -61,7 +61,7 @@ class PostFeedback
         return $this->selection;
     }
 
-    public function setSelection(CampaignFeedbackOption $selection): self
+    public function setSelection(?CampaignFeedbackOption $selection): self
     {
         $this->selection = $selection;
 

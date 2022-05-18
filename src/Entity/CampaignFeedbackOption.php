@@ -24,7 +24,7 @@ class CampaignFeedbackOption
     #[ORM\Column(type: 'string', length: 255)]
     private $text;
 
-    #[ORM\ManyToMany(targetEntity: User::class)]
+    #[ORM\OneToMany(mappedBy: 'selection', targetEntity: PostFeedback::class)]
     private $votes;
 
     public function __construct()
@@ -62,25 +62,31 @@ class CampaignFeedbackOption
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, PostFeedback>
      */
     public function getVotes(): Collection
     {
         return $this->votes;
     }
 
-    public function addVote(User $vote): self
+    public function addVote(PostFeedback $vote): self
     {
         if (!$this->votes->contains($vote)) {
             $this->votes[] = $vote;
+            $vote->setSelection($this);
         }
 
         return $this;
     }
 
-    public function removeVote(User $vote): self
+    public function removeVote(PostFeedback $vote): self
     {
-        $this->votes->removeElement($vote);
+        if ($this->votes->removeElement($vote)) {
+            // set the owning side to null (unless already changed)
+            if ($vote->getSelection() === $this) {
+                $vote->setSelection(null);
+            }
+        }
 
         return $this;
     }
