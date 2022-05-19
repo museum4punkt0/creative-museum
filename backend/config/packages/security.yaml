@@ -1,31 +1,51 @@
+# api/config/packages/security.yaml
 security:
+    # https://symfony.com/doc/current/security.html#c-hashing-passwords
     password_hashers:
         App\Entity\User:
             algorithm: auto
 
+    # https://symfony.com/doc/current/security/authenticator_manager.html
     enable_authenticator_manager: true
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
+        # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: uuid
+                property: email
 
     firewalls:
         api:
             pattern: ^/api
             stateless: true
             entry_point: jwt
+            json_login:
+                check_path: /api/login # or, if you have defined a route for your login path, the route name you used
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
             jwt: ~
-            custom_authenticators:
-                - App\Security\IdpAuthenticator
+            refresh_jwt:
+                check_path: /api/token/refresh # or, you may use the `api_refresh_token` route name
         dev:
             pattern: ^/_(profiler|wdt)
             security: false
+        main:
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path: /authentication_token
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
 
     access_control:
         - { path: ^/api/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
-        - { path: ^/api/users, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
+        - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
+        - { path: ^/, roles: PUBLIC_ACCESS }
 
 when@test:
     security:

@@ -7,7 +7,17 @@ use App\Repository\PostFeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostFeedbackRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user"],
+    ],
+    itemOperations: [
+        "get",
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
+    ],
+)]
 class PostFeedback
 {
     #[ORM\Id]
@@ -23,7 +33,7 @@ class PostFeedback
     #[ORM\JoinColumn(nullable: false)]
     private $post;
 
-    #[ORM\OneToOne(targetEntity: CampaignFeedbackOption::class, cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(targetEntity: CampaignFeedbackOption::class, inversedBy: 'votes')]
     #[ORM\JoinColumn(nullable: false)]
     private $selection;
 
@@ -61,7 +71,7 @@ class PostFeedback
         return $this->selection;
     }
 
-    public function setSelection(CampaignFeedbackOption $selection): self
+    public function setSelection(?CampaignFeedbackOption $selection): self
     {
         $this->selection = $selection;
 

@@ -7,7 +7,17 @@ use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.receiver == user"],
+    ],
+    itemOperations: [
+        "get",
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"]
+    ],
+)]
 class Notification
 {
     #[ORM\Id]

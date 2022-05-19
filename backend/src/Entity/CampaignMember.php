@@ -7,7 +7,16 @@ use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CampaignMemberRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
+    ],
+    itemOperations: [
+        "get",
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+    ],
+)]
 class CampaignMember
 {
     #[ORM\Id]

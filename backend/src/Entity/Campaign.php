@@ -11,7 +11,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
-#[ApiResource(attributes: ['filters' => ['campaign.date_filter']], order: ["start" => "DESC"])]
+#[ApiResource(
+    attributes: [
+        'filters' => ['campaign.date_filter'],
+        "security" => "is_granted('ROLE_ADMIN')"
+    ],
+    order: ["start" => "DESC"],
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+    ],
+    itemOperations: [
+        "get",
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+    ],
+)]
 #[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
 class Campaign
 {

@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,16 +18,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(
-    attributes: ["security" => "is_granted('ROLE_USER')"],
     collectionOperations: [
         "get",
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user"],
     ],
     itemOperations: [
         "get",
-        "put" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
 class Post
 {
     #[ORM\Id]
