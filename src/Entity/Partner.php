@@ -7,7 +7,16 @@ use App\Repository\PartnerRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PartnerRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+    ],
+    itemOperations: [
+        "get",
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+    ],
+)]
 class Partner
 {
     #[ORM\Id]

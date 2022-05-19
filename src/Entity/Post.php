@@ -25,7 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
     itemOperations: [
         "get",
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete"
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]

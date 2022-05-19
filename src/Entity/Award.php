@@ -7,7 +7,20 @@ use App\Repository\AwardRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AwardRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    attributes: [
+        "security" => "is_granted('ROLE_ADMIN')"
+    ],
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+    ],
+    itemOperations: [
+        "get",
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+    ],
+)]
 class Award
 {
     #[ORM\Id]
