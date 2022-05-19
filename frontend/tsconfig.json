@@ -1,0 +1,12 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "types": [
+      "@nuxtjs/auth-next",
+      "@nuxt/types",
+      "nuxt-windicss"
+    ]
+  },
+}
