@@ -2,7 +2,6 @@
 
 namespace App\EventSubscriber;
 
-
 use App\Entity\CampaignMember;
 use App\Entity\Post;
 use App\Repository\CampaignMemberRepository;
@@ -13,10 +12,8 @@ use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use ApiPlatform\Core\EventListener\EventPriorities;
 
-
 class CampaignMemberSubscriber implements EventSubscriberInterface
 {
-
     private CampaignMemberRepository $campaignMemberRepository;
 
     public function __construct(CampaignMemberRepository $campaignMemberRepository)
@@ -24,6 +21,9 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         $this->campaignMemberRepository = $campaignMemberRepository;
     }
 
+    /**
+     * @return array[]
+     */
     #[ArrayShape([KernelEvents::VIEW => "array"])]
     public static function getSubscribedEvents(): array
     {
@@ -32,6 +32,12 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param ViewEvent $event
+     * @return void
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function addCampaignMember(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
@@ -49,6 +55,10 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         $this->campaignMemberRepository->add($campaignMember);
     }
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     private function isCampaignMember(Post $post): bool
     {
         $result = $this->campaignMemberRepository->findBy([

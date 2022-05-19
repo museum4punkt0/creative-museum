@@ -13,15 +13,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $email;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
@@ -37,12 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'notficationtype')]
     private NotificationType $notificationSettings = NotificationType::ALL;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $username;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $password;
 
     #[ORM\Column(type: 'boolean')]
     private $tutorial = false;
@@ -76,18 +67,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -95,7 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->id;
     }
 
     /**
@@ -103,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->id;
     }
 
     /**
@@ -123,26 +102,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
-    }
-
-    /**
-     * This method can be removed in Symfony 6.0 - is not needed for apps that do not check user passwords.
-     *
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    /**
-     * This method can be removed in Symfony 6.0 - is not needed for apps that do not check user passwords.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
     }
 
     /**
@@ -240,20 +199,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNotificationSettings(NotificationType $notificationSettings): self
     {
         $this->notificationSettings = $notificationSettings;
-
-        return $this;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }
