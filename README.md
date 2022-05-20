@@ -14,7 +14,7 @@
   - [Docker](https://www.docker.com/products/docker-desktop) - Docker Desktop is a
     tool for MacOS and Windows machines for the building and sharing of
     containerized applications and microservices.
-  - [Colima](https://github.com/abiosoft/colima) - Colima is a Docker Desktop alternative which brings aproximately 10 times better performance (Install HEAD for best performance)
+  - [Colima](https://github.com/abiosoft/colima) - Colima is a Docker Desktop alternative which brings aproximately 10 times better performance (Install HEAD for best performance ```brew unlink colima && brew install --HEAD colima```)
 
 ## Clone ##
 Clone from remote repository into your local directory:
