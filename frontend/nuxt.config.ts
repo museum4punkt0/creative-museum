@@ -26,7 +26,9 @@ export default defineNuxtConfig({
   },
   components: true,
   modules: [
-    '@pinia/nuxt',
+    '@nuxtjs-alt/auth',
+    '@nuxtjs-alt/axios',
+    '@nuxtjs-alt/pinia',
     '@intlify/nuxt3',
     'nuxt-windicss',
   ],

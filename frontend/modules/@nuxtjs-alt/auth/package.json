@@ -1,0 +1,57 @@
+{
+    "name": "@nuxtjs-alt/auth",
+    "version": "1.1.18",
+    "description": "An alternative module to @nuxtjs/auth",
+    "homepage": "https://github.com/Teranode/nuxt-module-alternatives",
+    "author": "Teranode",
+    "keywords": [
+        "nuxt",
+        "nuxtjs",
+        "nuxt-module",
+        "nuxt-plugin",
+        "nuxt-module-alternatives",
+        "@nuxtjs/auth"
+    ],
+    "license": "MIT",
+    "type": "module",
+    "main": "./dist/module.mjs",
+    "module": "./dist/module.mjs",
+    "commonjs": "./dist/module.cjs",
+    "types": "./dist/types/index.d.ts",
+    "typings": "./dist/types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "nuxi dev playground",
+        "dev:build": "nuxi build playground",
+        "prepack": "npx unbuild"
+    },
+    "dependencies": {
+        "@nuxt/kit": "^3.0.0-rc.1",
+        "body-parser": "latest",
+        "cookie-es": "latest",
+        "defu": "^6.0.0",
+        "fs-extra": "latest",
+        "hasha": "latest",
+        "jwt-decode": "latest",
+        "requrl": "latest"
+    },
+    "devDependencies": {
+        "@nuxt/module-builder": "latest",
+        "@types/fs-extra": "latest",
+        "eslint": "latest",
+        "nuxt": "^3.0.0-rc.1"
+    },
+    "peerDependencies": {
+        "vue": "*"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Teranode/nuxt-module-alternatives.git",
+        "directory": "@nuxtjs-alt/auth"
+    },
+    "bugs": {
+        "url": "https://github.com/Teranode/nuxt-module-alternatives/issues"
+    }
+}

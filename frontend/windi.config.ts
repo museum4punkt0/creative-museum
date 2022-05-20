@@ -24,7 +24,7 @@ export default defineConfig({
         xl: ['22px', '30px'],
       },
       colors: {
-        primary: '#0070c0',
+        primary: '#FFFF00',
       },
     },
   }

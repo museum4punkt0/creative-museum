@@ -16,6 +16,9 @@
     "vite-svg-loader": "^3.3.0"
   },
   "dependencies": {
+    "@nuxtjs-alt/auth": "file:modules/@nuxtjs-alt/auth",
+    "@nuxtjs-alt/axios": "file:modules/@nuxtjs-alt/axios",
+    "@nuxtjs-alt/pinia": "file:modules/@nuxtjs-alt/pinia",
     "@pinia/nuxt": "^0.1.9",
     "dayjs": "^1.11.2",
     "pinia": "^2.0.14"

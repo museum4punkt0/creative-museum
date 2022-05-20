@@ -21,4 +21,5 @@ nodejs_version: "16"
 webimage_extra_packages: [openssl, build-essential, sendmail, python]
 hooks:
   post-start:
+  - exec: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.con
   - exec: npm install -g node-gyp-build @mapbox/node-pre-gyp consola
