@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "devDependencies": {
+    "@intlify/nuxt3": "^0.2.2",
+    "autoloader": "^2.1.0",
+    "nuxt": "3.0.0-rc.3",
+    "nuxt-windicss": "^2.3.1",
+    "sass": "^1.51.0",
+    "sass-loader": "^13.0.0",
+    "vite-svg-loader": "^3.3.0"
+  },
+  "dependencies": {
+    "@nuxtjs-alt/auth": "file:modules/@nuxtjs-alt/auth",
+    "@nuxtjs-alt/axios": "file:modules/@nuxtjs-alt/axios",
+    "@nuxtjs-alt/pinia": "file:modules/@nuxtjs-alt/pinia",
+    "@pinia/nuxt": "^0.1.9",
+    "dayjs": "^1.11.2",
+    "pinia": "^2.0.14"
+  }
+}
