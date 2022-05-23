@@ -1,0 +1,8 @@
+#!/bin/bash
+
+## Description: Installs backend composer packages
+## Usage: backend-install
+## Example: "ddev backend-install"
+
+cd backend && composer install
+
