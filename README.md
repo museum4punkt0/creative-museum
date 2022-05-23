@@ -34,8 +34,8 @@ After the project was started successfully you will have to install all required
 dependencies via *npm*. Navigate to the root directory of your project and
 execute the following command:
 ```
+ddev backend-install
 ddev frontend-install
-ddev prisma-push
 ```
 ### Frontend ###
 ```
