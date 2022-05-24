@@ -11,7 +11,7 @@ export default defineConfig({
       center: true,
     },
     fontFamily: {
-      sans: ['Roboto Condensed', 'sans-serif'],
+      sans: ['Manrope', 'sans-serif'],
     },
     extend: {
       fontSize: {
@@ -25,6 +25,7 @@ export default defineConfig({
       },
       colors: {
         primary: '#FFFF00',
+        grey: '#2E2E2E'
       },
     },
   }
