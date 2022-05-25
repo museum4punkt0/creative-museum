@@ -10,7 +10,7 @@
       <Logo
         w:text="white/50"
         w:h="8 md:12"
-        w:m="5"
+        w:m="l-5 y-3"
       />
       <button
         class="addBtn"
