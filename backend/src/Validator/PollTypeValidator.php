@@ -19,7 +19,7 @@ class PollTypeValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value->getPostType() === PostType::POLL) {
+        if (!($value->getPostType() === PostType::POLL)) {
             return;
         }
 
