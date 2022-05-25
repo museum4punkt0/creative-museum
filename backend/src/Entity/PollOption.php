@@ -5,34 +5,30 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PollOptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PollOptionRepository::class)]
 #[ApiResource(
-    attributes: [
-        "security" => "is_granted('ROLE_ADMIN')"
-    ],
-    collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-    ],
-    itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-    ],
+    collectionOperations: []
 )]
 class PollOption
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:post"])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'pollOptions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["write:post"])]
     private $post;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["write:post", "read:post"])]
+    #[Assert\NotNull]
+    #[Assert\Length(max: 25)]
     private $title;
 
     public function getId(): ?int
