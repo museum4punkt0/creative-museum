@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt3'
 import svgLoader from "vite-svg-loader"
 
 export default defineNuxtConfig({
@@ -32,11 +32,6 @@ export default defineNuxtConfig({
     '@intlify/nuxt3',
     'nuxt-windicss',
   ],
-  postcss: {
-    plugins: {
-      cssnano: false
-    }
-  },
   intlify: {
     vueI18n: {
       locale: 'de',

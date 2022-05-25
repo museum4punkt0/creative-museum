@@ -1,11 +1,12 @@
 import { defineConfig } from 'windicss/helpers'
 export default defineConfig({
+  attributify: {
+    prefix: 'w:',
+  },
   extract: {
     include: ['**/*.{vue,html,jsx,tsx}'],
     exclude: ['node_modules', '.git'],
   },
-  safeList: 'router-link-active',
-  transformCSS: 'pre',
   theme: {
     container: {
       center: true,
