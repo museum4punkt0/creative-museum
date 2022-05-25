@@ -7,29 +7,42 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
+use App\Validator\Constraints\PollType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Constraints\PlaylistType;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  * Secured resource.
  * @PlaylistType
+ * @PollType
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user"],
+        "get" => [
+            "normalization_context" => ["groups" => ["read:post"]]
+        ],
+        "post" => [
+            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user",
+            "denormalization_context" => ["groups" => ["write:post"]]
+            ],
     ],
     itemOperations: [
-        "get",
+        "get" => [
+            "normalization_context" => ["groups" => ["read:post"]]
+        ],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
+#[ORM\HasLifecycleCallbacks]
 class Post
 {
     #[ORM\Id]
@@ -45,12 +58,15 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["write:post", "read:post"])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
-    private PostType $type;
+    #[Groups(["write:post", "read:post"])]
+    private PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(["write:post", "read:post"])]
     private $body;
 
     #[ORM\Column(type: 'integer')]
@@ -62,18 +78,27 @@ class Post
     #[ORM\Column(type: 'integer')]
     private $votestotal = 0;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
+    #[Groups(["write:post", "read:post"])]
+    #[Assert\Valid]
     private $pollOptions;
 
     #[ORM\ManyToOne(targetEntity: self::class)]
+    #[Groups(["write:post", "read:post"])]
     private $parent;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["write:post", "read:post"])]
     private $campaign;
 
     #[ORM\ManyToMany(targetEntity: Playlist::class)]
+    #[Groups(["write:post", "read:post"])]
     private $playlist;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["write:post", "read:post"])]
+    private $question;
 
     public function __construct()
     {
@@ -93,9 +118,10 @@ class Post
         return $this->created;
     }
 
-    public function setCreated(\DateTimeInterface $created): self
+    #[ORM\PrePersist]
+    public function setCreated(): self
     {
-        $this->created = $created;
+        $this->created = new \DateTimeImmutable();
 
         return $this;
     }
@@ -105,9 +131,11 @@ class Post
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -135,6 +163,8 @@ class Post
     /**
      * @param PostType $type
      */
+    #[SerializedName('postType')]
+    #[Groups(["write:post"])]
     public function setPostType(PostType $type): self
     {
         $this->type = $type;
@@ -284,6 +314,18 @@ class Post
     public function removePlaylist(Playlist $playlist): self
     {
         $this->playlist->removeElement($playlist);
+
+        return $this;
+    }
+
+    public function getQuestion(): ?string
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?string $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }
