@@ -24,8 +24,12 @@ export default defineConfig({
     },
     extend: {
       colors: {
-        primary: '#FFFF00',
-        grey: '#2E2E2E'
+        '1': '#FFFF00',
+        '2': '#34F9AF',
+        '3': '#D377FF',
+        '4': '#42B0FF',
+        '5': '#FF5BA0',
+        'grey': '#2E2E2E'
       },
     },
   }
