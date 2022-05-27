@@ -9,8 +9,8 @@
   "devDependencies": {
     "@intlify/nuxt3": "^0.2.2",
     "autoloader": "^2.1.0",
-    "nuxt-windicss": "latest",
     "nuxt": "^3.0.0-rc.3",
+    "nuxt-windicss": "latest",
     "sass": "^1.51.0",
     "sass-loader": "^13.0.0",
     "vite-svg-loader": "^3.3.0"
@@ -19,7 +19,6 @@
     "@nuxtjs-alt/auth": "^1.1.20",
     "@nuxtjs-alt/axios": "^1.0.11",
     "@nuxtjs-alt/pinia": "^1.0.7",
-    "@pinia/nuxt": "^0.1.9",
     "dayjs": "^1.11.2",
     "pinia": "^2.0.14"
   }
