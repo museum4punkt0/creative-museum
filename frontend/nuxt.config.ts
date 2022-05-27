@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { defineNuxtConfig } from 'nuxt'
 import svgLoader from "vite-svg-loader"
 
@@ -20,8 +21,13 @@ export default defineNuxtConfig({
     title: 'Creative Museum - Badisches Landesmuseum',
     charset: 'utf-8',
     viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+    meta: [
+      { name: 'theme-color', content: '#ffdd67' }
+    ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/icons/favicon.png' }
+      { hid: 'icon', rel: 'icon', type: 'image/png', href: '/icons/logo_x32.png' },
+      { hid: 'apple-touch-icon', rel: 'apple-touch-icon', href: '/icons/logo_x180.png' },
+      { rel: 'manifest', href: '/manifest.json' }
     ]
   },
   components: true,
