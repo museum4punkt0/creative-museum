@@ -1,5 +1,5 @@
 <template>
-
+  <div>
     <div
       ref="globalHeader"
       w:pos="relative"
@@ -57,44 +57,63 @@
         <button
           w:transition="scale duration-300 ease-in-out"
           w:transform="gpu hover:scale-125"
-          @click.prevent="isMobileMenu = !isMobileMenu"
+          w:h="6"
+          w:w="6"
+          @click.prevent="isMenuVisible = !isMenuVisible"
+          :w:border="isMenuVisible ? '~ rounded-full white' : '~ rounded-full white transparent'"
         >
           <span
             w:pointer-events="none"
             w:space="y-1"
+            w:display="block"
+            :w:m="isMenuVisible ? '-t-0.5' : ''"
           >
             <span
               w:display="block"
-              w:w="w-6"
               w:h="px"
               w:bg="white"
               w:transition="all duration-300"
-              :w:transform="isMobileMenu ? 'gpu rotate-45 origin-center translate-y-1.5' : ''"
+              :w:transform="isMenuVisible ? 'gpu rotate-45 origin-center translate-y-1.5 scale-x-75' : ''"
             />
             <span
               w:display="block"
-              w:w="w-6"
               w:h="px"
               w:bg="white"
               w:transition="all duration-500"
-              :w:transform="isMobileMenu ? 'gpu translate-x-10 opacity-0' : ''"
+              :w:transform="isMenuVisible ? 'gpu translate-x-10 opacity-0' : ''"
             />
             <span
               w:display="block"
-              w:w="w-6"
               w:h="px"
               w:bg="white"
               w:transition="all duration-300"
-              :w:transform="isMobileMenu ? 'gpu -rotate-45 origin-center -translate-y-1' : ''"
+              :w:transform="isMenuVisible ? 'gpu -rotate-45 origin-center -translate-y-1 scale-x-75' : ''"
             />
           </span>
         </button>
       </div>
     </div>
+    <div v-show="isMenuVisible" ref="globalMenu">
+      <transition
+        enter-active-class="duration-300 ease-out opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div w:min-h="sm" w:bg="grey" w:grid="lg:~ lg:columns-4">
+          <div w:text="white">Lorem Ipsum</div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </transition>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
 import Logo from '@/assets/images/logo.svg'
-let isMobileMenu = ref(false)
+let isMenuVisible = ref(false)
 </script>
 <style lang="postcss" scoped>
 .addBtn {

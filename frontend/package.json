@@ -2,13 +2,14 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "cross-env NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },
   "devDependencies": {
     "@intlify/nuxt3": "^0.2.2",
     "autoloader": "^2.1.0",
+    "cross-env": "^7.0.3",
     "nuxt": "^3.0.0-rc.3",
     "nuxt-windicss": "latest",
     "sass": "^1.51.0",
