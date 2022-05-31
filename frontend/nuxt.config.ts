@@ -41,12 +41,13 @@ export default defineNuxtConfig({
   auth: {
     defaultStrategy: 'iam',
     strategies: {
+      // @ts-ignore
       iam: {
         scheme: 'oauth2',
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'GET' },
+          //userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'GET' },
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
@@ -80,6 +81,7 @@ export default defineNuxtConfig({
   intlify: {
     vueI18n: {
       locale: 'de',
+      // @ts-ignore
       localeDir: 'locales',
       availableLocales: ['de', 'en']
     }
