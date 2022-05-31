@@ -40,6 +40,12 @@ export default defineNuxtConfig({
   ],
   auth: {
     defaultStrategy: 'iam',
+    // @ts-ignore
+    redirect: {
+      home: '/',
+      logout: '/',
+      login: '/verify',
+    },
     strategies: {
       // @ts-ignore
       iam: {
@@ -50,24 +56,10 @@ export default defineNuxtConfig({
           userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'POST' },
           logout: 'https://identity-manager.ddev.site/logout'
         },
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-          maxAge: 60
-        },
-        user: {
-          property: false,
-          autoFetch: true
-        },
-        responseType: 'token',
-        grantType: 'authorization_code',
-        accessType: 'offline',
-        redirectUri: 'https://creative-museum.ddev.site/verify',
-        logoutRedirectUri: 'https://creative-museum.ddev.site/',
         clientId: 'bdlm_cm',
         scope: ['default'],
-        state: 'UNIQUE_AND_NON_GUESSABLE',
-        codeChallengeMethod: 'implicit',
+        responseType: 'token',
+        grantType: 'authorization_code',
       }
     }
   },
