@@ -27,6 +27,9 @@
         url('../fonts/manrope-v12-latin-ext_latin-600.svg#Manrope') format('svg'); /* Legacy iOS */
   }
 
+  html {
+    @apply bg-grey;
+  }
   body {
     @apply text-white;
   }

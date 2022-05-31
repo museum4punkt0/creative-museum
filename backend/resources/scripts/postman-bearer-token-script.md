@@ -15,8 +15,8 @@ pm.sendRequest({
     body: {
         mode: 'raw',
         raw: JSON.stringify({
-        email: pm.collectionVariables.get("email"),
-        password: pm.collectionVariables.get("password")
+            email: pm.collectionVariables.get("email"),
+            password: pm.collectionVariables.get("password")
         })
     }
 },
