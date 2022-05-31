@@ -60,6 +60,11 @@ export default defineNuxtConfig({
         scope: ['default'],
         responseType: 'token',
         grantType: 'authorization_code',
+        accessType: 'offline',
+        redirectUri: 'https://creative-museum.ddev.site/verify',
+        logoutRedirectUri: 'https://creative-museum.ddev.site/',
+        state: 'UNIQUE_AND_NON_GUESSABLE',
+        codeChallengeMethod: 'implicit',
       }
     }
   },
