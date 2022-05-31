@@ -56,7 +56,7 @@ export default defineNuxtConfig({
         },
         user: {
           property: false,
-          //autoFetch: true
+          autoFetch: true
         },
         responseType: 'token',
         grantType: 'implicit',
