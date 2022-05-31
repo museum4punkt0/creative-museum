@@ -60,16 +60,14 @@ export default defineNuxtConfig({
           autoFetch: true
         },
         responseType: 'token',
-        grantType: 'implicit',
+        grantType: 'authorization_code',
         accessType: 'offline',
         redirectUri: 'https://creative-museum.ddev.site/verify',
         logoutRedirectUri: 'https://creative-museum.ddev.site/',
         clientId: 'bdlm_cm',
         scope: ['default'],
         state: 'UNIQUE_AND_NON_GUESSABLE',
-        codeChallengeMethod: 'S256',
-        responseMode: '',
-        acrValues: ''
+        codeChallengeMethod: 'implicit',
       }
     }
   },
