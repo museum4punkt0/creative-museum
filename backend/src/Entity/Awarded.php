@@ -8,6 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Secured resource.
+ * @\App\Validator\Constraints\Awarded
+ */
 #[ORM\Entity(repositoryClass: AwardedRepository::class)]
 #[ApiResource(
     collectionOperations: [
@@ -27,49 +31,21 @@ class Awarded
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToMany(targetEntity: Award::class)]
-    private $award;
-
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $giver;
+    public $giver;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $winner;
 
-    public function __construct()
-    {
-        $this->award = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(targetEntity: Award::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $award;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Award>
-     */
-    public function getAward(): Collection
-    {
-        return $this->award;
-    }
-
-    public function addAward(Award $award): self
-    {
-        if (!$this->award->contains($award)) {
-            $this->award[] = $award;
-        }
-
-        return $this;
-    }
-
-    public function removeAward(Award $award): self
-    {
-        $this->award->removeElement($award);
-
-        return $this;
     }
 
     public function getGiver(): ?User
@@ -92,6 +68,18 @@ class Awarded
     public function setWinner(?User $winner): self
     {
         $this->winner = $winner;
+
+        return $this;
+    }
+
+    public function getAward(): ?Award
+    {
+        return $this->award;
+    }
+
+    public function setAward(?Award $award): self
+    {
+        $this->award = $award;
 
         return $this;
     }

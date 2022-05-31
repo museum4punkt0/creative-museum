@@ -35,6 +35,9 @@ class CampaignMember
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $rewardPoints = 0;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -72,6 +75,18 @@ class CampaignMember
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRewardPoints(): ?int
+    {
+        return $this->rewardPoints;
+    }
+
+    public function setRewardPoints(?int $rewardPoints): self
+    {
+        $this->rewardPoints = $rewardPoints;
 
         return $this;
     }
