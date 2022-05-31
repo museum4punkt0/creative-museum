@@ -5,8 +5,8 @@
     </NuxtLayout>
   </div>
 </template>
-<script lang="ts" setup>
-if (process.client) {
+<script setup>
+if (process.client && !process.dev) {
   window.addEventListener('load', () => {
     if (!('serviceWorker' in navigator)) {
       throw new Error('serviceWorker is not supported in current browser!')
