@@ -5,9 +5,10 @@
     <NuxtLink to="/sample">Sample 1</NuxtLink>
   </div>
 </template>
+<script setup>
 
-<script setup lang="ts">
-    definePageMeta({
-        middleware: ["auth"]
-    })
+const ctx = useNuxtApp()
+
+console.log(ctx.$auth)
+
 </script>

@@ -6,5 +6,7 @@
 
 <script setup lang="ts">
   const ctx = useNuxtApp()
-  ctx.$auth.loginWith('oauth2')
+  if (process.client) {
+    ctx.$auth.login()
+  }
 </script>

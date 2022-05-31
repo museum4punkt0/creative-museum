@@ -38,18 +38,15 @@ export default defineNuxtConfig({
     '@intlify/nuxt3',
     'nuxt-windicss',
   ],
-  router: {
-    middleware: ['auth']
-  },
   auth: {
-    globalMiddleware: false,
+    defaultStrategy: 'iam',
     strategies: {
-      oauth2: {
-        provider: 'oauth2',
+      iam: {
+        scheme: 'oauth2',
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          // userInfo: {url: 'https://identity-manager.ddev.site/user-info'},
+          userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'GET' },
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
@@ -58,21 +55,20 @@ export default defineNuxtConfig({
           maxAge: 60
         },
         user: {
-          property: 'user',
-        //  autoFetch: true
+          property: false,
+          //autoFetch: true
         },
         responseType: 'token',
         grantType: 'implicit',
         accessType: 'offline',
         redirectUri: 'https://creative-museum.ddev.site/verify',
-        logoutRedirectUri: 'https://creative-museum.ddev.site/login',
+        logoutRedirectUri: 'https://creative-museum.ddev.site/',
         clientId: 'bdlm_cm',
         scope: ['default'],
         state: 'UNIQUE_AND_NON_GUESSABLE',
         codeChallengeMethod: 'S256',
         responseMode: '',
-        acrValues: '',
-        // autoLogout: false
+        acrValues: ''
       }
     }
   },
