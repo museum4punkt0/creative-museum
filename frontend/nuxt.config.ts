@@ -47,7 +47,7 @@ export default defineNuxtConfig({
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          //userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'GET' },
+          userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'POST' },
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
