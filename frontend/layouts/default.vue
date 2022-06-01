@@ -7,7 +7,7 @@
       >
         <page-header />
       </div>
-      <slot />
+      <Nuxt/>
     </div>
   </div>
 </template>
