@@ -4,12 +4,8 @@
     <NuxtLink to="/sample">Sample</NuxtLink>
   </div>
 </template>
-<script setup>
-
-  const nuxtApp = useNuxtApp()
-
-  definePageMeta({
-      middleware: ['auth']
-  })
-
+<script>
+export default {
+  middleware: 'auth'
+}
 </script>

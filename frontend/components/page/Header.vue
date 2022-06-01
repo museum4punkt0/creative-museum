@@ -8,14 +8,16 @@
       w:justify="between"
       w:align="items-center"
     >
-      <Logo
-        w:text="white/50"
-        w:h="8 md:12"
-        w:m="l-5 y-3"
-        w:transition="scale duration-300 ease-in-out"
-        w:transform="gpu hover:scale-125"
-        w:cursor="pointer"
-      />
+      <nuxt-link to="/">
+        <Logo
+          w:text="white/50"
+          w:h="8 md:12"
+          w:m="l-5 y-3"
+          w:transition="scale duration-300 ease-in-out"
+          w:transform="gpu hover:scale-125"
+          w:cursor="pointer"
+        />
+      </nuxt-link>
       <button
         class="addBtn"
         w:pos="absolute"
@@ -111,9 +113,18 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
-import Logo from '@/assets/images/logo.svg'
-let isMenuVisible = ref(false)
+<script>
+import Logo from '@/assets/images/logo.svg?inline'
+export default {
+  components: {
+    Logo
+  },
+  data() {
+    return {
+      isMenuVisible: false
+    }
+  }
+}
 </script>
 <style lang="postcss" scoped>
 .addBtn {
