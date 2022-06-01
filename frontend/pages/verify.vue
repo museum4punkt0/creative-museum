@@ -4,8 +4,12 @@
     <NuxtLink to="/sample">Sample</NuxtLink>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
+
+  const nuxtApp = useNuxtApp()
+
   definePageMeta({
       middleware: ['auth']
   })
+
 </script>

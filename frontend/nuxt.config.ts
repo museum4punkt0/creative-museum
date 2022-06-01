@@ -39,12 +39,15 @@ export default defineNuxtConfig({
     'nuxt-windicss',
   ],
   auth: {
+    globalMiddleware: false,
+    enableMiddleware: true,
     defaultStrategy: 'iam',
     // @ts-ignore
     redirect: {
       home: '/',
       logout: '/',
-      login: '/verify',
+      login: '/dashboard',
+      callback: '/verify'
     },
     strategies: {
       // @ts-ignore
@@ -53,26 +56,16 @@ export default defineNuxtConfig({
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/', method: 'GET' },
+          userInfo: { url: '/user-info', baseURL: 'https://identity-manager.ddev.site/' },
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
-          property: 'access_token',
-          type: 'Bearer',
-          maxAge: 60
-        },
-        user: {
-          property: false,
-          autoFetch: true
+          property: 'access_token'
         },
         clientId: 'bdlm_cm',
         scope: ['default'],
-        responseType: 'token',
         grantType: 'authorization_code',
         accessType: 'offline',
-        codeChallengeMethod: 'implicit',
-        redirectUri: 'https://creative-museum.ddev.site/verify',
-        logoutRedirectUri: 'https://creative-museum.ddev.site/',
         state: 'UNIQUE_AND_NON_GUESSABLE'
       }
     }

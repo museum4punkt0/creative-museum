@@ -5,10 +5,3 @@
     <NuxtLink to="/sample">Sample 1</NuxtLink>
   </div>
 </template>
-<script setup>
-
-const ctx = useNuxtApp()
-
-console.log(ctx.$auth)
-
-</script>

@@ -6,11 +6,11 @@
     <NuxtLink to="/sample2">Sample 2</NuxtLink>
   </div>
 </template>
-<script lang="ts" setup>
-const ctx = useNuxtApp()
+<script setup>
+const nuxtApp = useNuxtApp()
 
 function logout() {
-  ctx.$auth.logout()
+  nuxtApp.$auth.logout()
 }
 
 </script>

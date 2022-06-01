@@ -102,7 +102,7 @@
         leave-to-class="opacity-0"
       >
         <div w:min-h="sm" w:bg="grey" w:grid="lg:~ lg:columns-4">
-          <div w:text="white">Lorem Ipsum</div>
+          <nuxt-link to="/login" w:text="white">Login</nuxt-link>
           <div></div>
           <div></div>
           <div></div>

@@ -4,9 +4,9 @@
   </div>
 </template>
 
-<script setup lang="ts">
-  const ctx = useNuxtApp()
+<script setup>
+  const nuxtApp = useNuxtApp()
   if (process.client) {
-    ctx.$auth.login()
+    nuxtApp.$auth.login()
   }
 </script>
