@@ -1,7 +1,7 @@
+import WindiCSSWebpackPlugin from 'windicss-webpack-plugin'
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'Creative Musuem - Badisches Landesmuseum',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -12,15 +12,16 @@ export default {
   },
   css: [
     '@/assets/css/main.scss',
-    'virtual:windi.css',
-    'virtual:windi-devtools'
+    'virtual:windi.css'
   ],
   plugins: [],
   components: true,
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/svg',
-    'nuxt-windicss'
+    'nuxt-windicss',
+    'nuxt-webpack-optimisations',
+    '@nuxt/postcss8'
   ],
   modules: [
     '@nuxtjs/axios',
@@ -66,6 +67,5 @@ export default {
         acrValues: ''
       }
     }
-  },
-  build: {},
+  }
 }
