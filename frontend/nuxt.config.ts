@@ -20,7 +20,9 @@ export default {
     '@/assets/css/main.scss',
     'virtual:windi.css'
   ],
-  plugins: [],
+  plugins:[
+    'plugins/axios'
+  ],
   components: true,
   buildModules: [
     '@nuxt/typescript-build',
@@ -47,7 +49,7 @@ export default {
     }
   },
   axios: {
-    baseURL: 'https://backend.creative-museum.ddev.site',
+    baseURL: 'https://backend.creative-museum.ddev.site/v1/',
   },
   pwa: {
     meta: {

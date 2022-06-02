@@ -17,16 +17,16 @@ security:
 
     firewalls:
         api:
-            pattern: ^/api
+            pattern: ^/v1
             stateless: true
             entry_point: jwt
             json_login:
-                check_path: /api/login # or, if you have defined a route for your login path, the route name you used
+                check_path: /v1/login # or, if you have defined a route for your login path, the route name you used
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
             jwt: ~
             refresh_jwt:
-                check_path: /api/token/refresh # or, you may use the `api_refresh_token` route name
+                check_path: /v1/token/refresh # or, you may use the `api_refresh_token` route name
         dev:
             pattern: ^/_(profiler|wdt)
             security: false
@@ -42,10 +42,10 @@ security:
             jwt: ~
 
     access_control:
-        - { path: ^/api/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
-        - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
+        - { path: ^/v1/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+        - { path: ^/v1/(login|token/refresh), roles: PUBLIC_ACCESS }
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: PUBLIC_ACCESS }
+        - { path: ^/v1, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
