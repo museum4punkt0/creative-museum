@@ -18,6 +18,7 @@ export default {
   components: true,
   buildModules: [
     '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module',
     '@nuxtjs/svg',
     'nuxt-windicss',
     'nuxt-webpack-optimisations',
@@ -26,14 +27,25 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/i18n'
   ],
+  i18n: {
+    locales: [
+      { code: 'de', iso: 'de-DE', file: 'de.js', dir: 'ltr' },
+      { code: 'en', iso: 'en-US', file: 'en.js', dir: 'ltr' },
+    ],
+    defaultLocale: 'de',
+    vueI18n: {
+      fallbackLocale: 'en',
+    }
+  },
   axios: {
-    baseURL: '/',
+    baseURL: 'https://api.creative-museum.ddev.site',
   },
   pwa: {
     manifest: {
-      lang: 'en',
+      lang: 'de',
     },
   },
   auth: {
@@ -55,10 +67,10 @@ export default {
           property: 'user'
         },
         responseType: 'token',
-        grantType: 'implicit',
+        grantType: 'authorization_code',
         accessType: undefined,
         redirectUri: 'https://creative-museum.ddev.site/login',
-        logoutRedirectUri: undefined,
+        logoutRedirectUri: '/',
         clientId: 'bdlm_cm',
         scope: ['default'],
         state: 'UNIQUE_AND_NON_GUESSABLE',

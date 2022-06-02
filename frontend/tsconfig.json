@@ -20,7 +20,8 @@
       "@nuxtjs/axios",
       "@types/node",
       "@nuxtjs/auth-next",
-      "nuxt-webpack-optimisations"
+      "nuxt-webpack-optimisations",
+      "@nuxtjs/i18n",
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
