@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     attributes: [
         'filters' => ['campaign.date_filter'],
-        "security" => "is_granted('ROLE_ADMIN')"
     ],
     order: ["start" => "DESC"],
     collectionOperations: [

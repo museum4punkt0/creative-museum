@@ -8,14 +8,16 @@
       w:justify="between"
       w:align="items-center"
     >
-      <Logo
-        w:text="white/50"
-        w:h="8 md:12"
-        w:m="l-5 y-3"
-        w:transition="scale duration-300 ease-in-out"
-        w:transform="gpu hover:scale-125"
-        w:cursor="pointer"
-      />
+      <NuxtLink to="/">
+        <Logo
+          w:text="white/50"
+          w:h="8 md:12"
+          w:m="l-5 y-3"
+          w:transition="scale duration-300 ease-in-out"
+          w:transform="gpu hover:scale-125"
+          w:cursor="pointer"
+        />
+      </NuxtLink>
       <button
         class="addBtn"
         w:pos="absolute"
@@ -32,28 +34,7 @@
         w:space="x-4"
         w:align="items-center"
       >
-        <div
-          w:flex="~ row"
-          w:space="md:x-4"
-          w:align="items-center"
-        >
-          <img
-            src="/images/placeholder_profile.png"
-            w:w="6"
-            w:h="6"
-            w:object="contain center"
-            w:rounded="full"
-          />
-          <span
-            w:text="sm overflow-ellipsis ..."
-            w:display="hidden md:inline-block"
-            w:overflow="hidden"
-            w:min-w="24"
-            w:max-w="32"
-          >
-            @Profilname
-          </span>
-        </div>
+        <PageHeaderUserInfo />
         <button
           w:transition="scale duration-300 ease-in-out"
           w:transform="gpu hover:scale-125"
@@ -102,7 +83,7 @@
         leave-to-class="opacity-0"
       >
         <div w:min-h="sm" w:bg="grey" w:grid="lg:~ lg:columns-4">
-          <div w:text="white">Lorem Ipsum</div>
+          <NuxtLink to="/login" w:text="white">Login</NuxtLink>
           <div></div>
           <div></div>
           <div></div>
@@ -111,9 +92,23 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup>
-import Logo from '@/assets/images/logo.svg'
-let isMenuVisible = ref(false)
+<script>
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import Logo from '@/assets/images/logo.svg?inline'
+
+export default defineComponent({
+  name: 'PageHeader',
+  components: {
+    Logo
+},
+  setup() {
+    const isMenuVisible = ref(false)
+
+    return {
+      isMenuVisible
+    }
+  }
+})
 </script>
 <style lang="postcss" scoped>
 .addBtn {

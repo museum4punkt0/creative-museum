@@ -1,91 +1,105 @@
-import 'dotenv/config'
-import { defineNuxtConfig } from 'nuxt'
-import svgLoader from "vite-svg-loader"
-
-export default defineNuxtConfig({
-  vite: {
-    server: {
-      hmr: {
-        protocol: 'wss',
-        clientPort: 4444
+export default {
+  head: {
+    title: 'Creative Musuem - Badisches Landesmuseum',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: '' },
+      { name: 'format-detection', content: 'telephone=no' },
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'preconnect',
+        href: 'https://backend.creative-museum.ddev.site',
+        crossorigin: 'use-credentials'
       }
-    },
-    plugins: [svgLoader()]
+    ],
   },
   css: [
     '@/assets/css/main.scss',
-    'virtual:windi.css',
-    'virtual:windi-devtools',
+    'virtual:windi.css'
   ],
-  meta: {
-    title: 'Creative Museum - Badisches Landesmuseum',
-    charset: 'utf-8',
-    viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
-    meta: [
-      { name: 'theme-color', content: '#ffdd67' }
-    ],
-    link: [
-      { hid: 'icon', rel: 'icon', type: 'image/png', href: '/icons/logo_x32.png' },
-      { hid: 'apple-touch-icon', rel: 'apple-touch-icon', href: '/icons/logo_x180.png' },
-      { rel: 'manifest', href: '/manifest.json' }
-    ]
-  },
+  plugins:[
+    'plugins/api'
+  ],
   components: true,
-  modules: [
-    '@nuxtjs-alt/auth',
-    '@nuxtjs-alt/axios',
-    '@nuxtjs-alt/pinia',
-    '@intlify/nuxt3',
+  buildModules: [
+    '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module',
+    '@nuxtjs/svg',
     'nuxt-windicss',
+    'nuxt-webpack-optimisations',
+    '@nuxt/postcss8'
   ],
-  router: {
-    middleware: ['auth']
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/pwa',
+    '@nuxtjs/i18n'
+  ],
+  i18n: {
+    locales: [
+      { code: 'de', iso: 'de-DE', file: 'de.js', dir: 'ltr' },
+      { code: 'en', iso: 'en-US', file: 'en.js', dir: 'ltr' }
+    ],
+    defaultLocale: 'de',
+    vueI18n: {
+      fallbackLocale: 'en',
+    }
+  },
+  axios: {
+    baseURL: 'https://backend.creative-museum.ddev.site/v1/',
+  },
+  pwa: {
+    meta: {
+      charset: 'utf-8',
+      author: 'Badisches Landesmuseum - Creative Museum',
+      name: 'Creative Museum',
+      nativeUI: true,
+      mobileAppIOS: true,
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover'
+    },
+    manifest: {
+      crossorigin: 'use-credentials',
+      name: 'Creative Museum',
+      short_name: 'Creative Museum',
+      lang: 'de',
+      background_color: '#2E2E2E',
+      theme_color: '#2E2E2E',
+      useWebmanifestExtension: true
+    }
   },
   auth: {
-    globalMiddleware: false,
+    defaultStrategy: 'iam',
     strategies: {
-      oauth2: {
-        provider: 'oauth2',
+      iam: {
+        scheme: 'oauth2',
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          // userInfo: {url: 'https://identity-manager.ddev.site/user-info'},
+          userInfo: 'users/me',
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
           property: 'access_token',
-          type: 'Bearer',
-          maxAge: 60
+          type: 'Bearer'
         },
         user: {
-          property: 'user',
-        //  autoFetch: true
+          property: false
         },
         responseType: 'token',
-        grantType: 'implicit',
-        accessType: 'offline',
-        redirectUri: 'https://creative-museum.ddev.site/verify',
-        logoutRedirectUri: 'https://creative-museum.ddev.site/login',
+        grantType: 'authorization_code',
+        accessType: undefined,
+        redirectUri: 'https://creative-museum.ddev.site/login',
+        logoutRedirectUri: '/',
         clientId: 'bdlm_cm',
         scope: ['default'],
         state: 'UNIQUE_AND_NON_GUESSABLE',
         codeChallengeMethod: 'S256',
-        responseMode: '',
-        acrValues: '',
-        // autoLogout: false
+        responseMode: 'token',
+        acrValues: ''
       }
     }
-  },
-  postcss: {
-    plugins: {
-      cssnano: false
-    }
-  },
-  intlify: {
-    vueI18n: {
-      locale: 'de',
-      localeDir: 'locales',
-      availableLocales: ['de', 'en']
-    }
   }
-})
+}

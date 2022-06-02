@@ -1,12 +1,12 @@
 <template>
   <div>
     <h1 class="text-primary p-7 text-2xl font-bold">Login callback</h1>
-    <NuxtLink to="/sample">Sample</NuxtLink>
+    <nuxt-link to="/sample">Sample</nuxt-link>
   </div>
 </template>
 
-<script setup lang="ts">
-    definePageMeta({
-        middleware: ["auth"]
-    })
+<script>
+export default {
+  middleware: 'auth'
+}
 </script>

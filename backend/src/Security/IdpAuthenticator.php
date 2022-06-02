@@ -30,7 +30,6 @@ class IdpAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return false;
         if (null === $request->headers->get(self::AUTH_HEADER_NAME)) {
             return false;
         }
@@ -44,11 +43,11 @@ class IdpAuthenticator extends AbstractAuthenticator
         $token = $this->jwtManager->parse(str_replace('Bearer ', '', $bearer));
 
         return new SelfValidatingPassport(
-            new UserBadge($token['uuid'], function () use ($token) {
+            new UserBadge($token['sub'], function () use ($token) {
 
                 /** @var User $existingUser */
                 $existingUser = $this->entityManager->getRepository(User::class)
-                    ->findOneBy(['uuid' => $token['uuid']]);
+                    ->findOneBy(['uuid' => $token['sub']]);
 
                 if ($existingUser) {
                     if (! $existingUser->getActive()) {
@@ -58,7 +57,7 @@ class IdpAuthenticator extends AbstractAuthenticator
                 }
 
                 $user = new User();
-                $user->setUuid($token['uuid']);
+                $user->setUuid($token['sub']);
                 $user->setActive(true);
 
                 $this->entityManager->persist($user);
