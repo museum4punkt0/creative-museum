@@ -6,8 +6,10 @@
 /public/bundles/
 /var/
 /vendor/
+!.gitkeep
 ###< symfony/framework-bundle ###
 
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
+/config/jwt/*.key
 ###< lexik/jwt-authentication-bundle ###

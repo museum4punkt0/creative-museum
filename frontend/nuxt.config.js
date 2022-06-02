@@ -1,4 +1,3 @@
-import WindiCSSWebpackPlugin from 'windicss-webpack-plugin'
 export default {
   head: {
     title: 'Creative Musuem - Badisches Landesmuseum',
@@ -8,7 +7,14 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'preconnect',
+        href: 'https://backend.creative-museum.ddev.site',
+        crossorigin: 'use-credentials'
+      }
+    ],
   },
   css: [
     '@/assets/css/main.scss',
@@ -33,7 +39,7 @@ export default {
   i18n: {
     locales: [
       { code: 'de', iso: 'de-DE', file: 'de.js', dir: 'ltr' },
-      { code: 'en', iso: 'en-US', file: 'en.js', dir: 'ltr' },
+      { code: 'en', iso: 'en-US', file: 'en.js', dir: 'ltr' }
     ],
     defaultLocale: 'de',
     vueI18n: {
@@ -41,12 +47,32 @@ export default {
     }
   },
   axios: {
-    baseURL: 'https://api.creative-museum.ddev.site',
+    baseURL: 'https://backend.creative-museum.ddev.site/api',
   },
   pwa: {
-    manifest: {
-      lang: 'de',
+    meta: {
+      charset: 'utf-8',
+      author: 'Badisches Landesmuseum - Creative Museum',
+      name: 'Creative Museum',
+      nativeUI: true,
+      mobileAppIOS: true,
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover'
     },
+    manifest: {
+      crossorigin: 'use-credentials',
+      name: 'Creative Museum',
+      short_name: 'Creative Museum',
+      lang: 'de',
+      background_color: '#2E2E2E',
+      theme_color: '#2E2E2E',
+      useWebmanifestExtension: true
+    },
+    workbox: {
+      dev: process.env.NODE_ENV !== 'production',
+      config: {
+        debug: true
+      }
+    }
   },
   auth: {
     defaultStrategy: 'iam',
@@ -56,7 +82,7 @@ export default {
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          userInfo: 'https://identity-manager.ddev.site/user-info',
+          userInfo: '/user-info',
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
