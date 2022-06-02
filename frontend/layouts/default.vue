@@ -5,7 +5,7 @@
         w:bg="grey"
         w:shadow="lg black/20"
       >
-        <page-header />
+        <PageHeader />
       </div>
       <Nuxt/>
     </div>

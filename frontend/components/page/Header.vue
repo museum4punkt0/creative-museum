@@ -8,7 +8,7 @@
       w:justify="between"
       w:align="items-center"
     >
-      <nuxt-link to="/">
+      <NuxtLink to="/">
         <Logo
           w:text="white/50"
           w:h="8 md:12"
@@ -17,7 +17,7 @@
           w:transform="gpu hover:scale-125"
           w:cursor="pointer"
         />
-      </nuxt-link>
+      </NuxtLink>
       <button
         class="addBtn"
         w:pos="absolute"
@@ -104,7 +104,7 @@
         leave-to-class="opacity-0"
       >
         <div w:min-h="sm" w:bg="grey" w:grid="lg:~ lg:columns-4">
-          <nuxt-link to="/login" w:text="white">Login</nuxt-link>
+          <NuxtLink to="/login" w:text="white">Login</NuxtLink>
           <div></div>
           <div></div>
           <div></div>
@@ -114,17 +114,24 @@
   </div>
 </template>
 <script>
+import { useStore, computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
-export default {
+
+export default defineComponent({
+  name: 'PageHeader',
   components: {
     Logo
   },
-  data() {
+  setup() {
+    const isMenuVisible = ref(false)
+    const store = useStore()
+
     return {
-      isMenuVisible: false
+      user: computed(() => store.state.auth.user),
+      isMenuVisible
     }
   }
-}
+})
 </script>
 <style lang="postcss" scoped>
 .addBtn {

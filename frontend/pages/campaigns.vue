@@ -10,10 +10,11 @@
 </template>
 <script>
 
-import { defineComponent, ref, useFetch, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
 export default defineComponent({
+  name: 'CampaignsPage',
   setup() {
 
     const { fetchCampaigns } = campaignApi()

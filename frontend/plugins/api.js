@@ -2,6 +2,10 @@ export default function ({ $axios, app }, inject) {
   const api = $axios.create()
 
   api.onRequest((config) => {
+    if (config.method === 'patch') {
+      config.headers['Content-Type'] = 'application/merge-patch+json'
+    }
+    config.headers.Accept = 'application/json'
     console.log(`Making request to ${config.url}`)
   })
 

@@ -21,7 +21,6 @@ export default {
     'virtual:windi.css'
   ],
   plugins:[
-    'plugins/axios',
     'plugins/api'
   ],
   components: true,
@@ -69,12 +68,6 @@ export default {
       background_color: '#2E2E2E',
       theme_color: '#2E2E2E',
       useWebmanifestExtension: true
-    },
-    workbox: {
-      dev: process.env.NODE_ENV !== 'production',
-      config: {
-        debug: true
-      }
     }
   },
   auth: {
