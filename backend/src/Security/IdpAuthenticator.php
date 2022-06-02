@@ -30,7 +30,6 @@ class IdpAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return false;
         if (null === $request->headers->get(self::AUTH_HEADER_NAME)) {
             return false;
         }
