@@ -13,11 +13,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user"],
+        "get"
     ],
     itemOperations: [
-        "get",
+        "me" => [
+            "method" => "GET",
+            "path" => "/users/me",
+            "defaults" => [
+                "id" => 0,
+            ],
+        ],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
     ],
