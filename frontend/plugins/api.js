@@ -6,7 +6,6 @@ export default function ({ $axios, app }, inject) {
       config.headers['Content-Type'] = 'application/merge-patch+json'
     }
     config.headers.Accept = 'application/json'
-    console.log(`Making request to ${config.url}`)
   })
 
   api.onError((error) => {
@@ -14,7 +13,6 @@ export default function ({ $axios, app }, inject) {
     const errorText = code
       ? `A request failed with status code ${code}`
       : `A network error occurred`
-
     console.error(errorText)
   })
 

@@ -76,7 +76,7 @@
         </button>
       </div>
     </div>
-    <div v-show="isMenuVisible" ref="globalMenu">
+    <div>
       <transition
         enter-active-class="duration-300 ease-out opacity-0"
         enter-to-class="opacity-100"
@@ -85,10 +85,12 @@
         leave-to-class="opacity-0"
       >
         <div
+          v-show="isMenuVisible"
           w:pos="absolute"
           w:top="16"
           w:left="0"
           w:right="0"
+          w:p="t-20 b-10"
           w:min-h="sm"
           w:bg="grey"
           w:shadow="lg black/20"
