@@ -10,11 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     collectionOperations: [
         "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.receiver == user"],
     ],
     itemOperations: [
         "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"]
     ],
 )]

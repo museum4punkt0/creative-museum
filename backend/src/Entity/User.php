@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
         "get"
     ],
     itemOperations: [
+        "get",
         "me" => [
             "method" => "GET",
             "path" => "/users/me",
