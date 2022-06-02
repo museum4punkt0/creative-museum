@@ -8,7 +8,9 @@
       w:justify="between"
       w:align="items-center"
     >
-      <NuxtLink to="/">
+      <NuxtLink
+        to="/"
+      >
         <Logo
           w:text="white/50 hover:color1"
           w:h="8 md:12"
@@ -82,11 +84,27 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <div w:min-h="sm" w:bg="grey" w:grid="lg:~ lg:columns-4">
-          <NuxtLink to="/login" w:text="white">Login</NuxtLink>
-          <div></div>
-          <div></div>
-          <div></div>
+        <div
+          w:pos="absolute"
+          w:top="16"
+          w:left="0"
+          w:right="0"
+          w:min-h="sm"
+          w:bg="grey"
+          w:shadow="lg black/20"
+        >
+          <div
+            w:p="x-5"
+            w:grid="lg:~ lg:columns-4"
+            w:container="~"
+          >
+            <div>
+              <NuxtLink to="/login" w:text="white">Login</NuxtLink>
+            </div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </transition>
     </div>
