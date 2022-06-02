@@ -47,7 +47,7 @@ export default {
     }
   },
   axios: {
-    baseURL: 'https://backend.creative-museum.ddev.site/api',
+    baseURL: 'https://backend.creative-museum.ddev.site',
   },
   pwa: {
     meta: {
