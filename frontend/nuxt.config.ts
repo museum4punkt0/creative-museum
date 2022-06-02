@@ -21,7 +21,8 @@ export default {
     'virtual:windi.css'
   ],
   plugins:[
-    'plugins/axios'
+    'plugins/axios',
+    'plugins/api'
   ],
   components: true,
   buildModules: [
@@ -84,7 +85,7 @@ export default {
         endpoints: {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
-          userInfo: '/user-info',
+          userInfo: 'users/me',
           logout: 'https://identity-manager.ddev.site/logout'
         },
         token: {
@@ -92,7 +93,7 @@ export default {
           type: 'Bearer'
         },
         user: {
-          property: 'user'
+          property: false
         },
         responseType: 'token',
         grantType: 'authorization_code',
