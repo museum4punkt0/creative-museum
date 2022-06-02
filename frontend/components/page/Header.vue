@@ -34,28 +34,7 @@
         w:space="x-4"
         w:align="items-center"
       >
-        <div
-          w:flex="~ row"
-          w:space="md:x-4"
-          w:align="items-center"
-        >
-          <img
-            src="/images/placeholder_profile.png"
-            w:w="6"
-            w:h="6"
-            w:object="contain center"
-            w:rounded="full"
-          />
-          <span
-            w:text="sm overflow-ellipsis ..."
-            w:display="hidden md:inline-block"
-            w:overflow="hidden"
-            w:min-w="24"
-            w:max-w="32"
-          >
-            @Profilname
-          </span>
-        </div>
+        <PageHeaderUserInfo />
         <button
           w:transition="scale duration-300 ease-in-out"
           w:transform="gpu hover:scale-125"
@@ -114,20 +93,18 @@
   </div>
 </template>
 <script>
-import { useStore, computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
 
 export default defineComponent({
   name: 'PageHeader',
   components: {
     Logo
-  },
+},
   setup() {
     const isMenuVisible = ref(false)
-    const store = useStore()
 
     return {
-      user: computed(() => store.state.auth.user),
       isMenuVisible
     }
   }
