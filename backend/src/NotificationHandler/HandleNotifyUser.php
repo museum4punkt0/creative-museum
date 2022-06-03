@@ -38,11 +38,17 @@ class HandleNotifyUser implements MessageHandlerInterface
 
     private function handleNewAwarded(Awarded $awarded)
     {
-        $notification = new Notification();
-        $notification
+        $winnerNotification = new Notification();
+        $winnerNotification
             ->setReceiver($awarded->getWinner())
-            ->setText("Du hast den Award {$awarded->getAward()->getTitle()} von {$awarded->getGiver()->getUserIdentifier()} erhalten");
-        $this->entityManager->persist($notification);
+            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} von {$awarded->getGiver()->getUserIdentifier()} erhalten");
+        $this->entityManager->persist($winnerNotification);
+
+        $giverNotification = new Notification();
+        $giverNotification
+            ->setReceiver($awarded->getGiver())
+            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} an {$awarded->getWinner()->getUserIdentifier()} vergeben");
+        $this->entityManager->persist($giverNotification);
         $this->entityManager->flush();
     }
 }
