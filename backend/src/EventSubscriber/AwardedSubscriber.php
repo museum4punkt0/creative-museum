@@ -14,6 +14,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AwardedSubscriber implements EventSubscriberInterface
 {
+    private const REWARD_POINTS = 1;
+
+    private const GIVER_REWARD_SCORE_POINTS = 10000;
+
+    private const WINNER_POPULARITY_SCORE_POINTS = 20000;
+
     private CampaignMemberRepository $campaignMemberRepository;
 
     private EntityManagerInterface $entityManager;
@@ -44,17 +50,27 @@ class AwardedSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $campaignMember = $this->campaignMemberRepository->findOneBy([
+        $awardGiver = $this->campaignMemberRepository->findOneBy([
             'user' => $awarded->getGiver()->getId(),
             'campaign' => $awarded->getAward()->getCampaign()->getId()
         ]);
-        $newCampaignScore = $campaignMember->getScore() - $awarded->getAward()->getPrice();
+        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice() + self::GIVER_REWARD_SCORE_POINTS;
 
-        $campaignMember
-            ->setScore($newCampaignScore)
-            ->setRewardPoints($campaignMember->getRewardPoints()+1);
+        $awardGiver
+            ->setScore($newGiverScore)
+            ->setRewardPoints($awardGiver->getRewardPoints() + self::REWARD_POINTS);
 
-        $this->entityManager->persist($campaignMember);
+        $this->entityManager->persist($awardGiver);
+
+        $awardWinner = $this->campaignMemberRepository->findOneBy([
+            'user' => $awarded->getWinner()->getId(),
+            'campaign' => $awarded->getAward()->getCampaign()->getId()
+        ]);
+
+        $awardWinner
+            ->setScore($awardWinner->getScore() + self::WINNER_POPULARITY_SCORE_POINTS);
+
+        $this->entityManager->persist($awardWinner);
         $this->entityManager->flush();
     }
 }
