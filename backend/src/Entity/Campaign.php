@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -16,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     attributes: [
         'filters' => ['campaign.date_filter'],
     ],
-    normalizationContext: ['groups' => ['campaign:read']],
+    normalizationContext: ['groups' => ['campaigns:read']],
     denormalizationContext: ['groups' => ['campaign:write']],
     order: ["start" => "DESC"],
     collectionOperations: [
@@ -35,51 +36,51 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["campaign:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaign:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $start;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaign:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $stop;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $description;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, orphanRemoval: true)]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $awards;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, orphanRemoval: true)]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $badges;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $partners;
 
     public function __construct()

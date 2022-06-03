@@ -29,6 +29,10 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param NotifyCampaignMembersAboutNewPost $post
+     * @return void
+     */
     public function __invoke(NotifyCampaignMembersAboutNewPost $post)
     {
         $post = $this->postRepository->find($post->getPostId());
@@ -40,7 +44,11 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
         $this->handleNewCampaignPost($post);
     }
 
-    private function handleNewCampaignPost(Post $post)
+    /**
+     * @param Post $post
+     * @return void
+     */
+    private function handleNewCampaignPost(Post $post): void
     {
         $campaignMembers = $this->campaignMemberRepository->findBy([
             'campaign' => $post->getCampaign()->getId()

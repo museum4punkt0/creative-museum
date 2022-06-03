@@ -3,15 +3,15 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\Post;
-use App\Message\NotifyCampaignMembersAboutNewPost;
+use App\Entity\Campaign;
+use App\Message\NotifyUsersAboutNewCampaign;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class PostNotificationSubscriber implements EventSubscriberInterface
+class CampaignNotificationSubscriber implements EventSubscriberInterface
 {
     private MessageBusInterface $bus;
 
@@ -26,7 +26,7 @@ class PostNotificationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['handleAwardNotification', EventPriorities::POST_WRITE]
+            KernelEvents::VIEW => ['handleNewCampaignNotification', EventPriorities::POST_WRITE]
         ];
     }
 
@@ -34,16 +34,16 @@ class PostNotificationSubscriber implements EventSubscriberInterface
      * @param ViewEvent $event
      * @return void
      */
-    public function handleAwardNotification(ViewEvent $event): void
+    public function handleNewCampaignNotification(ViewEvent $event): void
     {
-        $post = $event->getControllerResult();
+        $campaign = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$post instanceof Post || Request::METHOD_POST !== $method) {
+        if (!$campaign instanceof Campaign || Request::METHOD_POST !== $method) {
             return;
         }
 
-        $notification = new NotifyCampaignMembersAboutNewPost($post->getId());
+        $notification = new NotifyUsersAboutNewCampaign($campaign->getId());
         $this->bus->dispatch($notification);
     }
 }

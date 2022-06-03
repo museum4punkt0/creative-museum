@@ -41,6 +41,10 @@ class AwardedSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param ViewEvent $event
+     * @return void
+     */
     public function createAwardedPoints(ViewEvent $event): void
     {
         $awarded = $event->getControllerResult();

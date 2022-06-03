@@ -25,6 +25,10 @@ class HandleNotifyUser implements MessageHandlerInterface
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param NotifyUserAboutNewAwarded $awarded
+     * @return void
+     */
     public function __invoke(NotifyUserAboutNewAwarded $awarded)
     {
         $awarded = $this->awardedRepository->find($awarded->getAwardedId());
@@ -36,7 +40,11 @@ class HandleNotifyUser implements MessageHandlerInterface
         $this->handleNewAwarded($awarded);
     }
 
-    private function handleNewAwarded(Awarded $awarded)
+    /**
+     * @param Awarded $awarded
+     * @return void
+     */
+    private function handleNewAwarded(Awarded $awarded): void
     {
         $winnerNotification = new Notification();
         $winnerNotification
