@@ -23,15 +23,15 @@ class Partner
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read"])]
+    #[Groups(["campaigns:read"])]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]

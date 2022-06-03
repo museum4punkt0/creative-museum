@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\AwardRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AwardRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AwardRepository::class)]
 #[ApiResource(
@@ -26,12 +27,15 @@ class Award
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["campaigns:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaigns:read"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaigns:read"])]
     private $description;
 
     #[ORM\Column(type: 'integer')]
