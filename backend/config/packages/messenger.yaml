@@ -12,6 +12,7 @@ framework:
         routing:
             # Route your messages to the transports
              'App\Message\NotifyUserAboutNewAwarded': async
+             'App\Message\NotifyCampaignMembersAboutNewPost': async
 
 # when@test:
 #    framework:
