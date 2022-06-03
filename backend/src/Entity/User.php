@@ -16,7 +16,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
         "get"
     ],
     itemOperations: [
-        "get",
         "me" => [
             "method" => "GET",
             "path" => "/users/me",
@@ -24,6 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
                 "id" => 0,
             ],
         ],
+        "get",
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
     ],
