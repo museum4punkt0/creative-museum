@@ -8,6 +8,7 @@
         <PageHeader />
       </div>
       <Nuxt/>
+      <PageFooter />
     </div>
   </div>
 </template>

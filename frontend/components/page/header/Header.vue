@@ -101,7 +101,7 @@
             w:container="~"
           >
             <div>
-              <NuxtLink to="/login" w:text="white">Login</NuxtLink>
+              <NuxtLink to="/login" w:text="white" @click.native="closeMenu">Login</NuxtLink>
             </div>
             <div></div>
             <div></div>
@@ -124,8 +124,13 @@ export default defineComponent({
   setup() {
     const isMenuVisible = ref(false)
 
+    function closeMenu() {
+      isMenuVisible.value = false
+    }
+
     return {
-      isMenuVisible
+      isMenuVisible,
+      closeMenu
     }
   }
 })
