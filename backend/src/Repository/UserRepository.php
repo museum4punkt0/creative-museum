@@ -47,6 +47,18 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return User[]
+     */
+    public function getActiveUsers(): array
+    {
+        return $this->findBy(
+            [
+                'active' => 1
+            ]
+        );
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

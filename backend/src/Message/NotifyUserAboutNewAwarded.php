@@ -12,6 +12,9 @@ class NotifyUserAboutNewAwarded
         $this->awardedId = $awardedId;
     }
 
+    /**
+     * @return int
+     */
     public function getAwardedId(): int
     {
         return $this->awardedId;

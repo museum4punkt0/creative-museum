@@ -11,6 +11,9 @@ class NotifyCampaignMembersAboutNewPost
         $this->postId = $postId;
     }
 
+    /**
+     * @return int
+     */
     public function getPostId(): int
     {
         return $this->postId;

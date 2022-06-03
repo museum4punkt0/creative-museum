@@ -22,6 +22,9 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
         $this->bus = $bus;
     }
 
+    /**
+     * @return array[]
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -29,6 +32,10 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param ViewEvent $event
+     * @return void
+     */
     public function handleAwardNotification(ViewEvent $event): void
     {
         $awarded = $event->getControllerResult();
