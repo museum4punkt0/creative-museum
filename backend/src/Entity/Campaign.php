@@ -9,12 +9,15 @@ use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
 #[ApiResource(
     attributes: [
         'filters' => ['campaign.date_filter'],
     ],
+    normalizationContext: ['groups' => ['campaign:read']],
+    denormalizationContext: ['groups' => ['campaign:write']],
     order: ["start" => "DESC"],
     collectionOperations: [
         "get",
@@ -32,39 +35,51 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["campaign:read"])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(["campaign:read", "campaign:write"])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["campaign:read"])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["campaign:read", "campaign:write"])]
     private $start;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["campaign:read", "campaign:write"])]
     private $stop;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["campaign:read"])]
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read", "campaign:write"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read", "campaign:write"])]
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read", "campaign:write"])]
     private $description;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, orphanRemoval: true)]
+    #[Groups(["campaign:read"])]
     private $awards;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, orphanRemoval: true)]
+    #[Groups(["campaign:read"])]
     private $badges;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
+    #[Groups(["campaign:read"])]
     private $partners;
 
     public function __construct()

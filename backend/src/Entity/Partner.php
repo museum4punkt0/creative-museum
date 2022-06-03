@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\PartnerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PartnerRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PartnerRepository::class)]
 #[ApiResource(
@@ -22,12 +23,15 @@ class Partner
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["campaign:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read"])]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]
