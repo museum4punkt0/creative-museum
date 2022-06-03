@@ -4,8 +4,7 @@ export const campaignApi = () => {
   const { $api } = useContext()
 
   const fetchCampaign = async (campaignId) => {
-    const res = await $api.$get(`campaigns/${campaignId}`)
-
+    const res = await $api.get(`campaigns/${campaignId}`)
     return res
   }
 

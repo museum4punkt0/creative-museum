@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div v-if="campaigns.length > 0">
+    <div v-if="campaigns">
       {{ campaigns }}
+      <div v-for="(campaign, key) in campaigns" :key="key">
+        <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
+      </div>
     </div>
     <div v-else>
       No Campaigns
@@ -10,7 +13,7 @@
 </template>
 <script>
 
-import { defineComponent, ref, useFetch } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useAsync } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
 export default defineComponent({
@@ -18,11 +21,8 @@ export default defineComponent({
   setup() {
 
     const { fetchCampaigns } = campaignApi()
-    const campaigns = ref([])
 
-    useFetch(async () => {
-      campaigns.value = await fetchCampaigns()
-    })
+    const campaigns = useAsync(() => fetchCampaigns(), 'campaigns')
 
     return {
       campaigns

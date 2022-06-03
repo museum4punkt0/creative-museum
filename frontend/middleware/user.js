@@ -1,6 +1,8 @@
 export default function ({ $auth, store, redirect }) {
 
-    $auth.fetchUser()
+    if (process.client) {
+        $auth.fetchUser()
+    }
 
     if (!store.state.username) {
         //return redirect('/user/update')
