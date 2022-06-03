@@ -101,5 +101,8 @@ export default {
         acrValues: ''
       }
     }
+  },
+  router: {
+    middleware: ['user']
   }
 }
