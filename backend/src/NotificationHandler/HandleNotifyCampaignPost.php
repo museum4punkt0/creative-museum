@@ -50,7 +50,8 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
             $notification = new Notification();
             $notification
                 ->setReceiver($campaignMember->getUser())
-                ->setText("Neuer Post in der Kampange {$post->getCampaign()->getTitle()} von {$campaignMember->getUser()->getUserIdentifier()}");
+                ->setText("Neuer Post in der Kampange {$post->getCampaign()->getTitle()} von {$campaignMember->getUser()->getUserIdentifier()}")
+                ->setPost($post);
             $this->entityManager->persist($notification);
             $this->entityManager->flush();
         }
