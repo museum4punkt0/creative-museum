@@ -49,9 +49,8 @@ class Badge
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'achievements')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $user;
+    #[ORM\Column(type: 'integer')]
+    private $price;
 
     public function getId(): ?int
     {
@@ -142,14 +141,14 @@ class Badge
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getPrice(): ?int
     {
-        return $this->user;
+        return $this->price;
     }
 
-    public function setUser(?User $user): self
+    public function setPrice(int $price): self
     {
-        $this->user = $user;
+        $this->price = $price;
 
         return $this;
     }
