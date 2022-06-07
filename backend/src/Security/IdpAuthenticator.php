@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -58,6 +60,9 @@ class IdpAuthenticator extends AbstractAuthenticator
 
                 $user = new User();
                 $user->setUuid($token['sub']);
+                $user->setFirstName('Max');
+                $user->setLastName('Mustermann');
+                $user->setUsername('maxmuster1337');
                 $user->setActive(true);
 
                 $this->entityManager->persist($user);

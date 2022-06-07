@@ -2,30 +2,34 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use App\Enum\NotificationType;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\MarkTutorialSeenController;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get"
-    ],
-    itemOperations: [
         "me" => [
             "method" => "GET",
             "path" => "/users/me",
-            "defaults" => [
-                "id" => 0,
-            ],
+            "normalization_context" => ["groups" => ["read:me"]]
         ],
         "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
+    ],
+    itemOperations: [
+        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
+        "patch" => [
+            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
+            "denormalization_context" => ["groups" => ["write:me"]]
+        ],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"]
     ],
 )]
 class User implements UserInterface
@@ -33,12 +37,16 @@ class User implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:me"])]
+    #[ApiProperty(identifier: false)]
     private $id;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
+    #[Groups(["read:me"])]
+    #[ApiProperty(identifier: true)]
     private $uuid;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, orphanRemoval: true)]
@@ -51,22 +59,37 @@ class User implements UserInterface
     private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(["read:me", "write:me"])]
     private $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
     private $active = true;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:me"])]
     private $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
     private $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badge::class, orphanRemoval: true)]
+    #[Groups(["read:me"])]
     private $achievements;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
     private $bookmarks;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read:me", "write:me"])]
+    private $firstName;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read:me", "write:me"])]
+    private $lastName;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read:me", "write:me"])]
+    private $username;
 
     public function __construct()
     {
@@ -138,28 +161,6 @@ class User implements UserInterface
     public function getPosts(): Collection
     {
         return $this->posts;
-    }
-
-    public function addPost(Post $post): self
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts[] = $post;
-            $post->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): self
-    {
-        if ($this->posts->removeElement($post)) {
-            // set the owning side to null (unless already changed)
-            if ($post->getAuthor() === $this) {
-                $post->setAuthor(null);
-            }
-        }
-
-        return $this;
     }
 
     /**
@@ -342,5 +343,34 @@ class User implements UserInterface
         $this->bookmarks->removeElement($bookmark);
 
         return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
     }
 }
