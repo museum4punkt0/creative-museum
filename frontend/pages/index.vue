@@ -13,6 +13,8 @@ export default defineComponent({
 
     if (user.value.tutorial === false) {
       router.push('/tutorial')
+    } else {
+      router.push('/campaigns')
     }
 
   }
