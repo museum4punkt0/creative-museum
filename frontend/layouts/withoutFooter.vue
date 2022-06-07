@@ -10,7 +10,6 @@
       <div w:container="~" w:p="6">
         <Nuxt/>
       </div>
-      <PageFooter />
     </div>
   </div>
 </template>

@@ -29,7 +29,7 @@
         w:rounded="xl"
         w:bg="color1"
         w:text="xs black space-nowrap"
-      >3584 P</span>
+      >{{ user[0].score ? user[0].score : 0 }} P</span>
     </div>
     <span
       w:text="sm overflow-ellipsis ..."
@@ -38,7 +38,7 @@
       w:min-w="24"
       w:max-w="32"
     >
-      @Profilname
+      @{{ user[0].username }}
     </span>
   </div>
 </template>

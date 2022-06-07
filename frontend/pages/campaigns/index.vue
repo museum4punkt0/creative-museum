@@ -1,11 +1,9 @@
 <template>
   <div>
     <div v-if="campaigns">
-      <div w:container="~" w:p="x-6">
-        {{ campaigns }}
-        <div v-for="(campaign, key) in campaigns" :key="key">
-          <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
-        </div>
+      {{ campaigns }}
+      <div v-for="(campaign, key) in campaigns" :key="key">
+        <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
       </div>
     </div>
     <div v-else>
@@ -15,7 +13,7 @@
 </template>
 <script>
 
-import { defineComponent, ref, useAsync } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
 export default defineComponent({

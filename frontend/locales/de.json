@@ -1,3 +1,28 @@
 {
-
+  "next": "Weiter",
+  "prev": "Zurück",
+  "close": "Close",
+  "tutorial": {
+    "skipTutorial": "Direkt ins Creative Museum",
+    "step1": {
+      "title": "Willkommen im Creative Museum!",
+      "text": "Schön, dass du ein Teil vom Creative Museum bist. Wir stellen Dir in den Folgenden Schritten die wichtigsten Funktionen vor."
+    },
+    "step2": {
+      "title": "Punkte",
+      "text": "Bei allen Aktionen, die du hier im Creative Museum machst, sammelst du Punkte. Punkte können später für Awards und andere Überraschungen eingelöst werden. Also los geht’s: Fang an zu sammeln!"
+    },
+    "step3": {
+      "title": "Beiträge erstellen",
+      "text": "Es gibt verschiedene Weisen, wie du dich am Creative Museum beteiligen kannst. Eine der wichtigsten davon sind Beiträge, die Du selbst erstellen und teilen kannst. Wähle aus Bild-, Text-, Video- und Audiobeiträgen aus oder erstelle sogar eine eigene Umfrage oder eine Playlist!"
+    },
+    "step4": {
+      "title": "Awards",
+      "text": "Du kannst in jeder Kampgane verschiedene Awards freischalten indem du Punkte sammelst und diese dann an andere Teilnehmer*innen verleihen."
+    },
+    "step5": {
+      "title": "Badges",
+      "text": "Badges werden dir verliehen, indem du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und kommentiere drei Posts!"
+    }
+  }
 }

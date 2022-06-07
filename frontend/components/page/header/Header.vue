@@ -19,7 +19,7 @@
         />
       </NuxtLink>
       <button
-        class="addBtn"
+        class="add-btn"
         w:pos="absolute"
         w:left="1/2"
         w:transform="-translate-x-1/2"
@@ -139,7 +139,7 @@ export default defineComponent({
 })
 </script>
 <style lang="postcss" scoped>
-.addBtn {
+.add-btn {
   box-shadow: 0 0 1px 0 theme('colors.white') inset,
     0 0 1px 0 theme('colors.white');
   @apply transform duration-200 ease-in-out

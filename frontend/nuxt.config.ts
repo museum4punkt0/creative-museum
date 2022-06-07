@@ -17,8 +17,10 @@ export default {
     ],
   },
   css: [
+    'virtual:windi-base.css',
     '@/assets/css/main.scss',
-    'virtual:windi.css'
+    'virtual:windi-components.css',
+    'virtual:windi-utilities.css',
   ],
   plugins:[
     'plugins/api'
@@ -39,13 +41,14 @@ export default {
     '@nuxtjs/i18n'
   ],
   i18n: {
+    langDir: 'locales',
     locales: [
-      { code: 'de', iso: 'de-DE', file: 'de.js', dir: 'ltr' },
-      { code: 'en', iso: 'en-US', file: 'en.js', dir: 'ltr' }
+      { code: 'de', iso: 'de-DE', file: 'de.json', dir: 'ltr' },
+      { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' }
     ],
     defaultLocale: 'de',
     vueI18n: {
-      fallbackLocale: 'en',
+      fallbackLocale: 'de',
     }
   },
   axios: {
