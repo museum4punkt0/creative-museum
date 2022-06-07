@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\MeController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
             "method" => "GET",
             "path" => "/users/me",
             "normalization_context" => ["groups" => ["read:me"]],
+            "controller" => MeController::class,
             "output_formats" => [
                 "json" => "application/json"
             ]
