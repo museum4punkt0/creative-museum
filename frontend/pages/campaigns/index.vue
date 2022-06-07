@@ -1,9 +1,11 @@
 <template>
   <div>
     <div v-if="campaigns">
-      {{ campaigns }}
-      <div v-for="(campaign, key) in campaigns" :key="key">
-        <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
+      <div w:container="~" w:p="x-6">
+        {{ campaigns }}
+        <div v-for="(campaign, key) in campaigns" :key="key">
+          <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
+        </div>
       </div>
     </div>
     <div v-else>
