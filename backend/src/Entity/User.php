@@ -76,7 +76,7 @@ class User implements UserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
     private $memberships;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badge::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]
     #[Groups(["read:me"])]
     private $achievements;
 
@@ -296,14 +296,14 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection<int, Badge>
+     * @return Collection<int, Badged>
      */
     public function getAchievements(): Collection
     {
         return $this->achievements;
     }
 
-    public function addAchievement(Badge $achievement): self
+    public function addAchievement(Badged $achievement): self
     {
         if (!$this->achievements->contains($achievement)) {
             $this->achievements[] = $achievement;
@@ -313,7 +313,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function removeAchievement(Badge $achievement): self
+    public function removeAchievement(Badged $achievement): self
     {
         if ($this->achievements->removeElement($achievement)) {
             // set the owning side to null (unless already changed)
