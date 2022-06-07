@@ -1,6 +1,6 @@
 <?php
 
-namespace App\NotificationHandler;
+namespace App\MessageHandler;
 
 use App\Entity\Notification;
 use App\Entity\Post;
