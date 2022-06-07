@@ -35,12 +35,12 @@
           w:transform="gpu hover:scale-125"
           w:h="6"
           w:w="6"
-          @click.prevent="isMenuVisible = !isMenuVisible"
           :w:border="
             isMenuVisible
               ? '~ rounded-full white'
               : '~ rounded-full white transparent'
           "
+          @click.prevent="isMenuVisible = !isMenuVisible"
         >
           <span
             w:pointer-events="none"
@@ -99,6 +99,7 @@
           w:min-h="sm"
           w:bg="grey"
           w:shadow="lg black/20"
+          w:z="50"
         >
           <div w:p="x-5" w:grid="lg:~ lg:columns-4" w:container="~">
             <div>

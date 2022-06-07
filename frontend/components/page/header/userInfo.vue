@@ -1,5 +1,6 @@
 <template>
-  <div w:flex="~ row" w:space="md:x-4" w:align="items-center">
+  <div
+      v-if="user" w:flex="~ row" w:space="md:x-4" w:align="items-center">
     <div
       w:position="relative"
     >
@@ -29,7 +30,7 @@
         w:rounded="xl"
         w:bg="color1"
         w:text="xs black space-nowrap"
-      >{{ user[0].score ? user[0].score : 0 }} P</span>
+      >{{ user.score ? user.score : 0 }} P</span>
     </div>
     <span
       w:text="sm overflow-ellipsis ..."
@@ -38,7 +39,7 @@
       w:min-w="24"
       w:max-w="32"
     >
-      @{{ user[0].username }}
+      @{{ user.username }}
     </span>
   </div>
 </template>

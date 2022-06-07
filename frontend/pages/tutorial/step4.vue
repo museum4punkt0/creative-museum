@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-header">
-      <NuxtLink to="/campaigns" class="back-btn">Erste Schritte</NuxtLink>
+      <NuxtLink to="/tutorial/step3" class="back-btn">Erste Schritte</NuxtLink>
     </div>
     <div class="box-shadow relative" w:text="center">
       <div w:text="left" w:m="b-10">
@@ -17,12 +17,11 @@
         4/5
       </div>
     </div>
-    <TutorialNavigation to="/tutorial/step5" prev="/tutorial/step3" />
+    <TutorialNavigation next="/tutorial/step5" prev="/tutorial/step3" />
   </div>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-
 export default defineComponent({
   layout: 'withoutFooter'
 })

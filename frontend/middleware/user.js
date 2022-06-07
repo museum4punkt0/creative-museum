@@ -1,5 +1,5 @@
 import { computed } from '@nuxtjs/composition-api'
-export default function ({ $auth, app, redirect, store }) {
+export default function ({ $auth, store }) {
 
     const user = computed(() => store.state.auth.user)
 
@@ -7,12 +7,8 @@ export default function ({ $auth, app, redirect, store }) {
         $auth.fetchUser()
     }
 
-    if (!user.value.username) {
+    if ($auth.loggedIn && !user.value.username) {
         //return redirect('/user/update')
-    }
-
-    if (!user.value.tutorial && !app.router.history.current.path.includes('/tutorial')) {
-        return redirect('/tutorial')
     }
 
 }

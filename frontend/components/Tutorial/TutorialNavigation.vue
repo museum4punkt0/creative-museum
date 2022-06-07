@@ -4,7 +4,7 @@
     w:p="6"
     w:m="t-10"
   >
-    <NuxtLink class="btn-primary" w:m="b-3" :to="to" @click.native="goNext()"> {{ $t('next') }}</NuxtLink>
+    <NuxtLink class="btn-primary" w:m="b-3" :to="next" @click.native="goNext()"> {{ $t('next') }}</NuxtLink>
     <NuxtLink class="btn-outline" w:m="b-3" :to="prev"> {{ $t('prev') }}</NuxtLink>
     <NuxtLink class="btn-outline" to="/campaigns" @click.native="goNext(true)"> {{ $t('tutorial.skipTutorial') }}</NuxtLink>
   </div>
@@ -15,7 +15,7 @@ import { userApi } from '@/api/user'
 
 export default defineComponent({
   props: {
-    to: {
+    next: {
       type: String,
       default: ''
     },
@@ -38,7 +38,7 @@ export default defineComponent({
 
     function goNext(finish = false) {
       if (props.finish === true || finish === true) {
-        finishTutorial(user.value[0].uuid)
+        finishTutorial(user.value.uuid)
         return true
       } else {
         return true

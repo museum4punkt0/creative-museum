@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page-header">
-      <NuxtLink to="/campaigns" class="back-btn">Erste Schritte</NuxtLink>
+      <NuxtLink to="/" class="back-btn">Erste Schritte</NuxtLink>
     </div>
     <div class="box-shadow relative" w:text="center">
       <Logo
@@ -22,13 +22,12 @@
         1/5
       </div>
     </div>
-    <TutorialNavigation to="/tutorial/step2" />
+    <TutorialNavigation next="/tutorial/step2" />
   </div>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
-
 export default defineComponent({
   name: 'TutorialIndex',
   components: {
