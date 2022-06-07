@@ -18,7 +18,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
         "me" => [
             "method" => "GET",
             "path" => "/users/me",
-            "normalization_context" => ["groups" => ["read:me"]]
+            "normalization_context" => ["groups" => ["read:me"]],
+            "output_formats" => [
+                "json" => "application/json"
+            ]
         ],
         "get",
     ],
