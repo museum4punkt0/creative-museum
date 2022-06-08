@@ -1,11 +1,13 @@
 <template>
   <div>
-    <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
+    <NuxtLink :w:text="textColor" :to="`/campaigns/${campaign.id}`">
+      {{ campaign.title }}
+    </NuxtLink>
   </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
-
+import { TinyColor, readability } from '@ctrl/tinycolor';
+import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     campaign: {
@@ -13,8 +15,19 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props) {
+    const textColor = getContrastColorClass()
 
+    function getContrastColorClass() {
+      const bgColor = new TinyColor(props.campaign.color)
+      const fgColor = new TinyColor('#FFFFFF')
+      return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
+    }
+
+    return {
+      textColor,
+      getContrastColorClass
+    }
   },
 })
 </script>
