@@ -47,6 +47,7 @@ ddev frontend-install
 [TYPO3](https://typo3.creative-museum.ddev.site/typo3)
 ```
 ddev typo3-install
+ddev import-db --target-db=typo3 --src=data/typo3.sql.gz
 ```
 ### Frontend Watcher ###
 ```
