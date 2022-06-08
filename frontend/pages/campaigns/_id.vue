@@ -12,7 +12,7 @@
 
 <script>
 
-import { defineComponent, ref, useAsync, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
 export default defineComponent({

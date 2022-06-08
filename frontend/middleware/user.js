@@ -1,14 +1,8 @@
-import { computed } from '@nuxtjs/composition-api'
-export default function ({ $auth, store }) {
-
-    const user = computed(() => store.state.auth.user)
+import { defineNuxtMiddleware } from '@nuxtjs/composition-api'
+export default defineNuxtMiddleware((ctx) => {
 
     if (process.client) {
-        $auth.fetchUser()
+        ctx.$auth.fetchUser()
     }
 
-    if ($auth.loggedIn && !user.value.username) {
-        //return redirect('/user/update')
-    }
-
-}
+})

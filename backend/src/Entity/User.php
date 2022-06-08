@@ -96,10 +96,9 @@ class User implements UserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["read:me", "write:me"])]
-    private string $username;
+    private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-
     #[Groups(["read:me"])]
     private string $email;
 

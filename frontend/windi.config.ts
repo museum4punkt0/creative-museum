@@ -7,6 +7,10 @@ export default defineConfig({
     include: ['**/*.{vue,html,jsx,tsx}'],
     exclude: ['node_modules', '.git'],
   },
+  shortcuts: {
+    'btn-primary': 'block rounded-full border-1  p-2 text-center bg-color1 border-color1 text-black',
+    'btn-outline': 'block rounded-full border-1  p-2 text-center bg-transparent border-white text-white'
+  },
   theme: {
     container: {
       center: true,

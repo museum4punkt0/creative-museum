@@ -9,7 +9,16 @@ export const userApi = () => {
     })
     return res
   }
+
+  const supplyUsername = async (userId, username) => {
+    const res = await $api.patch(`users/${userId}`, {
+      username
+    })
+    return res
+  }
+
   return {
     finishTutorial,
+    supplyUsername
   }
 }

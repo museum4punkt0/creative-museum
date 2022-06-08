@@ -71,14 +71,22 @@
     @apply text-xl mb-2;
   }
 
+
   .box-shadow {
     @apply p-6;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35), -3px -3px 8px rgba(100, 100, 100, 0.4);
     border-radius: 16px;
   }
+
+  .input-text {
+    box-shadow: inset -3px -3px 8px rgba(100, 100, 100, 0.4), inset 3px 3px 8px rgba(0, 0, 0, 0.4);
+    @apply block w-full p-2 rounded-full bg-grey;
+  }
+
   .page-header {
     @apply font-medium text-3xl my-6;
   }
+
   .back-btn {
     @apply relative pl-10;
     &:before {
@@ -88,19 +96,6 @@
       @apply content-[''] block absolute w-4 h-4 left-0 top-1/2 transform -translate-y-1/2 -rotate-45 border-t-3 border-t-white border-l-3 border-l-white;
     }
   }
-
-  .btn-outline,
-  .btn-primary {
-    @apply block rounded-full border-1  p-2 text-center;
-  }
-  .btn-primary {
-    @apply bg-color1 border-color1 text-black;
-  }
-  .btn-outline {
-    @apply bg-transparent border-white text-white;
-  }
-
-
 }
 
 @layer utilities {

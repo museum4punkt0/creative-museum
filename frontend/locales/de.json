@@ -1,7 +1,12 @@
 {
   "next": "Weiter",
   "prev": "Zurück",
+  "submit": "Abschicken",
   "close": "Close",
+  "noUsername": "Kein Benutzername",
+  "provideUsername": {
+    "title": "Please provide a Username"
+  },
   "tutorial": {
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
