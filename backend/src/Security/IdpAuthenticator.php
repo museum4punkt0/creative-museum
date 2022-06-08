@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
+use App\OauthProvider\IdpOauthProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,8 +25,10 @@ class IdpAuthenticator extends AbstractAuthenticator
 
     private EntityManagerInterface $entityManager;
 
-    public function __construct(JWTTokenManagerInterface $jwtManager, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        JWTTokenManagerInterface $jwtManager, 
+        EntityManagerInterface $entityManager
+    ) {
         $this->jwtManager = $jwtManager;
         $this->entityManager = $entityManager;
     }
@@ -58,11 +61,29 @@ class IdpAuthenticator extends AbstractAuthenticator
                     return $existingUser;
                 }
 
+                $provider = new IdpOauthProvider([
+                    'clientId' => $_ENV['IDP_OAUTH_CLIENT_ID'],
+                    'clientSecret' => $_ENV['IDP_OAUTH_CLIENT_SECRET'],
+                    'verify' => 'dev' !== $_ENV['APP_ENV']
+                ]);
+                
+                $idpToken = $provider->getAccessToken(
+                    'client_credentials', [ 'scope' => 'api' ]
+                );
+
+                $req = $provider->getAuthenticatedRequest(
+                    Request::METHOD_GET,
+                    str_replace('{uuid}', $token['sub'], $_ENV['IDP_OAUTH_USERINFO_ENDPOINT']),
+                    $idpToken
+                );
+
+                $response = $provider->getParsedResponse($req);
+
                 $user = new User();
                 $user->setUuid($token['sub']);
-                $user->setFirstName('Max');
-                $user->setLastName('Mustermann');
-                $user->setUsername('maxmuster1337');
+                $user->setFirstName($response['firstName']);
+                $user->setLastName($response['lastName']);
+                $user->setEmail($response['email']);
                 $user->setActive(true);
 
                 $this->entityManager->persist($user);

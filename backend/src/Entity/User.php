@@ -12,6 +12,7 @@ use App\Controller\MeController;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
@@ -31,11 +32,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
         "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
         "patch" => [
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
-            "denormalization_context" => ["groups" => ["write:me"]]
+            "denormalization_context" => ["groups" => ["write:me"]],
+            "normalization_context" => ["groups" => ["read:me"]],
         ],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"]
     ],
 )]
+#[UniqueEntity('username')]
 class User implements UserInterface
 {
     #[ORM\Id]
@@ -43,57 +46,62 @@ class User implements UserInterface
     #[ORM\Column(type: 'integer')]
     #[Groups(["read:me"])]
     #[ApiProperty(identifier: false)]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
     #[Groups(["read:me"])]
     #[ApiProperty(identifier: true)]
-    private $uuid;
+    private string $uuid;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, orphanRemoval: true)]
-    private $posts;
+    private Collection $posts;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
-    private $playlists;
+    private Collection $playlists;
 
     #[ORM\Column(type: 'notficationtype')]
     private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'boolean')]
     #[Groups(["read:me", "write:me"])]
-    private $tutorial = false;
+    private bool $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
-    private $active = true;
+    private bool $active = true;
 
     #[ORM\Column(type: 'integer')]
     #[Groups(["read:me"])]
-    private $score = 0;
+    private int $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
-    private $memberships;
+    private Collection $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]
     #[Groups(["read:me"])]
-    private $achievements;
+    private Collection $achievements;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
-    private $bookmarks;
+    private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read:me", "write:me"])]
-    private $firstName;
+    private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read:me", "write:me"])]
-    private $lastName;
+    private string $lastName;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["read:me", "write:me"])]
+    private string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me", "write:me"])]
-    private $username;
+
+    #[Groups(["read:me"])]
+    private string $email;
 
     public function __construct()
     {
@@ -147,7 +155,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getUuid()
+    public function getUuid(): string
     {
         return $this->uuid;
     }
@@ -376,5 +384,17 @@ class User implements UserInterface
     public function getUsername(): ?string
     {
         return $this->username;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 }
