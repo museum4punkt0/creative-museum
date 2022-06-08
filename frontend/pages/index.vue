@@ -11,7 +11,7 @@ export default defineComponent({
     const user = computed(() => store.state.auth.user);
     const router = useRouter()
 
-    if (user.value.tutorial === false) {
+    if (user.value !== null && user.value.tutorial === false) {
       router.push('/tutorial')
     } else {
       router.push('/campaigns')
