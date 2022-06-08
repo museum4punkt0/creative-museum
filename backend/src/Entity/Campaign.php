@@ -84,6 +84,7 @@ class Campaign
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(["campaigns:read"])]
     private $color;
 
     public function __construct()

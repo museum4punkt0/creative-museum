@@ -1,9 +1,8 @@
 <template>
   <div>
     <div v-if="campaigns">
-      {{ campaigns }}
       <div v-for="(campaign, key) in campaigns" :key="key">
-        <NuxtLink :to="`/campaigns/${campaign.id}`">Link</NuxtLink>
+        <CampaignItem :style="`background-color: ${campaign.color}`" :campaign="campaign" />
       </div>
     </div>
     <div v-else>
