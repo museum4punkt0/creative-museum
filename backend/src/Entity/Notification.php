@@ -33,6 +33,9 @@ class Notification
     #[ORM\ManyToOne(targetEntity: Post::class)]
     private $post;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $color;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +73,18 @@ class Notification
     public function setPost(?Post $post): self
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): self
+    {
+        $this->color = $color;
 
         return $this;
     }
