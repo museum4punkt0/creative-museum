@@ -33,12 +33,22 @@ ddev start
 After the project was started successfully you will have to install all required
 dependencies via *npm*. Navigate to the root directory of your project and
 execute the following command:
+
+[Backend](https://backend.creative-museum.ddev.site)
 ```
 ddev backend-install
+```
+
+[Frontend](https://creative-museum.ddev.site)
+```
 ddev frontend-install
 ```
-### Frontend ###
+
+[TYPO3](https://typo3.creative-museum.ddev.site/typo3)
+```
+ddev typo3-install
+```
+### Frontend Watcher ###
 ```
 ddev frontend-dev
-https://creative-museum.ddev.site/
 ```

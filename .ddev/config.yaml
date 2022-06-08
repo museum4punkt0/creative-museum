@@ -8,6 +8,7 @@ router_https_port: "443"
 xdebug_enabled: false
 additional_hostnames:
   - backend.creative-museum
+  - typo3.creative-museum
 additional_fqdns: []
 database:
   type: mariadb
@@ -16,10 +17,33 @@ nfs_mount_enabled: false
 mutagen_enabled: true
 use_dns_when_possible: true
 composer_version: "2"
-web_environment: []
+web_environment:
+  # Environment
+  - ENVIRONMENT=DDEV
+  # TYPO3 Context
+  - TYPO3_CONTEXT=Development
+  # TYPO3 Debug settings
+  - TYPO3_BE_DEBUG=true
+  - TYPO3_FE_DEBUG=true
+  - TYPO3_SYS_DEV_IPMASK=*
+  - TYPO3_SYS_DISPLAY_ERRORS=1
+  - TYPO3_SYS_EXCEPTIONAL_ERRORS=12290
+  # TYPO3 Database credentials
+  - TYPO3_DB_CONNECTIONS_DEFAULT_HOST=db
+  - TYPO3_DB_CONNECTIONS_DEFAULT_PORT=3306
+  - TYPO3_DB_CONNECTIONS_DEFAULT_USER=db
+  - TYPO3_DB_CONNECTIONS_DEFAULT_PASS=db
+  - TYPO3_DB_CONNECTIONS_DEFAULT_NAME=typo3
+  # TYPO3 Mail settings
+  - TYPO3_MAIL_TRANSPORT=
+  - TYPO3_MAIL_TRANSPORT_SMTP_SERVER=
+  - TYPO3_MAIL_TRANSPORT_SENDMAIL_COMMAND=/usr/local/bin/mailhog sendmail test@example.org --smtp-addr 127.0.0.1:1025
+  # TYPO3 SYS
+  - TYPO3_SYS_TRUSTED_HOSTS_PATTERN=.*
 nodejs_version: "16"
 webimage_extra_packages: [openssl, build-essential, sendmail, python]
 hooks:
   post-start:
+  - exec: mysql -uroot -proot -hdb -e "CREATE DATABASE IF NOT EXISTS typo3; GRANT ALL ON typo3.* TO 'db'@'%';"
   - exec: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.con
-  - exec: npm install -g node-gyp-build @mapbox/node-pre-gyp consola
+  - exec: npm install --location=global node-gyp-build @mapbox/node-pre-gyp consola
