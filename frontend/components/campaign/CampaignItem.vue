@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div
+    w:border="rounded-lg"
+    w:p="y-6 x-4"
+    w:h="md"
+    w:shadow="md black/50"
+    :style="`background-color: ${campaign.color}`"
+  >
     <NuxtLink :w:text="textColor" :to="`/campaigns/${campaign.id}`">
       {{ campaign.title }}
     </NuxtLink>

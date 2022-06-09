@@ -1,9 +1,11 @@
 <template>
   <div>
-    <div v-if="campaigns">
-      <div v-for="(campaign, key) in campaigns" :key="key">
-        <CampaignItem :style="`background-color: ${campaign.color}`" :campaign="campaign" />
-      </div>
+    <div v-if="campaigns" >
+      <CampaignCardStack :cards="campaigns">
+        <template #card="{ card }">
+          <CampaignItem :campaign="card" />
+        </template>
+      </CampaignCardStack>
     </div>
     <div v-else>
       No Campaigns
@@ -17,6 +19,7 @@ import { campaignApi } from '@/api/campaign'
 
 export default defineComponent({
   name: 'CampaignsPage',
+  layout: 'withoutContainer',
   setup() {
 
     const { fetchCampaigns } = campaignApi()

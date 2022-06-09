@@ -27,7 +27,7 @@ class IdpAuthenticator extends AbstractAuthenticator
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        JWTTokenManagerInterface $jwtManager, 
+        JWTTokenManagerInterface $jwtManager,
         EntityManagerInterface $entityManager
     ) {
         $this->jwtManager = $jwtManager;
@@ -46,7 +46,7 @@ class IdpAuthenticator extends AbstractAuthenticator
     public function authenticate(Request $request): Passport
     {
         $bearer = $request->headers->get(self::AUTH_HEADER_NAME);
-        
+
         try {
             $token = $this->jwtManager->parse(str_replace('Bearer ', '', $bearer));
         } catch (JWTDecodeFailureException $e) {
@@ -72,7 +72,7 @@ class IdpAuthenticator extends AbstractAuthenticator
                     'clientSecret' => $_ENV['IDP_OAUTH_CLIENT_SECRET'],
                     'verify' => 'dev' !== $_ENV['APP_ENV']
                 ]);
-                
+
                 $idpToken = $provider->getAccessToken(
                     'client_credentials', [ 'scope' => 'api' ]
                 );

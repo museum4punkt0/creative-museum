@@ -37,5 +37,8 @@ export default defineConfig({
         'grey': '#2E2E2E'
       },
     },
-  }
+  },
+  plugins: [
+    require('tailwindcss-container-bleed'),
+  ]
 })
