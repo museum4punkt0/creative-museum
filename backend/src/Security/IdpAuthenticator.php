@@ -7,6 +7,7 @@ namespace App\Security;
 use App\Entity\User;
 use App\OauthProvider\IdpOauthProvider;
 use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,12 @@ class IdpAuthenticator extends AbstractAuthenticator
     public function authenticate(Request $request): Passport
     {
         $bearer = $request->headers->get(self::AUTH_HEADER_NAME);
-        $token = $this->jwtManager->parse(str_replace('Bearer ', '', $bearer));
+        
+        try {
+            $token = $this->jwtManager->parse(str_replace('Bearer ', '', $bearer));
+        } catch (JWTDecodeFailureException $e) {
+            throw new AuthenticationException('Token invalid or expired');
+        }
 
         return new SelfValidatingPassport(
             new UserBadge($token['sub'], function () use ($token) {
