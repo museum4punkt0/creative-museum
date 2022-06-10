@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="campaigns" >
+    <div v-if="campaigns" class="px-container-padding" >
       <CampaignCardStack :cards="campaigns">
         <template #card="{ card }">
           <CampaignItem :campaign="card" />
