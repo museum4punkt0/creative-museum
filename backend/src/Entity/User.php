@@ -29,7 +29,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         "get",
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
+//        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
+        "get",
         "patch" => [
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
             "denormalization_context" => ["groups" => ["write:me"]],
