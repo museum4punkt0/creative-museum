@@ -100,12 +100,16 @@ class Post
     #[Groups(["write:post", "read:post"])]
     private $question;
 
+    #[ORM\ManyToMany(targetEntity: MediaObject::class)]
+    private $files;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
         $this->awards = new ArrayCollection();
         $this->partners = new ArrayCollection();
         $this->playlist = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -326,6 +330,30 @@ class Post
     public function setQuestion(?string $question): self
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MediaObject>
+     */
+    public function getFiles(): Collection
+    {
+        return $this->files;
+    }
+
+    public function addFile(MediaObject $file): self
+    {
+        if (!$this->files->contains($file)) {
+            $this->files[] = $file;
+        }
+
+        return $this;
+    }
+
+    public function removeFile(MediaObject $file): self
+    {
+        $this->files->removeElement($file);
 
         return $this;
     }

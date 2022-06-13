@@ -53,6 +53,7 @@ class Badge
     private $price;
 
     #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $picture;
 
     public function getId(): ?int

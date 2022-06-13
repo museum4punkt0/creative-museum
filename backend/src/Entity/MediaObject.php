@@ -19,15 +19,15 @@ class MediaObject
     #[ORM\Column(type: 'string', length: 255)]
     private $contentUrl;
 
-    #[ORM\ManyToOne(targetEntity: File::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $file;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $filepath;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $updatedAt;
+
+    #[ORM\OneToOne(targetEntity: File::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private $file;
 
     public function getId(): ?int
     {
@@ -42,18 +42,6 @@ class MediaObject
     public function setContentUrl(string $contentUrl): self
     {
         $this->contentUrl = $contentUrl;
-
-        return $this;
-    }
-
-    public function getFile(): ?File
-    {
-        return $this->file;
-    }
-
-    public function setFile(?File $file): self
-    {
-        $this->file = $file;
 
         return $this;
     }
@@ -78,6 +66,18 @@ class MediaObject
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(File $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }
