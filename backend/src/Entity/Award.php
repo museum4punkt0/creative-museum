@@ -45,7 +45,7 @@ class Award
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
     private $picture;
 
     public function getId(): ?int

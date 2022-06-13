@@ -37,7 +37,7 @@ class Partner
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]
     private $campaign;
 
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
     private $logo;
 
     public function getId(): ?int

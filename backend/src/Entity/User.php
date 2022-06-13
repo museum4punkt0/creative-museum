@@ -103,7 +103,7 @@ class User implements UserInterface
     #[Groups(["read:me"])]
     private string $email;
 
-    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
     private $profilePicture;
 
     public function __construct()

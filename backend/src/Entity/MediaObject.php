@@ -6,7 +6,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MediaObjectRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+
+/**
+ * @Vich\Uploadable
+ */
 #[ORM\Entity(repositoryClass: MediaObjectRepository::class)]
 #[ApiResource]
 class MediaObject
@@ -25,9 +31,10 @@ class MediaObject
     #[ORM\Column(type: 'datetime_immutable')]
     private $updatedAt;
 
-    #[ORM\OneToOne(targetEntity: File::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $file;
+    #[Assert\NotNull]
+    #[Assert\File]
+    #[Vich\UploadableField(mapping: 'media_object', fileNameProperty: 'filepath')]
+    private ?File $file = null;
 
     public function getId(): ?int
     {
@@ -75,7 +82,7 @@ class MediaObject
         return $this->file;
     }
 
-    public function setFile(File $file): self
+    public function setFile(?File $file): self
     {
         $this->file = $file;
 
