@@ -103,6 +103,9 @@ class User implements UserInterface
     #[Groups(["read:me"])]
     private string $email;
 
+    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    private $profilePicture;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -394,6 +397,18 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?MediaObject
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?MediaObject $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

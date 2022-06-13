@@ -52,6 +52,9 @@ class Badge
     #[ORM\Column(type: 'integer')]
     private $price;
 
+    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    private $picture;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +152,18 @@ class Badge
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPicture(): ?MediaObject
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?MediaObject $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

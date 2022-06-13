@@ -45,6 +45,9 @@ class Award
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
+    #[ORM\ManyToOne(targetEntity: MediaObject::class)]
+    private $picture;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,6 +97,18 @@ class Award
     public function setCampaign(?Campaign $campaign): self
     {
         $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    public function getPicture(): ?MediaObject
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?MediaObject $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }
