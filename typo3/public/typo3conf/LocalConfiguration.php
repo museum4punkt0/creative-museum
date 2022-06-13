@@ -36,6 +36,13 @@ return [
             'loginLogo' => '',
             'loginLogoAlt' => '',
         ],
+        'creativemuseum' => [
+            'baseUrl' => '',
+            'cilendId' => '',
+            'cilentId' => '',
+            'clientSecret' => '',
+            'tokenUrl' => '',
+        ],
         'extensionmanager' => [
             'automaticInstallation' => '1',
             'offlineMode' => '0',

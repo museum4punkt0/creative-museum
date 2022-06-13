@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ff52121fc8c5644169c7e4ddc57477e3",
+    "content-hash": "1c2396968705fee7354368be61f4cac8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1385,6 +1385,46 @@
                 }
             ],
             "time": "2022-05-31T06:51:43+00:00"
+        },
+        {
+            "name": "jwied/creativemuseum",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "extensions/creativemuseum",
+                "reference": "d113be97ea88da5bb61ad6933ae6b0cfb66cf081"
+            },
+            "require": {
+                "typo3/cms-core": "^10.4 || ^11"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "creativemuseum"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JWIED\\Creativemuseum\\": "Classes"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Willi Wehmeier",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Backend Administration module - Creative Museum",
+            "keywords": [
+                "TYPO3",
+                "extension"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "lolli42/finediff",
@@ -6344,6 +6384,65 @@
                 }
             ],
             "description": "The Install Tool mounted as the module Tools>Install in TYPO3.",
+            "homepage": "https://typo3.org",
+            "support": {
+                "chat": "https://typo3.org/help",
+                "docs": "https://docs.typo3.org",
+                "issues": "https://forge.typo3.org",
+                "source": "https://github.com/typo3/typo3"
+            },
+            "time": "2022-05-10T08:49:51+00:00"
+        },
+        {
+            "name": "typo3/cms-lowlevel",
+            "version": "v11.5.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3-CMS/lowlevel.git",
+                "reference": "d5ddfa061a939a9ca80b257edf11227d4d3bc873"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3-CMS/lowlevel/zipball/d5ddfa061a939a9ca80b257edf11227d4d3bc873",
+                "reference": "d5ddfa061a939a9ca80b257edf11227d4d3bc873",
+                "shasum": ""
+            },
+            "require": {
+                "typo3/cms-core": "11.5.10"
+            },
+            "conflict": {
+                "typo3/cms": "*"
+            },
+            "type": "typo3-cms-framework",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "11.5.x-dev"
+                },
+                "typo3/cms": {
+                    "Package": {
+                        "serviceProvider": "TYPO3\\CMS\\Lowlevel\\ServiceProvider",
+                        "partOfFactoryDefault": true
+                    },
+                    "extension-key": "lowlevel"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TYPO3\\CMS\\Lowlevel\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "TYPO3 Core Team",
+                    "email": "typo3cms@typo3.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Enables the 'Config' and 'DB Check' modules for technical analysis of the system. This includes raw database search, checking relations, counting pages and records etc.",
             "homepage": "https://typo3.org",
             "support": {
                 "chat": "https://typo3.org/help",
