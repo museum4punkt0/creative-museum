@@ -25,7 +25,8 @@ export default defineConfig({
       'lg':   ['17px', '19px'],
       'xl':   ['22px', '30px'],
       '2xl':  ['25px', '30px'],
-      '3xl':  ['30px', '39px']
+      '3xl':  ['30px', '39px'],
+      'xxl':  ['64px', '64px']
     },
     extend: {
       colors: {

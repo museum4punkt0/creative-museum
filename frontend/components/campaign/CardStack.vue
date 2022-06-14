@@ -1,12 +1,10 @@
 <template>
   <div class="vue-card-stack__wrapper">
     <div
-      class="vue-card-stack__stack" w:p="t-10 md:t-5"
-      :style="{
-        height: `${cardHeight + paddingVertical * 2}px`,
-      }"
+      class="vue-card-stack__stack" w:p="t-10 md:t-5" w:h="2xl lg:4xl"
     >
       <div
+        ref="card"
         v-for="(card, index) in stack"
         :key="card._id"
         class="vue-card-stack__card"
@@ -29,10 +27,6 @@
         <slot :card="{ ...card, $index: index }" name="card"></slot>
       </div>
     </div>
-    <slot
-      name="nav"
-      v-bind="{ activeCardIndex: originalActiveCardIndex, onNext, onPrevious }"
-    ></slot>
   </div>
 </template>
 <script>
@@ -45,17 +39,13 @@ export default {
       type: Array,
       default: () => [],
     },
-    cardHeight: {
-      type: Number,
-      default: () => 600,
-    },
     stackWidth: {
       type: [Number, String],
       default: () => '100%',
     },
     sensitivity: {
       type: Number,
-      default: () => 0.25,
+      default: () => 0.05,
     },
     maxVisibleCards: {
       type: Number,
@@ -80,11 +70,11 @@ export default {
       width: 0,
       activeCardIndex: 1,
       isDragging: false,
-      dragStartX: 0,
+      dragStartX: 50,
       dragStartY: 0,
       isDraggingNext: false,
       isMobile: false,
-      cardWidth: 500,
+      cardWidth: 700,
       containerWidth: 1920,
       mobileYOffset: 70
     }
@@ -182,7 +172,6 @@ export default {
           yPos: (isMobile) ? index < this._maxVisibleCards ? this.mobileYOffset + -10 * index : yPos - this.yPosOffset + this.mobileYOffset : 0,
           rotate: index !== 1 ? Math.floor(Math.random() * ( 2.5 - -2.5 )) : 0,
           width: this.cardWidth,
-          height: this.cardHeight,
           zIndex: this.cards.length + index * -1,
           isDragging: this.isDragging
         }
@@ -284,10 +273,10 @@ export default {
           this.rebuild()
         }
       } else if (distanceTravelledX * -1 > minDistanceToTravel) {
-          this.onNext()
-        } else {
-          this.rebuild()
-        }
+        this.onNext()
+      } else {
+        this.rebuild()
+      }
     },
     moveStack(dragXPos) {
       const activeCardOffsetX = dragXPos - this.dragStartX

@@ -38,7 +38,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     '@nuxtjs/pwa',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
+    '@nuxtjs/dayjs'
   ],
   i18n: {
     langDir: 'locales',
@@ -50,6 +51,10 @@ export default {
     vueI18n: {
       fallbackLocale: 'de',
     }
+  },
+  dayjs: {
+    locales: ['de', 'en'],
+    defaultLocale: 'de'
   },
   axios: {
     baseURL: 'https://backend.creative-museum.ddev.site/v1/',
