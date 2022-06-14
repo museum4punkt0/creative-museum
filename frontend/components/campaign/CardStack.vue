@@ -120,7 +120,7 @@ export default {
           if (this.isMobile) {
             return {
               x: this.cardWidth * -1,
-              y: this.cardHeight * -1 + 20
+              y: this.$refs.card[0].clientHeight * -1 + 20
             }
           } else {
             return {
@@ -145,7 +145,7 @@ export default {
           if (this.isMobile) {
             return {
               x: 0,
-              y: (-10 * index) + this.mobileYOffset
+              y: (-15 * index) + this.mobileYOffset
             }
           } else {
             return {
@@ -161,18 +161,18 @@ export default {
         const xPos = this.stackRestPoints[index].x
         const yPos = this.stackRestPoints[index].y
         let isMobile = false
-        if (window.innerWidth < 768) {
+        if (document.getElementById('globalHeader').clientWidth < 768) {
           isMobile = true
         }
 
         return {
           opacity: index > 0 && index < this._maxVisibleCards ? 1 : 0,
           display: index < this._maxVisibleCards + 1 ? "block" : "none",
-          xPos: index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset,
+          xPos: (!isMobile) ? index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset : 0,
           yPos: (isMobile) ? index < this._maxVisibleCards ? this.mobileYOffset + -10 * index : yPos - this.yPosOffset + this.mobileYOffset : 0,
           rotate: index !== 1 ? Math.floor(Math.random() * ( 2.5 - -2.5 )) : 0,
-          width: this.cardWidth,
-          zIndex: this.cards.length + index * -1,
+          width: isMobile ? window.innerWidth - this.paddingHorizontal : this.cardWidth,
+          zIndex: index !== 0 ? this.cards.length + index * -1 : -1,
           isDragging: this.isDragging
         }
       })
@@ -221,12 +221,14 @@ export default {
           ...this.cardDefaults[index],
         }
       })
-      if (process.client) {
-        if (window.innerWidth < 768) {
-          this.isMobile = true
-          this.cardWidth = window.innerWidth - this.paddingHorizontal
+      this.$nextTick(() => {
+        if (process.client) {
+          if (window.innerWidth < 768) {
+            this.isMobile = true
+            this.cardWidth = window.innerWidth - this.paddingHorizontal
+          }
         }
-      }
+      })
     },
     rebuild() {
       this.$nextTick(() => {
