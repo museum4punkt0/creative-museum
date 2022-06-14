@@ -29,7 +29,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         "get",
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
+//        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
+        "get",
         "patch" => [
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
             "denormalization_context" => ["groups" => ["write:me"]],
@@ -101,6 +102,9 @@ class User implements UserInterface
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["read:me"])]
     private string $email;
+
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    private $profilePicture;
 
     public function __construct()
     {
@@ -393,6 +397,18 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?MediaObject
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?MediaObject $profilePicture): self
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

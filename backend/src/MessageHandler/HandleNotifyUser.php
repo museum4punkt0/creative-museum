@@ -49,13 +49,15 @@ class HandleNotifyUser implements MessageHandlerInterface
         $winnerNotification = new Notification();
         $winnerNotification
             ->setReceiver($awarded->getWinner())
-            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} von {$awarded->getGiver()->getUserIdentifier()} erhalten");
+            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} von {$awarded->getGiver()->getUserIdentifier()} erhalten")
+            ->setColor($awarded->getAward()->getCampaign()->getColor());
         $this->entityManager->persist($winnerNotification);
 
         $giverNotification = new Notification();
         $giverNotification
             ->setReceiver($awarded->getGiver())
-            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} an {$awarded->getWinner()->getUserIdentifier()} vergeben");
+            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} an {$awarded->getWinner()->getUserIdentifier()} vergeben")
+            ->setColor($awarded->getAward()->getCampaign()->getColor());
         $this->entityManager->persist($giverNotification);
         $this->entityManager->flush();
     }

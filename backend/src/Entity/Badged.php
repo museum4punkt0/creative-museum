@@ -7,7 +7,17 @@ use App\Repository\BadgedRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BadgedRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        "get",
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
+    ],
+    itemOperations: [
+        "get",
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+    ],
+)]
 class Badged
 {
     #[ORM\Id]

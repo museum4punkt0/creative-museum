@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      id="globalHeader"
       ref="globalHeader"
       w:pos="relative"
       w:container="~"
@@ -8,7 +9,8 @@
       w:justify="between"
       w:align="items-center"
     >
-      <NuxtLink to="/">
+      <NuxtLink
+          id="pageLogo" to="/">
         <Logo
           w:text="white/50 hover:color1"
           w:h="8 md:12"

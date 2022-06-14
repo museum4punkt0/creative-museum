@@ -1,10 +1,9 @@
 <template>
   <div class="vue-card-stack__wrapper">
     <div
-      class="vue-card-stack__stack"
+      class="vue-card-stack__stack" w:p="t-10 md:t-5"
       :style="{
         height: `${cardHeight + paddingVertical * 2}px`,
-        width: containerWidth,
       }"
     >
       <div
@@ -16,7 +15,6 @@
           display: card.display,
           top: `${card.yPos}px`,
           width: `${card.width}px`,
-          height: `${card.height}px`,
           zIndex: card.zIndex,
           transition: `transform ${
             isDragging ? 0 : speed
@@ -38,7 +36,7 @@
   </div>
 </template>
 <script>
-import { debounce } from '@/utilities/debounce';
+import { debounce } from '@/utilities/debounce'
 
 export default {
   name: 'CampaignCardStack',
@@ -61,7 +59,7 @@ export default {
     },
     maxVisibleCards: {
       type: Number,
-      default: () => 6,
+      default: () => 7,
     },
     speed: {
       type: Number,
@@ -84,114 +82,147 @@ export default {
       isDragging: false,
       dragStartX: 0,
       dragStartY: 0,
-      isDraggingRight: false,
+      isDraggingNext: false,
       isMobile: false,
-      cardWidth: 500
-    };
+      cardWidth: 500,
+      containerWidth: 1920,
+      mobileYOffset: 70
+    }
   },
   computed: {
     _stackWidth() {
       if (!this.stackWidth) {
-        return this.cardWidth + this.paddingHorizontal * 2;
+        return this.cardWidth + this.paddingHorizontal * 2
       } else if (typeof this.stackWidth === "number") {
-        return this.stackWidth;
+        return this.stackWidth
       }
 
-      return this.width || this.$el.clientWidth;
+      return this.width || this.$el.clientWidth
     },
     _maxVisibleCards() {
       return this.cards.length > this.maxVisibleCards
         ? this.maxVisibleCards
-        : this.cards.length - 1;
-    },
-    containerWidth() {
-      if (!this.stackWidth) {
-        return `${this.cardWidth + this.paddingHorizontal * 2}px`;
-      } else if (typeof this.stackWidth === "number") {
-        return `${this.stackWidth}px`;
-      }
-
-      return this.stackWidth;
+        : this.cards.length - 1
     },
     elementXPosOffset() {
-      return this.$el.getBoundingClientRect().x;
+      return this.$el.getBoundingClientRect().x
+    },
+    elementYPosOffset() {
+      return 20
     },
     isTouch() {
-      return "ontouchstart" in window;
+      return "ontouchstart" in window
     },
     dragEvent() {
-      return this.isTouch ? "touchmove" : "mousemove";
+      return this.isTouch ? "touchmove" : "mousemove"
     },
     touchStartEvent() {
-      return this.isTouch ? "touchstart" : "mousedown";
+      return this.isTouch ? "touchstart" : "mousedown"
     },
     touchEndEvent() {
-      return this.isTouch ? "touchend" : "mouseup";
+      return this.isTouch ? "touchend" : "mouseup"
     },
     stackRestPoints() {
       return this.cards.map((item, index) => {
-        const offset = this.xPosOffset * index;
+        const xOffset = this.xPosOffset * index
 
         if (!index) {
-          return this.cardWidth * -1;
+          if (this.isMobile) {
+            return {
+              x: this.cardWidth * -1,
+              y: this.cardHeight * -1 + 20
+            }
+          } else {
+            return {
+              x: this.cardWidth * -1,
+              y: 0
+            }
+          }
         } else if (index === 1) {
-          return 0;
+          if (this.isMobile) {
+            return {
+              x: document.getElementById('pageLogo').getBoundingClientRect().left + this.paddingHorizontal,
+              y: this.mobileYOffset
+            }
+          } else {
+            return {
+              x: document.getElementById('pageLogo').getBoundingClientRect().left + this.paddingHorizontal,
+              y: 0
+            }
+          }
         } else {
-          return (
-            offset - this.paddingHorizontal
-          );
+          // eslint-disable-next-line no-lonely-if
+          if (this.isMobile) {
+            return {
+              x: 0,
+              y: (-10 * index) + this.mobileYOffset
+            }
+          } else {
+            return {
+              x: xOffset - this.paddingHorizontal,
+              y: 0
+            }
+          }
         }
-      });
+      })
     },
     cardDefaults() {
       return this.cards.map((card, index) => {
-        const xPos = this.stackRestPoints[index];
+        const xPos = this.stackRestPoints[index].x
+        const yPos = this.stackRestPoints[index].y
+        let isMobile = false
+        if (window.innerWidth < 768) {
+          isMobile = true
+        }
 
         return {
           opacity: index > 0 && index < this._maxVisibleCards ? 1 : 0,
           display: index < this._maxVisibleCards + 1 ? "block" : "none",
           xPos: index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset,
-          yPos: this.paddingVertical,
-          rotate: index > 0 ? Math.floor(Math.random() * ( 2.5 - -2.5 )) : 0,
+          yPos: (isMobile) ? index < this._maxVisibleCards ? this.mobileYOffset + -10 * index : yPos - this.yPosOffset + this.mobileYOffset : 0,
+          rotate: index !== 1 ? Math.floor(Math.random() * ( 2.5 - -2.5 )) : 0,
           width: this.cardWidth,
           height: this.cardHeight,
           zIndex: this.cards.length + index * -1,
           isDragging: this.isDragging
-        };
-      });
+        }
+      })
     },
     xPosOffset() {
       return (
         (this._stackWidth - this.paddingHorizontal * 2 - this.cardWidth) /
         (this._maxVisibleCards - 2)
-      );
+      )
+    },
+    yPosOffset() {
+      return 20
     },
     originalActiveCardIndex() {
       if (this.stack[this.activeCardIndex]) {
-        return this.stack[this.activeCardIndex]._index;
+        return this.stack[this.activeCardIndex]._index
       }
-
-      return 0;
+      return 0
     },
   },
   watch: {
     _maxVisibleCards: {
       handler() {
-        this.rebuild();
+        this.rebuild()
       },
     },
   },
   mounted() {
-    this.init();
-    window.addEventListener("resize", this.handleResize);
-    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart);
-    document.addEventListener(this.touchEndEvent, this.onTouchEnd);
+    this.init()
+    window.addEventListener("resize", this.handleResize)
+    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart)
+    document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
   methods: {
     init() {
-      // move bottom card to top of stack (positioned offscreen)
       // eslint-disable-next-line vue/no-mutating-props
-      this.cards.unshift(this.cards.pop());
+      this.cards.unshift(this.cards.pop())
+
+      this.containerWidth = document.getElementById('globalHeader').clientWidth
 
       this.stack = this.cards.map((card, index) => {
         return {
@@ -199,8 +230,8 @@ export default {
           _index: index,
           ...card,
           ...this.cardDefaults[index],
-        };
-      });
+        }
+      })
       if (process.client) {
         if (window.innerWidth < 768) {
           this.isMobile = true
@@ -214,67 +245,76 @@ export default {
           return {
             ...card,
             ...this.cardDefaults[index],
-          };
-        });
-      });
+          }
+        })
+      })
     },
     handleResize: debounce(function() {
-      this.width = this.$el.clientWidth;
-      this.rebuild();
+      this.width = this.$el.clientWidth
+      this.rebuild()
     }, 250),
     onNext() {
-      const cardToMoveToBottomOfStack = this.stack.shift();
-      this.stack.push(cardToMoveToBottomOfStack);
-      this.rebuild();
+      const cardToMoveToBottomOfStack = this.stack.shift()
+      this.stack.push(cardToMoveToBottomOfStack)
+      this.rebuild()
     },
     onPrevious() {
-      const cardToMoveToTopOfStack = this.stack.pop();
-      this.stack.unshift(cardToMoveToTopOfStack);
-      this.rebuild();
+      if (this.isMobile) {
+        const cardToMoveToBottomOfStack = this.stack.shift()
+        this.stack.push(cardToMoveToBottomOfStack)
+        this.rebuild()
+      }
+      const cardToMoveToTopOfStack = this.stack.pop()
+      this.stack.unshift(cardToMoveToTopOfStack)
+      this.rebuild()
     },
     updateStack() {
-      const activeCard = this.stack[this.activeCardIndex];
-      const activeCardRestPoint = this.stackRestPoints[this.activeCardIndex];
-      const distanceTravelled = activeCard.xPos - activeCardRestPoint;
+      const activeCard = this.stack[1]
+      const activeCardRestPoint = this.stackRestPoints[this.activeCardIndex]
+      const distanceTravelledX = activeCard.xPos - activeCardRestPoint.x
       const minDistanceToTravel =
-        (this.cardWidth + this.paddingHorizontal) / (1 / this.sensitivity);
+        (this.cardWidth + this.paddingHorizontal) / (1 / this.sensitivity)
 
-      this.$emit("move", 0);
+      this.$emit("move", 0)
 
-      if (this.isDraggingRight) {
-        if (distanceTravelled > minDistanceToTravel) {
-          this.onPrevious();
+      if (this.isDraggingNext) {
+        if (distanceTravelledX > minDistanceToTravel) {
+          this.onPrevious()
         } else {
-          this.rebuild();
+          this.rebuild()
         }
-      } else if (distanceTravelled * -1 > minDistanceToTravel) {
-          this.onNext();
+      } else if (distanceTravelledX * -1 > minDistanceToTravel) {
+          this.onNext()
         } else {
-          this.rebuild();
+          this.rebuild()
         }
     },
     moveStack(dragXPos) {
-      const activeCardOffset = dragXPos - this.dragStartX;
+      const activeCardOffsetX = dragXPos - this.dragStartX
+      const activeCardOffsetY = 0
 
       this.$emit(
         "move",
-        activeCardOffset / (this.cardWidth + this.paddingHorizontal)
-      );
-
-      if (this.isDraggingLeft) {
-        this.activeCardIndex = 1;
-      } else {
-        this.activeCardIndex = 0; // first card is positioned offscreen
-      }
+        activeCardOffsetX / (this.cardWidth + this.paddingHorizontal)
+      )
 
       this.stack = this.stack.map((card, index) => {
-        const isActiveCard = index === this.activeCardIndex;
+        const isActiveCard = index === this.activeCardIndex
+        let yPos
         const xPos = isActiveCard
-          ? this.cardDefaults[index].xPos + activeCardOffset
+          ? this.cardDefaults[index].xPos + activeCardOffsetX
           : this.cardDefaults[index].xPos +
             (this.xPosOffset / (this.cardWidth + this.paddingHorizontal)) *
-              activeCardOffset;
-
+              activeCardOffsetX
+        if (this.isMobile) {
+          yPos = isActiveCard
+            ? this.cardDefaults[index].yPos + activeCardOffsetY
+            : this.cardDefaults[index].yPos +
+              (this.yPosOffset / (this.cardWidth + this.paddingVertical)) *
+                activeCardOffsetY
+        } else {
+          yPos = card.yPos
+        }
         const rotate = isActiveCard
           ? '0'
           : Math.floor(Math.random() * ( 2.5 - -2.5 ))
@@ -283,43 +323,44 @@ export default {
           ...card,
           ...this.cardDefaults[index],
           xPos,
+          yPos,
           rotate,
           opacity:
-            index === 0 && !this.isDraggingRight
+            index === 0 && !this.isDraggingNext
               ? 1
               : this.cardDefaults[index].opacity,
-        };
-      });
+        }
+      })
     },
     getDragXPos(e) {
-      return this.isTouch ? e.touches[0].clientX : e.clientX;
+      return this.isTouch ? e.touches[0].clientX : e.clientX
     },
     getDragYPos(e) {
-      return this.isTouch ? e.touches[0].clientY : e.clientY;
+      return this.isTouch ? e.touches[0].clientY : e.clientY
     },
     onTouchStart(e) {
-      this.isDragging = true;
-      this.dragStartX = this.getDragXPos(e) - this.elementXPosOffset;
-      this.dragStartY = this.getDragYPos(e);
+      this.isDragging = true
+      this.dragStartX = this.getDragXPos(e) - this.elementXPosOffset
+      this.dragStartY = this.getDragYPos(e) - this.elementYPosOffset
 
-      document.addEventListener(this.dragEvent, this.onDrag);
+      document.addEventListener(this.dragEvent, this.onDrag)
     },
     onTouchEnd() {
-      this.isDragging = false;
-      this.dragStartX = 0;
-      this.dragStartY = 0;
+      this.isDragging = false
+      this.dragStartX = 0
+      this.dragStartY = 0
 
-      document.removeEventListener(this.dragEvent, this.onDrag);
-      this.updateStack();
+      document.removeEventListener(this.dragEvent, this.onDrag)
+      this.updateStack()
     },
     onDrag(e) {
-      const dragXPos = this.getDragXPos(e) - this.elementXPosOffset;
+      const dragXPos = this.getDragXPos(e) - this.elementXPosOffset
 
-      this.isDraggingRight = dragXPos > this.dragStartX;
-      this.moveStack(dragXPos);
+      this.isDraggingNext = dragXPos > this.dragStartX
+      this.moveStack(dragXPos)
     },
   },
-};
+}
 </script>
 <style scoped>
 .vue-card-stack__wrapper {
@@ -333,7 +374,7 @@ export default {
 
 .vue-card-stack__card {
   position: absolute;
-  transform-origin: 0 50%;
+  transform-origin: 50% 50%;
   cursor: grab;
 }
 </style>

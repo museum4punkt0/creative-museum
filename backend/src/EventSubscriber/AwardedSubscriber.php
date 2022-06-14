@@ -4,9 +4,11 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Awarded;
+use App\Event\CampaignPointsReceivedEvent;
 use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -24,10 +26,17 @@ class AwardedSubscriber implements EventSubscriberInterface
 
     private EntityManagerInterface $entityManager;
 
-    public function __construct(CampaignMemberRepository $campaignMemberRepository, EntityManagerInterface $entityManager)
+    private EventDispatcherInterface $eventDispatcher;
+
+    public function __construct(
+        CampaignMemberRepository $campaignMemberRepository,
+        EntityManagerInterface   $entityManager,
+        EventDispatcherInterface $eventDispatcher
+    )
     {
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -66,6 +75,12 @@ class AwardedSubscriber implements EventSubscriberInterface
 
         $this->entityManager->persist($awardGiver);
 
+        $giverPointsEvent = new CampaignPointsReceivedEvent(
+            $awarded->getAward()->getCampaign()->getId(),
+            $awardGiver->getUser()->getId()
+        );
+        $this->eventDispatcher->dispatch($giverPointsEvent, CampaignPointsReceivedEvent::NAME);
+
         $awardWinner = $this->campaignMemberRepository->findOneBy([
             'user' => $awarded->getWinner()->getId(),
             'campaign' => $awarded->getAward()->getCampaign()->getId()
@@ -76,5 +91,11 @@ class AwardedSubscriber implements EventSubscriberInterface
 
         $this->entityManager->persist($awardWinner);
         $this->entityManager->flush();
+
+        $winnerPointsEvent = new CampaignPointsReceivedEvent(
+            $awarded->getAward()->getCampaign()->getId(),
+            $awardWinner->getUser()->getId()
+        );
+        $this->eventDispatcher->dispatch($winnerPointsEvent, CampaignPointsReceivedEvent::NAME);
     }
 }

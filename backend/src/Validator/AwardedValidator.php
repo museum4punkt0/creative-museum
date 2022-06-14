@@ -32,20 +32,29 @@ final class AwardedValidator extends ConstraintValidator
             return;
         }
 
+        $continue = true;
+
         /**
          * @var Awarded $value
          * @var \App\Validator\Constraints\Awarded $constraint
          */
         if (!$this->isCampaignMember($value->getAward()->getCampaign(),$value->getGiver())){
             $this->context->buildViolation($constraint->giverNotCampaignMember)->addViolation();
+            $continue = false;
         }
 
         if (!$this->isCampaignMember($value->getAward()->getCampaign(),$value->getWinner())){
             $this->context->buildViolation($constraint->receiverNotCampaignMember)->addViolation();
+            $continue = false;
+        }
+
+        if (!$continue){
+            return;
         }
 
         if ($value->getAward()->getPrice() > $this->getCampaignScore($value->getAward()->getCampaign(),$value->getGiver())){
             $this->context->buildViolation($constraint->notEnoughPoints)->addViolation();
+            return;
         }
 
         if ($this->hasAlreadyAwarded($value->getAward(),$value->getGiver())){

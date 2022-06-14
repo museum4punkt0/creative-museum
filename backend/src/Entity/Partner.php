@@ -37,6 +37,9 @@ class Partner
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]
     private $campaign;
 
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    private $logo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Partner
     public function setCampaign(?Campaign $campaign): self
     {
         $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    public function getLogo(): ?MediaObject
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?MediaObject $logo): self
+    {
+        $this->logo = $logo;
 
         return $this;
     }
