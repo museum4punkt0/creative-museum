@@ -38,7 +38,6 @@ return [
         ],
         'creativemuseum' => [
             'baseUrl' => '',
-            'cilendId' => '',
             'cilentId' => '',
             'clientSecret' => '',
             'tokenUrl' => '',

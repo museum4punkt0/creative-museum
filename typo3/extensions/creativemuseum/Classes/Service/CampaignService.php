@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Service;
 
-use TYPO3\CMS\Core\SingletonInterface;
-
-class CampaignService implements SingletonInterface
+class CampaignService extends CmApiService
 {
+    const ENDPOINT = 'campaigns';
 
-    private function getBackendUser()
+    public function getCampaigns()
     {
-        return $GLOBALS['BE_USER'];
+
     }
 }
