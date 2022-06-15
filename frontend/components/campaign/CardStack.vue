@@ -1,23 +1,29 @@
 <template>
   <div class="vue-card-stack__wrapper">
     <div
-      class="vue-card-stack__stack" w:p="t-10 md:t-5" w:h="2xl lg:4xl"
+      class="vue-card-stack__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl"
     >
       <div
         ref="card"
         v-for="(card, index) in stack"
         :key="card._id"
         class="vue-card-stack__card"
+        w:select="none"
+        w:pos="absolute"
+        w:transform="origin-center"
+        :w:z-index="card.zIndex"
         :style="{
           opacity: card.opacity,
           display: card.display,
           top: `${card.yPos}px`,
           width: `${card.width}px`,
           zIndex: card.zIndex,
+          top: `${card.yPos}px`,
+          width: `${card.width}px`,
+          cursor: 'grab',
           transition: `transform ${
             isDragging ? 0 : speed
           }s ease,   ${speed}s ease`,
-          'transform-origin': 'center center',
           transform: `
             rotate(${card.rotate}deg)
             translate(${card.xPos}px, 0)
@@ -124,7 +130,7 @@ export default {
             }
           } else {
             return {
-              x: this.cardWidth * -1,
+              x: (this.cardWidth - 100) * -1,
               y: 0
             }
           }
@@ -166,13 +172,13 @@ export default {
         }
 
         return {
-          opacity: index > 0 && index < this._maxVisibleCards ? 1 : 0,
+          opacity: 1,
           display: index < this._maxVisibleCards + 1 ? "block" : "none",
           xPos: (!isMobile) ? index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset : 0,
-          yPos: (isMobile) ? index < this._maxVisibleCards ? this.mobileYOffset + -10 * index : yPos - this.yPosOffset + this.mobileYOffset : 0,
-          rotate: index !== 1 ? Math.floor(Math.random() * ( 2.5 - -2.5 )) : 0,
-          width: isMobile ? window.innerWidth - this.paddingHorizontal : this.cardWidth,
-          zIndex: index !== 0 ? this.cards.length + index * -1 : -1,
+          yPos: (isMobile) ? index < this._maxVisibleCards ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
+          rotate: index !== 1 ? Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
+          width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
+          zIndex: index !== 0 ? this.cards.length + index * -1 : 0,
           isDragging: this.isDragging
         }
       })
@@ -308,7 +314,7 @@ export default {
         }
         const rotate = isActiveCard
           ? '0'
-          : Math.floor(Math.random() * ( 2.5 - -2.5 ))
+          : Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1)
 
         return {
           ...card,
@@ -363,9 +369,4 @@ export default {
   overflow: hidden;
 }
 
-.vue-card-stack__card {
-  position: absolute;
-  transform-origin: 50% 50%;
-  cursor: grab;
-}
 </style>
