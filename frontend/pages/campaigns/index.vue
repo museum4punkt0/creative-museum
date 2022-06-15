@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div v-if="campaigns" class="px-container-padding" >
-      <CampaignCardStack :cards="campaigns">
-        <template #card="{ card }">
-          <CampaignItem :campaign="card" />
-        </template>
-      </CampaignCardStack>
+    <div v-if="campaigns.length > 0" class="px-container-padding" >
+      <CampaignCardStack :cards="campaigns" />
     </div>
     <div v-else>
       No Campaigns

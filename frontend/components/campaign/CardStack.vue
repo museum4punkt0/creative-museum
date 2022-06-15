@@ -4,8 +4,8 @@
       class="vue-card-stack__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl"
     >
       <div
-        ref="card"
         v-for="(card, index) in stack"
+        ref="card"
         :key="card._id"
         class="vue-card-stack__card"
         w:select="none"
@@ -30,7 +30,7 @@
           `,
         }"
       >
-        <slot :card="{ ...card, $index: index }" name="card"></slot>
+        <CampaignItem :campaign="card" />
       </div>
     </div>
   </div>
@@ -174,11 +174,11 @@ export default {
         return {
           opacity: 1,
           display: index < this._maxVisibleCards + 1 ? "block" : "none",
-          xPos: (!isMobile) ? index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset : 0,
-          yPos: (isMobile) ? index < this._maxVisibleCards ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
+          xPos: !isMobile ? index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset : 0,
+          yPos: isMobile ? index < this._maxVisibleCards ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
           rotate: index !== 1 ? Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
           width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
-          zIndex: index !== 0 ? this.cards.length + index * -1 : 0,
+          zIndex: index !== 0 ? this.cards.length + index * -1 : isMobile ? 0 : this._maxVisibleCards,
           isDragging: this.isDragging
         }
       })
