@@ -30,7 +30,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
         "post" => [
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user",
-            "denormalization_context" => ["groups" => ["write:post"]]
+            "denormalization_context" => ["groups" => ["write:post"]],
+            "normalization_context" => ["groups" => ["read:post"]]
             ],
     ],
     itemOperations: [
@@ -83,7 +84,8 @@ class Post
     #[Assert\Valid]
     private $pollOptions;
 
-    #[ORM\ManyToOne(targetEntity: self::class)]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(["write:post", "read:post"])]
     private $parent;
 
@@ -101,7 +103,12 @@ class Post
     private $question;
 
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
+    #[Groups(["write:post", "read:post"])]
     private $files;
+
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[Groups(["write:post", "read:post"])]
+    private $comments;
 
     public function __construct()
     {
@@ -110,6 +117,7 @@ class Post
         $this->partners = new ArrayCollection();
         $this->playlist = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -354,6 +362,33 @@ class Post
     public function removeFile(MediaObject $file): self
     {
         $this->files->removeElement($file);
+
+        return $this;
+    }
+
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(self $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(self $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getParent() === $this) {
+                $comment->setParent(null);
+            }
+        }
 
         return $this;
     }
