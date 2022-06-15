@@ -80,7 +80,7 @@ export default {
       dragStartY: 0,
       isDraggingNext: false,
       isMobile: false,
-      cardWidth: 700,
+      cardWidth: 650,
       containerWidth: 1920,
       mobileYOffset: 70
     }

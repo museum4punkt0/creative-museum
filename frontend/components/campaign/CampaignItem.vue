@@ -8,7 +8,7 @@
     :style="`background-color: ${campaign.color}`"
   >
 
-      <article :w:text="textColor">
+      <article w:flex="~ col" w:h="full" :w:text="textColor">
         <header>
           <div
             w:text="right"
@@ -23,17 +23,24 @@
               </template>
             </span>
           </div>
-          <h1 v-if="campaign.title" w:text="xl lg:xxl" >
+          <h1
+            v-if="campaign.title"
+            w:m="y-4"
+            w:text="xl lg:xxl"
+          >
             <NuxtLink
               :to="`/campaigns/${campaign.id}`"
             >
               {{ campaign.title }}
             </NuxtLink>
           </h1>
-          <div v-if="campaign.description">
-            {{ campaign.description }}
-          </div>
         </header>
+        <div v-if="campaign.description">
+          {{ campaign.description }}
+        </div>
+        <footer w:m="t-auto">
+          {{ $t('campaign.partner')}}
+        </footer>
       </article>
   </div>
 </template>
