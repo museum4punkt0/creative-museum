@@ -13,8 +13,6 @@
         w:transform="origin-center"
         :w:z-index="card.zIndex"
         :style="{
-          opacity: card.opacity,
-          display: card.display,
           top: `${card.yPos}px`,
           width: `${card.width}px`,
           zIndex: card.zIndex,
@@ -55,7 +53,7 @@ export default {
     },
     maxVisibleCards: {
       type: Number,
-      default: () => 7,
+      default: () => 6,
     },
     speed: {
       type: Number,
@@ -81,7 +79,6 @@ export default {
       isDraggingNext: false,
       isMobile: false,
       cardWidth: 650,
-      containerWidth: 1920,
       mobileYOffset: 70
     }
   },
@@ -120,7 +117,8 @@ export default {
     },
     stackRestPoints() {
       return this.cards.map((item, index) => {
-        const xOffset = this.xPosOffset * index
+        const xOffset = document.getElementById('pageLogo').getBoundingClientRect().left + (((this.cardWidth / 2) - 100) * (index
+         - 1))
 
         if (!index) {
           if (this.isMobile) {
@@ -155,7 +153,7 @@ export default {
             }
           } else {
             return {
-              x: xOffset - this.paddingHorizontal,
+              x: xOffset,
               y: 0
             }
           }
@@ -172,13 +170,11 @@ export default {
         }
 
         return {
-          opacity: 1,
-          display: index < this._maxVisibleCards + 1 ? "block" : "none",
-          xPos: !isMobile ? index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset : 0,
+          xPos: !isMobile ? index < this._maxVisibleCards ? xPos : document.getElementById('pageLogo').getBoundingClientRect().left + (this.cardWidth * (index - 1)) : 0,
           yPos: isMobile ? index < this._maxVisibleCards ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
           rotate: index !== 1 ? Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
           width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
-          zIndex: index !== 0 ? this.cards.length + index * -1 : isMobile ? 0 : this._maxVisibleCards,
+          zIndex: index !== 0 ? this.cards.length + index * -1 : this.isDraggingNext ? isMobile ? 0 : this._maxVisibleCards : 0,
           isDragging: this.isDragging
         }
       })
@@ -217,8 +213,6 @@ export default {
       // eslint-disable-next-line vue/no-mutating-props
       this.cards.unshift(this.cards.pop())
 
-      this.containerWidth = document.getElementById('globalHeader').clientWidth
-
       this.stack = this.cards.map((card, index) => {
         return {
           _id: new Date().getTime() + index,
@@ -256,11 +250,6 @@ export default {
       this.rebuild()
     },
     onPrevious() {
-      if (this.isMobile) {
-        const cardToMoveToBottomOfStack = this.stack.shift()
-        this.stack.push(cardToMoveToBottomOfStack)
-        this.rebuild()
-      }
       const cardToMoveToTopOfStack = this.stack.pop()
       this.stack.unshift(cardToMoveToTopOfStack)
       this.rebuild()
