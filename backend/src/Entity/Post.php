@@ -5,7 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use App\Controller\GetComments;
+use App\Controller\GetCommentsController;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
 use App\Validator\Constraints\PollType;
@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             "method" => "GET",
             "path" => "/posts/{id}/comments",
             "requirements" => ["id" => "\d+"],
-            "controller" => GetComments::class
+            "controller" => GetCommentsController::class
         ]
     ],
     itemOperations: [

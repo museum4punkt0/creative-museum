@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class GetComments extends AbstractController
+class GetCommentsController extends AbstractController
 {
     private PostRepository $postRepository;
 
@@ -15,10 +14,18 @@ class GetComments extends AbstractController
         $this->postRepository = $postRepository;
     }
 
+    /**
+     * @param int $id
+     * @return array|\Doctrine\Common\Collections\Collection
+     */
     public function __invoke(int $id)
     {
         $post = $this->postRepository->find($id);
 
-        return $post->getComments();
+        if ($post) {
+            return $post->getComments();
+        }
+
+        return [];
     }
 }
