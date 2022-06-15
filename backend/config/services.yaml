@@ -36,3 +36,6 @@ services:
         autowire: false
         autoconfigure: false
         public: false
+    App\QueryExtension\PostCollectionQueryExtension:
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }

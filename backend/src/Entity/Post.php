@@ -33,6 +33,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             "denormalization_context" => ["groups" => ["write:post"]],
             "normalization_context" => ["groups" => ["read:post"]]
             ],
+        "getComments" => [
+            "path" => "/posts/{id}/comments",
+
+        ]
     ],
     itemOperations: [
         "get" => [
@@ -41,6 +45,9 @@ use Symfony\Component\Validator\Constraints as Assert;
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
     ],
+    attributes: [
+        "pagination_items_per_page" => 5
+    ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
 #[ORM\HasLifecycleCallbacks]
