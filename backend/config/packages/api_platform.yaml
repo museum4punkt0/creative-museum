@@ -11,6 +11,4 @@ api_platform:
                 type: header
     eager_loading:
         max_joins: 10
-    defaults:
-        pagination_items_per_page: 5
 
