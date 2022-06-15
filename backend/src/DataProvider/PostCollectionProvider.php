@@ -4,10 +4,11 @@ namespace App\DataProvider;
 
 
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
+use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 
-final class PostCollectionProvider implements ContextAwareCollectionDataProviderInterface
+final class PostCollectionProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     private PostRepository $postRepository;
 
@@ -26,5 +27,6 @@ final class PostCollectionProvider implements ContextAwareCollectionDataProvider
         return $this->postRepository->findBy([
             'parent' => null
         ]);
+
     }
 }
