@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\GetCommentsController;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
 use App\Validator\Constraints\PollType;
@@ -33,9 +34,11 @@ use Symfony\Component\Validator\Constraints as Assert;
             "denormalization_context" => ["groups" => ["write:post"]],
             "normalization_context" => ["groups" => ["read:post"]]
             ],
-        "getComments" => [
+        "get_comments" => [
+            "method" => "GET",
             "path" => "/posts/{id}/comments",
-
+            "requirements" => ["id" => "\d+"],
+            "controller" => GetCommentsController::class
         ]
     ],
     itemOperations: [
@@ -43,10 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             "normalization_context" => ["groups" => ["read:post"]]
         ],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
-    ],
-    attributes: [
-        "pagination_items_per_page" => 5
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
@@ -78,12 +78,15 @@ class Post
     private $body;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write:post", "read:post"])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write:post", "read:post"])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write:post", "read:post"])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
