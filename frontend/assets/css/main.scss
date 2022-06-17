@@ -78,6 +78,20 @@
     border-radius: 16px;
   }
 
+  .box-shadow-mobile {
+    @media (max-width: 1023px) {
+      box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35), -3px -3px 8px rgba(100, 100, 100, 0.4);
+      border-radius: 16px;
+    }
+  }
+
+  .modal {
+    @media (min-width: 1024px) {
+      @apply bg-grey;
+      box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35), -3px -3px 8px rgba(100, 100, 100, 0.4);
+    }
+  }
+
   .input-text {
     box-shadow: inset -3px -3px 8px rgba(100, 100, 100, 0.4), inset 3px 3px 8px rgba(0, 0, 0, 0.4);
     @apply block w-full p-2 rounded-full bg-grey;
