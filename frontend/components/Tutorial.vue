@@ -93,7 +93,7 @@
       >
         <button class="btn-primary" w:m="b-3"  @click.prevent="goNext()"> {{ $t('next') }}</button>
         <button v-if="step > 1" class="btn-outline" w:m="b-3" @click.prevent="goPrev()"> {{ $t('prev') }}</button>
-        <button class="btn-outline" @click.prevent="goNext(true)"> {{ $t('tutorial.skipTutorial') }}</button>
+        <button class="btn-outline" @click.prevent="finish()"> {{ $t('tutorial.skipTutorial') }}</button>
       </div>
     </div>
   </div>
