@@ -2,7 +2,7 @@
   <div>
     <div v-if="campaign">
       <CampaignHead :campaign="campaign" />
-      <div v-if="posts.length > 0">
+      <div v-if="posts">
         <PostItem
           v-for="(post, key) in posts"
           :key="key"
@@ -36,7 +36,7 @@ export default defineComponent({
     const { fetchPostsByCampaign } = postApi()
 
     let campaign = null
-    let posts = []
+    let posts = null
 
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
