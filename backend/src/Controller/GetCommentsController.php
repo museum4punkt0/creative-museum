@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GetCommentsController extends AbstractController
 {
+    /**
+     * @var PostRepository
+     */
     private PostRepository $postRepository;
 
     public function __construct(PostRepository $postRepository)
