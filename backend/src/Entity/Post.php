@@ -126,6 +126,10 @@ class Post
     #[Groups(["write:post", "read:post"])]
     private $files;
 
+    #[ORM\Column(type: 'integer')]
+    #[Groups(["read:post"])]
+    private $commentCount = 0;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -406,6 +410,24 @@ class Post
     {
         $this->files->removeElement($file);
 
+        return $this;
+    }
+
+    public function getCommentCount(): ?int
+    {
+        return $this->commentCount;
+    }
+
+    public function setCommentCount(int $commentCount): self
+    {
+        $this->commentCount = $commentCount;
+
+        return $this;
+    }
+
+    public function increaseCommentCount(): self
+    {
+        $this->commentCount++;
         return $this;
     }
 }

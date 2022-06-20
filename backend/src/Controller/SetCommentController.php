@@ -12,17 +12,16 @@ class SetCommentController extends AbstractController
     /**
      * @var PostRepository
      */
-    private EntityManagerInterface $entityManager;
+    private PostRepository $postRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(PostRepository $postRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
     }
 
     public function __invoke(Post $data): Post
     {
-        $this->entityManager->persist($data);
-        $this->entityManager->flush();
+        $this->postRepository->add($data);
 
         return $data;
     }
