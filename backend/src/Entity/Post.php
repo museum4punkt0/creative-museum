@@ -44,7 +44,8 @@ use Symfony\Component\Validator\Constraints as Assert;
             "method" => "POST",
             "path" => "/posts/{id}/comment",
             "requirements" => ["id" => "\d+", "comment" => "array"],
-            "controller" => SetCommentController::class
+            "controller" => SetCommentController::class,
+            'normalization_context' => ['groups' => 'write:comment'],
         ],
     ],
     itemOperations: [
@@ -72,7 +73,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
@@ -80,19 +81,19 @@ class Post
     private PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $body;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
@@ -102,7 +103,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["write:post"])]
+    #[Groups(["write:comment"])]
     private $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
@@ -110,7 +111,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $campaign;
 
     #[ORM\ManyToMany(targetEntity: Playlist::class)]
