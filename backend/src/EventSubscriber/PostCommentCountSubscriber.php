@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Post;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -14,13 +15,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class PostCommentCountSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var PostRepository
      */
-    private EntityManagerInterface $entityManager;
+    private PostRepository $postRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(PostRepository $postRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -43,8 +44,7 @@ class PostCommentCountSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->entityManager->persist($post->getParent()->increaseCommentCount());
-        $this->entityManager->flush();
+        $this->postRepository->increaseCommentCount($post);
     }
 
     private function isComment(Post $post): bool
