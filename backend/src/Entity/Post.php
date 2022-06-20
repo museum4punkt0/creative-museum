@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\GetCommentsController;
+use App\Controller\SetCommentController;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
 use App\Validator\Constraints\PollType;
@@ -16,7 +17,6 @@ use App\Validator\Constraints\PlaylistType;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Secured resource.
@@ -39,7 +39,13 @@ use Symfony\Component\Validator\Constraints as Assert;
             "path" => "/posts/{id}/comments",
             "requirements" => ["id" => "\d+"],
             "controller" => GetCommentsController::class
-        ]
+        ],
+        "post_comment" => [
+            "method" => "POST",
+            "path" => "/posts/{id}/comment",
+            "requirements" => ["id" => "\d+", "comment" => "array"],
+            "controller" => SetCommentController::class
+        ],
     ],
     itemOperations: [
         "get" => [
@@ -96,8 +102,11 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post"])]
     private $parent;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private $comments;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
@@ -115,10 +124,6 @@ class Post
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
     #[Groups(["write:post", "read:post"])]
     private $files;
-
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
-    #[Groups(["write:post", "read:post"])]
-    private $comments;
 
     public function __construct()
     {
@@ -304,6 +309,33 @@ class Post
         return $this;
     }
 
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(self $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(self $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getParent() === $this) {
+                $comment->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getCampaign(): ?Campaign
     {
         return $this->campaign;
@@ -372,33 +404,6 @@ class Post
     public function removeFile(MediaObject $file): self
     {
         $this->files->removeElement($file);
-
-        return $this;
-    }
-
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(self $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(self $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getParent() === $this) {
-                $comment->setParent(null);
-            }
-        }
 
         return $this;
     }
