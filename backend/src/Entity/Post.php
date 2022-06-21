@@ -130,6 +130,10 @@ class Post
     #[Groups(["read:post"])]
     private $commentCount = 0;
 
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(["write:post", "read:post"])]
+    private $blocked = false;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -428,6 +432,18 @@ class Post
     public function increaseCommentCount(): self
     {
         $this->commentCount++;
+        return $this;
+    }
+
+    public function getBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
+
         return $this;
     }
 }
