@@ -4,6 +4,8 @@ namespace App\MessageHandler;
 
 use App\Entity\Notification;
 use App\Entity\Post;
+use App\Entity\User;
+use App\Enum\NotificationType;
 use App\Message\NotifyCampaignMembersAboutNewPost;
 use App\Repository\CampaignMemberRepository;
 use App\Repository\PostRepository;
@@ -19,9 +21,9 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        PostRepository      $postRepository,
+        PostRepository           $postRepository,
         CampaignMemberRepository $campaignMemberRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface   $entityManager
     )
     {
         $this->postRepository = $postRepository;
@@ -61,9 +63,15 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
                 ->setReceiver($campaignMember->getUser())
                 ->setText("Neuer Post in der Kampange {$post->getCampaign()->getTitle()} von {$campaignMember->getUser()->getUserIdentifier()}")
                 ->setPost($post)
-                ->setColor($campaignColor);
+                ->setColor($campaignColor)
+                ->setSilent($campaignMember->getUser()->getNotificationSettings() === NotificationType::NONE);
             $this->entityManager->persist($notification);
             $this->entityManager->flush();
         }
+    }
+
+    private function isSilentNotification(User $user): bool
+    {
+        return $user->getNotificationSettings() === NotificationType::NONE;
     }
 }
