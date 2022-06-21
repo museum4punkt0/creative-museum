@@ -82,6 +82,7 @@ class Post
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(["write:post", "read:post","write:comment"])]
+    #[Assert\Length(max: 1000)]
     private $body;
 
     #[ORM\Column(type: 'integer')]
