@@ -1,0 +1,102 @@
+
+<f:form action="{action}" controller="Administration" method="POST" id="campaign-create" name="campaign-create" object="{campaignDto}" objectName="campaignDto">
+    <f:if condition="{action} == 'updateCampaign'">
+        <f:form.hidden property="id" />
+    </f:if>
+
+    <div class="form-group">
+        <div class="form-section">
+            <div class="form-group">
+                <label for="campaign-title">Titel der Kampagne</label>
+                <div class="form-control-wrap">
+                    <div class="input-group">
+                        <f:form.textfield
+                                property="title"
+                                class="form-control"
+                                id="campaign-title" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="row">
+                <div class="form-group col col-sm-6">
+                    <label for="campaign-start">Beginn der Kampagne</label>
+                    <div class="form-control-wrap">
+                        <div class="form-wizards-wrap">
+                            <div class="form-wizards-element">
+                                <div class="input-group">
+                                    <div class="form-control-clearable">
+                                        <f:form.textfield
+                                                property="start"
+                                                class="form-control t3js-datetimepicker t3js-clearable"
+                                                id="campaign-start"
+                                                data="{date-type: 'datetime', date-offset: '0'}"
+                                                value="{f:format.date(date: campaignDto.start, format: 'H:i d-m-Y')}" />
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <label class="btn btn-default" for="campaign-start">
+                                            <span class="fa fa-calendar"></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col col-sm-6">
+                    <label for="campaign-stop">Ende der Kampagne</label>
+                    <div class="form-control-wrap">
+                        <div class="form-wizards-wrap">
+                            <div class="form-wizards-element">
+                                <div class="input-group">
+                                    <div class="form-control-clearable">
+                                        <f:form.textfield
+                                                property="stop"
+                                                class="form-control t3js-datetimepicker t3js-clearable"
+                                                id="campaign-stop"
+                                                data="{date-type: 'datetime', date-offset: '0'}"
+                                                value="{f:format.date(date: campaignDto.stop, format: 'H:i d-m-Y')}" />
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <label class="btn btn-default" for="campaign-stop">
+                                            <span class="fa fa-calendar"></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <label for="campaign-shortdescription">Kurzbeschreibung</label>
+                <div class="form-control-wrap">
+                    <f:form.textarea class="form-control" property="shortDesc" id="campaign-shortdescription"></f:form.textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <label for="campaign-description">Beschreibung</label>
+                <div class="form-control-wrap">
+                    <f:form.textarea class="form-control" property="description" id="campaign-description"></f:form.textarea>
+                </div>
+            </div>
+        </div>
+
+        <h2>Badges</h2>
+
+        <div class="t3js-badges-container">
+            <f:for each="{campaignDto.badges}" as="badge" iteration="iterator">
+                <f:render partial="Campaigns/BadgeForm" arguments="{badge: badge, iterator: iterator}" />
+            </f:for>
+        </div>
+
+    </div>
+</f:form>

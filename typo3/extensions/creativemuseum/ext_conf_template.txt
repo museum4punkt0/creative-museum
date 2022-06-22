@@ -2,7 +2,7 @@
 tokenUrl =
 
 # cat=API; type=string; label=Client Identifier
-cilentId =
+clientId =
 
 # cat=API; type=string; label=Client Secret
 clientSecret =

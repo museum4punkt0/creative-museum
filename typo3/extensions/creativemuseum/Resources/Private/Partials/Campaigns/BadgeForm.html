@@ -1,0 +1,47 @@
+<div
+        class="form-section t3js-item-container mb-3 t3js-iterable t3js-badge-item-{iterator.index}"
+        data-template="t3js-badge-item-[i]"
+        data-iteration-target="class"
+>
+    <h4 class="t3js-iterable" data-template="Badge #[i]" data-iteration-target="value">Badge #{iterator.cycle}</h4>
+    <div class="form-group">
+        <f:form.hidden
+                property="badges.{iterator.index}.id"
+                class="t3js-iterable"
+                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][id]', iteration-target: 'name'}"
+        />
+        <label
+                for="campaign-badge-{iterator.index}-title"
+                class="campaign-badge-title t3js-iterable"
+                data-template="campaign-badge-[i]-title"
+                data-iteration-target="for"
+        >
+            Titel
+        </label>
+        <div class="form-control-wrap">
+            <f:form.textfield
+                    class="form-control t3js-iterable"
+                    property="badges.{iterator.index}.title"
+                    id="campaign-badge-{iterator.index}-title"
+                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][title]', iteration-target: 'name'}"
+            ></f:form.textfield>
+        </div>
+    </div>
+    <div class="form-group">
+        <label
+                for="campaign-badge-{iterator.index}-description"
+                class="campaign-badge-description t3js-iterable"
+                data-template="campaign-badge-[i]-description"
+                data-iteration-target="for">
+            Beschreibung
+        </label>
+        <div class="form-control-wrap">
+            <f:form.textfield
+                    class="form-control t3js-iterable"
+                    property="badges.{iterator.index}.description"
+                    id="campaign-badge-{iterator.index}-description"
+                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][description]', iteration-target: 'name'}"
+            ></f:form.textfield>
+        </div>
+    </div>
+</div>

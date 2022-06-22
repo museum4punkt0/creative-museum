@@ -1,0 +1,45 @@
+<tr class="t3js-entity" data-l10nparent="0" data-table="be_groups" data-uid="1" title="id=1">
+    <td class="col-title col-responsive nowrap">
+        <a aria-label="Kampagne editieren" data-bs-original-title="Kampagne editieren"
+           href="{f:uri.action(action: 'editCampaign', arguments: '{campaignDto: row.id}')}" title="">
+            {row.title}
+        </a>
+    </td>
+    <td class="col-shortdesc nowrap">
+        {row.shortDescription}
+    </td>
+    <td class="col-start">
+        <f:format.date format="d.m.Y - H:i">{row.start}</f:format.date>
+    </td>
+    <td class="col-end">
+        <f:format.date format="d.m.Y - H:i">{row.stop}</f:format.date>
+    </td>
+    <td class="col-control nowrap">
+        <div class="btn-group">
+            <f:link.action action="editCampaign" arguments="{campaignDto: row.id}" class="btn btn-default">
+                <core:icon identifier="actions-open" size="small" />
+            </f:link.action>
+            <a
+                    class="btn btn-default"
+                    href="{f:uri.action(action: '{f:if(condition: row.active, then: \'hideCampaign\', else: \'unhideCampaign\')}', arguments:{campaignDto: row.id})}"
+            >
+                <f:if condition="{row.active}">
+                    <f:then>
+                        <core:icon identifier="actions-edit-hide" size="small" />
+                    </f:then>
+                    <f:else>
+                        <core:icon identifier="actions-edit-unhide" size="small" />
+                    </f:else>
+                </f:if>
+            </a>
+            <button aria-haspopup="dialog" aria-label="Kampagne löschen"
+                class="btn btn-default t3js-record-delete"
+                data-button-ok-text="Kampagne löschen" data-l10parent=""
+                data-message="Bist du dir sicher, dass du die Kampagne '{row.title}' löschen möchtest?"
+                data-link="{f:uri.action(action: 'deleteCampaign', arguments:{campaignDto: row.id})}" title="Kampagne löschen"
+                type="button">
+                <core:icon identifier="actions-edit-delete" size="small" />
+            </button>
+        </div>
+    </td>
+</tr>
