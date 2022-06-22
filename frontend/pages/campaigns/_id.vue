@@ -1,22 +1,31 @@
 <template>
   <div>
-    <div v-if="campaign">
-      <CampaignHead :campaign="campaign" />
-      <div v-if="posts">
-        <PostItem
-          v-for="(post, key) in posts"
-          :key="key"
-          :post="post"
-        />
+    <div w:grid="~ cols-1 lg:cols-12">
+      <div w:display="hidden lg:block" w:grid="col-span-3">
+        Sidebar Left
       </div>
-      <div v-else>
-        No Posts
+      <div w:grid="lg:col-span-6">
+        <div v-if="campaign">
+          <CampaignHead :campaign="campaign" />
+          <div v-if="posts">
+            <PostItem
+              v-for="(post, key) in posts"
+              :key="key"
+              :post="post"
+            />
+          </div>
+          <div v-else>
+            No Posts
+          </div>
+        </div>
+        <div v-else>
+          No Campaign found
+        </div>
+      </div>
+      <div w:display="hidden lg:block" w:grid="col-span-3">
+        Sidebar Right
       </div>
     </div>
-    <div v-else>
-      No Campaign found
-    </div>
-
   </div>
 </template>
 
