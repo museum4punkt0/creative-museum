@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\GetCommentsController;
 use App\Controller\SetCommentController;
@@ -34,18 +35,20 @@ use Symfony\Component\Validator\Constraints as Assert;
             "denormalization_context" => ["groups" => ["write:post"]],
             "normalization_context" => ["groups" => ["read:post"]]
             ],
-        "get_comments" => [
-            "method" => "GET",
-            "path" => "/posts/{id}/comments",
-            "requirements" => ["id" => "\d+"],
-            "controller" => GetCommentsController::class
-        ],
         "post_comment" => [
             "method" => "POST",
             "path" => "/posts/{id}/comment",
             "requirements" => ["id" => "\d+", "comment" => "array"],
             "controller" => SetCommentController::class,
             'normalization_context' => ['groups' => 'write:comment'],
+        ],
+    ],
+    subresourceOperations: [
+        'api_posts_comments_get_subresource' => [
+            'method' => 'GET',
+            'normalization_context' => [
+                'groups' => ['read:post'],
+            ],
         ],
     ],
     itemOperations: [
@@ -107,7 +110,9 @@ class Post
     #[Groups(["write:comment"])]
     private $parent;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class)]
+    #[Groups(["read:post"])]
+    #[ApiSubresource]
     private $comments;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]

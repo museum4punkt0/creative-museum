@@ -11,7 +11,7 @@ class PostCollectionQueryExtension implements QueryCollectionExtensionInterface
 {
     public function applyToCollection(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
     {
-        if ($resourceClass !== Post::class) {
+        if ($resourceClass !== Post::class || $operationName === 'api_posts_comments_get_subresource') {
             return;
         }
         $rootAlias = $queryBuilder->getRootAliases()[0];

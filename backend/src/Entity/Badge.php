@@ -90,7 +90,7 @@ class Badge
     /**
      * @return PostType
      */
-    public function getPostType(): PostType
+    public function getPostType(): ?PostType
     {
         return $this->postType;
     }
