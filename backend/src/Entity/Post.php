@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\GetCommentsController;
+use App\Controller\SetCommentController;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
 use App\Validator\Constraints\PollType;
@@ -15,7 +17,6 @@ use App\Validator\Constraints\PlaylistType;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * Secured resource.
@@ -30,16 +31,30 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
         "post" => [
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user",
-            "denormalization_context" => ["groups" => ["write:post"]]
+            "denormalization_context" => ["groups" => ["write:post"]],
+            "normalization_context" => ["groups" => ["read:post"]]
             ],
+        "get_comments" => [
+            "method" => "GET",
+            "path" => "/posts/{id}/comments",
+            "requirements" => ["id" => "\d+"],
+            "controller" => GetCommentsController::class
+        ],
+        "post_comment" => [
+            "method" => "POST",
+            "path" => "/posts/{id}/comment",
+            "requirements" => ["id" => "\d+", "comment" => "array"],
+            "controller" => SetCommentController::class,
+            'normalization_context' => ['groups' => 'write:comment'],
+        ],
     ],
     itemOperations: [
         "get" => [
             "normalization_context" => ["groups" => ["read:post"]]
         ],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
-    ],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+    ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
 #[ORM\HasLifecycleCallbacks]
@@ -58,7 +73,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
@@ -66,16 +81,20 @@ class Post
     private PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post","write:comment"])]
+    #[Assert\Length(max: 1000)]
     private $body;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["write:post", "read:post","write:comment"])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
@@ -83,13 +102,17 @@ class Post
     #[Assert\Valid]
     private $pollOptions;
 
-    #[ORM\ManyToOne(targetEntity: self::class)]
-    #[Groups(["write:post", "read:post"])]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(["write:comment"])]
     private $parent;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private $comments;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $campaign;
 
     #[ORM\ManyToMany(targetEntity: Playlist::class)]
@@ -101,7 +124,16 @@ class Post
     private $question;
 
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
+    #[Groups(["write:post", "read:post"])]
     private $files;
+
+    #[ORM\Column(type: 'integer')]
+    #[Groups(["read:post"])]
+    private $commentCount = 0;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(["write:post", "read:post"])]
+    private $blocked = false;
 
     public function __construct()
     {
@@ -110,6 +142,7 @@ class Post
         $this->partners = new ArrayCollection();
         $this->playlist = new ArrayCollection();
         $this->files = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -286,6 +319,33 @@ class Post
         return $this;
     }
 
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(self $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(self $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getParent() === $this) {
+                $comment->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getCampaign(): ?Campaign
     {
         return $this->campaign;
@@ -354,6 +414,36 @@ class Post
     public function removeFile(MediaObject $file): self
     {
         $this->files->removeElement($file);
+
+        return $this;
+    }
+
+    public function getCommentCount(): ?int
+    {
+        return $this->commentCount;
+    }
+
+    public function setCommentCount(int $commentCount): self
+    {
+        $this->commentCount = $commentCount;
+
+        return $this;
+    }
+
+    public function increaseCommentCount(): self
+    {
+        $this->commentCount++;
+        return $this;
+    }
+
+    public function getBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(bool $blocked): self
+    {
+        $this->blocked = $blocked;
 
         return $this;
     }

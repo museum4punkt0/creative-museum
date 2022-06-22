@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
+use App\Event\NewUserRegisteredEvent;
 use App\OauthProvider\IdpOauthProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -27,12 +29,17 @@ class IdpAuthenticator extends AbstractAuthenticator
 
     private EntityManagerInterface $entityManager;
 
+    private EventDispatcherInterface $eventDispatcher;
+
     public function __construct(
         JWTTokenManagerInterface $jwtManager,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher
+
     ) {
         $this->jwtManager = $jwtManager;
         $this->entityManager = $entityManager;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function supports(Request $request): ?bool
@@ -103,6 +110,9 @@ class IdpAuthenticator extends AbstractAuthenticator
 
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
+
+                $userRegisteredEvent = new NewUserRegisteredEvent($user->getId());
+                $this->eventDispatcher->dispatch($userRegisteredEvent, NewUserRegisteredEvent::NAME);
 
                 return $user;
             })

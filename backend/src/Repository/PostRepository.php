@@ -47,6 +47,20 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Post $comment
+     * @return void
+     */
+    public function increaseCommentCount(Post $comment)
+    {
+        $query = $this->_em->createQuery(
+            "UPDATE App\Entity\Post p
+            SET p.commentCount = p.commentCount + 1
+            WHERE p.id = {$comment->getParent()->getId()}"
+        );
+        $query->execute();
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */

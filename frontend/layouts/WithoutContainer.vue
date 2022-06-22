@@ -7,9 +7,16 @@
       >
         <PageHeader />
       </div>
-      <div w:container="~" w:p="6">
-        <Nuxt/>
-      </div>
+      <Nuxt/>
+      <PageFooter />
     </div>
   </div>
 </template>
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'WithoutContainer'
+})
+</script>
+

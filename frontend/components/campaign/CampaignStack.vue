@@ -1,53 +1,47 @@
 <template>
-  <div class="vue-card-stack__wrapper">
+  <div class="campaign__wrapper">
     <div
-      class="vue-card-stack__stack" w:p="t-10 md:t-5"
-      :style="{
-        height: `${cardHeight + paddingVertical * 2}px`,
-      }"
+      class="campaign__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl"
     >
       <div
-        v-for="(card, index) in stack"
-        :key="card._id"
+        v-for="campaign in stack"
+        ref="card"
+        :key="campaign._id"
         class="vue-card-stack__card"
+        w:select="none"
+        w:pos="absolute"
+        w:transform="origin-center"
+        :w:z-index="campaign.zIndex"
         :style="{
-          opacity: card.opacity,
-          display: card.display,
-          top: `${card.yPos}px`,
-          width: `${card.width}px`,
-          zIndex: card.zIndex,
+          top: `${campaign.yPos}px`,
+          width: `${campaign.width}px`,
+          zIndex: campaign.zIndex,
+          top: `${campaign.yPos}px`,
+          width: `${campaign.width}px`,
+          cursor: 'grab',
           transition: `transform ${
             isDragging ? 0 : speed
           }s ease,   ${speed}s ease`,
-          'transform-origin': 'center center',
           transform: `
-            rotate(${card.rotate}deg)
-            translate(${card.xPos}px, 0)
+            rotate(${campaign.rotate}deg)
+            translate(${campaign.xPos}px, 0)
           `,
         }"
       >
-        <slot :card="{ ...card, $index: index }" name="card"></slot>
+        <CampaignItem :campaign="campaign" />
       </div>
     </div>
-    <slot
-      name="nav"
-      v-bind="{ activeCardIndex: originalActiveCardIndex, onNext, onPrevious }"
-    ></slot>
   </div>
 </template>
 <script>
 import { debounce } from '@/utilities/debounce'
 
 export default {
-  name: 'CampaignCardStack',
+  name: 'CampaignStack',
   props: {
-    cards: {
+    campaigns: {
       type: Array,
       default: () => [],
-    },
-    cardHeight: {
-      type: Number,
-      default: () => 600,
     },
     stackWidth: {
       type: [Number, String],
@@ -55,11 +49,11 @@ export default {
     },
     sensitivity: {
       type: Number,
-      default: () => 0.25,
+      default: () => 0.05,
     },
     maxVisibleCards: {
       type: Number,
-      default: () => 7,
+      default: () => 6,
     },
     speed: {
       type: Number,
@@ -80,13 +74,13 @@ export default {
       width: 0,
       activeCardIndex: 1,
       isDragging: false,
-      dragStartX: 0,
+      dragStartX: 50,
       dragStartY: 0,
-      isDraggingNext: false,
+      isDraggingPrevious: false,
       isMobile: false,
-      cardWidth: 500,
-      containerWidth: 1920,
-      mobileYOffset: 70
+      cardWidth: 650,
+      mobileYOffset: 70,
+      initialized: false
     }
   },
   computed: {
@@ -99,10 +93,10 @@ export default {
 
       return this.width || this.$el.clientWidth
     },
-    _maxVisibleCards() {
-      return this.cards.length > this.maxVisibleCards
+    _maxVisibleCampaigns() {
+      return this.campaigns.length > this.maxVisibleCards
         ? this.maxVisibleCards
-        : this.cards.length - 1
+        : this.campaigns.length - 1
     },
     elementXPosOffset() {
       return this.$el.getBoundingClientRect().x
@@ -123,18 +117,19 @@ export default {
       return this.isTouch ? "touchend" : "mouseup"
     },
     stackRestPoints() {
-      return this.cards.map((item, index) => {
-        const xOffset = this.xPosOffset * index
+      return this.campaigns.map((item, index) => {
+        const xOffset = document.getElementById('pageLogo').getBoundingClientRect().left + (((this.cardWidth / 2) - 100) * (index
+         - 1))
 
         if (!index) {
           if (this.isMobile) {
             return {
               x: this.cardWidth * -1,
-              y: this.cardHeight * -1 + 20
+              y: this.$refs.card[0].clientHeight * -1 + 20
             }
           } else {
             return {
-              x: this.cardWidth * -1,
+              x: (this.cardWidth - 100) * -1,
               y: 0
             }
           }
@@ -155,11 +150,11 @@ export default {
           if (this.isMobile) {
             return {
               x: 0,
-              y: (-10 * index) + this.mobileYOffset
+              y: (-15 * index) + this.mobileYOffset
             }
           } else {
             return {
-              x: xOffset - this.paddingHorizontal,
+              x: xOffset,
               y: 0
             }
           }
@@ -167,23 +162,20 @@ export default {
       })
     },
     cardDefaults() {
-      return this.cards.map((card, index) => {
+      return this.campaigns.map((campaign, index) => {
         const xPos = this.stackRestPoints[index].x
         const yPos = this.stackRestPoints[index].y
         let isMobile = false
-        if (window.innerWidth < 768) {
+        if (document.getElementById('globalHeader').clientWidth < 768) {
           isMobile = true
         }
 
         return {
-          opacity: index > 0 && index < this._maxVisibleCards ? 1 : 0,
-          display: index < this._maxVisibleCards + 1 ? "block" : "none",
-          xPos: index < this._maxVisibleCards ? xPos : xPos - this.xPosOffset,
-          yPos: (isMobile) ? index < this._maxVisibleCards ? this.mobileYOffset + -10 * index : yPos - this.yPosOffset + this.mobileYOffset : 0,
-          rotate: index !== 1 ? Math.floor(Math.random() * ( 2.5 - -2.5 )) : 0,
-          width: this.cardWidth,
-          height: this.cardHeight,
-          zIndex: this.cards.length + index * -1,
+          xPos: !isMobile ? index < this._maxVisibleCampaigns ? xPos : document.getElementById('pageLogo').getBoundingClientRect().left + (this.cardWidth * (index - 1)) : 0,
+          yPos: isMobile ? index < this._maxVisibleCampaigns ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
+          rotate: index !== 1 ? Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
+          width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
+          zIndex: index !== 0 ? this.campaigns.length + index * -1 : this.isDraggingPrevious ? isMobile ? 0 : this._maxVisibleCampaigns : 0,
           isDragging: this.isDragging
         }
       })
@@ -191,7 +183,7 @@ export default {
     xPosOffset() {
       return (
         (this._stackWidth - this.paddingHorizontal * 2 - this.cardWidth) /
-        (this._maxVisibleCards - 2)
+        (this._maxVisibleCampaigns - 2)
       )
     },
     yPosOffset() {
@@ -219,25 +211,26 @@ export default {
   },
   methods: {
     init() {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.cards.unshift(this.cards.pop())
+      this.stack = this.campaigns
 
-      this.containerWidth = document.getElementById('globalHeader').clientWidth
+      this.stack.unshift(this.stack.pop())
 
-      this.stack = this.cards.map((card, index) => {
+      this.stack = this.stack.map((campaign, index) => {
         return {
           _id: new Date().getTime() + index,
           _index: index,
-          ...card,
+          ...campaign,
           ...this.cardDefaults[index],
         }
       })
-      if (process.client) {
-        if (window.innerWidth < 768) {
-          this.isMobile = true
-          this.cardWidth = window.innerWidth - this.paddingHorizontal
+      this.$nextTick(() => {
+        if (process.client) {
+          if (window.innerWidth < 768) {
+            this.isMobile = true
+            this.cardWidth = window.innerWidth - this.paddingHorizontal
+          }
         }
-      }
+      })
     },
     rebuild() {
       this.$nextTick(() => {
@@ -259,11 +252,6 @@ export default {
       this.rebuild()
     },
     onPrevious() {
-      if (this.isMobile) {
-        const cardToMoveToBottomOfStack = this.stack.shift()
-        this.stack.push(cardToMoveToBottomOfStack)
-        this.rebuild()
-      }
       const cardToMoveToTopOfStack = this.stack.pop()
       this.stack.unshift(cardToMoveToTopOfStack)
       this.rebuild()
@@ -276,18 +264,15 @@ export default {
         (this.cardWidth + this.paddingHorizontal) / (1 / this.sensitivity)
 
       this.$emit("move", 0)
-
-      if (this.isDraggingNext) {
+      if (this.isDraggingPrevious) {
         if (distanceTravelledX > minDistanceToTravel) {
           this.onPrevious()
         } else {
           this.rebuild()
         }
       } else if (distanceTravelledX * -1 > minDistanceToTravel) {
-          this.onNext()
-        } else {
-          this.rebuild()
-        }
+        this.onNext()
+      }
     },
     moveStack(dragXPos) {
       const activeCardOffsetX = dragXPos - this.dragStartX
@@ -298,7 +283,7 @@ export default {
         activeCardOffsetX / (this.cardWidth + this.paddingHorizontal)
       )
 
-      this.stack = this.stack.map((card, index) => {
+      this.stack = this.stack.map((campaign, index) => {
         const isActiveCard = index === this.activeCardIndex
         let yPos
         const xPos = isActiveCard
@@ -313,20 +298,20 @@ export default {
               (this.yPosOffset / (this.cardWidth + this.paddingVertical)) *
                 activeCardOffsetY
         } else {
-          yPos = card.yPos
+          yPos = campaign.yPos
         }
         const rotate = isActiveCard
           ? '0'
-          : Math.floor(Math.random() * ( 2.5 - -2.5 ))
+          : Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1)
 
         return {
-          ...card,
+          ...campaign,
           ...this.cardDefaults[index],
           xPos,
           yPos,
           rotate,
           opacity:
-            index === 0 && !this.isDraggingNext
+            index === 0 && !this.isDraggingPrevious
               ? 1
               : this.cardDefaults[index].opacity,
         }
@@ -349,32 +334,26 @@ export default {
       this.isDragging = false
       this.dragStartX = 0
       this.dragStartY = 0
-
       document.removeEventListener(this.dragEvent, this.onDrag)
       this.updateStack()
     },
     onDrag(e) {
       const dragXPos = this.getDragXPos(e) - this.elementXPosOffset
 
-      this.isDraggingNext = dragXPos > this.dragStartX
+      this.isDraggingPrevious = dragXPos > this.dragStartX
       this.moveStack(dragXPos)
     },
   },
 }
 </script>
 <style scoped>
-.vue-card-stack__wrapper {
+.campaign__wrapper {
   position: relative;
 }
 
-.vue-card-stack__stack {
+.campaign__stack {
   position: relative;
   overflow: hidden;
 }
 
-.vue-card-stack__card {
-  position: absolute;
-  transform-origin: 50% 50%;
-  cursor: grab;
-}
 </style>

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+## Description: Migrates backend database
+## Usage: backend-migrate
+## Example: "ddev backend-migrate"
+
+cd backend && bin/console doctrine:migrations:migrate
+

@@ -36,6 +36,9 @@ class Notification
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $color;
 
+    #[ORM\Column(type: 'boolean')]
+    private $silent = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +88,18 @@ class Notification
     public function setColor(?string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getSilent(): ?bool
+    {
+        return $this->silent;
+    }
+
+    public function setSilent(bool $silent): self
+    {
+        $this->silent = $silent;
 
         return $this;
     }

@@ -22,6 +22,8 @@
       "@nuxtjs/auth-next",
       "nuxt-webpack-optimisations",
       "@nuxtjs/i18n",
+      "@nuxtjs/dayjs",
+      "dayjs/plugin/relativeTime"
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

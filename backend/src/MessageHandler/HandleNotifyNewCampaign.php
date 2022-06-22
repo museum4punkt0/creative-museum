@@ -4,6 +4,7 @@ namespace App\MessageHandler;
 
 use App\Entity\Campaign;
 use App\Entity\Notification;
+use App\Enum\NotificationType;
 use App\Message\NotifyUsersAboutNewCampaign;
 use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
@@ -57,7 +58,8 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
             $notification
                 ->setReceiver($user)
                 ->setText("Neue Kampange {$campaign->getTitle()} verfügbar")
-                ->setColor($campaign->getColor());
+                ->setColor($campaign->getColor())
+                ->setSilent($user->getNotificationSettings() === NotificationType::NONE);
             $this->entityManager->persist($notification);
             $this->entityManager->flush();
         }
