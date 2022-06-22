@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div w:grid="~ cols-1 lg:cols-12">
+    <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
       <div w:display="hidden lg:block" w:grid="col-span-3">
         Sidebar Left
       </div>

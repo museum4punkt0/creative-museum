@@ -3,6 +3,9 @@
   "prev": "Zurück",
   "submit": "Abschicken",
   "close": "Close",
+  "till": "bis",
+  "readLess": "weniger lesen",
+  "readMore": "mehr lesen",
   "noUsername": "Kein Benutzername",
   "provideUsername": {
     "title": "Please provide a Username"

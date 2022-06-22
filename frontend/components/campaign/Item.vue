@@ -35,8 +35,8 @@
             </NuxtLink>
           </h1>
         </header>
-        <div v-if="campaign.description">
-          {{ campaign.description }}
+        <div v-if="campaign.shortDescription">
+          {{ campaign.shortDescription }}
         </div>
         <footer w:m="t-auto">
           {{ $t('campaign.partner')}}
