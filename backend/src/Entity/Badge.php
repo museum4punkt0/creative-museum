@@ -56,10 +56,6 @@ class Badge
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
-    #[ORM\Column(type: 'integer')]
-    #[Groups(["campaign:read"])]
-    private $price = 0;
-
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
     #[Groups(["campaign:read"])]
     private $picture;
@@ -149,18 +145,6 @@ class Badge
     public function setCampaign(?Campaign $campaign): self
     {
         $this->campaign = $campaign;
-
-        return $this;
-    }
-
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
 
         return $this;
     }

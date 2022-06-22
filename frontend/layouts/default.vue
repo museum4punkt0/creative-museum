@@ -7,8 +7,8 @@
       >
         <PageHeader />
       </div>
-      <div w:container="~" w:p="6">
-        <Nuxt/>
+      <div w:container="~" w:p="6 lg:t-20">
+        <Nuxt />
       </div>
       <PageFooter />
     </div>
