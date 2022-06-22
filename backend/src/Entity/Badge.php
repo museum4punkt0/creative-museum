@@ -7,6 +7,7 @@ use App\Enum\BadgeType;
 use App\Enum\PostType;
 use App\Repository\BadgeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ApiResource(
@@ -28,31 +29,39 @@ class Badge
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["campaign:read"])]
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    private $threshold;
+    #[Groups(["campaign:read"])]
+    private $threshold = 0;
 
     #[ORM\Column(type: 'badgetype')]
-    private BadgeType $type;
+    #[Groups(["campaign:read"])]
+    private BadgeType $type = BadgeType::SCORING;
 
     #[ORM\Column(type: 'posttype')]
-    private PostType $postType;
+    #[Groups(["campaign:read"])]
+    private PostType $postType = PostType::TEXT;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["campaign:read"])]
     private $description;
 
-    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    private $price;
+    #[Groups(["campaign:read"])]
+    private $price = 0;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups(["campaign:read"])]
     private $picture;
 
     public function getId(): ?int
@@ -166,5 +175,10 @@ class Badge
         $this->picture = $picture;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return 'Badge #' . $this->id . ' - ' . $this->title;
     }
 }

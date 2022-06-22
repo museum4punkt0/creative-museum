@@ -25,66 +25,67 @@ use Symfony\Component\Serializer\Annotation\Groups;
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
-        "get",
+        "get" => ["normalization_context" => ["groups" => ['campaign:read']]],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 #[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
+#[ORM\HasLifecycleCallbacks]
 class Campaign
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read"])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read"])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
     private $start;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
     private $stop;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read"])]
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
     private $description;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, orphanRemoval: true)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read"])]
     private $awards;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, orphanRemoval: true)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read", "campaign:write"])]
     private $badges;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read"])]
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:read"])]
     private $color;
 
     public function __construct()
@@ -116,9 +117,10 @@ class Campaign
         return $this->created;
     }
 
-    public function setCreated(\DateTimeInterface $created): self
+    #[ORM\PrePersist]
+    public function setCreated(): self
     {
-        $this->created = $created;
+        $this->created = new \DateTime();
 
         return $this;
     }
@@ -152,9 +154,11 @@ class Campaign
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime();
 
         return $this;
     }
@@ -226,11 +230,11 @@ class Campaign
     }
 
     /**
-     * @return Collection<int, Badge>
+     * @return Badge[]
      */
-    public function getBadges(): Collection
+    public function getBadges(): array
     {
-        return $this->badges;
+        return $this->badges->getValues();
     }
 
     public function addBadge(Badge $badge): self

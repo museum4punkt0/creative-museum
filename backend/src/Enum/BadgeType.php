@@ -6,7 +6,11 @@ enum BadgeType: string
 {
     case SCORING = 'scoring';
 
-    case POSTCOUNT = 'postcount';
+    case AWARDS = 'awards';
 
-    case LIKES = 'likes';
+    // Logic not implemented yet
+    // case POSTCOUNT = 'postcount';
+
+    // Logic not implemented yet
+    // case LIKES = 'likes';
 }
