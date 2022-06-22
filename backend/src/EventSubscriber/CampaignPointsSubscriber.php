@@ -46,23 +46,14 @@ class CampaignPointsSubscriber implements EventSubscriberInterface
         $this->campaignMemberRepository = $campaignMemberRepository;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::RESPONSE => [
-                ['onKernelResponsePre', 10],
-                ['onKernelResponsePost', -10],
-            ],
             CampaignPointsReceivedEvent::NAME => 'onCampaignPointsReceived',
         ];
-    }
-
-    public function onKernelResponsePre(ResponseEvent $event)
-    {
-    }
-
-    public function onKernelResponsePost(ResponseEvent $event)
-    {
     }
 
     public function onCampaignPointsReceived(CampaignPointsReceivedEvent $event)
