@@ -27,11 +27,6 @@ class BadgeDto extends AbstractDomainObject
     /**
      * @var string
      */
-    protected $postType;
-
-    /**
-     * @var string
-     */
     protected $title;
 
     /**
@@ -43,11 +38,6 @@ class BadgeDto extends AbstractDomainObject
      * @var CampaignDto|null
      */
     protected $campaign = null;
-
-    /**
-     * @var int
-     */
-    protected $price;
 
     /**
      * @return string|null
@@ -106,24 +96,6 @@ class BadgeDto extends AbstractDomainObject
     /**
      * @return string
      */
-    public function getPostType(): string
-    {
-        return $this->postType;
-    }
-
-    /**
-     * @param string $postType
-     * @return BadgeDto
-     */
-    public function setPostType(string $postType): BadgeDto
-    {
-        $this->postType = $postType;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
@@ -176,24 +148,6 @@ class BadgeDto extends AbstractDomainObject
     }
 
     /**
-     * @return int
-     */
-    public function getPrice(): int
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param int $price
-     * @return BadgeDto
-     */
-    public function setPrice(int $price): BadgeDto
-    {
-        $this->price = $price;
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function serialize()
@@ -201,6 +155,8 @@ class BadgeDto extends AbstractDomainObject
         $data = [
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
+            'type' => $this->getBadgeType(),
+            'threshold' => $this->getThreshold()
         ];
 
         if (null !== $this->getId() && ! empty($this->getId())) {

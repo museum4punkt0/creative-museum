@@ -90,10 +90,10 @@ class CampaignService extends CmApiService
             foreach ($campaign['badges'] as $badge) {
                 $badgeDto = new BadgeDto();
                 $badgeDto->setId((string) $badge['id']);
+                $badgeDto->setBadgeType($badge['type']);
                 $badgeDto->setThreshold($badge['threshold']);
                 $badgeDto->setTitle($badge['title']);
                 $badgeDto->setDescription($badge['description']);
-                $badgeDto->setPrice($badge['price']);
                 $badgeDto->setCampaign($dto);
 
                 $dto->addBadge($badgeDto);
