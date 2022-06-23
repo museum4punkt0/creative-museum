@@ -61,7 +61,9 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
                 ->setColor($campaign->getColor())
                 ->setSilent($user->getNotificationSettings() === NotificationType::NONE);
             $this->entityManager->persist($notification);
-            $this->entityManager->flush();
         }
+        $campaign->setNotified(true);
+        $this->entityManager->persist($campaign);
+        $this->entityManager->flush();
     }
 }

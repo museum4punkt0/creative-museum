@@ -8,8 +8,6 @@ use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
 use App\Service\BadgeService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 class CampaignPointsSubscriber implements EventSubscriberInterface
 {

@@ -87,6 +87,9 @@ class Campaign
     #[Groups(["campaigns:read"])]
     private $color;
 
+    #[ORM\Column(type: 'boolean')]
+    private $notified = false;
+
     public function __construct()
     {
         $this->badges = new ArrayCollection();
@@ -293,6 +296,18 @@ class Campaign
     public function setColor(?string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getNotified(): ?bool
+    {
+        return $this->notified;
+    }
+
+    public function setNotified(bool $notified): self
+    {
+        $this->notified = $notified;
 
         return $this;
     }

@@ -35,6 +35,10 @@ class HandleNotifyUserAboutRegister implements MessageHandlerInterface
         $this->handleNewUserRegisteredNotification($user);
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
     private function handleNewUserRegisteredNotification(User $user): void
     {
         $notification = new Notification();
