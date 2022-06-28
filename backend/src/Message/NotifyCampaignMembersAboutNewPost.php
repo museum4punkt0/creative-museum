@@ -4,6 +4,9 @@ namespace App\Message;
 
 class NotifyCampaignMembersAboutNewPost
 {
+    /**
+     * @var int
+     */
     private int $postId;
 
     public function __construct(int $postId)

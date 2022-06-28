@@ -5,6 +5,9 @@ namespace App\Message;
 
 class NotifyUserAboutNewAwarded
 {
+    /**
+     * @var int
+     */
     private int $awardedId;
 
     public function __construct(int $awardedId)
