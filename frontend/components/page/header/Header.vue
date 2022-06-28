@@ -105,7 +105,7 @@
         >
           <div w:p="x-5" w:grid="lg:~ lg:columns-4" w:container="~">
             <div>
-              <NuxtLink to="/login" w:text="white" @click.native="closeMenu"
+              <NuxtLink to="/login" w:text="white" @click.native="login"
                 >Login</NuxtLink
               >
             </div>
@@ -134,9 +134,14 @@ export default defineComponent({
       isMenuVisible.value = false
     }
 
+    function login() {
+      this.$auth.login().then(closeMenu())
+    }
+
     return {
       isMenuVisible,
       closeMenu,
+      login
     }
   },
 })
