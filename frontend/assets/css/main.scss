@@ -4,6 +4,16 @@
     --highlight: #FFFF00;
   }
 
+  .highlight-text {
+    color: var(--highlight);
+    transition: all .25s ease-in-out;
+  }
+
+  .highlight-bg {
+    background-color: var(--highlight);
+    transition: all .25s ease-in-out;
+  }
+
   /* manrope-regular - latin-ext_latin */
   @font-face {
     font-family: 'Manrope';

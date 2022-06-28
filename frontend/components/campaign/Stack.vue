@@ -235,6 +235,10 @@ export default {
     rebuild() {
       this.$nextTick(() => {
         this.stack = this.stack.map((card, index) => {
+
+          if (index === this.activeCardIndex) {
+            document.documentElement.style.setProperty('--highlight', card.color)
+          }
           return {
             ...card,
             ...this.cardDefaults[index],

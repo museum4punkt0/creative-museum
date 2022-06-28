@@ -14,23 +14,23 @@
           w:rounded="full"
         />
         <span
+          class="highlight-bg"
           w:pos="absolute"
           w:h="2"
           w:w="2"
           w:top="0"
           w:right="0"
           w:rounded="full"
-          w:bg="$highlight"
           w:white
         />
         <span
+          class="highlight-bg"
           w:pos="absolute"
           w:top="1"
           w:p="y-0.5 x-2"
           w:m="-r-1"
           w:right="full"
           w:rounded="xl"
-          w:bg="$highlight"
           w:text="xs black space-nowrap"
         >{{ user.score ? user.score : 0 }} P</span>
       </div>
