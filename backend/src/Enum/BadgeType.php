@@ -9,4 +9,6 @@ enum BadgeType: string
     case POSTCOUNT = 'postcount';
 
     case LIKES = 'likes';
+
+    case REWARD_POINTS = 'reward_points';
 }

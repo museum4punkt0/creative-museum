@@ -40,19 +40,20 @@ class BadgeService
     }
 
     /**
+     * Returns all badges which are not badged to the user by campaign and user
+     *
      * @param Campaign $campaign
      * @param User $user
-     * @return Badge|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @return array
      */
-    public function getNextHigherBadge(Campaign $campaign, User $user): ?Badge
+    public function getUnbadged(Campaign $campaign, User $user): array
     {
         $qb = $this->em->createQueryBuilder();
-        $nextBadge = $qb->select('badge')
+        $unbadgedArr = $qb->select('badge')
             ->from(Badge::class, 'badge')
             ->andWhere(
                 $qb->expr()->eq('badge.campaign', $campaign->getId()),
-                $qb->expr()->isNull('badged.id')
+                $qb->expr()->isNull('badged.id'),
             )
             ->leftJoin(
                 Badged::class,
@@ -63,11 +64,23 @@ class BadgeService
                     $qb->expr()->eq('badged.user', $user->getId())
                 )
             )
-            ->orderBy('badge.price','ASC')
-            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->execute();
 
-        return $nextBadge;
+        return $unbadgedArr;
+    }
+
+    /**
+     * @param Badge $badge
+     * @param User $user
+     * @return void
+     */
+    public function createBadged(Badge $badge, User $user): void
+    {
+        $newBadged = new Badged();
+        $newBadged
+            ->setBadge($badge)
+            ->setUser($user);
+        $this->badgedRepository->add($newBadged);
     }
 }

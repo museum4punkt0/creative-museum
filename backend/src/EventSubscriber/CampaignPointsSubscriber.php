@@ -21,27 +21,14 @@ class CampaignPointsSubscriber implements EventSubscriberInterface
      */
     private UserRepository $userRepository;
 
-    /**
-     * @var BadgeService
-     */
-    private BadgeService $badgeService;
-
-    /**
-     * @var CampaignMemberRepository
-     */
-    private CampaignMemberRepository $campaignMemberRepository;
 
     public function __construct(
         CampaignRepository $campaignRepository,
         UserRepository $userRepository,
-        BadgeService $badgeService,
-        CampaignMemberRepository $campaignMemberRepository
     )
     {
         $this->campaignRepository = $campaignRepository;
         $this->userRepository = $userRepository;
-        $this->badgeService = $badgeService;
-        $this->campaignMemberRepository = $campaignMemberRepository;
     }
 
     /**
@@ -58,7 +45,5 @@ class CampaignPointsSubscriber implements EventSubscriberInterface
     {
         $campaign = $this->campaignRepository->find($event->getCampaignId());
         $receiver = $this->userRepository->find($event->getReceiverId());
-
-        $this->badgeService->getNextHigherBadge($campaign,$receiver);
     }
 }
