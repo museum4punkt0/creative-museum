@@ -12,7 +12,7 @@
       <NuxtLink
           id="pageLogo" to="/">
         <Logo
-          w:text="white/50 hover:color1"
+          w:text="white/50 hover:$highlight"
           w:h="8 md:12"
           w:m="l-5 y-3"
           w:transition="all duration-300 ease-in-out"

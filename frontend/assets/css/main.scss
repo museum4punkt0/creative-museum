@@ -1,5 +1,9 @@
 @layer base {
 
+  :root {
+    --highlight: #FFFF00;
+  }
+
   /* manrope-regular - latin-ext_latin */
   @font-face {
     font-family: 'Manrope';
@@ -69,6 +73,10 @@
 
   h2 {
     @apply text-xl mb-2;
+  }
+
+  .highlight-text {
+    color: var(--highlight)
   }
 
   .box-shadow {

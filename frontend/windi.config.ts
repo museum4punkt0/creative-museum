@@ -8,6 +8,7 @@ export default defineConfig({
     exclude: ['node_modules', '.git'],
   },
   shortcuts: {
+    'text-link': 'text-primary',
     'btn-primary': 'block rounded-full border-1  p-2 text-center bg-color1 border-color1 text-black',
     'btn-outline': 'block rounded-full border-1  p-2 text-center bg-transparent border-white text-white'
   },

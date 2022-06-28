@@ -20,7 +20,7 @@
           w:top="0"
           w:right="0"
           w:rounded="full"
-          w:bg="color1"
+          w:bg="$highlight"
           w:white
         />
         <span
@@ -30,7 +30,7 @@
           w:m="-r-1"
           w:right="full"
           w:rounded="xl"
-          w:bg="color1"
+          w:bg="$highlight"
           w:text="xs black space-nowrap"
         >{{ user.score ? user.score : 0 }} P</span>
       </div>
