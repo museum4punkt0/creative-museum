@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
+#[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
         "get",
@@ -38,6 +41,9 @@ class Notification
 
     #[ORM\Column(type: 'boolean')]
     private $silent = false;
+
+    #[ORM\Column(type: 'boolean')]
+    private $viewed = false;
 
     public function getId(): ?int
     {
@@ -100,6 +106,18 @@ class Notification
     public function setSilent(bool $silent): self
     {
         $this->silent = $silent;
+
+        return $this;
+    }
+
+    public function getViewed(): ?bool
+    {
+        return $this->viewed;
+    }
+
+    public function setViewed(bool $viewed): self
+    {
+        $this->viewed = $viewed;
 
         return $this;
     }
