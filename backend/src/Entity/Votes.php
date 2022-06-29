@@ -12,12 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     collectionOperations: [
         "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user"],
+        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.voter == user"],
     ],
     itemOperations: [
         "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"]
+        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"]
     ],
 )]
 class Votes
