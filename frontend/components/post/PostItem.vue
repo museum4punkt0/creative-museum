@@ -1,10 +1,10 @@
 <template>
   <div>
-    {{ post.body}}
+    <component :is="componentName" :post="post" />
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -13,8 +13,13 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-
+  setup(props) {
+    const componentName = computed(() => {
+      return 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1)
+    })
+    return {
+      componentName
+    }
   },
 })
 </script>
