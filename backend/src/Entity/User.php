@@ -78,6 +78,7 @@ class User implements UserInterface
     private int $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
+    #[Groups(["read:me"])]
     private Collection $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]

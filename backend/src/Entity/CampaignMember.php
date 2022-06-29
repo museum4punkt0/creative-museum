@@ -2,18 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignMemberRepository::class)]
+#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
-        "get",
+        "get" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
-        "get",
+        "get" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
     ],
 )]
@@ -29,6 +33,7 @@ class CampaignMember
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:me"])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
@@ -36,6 +41,7 @@ class CampaignMember
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(["read:me"])]
     private $rewardPoints = 0;
 
     public function getId(): ?int
