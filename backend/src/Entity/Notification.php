@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact'])]
@@ -16,7 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
     ],
     itemOperations: [
         "get",
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"]
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
+        'patch' => ['normalization_context' => ['groups' => ['patch']]]
     ],
 )]
 class Notification
@@ -43,6 +45,7 @@ class Notification
     private $silent = false;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(["patch"])]
     private $viewed = false;
 
     public function getId(): ?int
