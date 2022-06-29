@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['user' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
-        "get" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
