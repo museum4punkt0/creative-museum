@@ -49,6 +49,11 @@ class CampaignDto extends AbstractEntity
     protected $description = '';
 
     /**
+     * @var string
+     */
+    protected $color = '';
+
+    /**
      * @var bool
      */
     protected $active = false;
@@ -175,6 +180,24 @@ class CampaignDto extends AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getColor(): string
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     * @return CampaignDto
+     */
+    public function setColor(string $color): CampaignDto
+    {
+        $this->color = $color;
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isActive(): bool
@@ -232,7 +255,8 @@ class CampaignDto extends AbstractEntity
             'stop' => $this->getStop()->format('c'),
             'shortDescription' => $this->getShortDesc(),
             'description' => $this->getDescription(),
-            'active' => $this->isActive()
+            'active' => $this->isActive(),
+            'color' => $this->getColor()
         ];
 
         return $campaign;

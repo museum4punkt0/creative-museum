@@ -85,6 +85,7 @@ class CampaignService extends CmApiService
         $dto->setShortDesc($campaign['shortDescription']);
         $dto->setDescription($campaign['description']);
         $dto->setActive($campaign['active']);
+        $dto->setColor($campaign['color'] ?? '');
 
         if (isset($campaign['badges']) && count($campaign['badges']) > 0) {
             foreach ($campaign['badges'] as $badge) {

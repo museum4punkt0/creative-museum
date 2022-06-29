@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Controller;
 
-use JWIED\Creativemuseum\Domain\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Dto\CampaignDto;
 use JWIED\Creativemuseum\Service\CampaignService;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
@@ -13,6 +12,7 @@ use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -65,7 +65,9 @@ class AdministrationController extends ActionController
         $this->registerDocheaderButtons($view);
         $view->getModuleTemplate()->setFlashMessageQueue($this->controllerContext->getFlashMessageQueue());
 
+        /** @var BackendTemplateView $view */
         if ($view instanceof BackendTemplateView) {
+            /** @var PageRenderer $pageRenderer */
             $pageRenderer = $this->view->getModuleTemplate()->getPageRenderer();
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/Modal');
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/DocumentSaveActions');
@@ -73,7 +75,13 @@ class AdministrationController extends ActionController
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/RemoveCampaignModal');
 
             if (in_array($this->actionMethodName, ['newCampaignAction', 'editCampaignAction'])) {
-                $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/BadgeHandling');
+                $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/CampaignHandling');
+                $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/ColorPicker');
+
+                $pageRenderer->addJsFile(
+                    'EXT:creativemuseum/Resources/Public/JavaScript/Packages/file-upload-with-preview.iife.js'
+                );
+                $pageRenderer->addCssFile('EXT:creativemuseum/Resources/Public/Css/file-upload-with-preview.css');
             }
 
         }
@@ -294,7 +302,7 @@ class AdministrationController extends ActionController
             ->setValue('Kampagne anlegen')
             ->setTitle('Kampagne anlegen')
             ->setName('campaign-save')
-            ->setForm('campaign-create')
+            ->setForm('campaign-form')
             ->setShowLabelText(true);
 
         $buttonBar->addButton($saveButton);
@@ -313,7 +321,7 @@ class AdministrationController extends ActionController
             ->setValue('Kampagne speichern')
             ->setTitle('Kampagne speichern')
             ->setName('campaign-update')
-            ->setForm('campaign-create')
+            ->setForm('campaign-form')
             ->setShowLabelText(true);
 
         $buttonBar->addButton($saveButton);

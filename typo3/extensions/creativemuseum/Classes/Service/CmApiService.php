@@ -12,6 +12,7 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Http\RequestFactory;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -97,26 +98,42 @@ abstract class CmApiService implements SingletonInterface
     }
 
     /**
-     * @param array $data
+     * @param ?array $data
+     * @param ?UploadedFile $file
      * @return string|null
      */
-    protected function post(array $data): ?string
+    protected function post(?array $data, ?UploadedFile $file): ?string
     {
         /** @var RequestFactory $request */
         $request = GeneralUtility::makeInstance(RequestFactory::class);
 
         $token = $this->getOauthClient()->getAccessToken('client_credentials')->getToken();
 
+        $options = [
+            'headers' => [
+                'Accept' => 'application/ld+json',
+                'Authorization' => 'Bearer ' . $token
+            ]
+        ];
+
+        if (null !== $data) {
+            $options['json'] = $data;
+        }
+
+        if (null !== $file) {
+            $options['multipart'] = [
+                [
+                    'name' => 'file',
+                    'contents' => $file->getStream()->getContents(),
+                    'filename' => $file->getClientFilename()
+                ]
+            ];
+        }
+
         $response = $request->request(
             $this->configuration['baseUrl'] . '/' . $this->getEndpoint(),
             Request::METHOD_POST,
-            [
-                'headers' => [
-                    'Accept' => 'application/ld+json',
-                    'Authorization' => 'Bearer ' . $token
-                ],
-                'json' => $data
-            ]
+            $options
         );
 
         if ($response->getStatusCode() !== Response::HTTP_CREATED) {

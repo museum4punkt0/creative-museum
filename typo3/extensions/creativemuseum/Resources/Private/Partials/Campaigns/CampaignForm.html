@@ -1,5 +1,5 @@
 
-<f:form action="{action}" controller="Administration" method="POST" id="campaign-create" name="campaign-create" object="{campaignDto}" objectName="campaignDto">
+<f:form action="{action}" controller="Administration" method="POST" id="campaign-form" name="campaign-create" object="{campaignDto}" objectName="campaignDto">
     <f:if condition="{action} == 'updateCampaign'">
         <f:form.hidden property="id" />
     </f:if>
@@ -86,6 +86,15 @@
                 <label for="campaign-description">Beschreibung</label>
                 <div class="form-control-wrap">
                     <f:form.textarea class="form-control" property="description" id="campaign-description"></f:form.textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
+                <label for="campaign-description">Kampagnen Primärfarbe</label>
+                <div class="form-control-wrap t3js-formengine-field-item">
+                    <f:form.textfield class="form-control t3js-color-picker formengine-colorpickerelement" property="color" id="campaign-color"></f:form.textfield>
                 </div>
             </div>
         </div>

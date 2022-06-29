@@ -3,11 +3,24 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
     var BadgeHandler = {
         badges: [],
         container: null,
-        itemCount: 0
+        itemCount: 0,
+        uploadFields: []
     };
 
     BadgeHandler.init = function() {
         this.container = document.querySelector('.t3js-badges-container');
+
+        if (this.container === null) {
+            return;
+        }
+
+        const uploadContainers = document.querySelectorAll('.custom-file-container');
+
+        uploadContainers.forEach((item) => {
+           const uploadId = item.dataset.uploadId;
+           this.uploadFields.push(new FileUploadWithPreview.FileUploadWithPreview(uploadId));
+        });
+
         this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
         this.itemCount = this.badges.length;
 
@@ -109,4 +122,6 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
     };
 
     BadgeHandler.init();
+
+    return BadgeHandler;
 });
