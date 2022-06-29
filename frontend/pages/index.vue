@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div v-if="campaigns.length > 0" class="px-container-padding" >
+      <div v-if="campaigns && campaigns.length > 0" class="px-container-padding" >
         <CampaignStack :campaigns="campaigns" />
       </div>
       <div v-else>
