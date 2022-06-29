@@ -81,7 +81,7 @@ class Post
 
     #[ORM\Column(type: 'posttype')]
     #[Groups(["write:post", "read:post"])]
-    private PostType $type = PostType::TEXT;
+    public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(["write:post", "read:post","write:comment"])]
@@ -111,7 +111,6 @@ class Post
     private $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class)]
-    #[Groups(["read:post"])]
     #[ApiSubresource]
     private $comments;
 

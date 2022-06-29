@@ -25,7 +25,10 @@ services:
 
     App\Serializer\Normalizer\EnumNormalizer:
         tags:
-            - { name: serializer.normalizer, priority: -916 }
+            - { name: serializer.normalizer, priority: 110 }
+    App\Serializer\Normalizer\PostNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 100}
 
     campaign.date_filter:
         parent: 'api_platform.doctrine.orm.date_filter'

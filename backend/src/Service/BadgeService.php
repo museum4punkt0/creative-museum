@@ -7,17 +7,11 @@ use App\Entity\Badged;
 use App\Entity\Campaign;
 use App\Entity\User;
 use App\Repository\BadgedRepository;
-use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 
 class BadgeService
 {
-    /**
-     * @var CampaignMemberRepository
-     */
-    private CampaignMemberRepository $campaignMemberRepository;
-
     /**
      * @var BadgedRepository
      */
@@ -29,12 +23,10 @@ class BadgeService
     private EntityManagerInterface $em;
 
     public function __construct(
-        CampaignMemberRepository $campaignMemberRepository,
         BadgedRepository         $badgedRepository,
         EntityManagerInterface   $em
     )
     {
-        $this->campaignMemberRepository = $campaignMemberRepository;
         $this->badgedRepository = $badgedRepository;
         $this->em = $em;
     }

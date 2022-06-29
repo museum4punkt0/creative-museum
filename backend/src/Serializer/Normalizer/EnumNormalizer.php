@@ -13,7 +13,7 @@ class EnumNormalizer implements NormalizerInterface, DenormalizerInterface, Cach
      */
     public function normalize($object, $format = null, array $context = array()) {
         /** @var \BackedEnum $object */
-        return $object();
+        return $object->value;
     }
 
     /**

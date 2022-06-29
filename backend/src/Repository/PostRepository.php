@@ -61,6 +61,28 @@ class PostRepository extends ServiceEntityRepository
         $query->execute();
     }
 
+    /**
+     * @param Post $post
+     * @param int $limit
+     * @return float|int|mixed|string
+     */
+    public function getRecentPostComments(int $postId, int $limit = 2)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $comments = $qb
+            ->select('post')
+            ->from(Post::class, 'post')
+            ->andWhere(
+                $qb->expr()->eq('post.parent', $postId),
+            )
+            ->orderBy('post.created', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+
+        return $comments;
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
