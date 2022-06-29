@@ -2,13 +2,9 @@
 
 namespace App\Serializer\Normalizer;
 
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Paginator;
-use ApiPlatform\Core\Hal\Serializer\CollectionNormalizer;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
