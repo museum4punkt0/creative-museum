@@ -16,24 +16,49 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AwardedSubscriber implements EventSubscriberInterface
 {
-    private const REWARD_POINTS = 1;
 
-    private const GIVER_REWARD_SCORE_POINTS = 10000;
+    /**
+     * @var int
+     */
+    private int $rewardPoints;
 
-    private const WINNER_POPULARITY_SCORE_POINTS = 20000;
+    /**
+     * @var int
+     */
+    private int $giverRewardScorePoints;
 
+    /**
+     * @var int
+     */
+    private int $winnerPopularityScorePoints;
+
+    /**
+     * @var CampaignMemberRepository
+     */
     private CampaignMemberRepository $campaignMemberRepository;
 
+    /**
+     * @var EntityManagerInterface
+     */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * @var EventDispatcherInterface
+     */
     private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
+        int $rewardPoints,
+        int $giverRewardScorePoints,
+        int $winnerPopularityScorePoints,
         CampaignMemberRepository $campaignMemberRepository,
         EntityManagerInterface   $entityManager,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
     )
     {
+        $this->rewardPoints = $rewardPoints;
+        $this->giverRewardScorePoints = $giverRewardScorePoints;
+        $this->winnerPopularityScorePoints = $winnerPopularityScorePoints;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
@@ -67,11 +92,11 @@ class AwardedSubscriber implements EventSubscriberInterface
             'user' => $awarded->getGiver()->getId(),
             'campaign' => $awarded->getAward()->getCampaign()->getId()
         ]);
-        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice() + self::GIVER_REWARD_SCORE_POINTS;
+        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice() + $this->giverRewardScorePoints;
 
         $awardGiver
             ->setScore($newGiverScore)
-            ->setRewardPoints($awardGiver->getRewardPoints() + self::REWARD_POINTS);
+            ->setRewardPoints($awardGiver->getRewardPoints() + $this->rewardPoints);
 
         $this->entityManager->persist($awardGiver);
 
@@ -87,7 +112,7 @@ class AwardedSubscriber implements EventSubscriberInterface
         ]);
 
         $awardWinner
-            ->setScore($awardWinner->getScore() + self::WINNER_POPULARITY_SCORE_POINTS);
+            ->setScore($awardWinner->getScore() + $this->winnerPopularityScorePoints);
 
         $this->entityManager->persist($awardWinner);
         $this->entityManager->flush();
