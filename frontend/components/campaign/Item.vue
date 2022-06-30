@@ -17,7 +17,7 @@
               w:border="~ current rounded-full"
               w:p="y-1 x-2"
             >
-              {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
+              {{ $t('duration')}}: {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
               <template v-if="campaign.end && campaign.end !== campaign.start">
               – {{ $dayjs(campaign.end).format('DD.MM.YYYY') }}
               </template>
