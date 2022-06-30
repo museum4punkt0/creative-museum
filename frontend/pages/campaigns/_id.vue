@@ -1,7 +1,7 @@
 <template>
   <div>
     <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
-      <div w:display="hidden lg:block" w:grid="col-span-3">
+      <div v-if="isLargerThanLg" w:grid="col-span-3">
         Sidebar Left
       </div>
       <div w:grid="lg:col-span-6">
@@ -22,7 +22,7 @@
           No Campaign found
         </div>
       </div>
-      <div w:display="hidden lg:block" w:grid="col-span-3">
+      <div v-if="isLargerThanLg" w:grid="col-span-3">
         Sidebar Right
       </div>
     </div>
@@ -31,7 +31,7 @@
 
 <script>
 
-import { defineComponent, useAsync, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute, computed, useContext } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 
@@ -40,9 +40,14 @@ export default defineComponent({
   setup() {
 
     const route = useRoute()
+    const context = useContext()
 
     const { fetchCampaign } = campaignApi()
     const { fetchPostsByCampaign } = postApi()
+
+    const isLargerThanLg = computed(() => {
+      return context.$breakpoints.lLg
+    })
 
     let campaign = null
     let posts = null
@@ -54,7 +59,8 @@ export default defineComponent({
 
     return {
       campaign,
-      posts
+      posts,
+      isLargerThanLg
     }
 
   },

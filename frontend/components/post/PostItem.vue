@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <component :is="componentName" :post="post" />
+  <div w:m="t-10">
+    <div v-if="post.type !== 'system'" class="box-shadow">
+      <component :is="componentName" :post="post" />
+    </div>
+    <div v-else class="highlight-text">
+      <p>{{ post.body }}</p>
+    </div>
   </div>
 </template>
 <script>
