@@ -62,7 +62,10 @@ export default {
   },
   dayjs: {
     locales: ['de', 'en'],
-    defaultLocale: 'de'
+    defaultLocale: 'de',
+    plugins: [
+      'relativeTime'
+    ]
   },
   axios: {
     baseURL: 'https://backend.creative-museum.ddev.site/v1/',

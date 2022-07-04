@@ -1,12 +1,21 @@
 <template>
-  <div>
-    <div
-      w:flex="row"
+  <div
+    w:flex="~ row"
+    w:justify="between"
+  >
+    <NuxtLink
+      :to="`user/${post.author.id}`"
+      w:flex="~ row"
     >
       <UserProfileImage :user="post.author" />
-      {{ post.author }}
+      <div w:flex="~ col">
+        <span w:text="lg">@{{ post.author.username }}</span>
+        <span class="highlight-text" w:text="sm" w:m="t-1">{{ $dayjs(post.created).fromNow() }}</span>
+      </div>
+    </NuxtLink>
+    <div>
+      <ThreeDots />
     </div>
-    <div>...</div>
   </div>
 </template>
 <script>
