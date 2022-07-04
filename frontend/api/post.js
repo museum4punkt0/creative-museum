@@ -13,8 +13,14 @@ export const postApi = () => {
     return res
   }
 
+  const fetchPostsByPost = async (postId) => {
+    const res = await $api.get(`posts/${postId}/comments`)
+    return res
+  }
+
   return {
     fetchPost,
     fetchPostsByCampaign,
+    fetchPostsByPost
   }
 }
