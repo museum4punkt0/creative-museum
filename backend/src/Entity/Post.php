@@ -68,9 +68,11 @@ class Post
     private $id;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
