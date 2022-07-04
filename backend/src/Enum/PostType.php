@@ -16,4 +16,6 @@ enum PostType: string
     case POLL = 'poll';
 
     case PLAYLIST = 'playlist';
+
+    case SYSTEM = 'system';
 }
