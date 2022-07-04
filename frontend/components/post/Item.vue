@@ -1,7 +1,10 @@
 <template>
   <div w:m="t-10">
     <div v-if="post.type !== 'system'" class="box-shadow">
-      <component :is="componentName" :post="post" />
+      <PostHead :post="post" w:m="b-4" />
+      <component :is="componentName" :post="post" w:m="b-4" />
+      <PostFooter :post="post" />
+      <PostComments :post="post" />
     </div>
     <div v-else class="highlight-text">
       <p>{{ post.body }}</p>
