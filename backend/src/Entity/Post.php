@@ -65,6 +65,7 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:post"])]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
