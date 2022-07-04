@@ -97,7 +97,7 @@ class User implements UserInterface
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(["read:me", "write:me", "read:post"])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -105,6 +105,7 @@ class User implements UserInterface
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups(["read:post"])]
     private $profilePicture;
 
     public function __construct()
