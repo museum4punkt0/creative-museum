@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             ],
         "post_comment" => [
             "method" => "POST",
-            "path" => "/posts/{id}/comment",
+            "path" => "/posts/{id}/comments",
             "requirements" => ["id" => "\d+", "comment" => "array"],
             "controller" => SetCommentController::class,
             'normalization_context' => ['groups' => 'write:comment'],
