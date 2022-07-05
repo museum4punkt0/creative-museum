@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Votes;
 use App\Event\NewPostVoteEvent;
+use App\Repository\PostRepository;
 use App\Repository\VotesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -33,18 +34,25 @@ class PostVoteController extends AbstractController
      */
     private Security $security;
 
+    /**
+     * @var PostRepository
+     */
+    private PostRepository $postRepository;
+
     public function __construct
     (
         VotesRepository          $votesRepository,
         EntityManagerInterface   $entityManager,
         EventDispatcherInterface $eventDispatcher,
-        Security $security
+        Security $security,
+        PostRepository $postRepository
     )
     {
         $this->votesRepository = $votesRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->security = $security;
+        $this->postRepository = $postRepository;
     }
 
     public function __invoke(Votes $data): Votes|array
@@ -82,6 +90,13 @@ class PostVoteController extends AbstractController
         $voteEvent = new NewPostVoteEvent($data->getPost()->getId(), $data->getDirection()->value, $voteDifference, $switched);
         $this->eventDispatcher->dispatch($voteEvent, NewPostVoteEvent::NAME);
 
-        return $dbVote;
+        $result = [
+           [
+               'vote' => $dbVote,
+               'votesTotal' => $this->postRepository->find($data->getPost())->getVotestotal()
+           ]
+        ];
+
+        return $result;
     }
 }
