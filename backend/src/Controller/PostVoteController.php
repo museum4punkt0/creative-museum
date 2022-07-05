@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Votes;
 use App\Event\NewPostVoteEvent;
 use App\Repository\VotesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 class PostVoteController extends AbstractController
 {
@@ -26,25 +28,35 @@ class PostVoteController extends AbstractController
      */
     private EventDispatcherInterface $eventDispatcher;
 
+    /**
+     * @var Security
+     */
+    private Security $security;
+
     public function __construct
     (
         VotesRepository          $votesRepository,
         EntityManagerInterface   $entityManager,
         EventDispatcherInterface $eventDispatcher,
+        Security $security
     )
     {
         $this->votesRepository = $votesRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->security = $security;
     }
 
     public function __invoke(Votes $data): Votes|array
     {
-        /**
-         * @var Votes $dbVote
-         */
+        $user = $this->security->getUser();
+
+        if (!$user instanceof User) {
+            return [];
+        }
+
         $dbVote = $this->votesRepository->findOneBy([
-            'voter' => $data->getVoter()->getId(),
+            'voter' => $user->getId(),
             'post' => $data->getPost()->getId()
         ]);
         $switched = false;
