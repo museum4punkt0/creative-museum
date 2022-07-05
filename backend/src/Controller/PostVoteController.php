@@ -90,14 +90,10 @@ class PostVoteController extends AbstractController
         $voteEvent = new NewPostVoteEvent($data->getPost()->getId(), $data->getDirection()->value, $voteDifference, $switched);
         $this->eventDispatcher->dispatch($voteEvent, NewPostVoteEvent::NAME);
 
-
-
         if(is_array($dbVote)){
             $result = [
-                [
-                    'vote' => $dbVote,
-                    'post' => $this->postRepository->find($data->getPost())
-                ]
+                'vote' => $dbVote,
+                'post' => $this->postRepository->find($data->getPost())
             ];
         }else{
             $result = $dbVote;

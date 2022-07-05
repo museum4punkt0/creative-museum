@@ -32,7 +32,7 @@
       "@nuxtjs/i18n",
       "@nuxtjs/dayjs",
       "dayjs/plugin/relativeTime",
-      "dayjs/plugin/isSameOrBefore"
+      "dayjs/plugin/duration"
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

@@ -2,8 +2,8 @@
   <div
     class="highlight-bg"
     w:rounded="full"
-    w:w="10"
-    w:h="10"
+    w:w="7"
+    w:h="7"
   >
     <img v-if="user" />
   </div>

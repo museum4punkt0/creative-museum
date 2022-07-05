@@ -2,7 +2,7 @@
   <div v-if="comment" w:text="xs" w:m="t-4">
     <strong w:display="block">{{ comment.author.username }}</strong>
     <p>{{ comment.body }}</p>
-    <span class="highlight-text" w:display="block">{{ $dayjs().isSameOrBefore(comment.created, 'day') ? $dayjs(comment.created).fromNow() :  $dayjs(comment.created).format('DD.MM.YYYY') }}</span>
+    <span class="highlight-text" w:display="block">{{ $dayjs.duration($dayjs().diff($dayjs(comment.created))).days() > 2 ? $dayjs(comment.created).format('DD.MM.YYYY') : $dayjs(comment.created).fromNow() }}</span>
   </div>
 </template>
 <script>

@@ -65,7 +65,7 @@ export default {
     defaultLocale: 'de',
     plugins: [
       'relativeTime',
-      'isSameOrBefore'
+      'duration'
     ]
   },
   axios: {
