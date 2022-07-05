@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\PostVoteController;
 use App\Enum\BadgeType;
 use App\Enum\VoteDirection;
@@ -13,14 +15,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: VotesRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.voter == user"],
-        "post_comment" => [
-            "method" => "POST",
-            "path" => "/posts/{id}/vote",
-            "requirements" => ["id" => "\d+", "vote" => "array"],
+        "get" => [
+            "normalization_context" => ["groups" => "read:vote"],
+        ],
+        "post" => [
+            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.voter == user",
             "controller" => PostVoteController::class,
-            'normalization_context' => ['groups' => 'write:vote'],
+            "normalization_context" => ["groups" => "write:vote"],
         ],
     ],
     itemOperations: [
@@ -29,6 +30,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"]
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['voter' => 'exact','post' => 'exact'])]
 class Votes
 {
     #[ORM\Id]
@@ -37,17 +39,18 @@ class Votes
     private $id;
 
     #[ORM\Column(type: 'votedirection')]
-    #[Groups(["write:vote"])]
+    #[Groups(["write:vote","read:vote"])]
+    #[ORM\JoinColumn(nullable: false)]
     private VoteDirection $direction;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:vote"])]
+    #[Groups(["write:vote","read:vote"])]
     private $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:vote"])]
+    #[Groups(["write:vote","read:vote"])]
     private $post;
 
     public function getId(): ?int
