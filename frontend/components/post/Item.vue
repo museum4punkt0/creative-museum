@@ -3,7 +3,7 @@
     <div v-if="post.type !== 'system'" class="box-shadow">
       <PostHead :post="post" w:m="b-4" />
       <component :is="componentName" :post="post" w:m="b-4" />
-      <PostFooter :post="post" />
+      <PostFooter :post="post" w:m="b-4" />
       <PostComments :post="post" />
     </div>
     <div v-else class="highlight-text">

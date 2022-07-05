@@ -7,6 +7,9 @@
   .highlight-text {
     color: var(--highlight);
     transition: all .25s ease-in-out;
+    svg {
+      fill: var(--highlight)
+    }
   }
 
   .highlight-bg {
@@ -83,10 +86,6 @@
 
   h2 {
     @apply text-xl mb-2;
-  }
-
-  .highlight-text {
-    color: var(--highlight)
   }
 
   .box-shadow {

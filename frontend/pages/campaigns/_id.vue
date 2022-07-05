@@ -31,9 +31,10 @@
 
 <script>
 
-import { defineComponent, useAsync, useRoute, computed, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute, computed, useContext, ref } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
+import { on } from 'events'
 
 export default defineComponent({
   name: 'CampaignPage',
@@ -41,6 +42,8 @@ export default defineComponent({
 
     const route = useRoute()
     const context = useContext()
+
+    const postComment = ref(false)
 
     const { fetchCampaign } = campaignApi()
     const { fetchPostsByCampaign } = postApi()
@@ -58,11 +61,11 @@ export default defineComponent({
     }
 
     return {
+      postComment,
       campaign,
       posts,
       isLargerThanLg
     }
-
-  },
+  }
 })
 </script>

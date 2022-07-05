@@ -18,9 +18,15 @@ export const postApi = () => {
     return res
   }
 
+  const votePost = async (postId, direction) => {
+    const res = await $api.patch(`posts/${postId}`,{
+      direction
+    })
+  }
   return {
     fetchPost,
     fetchPostsByCampaign,
-    fetchPostsByPost
+    fetchPostsByPost,
+    votePost
   }
 }

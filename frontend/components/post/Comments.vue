@@ -1,7 +1,14 @@
 <template>
   <div>
 
-    <span @click.prevent="fetchComments">Fetch</span>
+    <div
+      class="highlight-text"
+      w:cursor="pointer"
+      w:text="sm"
+    >
+      <span v-if="post.comments && post.commentCount > 2" @click.prevent="fetchComments"> {{ post.commentCount }} {{ $t('post.showComments') }}</span>
+      <span v-else @click.prevent="postComment">{{ $t('post.postComment') }}</span>
+    </div>
 
     <div v-if="comments">
       <div v-for="(comment, key) in comments.value" :key="key">
@@ -26,7 +33,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits:['closeModal'],
+  setup(props, context) {
     const comments = ref(null)
     const { fetchPostsByPost } = postApi()
 
@@ -34,9 +42,14 @@ export default defineComponent({
       comments.value = useAsync(() => fetchPostsByPost(props.post.id), `comments_${props.post.id}`)
     }
 
+    function postComment() {
+      context.emit('postComment')
+    }
+
     return {
       comments,
-      fetchComments
+      fetchComments,
+      postComment
     }
   }
 })

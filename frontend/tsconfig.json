@@ -31,7 +31,8 @@
       "nuxt-webpack-optimisations",
       "@nuxtjs/i18n",
       "@nuxtjs/dayjs",
-      "dayjs/plugin/relativeTime"
+      "dayjs/plugin/relativeTime",
+      "dayjs/plugin/isSameOrBefore"
     ]
   },
   "exclude": ["node_modules", ".nuxt", "dist"]
