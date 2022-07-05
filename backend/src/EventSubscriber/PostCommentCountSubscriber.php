@@ -34,6 +34,10 @@ class PostCommentCountSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param ViewEvent $event
+     * @return void
+     */
     public function increaseCommentCount(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
@@ -46,6 +50,10 @@ class PostCommentCountSubscriber implements EventSubscriberInterface
         $this->postRepository->increaseCommentCount($post);
     }
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     private function isComment(Post $post): bool
     {
         if (is_null($post->getParent())){

@@ -3,7 +3,6 @@
 namespace App\Enum;
 
 use App\Doctrine\Type\AbstractEnumType;
-use App\Entity\VoteDirection;
 
 class VoteDirectionDefinition extends AbstractEnumType
 {

@@ -3,16 +3,25 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\PostVoteController;
 use App\Enum\BadgeType;
 use App\Enum\VoteDirection;
 use App\Repository\VotesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VotesRepository::class)]
 #[ApiResource(
     collectionOperations: [
         "get",
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.voter == user"],
+        "post_comment" => [
+            "method" => "POST",
+            "path" => "/posts/{id}/vote",
+            "requirements" => ["id" => "\d+", "vote" => "array"],
+            "controller" => PostVoteController::class,
+            'normalization_context' => ['groups' => 'write:vote'],
+        ],
     ],
     itemOperations: [
         "get",
@@ -28,14 +37,17 @@ class Votes
     private $id;
 
     #[ORM\Column(type: 'votedirection')]
+    #[Groups(["write:vote"])]
     private VoteDirection $direction;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["write:vote"])]
     private $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["write:vote"])]
     private $post;
 
     public function getId(): ?int

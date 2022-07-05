@@ -26,6 +26,10 @@ class UserRegisteredSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param NewUserRegisteredEvent $event
+     * @return void
+     */
     public function onNewUserRegistered(NewUserRegisteredEvent $event)
     {
         $registeredNotification = new NotifyUserAboutRegister($event->getUserId());

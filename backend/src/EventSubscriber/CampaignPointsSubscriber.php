@@ -41,6 +41,10 @@ class CampaignPointsSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param CampaignPointsReceivedEvent $event
+     * @return void
+     */
     public function onCampaignPointsReceived(CampaignPointsReceivedEvent $event)
     {
         $campaign = $this->campaignRepository->find($event->getCampaignId());
