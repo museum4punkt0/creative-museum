@@ -44,8 +44,8 @@ class PostVoteController extends AbstractController
         VotesRepository          $votesRepository,
         EntityManagerInterface   $entityManager,
         EventDispatcherInterface $eventDispatcher,
-        Security $security,
-        PostRepository $postRepository
+        Security                 $security,
+        PostRepository           $postRepository
     )
     {
         $this->votesRepository = $votesRepository;
@@ -91,10 +91,8 @@ class PostVoteController extends AbstractController
         $this->eventDispatcher->dispatch($voteEvent, NewPostVoteEvent::NAME);
 
         $result = [
-           [
-               'vote' => $dbVote,
-               'votesTotal' => $this->postRepository->find($data->getPost())->getVotestotal()
-           ]
+            $dbVote,
+            'votesTotal' => $this->postRepository->find($data->getPost())->getVotestotal()
         ];
 
         return $result;
