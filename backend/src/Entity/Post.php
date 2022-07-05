@@ -99,7 +99,7 @@ class Post
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post","write:comment"])]
+    #[Groups(["write:post", "read:post","write:comment", "write:vote","read:vote"])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
