@@ -46,7 +46,7 @@ class Votes
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[Groups(["write:vote","read:vote"])]
     #[ORM\JoinColumn(nullable: true)]
-    private $voter;
+    public $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false)]
