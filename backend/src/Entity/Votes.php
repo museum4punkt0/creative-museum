@@ -44,8 +44,8 @@ class Votes
     private VoteDirection $direction;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
     #[Groups(["write:vote","read:vote"])]
+    #[ORM\JoinColumn(nullable: true)]
     private $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]

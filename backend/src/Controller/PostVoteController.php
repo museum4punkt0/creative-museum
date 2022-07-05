@@ -60,6 +60,7 @@ class PostVoteController extends AbstractController
             'post' => $data->getPost()->getId()
         ]);
         $switched = false;
+        $data->setVoter($user);
 
         if (!$dbVote) {
             $this->votesRepository->add($data);
