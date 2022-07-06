@@ -3,47 +3,49 @@
     <div
         v-if="user" w:flex="~ row" w:space="md:x-4" w:align="items-center"
       >
-      <div
-        w:position="relative"
-      >
-        <img
-          src="/images/placeholder_profile.png"
-          w:w="6"
-          w:h="6"
-          w:object="contain center"
-          w:rounded="full"
-        />
+      <ClientOnly>
+        <div
+          w:position="relative"
+        >
+            <img
+              src="/images/placeholder_profile.png"
+              w:w="6"
+              w:h="6"
+              w:object="contain center"
+              w:rounded="full"
+            />
+            <span
+              class="highlight-bg"
+              w:pos="absolute"
+              w:h="2"
+              w:w="2"
+              w:top="0"
+              w:right="0"
+              w:rounded="full"
+              w:white
+            />
+            <span
+              v-if="campaignScore && campaignScore.value"
+              class="highlight-bg"
+              w:pos="absolute"
+              w:top="1"
+              w:p="y-0.5 x-2"
+              w:m="-r-1"
+              w:right="full"
+              w:rounded="xl"
+              w:text="xs black space-nowrap"
+            >{{ campaignScore.value.score }} P</span>
+        </div>
         <span
-          class="highlight-bg"
-          w:pos="absolute"
-          w:h="2"
-          w:w="2"
-          w:top="0"
-          w:right="0"
-          w:rounded="full"
-          w:white
-        />
-        <span
-          v-if="campaignScore && campaignScore.value"
-          class="highlight-bg"
-          w:pos="absolute"
-          w:top="1"
-          w:p="y-0.5 x-2"
-          w:m="-r-1"
-          w:right="full"
-          w:rounded="xl"
-          w:text="xs black space-nowrap"
-        >{{ campaignScore.value.score }} P</span>
-      </div>
-      <span
-        w:text="sm overflow-ellipsis ..."
-        w:display="hidden md:inline-block"
-        w:overflow="hidden"
-        w:min-w="24"
-        w:max-w="32"
-      >
-        {{ user.username ? `@${user.username}` : username ? `@${username}` : $t('noUsername') }}
-      </span>
+          w:text="sm overflow-ellipsis ..."
+          w:display="hidden md:inline-block"
+          w:overflow="hidden"
+          w:min-w="24"
+          w:max-w="32"
+        >
+          {{ user.username ? `@${user.username}` : username ? `@${username}` : $t('noUsername') }}
+        </span>
+      </ClientOnly>
     </div>
     <transition
       enter-active-class="duration-300 ease-out opacity-0"
