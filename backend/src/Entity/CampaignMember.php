@@ -29,6 +29,7 @@ class CampaignMember
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["read:me"])]
     private $campaign;
 
     #[ORM\Column(type: 'integer')]

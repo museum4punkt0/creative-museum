@@ -114,7 +114,6 @@ class Post
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class)]
     #[ApiSubresource]
-    #[Groups(["write:post", "read:post","write:comment"])]
     private $comments;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]

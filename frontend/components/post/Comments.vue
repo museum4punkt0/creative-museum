@@ -41,14 +41,9 @@ export default defineComponent({
       comments.value = useAsync(() => fetchPostsByPost(props.post.id), `comments_${props.post.id}`)
     }
 
-    function postComment() {
-      context.emit('postComment')
-    }
-
     return {
       comments,
-      fetchComments,
-      postComment
+      fetchComments
     }
   }
 })
