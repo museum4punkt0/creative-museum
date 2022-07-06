@@ -24,6 +24,7 @@
           w:white
         />
         <span
+          v-if="campaignScore && campaignScore.value"
           class="highlight-bg"
           w:pos="absolute"
           w:top="1"
@@ -32,7 +33,7 @@
           w:right="full"
           w:rounded="xl"
           w:text="xs black space-nowrap"
-        >{{ user.score ? user.score : 0 }} P</span>
+        >{{ campaignScore.value.score }} P</span>
       </div>
       <span
         w:text="sm overflow-ellipsis ..."
@@ -87,14 +88,13 @@ import { userApi } from '@/api/user'
 export default defineComponent({
   setup() {
 
-    const { $auth } = useContext();
+    const context = useContext();
     const store = useStore()
-    const user = computed(() => store.state.auth.user);
     const username = ref('')
     const { supplyUsername } = userApi()
 
     function submitUsername() {
-      supplyUsername(user.value.uuid, username.value).then(
+      supplyUsername(username.value).then(
        function() {
          $auth.fetchUser()
        }
@@ -103,6 +103,7 @@ export default defineComponent({
 
     return {
       user: computed(() => store.state.auth.user),
+      campaignScore: computed(() => context.$auth.$storage.getState('campaignScore')),
       username,
       submitUsername
     }

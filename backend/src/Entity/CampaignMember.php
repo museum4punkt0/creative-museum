@@ -10,9 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignMemberRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact','campaign' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
+        "get",
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [

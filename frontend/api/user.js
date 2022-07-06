@@ -1,24 +1,30 @@
 import { useContext } from '@nuxtjs/composition-api'
 
 export const userApi = () => {
-  const { $api } = useContext()
+  const { $api, $auth } = useContext()
 
-  const finishTutorial = async (userId) => {
-    const res = await $api.patch(`users/${userId}`, {
+  const finishTutorial = async () => {
+    const res = await $api.patch(`users/${$auth.user.id}`, {
       tutorial: true
     })
     return res
   }
 
-  const supplyUsername = async (userId, username) => {
-    const res = await $api.patch(`users/${userId}`, {
+  const supplyUsername = async (username) => {
+    const res = await $api.patch(`users/${$auth.user.id}`, {
       username
     })
     return res
   }
 
+  const fetchUserInfoByCampaign = async (campaignId) => {
+    const res = await $api.get(`campaign_members?user=${$auth.user.id}&campaign=${campaignId}`)
+    return res[0]
+  }
+
   return {
     finishTutorial,
-    supplyUsername
+    supplyUsername,
+    fetchUserInfoByCampaign
   }
 }

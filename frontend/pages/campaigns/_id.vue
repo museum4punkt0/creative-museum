@@ -206,7 +206,7 @@
 import { defineComponent, useAsync, useRoute, computed, useContext, ref } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
-import { on } from 'events'
+import { userApi } from '@/api/user'
 
 export default defineComponent({
   name: 'CampaignPage',
@@ -219,9 +219,10 @@ export default defineComponent({
 
     const { fetchCampaign } = campaignApi()
     const { fetchPostsByCampaign } = postApi()
+    const { fetchUserInfoByCampaign } = userApi()
 
     const isLargerThanLg = computed(() => {
-      return context.$breakpoints.lLg
+        return context.$breakpoints.lLg
     })
 
     let campaign = null
@@ -230,6 +231,7 @@ export default defineComponent({
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
       posts = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
+      context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
     }
 
     return {
