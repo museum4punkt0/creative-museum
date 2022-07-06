@@ -10,8 +10,11 @@
             w:h="21"
             w:rounded="full"
             w:mb="4"
+            w:overflow="hidden"
             class="highlight-bg"
-          ></div>
+          >
+            <img src="https://www.fillmurray.com/300/300" alt="Dummy Image" w:max-w="21" w:h="auto" />
+          </div>
           <p
             w:text="2xl"
           >
@@ -77,8 +80,122 @@
           No Campaign found
         </div>
       </div>
-      <div v-if="isLargerThanLg" w:grid="col-span-3">
-        Sidebar Right
+      <div v-if="isLargerThanLg" w:grid="col-span-3" w:pl="10">
+        <div
+          w:mb="10"
+        >
+          <p
+            w:text="2xl"
+          >
+            Neueste Mitteilungen
+          </p>
+        </div>
+        <div
+          w:mb="10"
+        >
+          <p
+            w:text="lg"
+          >
+            Heute
+          </p>
+          <div
+            w:flex="~ row"
+            w:mt="2"
+          >
+            <div
+            w:w="10"
+            w:h="10"
+            w:rounded="full"
+            w:mb="4"
+            w:mr="3"
+            w:overflow="hidden"
+            w:flex="shrink-0"
+            class="highlight-bg"
+            >
+              <img src="https://www.fillmurray.com/100/100" alt="Dummy Image" w:max-w="10" w:h="auto" />
+            </div>
+            <div
+              w:flex="~ col grow"
+            >
+              <p w:mb="1">Lorem Ipsum sit dolor</p>
+              <p w:text="sm color1">Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+        </div>
+        <div
+          w:mb="10"
+        >
+          <p
+            w:text="lg"
+          >
+            22. Dez.
+          </p>
+          <div
+            w:flex="~ row"
+            w:mt="2"
+          >
+            <div
+            w:w="10"
+            w:h="10"
+            w:rounded="full"
+            w:mb="4"
+            w:mr="3"
+            w:overflow="hidden"
+            w:flex="shrink-0"
+            class="highlight-bg"
+            >
+              <img src="https://www.fillmurray.com/100/100" alt="Dummy Image" w:max-w="10" w:h="auto" />
+            </div>
+            <div
+              w:flex="~ col grow"
+            >
+              <p w:mb="1">Lorem Ipsum sit dolor</p>
+              <p w:text="sm color1">Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+        </div>
+        <div
+          w:mt="14"
+          w:mb="10"
+        >
+          <div
+            w:flex="~ row"
+            w:justify="between"
+            w:mb="10"
+          >
+            <span w:text="2xl">Awards</span>
+          </div>
+          <div
+            w:flex="~ row"
+            w:align="items-center"
+            w:mt="2"
+          >
+            <div
+            w:w="18"
+            w:h="18"
+            w:rounded="full"
+            w:mr="3"
+            w:overflow="hidden"
+            w:flex="shrink-0"
+            class="highlight-bg"
+            >
+              <img src="https://www.fillmurray.com/100/100" alt="Dummy Image" w:max-w="18" w:h="auto" />
+            </div>
+            <div
+              w:flex="~ col grow"
+            >
+              <p w:mb="1">Lorem Ipsum sit dolor</p>
+              <p w:text="sm color1">23.000 Punkte</p>
+              <button
+                w:mt="2"
+                w:align="self-start"
+                class="btn-outline"
+              >
+                Verschenken
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
