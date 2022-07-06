@@ -55,7 +55,7 @@ class PostVoteController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    public function __invoke(Votes $data): Votes|array
+    public function __invoke(Votes $data): array
     {
         $user = $this->security->getUser();
 
