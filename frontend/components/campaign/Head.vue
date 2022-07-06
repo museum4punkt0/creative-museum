@@ -1,7 +1,7 @@
 <template>
   <div>
     <style>
-      :root {
+      body {
         --highlight: {{ campaign.color }};
       }
     </style>
