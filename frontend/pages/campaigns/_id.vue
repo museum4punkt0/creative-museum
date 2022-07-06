@@ -13,7 +13,7 @@
             w:overflow="hidden"
             class="highlight-bg"
           >
-            <img src="https://www.fillmurray.com/300/300" alt="Dummy Image" w:max-w="21" w:h="auto" />
+            <img src="https://fakeimg.pl/300/" alt="Dummy Image" w:max-w="21" w:h="auto" />
           </div>
           <p
             w:text="2xl"
@@ -112,7 +112,7 @@
             w:flex="shrink-0"
             class="highlight-bg"
             >
-              <img src="https://www.fillmurray.com/100/100" alt="Dummy Image" w:max-w="10" w:h="auto" />
+              <img src="https://fakeimg.pl/40/" alt="Dummy Image" w:max-w="10" w:h="auto" />
             </div>
             <div
               w:flex="~ col grow"
@@ -144,7 +144,7 @@
             w:flex="shrink-0"
             class="highlight-bg"
             >
-              <img src="https://www.fillmurray.com/100/100" alt="Dummy Image" w:max-w="10" w:h="auto" />
+              <img src="https://fakeimg.pl/40/" alt="Dummy Image" w:max-w="10" w:h="auto" />
             </div>
             <div
               w:flex="~ col grow"
@@ -179,7 +179,7 @@
             w:flex="shrink-0"
             class="highlight-bg"
             >
-              <img src="https://www.fillmurray.com/100/100" alt="Dummy Image" w:max-w="18" w:h="auto" />
+              <img src="https://fakeimg.pl/72/" alt="Dummy Image" w:max-w="18" w:h="auto" />
             </div>
             <div
               w:flex="~ col grow"
