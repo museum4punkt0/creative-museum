@@ -5,7 +5,7 @@
       ref="globalHeader"
       w:pos="relative"
       w:container="~"
-      w:flex="~ row align-middle items-center"
+      w:flex="~ row"
       w:justify="between"
       w:align="items-center"
     >

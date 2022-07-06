@@ -209,9 +209,15 @@ export default {
     this.$el.addEventListener(this.touchStartEvent, this.onTouchStart)
     document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
+  destroyed() {
+
+  },
   methods: {
     init() {
+
       this.stack = this.campaigns
+
+      document.documentElement.style.setProperty('--highlight', this.stack[0].color)
 
       this.stack.unshift(this.stack.pop())
 
@@ -280,11 +286,6 @@ export default {
     moveStack(dragXPos) {
       const activeCardOffsetX = dragXPos - this.dragStartX
       const activeCardOffsetY = 0
-
-      this.$emit(
-        "move",
-        activeCardOffsetX / (this.cardWidth + this.paddingHorizontal)
-      )
 
       this.stack = this.stack.map((campaign, index) => {
         const isActiveCard = index === this.activeCardIndex
