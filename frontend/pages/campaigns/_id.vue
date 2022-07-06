@@ -2,40 +2,7 @@
   <div>
     <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
       <div v-if="isLargerThanLg" w:grid="col-span-3" w:pr="10">
-        <div
-          w:mb="10"
-        >
-          <div
-            w:w="21"
-            w:h="21"
-            w:rounded="full"
-            w:mb="4"
-            class="highlight-bg"
-          ></div>
-          <p
-            w:text="2xl"
-          >
-            Max Muster
-          </p>
-          <p
-            w:text="lg"
-            w:mb="3"
-            class="highlight-text"
-          >
-            Lorem Ipsum
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-          </p>
-          <button
-            w:mt="10"
-            w:py="2"
-            w:w="full"
-            class="btn-outline"
-            >
-            Profil bearbeiten
-          </button>
-        </div>
+        <CampaignSidebarLeft :campaign="campaign" />
         <div
           w:mb="10"
         >
