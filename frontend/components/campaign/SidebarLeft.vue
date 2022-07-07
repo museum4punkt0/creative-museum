@@ -29,42 +29,38 @@
       <p w:font="bold" w:mb="3">
         Punktestand
       </p>
-      <div
-        w:px="4"
-        w:py="2"
-        w:rounded="full"
-        w:flex="~ row"
-        w:align="items-end"
-        w:justify="center"
-        class="box-shadow"
-      >
-        <span w:text="2xl" w:mr="2">{{campaignScore && campaignScore.value && campaignScore.value.score ? Math.abs(campaignScore.value.score) : '0' }}</span>
-        <span>Punkte</span>
-      </div>
+      <UserScore :campaign="campaign" />
+    </div>
+    <div w:mb="10">
+      <CampaignFilter />
+    </div>
+    <div w:mb="10">
+      <PageFooter />
     </div>
   </div>
 </template>
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
+import UserScore from '../user/UserScore.vue'
+import CampaignFilter from './CampaignFilter.vue'
 
 export default defineComponent({
-  props: {
-    campaign: {
-      type: Object,
-      default: () => {}
+    props: {
+        campaign: {
+            type: Object,
+            default: () => { }
+        },
     },
-  },
-  setup() {
-    const context = useContext()
-
-    const fullName = computed(() => {
-      return context.$auth.user.firstName + ' ' + context.$auth.user.lastName
-    })
-
-    return {
-      fullName,
-      campaignScore: computed(() => context.$auth.$storage.getState('campaignScore'))
-    }
-  },
+    setup() {
+        const context = useContext();
+        const fullName = computed(() => {
+            return context.$auth.user.firstName + " " + context.$auth.user.lastName;
+        });
+        return {
+            fullName,
+            campaignScore: computed(() => context.$auth.$storage.getState("campaignScore"))
+        };
+    },
+    components: { UserScore, CampaignFilter }
 })
 </script>

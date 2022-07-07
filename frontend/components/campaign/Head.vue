@@ -17,10 +17,14 @@
       <p w:m="b-6" v-html="formattedDescription" />
       <a class="highlight-text" href="#" @click.prevent="showLongDescription = false">{{ $t('readLess') }}</a>
     </div>
+    <div v-if="!isLargerThanLg">
+      <p w:text="lg" w:font="bold" w:mt="10" w:mb="3">Dein aktueller Punktestand</p>
+      <UserScore :campaign="campaign" />
+    </div>
   </div>
 </template>
 <script>
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, computed, ref } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     campaign: {
@@ -29,18 +33,24 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const context = useContext()
     const showLongDescription = ref(false)
     const formattedShortDescription = computed(() => {
       return props.campaign.description.split(' ').splice(0, 50).join(' ').replace(/(?:\r\n|\r|\n)/g, '<br />')
-    })
+    });
     const formattedDescription = computed(() => {
       return props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
-    })
+    });
+    const isLargerThanLg = computed(() => {
+        console.log(isLargerThanLg);
+        return context.$breakpoints.lLg
+    });
 
     return {
       formattedShortDescription,
       formattedDescription,
-      showLongDescription
+      showLongDescription,
+      isLargerThanLg
     }
   }
 })
