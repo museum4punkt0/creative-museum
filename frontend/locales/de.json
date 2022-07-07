@@ -38,6 +38,11 @@
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen"
   },
+  "user": {
+    "points": "Punkte",
+    "editProfile": "Profil bearbeiten",
+    "score": "Punktestand"
+  },
   "campaign": {
     "partner": "Kampagnenpartner"
   }

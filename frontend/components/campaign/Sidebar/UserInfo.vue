@@ -22,12 +22,12 @@
         voluptua.
       </p>
       <button w:mt="10" w:py="2" w:w="full" class="btn-outline">
-        Profil bearbeiten
+        {{ $t('user.editProfile') }}
       </button>
     </div>
     <div w:mb="10">
       <p w:font="bold" w:mb="3">
-        Punktestand
+        {{ $t('user.score') }}
       </p>
       <UserScore :campaign="campaign" />
     </div>
