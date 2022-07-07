@@ -46,7 +46,6 @@ export default defineComponent({
             return props.campaign.description.replace(/(?:\r\n|\r|\n)/g, "<br />");
         });
         const isLargerThanLg = computed(() => {
-            console.log(isLargerThanLg);
             return context.$breakpoints.lLg;
         });
         return {
