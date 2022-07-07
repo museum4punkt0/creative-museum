@@ -3,7 +3,7 @@
     <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
       <div w:grid="col-span-3" w:pr="10">
         <div v-if="isLargerThanLg">
-          <CampaignSidebarLeft :campaign="campaign" />
+          <CampaignSidebarUserInfo :campaign="campaign" />
         </div>
       </div>
       <div w:grid="lg:col-span-6">
@@ -177,7 +177,9 @@ export default defineComponent({
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
       posts = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
-      context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
+      if (context.$auth.loggedIn) {
+        context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
+      }
     }
 
     return {
