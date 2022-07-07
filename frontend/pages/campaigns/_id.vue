@@ -2,7 +2,7 @@
   <div>
     <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
       <div v-if="isLargerThanLg" w:grid="col-span-3" w:pr="10">
-        <CampaignSidebarLeft :campaign="campaign" />
+        <CampaignSidebarUserInfo :campaign="campaign" />
       </div>
       <div w:grid="lg:col-span-6">
         <div v-if="campaign">
