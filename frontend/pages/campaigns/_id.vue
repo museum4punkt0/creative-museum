@@ -173,7 +173,9 @@ export default defineComponent({
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
       posts = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
-      context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
+      if (context.$auth.loggedIn) {
+        context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
+      }
     }
 
     return {

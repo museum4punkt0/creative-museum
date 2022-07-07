@@ -34,7 +34,7 @@
               w:right="full"
               w:rounded="xl"
               w:text="xs black space-nowrap"
-            >{{ campaignScore.value.score }} P</span>
+            >{{ campaignScore.value.score.toLocaleString() }} P</span>
         </div>
         <span
           w:text="sm overflow-ellipsis ..."
