@@ -17,7 +17,7 @@
       <p w:m="b-6" v-html="formattedDescription" />
       <a class="highlight-text" href="#" @click.prevent="showLongDescription = false">{{ $t('readLess') }}</a>
     </div>
-    <div v-if="!isLargerThanLg">
+    <div v-if="!isLargerThanLg" w:display="xl:hidden">
       <div w:mb="10">
         <p w:text="lg" w:font="bold" w:mt="10" w:mb="3">Dein aktueller Punktestand</p>
         <UserScore :campaign="campaign" />
