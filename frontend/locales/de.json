@@ -36,7 +36,7 @@
   },
   "post": {
     "postComment": "Kommentar...",
-    "showComments": "Kommentare anzeigen"
+    "showComments": "Alle {count} Kommentare anzeigen"
   },
   "campaign": {
     "partner": "Kampagnenpartner"

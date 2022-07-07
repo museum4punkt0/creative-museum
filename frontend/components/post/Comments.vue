@@ -5,8 +5,9 @@
       w:cursor="pointer"
       w:text="sm"
     >
-      <span v-if="post.comments && post.commentCount > 2" @click.prevent="fetchComments"> {{ post.commentCount }} {{ $t('post.showComments') }}</span>
-      <span v-else @click.prevent="postComment">{{ $t('post.postComment') }}</span>
+      <ArrowIcon w:pos="relative" w:top="0.5" w:m="r-0.5" />
+      <span v-if="post.comments && post.commentCount > 0" @click.prevent="fetchComments"> {{ $t('post.showComments', { count: post.commentCount }) }}</span>
+      <span v-else @click.prevent="showCommentForm = true">{{ $t('post.postComment') }}</span>
     </div>
 
     <div v-if="comments">
@@ -14,35 +15,40 @@
         <PostCommentItem :comment="comment" />
       </div>
     </div>
-    <div v-else>
-      <div v-for="(comment, key) in post.comments" :key="key">
-          <PostCommentItem :comment="comment" />
-      </div>
+
+    <div v-if="showCommentForm" w:m="t-4">
+      <textarea class="input-text" w:p="x-4 y-2" w:text="xs"></textarea>
     </div>
   </div>
 </template>
 <script>
 import { defineComponent, useAsync, ref } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
+import ArrowIcon from '@/assets/icons/arrow.svg?inline'
 
 export default defineComponent({
+  components: {
+    ArrowIcon
+  },
   props: {
     post: {
       type: Object,
       required: true
     }
   },
-  emits:['closeModal'],
-  setup(props, context) {
+  setup(props) {
     const comments = ref(null)
+    const showCommentForm = ref(false)
     const { fetchPostsByPost } = postApi()
 
     function fetchComments() {
       comments.value = useAsync(() => fetchPostsByPost(props.post.id), `comments_${props.post.id}`)
+      showCommentForm.value = true
     }
 
     return {
       comments,
+      showCommentForm,
       fetchComments
     }
   }

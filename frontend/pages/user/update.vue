@@ -4,8 +4,12 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useStore } from '@nuxtjs/composition-api'
 export default defineComponent({
-  name: 'UserUpdate'
+  name: 'UserUpdate',
+  setup() {
+    const store = useStore()
+    store.dispatch('hideAddButton')
+  },
 })
 </script>

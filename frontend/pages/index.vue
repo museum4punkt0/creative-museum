@@ -36,6 +36,8 @@ export default defineComponent({
       tutorialOpen.value = true
     }
 
+    store.dispatch('hideAddButton')
+
     return {
       tutorialOpen,
       campaigns

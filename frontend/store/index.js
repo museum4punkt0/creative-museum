@@ -1,34 +1,26 @@
 export const state = () => ({
-  authenticated: false
+  showAddButton: false
 })
-
-export const getters = () => ({
-  isAuth: state => state.authenticated
-})
-
-export const mutations = () => ({
-  login (state) {
-    console.log('authenticated!')
-    Vue.set(state, 'authenticated', true)
+export const mutations = {
+  SHOW_ADD_BUTTON(state) {
+    state.showAddButton = true
   },
-  logout (state) {
-    Vue.set(state, 'authenticated', false)
+  HIDE_ADD_BUTTON(state) {
+    state.showAddButton = false
   }
-})
+}
 
-export const actions = () => ({
-  nuxtServerInit({ commit }, { req }) {
-    if (req.session && req.session.authUser) {
-      commit('login')
-    } else {
-      commit('logout')
-    }
+export const actions = {
+  showAddButton ({ commit }) {
+    commit('SHOW_ADD_BUTTON')
   },
-  login ({ commit }) {
-    commit('login')
-  },
-
-  logout ({ commit }) {
-    commit('logout')
+  hideAddButton ({ commit }) {
+    commit('HIDE_ADD_BUTTON')
   }
-})
+}
+
+export const getters = {
+  showAddButton(state) {
+    return state.showAddButton
+  }
+}

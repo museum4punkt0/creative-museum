@@ -272,7 +272,6 @@ export default {
       const minDistanceToTravel =
         (this.cardWidth + this.paddingHorizontal) / (1 / this.sensitivity)
 
-      this.$emit("move", 0)
       if (this.isDraggingPrevious) {
         if (distanceTravelledX > minDistanceToTravel) {
           this.onPrevious()

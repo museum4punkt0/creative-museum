@@ -21,6 +21,7 @@
         />
       </NuxtLink>
       <button
+        v-show="isAddButtonVisible"
         class="add-btn"
         w:pos="absolute"
         w:left="1/2"
@@ -119,7 +120,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useStore, computed } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
 
 export default defineComponent({
@@ -128,18 +129,23 @@ export default defineComponent({
     Logo,
   },
   setup() {
+    const store = useStore()
+    const context = useContext()
+
     const isMenuVisible = ref(false)
+    const isAddButtonVisible = ref(false)
 
     function closeMenu() {
       isMenuVisible.value = false
     }
 
     function login() {
-      this.$auth.login().then(closeMenu())
+      context.$auth.login().then(closeMenu())
     }
 
     return {
       isMenuVisible,
+      isAddButtonVisible: computed(() => store.state.showAddButton),
       closeMenu,
       login
     }

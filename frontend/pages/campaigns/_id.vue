@@ -145,17 +145,18 @@
 
 <script>
 
-import { defineComponent, useAsync, useRoute, computed, useContext, ref } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute, computed, useContext, ref, useStore } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import { userApi } from '@/api/user'
 
 export default defineComponent({
   name: 'CampaignPage',
-  setup() {
+  setup(props, ctx) {
 
     const route = useRoute()
     const context = useContext()
+    const store = useStore()
 
     const postComment = ref(false)
 
@@ -164,7 +165,7 @@ export default defineComponent({
     const { fetchUserInfoByCampaign } = userApi()
 
     const isLargerThanLg = computed(() => {
-        return context.$breakpoints.lLg
+      return context.$breakpoints.lLg
     })
 
     let campaign = null
@@ -177,6 +178,8 @@ export default defineComponent({
         context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
       }
     }
+
+    store.dispatch('showAddButton')
 
     return {
       postComment,
