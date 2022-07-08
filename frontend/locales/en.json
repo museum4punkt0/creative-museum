@@ -5,6 +5,24 @@
       "title": "Welcome to Creative Museum!"
     }
   },
+  "navigation": {
+    "profile": {
+      "header": "Profile",
+      "settings": "Settings",
+      "search": "Search profile",
+      "invite": "Invite friends"
+    },
+    "museum": {
+      "header": "Creative Museum",
+      "about": "About Creative Museum",
+      "firstSteps": "First steps",
+      "faq": "FAQ"
+    },
+    "language": {
+      "easyLanguage": "Easy Language",
+      "signLanguage": "English sign language"
+    }
+  },
   "user": {
     "points": "Points"
   }

@@ -36,6 +36,24 @@
       "text": "Badges werden dir verliehen, indem du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und kommentiere drei Posts!"
     }
   },
+  "navigation": {
+    "profile": {
+      "header": "Profil",
+      "settings": "Einstellungen",
+      "search": "Profil suchen",
+      "invite": "Freunde einladen"
+    },
+    "museum": {
+      "header": "Creative Museum",
+      "about": "Über Creative Museum",
+      "firstSteps": "Erste Schritte",
+      "faq": "FAQ"
+    },
+    "language": {
+      "easyLanguage": "Leichte Sprache",
+      "signLanguage": "Deutsche Gebärdensprache (DGS)"
+    }
+  },
   "post": {
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen"
@@ -46,6 +64,8 @@
     "score": "Punktestand"
   },
   "campaign": {
-    "partner": "Kampagnenpartner"
+    "partner": "Kampagnenpartner",
+    "latestPosts": "Neueste Mitteilungen",
+    "awards": "Awards"
   }
 }
