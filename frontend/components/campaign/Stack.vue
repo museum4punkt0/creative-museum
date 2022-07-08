@@ -173,7 +173,7 @@ export default {
         return {
           xPos: !isMobile ? index < this._maxVisibleCampaigns ? xPos : document.getElementById('pageLogo').getBoundingClientRect().left + (this.cardWidth * (index - 1)) : 0,
           yPos: isMobile ? index < this._maxVisibleCampaigns ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
-          rotate: index !== 1 ? Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
+          rotate: index !== 1 ? Math.floor(Math.random() * ( 5 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
           width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
           zIndex: index !== 0 ? this.campaigns.length + index * -1 : this.isDraggingPrevious ? isMobile ? 0 : this._maxVisibleCampaigns : 0,
           isDragging: this.isDragging

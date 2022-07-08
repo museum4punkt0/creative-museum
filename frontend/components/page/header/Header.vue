@@ -36,7 +36,7 @@
     <div>
       <transition enter-active-class="duration-300 ease-out opacity-0" enter-to-class="opacity-100"
         leave-active-class="duration-200 ease-in" leave-class="opacity-100" leave-to-class="opacity-0">
-        <div v-show="isMenuVisible" w:pos="absolute" w:top="16" w:left="0" w:right="0" w:p="t-20 b-10" w:min-h="sm"
+        <div v-show="isMenuVisible" w:pos="absolute" w:top="12 md:16" w:left="0" w:right="0" w:p="t-10 md:t-20 b-10" w:min-h="sm"
           w:bg="grey" w:shadow="lg black/20" w:z="50">
           <div w:p="x-5" w:grid="lg:~ lg:cols-4" w:container="~">
             <div w:mb="10 lg:0">
