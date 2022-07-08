@@ -68,5 +68,34 @@
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards"
+  },
+  "pages": {
+    "imprint": {
+      "title": "Impressum"
+    },
+    "privacy": {
+      "title": "Datenschutz"
+    },
+    "accessibility": {
+      "title": "Erklärung zur Barrierefreiheit"
+    },
+    "external": {
+      "stateMuseum": {
+        "title": "Badisches Landesmuseum",
+        "url": "https://www.landesmuseum.de/museum"
+      },
+      "instagram": {
+        "title": "Instagram",
+        "url": "https://www.instagram.com/?hl=de"
+      },
+      "twitter": {
+        "title": "Twitter",
+        "url": "https://twitter.com/?lang=de"
+      },
+      "facebook": {
+        "title": "Facebook",
+        "url": "https://www.facebook.com/"
+      }
+    }
   }
 }

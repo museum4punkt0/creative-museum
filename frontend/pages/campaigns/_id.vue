@@ -144,6 +144,9 @@
         </div>
       </div>
     </div>
+    <div v-if="!isLargerThanLg" w:display="xl:hidden">
+      <PageFooter />
+    </div>
   </div>
 </template>
 

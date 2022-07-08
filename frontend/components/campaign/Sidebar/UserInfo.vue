@@ -34,8 +34,10 @@
     <div w:mb="10">
       <CampaignFilter />
     </div>
-    <div w:mb="10">
-      <PageFooter />
+    <div v-if="isLargerThanLg">
+      <div w:mb="10">
+        <PageFooter />
+      </div>
     </div>
   </div>
 </template>
@@ -60,9 +62,13 @@ export default defineComponent({
         const fullName = computed(() => {
             return context.$auth.user.firstName + " " + context.$auth.user.lastName;
         });
+        const isLargerThanLg = computed(() => {
+          return context.$breakpoints.lLg
+        })
         return {
             fullName,
-            campaignScore: computed(() => context.$auth.$storage.getState("campaignScore"))
+            campaignScore: computed(() => context.$auth.$storage.getState("campaignScore")),
+            isLargerThanLg
         };
     }
 })
