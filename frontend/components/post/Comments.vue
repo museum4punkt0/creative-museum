@@ -5,7 +5,7 @@
       w:cursor="pointer"
       w:text="sm"
     >
-      <ArrowIcon w:pos="relative" w:top="0.5" w:m="r-0.5" />
+      <ArrowIcon w:pos="relative" w:m="r-0.5" w:display="inline-block" />
       <span v-if="post.comments && post.commentCount > 0" @click.prevent="fetchComments"> {{ $t('post.showComments', { count: post.commentCount }) }}</span>
       <span v-else @click.prevent="showCommentForm = true">{{ $t('post.postComment') }}</span>
     </div>
