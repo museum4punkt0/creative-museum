@@ -3,6 +3,7 @@
     w:text="center"
   >
     <LogoFull
+      w:display="inline-block"
       w:m="6"
     />
     <div><strong>&copy; 2022 Badisches Landesmuseum</strong></div>
