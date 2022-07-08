@@ -206,7 +206,7 @@ export default {
   mounted() {
     this.init()
     window.addEventListener("resize", this.handleResize)
-    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart)
+    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart, {passive: true})
     document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
   destroyed() {
