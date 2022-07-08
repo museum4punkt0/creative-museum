@@ -56,10 +56,16 @@
               </button>
             </div>
             <div w:mb="10 lg:0">
-              <p w:text="lg" w:font="bold leading-loose">Profil</p>
+              <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.profile.header') }}</p>
+              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.settings') }}</NuxtLink>
+              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.search') }}</NuxtLink>
+              <NuxtLink to="/" w:display="block">{{ $t('navigation.profile.invite') }}</NuxtLink>
             </div>
             <div w:mb="10 lg:0">
-              <p w:text="lg" w:font="bold leading-loose">Creative Museum</p>
+              <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.museum.header') }}</p>
+              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.museum.about') }}</NuxtLink>
+              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.museum.firstSteps') }}</NuxtLink>
+              <NuxtLink to="/" w:display="block">{{ $t('navigation.museum.faq') }}</NuxtLink>
             </div>
             <div w:mb="10 lg:0">
               <div w:flex="~ row" w:align="items-center" w:mb="4">
@@ -77,11 +83,11 @@
               </div>
               <div w:flex="~ row" w:align="items-center" w:mb="4">
                 <SimpleLanguageIcon />
-                <span>Leichte Sprache</span>
+                <span>{{ $t('navigation.language.easyLanguage') }}</span>
               </div>
               <div w:flex="~ row" w:align="items-center" w:mb="4">
                 <SignLanguageIcon />
-                <span>Deutsche Gebärdensprache</span>
+                <span>{{ $t('navigation.language.signLanguage') }}</span>
               </div>
             </div>
           </div>

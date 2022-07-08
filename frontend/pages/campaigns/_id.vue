@@ -32,7 +32,7 @@
             <p
               w:text="2xl"
             >
-              Neueste Mitteilungen
+              {{ $t('campaign.latestPosts') }}
             </p>
           </div>
           <div
@@ -108,7 +108,7 @@
               w:justify="between"
               w:mb="10"
             >
-              <span w:text="2xl">Awards</span>
+              <span w:text="2xl">{{ $t('campaign.awards') }}</span>
             </div>
             <div
               w:flex="~ row"
