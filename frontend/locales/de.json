@@ -12,6 +12,7 @@
     "title": "Please provide a Username"
   },
   "tutorial": {
+    "firstSteps": "Erste Schritte",
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
       "title": "Willkommen im Creative Museum!",

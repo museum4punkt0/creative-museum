@@ -29,7 +29,7 @@
             w:text="xl lg:xxl"
           >
             <NuxtLink
-              :to="`/campaigns/${campaign.id}`"
+              :to="localePath(`/campaigns/${campaign.id}`)"
             >
               {{ campaign.title }}
             </NuxtLink>

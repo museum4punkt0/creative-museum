@@ -1,7 +1,10 @@
 {
   "tutorial": {
     "step1": {
-      "title": "Willkommen im Creative Museum!"
+      "title": "Welcome to Creative Museum!"
     }
+  },
+  "user": {
+    "points": "Points"
   }
 }
