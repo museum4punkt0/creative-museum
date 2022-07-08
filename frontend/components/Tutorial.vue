@@ -1,7 +1,7 @@
 <template>
   <div>
     <div w:p="6" class="page-header">
-      <NuxtLink to="/" class="back-btn">Erste Schritte</NuxtLink>
+      <NuxtLink :to="localePath('/')" class="back-btn">{{ $t('tutorial.firstSteps') }}</NuxtLink>
     </div>
     <div
       class="box-shadow-mobile"

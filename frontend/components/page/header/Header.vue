@@ -2,7 +2,7 @@
   <div>
     <div id="globalHeader" ref="globalHeader" w:pos="relative" w:container="~" w:flex="~ row" w:justify="between"
       w:align="items-center">
-      <NuxtLink id="pageLogo" to="/">
+      <NuxtLink id="pageLogo" :to="localePath('/')">
         <Logo w:text="white/50 hover:$highlight" w:h="8 md:12" w:m="l-5 y-3" w:transition="all duration-300 ease-in-out"
           w:transform="gpu hover:scale-125" w:cursor="pointer" />
       </NuxtLink>
