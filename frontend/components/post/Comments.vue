@@ -5,12 +5,12 @@
       w:cursor="pointer"
       w:text="sm"
     >
-      <ArrowIcon w:pos="relative" w:m="r-0.5" w:display="inline-block" />
-      <span v-if="post.comments && post.commentCount > 0" @click.prevent="fetchComments"> {{ $t('post.showComments', { count: post.commentCount }) }}</span>
-      <span v-else @click.prevent="showCommentForm = true">{{ $t('post.postComment') }}</span>
+      <ArrowIcon w:pos="relative" w:m="r-0.5" w:display="inline-block" :w:transform="showComments || showCommentForm ? 'gpu rotate-180' : ''" />
+      <span v-if="post.comments && post.commentCount > 0" @click.prevent="!showComments ? fetchComments() : showComments = showCommentForm = false"> {{ !showComments ? $t('post.showComments', { count: post.commentCount }) :  $t('post.hideComments', { count: post.commentCount }) }}</span>
+      <span v-else @click.prevent="showCommentForm = !showCommentForm">{{ $t('post.postComment') }}</span>
     </div>
 
-    <div v-if="comments">
+    <div v-if="comments && showComments">
       <div v-for="(comment, key) in comments.value" :key="key">
         <PostCommentItem :comment="comment" />
       </div>
@@ -38,16 +38,19 @@ export default defineComponent({
   },
   setup(props) {
     const comments = ref(null)
+    const showComments = ref(false)
     const showCommentForm = ref(false)
     const { fetchPostsByPost } = postApi()
 
     function fetchComments() {
       comments.value = useAsync(() => fetchPostsByPost(props.post.id), `comments_${props.post.id}`)
       showCommentForm.value = true
+      showComments.value = true
     }
 
     return {
       comments,
+      showComments,
       showCommentForm,
       fetchComments
     }

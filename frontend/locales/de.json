@@ -56,7 +56,8 @@
   },
   "post": {
     "postComment": "Kommentar...",
-    "showComments": "Alle {count} Kommentare anzeigen"
+    "showComments": "Alle {count} Kommentare anzeigen",
+    "hideComments": "Alle {count} Kommentare ausblenden"
   },
   "user": {
     "points": "Punkte",
