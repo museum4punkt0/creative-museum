@@ -73,7 +73,7 @@
                     <label for="en" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">EN</label>
                   </div>
                 </div>
-                <p w:ml="4" w:font="leading-none">Deutsch</p>
+                <p w:ml="4" w:font="leading-none">{{ $t('locale') }}</p>
               </div>
               <div w:flex="~ row" w:align="items-center" w:mb="4">
                 <SimpleLanguageIcon />
