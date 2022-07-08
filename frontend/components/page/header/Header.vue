@@ -40,28 +40,20 @@
           w:bg="grey" w:shadow="lg black/20" w:z="50">
           <div w:p="x-5" w:grid="lg:~ lg:cols-4" w:container="~">
             <div w:mb="10 lg:0">
-              <NuxtLink to="/login" w:text="white" w:flex="~ row" w:align="items-center" w:font="bold leading-loose"
-                @click.native="login">
-                <svg viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg" w:w="6" w:h="6" w:mr="2">
-                  <g clip-path="url(#clip0_2649_44109)">
-                    <path
-                      d="M13.2656 17.2812L17.2371 13.3098C17.3433 13.2037 17.4276 13.0776 17.4851 12.9389C17.5426 12.8002 17.5722 12.6514 17.5722 12.5013C17.5722 12.3511 17.5426 12.2023 17.4851 12.0636C17.4276 11.9249 17.3433 11.7988 17.2371 11.6927L13.2656 7.72125"
-                      stroke="white" stroke-miterlimit="10" stroke-linecap="round" />
-                    <path d="M2.83984 12.502L17.0684 12.502" stroke="white" stroke-miterlimit="10"
-                      stroke-linecap="round" />
-                    <path
-                      d="M11.2679 22.6282H20.2536C20.5567 22.6282 20.8474 22.5078 21.0617 22.2935C21.2761 22.0792 21.3965 21.7885 21.3965 21.4854V3.51395C21.3965 3.21085 21.2761 2.92016 21.0617 2.70583C20.8474 2.4915 20.5567 2.37109 20.2536 2.37109H11.2679"
-                      stroke="white" stroke-miterlimit="10" stroke-linecap="round" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_2649_44109">
-                      <rect width="24" height="24" fill="white" transform="matrix(-1 0 0 1 24 0.5)" />
-                    </clipPath>
-                  </defs>
-                </svg>
-
+              <button
+                v-if="!$auth.loggedIn"
+                w:text="white" w:flex="~ row" w:align="items-center" w:font="bold leading-loose"
+                @click.prevent="login">
+                <LoginIcon />
                 <span>Login</span>
-              </NuxtLink>
+              </button>
+              <button
+                v-else
+                w:text="white" w:flex="~ row" w:align="items-center" w:font="bold leading-loose"
+                @click.prevent="logout">
+                <LogoutIcon w:m="r-2" />
+                <span>Logout</span>
+              </button>
             </div>
             <div w:mb="10 lg:0">
               <p w:text="lg" w:font="bold leading-loose">Profil</p>
@@ -130,11 +122,15 @@
 <script>
 import { defineComponent, ref, useContext, useStore, computed } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
+import LoginIcon from '@/assets/icons/login.svg?inline'
+import LogoutIcon from '@/assets/icons/logout.svg?inline'
 
 export default defineComponent({
   name: 'PageHeader',
   components: {
     Logo,
+    LoginIcon,
+    LogoutIcon
   },
   setup() {
     const store = useStore()
@@ -150,11 +146,16 @@ export default defineComponent({
       context.$auth.login().then(closeMenu())
     }
 
+    function logout() {
+      context.$auth.logout().then(closeMenu())
+    }
+
     return {
       isMenuVisible,
       isAddButtonVisible: computed(() => store.state.showAddButton),
       closeMenu,
-      login
+      login,
+      logout
     }
   },
 })
