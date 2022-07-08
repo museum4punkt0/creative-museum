@@ -55,7 +55,10 @@ use Symfony\Component\Validator\Constraints as Assert;
             "normalization_context" => ["groups" => ["read:post"]]
         ],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+        "delete" => [
+            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)",
+            "normalization_context" => ["groups" => ["delete:post"]]
+        ],
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
@@ -109,7 +112,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["write:comment"])]
+    #[Groups(["write:comment","delete:post"])]
     private $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class)]
