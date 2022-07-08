@@ -45,6 +45,10 @@ import UserScore from '../../user/UserScore.vue'
 import CampaignFilter from '../CampaignFilter.vue'
 
 export default defineComponent({
+    components: {
+      UserScore,
+      CampaignFilter
+    },
     props: {
         campaign: {
             type: Object,
@@ -60,7 +64,6 @@ export default defineComponent({
             fullName,
             campaignScore: computed(() => context.$auth.$storage.getState("campaignScore"))
         };
-    },
-    components: { UserScore, CampaignFilter }
+    }
 })
 </script>
