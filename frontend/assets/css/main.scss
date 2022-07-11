@@ -126,55 +126,53 @@
       @apply content-[''] block absolute w-4 h-4 left-0 top-1/2 transform -translate-y-1/2 -rotate-45 border-t-3 border-t-white border-l-3 border-l-white;
     }
   }
+
+  .btn-outline {
+    transition: color 200ms, background-color 200ms, border-color 200ms;
+    &:hover,
+    &.active {
+      color: #2E2E2E;
+      background-color: var(--highlight);
+      border-color: var(--highlight);
+      cursor: pointer;
+    }
+  }
+
+  // ****************************** TOGGLE CUSTOM STYLES ******************************
+  // **********************************************************************************
+  .toggle {
+    position: relative;
+    border-radius: 16px;
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      box-shadow: inset -1px -1px 2px rgba(100, 100, 100, 0.4), inset 1px 1px 2px rgba(0, 0, 0, 0.6);
+      border-radius: 16px;
+      content: '';
+      z-index: 1;
+      pointer-events: none;
+    }
+    &__item {
+      input[type="radio"] {
+        ~ label {
+          border-radius: 16px;
+          margin-left: -3px;
+        }
+        &:checked {
+          ~ label {
+            background-color: var(--highlight);
+          }
+        }
+      }
+    }
+  }
+
 }
 
 @layer utilities {
 
 }
 
-// ****************************** FILTER CUSTOM STYLES ******************************
-// **********************************************************************************
-.filter-item {
-  transition: color 200ms, background-color 200ms, border-color 200ms;
-
-  &:hover,
-  &.active {
-    color: #2E2E2E;
-    background-color: var(--highlight);
-    border-color: var(--highlight);
-    cursor: pointer;
-  }
-}
-
-
-// ****************************** TOGGLE CUSTOM STYLES ******************************
-// **********************************************************************************
-.toggle {
-  position: relative;
-  border-radius: 16px;
-  &::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    box-shadow: inset -1px -1px 2px rgba(100, 100, 100, 0.4), inset 1px 1px 2px rgba(0, 0, 0, 0.6);
-    border-radius: 16px;
-    content: '';
-    z-index: 1;
-    pointer-events: none;
-  }
-  &__item {
-    input[type="radio"] {
-      ~ label {
-        border-radius: 16px;
-        margin-left: -3px;
-      }
-      &:checked {
-        ~ label {
-          background-color: var(--highlight);
-        }
-      }
-    }
-  }
-}

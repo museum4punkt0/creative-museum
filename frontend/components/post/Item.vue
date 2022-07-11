@@ -4,7 +4,7 @@
       <PostHead :post="post" w:m="b-4" />
       <component :is="componentName" :post="post" w:m="b-4" />
       <PostFooter :post="post" w:m="b-4" />
-      <PostComments :post="post" />
+      <PostComments :post="post" @commentsLoaded="refetchPostData" />
     </div>
     <div v-else class="highlight-text">
       <p>{{ post.body }}</p>
@@ -13,6 +13,7 @@
 </template>
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { postApi } from '@/api/post'
 
 export default defineComponent({
   props: {
@@ -21,12 +22,18 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, context) {
     const componentName = computed(() => {
       return 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1)
     })
+
+    const refetchPostData = () => {
+      context.emit('update:post', props.post.id)
+    }
+
     return {
-      componentName
+      componentName,
+      refetchPostData
     }
   }
 })

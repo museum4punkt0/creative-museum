@@ -9,11 +9,12 @@
       <div w:grid="lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead :campaign="campaign" />
-          <div v-if="posts">
+          <div v-if="posts.value">
             <PostItem
-              v-for="(post, key) in posts"
+              v-for="(post, key) in posts.value"
               :key="key"
               :post="post"
+              @update:post="updatePost"
             />
           </div>
           <div v-else>
@@ -159,7 +160,7 @@ import { userApi } from '@/api/user'
 
 export default defineComponent({
   name: 'CampaignPage',
-  setup(props, ctx) {
+  setup() {
 
     const route = useRoute()
     const context = useContext()
@@ -168,7 +169,7 @@ export default defineComponent({
     const postComment = ref(false)
 
     const { fetchCampaign } = campaignApi()
-    const { fetchPostsByCampaign } = postApi()
+    const { fetchPost, fetchPostsByCampaign } = postApi()
     const { fetchUserInfoByCampaign } = userApi()
 
     const isLargerThanLg = computed(() => {
@@ -176,14 +177,24 @@ export default defineComponent({
     })
 
     let campaign = null
-    let posts = null
+    const posts = ref(null)
 
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
-      posts = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
+      posts.value = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
       if (context.$auth.loggedIn) {
         context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
       }
+    }
+
+    function updatePost(postId) {
+      posts.value.value.forEach(function(item, key) {
+        if (item.id === postId) {
+          fetchPost(postId).then(function(response) {
+            posts.value.value[key].commentCount = response.commentCount
+          })
+        }
+      })
     }
 
     store.dispatch('showAddButton')
@@ -192,7 +203,8 @@ export default defineComponent({
       postComment,
       campaign,
       posts,
-      isLargerThanLg
+      isLargerThanLg,
+      updatePost
     }
   }
 })

@@ -32,11 +32,22 @@ export const postApi = () => {
     return res[0]
   }
 
+  const submitCommentByPost = async (postId, body, campaignId) => {
+    const res = await $api.post(`posts/${postId}/comments`, {
+      author: `/v1/users/${$auth.user.uuid}`,
+      body,
+      campaign: `/v1/campaigns/${campaignId}`,
+      postType: 'text'
+    })
+    return res
+  }
+
   return {
     fetchPost,
     fetchPostsByCampaign,
     fetchPostsByPost,
     votePost,
-    fetchYourVoteByPost
+    fetchYourVoteByPost,
+    submitCommentByPost
   }
 }
