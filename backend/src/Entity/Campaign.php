@@ -36,7 +36,7 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read","read:post"])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
