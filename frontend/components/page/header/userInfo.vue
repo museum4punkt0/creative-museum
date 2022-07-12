@@ -54,32 +54,18 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <div
-        v-if="user && !user.username"
-        w:pos="fixed"
-        w:bg="grey/60"
-        w:top="0"
-        w:left="0"
-        w:bottom="0"
-        w:right="0"
-        w:z="100"
-      >
-        <div
-          w:pos="fixed"
-          w:top="1/2"
-          w:left="1/2"
-          w:transform="~ -translate-x-1/2 -translate-y-1/2"
-          w:p="6"
-          w:w="sm"
-          w:shadow="lg"
-          w:border="rounded-lg"
-          w:bg="grey"
-        >
-          <h2 w:m="b-2"> {{ $t('provideUsername.title') }} </h2>
-          <input v-model="username" type="text" class="input-text" />
-          <button v-show="username.length > 3" class="btn-primary w-full mt-4" @click.prevent="submitUsername">{{ $t('submit') }}</button>
+
+      <Modal v-if="user && !user.username" t="10">
+        <div>
+          <h1 class="page-header" w:p="4"> {{ $t('provideUsername.title') }} </h1>
+          <div w:p="x-4 b-4">
+            <input v-model="username" type="text" class="input-text" placeholder="Username*" w:p="4" />
+            <div w:pos="fixed lg:static" w:bottom="0" w:left="0" w:right="0" w:p="4 lg:0">
+              <button v-show="username.length > 3" class="btn-primary w-full mt-4" @click.prevent="submitUsername">{{ $t('submit') }}</button>
+            </div>
+          </div>
         </div>
-      </div>
+      </Modal>
     </transition>
   </div>
 </template>

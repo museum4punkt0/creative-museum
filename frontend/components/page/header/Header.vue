@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="globalHeader" ref="globalHeader" w:pos="relative" w:container="~" w:flex="~ row" w:justify="between"
+    <div id="globalHeader" ref="globalHeader" w:pos="relative" w:container="~" w:flex="~ row" w:justify="between" w:z="100"
       w:align="items-center">
       <NuxtLink id="pageLogo" :to="localePath('/')">
         <Logo w:text="white/50 hover:$highlight" w:h="8 md:12" w:m="l-5 y-3" w:transition="all duration-300 ease-in-out"

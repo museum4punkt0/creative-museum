@@ -10,7 +10,9 @@
   "noUsername": "Kein Benutzername",
   "duration": "Dauer",
   "provideUsername": {
-    "title": "Please provide a Username"
+    "title": "Username festlegen",
+    "notice": "Unerlaubte Zeichen im Usernamen  + Erklärung, welche vorkommen dürfen.",
+    "alreadyTaken": "Ups! Der Username ist leider schon vergeben."
   },
   "tutorial": {
     "firstSteps": "Erste Schritte",

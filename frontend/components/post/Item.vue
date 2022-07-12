@@ -6,7 +6,7 @@
       <PostFooter :post="post" w:m="b-4" />
       <PostComments :post="post" @commentsLoaded="refetchPostData" />
     </div>
-    <div v-else class="highlight-text">
+    <div v-else class="highlight-text" w:text="center">
       <p>{{ post.body }}</p>
     </div>
   </div>
