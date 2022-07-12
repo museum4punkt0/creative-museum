@@ -12,8 +12,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
-import { postApi } from '@/api/post'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -27,7 +26,7 @@ export default defineComponent({
       return 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1)
     })
 
-    const refetchPostData = () => {
+    function refetchPostData() {
       context.emit('update:post', props.post.id)
     }
 

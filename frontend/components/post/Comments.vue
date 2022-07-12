@@ -10,28 +10,35 @@
       <span v-else @click.prevent="showCommentForm = !showCommentForm">{{ $t('post.postComment') }}</span>
     </div>
 
-    <div v-if="comments && showComments">
-      <div v-for="(comment, key) in comments.value" :key="key">
-        <PostCommentItem :comment="comment" />
+    <div v-if="comments && showComments || showCommentForm" w:pos="relative">
+      <div v-if="comments && showComments">
+        <div v-for="(comment, key) in comments.value" :key="key">
+          <PostCommentItem :comment="comment" />
+        </div>
       </div>
-    </div>
 
-    <form v-if="showCommentForm" w:m="t-4" w:pos="fixed lg:static" w:bottom="0" w:left="0" w:right="0" w:bg="grey" w:p="6 lg:0"  @submit.prevent="submitComment">
-      <div w:container="~ lg:none" w:pos="relative">
-        <textarea  v-model="commentBody" class="input-text" w:p="x-4 y-2" w:text="md" w:resize="none" :placeholder="$t('post.commentPlaceholder')" @keyup.enter="submitComment"></textarea>
-        <button type="submit" w:pos="absolute" w:w="3" w:right="3" w:top="2" w:transform="gpu rotate-180" w:text="white/50"><ArrowIcon /></button>
-      </div>
-    </form>
+      <form v-if="showCommentForm" w:pos="sticky lg:static" w:bottom="0" w:left="0" w:right="0" w:bg="grey" w:p="t-4 b-4 x-4 lg:(x-0 b-0)" w:m="-b-10 -r-10 -l-10 lg:(b-0 r-0 l-0)" @submit.prevent="submitComment">
+        <div w:container="~ lg:none" w:pos="relative">
+          <textarea v-model="commentBody" v-autogrow class="input-text" w:p="x-4 y-2 r-8" rows="1" w:text="md" w:resize="none" :placeholder="$t('post.commentPlaceholder')" @keyup.enter="submitComment"></textarea>
+          <button type="submit" w:pos="absolute" w:w="3" w:right="3" w:top="1.5" w:maxh="3xl" w:transform="gpu rotate-180" w:text="white/50" w:z="100"><ArrowIcon /></button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 <script>
-import { defineComponent, useAsync, ref } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, ref, watch } from '@nuxtjs/composition-api'
+import { TextareaAutogrowDirective } from 'vue-textarea-autogrow-directive'
 import { postApi } from '@/api/post'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
+
 
 export default defineComponent({
   components: {
     ArrowIcon
+  },
+  directives: {
+    'autogrow': TextareaAutogrowDirective
   },
   props: {
     post: {

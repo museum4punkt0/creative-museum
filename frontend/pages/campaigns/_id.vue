@@ -15,6 +15,7 @@
               :key="key"
               :post="post"
               @update:post="updatePost"
+              @hideCommentsFromOtherPosts="hideCommentsFromOtherPosts"
             />
           </div>
           <div v-else>
@@ -153,7 +154,7 @@
 
 <script>
 
-import { defineComponent, useAsync, useRoute, computed, useContext, ref, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute, computed, useContext, ref, unref, useStore } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import { userApi } from '@/api/user'
@@ -197,6 +198,16 @@ export default defineComponent({
       })
     }
 
+    function hideCommentsFromOtherPosts(postId) {
+      posts.value.value.forEach(function(item, key) {
+        if (item.id === postId) {
+          posts.value.value[key].showComments = true
+        } else {
+          posts.value.value[key].showComments = false
+        }
+      })
+    }
+
     store.dispatch('showAddButton')
 
     return {
@@ -204,7 +215,8 @@ export default defineComponent({
       campaign,
       posts,
       isLargerThanLg,
-      updatePost
+      updatePost,
+      hideCommentsFromOtherPosts
     }
   }
 })
