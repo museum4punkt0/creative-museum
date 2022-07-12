@@ -54,7 +54,6 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-
       <Modal v-if="user && !user.username" t="10">
         <div>
           <h1 class="page-header" w:p="4"> {{ $t('provideUsername.title') }} </h1>
