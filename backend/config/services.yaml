@@ -7,6 +7,11 @@ parameters:
     rewardPoints: 1
     giverRewardScorePoints: 10000
     winnerPopularityScorePoints: 20000
+    textPostBodyLength: 1000
+    imagePostBodyLength: 1000
+    videoPostBodyLength: 2000
+    postQuestionLength: 100
+
 
 services:
     # default configuration for services in *this* file
@@ -58,3 +63,8 @@ services:
             1: '%rewardPoints%'
             2: '%giverRewardScorePoints%'
             3: '%winnerPopularityScorePoints%'
+    App\Validator\PostBodyLengthValidator:
+        arguments:
+            1: '%textPostBodyLength%'
+            2: '%imagePostBodyLength%'
+            3: '%videoPostBodyLength%'

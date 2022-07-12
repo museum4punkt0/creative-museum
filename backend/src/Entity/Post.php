@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Secured resource.
  * @PlaylistType
  * @PollType
+ * @\App\Validator\Constraints\PostBodyLength
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(
@@ -90,7 +91,6 @@ class Post
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(["write:post", "read:post","write:comment"])]
-    #[Assert\Length(max: 1000)]
     private $body;
 
     #[ORM\Column(type: 'integer')]
@@ -130,6 +130,7 @@ class Post
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(["write:post", "read:post"])]
+    #[Assert\Length(max: 100)]
     private $question;
 
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
