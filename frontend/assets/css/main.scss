@@ -12,6 +12,11 @@
     }
   }
 
+  svg {
+    width: 100%;
+    height: auto;
+  }
+
   .highlight-bg {
     background-color: var(--highlight);
     transition: all .25s ease-in-out;

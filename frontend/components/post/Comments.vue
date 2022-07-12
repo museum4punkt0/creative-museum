@@ -5,7 +5,7 @@
       w:cursor="pointer"
       w:text="sm"
     >
-      <ArrowIcon w:pos="relative" w:m="r-0.5" w:display="inline-block" :w:transform="showComments || showCommentForm ? 'gpu rotate-180' : ''" />
+      <ArrowIcon w:pos="relative" w:w="3" w:top="1" w:m="r-0.5" w:display="inline-block" :w:transform="showComments || showCommentForm ? 'gpu rotate-180' : ''" />
       <span v-if="post.comments && post.commentCount > 0" @click.prevent="!showComments ? fetchComments() : showComments = showCommentForm = false"> {{ !showComments ? $t('post.showComments', { count: post.commentCount }) :  $t('post.hideComments', { count: post.commentCount }) }}</span>
       <span v-else @click.prevent="showCommentForm = !showCommentForm">{{ $t('post.postComment') }}</span>
     </div>
@@ -16,14 +16,16 @@
       </div>
     </div>
 
-    <form v-if="showCommentForm" w:m="t-4" @submit.prevent="submitComment">
-      <textarea  v-model="commentBody" class="input-text" w:p="x-4 y-2" w:text="xs">Kommentar verfassen</textarea>
-      <input type="submit" class="btn-primary" value="submit" />
+    <form v-if="showCommentForm" w:m="t-4" w:pos="fixed lg:static" w:bottom="0" w:left="0" w:right="0" w:bg="grey" w:p="6 lg:0"  @submit.prevent="submitComment">
+      <div w:container="~ lg:none" w:pos="relative">
+        <textarea  v-model="commentBody" class="input-text" w:p="x-4 y-2" w:text="md" w:resize="none" :placeholder="$t('post.commentPlaceholder')" @keyup.enter="submitComment"></textarea>
+        <button type="submit" w:pos="absolute" w:w="3" w:right="3" w:top="2" w:transform="gpu rotate-180" w:text="white/50"><ArrowIcon /></button>
+      </div>
     </form>
   </div>
 </template>
 <script>
-import { defineComponent, useAsync, ref, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, ref } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
 
@@ -60,6 +62,7 @@ export default defineComponent({
 
     function submitComment() {
       submitCommentByPost(props.post.id, commentBody.value, props.post.campaign.id).then(function() {
+        commentBody.value = ''
         fetchComments()
         context.emit('commentsLoaded', props.post.id)
       })

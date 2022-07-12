@@ -59,7 +59,8 @@
   "post": {
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
-    "hideComments": "Alle {count} Kommentare ausblenden"
+    "hideComments": "Alle {count} Kommentare ausblenden",
+    "commentPlaceholder": "Deinen Kommentar schreiben..."
   },
   "user": {
     "points": "Punkte",

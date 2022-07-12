@@ -4,14 +4,14 @@ export const userApi = () => {
   const { $api, $auth } = useContext()
 
   const finishTutorial = async () => {
-    const res = await $api.patch(`users/${$auth.user.id}`, {
+    const res = await $api.patch(`users/${$auth.user.uuid}`, {
       tutorial: true
     })
     return res
   }
 
   const supplyUsername = async (username) => {
-    const res = await $api.patch(`users/${$auth.user.id}`, {
+    const res = await $api.patch(`users/${$auth.user.uuid}`, {
       username
     })
     return res
