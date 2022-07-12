@@ -15,6 +15,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator\Constraints\PlaylistType;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,7 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user",
             "denormalization_context" => ["groups" => ["write:post"]],
             "normalization_context" => ["groups" => ["read:post"]]
-            ],
+        ],
         "post_comment" => [
             "method" => "POST",
             "path" => "/posts/{id}/comments",
@@ -49,6 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalization_context' => [
                 'groups' => ['read:post'],
             ],
+            "maxDepth" => 2
         ],
     ],
     itemOperations: [
@@ -90,19 +93,19 @@ class Post
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(["write:post", "read:post","write:comment"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $body;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post","write:comment"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post","write:comment"])]
+    #[Groups(["write:post", "read:post", "write:comment"])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post","write:comment", "write:vote","read:vote"])]
+    #[Groups(["write:post", "read:post", "write:comment", "write:vote", "read:vote"])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
@@ -110,9 +113,11 @@ class Post
     #[Assert\Valid]
     private $pollOptions;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments',)]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["write:comment","delete:post"])]
+    #[Groups(["write:comment", "delete:post"])]
+    #[Ignore]
     private $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class)]
