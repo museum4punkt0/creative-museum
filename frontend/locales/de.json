@@ -60,7 +60,10 @@
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",
-    "commentPlaceholder": "Deinen Kommentar schreiben..."
+    "commentPlaceholder": "Deinen Kommentar schreiben...",
+    "errors": {
+      "1657590177": "Der Beschreibungstext ist zu lang."
+    }
   },
   "user": {
     "points": "Punkte",

@@ -5,6 +5,7 @@
     <LogoFull
       w:display="inline-block"
       w:my="6"
+      w:w="24"
     />
     <div w:mb="3"><strong>&copy; 2022 Badisches Landesmuseum</strong></div>
     <ul>
