@@ -28,6 +28,9 @@ class PostBodyLengthValidator extends ConstraintValidator
      */
     private int $videoPostBodyLength;
 
+    /**
+     * @var Constraint
+     */
     private Constraint $constraint;
 
     public function __construct(
@@ -78,6 +81,7 @@ class PostBodyLengthValidator extends ConstraintValidator
             $this->context->buildViolation($this->constraint->tooPostBodyMessage)
                 ->setParameter('%type%', $postType)
                 ->setParameter('%max%', $maxLength)
+                ->setCode(1657590177)
                 ->addViolation();
         }
     }
