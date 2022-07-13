@@ -60,7 +60,7 @@ export default defineComponent({
     before:(block content-[''] w-px h-3 bg-white absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2)
     after:(block content-[''] w-3 h-px bg-white absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2 );
   &:hover {
-    @apply rotate-90 scale-125;
+    @apply -rotate-135 scale-125;
   }
 }
 </style>
