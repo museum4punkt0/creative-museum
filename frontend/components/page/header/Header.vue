@@ -7,7 +7,7 @@
           w:transform="gpu hover:scale-125" w:cursor="pointer" />
       </NuxtLink>
       <button v-show="isAddButtonVisible" class="add-btn" w:pos="absolute" w:left="1/2" w:transform="-translate-x-1/2"
-        w:display="block" w:border="~ rounded-full white" w:h="6" w:w="6" />
+        w:display="block" w:border="~ rounded-full white" w:h="6" w:w="6" @click.prevent="isAddModalVisible = !isAddModalVisible" />
       <div w:flex="~ row" w:m="r-5" w:space="x-4" w:align="items-center">
         <PageHeaderUserInfo />
         <button w:transition="scale duration-300 ease-in-out" w:transform="gpu hover:scale-125" w:h="6" w:w="6"
@@ -38,59 +38,7 @@
         leave-active-class="duration-200 ease-in" leave-class="opacity-100" leave-to-class="opacity-0">
         <div v-show="isMenuVisible" w:pos="absolute" w:top="12 md:16" w:left="0" w:right="0" w:p="t-10 md:t-20 b-10" w:min-h="sm"
           w:bg="grey" w:shadow="lg black/20" w:z="50">
-          <div w:p="x-5" w:grid="lg:~ lg:cols-4" w:container="~">
-            <div w:mb="10 lg:0">
-              <button
-                v-if="!$auth.loggedIn"
-                w:text="white" w:flex="~ row" w:align="items-center" w:font="bold leading-loose"
-                @click.prevent="login">
-                <LoginIcon />
-                <span>Login</span>
-              </button>
-              <button
-                v-else
-                w:text="white" w:flex="~ row" w:align="items-center" w:font="bold leading-loose"
-                @click.prevent="logout">
-                <LogoutIcon w:m="r-2" />
-                <span>Logout</span>
-              </button>
-            </div>
-            <div w:mb="10 lg:0">
-              <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.profile.header') }}</p>
-              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.settings') }}</NuxtLink>
-              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.search') }}</NuxtLink>
-              <NuxtLink to="/" w:display="block">{{ $t('navigation.profile.invite') }}</NuxtLink>
-            </div>
-            <div w:mb="10 lg:0">
-              <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.museum.header') }}</p>
-              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.museum.about') }}</NuxtLink>
-              <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.museum.firstSteps') }}</NuxtLink>
-              <NuxtLink to="/" w:display="block">{{ $t('navigation.museum.faq') }}</NuxtLink>
-            </div>
-            <div w:mb="10 lg:0">
-              <div w:flex="~ row" w:align="items-center" w:mb="4">
-                <div class="toggle" w:flex="~ row" w:overflow="hidden">
-                  <div class="toggle__item" @click="$router.push(switchLocalePath('de'))">
-                    <input id="de" w:w="0" w:h="0" w:overflow="hidden" type="radio" value="de" name="language" :checked="$i18n.locale === 'de'">
-                    <label for="de" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">DE</label>
-                  </div>
-                  <div class="toggle__item" @click="$router.push(switchLocalePath('en'))">
-                    <input id="en" w:w="0" w:h="0" w:overflow="hidden" type="radio" value="en" name="language" :checked="$i18n.locale === 'en'">
-                    <label for="en" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">EN</label>
-                  </div>
-                </div>
-                <p w:ml="4" w:font="leading-none">{{ $t('locale') }}</p>
-              </div>
-              <div w:flex="~ row" w:align="items-center" w:mb="4">
-                <SimpleLanguageIcon />
-                <span>{{ $t('navigation.language.easyLanguage') }}</span>
-              </div>
-              <div w:flex="~ row" w:align="items-center" w:mb="4">
-                <SignLanguageIcon />
-                <span>{{ $t('navigation.language.signLanguage') }}</span>
-              </div>
-            </div>
-          </div>
+          <PageHeaderMainMenu />
         </div>
       </transition>
     </div>
@@ -99,44 +47,27 @@
 <script>
 import { defineComponent, ref, useContext, useStore, computed } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
-import LoginIcon from '@/assets/icons/login.svg?inline'
-import LogoutIcon from '@/assets/icons/logout.svg?inline'
-import SimpleLanguageIcon from '@/assets/icons/simpleLanguage.svg?inline'
-import SignLanguageIcon from '@/assets/icons/signLanguage.svg?inline'
 
 export default defineComponent({
   name: 'PageHeader',
   components: {
-    Logo,
-    LoginIcon,
-    LogoutIcon,
-    SimpleLanguageIcon,
-    SignLanguageIcon
+    Logo
   },
   setup() {
     const store = useStore()
-    const context = useContext()
 
     const isMenuVisible = ref(false)
+    const isAddModalVisible = ref(false)
 
     function closeMenu() {
       isMenuVisible.value = false
     }
 
-    function login() {
-      context.$auth.login().then(closeMenu())
-    }
-
-    function logout() {
-      context.$auth.logout().then(closeMenu())
-    }
-
     return {
       isMenuVisible,
       isAddButtonVisible: computed(() => store.state.showAddButton),
-      closeMenu,
-      login,
-      logout
+      isAddModalVisible,
+      closeMenu
     }
   },
 })

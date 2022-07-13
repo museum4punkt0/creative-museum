@@ -46,6 +46,9 @@ export default defineComponent({
       required: true
     }
   },
+  emits: [
+    'commentsLoaded'
+  ],
   setup(props, context) {
     const comments = ref([])
     const showComments = ref(false)

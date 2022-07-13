@@ -14,7 +14,7 @@
               v-for="(post, key) in posts.value"
               :key="key"
               :post="post"
-              @update:post="updatePost"
+              @updatePost="updatePost"
               @hideCommentsFromOtherPosts="hideCommentsFromOtherPosts"
             />
           </div>
@@ -209,6 +209,7 @@ export default defineComponent({
     }
 
     store.dispatch('showAddButton')
+    store.dispatch('setCurrentCampaign',route.value.params.id)
 
     return {
       postComment,

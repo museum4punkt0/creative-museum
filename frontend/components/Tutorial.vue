@@ -107,8 +107,10 @@ export default defineComponent({
   components: {
     Logo,
   },
-  emits:['closeModal'],
-  setup(props, context) {
+  emits:[
+    'closeModal'
+  ],
+  setup(_, context) {
 
     const step = ref(1)
     const store = useStore()

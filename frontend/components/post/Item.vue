@@ -4,7 +4,7 @@
       <PostHead :post="post" w:m="b-4" />
       <component :is="componentName" :post="post" w:m="b-4" />
       <PostFooter :post="post" w:m="b-4" />
-      <PostComments :post="post" @commentsLoaded="refetchPostData" />
+      <PostComments :post="post" @commentsLoaded="$emit('updatePost', post.id)" />
     </div>
     <div v-else class="highlight-text" w:text="center">
       <p>{{ post.body }}</p>
@@ -21,18 +21,16 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props, context) {
+  emits: [
+    'updatePost'
+  ],
+  setup(props) {
     const componentName = computed(() => {
       return 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1)
     })
 
-    function refetchPostData() {
-      context.emit('update:post', props.post.id)
-    }
-
     return {
-      componentName,
-      refetchPostData
+      componentName
     }
   }
 })
