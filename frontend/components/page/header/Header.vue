@@ -8,6 +8,17 @@
       </NuxtLink>
       <button v-show="isAddButtonVisible" class="add-btn" w:pos="absolute" w:left="1/2" w:transform="-translate-x-1/2"
         w:display="block" w:border="~ rounded-full white" w:h="6" w:w="6" @click.prevent="isAddModalVisible = !isAddModalVisible" />
+      <transition
+        enter-active-class="duration-300 ease-out opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <Modal v-if="isAddModalVisible" closable="true" @closeModal="isAddModalVisible = false">
+          <PostAdd />
+        </Modal>
+      </transition>
       <div w:flex="~ row" w:m="r-5" w:space="x-4" w:align="items-center">
         <PageHeaderUserInfo />
         <button w:transition="scale duration-300 ease-in-out" w:transform="gpu hover:scale-125" w:h="6" w:w="6"

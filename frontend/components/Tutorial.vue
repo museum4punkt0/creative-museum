@@ -91,9 +91,9 @@
         w:p="6"
         w:m="t-10"
       >
-        <button class="btn-primary" w:m="b-3"  @click.prevent="goNext()"> {{ $t('next') }}</button>
-        <button v-if="step > 1" class="btn-outline" w:m="b-3" @click.prevent="goPrev()"> {{ $t('prev') }}</button>
-        <button class="btn-outline" @click.prevent="finish()"> {{ $t('tutorial.skipTutorial') }}</button>
+        <button class="btn-primary" w:display="block" w:w="full" w:m="b-3"  @click.prevent="goNext()"> {{ $t('next') }}</button>
+        <button v-if="step > 1" class="btn-outline" w:display="block" w:w="full" w:p="y-2" w:m="b-3" @click.prevent="goPrev()"> {{ $t('prev') }}</button>
+        <button class="btn-outline" w:display="block" w:w="full" w:p="y-2" @click.prevent="finish()"> {{ $t('tutorial.skipTutorial') }}</button>
       </div>
     </div>
   </div>
