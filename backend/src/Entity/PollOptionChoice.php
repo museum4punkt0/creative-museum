@@ -7,6 +7,9 @@ use App\Repository\PollOptionChoiceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * @\App\Validator\Constraints\PollOptionChoiced
+ */
 #[ORM\Entity(repositoryClass: PollOptionChoiceRepository::class)]
 #[ApiResource(
     attributes: [
@@ -19,6 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ],
     ],
     itemOperations: [
+        "get",
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
     ],
 )]
@@ -37,7 +41,7 @@ class PollOptionChoice
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['write:pollOptionChoice'])]
-    private $user;
+    public $user;
 
     public function getId(): ?int
     {

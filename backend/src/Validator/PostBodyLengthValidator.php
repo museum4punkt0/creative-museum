@@ -58,13 +58,13 @@ class PostBodyLengthValidator extends ConstraintValidator
 
         switch ($value->getPostType()) {
             case PostType::TEXT:
-                $this->handleBodyLength($value->getBody(), PostType::TEXT->value, $this->textPostBodyLength);
+                $this->validateBodyLength($value->getBody(), PostType::TEXT->value, $this->textPostBodyLength);
                 break;
             case PostType::IMAGE:
-                $this->handleBodyLength($value->getBody(), PostType::IMAGE->value, $this->imagePostBodyLength);
+                $this->validateBodyLength($value->getBody(), PostType::IMAGE->value, $this->imagePostBodyLength);
                 break;
             case PostType::VIDEO:
-                $this->handleBodyLength($value->getBody(), PostType::VIDEO->value, $this->videoPostBodyLength);
+                $this->validateBodyLength($value->getBody(), PostType::VIDEO->value, $this->videoPostBodyLength);
                 break;
         }
     }
@@ -75,7 +75,7 @@ class PostBodyLengthValidator extends ConstraintValidator
      * @param int $maxLength
      * @return void
      */
-    private function handleBodyLength(string $bodyValue, string $postType, int $maxLength): void
+    private function validateBodyLength(string $bodyValue, string $postType, int $maxLength): void
     {
         if (strlen($bodyValue) > $maxLength) {
             $this->context->buildViolation($this->constraint->tooPostBodyMessage)
