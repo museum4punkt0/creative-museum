@@ -57,6 +57,15 @@
     }
   },
   "post": {
+    "type": {
+      "text": "Text",
+      "image": "Bild",
+      "poll": "Umfrage",
+      "audio": "Audio",
+      "video": "Video",
+      "playlist": "Playlist"
+    },
+    "new": "Neuer Beitrag",
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",

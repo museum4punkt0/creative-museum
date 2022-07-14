@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -26,7 +26,7 @@ export default defineComponent({
   ],
   setup(props) {
     const componentName = computed(() => {
-      return 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1)
+      return props.post.type ? 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1) : false
     })
 
     return {

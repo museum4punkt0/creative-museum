@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="post.author"
     w:flex="~ row"
     w:justify="between"
   >
