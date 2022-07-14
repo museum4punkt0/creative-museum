@@ -69,14 +69,14 @@ export default defineComponent({
   },
   setup() {
 
-    const context = useContext()
+    const { $auth } = useContext()
 
     function login() {
-      context.$auth.login().then(closeMenu())
+      $auth.login().then(closeMenu())
     }
 
     function logout() {
-      context.$auth.logout().then(closeMenu())
+      $auth.logout().then(closeMenu())
     }
 
     return {

@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, useAsync, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, ref, useContext } from '@nuxtjs/composition-api'
 import { TextareaAutogrowDirective } from 'vue-textarea-autogrow-directive'
 import { postApi } from '@/api/post'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
@@ -54,6 +54,7 @@ export default defineComponent({
     const showComments = ref(false)
     const showCommentForm = ref(false)
     const commentBody = ref('')
+    const { $auth } = useContext()
 
     const { fetchPostsByPost, submitCommentByPost } = postApi()
 
@@ -71,11 +72,15 @@ export default defineComponent({
     }
 
     function submitComment() {
-      submitCommentByPost(props.post.id, commentBody.value, props.post.campaign.id).then(function() {
-        commentBody.value = ''
-        fetchComments()
-        context.emit('commentsLoaded', props.post.id)
-      })
+      if ($auth.loggedIn) {
+        submitCommentByPost(props.post.id, commentBody.value, props.post.campaign.id).then(function() {
+          commentBody.value = ''
+          fetchComments()
+          context.emit('commentsLoaded', props.post.id)
+        })
+      } else {
+
+      }
     }
 
     return {

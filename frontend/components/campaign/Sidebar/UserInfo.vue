@@ -60,12 +60,12 @@ export default defineComponent({
         },
     },
     setup() {
-        const context = useContext();
+        const { $auth, $breakpoints} = useContext();
         const fullName = computed(() => {
-            return context.$auth.user ? context.$auth.user.firstName ?  context.$auth.user.firstName : '' + context.$auth.user.lastName ? ' ' + context.$auth.user.lastName : '' : '';
+            return $auth.user ? $auth.user.firstName ?  $auth.user.firstName : '' + $auth.user.lastName ? ' ' + $auth.user.lastName : '' : '';
         });
         const isLargerThanLg = computed(() => {
-          return context.$breakpoints.lLg
+          return $breakpoints.lLg
         })
         return {
             fullName,

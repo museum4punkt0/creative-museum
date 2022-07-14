@@ -27,10 +27,10 @@ export default defineComponent({
 
     const yourVote = ref(null)
     const voteCount = ref(null)
-    const context = useContext()
+    const { $auth } = useContext()
     const { votePost, fetchYourVoteByPost } = postApi()
 
-    if (context.$auth.loggedIn) {
+    if ($auth.loggedIn) {
       yourVote.value = useAsync(() => fetchYourVoteByPost(props.post.id), `post_yourvote_${props.post.id}`)
     }
 

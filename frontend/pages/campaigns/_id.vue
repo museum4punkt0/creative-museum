@@ -165,7 +165,7 @@ export default defineComponent({
 
     const route = useRoute()
     const router = useRouter()
-    const context = useContext()
+    const { $breakpoints, $auth } = useContext()
     const store = useStore()
 
     const postComment = ref(false)
@@ -175,7 +175,7 @@ export default defineComponent({
     const { fetchUserInfoByCampaign } = userApi()
 
     const isLargerThanLg = computed(() => {
-      return context.$breakpoints.lLg
+      return $breakpoints.lLg
     })
 
     let campaign = null
@@ -183,13 +183,12 @@ export default defineComponent({
 
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
-      console.log(campaign)
       if (campaign.value && campaign.value.error) {
         router.push('/404')
       }
       posts.value = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
-      if (context.$auth.loggedIn) {
-        context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))
+      if ($auth.loggedIn) {
+        $auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${$auth.user.id}`))
       }
     }
 
