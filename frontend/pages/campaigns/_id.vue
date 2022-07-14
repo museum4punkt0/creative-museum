@@ -154,7 +154,7 @@
 
 <script>
 
-import { defineComponent, useAsync, useRoute, computed, useContext, ref, unref, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute, useRouter, computed, useContext, ref, useStore } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import { userApi } from '@/api/user'
@@ -164,6 +164,7 @@ export default defineComponent({
   setup() {
 
     const route = useRoute()
+    const router = useRouter()
     const context = useContext()
     const store = useStore()
 
@@ -182,6 +183,10 @@ export default defineComponent({
 
     if (route.value.params.id) {
       campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
+      console.log(campaign)
+      if (campaign.value && campaign.value.error) {
+        router.push('/404')
+      }
       posts.value = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
       if (context.$auth.loggedIn) {
         context.$auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${context.$auth.user.id}`))

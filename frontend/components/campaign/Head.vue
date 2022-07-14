@@ -1,25 +1,39 @@
 <template>
   <div>
     <component is="style" type="text/css">
-      body {
-        --highlight: {{ campaign.color }};
-      }
+      body { --highlight: {{ campaign.color }}; }
     </component>
     <div w:m="b-6">
       <h1 class="page-header" w:m="t-0 b-1">{{ campaign.title }}</h1>
-      <div w:text="lg"><span w:text="capitalize">{{ $t('till')}}</span> {{ $dayjs(campaign.end).format('DD.MM.YYYY') }}</div>
+      <div w:text="lg">
+        <span w:text="capitalize">{{ $t('till') }}</span>
+        {{ $dayjs(campaign.stop).format('DD.MM.YYYY') }}
+      </div>
     </div>
     <div v-show="!showLongDescription">
       <p w:m="b-6" v-html="formattedShortDescription" />
-      <a v-if="formattedShortDescription !== formattedDescription" class="highlight-text" href="#" @click.prevent="showLongDescription = true">{{ $t('readMore') }}</a>
+      <a
+        v-if="formattedShortDescription !== formattedDescription"
+        class="highlight-text"
+        href="#"
+        @click.prevent="showLongDescription = true"
+        >{{ $t('readMore') }}</a
+      >
     </div>
     <div v-show="showLongDescription">
       <p w:m="b-6" v-html="formattedDescription" />
-      <a class="highlight-text" href="#" @click.prevent="showLongDescription = false">{{ $t('readLess') }}</a>
+      <a
+        class="highlight-text"
+        href="#"
+        @click.prevent="showLongDescription = false"
+        >{{ $t('readLess') }}</a
+      >
     </div>
     <div v-if="!isLargerThanLg" w:display="xl:hidden">
       <div w:mb="10">
-        <p w:text="lg" w:font="bold" w:mt="10" w:mb="3">Dein aktueller Punktestand</p>
+        <p w:text="lg" w:font="bold" w:mt="10" w:mb="3">
+          Dein aktueller Punktestand
+        </p>
         <UserScore :campaign="campaign" />
       </div>
       <CampaignFilter />
@@ -27,34 +41,45 @@
   </div>
 </template>
 <script>
-import { defineComponent, useContext, computed, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  computed,
+  ref,
+} from '@nuxtjs/composition-api'
 import CampaignFilter from './CampaignFilter.vue'
 export default defineComponent({
-    props: {
-        campaign: {
-            type: Object,
-            required: true
-        }
+  components: {
+    CampaignFilter,
+  },
+  props: {
+    campaign: {
+      type: Object,
+      required: true,
     },
-    setup(props) {
-        const context = useContext();
-        const showLongDescription = ref(false);
-        const formattedShortDescription = computed(() => {
-            return props.campaign.description.split(" ").splice(0, 50).join(" ").replace(/(?:\r\n|\r|\n)/g, "<br />");
-        });
-        const formattedDescription = computed(() => {
-            return props.campaign.description.replace(/(?:\r\n|\r|\n)/g, "<br />");
-        });
-        const isLargerThanLg = computed(() => {
-            return context.$breakpoints.lLg;
-        });
-        return {
-            formattedShortDescription,
-            formattedDescription,
-            showLongDescription,
-            isLargerThanLg
-        };
-    },
-    components: { CampaignFilter }
+  },
+  setup(props) {
+    const context = useContext()
+    const showLongDescription = ref(false)
+    const formattedShortDescription = computed(() => {
+      return props.campaign.description ? props.campaign.description
+        .split(' ')
+        .splice(0, 50)
+        .join(' ')
+        .replace(/(?:\r\n|\r|\n)/g, '<br />') : ''
+    })
+    const formattedDescription = computed(() => {
+      return props.campaign.description ? props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />') : ''
+    })
+    const isLargerThanLg = computed(() => {
+      return context.$breakpoints.lLg
+    })
+    return {
+      formattedShortDescription,
+      formattedDescription,
+      showLongDescription,
+      isLargerThanLg,
+    }
+  },
 })
 </script>
