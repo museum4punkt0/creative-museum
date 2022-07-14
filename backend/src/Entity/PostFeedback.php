@@ -6,6 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PostFeedbackRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @\App\Validator\Constraints\FeedbackGiven
+ */
 #[ORM\Entity(repositoryClass: PostFeedbackRepository::class)]
 #[ApiResource(
     collectionOperations: [

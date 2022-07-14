@@ -15,7 +15,7 @@ class PollOptionChoiceService
     private EntityManagerInterface $em;
 
     public function __construct(
-        EntityManagerInterface   $em
+        EntityManagerInterface $em
     )
     {
         $this->em = $em;
@@ -24,15 +24,15 @@ class PollOptionChoiceService
     /**
      * @param int $postId
      * @param int $userId
-     * @return float|int|mixed|string
+     * @return array
      */
     public function getChoiceByPostAndUser(int $postId, int $userId): array
     {
         $qb = $this->em->createQueryBuilder();
         $choiced = $qb->select('choice')
-            ->from(PollOptionChoice::class,'choice')
+            ->from(PollOptionChoice::class, 'choice')
             ->andWhere(
-                $qb->expr()->in('option.id','choice.pollOption'),
+                $qb->expr()->in('option.id', 'choice.pollOption'),
                 $qb->expr()->eq('choice.user', $userId)
             )
             ->leftJoin(
@@ -40,7 +40,7 @@ class PollOptionChoiceService
                 'option',
                 Expr\Join::WITH,
                 $qb->expr()->andX(
-                    $qb->expr()->eq('option.post',$postId)
+                    $qb->expr()->eq('option.post', $postId)
                 )
             )
             ->getQuery()
@@ -48,5 +48,4 @@ class PollOptionChoiceService
 
         return $choiced;
     }
-
 }
