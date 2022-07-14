@@ -60,7 +60,7 @@
     "types": {
       "text": {
         "button": "Text",
-        "headline": "Text erstellen"
+        "headline": "Text hochladen"
       },
       "image": {
         "button": "Bild",
@@ -68,11 +68,11 @@
       },
       "poll": {
         "button": "Umfrage",
-        "headline": "Umfrage erstellen"
+        "headline": "Umfrage hochladen"
       },
       "audio": {
         "button": "Audio",
-        "headline": "Audio aufnehmen"
+        "headline": "Audio hochladen"
       },
       "video": {
         "button": "Video",
@@ -80,10 +80,11 @@
       },
       "playlist": {
         "button": "Playlist",
-        "headline": "Playlist teilen"
+        "headline": "Playlist hochladen"
       }
     },
     "new": "Neuer Beitrag",
+    "share": "teilen",
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",

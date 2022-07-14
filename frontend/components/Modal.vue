@@ -12,6 +12,7 @@
       class="modal"
       w:bg="grey"
       w:pos="fixed"
+      w:flex="~ col 1"
       w:top="15 lg:1/2"
       w:right="0 lg:auto"
       w:left="0 lg:1/2"
@@ -32,7 +33,8 @@
         w:top="5"
         w:transform="-translate-x-1/2"
         w:border="~ rounded-full white"
-        @click.prevent="$emit('closeModal')" />
+        @click.prevent="$emit('closeModal')"
+      />
       <slot></slot>
     </div>
   </div>

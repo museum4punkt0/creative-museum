@@ -8,6 +8,16 @@ export const postApi = () => {
     return res
   }
 
+  const createTextPost = async (campaignId, body) => {
+    const res = await $api.post('posts', {
+      type: 'text',
+      author: `/v1/users/${$auth.user.uuid}`,
+      body,
+      campaign: `/v1/campaigns/${campaignId}`,
+    })
+    return res
+  }
+
   const fetchPostsByCampaign = async (campaignId) => {
     const res = await $api.get(`posts/?campaign=${campaignId}`)
     return res
@@ -44,6 +54,7 @@ export const postApi = () => {
 
   return {
     fetchPost,
+    createTextPost,
     fetchPostsByCampaign,
     fetchPostsByPost,
     votePost,

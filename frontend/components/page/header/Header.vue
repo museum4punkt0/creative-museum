@@ -145,7 +145,7 @@
         leave-to-class="opacity-0"
       >
         <Modal v-if="openAddModalType !== ''">
-          <component :is="addComponentName" @abortPost="abortPost" />
+          <component :is="addComponentName" @abortPost="abortPost" @closeAddModal="closeAddModal" />
         </Modal>
       </transition>
     </div>
@@ -181,11 +181,18 @@ export default defineComponent({
     function openAddModal($type) {
       openAddModalType.value = $type
       isAddVisible.value = false
+      store.dispatch('hideAddButton')
     }
 
     function abortPost() {
       openAddModalType.value = ''
       isAddVisible.value = true
+      store.dispatch('showAddButton')
+    }
+
+    function closeAddModal() {
+      store.dispatch('showAddButton')
+      openAddModalType.value = ''
     }
 
     return {
@@ -195,6 +202,7 @@ export default defineComponent({
       openAddModalType,
       addComponentName,
       openAddModal,
+      closeAddModal,
       abortPost,
     }
   },

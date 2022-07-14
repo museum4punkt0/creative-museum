@@ -154,14 +154,14 @@
 
 <script>
 
-import { defineComponent, useAsync, useRoute, useRouter, computed, useContext, ref, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute, useRouter, computed, useContext, ref, useStore, watch } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import { userApi } from '@/api/user'
 
 export default defineComponent({
   name: 'CampaignPage',
-  setup() {
+  setup(props) {
 
     const route = useRoute()
     const router = useRouter()
@@ -169,6 +169,15 @@ export default defineComponent({
     const store = useStore()
 
     const postComment = ref(false)
+
+    const newPost = computed(() => store.state.newPostOnCampaign)
+
+    watch(newPost, (newValue) => {
+      if (newValue === route.value.params.id) {
+        loadCampaign()
+        store.dispatch('resetNewPostOnCampaign')
+      }
+    })
 
     const { fetchCampaign } = campaignApi()
     const { fetchPost, fetchPostsByCampaign } = postApi()
@@ -181,16 +190,20 @@ export default defineComponent({
     let campaign = null
     const posts = ref(null)
 
-    if (route.value.params.id) {
-      campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
-      posts.value = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
-      if (campaign.value && campaign.value.error) {
-        router.push('/404')
-      }
-      if ($auth.loggedIn) {
-        $auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${$auth.user.id}`))
+    function loadCampaign() {
+      if (route.value.params.id) {
+        campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
+        posts.value = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
+        if (campaign.value && campaign.value.error) {
+          router.push('/404')
+        }
+        if ($auth.loggedIn) {
+          $auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${$auth.user.id}`))
+        }
       }
     }
+
+    loadCampaign()
 
     function updatePost(postId) {
       posts.value.value.forEach(function(item, key) {
@@ -219,7 +232,9 @@ export default defineComponent({
       postComment,
       campaign,
       posts,
+      newPost,
       isLargerThanLg,
+      loadCampaign,
       updatePost,
       hideCommentsFromOtherPosts
     }
