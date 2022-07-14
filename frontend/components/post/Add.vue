@@ -2,29 +2,9 @@
   <div w:p="6">
     <h2 w:text="xl" w:m="b-10">{{ $t('post.new') }}</h2>
     <div w:grid="~ cols-2 md:cols-6 gap-4" w:max-w="lg:3xl">
-      <button class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal('text')">
-        <PostTextIcon w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{ $t('post.types.text.button') }}</span>
-      </button>
-      <button class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal('image')">
-        <PostImageIcon w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{ $t('post.types.image.button') }}</span>
-      </button>
-      <button class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal('poll')">
-        <PostPollIcon w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{ $t('post.types.poll.button') }}</span>
-      </button>
-      <button class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal('audio')">
-        <PostAudioIcon w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{ $t('post.types.audio.button') }}</span>
-      </button>
-      <button class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal('video')">
-        <PostVideoIcon w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{ $t('post.types.video.button') }}</span>
-      </button>
-      <button class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal('playlist')">
-        <PostPlaylistIcon w:w="8" w:h="8" w:m="b-2" />
-        <span w:w:display="block" w:text="center">{{ $t('post.types.playlist.button') }}</span>
+      <button v-for="(item, key) in addMenuItems" :key=key class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal(item)">
+        <component :is="`Post${item}Icon`" w:w="8" w:h="8" w:m="b-2" />
+        <span w:display="block" w:text="center">{{ $t(`post.types.${item.toLowerCase()}.button`) }}</span>
       </button>
     </div>
   </div>
@@ -53,11 +33,21 @@ export default defineComponent({
   setup(_, context) {
     const openModal = ref('')
 
+    const addMenuItems = [
+      'Text',
+      'Image',
+      'Poll',
+      'Audio',
+      'Video',
+      'Playlist'
+    ]
+
     function openAddModal($type) {
       context.emit('openAddModal', $type)
     }
 
     return {
+      addMenuItems,
       openModal,
       openAddModal
     }

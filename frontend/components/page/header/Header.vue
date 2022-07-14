@@ -31,7 +31,10 @@
         w:border="~ rounded-full white"
         w:h="6"
         w:w="6"
-        @click.prevent="isAddVisible = !isAddVisible; isMenuVisible = false"
+        @click.prevent="
+          isAddVisible = !isAddVisible
+          isMenuVisible = false
+        "
       />
       <transition
         enter-active-class="duration-300 ease-out opacity-0"
@@ -67,7 +70,10 @@
               ? '~ rounded-full white'
               : '~ rounded-full white transparent'
           "
-          @click.prevent="isMenuVisible = !isMenuVisible; isAddVisible = false"
+          @click.prevent="
+            isMenuVisible = !isMenuVisible
+            isAddVisible = false
+          "
         >
           <span
             w:pointer-events="none"
@@ -138,23 +144,8 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <Modal v-if="openAddModalType === 'text'">
-          <PostTypesTextAdd @abortPost="abortPost" />
-        </Modal>
-        <Modal v-if="openAddModalType === 'image'">
-          <PostTypesImageAdd @abortPost="abortPost" />
-        </Modal>
-        <Modal v-if="openAddModalType === 'poll'">
-          <PostTypesPollAdd @abortPost="abortPost" />
-        </Modal>
-        <Modal v-if="openAddModalType === 'audio'">
-          <PostTypesAudioAdd @abortPost="abortPost" />
-        </Modal>
-        <Modal v-if="openAddModalType === 'video'">
-          <PostTypesVideoAdd @abortPost="abortPost" />
-        </Modal>
-        <Modal v-if="openAddModalType === 'playlist'">
-          <PostTypesPlaylistAdd @abortPost="abortPost" />
+        <Modal v-if="openAddModalType !== ''">
+          <component :is="addComponentName" @abortPost="abortPost" />
         </Modal>
       </transition>
     </div>
@@ -181,6 +172,12 @@ export default defineComponent({
     const isMenuVisible = ref(false)
     const openAddModalType = ref('')
 
+    const addComponentName = computed(() => {
+      return openAddModalType.value !== ''
+        ? 'PostTypes' + openAddModalType.value + 'Add'
+        : false
+    })
+
     function openAddModal($type) {
       openAddModalType.value = $type
       isAddVisible.value = false
@@ -196,8 +193,9 @@ export default defineComponent({
       isAddVisible,
       isMenuVisible,
       openAddModalType,
+      addComponentName,
       openAddModal,
-      abortPost
+      abortPost,
     }
   },
 })
@@ -213,7 +211,7 @@ export default defineComponent({
     @apply rotate-180 scale-125;
   }
   &.visible {
-    @apply before:(opacity-0)
+    @apply before:(opacity-0);
   }
 }
 </style>
