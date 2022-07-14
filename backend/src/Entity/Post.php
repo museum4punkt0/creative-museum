@@ -28,6 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(
+    order: ["created" => "DESC"],
     collectionOperations: [
         "get" => [
             "normalization_context" => ["groups" => ["read:post"]]
