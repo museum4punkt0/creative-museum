@@ -213,13 +213,13 @@ export default defineComponent({
   box-shadow: 0 0 1px 0 theme('colors.white') inset,
     0 0 1px 0 theme('colors.white');
   @apply transform duration-200 ease-in-out -translate-x-1/2
-    before:(block content-[''] w-px h-4 bg-white absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-opacity duration-200)
+    before:(block content-[''] w-px h-4 bg-white absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
     after:(block content-[''] w-4 h-px bg-white absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
   &:hover {
     @apply rotate-180 scale-125;
   }
   &.visible {
-    @apply before:(opacity-0);
+    @apply before:(rotate-90);
   }
 }
 </style>
