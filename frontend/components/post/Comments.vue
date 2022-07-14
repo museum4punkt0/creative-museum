@@ -78,8 +78,6 @@ export default defineComponent({
           fetchComments()
           context.emit('commentsLoaded', props.post.id)
         })
-      } else {
-
       }
     }
 

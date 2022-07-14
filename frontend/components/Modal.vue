@@ -1,7 +1,7 @@
 <template>
   <div
     w:pos="fixed"
-    w:top="15 lg:0"
+    w:top="15"
     w:right="0"
     w:bottom="0"
     w:left="0"

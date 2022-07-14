@@ -57,13 +57,31 @@
     }
   },
   "post": {
-    "type": {
-      "text": "Text",
-      "image": "Bild",
-      "poll": "Umfrage",
-      "audio": "Audio",
-      "video": "Video",
-      "playlist": "Playlist"
+    "types": {
+      "text": {
+        "button": "Text",
+        "headline": "Text erstellen"
+      },
+      "image": {
+        "button": "Bild",
+        "headline": "Bild hochladen"
+      },
+      "poll": {
+        "button": "Umfrage",
+        "headline": "Umfrage erstellen"
+      },
+      "audio": {
+        "button": "Audio",
+        "headline": "Audio aufnehmen"
+      },
+      "video": {
+        "button": "Video",
+        "headline": "Video hochladen"
+      },
+      "playlist": {
+        "button": "Playlist",
+        "headline": "Playlist teilen"
+      }
     },
     "new": "Neuer Beitrag",
     "postComment": "Kommentar...",

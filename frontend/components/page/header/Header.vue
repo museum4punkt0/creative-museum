@@ -52,7 +52,7 @@
           w:shadow="lg black/20"
           w:z="50"
         >
-          <PostAdd />
+          <PostAdd @openAddModal="openAddModal" />
         </div>
       </transition>
       <div w:flex="~ row" w:m="r-5" w:space="x-4" w:align="items-center">
@@ -131,6 +131,32 @@
           <PageHeaderMainMenu />
         </div>
       </transition>
+      <transition
+        enter-active-class="duration-300 ease-out opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <Modal v-if="openAddModalType === 'text'">
+          <PostTypesTextAdd @abortPost="abortPost" />
+        </Modal>
+        <Modal v-if="openAddModalType === 'image'">
+          <PostTypesImageAdd @abortPost="abortPost" />
+        </Modal>
+        <Modal v-if="openAddModalType === 'poll'">
+          <PostTypesPollAdd @abortPost="abortPost" />
+        </Modal>
+        <Modal v-if="openAddModalType === 'audio'">
+          <PostTypesAudioAdd @abortPost="abortPost" />
+        </Modal>
+        <Modal v-if="openAddModalType === 'video'">
+          <PostTypesVideoAdd @abortPost="abortPost" />
+        </Modal>
+        <Modal v-if="openAddModalType === 'playlist'">
+          <PostTypesPlaylistAdd @abortPost="abortPost" />
+        </Modal>
+      </transition>
     </div>
   </div>
 </template>
@@ -138,7 +164,6 @@
 import {
   defineComponent,
   ref,
-  useContext,
   useStore,
   computed,
 } from '@nuxtjs/composition-api'
@@ -154,11 +179,25 @@ export default defineComponent({
 
     const isAddVisible = ref(false)
     const isMenuVisible = ref(false)
+    const openAddModalType = ref('')
+
+    function openAddModal($type) {
+      openAddModalType.value = $type
+      isAddVisible.value = false
+    }
+
+    function abortPost() {
+      openAddModalType.value = ''
+      isAddVisible.value = true
+    }
 
     return {
       isAddButtonVisible: computed(() => store.state.showAddButton),
       isAddVisible,
-      isMenuVisible
+      isMenuVisible,
+      openAddModalType,
+      openAddModal,
+      abortPost
     }
   },
 })
