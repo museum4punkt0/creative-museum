@@ -113,7 +113,6 @@ class Post
     #[Assert\Valid]
     private $pollOptions;
 
-
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments',)]
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(["write:comment", "delete:post"])]

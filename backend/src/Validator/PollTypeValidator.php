@@ -13,6 +13,11 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class PollTypeValidator extends ConstraintValidator
 {
+    /**
+     * @param $value
+     * @param Constraint $constraint
+     * @return void
+     */
     public function validate($value, Constraint $constraint): void
     {
         if (!$value instanceof Post) {

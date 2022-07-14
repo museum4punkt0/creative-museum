@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PollOptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PollOptionRepository::class)]
@@ -20,6 +21,9 @@ class PollOption
     #[Groups(["read:post"])]
     private $id;
 
+    /**
+     * @MaxDepth(3)
+     */
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'pollOptions')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(["write:post"])]
