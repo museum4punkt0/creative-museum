@@ -21,7 +21,12 @@ class PollOptionChoiceService
         $this->em = $em;
     }
 
-    public function getChoicedByPostAndUser(int $postId, int $userId)
+    /**
+     * @param int $postId
+     * @param int $userId
+     * @return float|int|mixed|string
+     */
+    public function getChoiceByPostAndUser(int $postId, int $userId): array
     {
         $qb = $this->em->createQueryBuilder();
         $choiced = $qb->select('choice')

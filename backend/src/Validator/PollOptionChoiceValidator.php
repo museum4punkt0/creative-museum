@@ -36,9 +36,9 @@ class PollOptionChoiceValidator extends ConstraintValidator
             return;
         }
 
-        $choiced = $this->pollOptionChoiceService->getChoicedByPostAndUser($value->getPollOption()->getPost()->getId(), $value->getUser()->getId());
+        $choice = $this->pollOptionChoiceService->getChoiceByPostAndUser($value->getPollOption()->getPost()->getId(), $value->getUser()->getId());
 
-        if (empty($choiced)) {
+        if (empty($choice)) {
             return;
         }
 
