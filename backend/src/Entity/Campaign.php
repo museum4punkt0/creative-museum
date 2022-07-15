@@ -11,7 +11,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
+
+/**
+ * @\App\Validator\Constraints\FeedbackOptionCount
+ */
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
 #[ApiResource(
     attributes: [
@@ -31,6 +36,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
 )]
 #[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
+#[ORM\HasLifecycleCallbacks]
 class Campaign
 {
     #[ORM\Id]
@@ -44,7 +50,7 @@ class Campaign
     private $active;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read","campaign:write"])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
@@ -56,7 +62,7 @@ class Campaign
     private $stop;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -90,11 +96,17 @@ class Campaign
     #[ORM\Column(type: 'boolean')]
     private $notified = false;
 
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: CampaignFeedbackOption::class, cascade: ["persist"])]
+    #[Groups(["campaigns:read","campaign:write"])]
+    #[Assert\Valid]
+    private $feedbackOptions;
+
     public function __construct()
     {
         $this->badges = new ArrayCollection();
         $this->awards = new ArrayCollection();
         $this->partners = new ArrayCollection();
+        $this->feedbackOptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,9 +131,10 @@ class Campaign
         return $this->created;
     }
 
-    public function setCreated(\DateTimeInterface $created): self
+    #[ORM\PrePersist]
+    public function setCreated(): self
     {
-        $this->created = $created;
+        $this->created = new \DateTimeImmutable();
 
         return $this;
     }
@@ -155,9 +168,11 @@ class Campaign
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -310,5 +325,52 @@ class Campaign
         $this->notified = $notified;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, CampaignFeedbackOption>
+     */
+    public function getFeedbackOptions(): Collection
+    {
+        return $this->feedbackOptions;
+    }
+
+    public function addFeedbackOption(CampaignFeedbackOption $feedbackOption): self
+    {
+        if (!$this->feedbackOptions->contains($feedbackOption)) {
+            $this->feedbackOptions[] = $feedbackOption;
+            $feedbackOption->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedbackOption(CampaignFeedbackOption $feedbackOption): self
+    {
+        if ($this->feedbackOptions->removeElement($feedbackOption)) {
+            // set the owning side to null (unless already changed)
+            if ($feedbackOption->getCampaign() === $this) {
+                $feedbackOption->setCampaign(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->created = new \DateTime("now");
+        $this->updatedAt = $this->created;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime("now");
     }
 }

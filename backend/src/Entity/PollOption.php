@@ -32,7 +32,7 @@ class PollOption
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(["write:post", "read:post"])]
     #[Assert\NotNull]
-    #[Assert\Length(max: 100)]
+    #[Assert\Length(min:1, max: 100)]
     private $title;
 
     public function getId(): ?int

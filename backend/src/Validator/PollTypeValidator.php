@@ -34,9 +34,7 @@ class PollTypeValidator extends ConstraintValidator
          */
         if ($value->getPollOptions()->count() > 5) {
             $this->context->buildViolation($constraint->tooMuchPollOptions)->addViolation();
-        }
-
-        if ($value->getPollOptions()->count() < 2) {
+        }elseif ($value->getPollOptions()->count() < 2) {
             $this->context->buildViolation($constraint->tooFewPollOptions)->addViolation();
         }
 

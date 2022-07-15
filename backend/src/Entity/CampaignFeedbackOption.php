@@ -7,6 +7,7 @@ use App\Repository\CampaignFeedbackOptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -30,14 +31,17 @@ class CampaignFeedbackOption
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["campaigns:read"])]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'feedbackOptions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["campaign:write"])]
     private $campaign;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\Length(max: 25)]
+    #[Assert\Length(min:1, max: 25)]
+    #[Groups(["campaigns:read", "campaign:write"])]
     private $text;
 
     #[ORM\OneToMany(mappedBy: 'selection', targetEntity: PostFeedback::class)]
