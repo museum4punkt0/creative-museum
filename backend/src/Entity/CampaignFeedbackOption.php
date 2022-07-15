@@ -36,7 +36,6 @@ class CampaignFeedbackOption
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'feedbackOptions')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["campaign:write"])]
     private $campaign;
 
     #[ORM\Column(type: 'string', length: 255)]
