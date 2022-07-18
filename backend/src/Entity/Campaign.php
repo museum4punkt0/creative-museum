@@ -96,7 +96,7 @@ class Campaign
     #[ORM\Column(type: 'boolean')]
     private $notified = false;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: CampaignFeedbackOption::class, cascade: ["persist"])]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: CampaignFeedbackOption::class, cascade: ["persist","remove"])]
     #[Groups(["campaigns:read","campaign:write"])]
     #[Assert\Valid]
     private $feedbackOptions;
