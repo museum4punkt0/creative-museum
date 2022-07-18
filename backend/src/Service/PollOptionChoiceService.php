@@ -48,4 +48,30 @@ class PollOptionChoiceService
 
         return $choiced;
     }
+
+    /**
+     * @param int $postId
+     * @return array
+     */
+    public function getAllChoicesByPost(int $postId): array
+    {
+        $qb = $this->em->createQueryBuilder();
+        $choiced = $qb->select('choice')
+            ->from(PollOptionChoice::class, 'choice')
+            ->andWhere(
+                $qb->expr()->in('option.id', 'choice.pollOption'),
+            )
+            ->leftJoin(
+                PollOption::class,
+                'option',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('option.post', $postId)
+                )
+            )
+            ->getQuery()
+            ->execute();
+
+        return $choiced;
+    }
 }

@@ -108,7 +108,7 @@ class Post
     #[Groups(["write:post", "read:post", "write:comment", "write:vote", "read:vote"])]
     private $votestotal = 0;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist"])]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist","remove"])]
     #[Groups(["write:post", "read:post"])]
     #[Assert\Valid]
     private $pollOptions;
@@ -119,7 +119,7 @@ class Post
     #[Ignore]
     private $parent;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class, cascade: ["persist","remove"])]
     #[ApiSubresource]
     private $comments;
 

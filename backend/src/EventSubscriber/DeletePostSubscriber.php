@@ -4,8 +4,11 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Post;
+use App\Repository\PollOptionChoiceRepository;
+use App\Repository\PostFeedbackRepository;
 use App\Repository\PostRepository;
 use App\Repository\VotesRepository;
+use App\Service\PollOptionChoiceService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,11 +32,37 @@ class DeletePostSubscriber implements EventSubscriberInterface
      */
     private EntityManagerInterface $entityManager;
 
-    public function __construct(PostRepository $postRepository, VotesRepository $votesRepository ,EntityManagerInterface $entityManager)
+    /**
+     * @var PollOptionChoiceService
+     */
+    private PollOptionChoiceService $choiceService;
+
+    /**
+     * @var PollOptionChoiceRepository
+     */
+    private PollOptionChoiceRepository $pollOptionChoiceRepository;
+
+    /**
+     * @var PostFeedbackRepository
+     */
+    private PostFeedbackRepository $postFeedbackRepository;
+
+    public function __construct
+    (
+        PostRepository             $postRepository,
+        VotesRepository            $votesRepository,
+        EntityManagerInterface     $entityManager,
+        PollOptionChoiceService    $choiceService,
+        PollOptionChoiceRepository $pollOptionChoiceRepository,
+        PostFeedbackRepository     $postFeedbackRepository
+    )
     {
         $this->postRepository = $postRepository;
         $this->votesRepository = $votesRepository;
         $this->entityManager = $entityManager;
+        $this->choiceService = $choiceService;
+        $this->pollOptionChoiceRepository = $pollOptionChoiceRepository;
+        $this->postFeedbackRepository = $postFeedbackRepository;
     }
 
     public static function getSubscribedEvents()
@@ -68,15 +97,20 @@ class DeletePostSubscriber implements EventSubscriberInterface
             $votes = $this->votesRepository->findBy([
                 'post' => $post->getId()
             ]);
-            foreach ($votes as $vote){
+            foreach ($votes as $vote) {
                 $this->votesRepository->remove($vote);
             }
 
-            $comments = $this->postRepository->findBy([
-                'parent' => $post->getId()
+            $choices = $this->choiceService->getAllChoicesByPost($post->getId());
+            foreach ($choices as $choice) {
+                $this->pollOptionChoiceRepository->remove($choice);
+            }
+
+            $postFeedbacks = $this->postFeedbackRepository->findBy([
+                'post' => $post->getId()
             ]);
-            foreach ($comments as $comment) {
-                $this->postRepository->remove($comment);
+            foreach ($postFeedbacks as $feedback) {
+                $this->postFeedbackRepository->remove($feedback);
             }
         }
     }
