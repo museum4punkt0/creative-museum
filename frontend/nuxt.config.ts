@@ -23,7 +23,7 @@ export default {
     'virtual:windi-utilities.css',
   ],
   plugins:[
-    '~/plugins/api'
+    '~/plugins/api',
   ],
   components: true,
   buildModules: [

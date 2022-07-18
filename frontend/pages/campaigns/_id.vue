@@ -15,7 +15,6 @@
               :key="key"
               :post="post"
               @updatePost="updatePost"
-              @hideCommentsFromOtherPosts="hideCommentsFromOtherPosts"
             />
           </div>
           <div v-else>

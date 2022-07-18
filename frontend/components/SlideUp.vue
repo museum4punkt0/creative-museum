@@ -1,11 +1,10 @@
 <template>
   <div
     w:pos="fixed"
-    w:top="15"
+    w:top="0"
     w:right="0"
     w:bottom="0"
     w:left="0"
-    w:backdrop="~ lg:blur-lg"
     w:z="40 lg:100"
   >
     <div
@@ -13,12 +12,12 @@
       w:bg="grey"
       w:pos="fixed"
       w:flex="~ col 1"
-      w:top="15 lg:1/2"
       w:right="0 lg:auto"
       w:left="0 lg:1/2"
       w:min-w="full lg:2xl"
       w:min-h="full lg:xl"
-      w:bottom="0 lg:auto"
+      w:bottom="0"
+      w:top="auto"
       w:border="rounded-xl"
       w:transform="lg:~ lg:-translate-x-1/2 lg:-translate-y-1/2"
     >
@@ -33,7 +32,7 @@
         w:top="5"
         w:transform="-translate-x-1/2"
         w:border="~ rounded-full white"
-        @click.prevent="$emit('closeModal')"
+        @click.prevent="$emit('closeSlideUp')"
       />
       <slot></slot>
     </div>
@@ -49,7 +48,7 @@ export default defineComponent({
     }
   },
   emits: [
-    'closeModal'
+    'closeSlideUp'
   ],
   setup() {
     onMounted(() => {

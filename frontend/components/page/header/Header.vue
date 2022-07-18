@@ -36,28 +36,6 @@
           isMenuVisible = false
         "
       />
-      <transition
-        enter-active-class="duration-300 ease-out opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="duration-200 ease-in"
-        leave-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <div
-          v-show="isAddVisible"
-          w:pos="absolute"
-          w:top="12 md:16"
-          w:left="0"
-          w:right="0"
-          w:p="t-10 md:t-20 b-10"
-          w:min-h="sm"
-          w:bg="grey"
-          w:shadow="lg black/20"
-          w:z="50"
-        >
-          <PostAdd @openAddModal="openAddModal" />
-        </div>
-      </transition>
       <div w:flex="~ row" w:m="r-5" w:space="x-4" w:align="items-center">
         <PageHeaderUserInfo />
         <button
@@ -115,7 +93,7 @@
       </div>
     </div>
     <div>
-      <transition
+      <transition-group
         enter-active-class="duration-300 ease-out opacity-0"
         enter-to-class="opacity-100"
         leave-active-class="duration-200 ease-in"
@@ -124,6 +102,7 @@
       >
         <div
           v-show="isMenuVisible"
+          key="0"
           w:pos="absolute"
           w:top="12 md:16"
           w:left="0"
@@ -136,7 +115,22 @@
         >
           <PageHeaderMainMenu />
         </div>
-      </transition>
+        <div
+          v-show="isAddVisible"
+          key="1"
+          w:pos="absolute"
+          w:top="12 md:16"
+          w:left="0"
+          w:right="0"
+          w:p="t-10 md:t-20 b-10"
+          w:min-h="sm"
+          w:bg="grey"
+          w:shadow="lg black/20"
+          w:z="50"
+        >
+          <PostAdd @openAddModal="openAddModal" />
+        </div>
+      </transition-group>
       <transition
         enter-active-class="duration-300 ease-out opacity-0"
         enter-to-class="opacity-100"
@@ -208,18 +202,3 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="postcss" scoped>
-.add-btn {
-  box-shadow: 0 0 1px 0 theme('colors.white') inset,
-    0 0 1px 0 theme('colors.white');
-  @apply transform duration-200 ease-in-out -translate-x-1/2
-    before:(block content-[''] w-px h-4 bg-white absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
-    after:(block content-[''] w-4 h-px bg-white absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
-  &:hover {
-    @apply rotate-180 scale-125;
-  }
-  &.visible {
-    @apply before:(rotate-90);
-  }
-}
-</style>

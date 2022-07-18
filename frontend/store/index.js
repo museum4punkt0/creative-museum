@@ -1,7 +1,8 @@
 export const state = () => ({
   showAddButton: false,
   currentCampaign: 0,
-  newPostOnCampaign: 0
+  newPostOnCampaign: 0,
+  showLogin: false
 })
 export const mutations = {
   SHOW_ADD_BUTTON(state) {
@@ -18,6 +19,12 @@ export const mutations = {
   },
   RESET_NEW_POST_ON_CAMPAIGN(state) {
     state.newPostOnCampaign = 0
+  },
+  SHOW_LOGIN(state) {
+    state.showLogin = true
+  },
+  HIDE_LOGIN(state) {
+    state.showLogin = false
   }
 }
 
@@ -36,6 +43,12 @@ export const actions = {
   },
   resetNewPostOnCampaign({ commit }) {
     commit('RESET_NEW_POST_ON_CAMPAIGN')
+  },
+  showLogin({ commit }) {
+    commit('SHOW_LOGIN')
+  },
+  hideLogin({ commit }) {
+    commit('HIDE_LOGIN')
   }
 }
 
@@ -48,5 +61,8 @@ export const getters = {
   },
   newPostOnCampaign(state) {
     return state.newPostOnCampaign
+  },
+  showLogin(state) {
+    return state.showLogin
   }
 }
