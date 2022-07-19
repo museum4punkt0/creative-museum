@@ -24,7 +24,7 @@
       leave-class="bottom-0 lg:bottom-auto lg:top-1/2 lg:opacity-100"
       leave-to-class="bottom-full lg:bottom-auto lg:opacity-0"
     >
-      <SlideUp v-show="showAdditionalOptions" :closable="true" @closeSlideUp="showAdditionalOptions = false">
+      <SlideUp v-if="showAdditionalOptions" :closable="true" @closeSlideUp="showAdditionalOptions = false">
         <div w:p="6">
           3 Punkte Menü
         </div>
