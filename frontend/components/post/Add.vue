@@ -1,5 +1,5 @@
 <template>
-  <div w:p="6">
+  <div w:container="~" w:p="6">
     <h2 w:text="xl" w:m="b-10">{{ $t('post.new') }}</h2>
     <div w:grid="~ cols-2 md:cols-6 gap-4" w:max-w="lg:3xl">
       <button v-for="(item, key) in addMenuItems" :key=key class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal(item)">
