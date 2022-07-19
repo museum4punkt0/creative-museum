@@ -168,6 +168,19 @@
     }
   }
 
+  .btn-dropdown {
+    @apply relative;
+    &:after {
+      @apply content-[''] block absolute w-2 h-2 right-2 top-1.5 transform -rotate-135 border-t-1 border-t-white border-l-1 border-l-white;
+    }
+    &:hover,
+    &.active {
+      &:after {
+        @apply border-t-black border-l-black rotate-45 top-2;
+      }
+    }
+  }
+
   // ****************************** TOGGLE CUSTOM STYLES ******************************
   // **********************************************************************************
   .toggle {

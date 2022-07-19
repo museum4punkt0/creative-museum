@@ -22,9 +22,9 @@
           eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
           voluptua.
         </p>
-        <button w:mt="10" w:py="2" w:w="full" class="btn-outline">
+        <NuxtLink to="/user/profile" w:mt="10" w:py="2" w:w="full" class="btn-outline">
           {{ $t('user.editProfile') }}
-        </button>
+        </NuxtLink>
       </div>
       <div w:mb="10">
         <p w:font="bold" w:mb="3">
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div w:mb="10">
-      <CampaignFilter />
+      <CampaignFilter :campaign="campaign" />
     </div>
     <div v-if="isLargerThanLg">
       <div w:mb="10">

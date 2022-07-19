@@ -36,7 +36,7 @@
         </p>
         <UserScore :campaign="campaign" />
       </div>
-      <CampaignFilter />
+      <CampaignFilter :campaign="campaign" />
     </div>
   </div>
 </template>
