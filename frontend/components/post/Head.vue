@@ -5,7 +5,7 @@
     w:justify="between"
   >
     <NuxtLink
-      :to="localePath(`user/${post.author.id}`)"
+      :to="localePath(`/user/${post.author.username}`)"
       w:flex="~ row"
     >
       <UserProfileImage :user="post.author" w:m="r-4" />
