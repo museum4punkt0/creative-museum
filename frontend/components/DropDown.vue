@@ -44,12 +44,12 @@ export default defineComponent({
     const selectedValue = ref(-1)
 
     function selectValue(value) {
-      props.options.forEach(function(_, key) {
-        if (key === value) {
-          selectedValue.value = key
-          context.emit('dropdownChange', key)
-        }
-      })
+      if (selectedValue.value === value) {
+        selectedValue.value = -1
+      } else {
+        selectedValue.value = value
+      }
+      context.emit('dropdownChange', value)
     }
 
     return {
