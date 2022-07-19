@@ -86,6 +86,7 @@ class User implements UserInterface
     private Collection $achievements;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
+    #[ORM\JoinTable(name: 'user_bookmark')]
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
