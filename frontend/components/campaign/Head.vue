@@ -47,7 +47,7 @@ import {
   computed,
   ref,
 } from '@nuxtjs/composition-api'
-import CampaignFilter from './CampaignFilter.vue'
+import CampaignFilter from './Filter.vue'
 export default defineComponent({
   components: {
     CampaignFilter,

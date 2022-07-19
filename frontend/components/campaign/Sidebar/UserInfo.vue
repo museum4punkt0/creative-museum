@@ -45,14 +45,8 @@
 </template>
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
-import UserScore from '../../user/UserScore.vue'
-import CampaignFilter from '../CampaignFilter.vue'
 
 export default defineComponent({
-    components: {
-      UserScore,
-      CampaignFilter
-    },
     props: {
         campaign: {
             type: Object,

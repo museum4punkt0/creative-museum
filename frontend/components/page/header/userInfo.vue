@@ -83,7 +83,7 @@ export default defineComponent({
     function submitUsername() {
       supplyUsername(username.value).then(
        function() {
-         $auth.fetchUser()
+         context.$auth.fetchUser()
        }
       )
     }
