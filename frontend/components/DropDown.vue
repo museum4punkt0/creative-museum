@@ -3,7 +3,7 @@
     <button w:px="2" w:pr="6" w:py="1" w:mb="3" w:rounded="full" w:abuttongn="self-start" w:text="sm" w:border="1 white" class="btn-outline btn-dropdown" :class="showOptions ? 'active' : ''" @click.prevent="showOptions = !showOptions">
       {{ label }}
     </button>
-    <div w:ml="2" v-show="showOptions">
+    <div v-show="showOptions" w:ml="2">
       <button
         v-for="(item, key) in options"
         :key="key"
@@ -14,6 +14,8 @@
         w:text="sm"
         w:border="1 white"
         class="btn-outline"
+        :class="key === selectedValue ? 'active' : ''"
+        @click="selectValue(key)"
       >
         {{ item }}
       </button>
@@ -34,10 +36,26 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  emits: [
+    'dropdownChange'
+  ],
+  setup(props, context) {
     const showOptions = ref(false)
+    const selectedValue = ref(-1)
+
+    function selectValue(value) {
+      props.options.forEach(function(_, key) {
+        if (key === value) {
+          selectedValue.value = key
+          context.emit('dropdownChange', key)
+        }
+      })
+    }
+
     return {
-      showOptions
+      showOptions,
+      selectedValue,
+      selectValue
     }
   },
 })
