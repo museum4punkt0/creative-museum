@@ -18,11 +18,17 @@
           Lorem Ipsum
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-          eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-          voluptua.
+          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+          sed diam voluptua.
         </p>
-        <NuxtLink to="/user/profile" w:mt="10" w:py="2" w:w="full" class="btn-outline">
+        <NuxtLink
+          to="/user/profile"
+          w:mt="10"
+          w:py="2"
+          w:w="full"
+          class="btn-outline"
+        >
           {{ $t('user.editProfile') }}
         </NuxtLink>
       </div>
@@ -47,25 +53,33 @@
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-    props: {
-        campaign: {
-            type: Object,
-            default: () => { }
-        },
+  props: {
+    campaign: {
+      type: Object,
+      default: () => {},
     },
-    setup() {
-        const { $auth, $breakpoints} = useContext();
-        const fullName = computed(() => {
-            return $auth.user ? $auth.user.firstName ?  $auth.user.firstName : '' + $auth.user.lastName ? ' ' + $auth.user.lastName : '' : '';
-        });
-        const isLargerThanLg = computed(() => {
-          return $breakpoints.lLg
-        })
-        return {
-            fullName,
-            campaignScore: computed(() => context.$auth.$storage.getState("campaignScore")),
-            isLargerThanLg
-        };
+  },
+  setup() {
+    const { $auth, $breakpoints } = useContext()
+    const fullName = computed(() => {
+      return $auth.user
+        ? $auth.user.firstName
+          ? $auth.user.firstName
+          : '' + $auth.user.lastName
+          ? ' ' + $auth.user.lastName
+          : ''
+        : ''
+    })
+    const isLargerThanLg = computed(() => {
+      return $breakpoints.lLg
+    })
+    return {
+      fullName,
+      campaignScore: computed(() =>
+        context.$auth.$storage.getState('campaignScore')
+      ),
+      isLargerThanLg,
     }
+  },
 })
 </script>

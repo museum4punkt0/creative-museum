@@ -47,15 +47,11 @@ import {
   computed,
   ref,
 } from '@nuxtjs/composition-api'
-import CampaignFilter from './Filter.vue'
 export default defineComponent({
-  components: {
-    CampaignFilter,
-  },
   props: {
     campaign: {
       type: Object,
-      required: true,
+      default: () => {}
     },
   },
   setup(props) {
