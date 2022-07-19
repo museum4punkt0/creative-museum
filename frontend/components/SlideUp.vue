@@ -8,16 +8,16 @@
     w:z="40 lg:100"
   >
     <div
-      class="modal"
+      class="slideup"
       w:bg="grey"
       w:pos="fixed"
       w:flex="~ col 1"
-      w:right="0 lg:auto"
-      w:left="0 lg:1/2"
-      w:min-w="full lg:2xl"
-      w:min-h="full lg:xl"
-      w:bottom="0"
-      w:top="auto"
+      w:right="2 lg:auto"
+      w:left="2 lg:1/2"
+      w:min-w="lg:2xl"
+      w:min-h="xl lg:xl"
+      w:bottom="0 lg:auto"
+      w:top="auto lg:1/2"
       w:border="rounded-xl"
       w:transform="lg:~ lg:-translate-x-1/2 lg:-translate-y-1/2"
     >
