@@ -73,7 +73,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact','reported' => 'exact'])]
 #[ORM\HasLifecycleCallbacks]
 class Post
 {
@@ -159,6 +159,10 @@ class Post
 
     #[Groups(["read:post"])]
     private $bookmarked = false;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(["write:post", "read:post"])]
+    private $reported = false;
 
     public function __construct()
     {
@@ -481,6 +485,18 @@ class Post
     public function setBookmarked(bool $bookmarked): self
     {
         $this->bookmarked = $bookmarked;
+        return $this;
+    }
+
+    public function getReported(): ?bool
+    {
+        return $this->reported;
+    }
+
+    public function setReported(bool $reported): self
+    {
+        $this->reported = $reported;
+
         return $this;
     }
 }
