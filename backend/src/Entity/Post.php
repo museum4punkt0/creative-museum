@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\AddPostToPlaylistController;
 use App\Controller\SetBookmarkController;
 use App\Controller\SetCommentController;
 use App\Enum\PostType;
@@ -58,6 +59,12 @@ use Symfony\Component\Validator\Constraints as Assert;
     itemOperations: [
         "get" => [
             "normalization_context" => ["groups" => ["read:post"]]
+        ],
+        "add_post_to_playlist" => [
+            "method" => "GET",
+            "path" => "/playlists/{playlistId}/add-post/{postId}",
+            "read" => false,
+            "controller" => AddPostToPlaylistController::class
         ],
         "bookmark" => [
             "method" => "GET",

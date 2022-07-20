@@ -7,6 +7,7 @@ use App\Repository\PlaylistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 #[ApiResource(
@@ -25,9 +26,11 @@ class Playlist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:me"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read:me"])]
     private $title;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
@@ -93,5 +96,14 @@ class Playlist
         $this->creator = $creator;
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    #[Groups(["read:me"])]
+    public function getPostCount(): int
+    {
+        return $this->getPosts()->count();
     }
 }

@@ -18,7 +18,7 @@ class SetCommentController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    public function __invoke($id,Post $data): Post
+    public function __invoke($id, Post $data): Post
     {
         $parent = $this->postRepository->find($id);
         $data->setParent($parent);

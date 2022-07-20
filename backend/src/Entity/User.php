@@ -63,6 +63,7 @@ class User implements UserInterface
     private Collection $posts;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
+    #[Groups(["read:me"])]
     private Collection $playlists;
 
     #[ORM\Column(type: 'notficationtype')]

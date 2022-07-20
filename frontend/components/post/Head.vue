@@ -36,14 +36,28 @@
               {{ $t('post.actions.removeBookmark') }}
             </li>
 
-            <li>Playlist</li>
+            <li @click="openPlaylistSelectionModal">
+              {{ $t('post.actions.addToPlaylist') }}
+            </li>
+
+            <!--
             <li>Teilen</li>
             <li>Kopieren</li>
             <li>Melden</li>
+            -->
           </ul>
         </div>
       </SlideUp>
     </transition>
+
+    <Modal v-if="modalOpen">
+      <div v-if="modalContent === 'playlistSelection'">
+        <PlaylistSelection
+          @closeModal="modalOpen = false"
+          @createPlaylist="addPostToNewPlaylist"
+          @selectPlaylist="addPostToPlaylist" />
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
@@ -58,18 +72,42 @@ export default defineComponent({
       }
     },
     setup(props, context) {
-      const { toggleBookmark } = postApi()
+      const { toggleBookmark, addToPlaylist, createPlaylistWithPost } = postApi()
 
       const showAdditionalOptions = ref(false)
+      const modalOpen = ref(false)
+      const modalContent = ref('')
 
       function addOrRemoveBookmark(postId) {
         toggleBookmark(postId)
         context.emit('toggle-bookmark-state', postId)
       }
 
+      function openPlaylistSelectionModal() {
+        modalContent.value = 'playlistSelection'
+        modalOpen.value = true
+      }
+
+      function addPostToPlaylist(playlistId) {
+        addToPlaylist(playlistId, props.post.id)
+        modalOpen.value = false
+        showAdditionalOptions.value = false
+      }
+
+      function addPostToNewPlaylist(playlistName) {
+        createPlaylistWithPost(props.post.id, playlistName)
+        modalOpen.value = false
+        showAdditionalOptions.value = false
+      }
+
       return {
         showAdditionalOptions,
-        addOrRemoveBookmark
+        addOrRemoveBookmark,
+        modalOpen,
+        modalContent,
+        openPlaylistSelectionModal,
+        addPostToPlaylist,
+        addPostToNewPlaylist
       }
     }
 })

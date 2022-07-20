@@ -92,7 +92,15 @@
     "moreActions": "Weitere Aktionen",
     "actions": {
       "addBookmark": "Hinzufügen zur Merkliste",
-      "removeBookmark": "Von Merkliste entfernen"
+      "removeBookmark": "Von Merkliste entfernen",
+      "addToPlaylist": "Zu Playlist hinzufügen",
+      "playlist": {
+        "createNew": {
+          "cta": "Neue Playlist erstellen",
+          "submitButton": "Playlist erstellen",
+          "placeholder": "Name der Playlist"
+        }
+      }
     },
     "errors": {
       "1657590177": "Der Beschreibungstext ist zu lang."
