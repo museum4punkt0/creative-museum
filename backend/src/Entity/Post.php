@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\SetBookmarkController;
 use App\Controller\SetCommentController;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
@@ -57,6 +58,13 @@ use Symfony\Component\Validator\Constraints as Assert;
     itemOperations: [
         "get" => [
             "normalization_context" => ["groups" => ["read:post"]]
+        ],
+        "bookmark" => [
+            "method" => "GET",
+            "path" => "/posts/{id}/bookmark",
+            "requirements" => ["id" => "\d+"],
+            "controller" => SetBookmarkController::class,
+            "normalization_context" => ['groups' => 'write:post:bookmarks']
         ],
         "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         "delete" => [
@@ -148,6 +156,9 @@ class Post
     #[ORM\Column(type: 'boolean')]
     #[Groups(["write:post", "read:post"])]
     private $blocked = false;
+
+    #[Groups(["read:post"])]
+    private $bookmarked = false;
 
     public function __construct()
     {
@@ -459,6 +470,17 @@ class Post
     {
         $this->blocked = $blocked;
 
+        return $this;
+    }
+
+    public function getBookmarked(): ?bool
+    {
+        return $this->bookmarked;
+    }
+
+    public function setBookmarked(bool $bookmarked): self
+    {
+        $this->bookmarked = $bookmarked;
         return $this;
     }
 }

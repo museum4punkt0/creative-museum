@@ -15,6 +15,7 @@
               :key="key"
               :post="post"
               @updatePost="updatePost"
+              @toggle-bookmark-state="toggleBookmarkState"
             />
           </div>
           <div v-else>
@@ -214,6 +215,15 @@ export default defineComponent({
       })
     }
 
+    function toggleBookmarkState(postId) {
+      posts.value.value.forEach((item, key) => {
+        if (item.id !== postId) {
+          return
+        }
+        posts.value.value[key].bookmarked = !posts.value.value[key].bookmarked
+      })
+    }
+
     function hideCommentsFromOtherPosts(postId) {
       posts.value.value.forEach(function(item, key) {
         if (item.id === postId) {
@@ -235,6 +245,7 @@ export default defineComponent({
       isLargerThanLg,
       loadCampaign,
       updatePost,
+      toggleBookmarkState,
       hideCommentsFromOtherPosts
     }
   }
