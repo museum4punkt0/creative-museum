@@ -13,8 +13,14 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class CampaignNotificationSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var MessageBusInterface
+     */
     private MessageBusInterface $bus;
 
+    /**
+     * @var CampaignRepository
+     */
     private CampaignRepository $campaignRepository;
 
     public function __construct(MessageBusInterface $bus, CampaignRepository $campaignRepository)
