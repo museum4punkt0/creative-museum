@@ -3,7 +3,9 @@
 namespace App\Serializer\Normalizer;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Repository\PostRepository;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -20,10 +22,19 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
      */
     private PostRepository $postRepository;
 
-    public function __construct(ObjectNormalizer $normalizer, PostRepository $postRepository)
-    {
+    /**
+     * @var Security
+     */
+    private Security $security;
+
+    public function __construct(
+        ObjectNormalizer $normalizer,
+        PostRepository $postRepository,
+        Security $security
+    ) {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
+        $this->security = $security;
     }
 
     public function normalize($object, $format = null, array $context = array()): array
@@ -35,6 +46,15 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
         if (!empty($comments)) {
             foreach ($comments as $comment) {
                 $data['comments'][] = $this->normalizer->normalize($comment, $format, $context);
+            }
+        }
+
+        if (null !== $this->security->getUser()) {
+            /** @var User $user */
+            $user = $this->security->getUser();
+
+            if ($user->getBookmarks()->contains($object)) {
+                $data['bookmarked'] = true;
             }
         }
 

@@ -1,7 +1,7 @@
 <template>
   <div w:m="t-10">
     <div v-if="post.type !== 'system'" class="box-shadow">
-      <PostHead :post="post" w:m="b-4" />
+      <PostHead :post="post" w:m="b-4" @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)" />
       <component :is="componentName" :post="post" w:m="b-4" />
       <PostFooter :post="post" w:m="b-4" />
       <PostComments :post="post" @commentsLoaded="$emit('updatePost', post.id)" />

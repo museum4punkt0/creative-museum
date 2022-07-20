@@ -26,7 +26,21 @@
     >
       <SlideUp v-if="showAdditionalOptions" :closable="true" @closeSlideUp="showAdditionalOptions = false">
         <div w:p="6">
-          3 Punkte Menü
+          {{ $t('post.moreActions') }}
+          <ul>
+
+            <li @click="addOrRemoveBookmark(post.id)" v-if="! post.bookmarked">
+              {{ $t('post.actions.addBookmark') }}
+            </li>
+            <li @click="addOrRemoveBookmark(post.id)" v-if="post.bookmarked">
+              {{ $t('post.actions.removeBookmark') }}
+            </li>
+
+            <li>Playlist</li>
+            <li>Teilen</li>
+            <li>Kopieren</li>
+            <li>Melden</li>
+          </ul>
         </div>
       </SlideUp>
     </transition>
@@ -34,6 +48,7 @@
 </template>
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { postApi } from '@/api/post'
 
 export default defineComponent({
     props: {
@@ -42,11 +57,19 @@ export default defineComponent({
         required: true
       }
     },
-    setup() {
+    setup(props, context) {
+      const { toggleBookmark } = postApi()
+
       const showAdditionalOptions = ref(false)
 
+      function addOrRemoveBookmark(postId) {
+        toggleBookmark(postId)
+        context.emit('toggle-bookmark-state', postId)
+      }
+
       return {
-        showAdditionalOptions
+        showAdditionalOptions,
+        addOrRemoveBookmark
       }
     }
 })

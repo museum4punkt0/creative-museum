@@ -89,6 +89,11 @@
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",
     "commentPlaceholder": "Deinen Kommentar schreiben...",
+    "moreActions": "Weitere Aktionen",
+    "actions": {
+      "addBookmark": "Hinzufügen zur Merkliste",
+      "removeBookmark": "Von Merkliste entfernen"
+    },
     "errors": {
       "1657590177": "Der Beschreibungstext ist zu lang."
     }

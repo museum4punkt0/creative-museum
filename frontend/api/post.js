@@ -28,6 +28,10 @@ export const postApi = () => {
     return res
   }
 
+  const toggleBookmark = async (postId) => {
+    return await $api.get(`posts/${postId}/bookmark`)
+  }
+
   const votePost = async (postId, direction) => {
     const res = await $api.post(`votes`,{
       post: `/v1/posts/${postId}`,
@@ -54,6 +58,7 @@ export const postApi = () => {
 
   return {
     fetchPost,
+    toggleBookmark,
     createTextPost,
     fetchPostsByCampaign,
     fetchPostsByPost,
