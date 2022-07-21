@@ -93,6 +93,10 @@
     @apply text-xl mb-2;
   }
 
+  h3 {
+    @apply text-lg mb-2 font-bold;
+  }
+
   .box-shadow {
     @apply p-6;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35), -3px -3px 8px rgba(100, 100, 100, 0.4);
@@ -176,12 +180,24 @@
   .btn-dropdown {
     @apply relative;
     &:after {
-      @apply content-[''] block absolute w-2 h-2 right-2 top-1.5 transform -rotate-135 border-t-1 border-t-white border-l-1 border-l-white;
+      @apply content-[''] block absolute w-2 h-2 right-2 top-1.5 transform -rotate-135 border-t-1 border-t-current border-l-1 border-l-current;
     }
     &:hover,
     &.active {
       &:after {
-        @apply border-t-black border-l-black rotate-45 top-2;
+        @apply rotate-45 top-2;
+      }
+    }
+  }
+
+  .btn-right {
+    @apply relative w-full pr-4 text-left;
+    &:after {
+      @apply content-[''] block absolute w-3 h-3 right-2 top-1/2 transform rotate-45 border-t-1 border-t-current border-r-1 border-r-current transition-transform duration-200;
+    }
+    &:hover {
+      &:after {
+        @apply translate-x-3;
       }
     }
   }
