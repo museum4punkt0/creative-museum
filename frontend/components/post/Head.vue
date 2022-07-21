@@ -21,18 +21,18 @@
       leave-class="bottom-0 lg:bottom-auto lg:top-1/2 lg:opacity-100"
       leave-to-class="bottom-full lg:bottom-auto lg:opacity-0"
     >
-      <SlideUp
+      <component
+        :is="modalType"
         v-if="showAdditionalOptions"
         :closable="true"
-        @closeSlideUp="showAdditionalOptions = false"
+        @closeModal="showAdditionalOptions = false"
       >
-        <div w:p="6" w:mr="12">
+        <div v-if="!additionalPage" w:p="6" w:mr="12">
           <h3 w:mb="6">{{ $t('post.moreActions') }}</h3>
           <ul w:text="base">
             <li w:my="6">
               <button
                 v-if="!post.bookmarked"
-                class="block btn-right"
                 @click="addOrRemoveBookmark(post.id)"
               >
                 {{ $t('post.actions.addBookmark') }}
@@ -41,7 +41,6 @@
             <li w:my="6">
               <button
                 v-if="post.bookmarked"
-                class="block btn-right"
                 @click="addOrRemoveBookmark(post.id)"
               >
                 {{ $t('post.actions.removeBookmark') }}
@@ -59,22 +58,21 @@
             -->
           </ul>
         </div>
-      </SlideUp>
+        <div v-if="additionalPage">
+          <div v-if="additionalPageContent === 'playlistSelection'">
+            <PlaylistSelection
+              @closeModal="additionalPage = false"
+              @createPlaylist="addPostToNewPlaylist"
+              @selectPlaylist="addPostToPlaylist"
+            />
+          </div>
+        </div>
+      </component>
     </transition>
-
-    <Modal v-if="modalOpen">
-      <div v-if="modalContent === 'playlistSelection'">
-        <PlaylistSelection
-          @closeModal="modalOpen = false"
-          @createPlaylist="addPostToNewPlaylist"
-          @selectPlaylist="addPostToPlaylist"
-        />
-      </div>
-    </Modal>
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -88,8 +86,12 @@ export default defineComponent({
     const { toggleBookmark, addToPlaylist, createPlaylistWithPost } = postApi()
 
     const showAdditionalOptions = ref(false)
-    const modalOpen = ref(false)
-    const modalContent = ref('')
+    const additionalPage = ref(false)
+    const additionalPageContent = ref('')
+
+    const modalType = computed(() => {
+      return additionalPage.value ? 'Modal' : 'SlideUp'
+    })
 
     function addOrRemoveBookmark(postId) {
       toggleBookmark(postId)
@@ -97,27 +99,28 @@ export default defineComponent({
     }
 
     function openPlaylistSelectionModal() {
-      modalContent.value = 'playlistSelection'
-      modalOpen.value = true
+      additionalPageContent.value = 'playlistSelection'
+      additionalPage.value = true
     }
 
     function addPostToPlaylist(playlistId) {
       addToPlaylist(playlistId, props.post.id)
-      modalOpen.value = false
+      additionalPage.value = false
       showAdditionalOptions.value = false
     }
 
     function addPostToNewPlaylist(playlistName) {
       createPlaylistWithPost(props.post.id, playlistName)
-      modalOpen.value = false
+      additionalPage.value = false
       showAdditionalOptions.value = false
     }
 
     return {
       showAdditionalOptions,
+      additionalPage,
+      additionalPageContent,
+      modalType,
       addOrRemoveBookmark,
-      modalOpen,
-      modalContent,
       openPlaylistSelectionModal,
       addPostToPlaylist,
       addPostToNewPlaylist,

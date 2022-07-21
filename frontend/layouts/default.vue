@@ -4,6 +4,9 @@
       <div
         w:bg="grey"
         w:shadow="lg black/20"
+        w:pos="sticky"
+        w:z="10"
+        w:top="0"
       >
         <PageHeader />
       </div>

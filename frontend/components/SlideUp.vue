@@ -32,7 +32,7 @@
         w:top="5"
         w:transform="-translate-x-1/2"
         w:border="~ rounded-full white"
-        @click.prevent="$emit('closeSlideUp')"
+        @click.prevent="$emit('closeModal')"
       />
       <slot></slot>
     </div>
@@ -48,17 +48,12 @@ export default defineComponent({
     }
   },
   emits: [
-    'closeSlideUp'
+    'closeModal'
   ],
   setup() {
     onMounted(() => {
       if (process.client) {
         const body = document.querySelector('body')
-        window.scroll({
-          top: 0,
-          left: 0,
-          behavior: 'smooth'
-        })
         body.style.height ='100vh'
       }
     });
