@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => ['normalization_context' => ['groups' => ['patch']]]
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
 class Notification
 {
     #[ORM\Id]
@@ -47,6 +48,9 @@ class Notification
     #[ORM\Column(type: 'boolean')]
     #[Groups(["patch"])]
     private $viewed = false;
+
+    #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    private $campaign;
 
     public function getId(): ?int
     {
@@ -121,6 +125,18 @@ class Notification
     public function setViewed(bool $viewed): self
     {
         $this->viewed = $viewed;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): self
+    {
+        $this->campaign = $campaign;
 
         return $this;
     }
