@@ -46,7 +46,7 @@
           :w:border="
             isMenuVisible
               ? '~ rounded-full white'
-              : '~ rounded-full white transparent'
+              : '~ rounded-none transparent'
           "
           @click.prevent="
             isMenuVisible = !isMenuVisible
