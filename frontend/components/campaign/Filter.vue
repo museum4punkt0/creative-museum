@@ -10,7 +10,7 @@
       <button w:px="2" w:py="1" w:ml="3 lg:0" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" w:border="1 white" class="btn-outline">
         Kontrovers
       </button>
-      <DropDown w:ml="3 lg:0" :options="['Wie krass!', 'Super informativ!', 'Du erhellst meinen Tag!', 'Hab ich noch nie gehört.', 'Wie traurig.']" label="Feedback" @dropdownState="setHeight" />
+      <DropDown w:ml="3 lg:0" :options="campaign.feedbackOptions" label="Feedback" @dropdownState="setHeight" />
       <button w:px="2" w:py="1" w:ml="3 lg:0" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" w:border="1 white" class="btn-outline">
         Playlist
       </button>

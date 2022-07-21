@@ -19,7 +19,7 @@
         :class="key === selectedValue ? 'active' : ''"
         @click="selectValue(key)"
       >
-        {{ item }}
+        {{ item.text }}
       </button>
     </div>
   </div>
