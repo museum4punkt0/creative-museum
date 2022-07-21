@@ -44,8 +44,9 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
         $comments = $this->postRepository->getRecentPostComments($postId);
 
         if (!empty($comments)) {
+            $data['comments'] = [];
             foreach ($comments as $comment) {
-                $data['comments'][] = $this->normalizer->normalize($comment, $format, $context);
+                array_unshift($data['comments'],$this->normalizer->normalize($comment, $format, $context));
             }
         }
 

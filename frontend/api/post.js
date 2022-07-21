@@ -24,7 +24,7 @@ export const postApi = () => {
   }
 
   const fetchPostsByPost = async (postId) => {
-    const res = await $api.get(`posts/${postId}/comments`)
+    const res = await $api.get(`posts/${postId}/comments?order[created]=asc`)
     return res
   }
 

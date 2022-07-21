@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\AddPostToPlaylistController;
 use App\Controller\SetBookmarkController;
@@ -53,7 +54,8 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalization_context' => [
                 'groups' => ['read:post'],
             ],
-            "maxDepth" => 2
+            "maxDepth" => 2,
+            "order" => ["created" => "ASC"]
         ],
     ],
     itemOperations: [
@@ -81,6 +83,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact','reported' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['created'], arguments: ['orderParameterName' => 'order'])]
 #[ORM\HasLifecycleCallbacks]
 class Post
 {
@@ -136,6 +139,7 @@ class Post
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class, cascade: ["persist","remove"])]
     #[ApiSubresource]
+    #[ORM\OrderBy(['created' => 'ASC'])]
     private $comments;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
