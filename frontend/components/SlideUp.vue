@@ -5,6 +5,7 @@
     w:right="0"
     w:bottom="0"
     w:left="0"
+    w:backdrop="~ lg:blur-lg"
     w:z="40 lg:100"
   >
     <div

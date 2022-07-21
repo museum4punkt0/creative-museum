@@ -55,8 +55,6 @@ export default defineComponent({
     onMounted(() => {
       if (process.client) {
         const body = document.querySelector('body')
-        const header = document.querySelector('#globalHeader')
-        header.scrollIntoView({behavior: 'smooth', block: 'start'});
         body.style.height ='100vh'
       }
     });
