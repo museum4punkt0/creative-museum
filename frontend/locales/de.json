@@ -114,12 +114,19 @@
   "user": {
     "points": "Punkte",
     "editProfile": "Profil bearbeiten",
-    "score": "Punktestand"
+    "score": "Punktestand",
+    "yourCurrentScore": "Dein aktueller Punktestand"
   },
   "campaign": {
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards"
+  },
+  "filter": {
+    "newest": "Neust",
+    "relevant": "Relevant",
+    "controversial": "Kontrovers",
+    "playlist": "Playlist"
   },
   "pages": {
     "imprint": {

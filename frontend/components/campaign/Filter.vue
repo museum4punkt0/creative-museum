@@ -2,17 +2,17 @@
   <div>
     <div w:pos="relative" w:m="-x-6 lg:0" w:p="x-6 lg:0" :w:h="dropdownHeight ? '20 lg:auto' : 'auto'" w:flex="~ row nowrap md:col" w:snap="x" w:overflow="x-auto" class="snap snap-mandatory snap-x scrollbar-hide">
       <button w:px="2" w:py="1" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" w:border="1 white" class="btn-outline">
-        Neuste
+        {{ $t('filter.newest') }}
       </button>
       <button w:px="2" w:py="1" w:ml="3 lg:0" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" w:border="1 white" class="btn-outline">
-        Relevant
+        {{ $t('filter.relevant') }}
       </button>
       <button w:px="2" w:py="1" w:ml="3 lg:0" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" w:border="1 white" class="btn-outline">
-        Kontrovers
+        {{ $t('filter.controversial') }}
       </button>
       <DropDown v-if="campaign && campaign.feedbackOptions && campaign.feedbackOptions.length > 0" w:ml="3 lg:0" :options="campaign.feedbackOptions" label="Feedback" @dropdownState="setHeight" />
       <button w:px="2" w:py="1" w:ml="3 lg:0" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" w:border="1 white" class="btn-outline">
-        Playlist
+        {{ $t('filter.playlist') }}
       </button>
     </div>
   </div>

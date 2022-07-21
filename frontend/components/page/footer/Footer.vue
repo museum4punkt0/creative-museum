@@ -7,7 +7,7 @@
       w:my="6"
       w:w="24"
     />
-    <div w:mb="3"><strong>&copy; 2022 Badisches Landesmuseum</strong></div>
+    <div w:mb="3"><strong>&copy; {{ $dayjs().year() }} Badisches Landesmuseum</strong></div>
     <ul>
       <li>
         <NuxtLink to="/legal/imprint" w:display="block" w:mb="2">{{ $t('pages.imprint.title') }}</NuxtLink>
