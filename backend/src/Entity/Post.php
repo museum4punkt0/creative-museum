@@ -143,7 +143,7 @@ class Post
     #[Groups(["write:post", "read:post", "write:comment"])]
     private $campaign;
 
-    #[ORM\ManyToMany(targetEntity: Playlist::class)]
+    #[ORM\ManyToMany(targetEntity: Playlist::class, cascade: ["persist","remove"])]
     #[Groups(["write:post", "read:post"])]
     private $playlist;
 
