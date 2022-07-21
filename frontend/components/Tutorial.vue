@@ -21,10 +21,10 @@
           <p>{{ $t('tutorial.step1.text') }}</p>
         </div>
         <div
-        w:pos="absolute"
-        w:left="6"
-        w:bottom="6"
-        w:text="color1 sm"
+          w:pos="absolute"
+          w:left="6"
+          w:bottom="6"
+          w:text="color1 sm"
         >
           1/5
         </div>
@@ -35,10 +35,10 @@
           <p>{{ $t('tutorial.step2.text') }}</p>
         </div>
         <div
-        w:pos="absolute"
-        w:left="6"
-        w:bottom="6"
-        w:text="color1 sm"
+          w:pos="absolute"
+          w:left="6"
+          w:bottom="6"
+          w:text="color1 sm"
         >
           2/5
         </div>
@@ -49,10 +49,10 @@
           <p>{{ $t('tutorial.step3.text') }}</p>
         </div>
         <div
-        w:pos="absolute"
-        w:left="6"
-        w:bottom="6"
-        w:text="color1 sm"
+          w:pos="absolute"
+          w:left="6"
+          w:bottom="6"
+          w:text="color1 sm"
         >
           3/5
         </div>
@@ -63,10 +63,10 @@
           <p>{{ $t('tutorial.step4.text') }}</p>
         </div>
         <div
-        w:pos="absolute"
-        w:left="6"
-        w:bottom="6"
-        w:text="color1 sm"
+          w:pos="absolute"
+          w:left="6"
+          w:bottom="6"
+          w:text="color1 sm"
         >
           4/5
         </div>
@@ -77,10 +77,10 @@
           <p>{{ $t('tutorial.step5.text') }}</p>
         </div>
         <div
-        w:pos="absolute"
-        w:left="6"
-        w:bottom="6"
-        w:text="color1 sm"
+          w:pos="absolute"
+          w:left="6"
+          w:bottom="6"
+          w:text="color1 sm"
         >
           5/5
         </div>

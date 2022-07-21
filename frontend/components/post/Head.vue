@@ -24,10 +24,12 @@
       <component
         :is="modalType"
         v-if="showAdditionalOptions"
-        :closable="true"
+        w:h="full"
+        w:flex="~ col"
+        :closable="modalType === 'SlideUp' ? true : false"
         @closeModal="showAdditionalOptions = false"
       >
-        <div v-if="!additionalPage" w:p="6" w:mr="12">
+        <div v-if="!additionalPage" w:flex="~ col" w:p="6" w:mr="12">
           <h3 w:mb="6">{{ $t('post.moreActions') }}</h3>
           <ul w:text="base">
             <li w:my="6">
@@ -58,9 +60,10 @@
             -->
           </ul>
         </div>
-        <div v-if="additionalPage">
-          <div v-if="additionalPageContent === 'playlistSelection'">
+        <div w:flex="~ col 1" w:align="items-stretch" v-if="additionalPage">
+          <div w:flex="~ col 1" w:align="items-stretch" v-if="additionalPageContent === 'playlistSelection'">
             <PlaylistSelection
+              w:flex="~ col 1" w:align="items-stretch"
               @closeModal="additionalPage = false"
               @createPlaylist="addPostToNewPlaylist"
               @selectPlaylist="addPostToPlaylist"
@@ -72,7 +75,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed, useContext } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -93,6 +96,8 @@ export default defineComponent({
       return additionalPage.value ? 'Modal' : 'SlideUp'
     })
 
+    const { $auth } = useContext()
+
     function addOrRemoveBookmark(postId) {
       toggleBookmark(postId)
       context.emit('toggle-bookmark-state', postId)
@@ -110,9 +115,11 @@ export default defineComponent({
     }
 
     function addPostToNewPlaylist(playlistName) {
-      createPlaylistWithPost(props.post.id, playlistName)
-      additionalPage.value = false
-      showAdditionalOptions.value = false
+      createPlaylistWithPost(props.post.id, playlistName).then(function() {
+        $auth.fetchUser()
+        additionalPage.value = false
+        showAdditionalOptions.value = false
+      })
     }
 
     return {

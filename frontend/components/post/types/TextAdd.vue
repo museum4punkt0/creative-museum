@@ -29,7 +29,6 @@ export default defineComponent({
   setup(_, context) {
 
     const { store } = useContext()
-    const router = useRouter()
 
     const postBody = ref('')
 

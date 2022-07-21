@@ -106,6 +106,11 @@
       "1657590177": "Der Beschreibungstext ist zu lang."
     }
   },
+  "playlist": {
+    "addTo": "Zu Playlist hinzufügen",
+    "createNew": "Neue Playlist erstellen",
+    "new": "Neue Playlist"
+  },
   "user": {
     "points": "Punkte",
     "editProfile": "Profil bearbeiten",
