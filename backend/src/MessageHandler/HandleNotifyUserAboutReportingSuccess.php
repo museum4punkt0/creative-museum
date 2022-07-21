@@ -53,15 +53,23 @@ class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
         $this->handlePostReportedSuccessNotification($user,$post);
     }
 
-    private function handlePostReportedSuccessNotification(User $user, Post $post)
+    private function handlePostReportedSuccessNotification(User $reporter, Post $post)
     {
-        $notification = new Notification();
-        $notification
-            ->setReceiver($user)
+        $reporterNotification = new Notification();
+        $reporterNotification
+            ->setReceiver($reporter)
             ->setPost($post)
             ->setText('Danke, wir kümmern uns und prüfen den Post.')
-            ->setSilent($user->getNotificationSettings() === NotificationType::NONE);
-        $this->entityManager->persist($notification);
+            ->setSilent($reporter->getNotificationSettings() === NotificationType::NONE);
+        $this->entityManager->persist($reporterNotification);
+
+        $postAuthorNotification = new Notification();
+        $postAuthorNotification
+            ->setReceiver($post->getAuthor())
+            ->setPost($post)
+            ->setText('Ihr Beitrag wird von der Redaktion auf unangemessene Inhalte geprüft.')
+            ->setSilent($post->getAuthor()->getNotificationSettings() === NotificationType::NONE);
+        $this->entityManager->persist($postAuthorNotification);
         $this->entityManager->flush();
     }
 }
