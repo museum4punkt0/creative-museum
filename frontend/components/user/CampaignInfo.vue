@@ -15,12 +15,10 @@
           {{ fullName }}
         </p>
         <p w:text="lg" w:mb="3" class="highlight-text">
-          Lorem Ipsum
+          ### TITEL / RANG ###
         </p>
-        <p>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua.
+        <p v-if="$auth.user.description">
+          {{ $auth.user.description }}
         </p>
         <NuxtLink
           to="/user/profile"
