@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AwardedSubscriber implements EventSubscriberInterface
 {
-
     /**
      * @var int
      */

@@ -20,21 +20,15 @@ class NewPostVoteEvent
     protected string $direction;
 
     /**
-     * @var int
+     * @var string|null
      */
-    protected int $voteDifference;
+    protected ?string $oldDirection;
 
-    /**
-     * @var bool
-     */
-    protected bool $switched;
-
-    public function __construct(int $postId, string $direction, int $voteDifference, bool $switched = false)
+    public function __construct(int $postId, string $direction, string $oldDirection = null)
     {
         $this->postId = $postId;
         $this->direction = $direction;
-        $this->voteDifference = $voteDifference;
-        $this->switched = $switched;
+        $this->oldDirection = $oldDirection;
     }
 
     /**
@@ -54,18 +48,10 @@ class NewPostVoteEvent
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getVoteDifference(): int
+    public function getOldDirection(): ?string
     {
-        return $this->voteDifference;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getSwitched(): bool
-    {
-        return $this->switched;
+        return $this->oldDirection;
     }
 }

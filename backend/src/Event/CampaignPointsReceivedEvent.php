@@ -21,10 +21,16 @@ class CampaignPointsReceivedEvent extends Event
      */
     protected int $receiverId;
 
-    public function __construct(int $campaignId, int $receiverId)
+    /**
+     * @var string
+     */
+    protected string $pointsType;
+
+    public function __construct(int $campaignId, int $receiverId, string $pointsType)
     {
         $this->campaignId = $campaignId;
         $this->receiverId = $receiverId;
+        $this->pointsType = $pointsType;
     }
 
     /**
@@ -41,5 +47,13 @@ class CampaignPointsReceivedEvent extends Event
     public function getReceiverId(): int
     {
         return $this->receiverId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPointsType(): string
+    {
+        return $this->pointsType;
     }
 }

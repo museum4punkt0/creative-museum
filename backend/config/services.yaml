@@ -4,9 +4,18 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    rewardPoints: 1
     giverRewardScorePoints: 10000
     winnerPopularityScorePoints: 20000
+
+    rewardPoints: 1
+    registrationScorePoints: 2000
+    loginScorePoints: 1000
+    awardedScorePoints: 10000
+    awardReceivedScorePoints: 20000
+    postCreatedScorePoints: 10000
+    commentCreatedScorePoints: 5000
+    upvoteScorePoints: 2000
+
     textPostBodyLength: 1000
     imagePostBodyLength: 1000
     videoPostBodyLength: 2000
@@ -68,3 +77,13 @@ services:
             1: '%textPostBodyLength%'
             2: '%imagePostBodyLength%'
             3: '%videoPostBodyLength%'
+    App\Service\ScoringService:
+        arguments:
+            - '%rewardPoints%'
+            - '%registrationScorePoints%'
+            - '%loginScorePoints%'
+            - '%awardedScorePoints%'
+            - '%awardReceivedScorePoints%'
+            - '%postCreatedScorePoints%'
+            - '%commentCreatedScorePoints%'
+            - '%upvoteScorePoints%'

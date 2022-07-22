@@ -48,23 +48,29 @@ class NewPostVoteSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($event->getDirection() == VoteDirection::UP->value) {
-            $post->setUpvotes($post->getUpvotes() + $event->getVoteDifference());
+        if ($event->getDirection() === VoteDirection::UP->value) {
+            $post->setUpvotes($post->getUpvotes() + 1);
+            $post->setVotestotal($post->getVotestotal() + 1);
 
-            if ($event->getSwitched()) {
+            if ($event->getOldDirection() === VoteDirection::DOWN->value) {
                 $post->setDownvotes($post->getDownvotes() - 1);
-                $post->setVotestotal($post->getVotestotal() + 2);
-            } else {
-                $post->setVotestotal($post->getVotestotal() + $event->getVoteDifference());
+                $post->setVotestotal($post->getVotestotal() + 1);
             }
-        } elseif ($event->getDirection() == VoteDirection::DOWN->value) {
-            $post->setDownvotes($post->getDownvotes() + $event->getVoteDifference());
+        } elseif ($event->getDirection() === VoteDirection::DOWN->value) {
+            $post->setDownvotes($post->getDownvotes() + 1);
+            $post->setVotestotal($post->getVotestotal() - 1);
 
-            if ($event->getSwitched()) {
+            if ($event->getOldDirection() === VoteDirection::UP->value) {
                 $post->setUpvotes($post->getUpvotes() - 1);
-                $post->setVotestotal($post->getVotestotal() - 2);
-            } else {
-                $post->setVotestotal($post->getVotestotal() - $event->getVoteDifference());
+                $post->setVotestotal($post->getVotestotal() - 1);
+            }
+        } elseif ($event->getDirection() === VoteDirection::NONE->value) {
+            if ($event->getOldDirection() == VoteDirection::UP->value) {
+                $post->setUpvotes($post->getUpvotes() - 1);
+                $post->setVotestotal($post->getVotestotal() - 1);
+            } elseif ($event->getOldDirection() == VoteDirection::DOWN->value) {
+                $post->setDownvotes($post->getDownvotes() - 1);
+                $post->setVotestotal($post->getVotestotal() + 1);
             }
         }
 

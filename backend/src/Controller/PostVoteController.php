@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Votes;
+use App\Enum\PointsReceivedType;
+use App\Enum\VoteDirection;
+use App\Event\CampaignPointsReceivedEvent;
 use App\Event\NewPostVoteEvent;
 use App\Repository\PostRepository;
 use App\Repository\VotesRepository;
@@ -44,8 +47,8 @@ class PostVoteController extends AbstractController
         VotesRepository          $votesRepository,
         EntityManagerInterface   $entityManager,
         EventDispatcherInterface $eventDispatcher,
-        Security $security,
-        PostRepository $postRepository
+        Security                 $security,
+        PostRepository           $postRepository,
     )
     {
         $this->votesRepository = $votesRepository;
@@ -67,27 +70,31 @@ class PostVoteController extends AbstractController
             'voter' => $user->getId(),
             'post' => $data->getPost()->getId()
         ]);
-        $switched = false;
         $data->setVoter($user);
+        $oldDirection = null;
 
         if (!$dbVote) {
             $this->votesRepository->add($data);
             $dbVote = $data;
-            $voteDifference = 1;
-        } elseif ($dbVote->getDirection()->value === $data->getDirection()->value) {
-            $this->entityManager->remove($dbVote);
+            $campaignPointsEvent = new CampaignPointsReceivedEvent(
+                $data->getPost()->getCampaign()->getId(),
+                $data->getVoter()->getId(),
+                PointsReceivedType::UPVOTE->value
+            );
+            $this->eventDispatcher->dispatch($campaignPointsEvent, CampaignPointsReceivedEvent::NAME);
+        }elseif ($dbVote->getDirection()->value === $data->getDirection()->value) {
+            $oldDirection = $dbVote->getDirection()->value;
+            $dbVote->setDirection(VoteDirection::NONE);
+            $this->entityManager->persist($dbVote);
             $this->entityManager->flush();
-            $voteDifference = -1;
-            $dbVote = [];
         } else {
+            $oldDirection = $dbVote->getDirection()->value;
             $dbVote->setDirection($data->getDirection());
             $this->entityManager->persist($dbVote);
             $this->entityManager->flush();
-            $voteDifference = 1;
-            $switched = true;
         }
 
-        $voteEvent = new NewPostVoteEvent($data->getPost()->getId(), $data->getDirection()->value, $voteDifference, $switched);
+        $voteEvent = new NewPostVoteEvent($data->getPost()->getId(), $dbVote->getDirection()->value, $oldDirection);
         $this->eventDispatcher->dispatch($voteEvent, NewPostVoteEvent::NAME);
 
         $result = [
