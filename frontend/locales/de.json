@@ -64,7 +64,11 @@
       },
       "image": {
         "button": "Bild",
-        "headline": "Bild hochladen"
+        "headline": "Bild hochladen",
+        "uploader": {
+          "add": "Bild hinzufügen",
+          "replace": "Bild ersetzen"
+        }
       },
       "poll": {
         "button": "Umfrage",

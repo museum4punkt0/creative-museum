@@ -4,28 +4,52 @@ export const postApi = () => {
   const { $api, $auth } = useContext()
 
   const fetchPost = async (postId) => {
-    const res = await $api.get(`posts/${postId}`)
-    return res
+    return await $api.get(`posts/${postId}`)
   }
 
   const createTextPost = async (campaignId, body) => {
-    const res = await $api.post('posts', {
+    return await $api.post('posts', {
       type: 'text',
       author: `/v1/users/${$auth.user.uuid}`,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
     })
-    return res
+  }
+
+  const createPicturePost = async (campaignId, body, picture) => {
+
+    let form = new FormData()
+    form.append('file', picture[0].file)
+
+    const response = await $api.post('media_objects', form)
+    const fileId = response.id
+
+    return await $api.post('posts', {
+      type: 'image',
+      author: `/v1/users/${$auth.user.uuid}`,
+      body,
+      campaign: `/v1/campaigns/${campaignId}`,
+      files: [
+        `/v1/media_objects/` + fileId
+      ]
+    })
+  }
+
+  const createPlaylistPost = async (campaignId, playlistId) => {
+    return await $api.post('posts', {
+      type: 'playlist',
+      author: `/v1/users/${$auth.user.uuid}`,
+      campaign: `/v1/campaigns/${campaignId}`,
+      linkedPlaylist: `/v1/playlists/${playlistId}`
+    })
   }
 
   const fetchPostsByCampaign = async (campaignId) => {
-    const res = await $api.get(`posts/?campaign=${campaignId}`)
-    return res
+    return await $api.get(`posts/?campaign=${campaignId}`)
   }
 
   const fetchPostsByPost = async (postId) => {
-    const res = await $api.get(`posts/${postId}/comments?order[created]=asc`)
-    return res
+    return await $api.get(`posts/${postId}/comments?order[created]=asc`)
   }
 
   const toggleBookmark = async (postId) => {
@@ -33,17 +57,15 @@ export const postApi = () => {
   }
 
   const votePost = async (postId, direction) => {
-    const res = await $api.post(`votes`,{
+    return await $api.post(`votes`,{
       post: `/v1/posts/${postId}`,
       direction,
       voter: `/v1/users/${$auth.user.uuid}`
     })
-    return res
   }
 
   const addToPlaylist = async (playlistId, postId) => {
-    const res = await $api.get(`playlists/${playlistId}/add-post/${postId}`)
-    return res
+    return await $api.get(`playlists/${playlistId}/add-post/${postId}`)
   }
 
   const fetchYourVoteByPost = async (postId) => {
@@ -52,36 +74,36 @@ export const postApi = () => {
   }
 
   const createPlaylistWithPost = async (postId, title) => {
-    const res = await $api.post(`playlists`, {
+    return await $api.post(`playlists`, {
       creator: `/v1/users/${$auth.user.uuid}`,
       title,
       posts: [
         `/v1/posts/${postId}`
       ]
     })
-    return res
   }
 
   const submitCommentByPost = async (postId, body, campaignId) => {
-    const res = await $api.post(`posts/${postId}/comments`, {
+    return await $api.post(`posts/${postId}/comments`, {
       author: `/v1/users/${$auth.user.uuid}`,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
       postType: 'text'
     })
-    return res
   }
 
   return {
     fetchPost,
     toggleBookmark,
     createTextPost,
+    createPicturePost,
     fetchPostsByCampaign,
     fetchPostsByPost,
     votePost,
     addToPlaylist,
     fetchYourVoteByPost,
     submitCommentByPost,
-    createPlaylistWithPost
+    createPlaylistWithPost,
+    createPlaylistPost
   }
 }

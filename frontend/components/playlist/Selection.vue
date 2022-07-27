@@ -1,7 +1,7 @@
 <template>
   <div w:flex="~ col 1">
     <div v-show="step === 1" w:flex="~ col 1">
-      <div w:p="6" class="page-header">
+      <div w:p="6" class="page-header" v-if="headline">
         <a class="back-btn" @click="backLink">{{ $t('playlist.addTo') }}</a>
       </div>
       <div w:p="6" w:grid="~ cols-2 gap-6" w:max-h="lg" w:overflow="y-auto" w:overscroll="y-auto">
@@ -19,7 +19,7 @@
             {{ item.title }}
           </span>
         </button>
-        <button class="btn-primary" @click.prevent="step = 2">
+        <button class="btn-primary" @click.prevent="step = 2"  v-if="addButton">
           <span
             w:h="30"
             w:flex="~ col"
@@ -52,6 +52,18 @@
 import { defineComponent, ref, useStore, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  props: {
+    headline: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    addButton: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
+  },
   emits:[
     'closeModal',
     'selectPlaylist'

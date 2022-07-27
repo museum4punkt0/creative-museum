@@ -26,7 +26,7 @@ final class PlaylistTypeValidator extends ConstraintValidator
         /**
          * @var Post $value
          */
-        if ($value->getPostType() === PostType::PLAYLIST && $value->getPlaylist()->isEmpty()) {
+        if ($value->getPostType() === PostType::PLAYLIST && ! $value->getLinkedPlaylist()) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

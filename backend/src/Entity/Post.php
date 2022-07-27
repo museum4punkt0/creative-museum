@@ -175,6 +175,10 @@ class Post
     #[Groups(["write:post", "read:post"])]
     private $reported = false;
 
+    #[ORM\ManyToOne(targetEntity: Playlist::class)]
+    #[Groups(["write:post", "read:post"])]
+    private $linkedPlaylist;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -507,6 +511,18 @@ class Post
     public function setReported(bool $reported): self
     {
         $this->reported = $reported;
+
+        return $this;
+    }
+
+    public function getLinkedPlaylist(): ?Playlist
+    {
+        return $this->linkedPlaylist;
+    }
+
+    public function setLinkedPlaylist(?Playlist $linkedPlaylist): self
+    {
+        $this->linkedPlaylist = $linkedPlaylist;
 
         return $this;
     }
