@@ -17,7 +17,7 @@
       w:right="0 lg:auto"
       w:left="0 lg:1/2"
       w:min-w="full lg:2xl"
-      w:min-h="full lg:xl"
+      w:min-h=" lg:xl"
       w:bottom="0 lg:auto"
       w:border="rounded-xl"
       w:transform="lg:~ lg:-translate-x-1/2 lg:-translate-y-1/2"

@@ -4,16 +4,13 @@
       <button class="back-btn" @click.prevent="abortPost">{{ $t('post.types.text.headline') }}</button>
     </div>
     <div
-      w:flex="~ col" w:justify="space-between"
+      w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6"
     >
-      <div>
-        <textarea v-model="postBody" type="text" class="input-text"></textarea>
+      <div w:flex="~ col grow">
+        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" :maxlength="maxCount" @keyup="countdown"></textarea>
+        <p w:text="right" w:mt="3" w:mr="3" class='highlight-text' :class="{'text-danger': hasError }">{{remainingCount}} / {{maxCount}}</p>
       </div>
-      <div
-
-      >
-        <button type="submit" class="btn-primary" @click.prevent="submitPost">{{ $t('post.share') }}</button>
-      </div>
+      <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
     </div>
   </div>
 </template>
@@ -49,8 +46,21 @@ export default defineComponent({
     return {
       postBody,
       abortPost,
-      submitPost
+      submitPost,
     }
   },
+  data() {
+    return {
+      maxCount: 1000,
+      remainingCount: 1000,
+      hasError: false
+    }
+  },
+  methods: {
+    countdown: function() {
+      this.remainingCount = this.maxCount - this.postBody.length;
+      this.hasError = this.remainingCount < 0;
+    }
+  }
 })
 </script>

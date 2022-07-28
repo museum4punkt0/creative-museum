@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div w:flex="~ col 1" w:h="full">
     <div w:p="6" class="page-header">
       <button class="back-btn" @click.prevent="abortPost">{{ $t('post.types.image.headline') }}</button>
     </div>
-    <div w:p="6" class="page-body">
+    <div w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6">
       <client-only>
 
-        <img v-if="files.length" :src="files[0].blob" />
+        <img v-if="files.length" :src="files[0].blob" w:max-h="1/3 lg:48" w:w="auto" w:border="rounded" w:align="self-center" />
 
         <file-upload ref="upload"
           v-model="files"
@@ -15,17 +15,13 @@
           @input-file="inputFile"
           @input-filter="inputFilter"
         >
-          <div style="width:100%;min-height:5vh;background:#333">
+          <div class="btn-outline" w:px="4" w:py="2" w:mt="6">
             {{ $t('post.types.image.uploader.' + (files.length ? 'replace' : 'add')) }}
           </div>
         </file-upload>
       </client-only>
-
-      <div>
-        <textarea v-model="postBody" type="text" class="input-text"></textarea>
-      </div>
-
-      <button type="submit" class="btn-primary" @click.prevent="submitPost">{{ $t('post.share') }}</button>
+      <textarea v-model="postBody" type="text" class="input-text" w:mt="6" w:flex="grow"></textarea>
+      <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
 
     </div>
   </div>

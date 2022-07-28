@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="highlight-text"
+      :class="post.type !== 'playlist' ? 'highlight-text' : ''"
       w:cursor="pointer"
       w:text="sm"
     >

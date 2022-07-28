@@ -1,6 +1,6 @@
 <template>
   <div w:m="t-10">
-    <div v-if="post.type !== 'system'" class="box-shadow">
+    <div v-if="post.type !== 'system'" class="box-shadow" :class="post.type === 'playlist' ? 'highlight-bg' : ''">
       <PostHead :post="post" w:m="b-4" @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)" />
       <component :is="componentName" :post="post" w:m="b-4" />
       <PostFooter :post="post" w:m="b-4" />
