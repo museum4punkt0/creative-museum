@@ -111,6 +111,10 @@ class Post
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(["write:post", "read:post"])]
+    private $title;
+
+    #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(["write:post", "read:post", "write:comment"])]
     private $body;
 
@@ -250,6 +254,17 @@ class Post
     {
         $this->type = $type;
 
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
         return $this;
     }
 

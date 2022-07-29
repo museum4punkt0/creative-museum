@@ -6,6 +6,11 @@
     <div
       w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6"
     >
+      <div w:flex="~ col">
+        <input :placeholder="$t('post.placeholder.title')" type="text" v-model="postTitle" class="input-text" w:flex="grow" :maxlength="100" />
+        <countdown :max-count="100" :text="postTitle" />
+      </div>
+
       <div w:flex="~ col grow" w:position="relative">
         <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pb="8" :maxlength="1000"></textarea>
         <countdown :max-count="1000" :text="postBody" w:position="absolute" w:bottom="1" w:right="2" />
@@ -31,12 +36,15 @@ export default defineComponent({
 
     const { store } = useContext()
 
+    const postTitle = ref('')
+
     const postBody = ref('')
 
     const { createTextPost } = postApi()
 
     function submitPost() {
       createTextPost( store.state.currentCampaign, postBody.value ).then(function() {
+        postTitle.value = ''
         postBody.value = ''
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
@@ -48,6 +56,7 @@ export default defineComponent({
     }
 
     return {
+      postTitle,
       postBody,
       abortPost,
       submitPost,

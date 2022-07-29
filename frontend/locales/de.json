@@ -99,6 +99,12 @@
       }
     },
     "new": "Neuer Beitrag",
+    "placeholder": {
+      "title": "Titel hinzufügen (optional)",
+      "image": {
+        "alttext": "Beschreibung für Personen mit Sehbehinderung (optional)"
+      }
+    },
     "share": "teilen",
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
