@@ -1,8 +1,7 @@
 <template>
   <div>
-    <span class="poll-title">{{ post.question }}</span>
-    <br>
-    <span class="poll-desc">{{ post.body }}</span>
+    <p w:text="lg" w:font="bold" w:mb="2">{{ post.question }}</p>
+    <p>{{ post.body }}</p>
 
     <div class="poll-options">
       <div v-for="option of post.pollOptions">

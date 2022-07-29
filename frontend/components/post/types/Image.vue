@@ -6,10 +6,10 @@
       w:border="rounded"
       w:mx="auto"
       :alt="post.files[0].description ? post.files[0].description : (post.title ? post.title : post.body) " />
-    <p w:my="3">
-      <template v-if="post.title">Title: {{ post.title }}<br></template>
-      {{ post.body }}
-    </p>
+    <div w:my="3">
+      <p w:text="lg" w:font="bold" w:mb="2" v-if="post.title">{{ post.title }}</p>
+      <p>{{ post.body }}</p>
+    </div>
   </div>
 </template>
 

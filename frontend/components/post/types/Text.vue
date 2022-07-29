@@ -1,7 +1,7 @@
 <template>
   <div>
-    <template v-if="post.title">Title: {{ post.title }}<br></template>
-    Body: {{ post.body }}
+    <p w:text="lg" w:font="bold" w:mb="2" v-if="post.title">{{ post.title }}</p>
+    <p>{{ post.body }}</p>
   </div>
 </template>
 <script lang="ts">
