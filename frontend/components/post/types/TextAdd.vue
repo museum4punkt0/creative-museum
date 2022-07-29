@@ -6,9 +6,9 @@
     <div
       w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6"
     >
-      <div w:flex="~ col grow">
-        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" :maxlength="maxCount"></textarea>
-        <countdown :max-count="maxCount" :text="postBody" />
+      <div w:flex="~ col grow" w:position="relative">
+        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pb="8" :maxlength="1000"></textarea>
+        <countdown :max-count="1000" :text="postBody" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
       <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
     </div>
@@ -51,12 +51,6 @@ export default defineComponent({
       postBody,
       abortPost,
       submitPost,
-    }
-  },
-  data() {
-    return {
-      maxCount: 1000,
-      hasError: false
     }
   }
 })

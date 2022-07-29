@@ -1,5 +1,5 @@
 <template>
-  <p w:text="right" w:mt="3" w:mr="3" class='highlight-text' :class="{'text-danger': hasError }">
+  <p w:text="right" class='highlight-text'>
     {{ maxCount - text.length }} / {{maxCount}}
   </p>
 </template>
