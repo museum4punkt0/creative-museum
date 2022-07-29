@@ -4,10 +4,10 @@
     <p>{{ post.body }}</p>
 
     <div class="poll-options" w:mt="4">
-      <div v-for="option of post.pollOptions">
+      <div v-for="(option, index) of post.pollOptions">
         <div w:flex="~ row" w:align="items-center" w:mb="4">
           <span w:w="10" w:h="10" w:mr="2" w:border="rounded-full" w:flex="~ row" w:justify="center" w:align="items-center" class="highlight-bg">
-            {{ option.id }}
+            {{$t('post.types.poll.shortOption.' + index)}}
           </span>
           <span class="poll-option" :id="'poll-option-' + option.id" @click.prevent="vote(option.id)">
             {{ option.title }}
