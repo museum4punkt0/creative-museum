@@ -21,6 +21,10 @@ class CreateMediaObjectAction extends AbstractController
         $mediaObject = new MediaObject();
         $mediaObject->file = $uploadedFile;
 
+        if (null !== $request->get('description')) {
+            $mediaObject->setDescription($request->get('description'));
+        }
+
         return $mediaObject;
     }
 }

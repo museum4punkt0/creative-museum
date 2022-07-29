@@ -16,10 +16,11 @@ export const postApi = () => {
     })
   }
 
-  const createPicturePost = async (campaignId, body, picture) => {
+  const createPicturePost = async (campaignId, body, picture, altText) => {
 
     let form = new FormData()
-    form.append('file', picture[0].file)
+    form.append('file', picture.file)
+    form.append('description', altText)
 
     const response = await $api.post('media_objects', form)
     const fileId = response.id

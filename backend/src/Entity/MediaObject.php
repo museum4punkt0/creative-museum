@@ -35,6 +35,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                         'type' => 'string',
                                         'format' => 'binary',
                                     ],
+                                    'description' => [
+                                        'type' => 'string'
+                                    ]
                                 ],
                             ],
                         ],
@@ -62,6 +65,10 @@ class MediaObject
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     public ?string $filepath = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['media_object:read', 'read:post'])]
+    private string $description;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['media_object:read'])]
@@ -125,6 +132,18 @@ class MediaObject
     public function setFile(?File $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

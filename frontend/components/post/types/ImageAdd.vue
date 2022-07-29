@@ -25,6 +25,17 @@
           </div>
         </file-upload>
       </client-only>
+
+      <div w:flex="~ col">
+        <input :placeholder="$t('post.placeholder.image.alttext')" type="text" v-model="imgAlt" class="input-text" w:flex="grow" :maxlength="200" />
+        <countdown :max-count="200" :text="imgAlt" />
+      </div>
+
+      <div w:flex="~ col">
+        <input :placeholder="$t('post.placeholder.title')" type="text" v-model="postTitle" class="input-text" w:flex="grow" :maxlength="100" />
+        <countdown :max-count="100" :text="postTitle" />
+      </div>
+
       <div w:flex="~ col grow">
         <textarea v-model="postBody" type="text" class="input-text" w:mt="6" w:flex="grow" :maxlength="maxCount" @keyup="countdown"></textarea>
         <p w:text="right" w:mt="3" w:mr="3" class='highlight-text' :class="{'text-danger': hasError }">{{remainingCount}} / {{maxCount}}</p>
@@ -51,7 +62,9 @@ export default defineComponent({
 
     const files = ref([])
     const edit = ref(false)
+    const postTitle = ref('')
     const postBody = ref('')
+    const imgAlt = ref('')
     const { createPicturePost } = postApi()
 
     function abortPost() {
@@ -59,8 +72,13 @@ export default defineComponent({
     }
 
     function submitPost() {
-      createPicturePost( store.state.currentCampaign, postBody.value, files.value ).then(function() {
+
+      const pictureArray = files.value
+
+      createPicturePost( store.state.currentCampaign, postBody.value, pictureArray[0], imgAlt.value ).then(function() {
+        postTitle.value = ''
         postBody.value = ''
+        imgAlt.value = ''
         files.value = []
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
@@ -97,7 +115,9 @@ export default defineComponent({
       inputFile,
       inputFilter,
       edit,
-      postBody
+      postTitle,
+      postBody,
+      imgAlt
     }
   },
   data() {
