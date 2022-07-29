@@ -3,7 +3,7 @@
     <div w:p="6" class="page-header">
       <button class="back-btn" @click.prevent="abortPost">{{ $t('post.types.playlist.headline') }}</button>
     </div>
-    <div w:flex="~ col" w:justify="space-between">
+    <div w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6">
       <div>
         <PlaylistSelection
           w:flex="~ col 1" w:align="items-stretch"
