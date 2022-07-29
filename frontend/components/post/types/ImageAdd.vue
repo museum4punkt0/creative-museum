@@ -15,12 +15,20 @@
           @input-file="inputFile"
           @input-filter="inputFilter"
         >
-          <div class="btn-outline" w:px="4" w:py="2" w:mt="6">
+          <div class="box-shadow-inset" w:pt="2" w:pr="2" w:pb="10" w:pl="2" w:border="rounded-xl" w:text="left" w:flex="~ row">
             {{ $t('post.types.image.uploader.' + (files.length ? 'replace' : 'add')) }}
+            <svg w:w="6" w:h="6" w:ml="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M12 5.28571V18.7143" stroke="#FFFFFF" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M18.7137 11.8514H5.28516" stroke="#FFFFFF" stroke-miterlimit="10" stroke-linecap="round"/>
+            </svg>
           </div>
         </file-upload>
       </client-only>
-      <textarea v-model="postBody" type="text" class="input-text" w:mt="6" w:flex="grow"></textarea>
+      <div w:flex="~ col grow">
+        <textarea v-model="postBody" type="text" class="input-text" w:mt="6" w:flex="grow" :maxlength="maxCount" @keyup="countdown"></textarea>
+        <p w:text="right" w:mt="3" w:mr="3" class='highlight-text' :class="{'text-danger': hasError }">{{remainingCount}} / {{maxCount}}</p>
+      </div>
       <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
 
     </div>
@@ -92,5 +100,18 @@ export default defineComponent({
       postBody
     }
   },
+  data() {
+    return {
+      maxCount: 1000,
+      remainingCount: 1000,
+      hasError: false
+    }
+  },
+  methods: {
+    countdown: function() {
+      this.remainingCount = this.maxCount - this.postBody.length;
+      this.hasError = this.remainingCount < 0;
+    }
+  }
 })
 </script>

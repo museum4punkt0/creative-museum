@@ -110,6 +110,10 @@
     }
   }
 
+  .box-shadow-inset {
+    box-shadow: inset -3px -3px 8px rgba(100, 100, 100, 0.4), inset 3px 3px 8px rgba(0, 0, 0, 0.4);
+  }
+
   .modal {
     @media (min-width: 1024px) {
       @apply bg-grey;
@@ -242,7 +246,10 @@
 
 }
 
-@layer utilities {
-
+// *************************** FORM ELEMENT CUSTOM STYLES ***************************
+// **********************************************************************************
+.file-uploads {
+  label {
+    cursor: pointer;
+  }
 }
-
