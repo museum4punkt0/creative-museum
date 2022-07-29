@@ -7,8 +7,8 @@
       w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6"
     >
       <div w:flex="~ col grow">
-        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" :maxlength="maxCount" @keyup="countdown"></textarea>
-        <p w:text="right" w:mt="3" w:mr="3" class='highlight-text' :class="{'text-danger': hasError }">{{remainingCount}} / {{maxCount}}</p>
+        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" :maxlength="maxCount"></textarea>
+        <countdown :max-count="maxCount" :text="postBody" />
       </div>
       <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
     </div>
@@ -17,12 +17,16 @@
 <script>
 import { defineComponent, ref, useContext, useRouter } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
+import Countdown from "~/components/Countdown";
 
 export default defineComponent({
   emits: [
     'abortPost',
     'closeAddModal'
   ],
+  components: {
+    Countdown
+  },
   setup(_, context) {
 
     const { store } = useContext()
@@ -52,14 +56,7 @@ export default defineComponent({
   data() {
     return {
       maxCount: 1000,
-      remainingCount: 1000,
       hasError: false
-    }
-  },
-  methods: {
-    countdown: function() {
-      this.remainingCount = this.maxCount - this.postBody.length;
-      this.hasError = this.remainingCount < 0;
     }
   }
 })
