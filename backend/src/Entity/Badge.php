@@ -72,7 +72,7 @@ class Badge
     /**
      * @return BadgeType
      */
-    public function getType(): BadgeType
+    public function getType(): ?BadgeType
     {
         return $this->type;
     }

@@ -11,7 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PollOptionRepository::class)]
 #[ApiResource(
-    collectionOperations: []
+    collectionOperations: [],
+    itemOperations: ["get"]
 )]
 class PollOption
 {

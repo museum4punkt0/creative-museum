@@ -13,7 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: PollOptionChoiceRepository::class)]
 #[ApiResource(
     attributes: [
-        "security" => "is_granted('ROLE_ADMIN')",
         "denormalization_context" => ["groups" => ["write:pollOptionChoice"]]
     ],
     collectionOperations: [
@@ -23,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     itemOperations: [
         "get",
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
 )]
 class PollOptionChoice

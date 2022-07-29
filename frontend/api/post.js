@@ -44,6 +44,31 @@ export const postApi = () => {
     })
   }
 
+  const createPollPost = async (campaignId, contents) => {
+
+    let pollOptions = []
+
+    for (let option of contents.options) {
+      pollOptions.push({title: option.value})
+    }
+
+    return await $api.post('posts', {
+      campaign: `/v1/campaigns/${campaignId}`,
+      type: 'poll',
+      author: `/v1/users/${$auth.user.uuid}`,
+      question: contents.question,
+      body: contents.description,
+      pollOptions
+    })
+  }
+
+  const votePollOption = async (pollOptionId) => {
+    return await $api.post('poll_option_choices', {
+      pollOption: `/v1/poll_options/${pollOptionId}`,
+      user: `/v1/users/${$auth.user.uuid}`
+    })
+  }
+
   const fetchPostsByCampaign = async (campaignId) => {
     return await $api.get(`posts/?campaign=${campaignId}`)
   }
@@ -104,6 +129,8 @@ export const postApi = () => {
     fetchYourVoteByPost,
     submitCommentByPost,
     createPlaylistWithPost,
-    createPlaylistPost
+    createPlaylistPost,
+    createPollPost,
+    votePollOption
   }
 }

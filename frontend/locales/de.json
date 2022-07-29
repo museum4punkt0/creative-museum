@@ -72,7 +72,18 @@
       },
       "poll": {
         "button": "Umfrage",
-        "headline": "Umfrage hochladen"
+        "headline": "Umfrage hochladen",
+        "pollTitle": "Titel der Umfrage",
+        "pollDescription": "Erläuterung der Fragestellung",
+        "option": {
+          "0": "Option A",
+          "1": "Option B",
+          "2": "Option C",
+          "3": "Option D",
+          "4": "Option E"
+        },
+        "addOption": "Option hinzufügen",
+        "removeOption": "Löschen"
       },
       "audio": {
         "button": "Audio",
