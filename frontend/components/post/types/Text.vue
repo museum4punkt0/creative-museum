@@ -1,6 +1,7 @@
 <template>
   <div>
-    {{post.body}}
+    <template v-if="post.title">Title: {{ post.title }}<br></template>
+    Body: {{ post.body }}
   </div>
 </template>
 <script lang="ts">

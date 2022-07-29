@@ -75,7 +75,13 @@ export default defineComponent({
 
       const pictureArray = files.value
 
-      createPicturePost( store.state.currentCampaign, postBody.value, pictureArray[0], imgAlt.value ).then(function() {
+      createPicturePost(
+        store.state.currentCampaign,
+        postTitle.value,
+        postBody.value,
+        pictureArray[0],
+        imgAlt.value
+      ).then(function() {
         postTitle.value = ''
         postBody.value = ''
         imgAlt.value = ''

@@ -43,7 +43,7 @@ export default defineComponent({
     const { createTextPost } = postApi()
 
     function submitPost() {
-      createTextPost( store.state.currentCampaign, postBody.value ).then(function() {
+      createTextPost( store.state.currentCampaign, postTitle.value, postBody.value ).then(function() {
         postTitle.value = ''
         postBody.value = ''
         context.emit('closeAddModal')

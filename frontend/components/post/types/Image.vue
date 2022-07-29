@@ -4,9 +4,11 @@
       v-if="post.files.length"
       :src="'https://backend.creative-museum.ddev.site/' + post.files[0].contentUrl"
       w:border="rounded"
-      w:mx="auto" />
+      w:mx="auto"
+      :alt="post.files[0].description ? post.files[0].description : (post.title ? post.title : post.body) " />
     <p w:my="3">
-      {{post.body}}
+      <template v-if="post.title">Title: {{ post.title }}<br></template>
+      {{ post.body }}
     </p>
   </div>
 </template>

@@ -7,16 +7,17 @@ export const postApi = () => {
     return await $api.get(`posts/${postId}`)
   }
 
-  const createTextPost = async (campaignId, body) => {
+  const createTextPost = async (campaignId, title, body) => {
     return await $api.post('posts', {
       type: 'text',
       author: `/v1/users/${$auth.user.uuid}`,
+      title,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
     })
   }
 
-  const createPicturePost = async (campaignId, body, picture, altText) => {
+  const createPicturePost = async (campaignId, title, body, picture, altText) => {
 
     let form = new FormData()
     form.append('file', picture.file)
@@ -28,6 +29,7 @@ export const postApi = () => {
     return await $api.post('posts', {
       type: 'image',
       author: `/v1/users/${$auth.user.uuid}`,
+      title,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
       files: [
