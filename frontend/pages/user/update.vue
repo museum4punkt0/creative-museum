@@ -33,7 +33,7 @@
 
     <h1 w:text="2xl">{{ firstName }} {{ lastName }}</h1>
     <p class="highlight-text" w:mb="4">{{ title }} @{{ user.username }}</p>
-    <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" w:pb="8" w:mb="8" :maxlength="1000"></textarea>
+    <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" w:pb="8" w:mb="12" :maxlength="1000"></textarea>
 
     <h2 w:text="2xl" w:mb="4">{{ $t('user.profile.self.edit.personalData') }}</h2>
 
@@ -54,11 +54,11 @@
       <input id="input_username" type="text" v-model="username" class="input-text" />
     </div>
 
-    <button class="btn-primary" @click.prevent="save" w:mb="10">{{ $t('user.profile.self.edit.save') }}</button>
+    <button w:align="md:self-start" class="btn-primary" @click.prevent="save" w:mb="12">{{ $t('user.profile.self.edit.save') }}</button>
 
     <h2>{{ $t('user.profile.self.edit.removal') }}</h2>
 
-    <button class="btn-primary btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
+    <button w:align="md:self-start" class="btn-primary btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
 
 
   </div>
