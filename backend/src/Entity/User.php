@@ -114,7 +114,7 @@ class User implements UserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 100)]
-    #[Groups(["read:me"])]
+    #[Groups(["read:me", "write:me"])]
     private $description;
 
     public function __construct()
