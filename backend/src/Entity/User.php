@@ -109,7 +109,7 @@ class User implements UserInterface
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(["read:post"])]
+    #[Groups(["read:post", "write:me", "read:me"])]
     private $profilePicture;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
