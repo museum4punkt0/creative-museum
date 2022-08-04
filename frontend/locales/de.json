@@ -155,7 +155,10 @@
           "username": "Benutzername",
           "save": "Änderungen speichern",
           "removal": "Profil löschen",
-          "deleteProfile": "Profil löschen"
+          "deleteProfile": "Profil löschen",
+          "placeholder": {
+            "description": "Profil Beschreibung und Status des Useres. Es kann natürlich länger werden."
+          }
         }
       }
     }

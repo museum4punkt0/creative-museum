@@ -9,12 +9,19 @@
           {{ $t('user.profile.self.headline', {firstName: user.firstName}) }}
         </button>
       </div>
-      {{ user.firstName }} {{ user.lastName }}
-      {{ user.username }}
-      <br>
-      {{ user.description }}
+      <div>
+        {{ user.firstName }} {{ user.lastName }}
+      </div>
+      <div>
+        {{ user.username }}
+      </div>
+      <div>
+        <p>
+          {{ user.description }}
+        </p>
+      </div>
 
-      <NuxtLink to="/user/update" class="btn-outline"> {{ $t('user.editProfile') }}</NuxtLink>
+      <NuxtLink to="/user/update" w:align="md:self-start" w:mt="6" class="btn-primary"> {{ $t('user.editProfile') }}</NuxtLink>
 
     </div>
   </div>

@@ -1,52 +1,64 @@
 <template>
-  <div>
+  <div w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6">
 
     <client-only>
-
-      <file-upload ref="upload"
-                   v-model="files"
-                   accept="image/png,image/gif,image/jpeg"
-                   class="block"
-                   @input-file="inputFile"
-                   @input-filter="inputFilter"
-      >
-        <div class="box-shadow-inset" w:pt="2" w:pr="2" w:pb="10" w:pl="2" w:border="rounded-xl" w:text="left" w:flex="~ row">
-
-          <img v-if="files.length" :src="typeof files[0] === 'string' ? files[0] : files[0].blob" w:max-h="1/3 lg:48" w:w="auto" w:border="rounded" w:align="self-center" />
-
-          {{ $t('post.types.image.uploader.' + (files.length ? 'replace' : 'add')) }}
-          <svg w:w="6" w:h="6" w:ml="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FFFFFF" stroke-miterlimit="10" stroke-linecap="round"/>
-            <path d="M12 5.28571V18.7143" stroke="#FFFFFF" stroke-miterlimit="10" stroke-linecap="round"/>
-            <path d="M18.7137 11.8514H5.28516" stroke="#FFFFFF" stroke-miterlimit="10" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </file-upload>
+      <div w:flex="~ col" w:align="items-start" w:mb="6">
+        <img v-if="files.length" :src="typeof files[0] === 'string' ? files[0] : files[0].blob" w:w="32" w:border="rounded-full" w:align="self-start" />
+        <file-upload ref="upload"
+                     v-model="files"
+                     accept="image/png,image/gif,image/jpeg"
+                     class="block"
+                     @input-file="inputFile"
+                     @input-filter="inputFilter"
+        >
+          <div w:pt="2" w:pr="2" w:pb="2" w:pl="2" w:border="rounded-xl" w:text="left" w:flex="~ row">
+            <svg v-if="!files.length" w:w="6" w:h="6" w:mr="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="highlight-svg-stroke">
+              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M12 5.28571V18.7143" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M18.7137 11.8514H5.28516" stroke-miterlimit="10" stroke-linecap="round"/>
+            </svg>
+            <svg v-if="files.length" w:w="6" w:h="6" w:mr="2" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="highlight-svg-stroke">
+              <path d="M12.812 13.1936C13.4218 12.6459 13.9076 11.9743 14.2368 11.2238C14.5661 10.4732 14.7313 9.66098 14.7213 8.84143C14.7207 7.29236 14.1051 5.8069 13.0098 4.71154C11.9144 3.61618 10.429 3.00057 8.87988 3" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M17.072 13.4783H13.3435C13.1161 13.4783 12.8981 13.388 12.7374 13.2272C12.5766 13.0665 12.4863 12.8485 12.4863 12.6211V8.89258" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M5.26028 4.43994C4.65056 4.98903 4.1649 5.66178 3.83567 6.41336C3.50644 7.16493 3.34121 7.97805 3.351 8.79851C3.35156 10.3476 3.96718 11.833 5.06254 12.9284C6.1579 14.0238 7.64335 14.6394 9.19242 14.6399" stroke-miterlimit="10" stroke-linecap="round"/>
+              <path d="M1 4.16113H4.72857C4.9559 4.16113 5.17392 4.25144 5.33466 4.41218C5.49541 4.57293 5.58571 4.79095 5.58571 5.01828V8.74685" stroke-miterlimit="10" stroke-linecap="round"/>
+            </svg>
+            <span class="highlight-text">
+              {{ $t('post.types.image.uploader.' + (files.length ? 'replace' : 'add')) }}
+            </span>
+          </div>
+        </file-upload>
+      </div>
     </client-only>
 
-    <h1>{{ firstName }} {{ lastName }}</h1>
-    <p>{{ title }} @{{ user.username }}</p>
-    <textarea v-model="description" type="text" class="input-text" w:flex="grow" w:pb="8" :maxlength="1000"></textarea>
+    <h1 w:text="2xl">{{ firstName }} {{ lastName }}</h1>
+    <p class="highlight-text" w:mb="4">{{ title }} @{{ user.username }}</p>
+    <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" w:pb="8" w:mb="8" :maxlength="1000"></textarea>
 
-    <h2>{{ $t('user.profile.self.edit.personalData') }}</h2>
+    <h2 w:text="2xl" w:mb="4">{{ $t('user.profile.self.edit.personalData') }}</h2>
 
-    <label for="input_firstname">{{ $t('user.profile.self.edit.firstName') }}</label>
-    <input id="input_firstname" type="text" v-model="firstName" class="input-text" />
+    <div w:mb="6">
+      <label for="input_firstname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.firstName') }}</label>
+      <input id="input_firstname" type="text" v-model="firstName" class="input-text" />
+    </div>
+    <div w:mb="6">
+      <label for="input_lastname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.lastName') }}</label>
+      <input id="input_lastname" type="text" v-model="lastName" class="input-text" />
+    </div>
+    <div w:mb="6">
+      <label for="input_email" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.email') }}</label>
+      <input id="input_email" type="text" v-model="email" class="input-text" />
+    </div>
+    <div w:mb="6">
+      <label for="input_username" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.username') }}</label>
+      <input id="input_username" type="text" v-model="username" class="input-text" />
+    </div>
 
-    <label for="input_lastname">{{ $t('user.profile.self.edit.lastName') }}</label>
-    <input id="input_lastname" type="text" v-model="lastName" class="input-text" />
-
-    <label for="input_email">{{ $t('user.profile.self.edit.email') }}</label>
-    <input id="input_email" type="text" v-model="email" class="input-text" />
-
-    <label for="input_username">{{ $t('user.profile.self.edit.username') }}</label>
-    <input id="input_username" type="text" v-model="username" class="input-text" />
-
-    <button class="btn-primary" @click.prevent="save">{{ $t('user.profile.self.edit.save') }}</button>
+    <button class="btn-primary" @click.prevent="save" w:mb="10">{{ $t('user.profile.self.edit.save') }}</button>
 
     <h2>{{ $t('user.profile.self.edit.removal') }}</h2>
 
-    <button class="btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
+    <button class="btn-primary btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
 
 
   </div>

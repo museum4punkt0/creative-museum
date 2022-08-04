@@ -12,6 +12,13 @@
     }
   }
 
+  .highlight-svg-stroke {
+    transition: all .25s ease-in-out;
+    * {
+      stroke: var(--highlight)
+    }
+  }
+
   svg {
     width: 100%;
     height: auto;
