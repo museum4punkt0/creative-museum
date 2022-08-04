@@ -42,7 +42,7 @@ export const userApi = () => {
         const response = await $api.post('media_objects', form)
         const fileId = response.id
 
-        $api.patch(`users/${$auth.user.uuid}`, {
+        await $api.patch(`users/${$auth.user.uuid}`, {
           profilePicture: `/v1/media_objects/` + fileId
         })
       }
