@@ -26,19 +26,19 @@
         </file-upload>
       </client-only>
 
-      <div w:flex="~ col">
-        <input :placeholder="$t('post.placeholder.image.alttext')" type="text" v-model="imgAlt" class="input-text" w:flex="grow" :maxlength="200" />
-        <countdown :max-count="200" :text="imgAlt" />
+      <div w:position="relative">
+        <input type="text" v-model="imgAlt" class="input-text" w:pr="21" :placeholder="$t('post.placeholder.image.alttext')" :maxlength="200" />
+        <countdown :max-count="200" :text="imgAlt" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
 
-      <div w:flex="~ col">
-        <input :placeholder="$t('post.placeholder.title')" type="text" v-model="postTitle" class="input-text" w:flex="grow" :maxlength="100" />
-        <countdown :max-count="100" :text="postTitle" />
+      <div w:position="relative">
+        <input type="text" v-model="postTitle" class="input-text" w:pr="20" :placeholder="$t('post.placeholder.title')" :maxlength="100" />
+        <countdown :max-count="100" :text="postTitle" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
 
-      <div w:flex="~ col grow">
-        <textarea v-model="postBody" type="text" class="input-text" w:mt="6" w:flex="grow" :maxlength="maxCount" @keyup="countdown"></textarea>
-        <p w:text="right" w:mt="3" w:mr="3" class='highlight-text' :class="{'text-danger': hasError }">{{remainingCount}} / {{maxCount}}</p>
+      <div w:flex="~ col grow" w:position="relative">
+        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pr="21" :maxlength="1000"></textarea>
+        <countdown :max-count="1000" :text="postBody" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
       <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
 
@@ -47,10 +47,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, useAsync, useContext } from '@nuxtjs/composition-api'
-import {postApi} from "~/api/post";
+import {postApi} from "~/api/post"
+import Countdown from "~/components/Countdown.vue";
 
 export default defineComponent({
   components: {
+    Countdown,
     FileUpload: () => import('vue-upload-component')
   },
   emits: [
@@ -124,19 +126,6 @@ export default defineComponent({
       postTitle,
       postBody,
       imgAlt
-    }
-  },
-  data() {
-    return {
-      maxCount: 1000,
-      remainingCount: 1000,
-      hasError: false
-    }
-  },
-  methods: {
-    countdown: function() {
-      this.remainingCount = this.maxCount - this.postBody.length;
-      this.hasError = this.remainingCount < 0;
     }
   }
 })

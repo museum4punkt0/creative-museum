@@ -6,13 +6,13 @@
     <div
       w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6"
     >
-      <div w:flex="~ col">
-        <input :placeholder="$t('post.placeholder.title')" type="text" v-model="postTitle" class="input-text" w:flex="grow" :maxlength="100" />
-        <countdown :max-count="100" :text="postTitle" />
+      <div w:position="relative">
+        <input type="text" v-model="postTitle" class="input-text" w:pr="20" :placeholder="$t('post.placeholder.title')" :maxlength="100" />
+        <countdown :max-count="100" :text="postTitle" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
 
       <div w:flex="~ col grow" w:position="relative">
-        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pb="8" :maxlength="1000"></textarea>
+        <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pr="21" :maxlength="1000"></textarea>
         <countdown :max-count="1000" :text="postBody" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
       <button type="submit" class="btn-primary" w:mt="6" w:w="full" @click.prevent="submitPost">{{ $t('post.share') }}</button>
