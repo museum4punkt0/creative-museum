@@ -8,7 +8,7 @@
           w:position="relative"
         >
             <img
-              src="/images/placeholder_profile.png"
+              :src="profilePicture"
               w:w="6"
               w:h="6"
               w:object="contain center"
@@ -90,11 +90,19 @@ export default defineComponent({
       )
     }
 
+    const profilePicture = computed(() => {
+      if ('profilePicture' in store.state.auth.user) {
+        return 'https://backend.creative-museum.ddev.site/' + store.state.auth.user.profilePicture.contentUrl
+      }
+      return '/images/placeholder_profile.png'
+    })
+
     return {
       user: computed(() => store.state.auth.user),
       campaignScore: computed(() => context.$auth.$storage.getState('campaignScore')),
       username,
-      submitUsername
+      submitUsername,
+      profilePicture
     }
   },
 })

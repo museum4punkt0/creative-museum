@@ -143,7 +143,22 @@
     "points": "Punkte",
     "editProfile": "Profil bearbeiten",
     "score": "Punktestand",
-    "yourCurrentScore": "Dein aktueller Punktestand"
+    "yourCurrentScore": "Dein aktueller Punktestand",
+    "profile": {
+      "self": {
+        "headline": "Guten Tag {firstName}",
+        "edit": {
+          "personalData": "Persönliche Einstellungen",
+          "firstName": "Vorname",
+          "lastName": "Nachname",
+          "email": "E-Mail",
+          "username": "Benutzername",
+          "save": "Änderungen speichern",
+          "removal": "Profil löschen",
+          "deleteProfile": "Profil löschen"
+        }
+      }
+    }
   },
   "campaign": {
     "partner": "Kampagnenpartner",

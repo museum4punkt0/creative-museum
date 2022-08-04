@@ -4,7 +4,7 @@
       <div w:mb="10">
         <div w:w="21" w:h="21" w:rounded="full" w:mb="4" class="highlight-bg">
           <img
-            src="/images/placeholder_profile.png"
+            :src="profilePicture"
             w:w="21"
             w:h="21"
             w:object="contain center"
@@ -71,12 +71,21 @@ export default defineComponent({
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
     })
+
+    const profilePicture = computed(() => {
+      if ('profilePicture' in $auth.user) {
+        return 'https://backend.creative-museum.ddev.site' + $auth.user.profilePicture.contentUrl
+      }
+      return '/images/placeholder_profile.png'
+    })
+
     return {
       fullName,
+      profilePicture,
       campaignScore: computed(() =>
         context.$auth.$storage.getState('campaignScore')
       ),
-      isLargerThanLg,
+      isLargerThanLg
     }
   },
 })
