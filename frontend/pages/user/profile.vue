@@ -26,6 +26,15 @@
 
       <NuxtLink to="/user/update" w:align="md:self-start" w:mt="10" class="btn-primary btn-outline"> {{ $t('user.editProfile') }}</NuxtLink>
 
+      <h4>{{ $t('user.profile.self.points') }}</h4>
+
+      <div v-for="membership in user.memberships">
+        <div>
+          <span>{{ membership.campaign.title }}</span><br>
+          <span>{{ membership.score }} {{ $t('user.profile.self.score') }}</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>

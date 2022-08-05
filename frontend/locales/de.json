@@ -147,6 +147,8 @@
     "profile": {
       "self": {
         "headline": "Guten Tag {firstName}",
+        "points": "Punktestand",
+        "score": "Punkte",
         "edit": {
           "personalData": "Persönliche Einstellungen",
           "firstName": "Vorname",
