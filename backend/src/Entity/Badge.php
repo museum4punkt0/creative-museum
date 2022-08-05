@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Enum\BadgeType;
 use App\Enum\PostType;
 use App\Repository\BadgeRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
@@ -31,25 +32,31 @@ class Badge
     private $id;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups('read:me')]
     private $threshold;
 
     #[ORM\Column(type: 'badgetype')]
+    #[Groups('read:me')]
     private BadgeType $type;
 
     #[ORM\Column(type: 'posttype')]
     private PostType $postType;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('read:me')]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups('read:me')]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('read:me')]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups('read:me')]
     private $picture;
 
     public function getId(): ?int

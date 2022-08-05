@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BadgedRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BadgedRepository::class)]
@@ -31,6 +32,7 @@ class Badged
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('read:me')]
     private $badge;
 
     public function getId(): ?int

@@ -149,6 +149,16 @@
         "headline": "Guten Tag {firstName}",
         "points": "Punktestand",
         "score": "Punkte",
+        "notifications": "Neueste Mitteilungen",
+        "badges": {
+          "headline": "Badges",
+          "points": {
+            "scoring": "Du hast {threshold} Punkte gesammelt.",
+            "awards": "Du hast {threshold} Awards verliehen.",
+            "postcount": "Du hast {threshold} Beitrage verfasst.",
+            "likes": "Du hast {threshold} Beiträge bewertet."
+          }
+        },
         "edit": {
           "personalData": "Persönliche Einstellungen",
           "firstName": "Vorname",

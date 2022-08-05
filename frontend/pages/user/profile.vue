@@ -44,7 +44,18 @@
         </div>
       </div>
 
+      <h4>{{ $t('user.profile.self.notifications') }}</h4>
 
+      <h4>{{ $t('user.profile.self.badges.headline') }}</h4>
+
+      <div v-for="achievement in user.achievements">
+        <div>
+          {{ achievement.badge.title }}<br>
+          {{ achievement.badge.description }}<br>
+          <img :src="'https://backend.creative-museum.ddev.site' + achievement.badge.picture.contentUrl" />
+          {{ $t('user.profile.self.badges.points.' + achievement.badge.type, { threshold: achievement.badge.threshold })}}
+        </div>
+      </div>
 
     </div>
   </div>
@@ -54,16 +65,17 @@
 <script>
 
 import { defineComponent, useAsync, useRoute, useRouter, computed, useContext, ref, useStore } from '@nuxtjs/composition-api'
-import { campaignApi } from '@/api/campaign'
-import { postApi } from '@/api/post'
-import { userApi } from '@/api/user'
+import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
   name: 'ProfilePage',
   setup(props) {
 
+    const { getNotifications } = notificationApi()
+
     const store = useStore()
     const user = computed(() => store.state.auth.user)
+    const notifications = getNotifications()
 
     function backButton() {
 
@@ -71,7 +83,8 @@ export default defineComponent({
 
     return {
       user,
-      backButton
+      backButton,
+      notifications
     }
   }
 })
