@@ -150,11 +150,13 @@
         "points": "Punktestand",
         "score": "Punkte",
         "notifications": "Neueste Mitteilungen",
+        "awards": "Awards",
         "badges": {
           "headline": "Badges",
           "points": {
             "scoring": "Du hast {threshold} Punkte gesammelt.",
             "awards": "Du hast {threshold} Awards verliehen.",
+            "reward_points": "Du hast {threshold} Awards verliehen.",
             "postcount": "Du hast {threshold} Beitrage verfasst.",
             "likes": "Du hast {threshold} Beiträge bewertet."
           }

@@ -43,19 +43,30 @@
           </div>
         </div>
       </div>
+      <div w:grid="col-span-6" w:pr="10"></div>
+      <div w:grid="col-span-3" w:pr="10">
+        <div w:mb="12">
+          <h2 w:text="2xl">{{ $t('user.profile.self.notifications') }}</h2>
 
-      <h4>{{ $t('user.profile.self.notifications') }}</h4>
-
-      <h4>{{ $t('user.profile.self.badges.headline') }}</h4>
-
-      <div v-for="achievement in user.achievements">
-        <div>
-          {{ achievement.badge.title }}<br>
-          {{ achievement.badge.description }}<br>
-          <img :src="'https://backend.creative-museum.ddev.site' + achievement.badge.picture.contentUrl" />
-          {{ $t('user.profile.self.badges.points.' + achievement.badge.type, { threshold: achievement.badge.threshold })}}
         </div>
+        <div w:mb="12">
+          <h2 w:text="2xl">{{ $t('user.profile.self.awards') }}</h2>
+
+        </div>
+        <div w:mb="12">
+          <h2 w:text="2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
+
+          <div v-for="achievement in user.achievements" w:flex="~ row" w:mb="6">
+            <img :src="'https://backend.creative-museum.ddev.site' + achievement.badge.picture.contentUrl" w:w="20" w:align="self-center" />
+            <div w:ml="4" w:flex="~ col" w:justify="content-center">
+              <span>{{ achievement.badge.title }}</span>
+              <span w:text="sm" class="highlight-text">{{ $t('user.profile.self.badges.points.' + achievement.badge.type, { threshold: achievement.badge.threshold })}}</span>
+            </div>
+          </div>
+        </div>
+
       </div>
+
 
     </div>
   </div>
