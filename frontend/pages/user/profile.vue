@@ -54,7 +54,15 @@
 
         </div>
         <div w:mb="12">
-          <h2 w:text="2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
+          <div w:flex="~ row" w:justify="content-between">
+            <h2 w:text="2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
+            <button class="highlight-text" w:text="sm" w:flex="~ row" w:align="items-center" w:font="leading-none" w:cursor="pointer" @click.prevent="showMore">
+              <svg w:w="2" w:h="auto" w:mr="2" viewBox="0 0 9 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.20132 10.2219V0H4.17333V10.2218L1.36361 7.56731L0.636719 8.25405L4.32389 11.7376L4.68733 12.0809L5.05078 11.7376L8.72239 8.26875L7.9955 7.582L5.20132 10.2219Z"/>
+              </svg>
+              <span>Alle anzeigen</span>
+            </button>
+          </div>
 
           <div v-for="achievement in user.achievements" w:flex="~ row" w:mb="6">
             <img :src="'https://backend.creative-museum.ddev.site' + achievement.badge.picture.contentUrl" w:w="20" w:align="self-center" />
@@ -84,6 +92,7 @@ export default defineComponent({
 
     const { getNotifications } = notificationApi()
 
+    const readMore = computed(false)
     const store = useStore()
     const user = computed(() => store.state.auth.user)
     const notifications = getNotifications()
@@ -92,10 +101,15 @@ export default defineComponent({
 
     }
 
+    function showMore() {
+      readMore.value = true;
+    }
+
     return {
       user,
       backButton,
-      notifications
+      notifications,
+      showMore
     }
   }
 })
