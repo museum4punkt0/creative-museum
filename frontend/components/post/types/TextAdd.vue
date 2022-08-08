@@ -11,7 +11,7 @@
         <countdown :max-count="100" :text="postTitle" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
 
-      <div w:flex="~ col grow" w:position="relative">
+      <div w:flex="~ col grow" w:mt="4" w:position="relative">
         <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pr="21" :maxlength="1000"></textarea>
         <countdown :max-count="1000" :text="postBody" w:position="absolute" w:bottom="1" w:right="2" />
       </div>

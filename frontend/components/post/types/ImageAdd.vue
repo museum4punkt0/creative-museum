@@ -26,17 +26,17 @@
         </file-upload>
       </client-only>
 
-      <div w:position="relative">
+      <div w:position="relative" w:mt="4">
         <input type="text" v-model="imgAlt" class="input-text" w:pr="21" :placeholder="$t('post.placeholder.image.alttext')" :maxlength="200" />
         <countdown :max-count="200" :text="imgAlt" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
 
-      <div w:position="relative">
+      <div w:position="relative" w:mt="4">
         <input type="text" v-model="postTitle" class="input-text" w:pr="20" :placeholder="$t('post.placeholder.title')" :maxlength="100" />
         <countdown :max-count="100" :text="postTitle" w:position="absolute" w:bottom="1" w:right="2" />
       </div>
 
-      <div w:flex="~ col grow" w:position="relative">
+      <div w:flex="~ col grow" w:position="relative" w:mt="4">
         <textarea v-model="postBody" type="text" class="input-text" w:flex="grow" w:pr="21" :maxlength="1000"></textarea>
         <countdown :max-count="1000" :text="postBody" w:position="absolute" w:bottom="1" w:right="2" />
       </div>

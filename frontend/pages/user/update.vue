@@ -2,7 +2,7 @@
   <div w:flex="~ col 1" w:h="full" w:justify="between" w:pr="6" w:pb="6" w:pl="6">
 
     <client-only>
-      <div w:flex="~ col" w:align="items-start" w:mb="6">
+      <div w:flex="~ col" w:align="items-start">
         <img v-if="files.length" :src="typeof files[0] === 'string' ? files[0] : files[0].blob" w:w="32" w:border="rounded-full" w:align="self-start" />
         <file-upload ref="upload"
                      v-model="files"
@@ -31,30 +31,30 @@
       </div>
     </client-only>
 
-    <h1 w:text="2xl">{{ firstName }} {{ lastName }}</h1>
+    <h1 w:text="2xl" w:mt="6">{{ firstName }} {{ lastName }}</h1>
     <p class="highlight-text" w:mb="4">{{ title }} @{{ user.username }}</p>
-    <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" w:pb="8" w:mb="12" :maxlength="1000"></textarea>
+    <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" w:mb="12" :maxlength="1000"></textarea>
 
-    <h2 w:text="2xl" w:mb="4">{{ $t('user.profile.self.edit.personalData') }}</h2>
+    <h2 w:text="2xl" w:mt="8">{{ $t('user.profile.self.edit.personalData') }}</h2>
 
-    <div w:mb="6">
+    <div w:mt="4">
       <label for="input_firstname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.firstName') }}</label>
       <input id="input_firstname" type="text" v-model="firstName" class="input-text" />
     </div>
-    <div w:mb="6">
+    <div w:mt="4">
       <label for="input_lastname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.lastName') }}</label>
       <input id="input_lastname" type="text" v-model="lastName" class="input-text" />
     </div>
-    <div w:mb="6">
+    <div w:mt="4">
       <label for="input_email" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.email') }}</label>
       <input id="input_email" type="text" v-model="email" class="input-text" />
     </div>
-    <div w:mb="6">
+    <div w:mt="4">
       <label for="input_username" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.username') }}</label>
       <input id="input_username" type="text" v-model="username" class="input-text" />
     </div>
 
-    <button w:align="md:self-start" class="btn-primary" @click.prevent="save" w:mb="12">{{ $t('user.profile.self.edit.save') }}</button>
+    <button w:align="md:self-start" class="btn-primary" @click.prevent="save" w:mt="6" w:mb="12">{{ $t('user.profile.self.edit.save') }}</button>
 
     <h2>{{ $t('user.profile.self.edit.removal') }}</h2>
 
