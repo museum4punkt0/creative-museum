@@ -48,10 +48,10 @@
         <div w:flex="~row" w:justify="content-between">
           <h2 w:text="2xl">{{ $t('user.profile.self.activities.headline') }}</h2>
         </div>
-        <div class="filter">
-          <button @click.prevent="showPosts">{{ $t('user.profile.self.activities.posts') }}</button>
-          <button @click.prevent="showBookmarks">{{ $t('user.profile.self.activities.bookmarks') }}</button>
-          <button @click.prevent="showPlaylists">{{ $t('user.profile.self.activities.playlists') }}</button>
+        <div class="filter" w:flex="~ row wrap" w:mt="6">
+          <button w:px="2" w:py="1" w:mr="3" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'" @click.prevent="showPosts">{{ $t('user.profile.self.activities.posts') }}</button>
+          <button w:px="2" w:py="1" w:mr="3" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'" @click.prevent="showBookmarks">{{ $t('user.profile.self.activities.bookmarks') }}</button>
+          <button w:px="2" w:py="1" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'" @click.prevent="showPlaylists">{{ $t('user.profile.self.activities.playlists') }}</button>
         </div>
         <div class="list">
           <div v-if="mode === 'posts'">
