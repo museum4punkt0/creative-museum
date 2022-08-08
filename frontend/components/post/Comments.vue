@@ -19,7 +19,7 @@
       <form v-if="showCommentForm" w:pos="sticky lg:static" w:bottom="0" w:left="0" w:right="0" w:bg="grey" w:p="t-4 b-4 x-4 lg:(x-0 b-0)" w:m="-b-10 -r-10 -l-10 lg:(b-0 r-0 l-0)" @submit.prevent="submitComment">
         <div w:container="~ lg:none" w:pos="relative">
           <textarea v-model="commentBody" v-autogrow class="input-text" w:p="x-4 y-2 r-8" rows="1" w:text="md" w:resize="none" :placeholder="$t('post.commentPlaceholder')" @keyup.enter="submitComment" @click.prevent="showLoginIfNotLoggedIn"></textarea>
-          <button type="submit" w:pos="absolute" w:w="3" w:right="3" w:top="1.5" w:maxh="3xl" w:transform="gpu rotate-180" w:text="white/50" w:z="100"><ArrowIcon /></button>
+          <button type="submit" w:pos="absolute" w:w="3" w:right="3" w:top="2.5" w:maxh="3xl" w:transform="gpu rotate-180" w:text="white/50" w:z="100"><ArrowIcon /></button>
         </div>
       </form>
     </div>
