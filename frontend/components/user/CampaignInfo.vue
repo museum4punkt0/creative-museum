@@ -12,10 +12,10 @@
           />
         </div>
         <p w:text="2xl">
-          {{ fullName }}
+          {{ $auth.user.firstName }} {{ $auth.user.lastName }}
         </p>
         <p w:text="lg" w:mb="3" class="highlight-text">
-          ### TITEL / RANG ###
+          @{{ fullName }}
         </p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}

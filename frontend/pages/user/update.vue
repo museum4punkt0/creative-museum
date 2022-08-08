@@ -3,7 +3,7 @@
 
     <client-only>
       <div w:flex="~ col" w:align="items-start">
-        <img v-if="files.length" :src="typeof files[0] === 'string' ? files[0] : files[0].blob" w:w="32" w:border="rounded-full" w:align="self-start" />
+        <img v-if="files.length" :src="typeof files[0] === 'string' ? files[0] : files[0].blob" w:w="32" w:mr="2" w:mb="2" w:border="rounded-full" w:align="self-start" />
         <file-upload ref="upload"
                      v-model="files"
                      accept="image/png,image/gif,image/jpeg"
@@ -11,7 +11,7 @@
                      @input-file="inputFile"
                      @input-filter="inputFilter"
         >
-          <div w:pt="2" w:pr="2" w:pb="2" w:pl="2" w:border="rounded-xl" w:text="left" w:flex="~ row">
+          <div w:flex="~ row">
             <svg v-if="!files.length" w:w="6" w:h="6" w:mr="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="highlight-svg-stroke">
               <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-miterlimit="10" stroke-linecap="round"/>
               <path d="M12 5.28571V18.7143" stroke-miterlimit="10" stroke-linecap="round"/>
