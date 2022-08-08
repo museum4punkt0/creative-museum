@@ -27,7 +27,7 @@
 
         <h2 w:text="2xl">{{ $t('user.profile.self.points') }}</h2>
 
-        <div v-for="membership in user.memberships" w:align="self-stretch md:self-start" w:mt="3" w:mb="3">
+        <div v-for="membership in user.memberships" w:align="self-stretch md:self-start" w:mt="3" w:mb="12">
           <div w:text="sm" w:mb="2" class="highlight-text">{{ membership.campaign.title }}</div>
           <div
             w:px="4"
@@ -58,9 +58,9 @@
             <h2 w:text="2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
 
             <button class="highlight-text" w:text="sm" w:flex="~ row" w:align="items-center" w:font="leading-none" w:cursor="pointer" @click.prevent="toggleShowMore">
-              <ArrowIcon w:pos="relative" w:w="2" w:top="0" w:m="r-0.5" w:display="inline-block" :w:transform="readMore ? 'gpu rotate-180' : ''" />
-              <span v-if="! readMore">Alle anzeigen</span>
-              <span v-else>Ausblenden</span>
+              <ArrowIcon w:pos="relative" w:w="2" w:top="0" w:m="r-0.5" w:display="inline-block" w:transition="all duration-200" :w:transform="readMore ? 'gpu rotate-180' : ''" />
+              <span v-if="! readMore">{{ $t('showAll') }}</span>
+              <span v-else>{{ $t('hide') }}</span>
             </button>
           </div>
 
