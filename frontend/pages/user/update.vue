@@ -38,7 +38,7 @@
     </div>
 
     <div w:mb="12">
-      <h2 w:text="2xl" w:mt="8">{{ $t('user.profile.self.edit.personalData') }}</h2>
+      <h2 w:text="2xl">{{ $t('user.profile.self.edit.personalData') }}</h2>
       <div w:mt="4">
         <label for="input_firstname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.firstName') }}</label>
         <input id="input_firstname" type="text" v-model="firstName" class="input-text" />
@@ -58,7 +58,7 @@
     </div>
 
     <div w:mb="12">
-      <h2>{{ $t('user.profile.self.edit.notifications') }}</h2>
+      <h2 w:text="2xl">{{ $t('user.profile.self.edit.notifications') }}</h2>
       <p class="highlight-text" w:text="sm" w:mt="4" w:mb="3">Persönliche Benachrichtigungen</p>
       <div w:display="inline-block">
         <div class="toggle" w:flex="~ row" w:overflow="hidden">
@@ -89,9 +89,8 @@
     </div>
     <button w:align="md:self-start" class="btn-primary" @click.prevent="save" w:mb="12">{{ $t('user.profile.self.edit.save') }}</button>
 
-    <div>
-
-      <h2>{{ $t('user.profile.self.edit.removal') }}</h2>
+    <div w:flex="~ col">
+      <h2 w:text="2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
       <button w:align="md:self-start" class="btn-primary btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
     </div>
 
