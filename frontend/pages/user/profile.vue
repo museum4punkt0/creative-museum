@@ -69,7 +69,7 @@
               :key="'bookmark_' + key"
               :post="post"
               @updatePost="updatePost"
-              @toggle-bookmark-state="toggleBookmarkState"
+              @toggle-bookmark-state="removeBookmark"
             />
           </div>
           <div v-if="mode === 'playlists'">
@@ -170,22 +170,40 @@ export default defineComponent({
     }
 
     function updatePost(postId) {
-      posts.value.forEach(function(item, key) {
-        if (item.id === postId) {
-          fetchPost(postId).then(function(response) {
+
+      fetchPost(postId).then(function(response) {
+
+        posts.value.forEach(function(item, key) {
+          if (item.id === postId) {
             posts.value[key].commentCount = response.commentCount
-          })
-        }
+          }
+        })
+        bookmarks.value.forEach(function(item, key) {
+          if (item.id === postId) {
+            bookmarks.value[key].commentCount = response.commentCount
+          }
+        })
       })
     }
 
-    function toggleBookmarkState(postId) {
+    async function toggleBookmarkState(postId) {
       posts.value.forEach((item, key) => {
         if (item.id !== postId) {
           return
         }
         posts.value[key].bookmarked = !posts.value[key].bookmarked
       })
+      bookmarks.value = await getUserBookmarks()
+    }
+
+    async function removeBookmark(postId) {
+      bookmarks.value.forEach((item, key) => {
+        if (item.id !== postId) {
+          return
+        }
+        bookmarks.value[key].bookmarked = !bookmarks.value[key].bookmarked
+      })
+      bookmarks.value = await getUserBookmarks()
     }
 
     return {
@@ -202,7 +220,8 @@ export default defineComponent({
       playlists,
       bookmarks,
       updatePost,
-      toggleBookmarkState
+      toggleBookmarkState,
+      removeBookmark
     }
   }
 })

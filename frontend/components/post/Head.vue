@@ -98,8 +98,8 @@ export default defineComponent({
 
     const { $auth } = useContext()
 
-    function addOrRemoveBookmark(postId) {
-      toggleBookmark(postId)
+    async function addOrRemoveBookmark(postId) {
+      await toggleBookmark(postId)
       context.emit('toggle-bookmark-state', postId)
     }
 
