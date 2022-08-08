@@ -18,7 +18,7 @@
     </div>
     <div w:mb="10 lg:0">
       <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.profile.header') }}</p>
-      <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.settings') }}</NuxtLink>
+      <NuxtLink to="/user/update" w:display="block" w:mb="4">{{ $t('navigation.profile.settings') }}</NuxtLink>
       <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.search') }}</NuxtLink>
       <NuxtLink to="/" w:display="block">{{ $t('navigation.profile.invite') }}</NuxtLink>
     </div>

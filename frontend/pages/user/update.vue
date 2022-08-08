@@ -31,34 +31,69 @@
       </div>
     </client-only>
 
-    <h1 w:text="2xl" w:mt="6">{{ firstName }} {{ lastName }}</h1>
-    <p class="highlight-text" w:mb="4">{{ title }} @{{ user.username }}</p>
-    <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" w:mb="12" :maxlength="1000"></textarea>
-
-    <h2 w:text="2xl" w:mt="8">{{ $t('user.profile.self.edit.personalData') }}</h2>
-
-    <div w:mt="4">
-      <label for="input_firstname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.firstName') }}</label>
-      <input id="input_firstname" type="text" v-model="firstName" class="input-text" />
-    </div>
-    <div w:mt="4">
-      <label for="input_lastname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.lastName') }}</label>
-      <input id="input_lastname" type="text" v-model="lastName" class="input-text" />
-    </div>
-    <div w:mt="4">
-      <label for="input_email" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.email') }}</label>
-      <input id="input_email" type="text" v-model="email" class="input-text" />
-    </div>
-    <div w:mt="4">
-      <label for="input_username" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.username') }}</label>
-      <input id="input_username" type="text" v-model="username" class="input-text" />
+    <div w:mb="12">
+      <h1 w:text="2xl" w:mt="6">{{ firstName }} {{ lastName }}</h1>
+      <p class="highlight-text" w:mb="4">{{ title }} @{{ user.username }}</p>
+      <textarea v-model="description" type="text" class="input-text" :placeholder="$t('user.profile.self.edit.placeholder.description')" w:flex="grow" :maxlength="1000"></textarea>
     </div>
 
-    <button w:align="md:self-start" class="btn-primary" @click.prevent="save" w:mt="6" w:mb="12">{{ $t('user.profile.self.edit.save') }}</button>
+    <div w:mb="12">
+      <h2 w:text="2xl" w:mt="8">{{ $t('user.profile.self.edit.personalData') }}</h2>
+      <div w:mt="4">
+        <label for="input_firstname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.firstName') }}</label>
+        <input id="input_firstname" type="text" v-model="firstName" class="input-text" />
+      </div>
+      <div w:mt="4">
+        <label for="input_lastname" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.lastName') }}</label>
+        <input id="input_lastname" type="text" v-model="lastName" class="input-text" />
+      </div>
+      <div w:mt="4">
+        <label for="input_email" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.email') }}</label>
+        <input id="input_email" type="text" v-model="email" class="input-text" />
+      </div>
+      <div w:mt="4">
+        <label for="input_username" w:pl="2" w:text="sm" w:mb="3" class="highlight-text">{{ $t('user.profile.self.edit.username') }}</label>
+        <input id="input_username" type="text" v-model="username" class="input-text" />
+      </div>
+    </div>
 
-    <h2>{{ $t('user.profile.self.edit.removal') }}</h2>
+    <div w:mb="12">
+      <h2>{{ $t('user.profile.self.edit.notifications') }}</h2>
+      <p class="highlight-text" w:text="sm" w:mt="4" w:mb="3">Persönliche Benachrichtigungen</p>
+      <div w:display="inline-block">
+        <div class="toggle" w:flex="~ row" w:overflow="hidden">
+          <div class="toggle__item">
+            <input id="persNotifyOn" w:w="0" w:h="0" w:overflow="hidden" type="radio" value="0" name="persNotify" checked>
+            <label for="persNotifyOn" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">Ja</label>
+          </div>
+          <div class="toggle__item">
+            <input id="persNotifyOff" w:w="0" w:h="0" w:overflow="hidden" type="radio" value="1" name="persNotify">
+            <label for="persNotifyOff" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">Nein</label>
+          </div>
+        </div>
+      </div>
 
-    <button w:align="md:self-start" class="btn-primary btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
+      <p class="highlight-text" w:text="sm" w:mt="4" w:mb="3">Creative Museum Benachrichtigungen</p>
+      <div w:display="inline-block">
+        <div class="toggle" w:flex="~ row" w:overflow="hidden">
+          <div class="toggle__item">
+            <input id="globalNotifyOn" w:w="0" w:h="0" w:overflow="hidden" type="radio" value="0" name="globalNotify">
+            <label for="globalNotifyOn" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">Ja</label>
+          </div>
+          <div class="toggle__item">
+            <input id="globalNotifyOff" w:w="0" w:h="0" w:overflow="hidden" type="radio" value="1" name="globalNotify" checked>
+            <label for="globalNotifyOff" w:px="3" w:display="inline-block" w:font="leading-loose" w:transition="background-color duration-300">Nein</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button w:align="md:self-start" class="btn-primary" @click.prevent="save" w:mb="12">{{ $t('user.profile.self.edit.save') }}</button>
+
+    <div>
+
+      <h2>{{ $t('user.profile.self.edit.removal') }}</h2>
+      <button w:align="md:self-start" class="btn-primary btn-outline" @click.prevent="remove">{{ $t('user.profile.self.edit.deleteProfile') }}</button>
+    </div>
 
 
   </div>

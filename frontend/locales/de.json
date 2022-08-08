@@ -175,6 +175,7 @@
           "lastName": "Nachname",
           "email": "E-Mail",
           "username": "Benutzername",
+          "notifications": "Benachrichtigungen",
           "save": "Änderungen speichern",
           "removal": "Profil löschen",
           "deleteProfile": "Profil löschen",
