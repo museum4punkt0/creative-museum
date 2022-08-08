@@ -46,7 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             "requirements" => ["id" => "\d+", "comment" => "array"],
             "controller" => SetCommentController::class,
             'normalization_context' => ['groups' => 'write:comment'],
-        ],
+        ]
     ],
     subresourceOperations: [
         'api_posts_comments_get_subresource' => [
@@ -56,6 +56,11 @@ use Symfony\Component\Validator\Constraints as Assert;
             ],
             "maxDepth" => 2,
             "order" => ["created" => "ASC"]
+        ],
+        'api_users_bookmarks_get_subresource' => [
+            'normalization_context' => [
+                'groups' => ['read:post']
+            ]
         ],
     ],
     itemOperations: [
@@ -82,7 +87,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact','reported' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'type' => 'exact', 'reported' => 'exact', 'author' => 'exact'])]
 #[ApiFilter(OrderFilter::class, properties: ['created'], arguments: ['orderParameterName' => 'order'])]
 #[ORM\HasLifecycleCallbacks]
 class Post

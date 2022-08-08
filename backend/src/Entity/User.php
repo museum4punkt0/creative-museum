@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Enum\NotificationType;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -31,7 +32,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         "get",
     ],
     itemOperations: [
-//        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
         "get",
         "patch" => [
             "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
@@ -55,7 +55,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(["read:me"])]
+    #[Groups(["read:me", "read:post"])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -90,6 +90,7 @@ class User implements UserInterface
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
     #[ORM\JoinTable(name: 'user_bookmark')]
+    #[ApiSubresource(maxDepth: 1)]
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]

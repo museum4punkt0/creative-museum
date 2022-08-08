@@ -163,6 +163,12 @@
             "likes": "Du hast {threshold} Beiträge bewertet."
           }
         },
+        "activities": {
+          "headline": "Meine Aktivitäten",
+          "posts": "Beiträge",
+          "bookmarks": "Merkliste",
+          "playlists": "Playlists"
+        },
         "edit": {
           "personalData": "Persönliche Einstellungen",
           "firstName": "Vorname",

@@ -7,6 +7,14 @@ export const postApi = () => {
     return await $api.get(`posts/${postId}`)
   }
 
+  const getUserPosts = async() => {
+    return await $api.get(`posts?author=${$auth.user.uuid}`)
+  }
+
+  const getUserBookmarks = async() => {
+    return await $api.get(`users/${$auth.user.uuid}/bookmarks`)
+  }
+
   const createTextPost = async (campaignId, title, body) => {
     return await $api.post('posts', {
       type: 'text',
@@ -134,6 +142,8 @@ export const postApi = () => {
     createPlaylistWithPost,
     createPlaylistPost,
     createPollPost,
-    votePollOption
+    votePollOption,
+    getUserPosts,
+    getUserBookmarks
   }
 }
