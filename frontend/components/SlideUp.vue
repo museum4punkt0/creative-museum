@@ -11,6 +11,7 @@
     <div
       class="slideup"
       w:bg="grey"
+      w:text="white"
       w:pos="fixed"
       w:flex="~ col 1"
       w:right="2 lg:auto"

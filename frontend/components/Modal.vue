@@ -11,6 +11,7 @@
     <div
       class="modal"
       w:bg="grey"
+      w:text="white"
       w:pos="fixed"
       w:flex="~ col 1"
       w:top="15 lg:1/2"
