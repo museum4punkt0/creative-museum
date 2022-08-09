@@ -1,9 +1,9 @@
 <template>
   <div w:m="t-10">
-    <div v-if="post.type !== 'system'" class="box-shadow" :class="[post.type === 'playlist' ? `highlight-bg ${textColor}` : '']">
-      <PostHead :post="post" w:m="b-4" @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)" />
+    <div v-if="post.type !== 'system'" class="box-shadow" :w:text="post.type === 'playlist' ? textColor : ''" :class="[post.type === 'playlist' ? `highlight-bg` : '']">
+      <PostHead :post="post" w:m="b-4" :text-color="textColor" @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)" />
       <component :is="componentName" :post="post" w:m="b-4" />
-      <PostFooter :post="post" w:m="b-4" />
+      <PostFooter :post="post" w:m="b-4" :text-color="textColor" />
       <PostComments :post="post" @commentsLoaded="$emit('updatePost', post.id)" />
     </div>
     <div v-else class="highlight-text" w:text="center">
@@ -39,7 +39,7 @@ export default defineComponent({
     function getContrastColorClass() {
       const bgColor = new TinyColor(props.campaignColor)
       const fgColor = new TinyColor('#FFFFFF')
-      return readability(bgColor, fgColor) > 2 ? '!text-white' : '!text-black'
+      return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
     }
 
     return {

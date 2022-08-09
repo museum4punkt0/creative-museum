@@ -251,12 +251,17 @@
     }
   }
 
+  // *************************** FORM ELEMENT CUSTOM STYLES ***************************
+  // **********************************************************************************
+  .file-uploads {
+    label {
+      cursor: pointer;
+    }
+  }
 }
 
-// *************************** FORM ELEMENT CUSTOM STYLES ***************************
-// **********************************************************************************
-.file-uploads {
-  label {
-    cursor: pointer;
+@layer utitlities {
+  .btn-text-black {
+    @apply !text-black !border-black;
   }
 }

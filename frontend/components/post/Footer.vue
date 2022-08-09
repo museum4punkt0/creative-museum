@@ -5,7 +5,7 @@
       {{ yourVote && yourVote.value && Math.abs(yourVote.value.votestotal) >= 0 ? yourVote.value.votestotal : post.votestotal }}
       <LibraryIcon :class="yourVote && yourVote.value  && yourVote.value.direction && yourVote.value.direction === 'down' || yourVote && yourVote.value && yourVote.value.vote && yourVote.value.vote.direction && yourVote.value.vote.direction === 'down' ? 'highlight-text' : 'fill-white'" w:m="l-2" w:transform="gpu rotate-180" w:cursor="pointer" @click.prevent="doVotePost('down')" />
     </span>
-    <button class="btn-outline" w:text="sm">Feedback</button>
+    <button class="btn-outline" :class="post.type === 'playlist' ? `btn-text-${textColor}` : ''" w:text="sm">Feedback</button>
   </div>
 </template>
 <script>
@@ -20,6 +20,10 @@ export default defineComponent({
   props: {
     post: {
       type: Object,
+      required: true
+    },
+    textColor: {
+      type: String,
       required: true
     }
   },

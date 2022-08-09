@@ -12,7 +12,7 @@
       </div>
     </NuxtLink>
     <div @click="showAdditionalOptions = !showAdditionalOptions">
-      <ThreeDots w:cursor="pointer" />
+      <ThreeDots w:cursor="pointer" :text-color="post.type === 'playlist' ? textColor : 'white'" />
     </div>
     <transition
       enter-active-class="duration-300 ease-out -bottom-full lg:opacity-0 lg:bottom-auto"
@@ -84,6 +84,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    textColor: {
+      type: String,
+      required: true
+    }
   },
   setup(props, context) {
     const { toggleBookmark, addToPlaylist, createPlaylistWithPost } = postApi()
