@@ -57,9 +57,9 @@ export const postApi = () => {
 
   const createPollPost = async (campaignId, contents) => {
 
-    let pollOptions = []
+    const pollOptions = []
 
-    for (let option of contents.options) {
+    for (const option of contents.options) {
       pollOptions.push({title: option.value})
     }
 
@@ -119,6 +119,16 @@ export const postApi = () => {
     })
   }
 
+  const createAudioPost = async (campaignId, title, description, audio) => {
+    return await $api.post(`audio`, {
+      creator: `/v1/users/${$auth.user.uuid}`,
+      campaign: `/v1/campaigns/${campaignId}`,
+      title,
+      description,
+      audio
+    })
+  }
+
   const submitCommentByPost = async (postId, body, campaignId) => {
     return await $api.post(`posts/${postId}/comments`, {
       author: `/v1/users/${$auth.user.uuid}`,
@@ -142,6 +152,7 @@ export const postApi = () => {
     createPlaylistWithPost,
     createPlaylistPost,
     createPollPost,
+    createAudioPost,
     votePollOption,
     getUserPosts,
     getUserBookmarks

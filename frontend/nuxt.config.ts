@@ -24,6 +24,7 @@ export default {
   ],
   plugins:[
     '~/plugins/api',
+    {src: '~/plugins/vueRecord', mode: 'client'}
   ],
   components: true,
   buildModules: [
