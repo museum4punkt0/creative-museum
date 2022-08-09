@@ -18,15 +18,15 @@
     </div>
     <div w:mb="10 lg:0">
       <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.profile.header') }}</p>
-      <NuxtLink to="/user/update" w:display="block" w:mb="4">{{ $t('navigation.profile.settings') }}</NuxtLink>
-      <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.profile.search') }}</NuxtLink>
-      <NuxtLink to="/" w:display="block">{{ $t('navigation.profile.invite') }}</NuxtLink>
+      <NuxtLink to="/user/update" w:display="block" w:mb="4" @click.native="closeMenu">{{ $t('navigation.profile.settings') }}</NuxtLink>
+      <NuxtLink to="/" w:display="block" w:mb="4" @click.native="closeMenu">{{ $t('navigation.profile.search') }}</NuxtLink>
+      <NuxtLink to="/" w:display="block" @click.native="closeMenu">{{ $t('navigation.profile.invite') }}</NuxtLink>
     </div>
     <div w:mb="10 lg:0">
       <p w:text="lg" w:font="bold leading-loose" w:mb="4">{{ $t('navigation.museum.header') }}</p>
-      <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.museum.about') }}</NuxtLink>
-      <NuxtLink to="/" w:display="block" w:mb="4">{{ $t('navigation.museum.firstSteps') }}</NuxtLink>
-      <NuxtLink to="/" w:display="block">{{ $t('navigation.museum.faq') }}</NuxtLink>
+      <NuxtLink to="/" w:display="block" w:mb="4" @click.native="closeMenu">{{ $t('navigation.museum.about') }}</NuxtLink>
+      <NuxtLink to="/" w:display="block" w:mb="4" @click.native="closeMenu">{{ $t('navigation.museum.firstSteps') }}</NuxtLink>
+      <NuxtLink to="/" w:display="block" @click.native="closeMenu">{{ $t('navigation.museum.faq') }}</NuxtLink>
     </div>
     <div w:mb="10 lg:0">
       <div w:flex="~ row" w:align="items-center" w:mb="4">
@@ -67,7 +67,7 @@ export default defineComponent({
     SimpleLanguageIcon,
     SignLanguageIcon
   },
-  setup() {
+  setup(_, context) {
 
     const { $auth } = useContext()
 
@@ -79,9 +79,14 @@ export default defineComponent({
       $auth.logout().then(closeMenu())
     }
 
+    function closeMenu() {
+      context.emit('closeMenu')
+    }
+
     return {
       login,
-      logout
+      logout,
+      closeMenu
     }
   },
 })

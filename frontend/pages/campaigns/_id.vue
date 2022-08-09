@@ -14,6 +14,7 @@
               v-for="(post, key) in posts.value"
               :key="key"
               :post="post"
+              :campaign-color="campaign.color"
               @updatePost="updatePost"
               @toggle-bookmark-state="toggleBookmarkState"
             />

@@ -113,7 +113,7 @@
           w:shadow="lg black/20"
           w:z="50"
         >
-          <PageHeaderMainMenu />
+          <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />
         </div>
         <div
           v-show="isAddVisible"

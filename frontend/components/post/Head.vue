@@ -4,7 +4,7 @@
       <UserProfileImage :user="post.author" w:m="r-4" />
       <div w:flex="~ col">
         <span w:text="lg">{{ post.author.username }}</span>
-        <span class="highlight-text" w:text="sm" w:m="t-1">{{
+        <span :class="post.type !== 'playlist' ? 'highlight-text' : ''" w:text="sm" w:m="t-1">{{
           $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
             ? $dayjs(post.created).format('DD.MM.YYYY')
             : $dayjs(post.created).fromNow()
