@@ -25,7 +25,11 @@ export default {
   plugins:[
     '~/plugins/api',
     {src: '~/plugins/vueRecord', mode: 'client'},
+<<<<<<< HEAD
     {src: '~/plugins/vueAudioPlayer', mode: 'client'}
+=======
+    {src: '~/plugins/progressBar', mode: 'client'}
+>>>>>>> 562a6f7492227c9c22df0193748ba65abcb4fdf7
   ],
   components: true,
   buildModules: [

@@ -4,6 +4,7 @@ namespace App\Serializer\Normalizer;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Repository\PostFeedbackRepository;
 use App\Repository\PostRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
@@ -23,6 +24,11 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     private PostRepository $postRepository;
 
     /**
+     * @var PostFeedbackRepository
+     */
+    private PostFeedbackRepository $feedbackRepository;
+
+    /**
      * @var Security
      */
     private Security $security;
@@ -30,11 +36,13 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     public function __construct(
         ObjectNormalizer $normalizer,
         PostRepository $postRepository,
+        PostFeedbackRepository $feedbackRepository,
         Security $security
     ) {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
         $this->security = $security;
+        $this->feedbackRepository = $feedbackRepository;
     }
 
     public function normalize($object, $format = null, array $context = array()): array
@@ -56,6 +64,11 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
 
             if ($user->getBookmarks()->contains($object)) {
                 $data['bookmarked'] = true;
+            }
+
+            $feedback = $this->feedbackRepository->findBy(['user' => $user, 'post' => $object]);
+            if (count($feedback)) {
+                $data['rated'] = true;
             }
         }
 

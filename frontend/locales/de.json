@@ -115,6 +115,7 @@
       }
     },
     "share": "teilen",
+    "feedback": "Feedback",
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",
