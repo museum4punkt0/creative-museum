@@ -2,6 +2,7 @@ image: php:8.0-alpine
 
 options:
     max-time: 10
+
 pipelines:
     branches:
         develop:
