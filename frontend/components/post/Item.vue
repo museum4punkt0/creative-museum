@@ -23,7 +23,7 @@ export default defineComponent({
     },
     campaignColor: {
       type: String,
-      required: true
+      default: '#FFFF00'
     }
   },
   emits: [

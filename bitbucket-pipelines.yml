@@ -1,0 +1,65 @@
+image: php:8.0-alpine
+
+options:
+    max-time: 10
+
+definitions:
+    caches:
+        composer: /tmp/cache
+    steps:
+        -
+            step: &validate-php-syntax
+                name: Validate PHP Syntax
+                script:
+                    - apk --no-cache add parallel
+                    - find . -name \*.php | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+        -
+            step: &composer-setup
+                name: Composer Setup
+                image: composer:2
+                script:
+                    - composer validate
+                    - composer install -n --prefer-dist --no-ansi --no-progress
+                caches:
+                    - composer
+                artifacts:
+                    - bin/**
+                    - vendor/**
+                    - web/**
+                    - .php-cs-fixer.php
+        -
+            step: &check-coding-styles
+                name: Check Coding Styles
+                script:
+                    - bin/php-cs-fixer fix ./extensions --config=.php-cs-fixer.php -vv --dry-run
+pipelines:
+    default:
+        - parallel:
+            - step: *validate-php-syntax
+            - step: *composer-setup
+        - step: *check-coding-styles
+    branches:
+        develop:
+            - parallel:
+                - step: *validate-php-syntax
+                - step: *composer-setup
+            - step: *check-coding-styles
+            - step:
+                name: Deployment
+                deployment: staging
+                image: rubygem/capistrano:3.7.2
+                script:
+                    - gem install capistrano-composer
+                    - cap staging deploy
+        master:
+            - parallel:
+                - step: *validate-php-syntax
+                - step: *composer-setup
+            - step: *check-coding-styles
+            - step:
+                name: Deployment
+                deployment: production
+                image: rubygem/capistrano:3.7.2
+                script:
+                    - gem install capistrano-composer
+                    - cap production deploy
