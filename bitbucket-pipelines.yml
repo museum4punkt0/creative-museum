@@ -8,23 +8,15 @@ definitions:
         composer: /tmp/cache
     steps:
         -
-            step: &validate-php-syntax
-                name: Validate PHP Syntax
-                script:
-                    - apk --no-cache add parallel
-                    - find . -name \*.php | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
-        -
             step: &check-coding-styles
                 name: Check Coding Styles
                 script:
                     - bin/php-cs-fixer fix ./backend --config=.php-cs-fixer.php -vv --dry-run
 pipelines:
     default:
-        - step: *validate-php-syntax
         - step: *check-coding-styles
     branches:
         develop:
-            - step: *validate-php-syntax
             - step: *check-coding-styles
             - step:
                 name: Deployment
