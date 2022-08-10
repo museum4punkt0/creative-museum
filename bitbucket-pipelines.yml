@@ -2,22 +2,9 @@ image: php:8.0-alpine
 
 options:
     max-time: 10
-
-definitions:
-    caches:
-        composer: /tmp/cache
-    steps:
-        -
-            step: &check-coding-styles
-                name: Check Coding Styles
-                script:
-                    - bin/php-cs-fixer fix ./backend --config=.php-cs-fixer.php -vv --dry-run
 pipelines:
-    default:
-        - step: *check-coding-styles
     branches:
         develop:
-            - step: *check-coding-styles
             - step:
                 name: Deployment
                 deployment: staging
