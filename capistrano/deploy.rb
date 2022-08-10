@@ -7,4 +7,3 @@ set :ssh_cli, '/usr/bin/ssh'
 set :log_level, :info
 set :deploy_to, "~/#{fetch(:application)}-#{fetch(:stage)}"
 set :composer_install_flags, '--no-dev --no-interaction --no-progress --optimize-autoloader'
-set :use_sudo, true
