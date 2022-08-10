@@ -51,15 +51,3 @@ pipelines:
                 script:
                     - gem install capistrano-composer
                     - cap staging deploy
-        master:
-            - parallel:
-                - step: *validate-php-syntax
-                - step: *composer-setup
-            - step: *check-coding-styles
-            - step:
-                name: Deployment
-                deployment: production
-                image: rubygem/capistrano:3.7.2
-                script:
-                    - gem install capistrano-composer
-                    - cap production deploy
