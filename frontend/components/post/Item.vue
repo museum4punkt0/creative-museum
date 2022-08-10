@@ -111,7 +111,7 @@ export default defineComponent({
     return {
       componentName,
       textColor,
-      getContrastColorClass
+      getContrastColorClass,
       triggerFeedback,
       showFeedbackForm,
       selectedFeedbackOptions,
