@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => ['normalization_context' => ['groups' => ['patch']]]
     ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact','receiver' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'receiver' => 'exact'])]
 class Notification
 {
     #[ORM\Id]

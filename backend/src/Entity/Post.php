@@ -180,6 +180,9 @@ class Post
     #[Groups(["read:post"])]
     private $bookmarked = false;
 
+    #[Groups(["read:post"])]
+    private $rated = false;
+
     #[ORM\Column(type: 'boolean')]
     #[Groups(["write:post", "read:post"])]
     private $reported = false;
@@ -520,6 +523,17 @@ class Post
     public function setBookmarked(bool $bookmarked): self
     {
         $this->bookmarked = $bookmarked;
+        return $this;
+    }
+
+    public function getRated(): ?bool
+    {
+        return $this->rated;
+    }
+
+    public function setRated(bool $rated): self
+    {
+        $this->rated = $rated;
         return $this;
     }
 

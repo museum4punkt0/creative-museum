@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\CampaignFeedbackOptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,11 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CampaignFeedbackOptionRepository::class)]
 #[ApiResource(
-    attributes: [
-        "security" => "is_granted('ROLE_ADMIN')"
-    ],
     collectionOperations: [
-        "get",
+        "get" => ["normalization_context" => ["groups" => "read:feedbacks"]],
         "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
@@ -26,12 +25,13 @@ use Symfony\Component\Validator\Constraints as Assert;
         "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
 class CampaignFeedbackOption
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(["campaigns:read", "read:feedbacks"])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'feedbackOptions')]
@@ -40,7 +40,7 @@ class CampaignFeedbackOption
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Length(min:1, max: 25)]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(["campaigns:read", "campaign:write", "read:feedbacks"])]
     private $text;
 
     #[ORM\OneToMany(mappedBy: 'selection', targetEntity: PostFeedback::class)]

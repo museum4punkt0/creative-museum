@@ -22,6 +22,31 @@ class PostFeedbackService
 
     /**
      * @param int $postId
+     * @return array
+     */
+    public function getFeedbackResultsForPost(int $postId): array
+    {
+        $qb = $this->em->createQueryBuilder();
+
+        return $qb->select('option.id')
+            ->addSelect('count(option.id) as amount')
+            ->from(PostFeedback::class, 'feedback')
+            ->where($qb->expr()->eq('feedback.post', $postId))
+            ->innerJoin(
+                CampaignFeedbackOption::class,
+                'option',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('option.id', 'feedback.selection')
+                )
+            )
+            ->groupBy('option.id')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param int $postId
      * @param int $userId
      * @return array
      */
