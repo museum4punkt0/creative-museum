@@ -1,9 +1,9 @@
 set :stage, :staging
 
 server 'vpro0803.proserver.punkt.de',
-   user: 'vpro0803',
+   user: 'proserver',
    ssh_options: {
-      user: 'vpro0803',
+      user: 'proserver'
    }
 
 set :deploy_to, '/var/www/creative-museum-staging/'
