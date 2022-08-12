@@ -14,6 +14,6 @@ export const campaignApi = () => {
 
   return {
     fetchCampaign,
-    fetchCampaigns
+    fetchCampaigns,
   }
 }

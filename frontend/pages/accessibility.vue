@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 w:text="primary 2xl bold" w:p="7">{{ $t('pages.accessibility.title') }}</h1>
+    <h1 w:text="primary 2xl bold" w:p="7">
+      {{ $t('pages.accessibility.title') }}
+    </h1>
   </div>
 </template>
 <script>
@@ -13,4 +15,3 @@ export default defineComponent({
   },
 })
 </script>
-

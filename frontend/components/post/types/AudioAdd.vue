@@ -6,11 +6,7 @@
       </button>
     </div>
     <div class="box-shadow">
-      <VueRecordAudio
-        mode="press"
-        mime-type="audio/webm"
-        @result="onResult"
-      />
+      <VueRecordAudio mode="press" mime-type="audio/webm" @result="onResult" />
       <UtilitiesAudioPlayer
         v-if="audioURL"
         ref="audioPlayer"
@@ -32,10 +28,9 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 export default defineComponent({
   emits: ['abortPost'],
   setup(_, context) {
-
     const audioURL = ref('')
 
-    function onResult(data : any) {
+    function onResult(data: any) {
       audioURL.value = window.URL.createObjectURL(data)
     }
 

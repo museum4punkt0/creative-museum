@@ -1,59 +1,81 @@
 <template>
   <div w:m="t-10">
-    <div v-if="post.type !== 'system'" class="box-shadow" :w:text="post.type === 'playlist' ? textColor : ''" :class="[post.type === 'playlist' ? `highlight-bg` : '']">
-      <PostHead :post="post" w:m="b-4" :text-color="textColor" @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)" />
+    <div
+      v-if="post.type !== 'system'"
+      class="box-shadow"
+      :w:text="post.type === 'playlist' ? textColor : ''"
+      :class="[post.type === 'playlist' ? `highlight-bg` : '']"
+    >
+      <PostHead
+        :post="post"
+        w:m="b-4"
+        :text-color="textColor"
+        @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)"
+      />
       <component :is="componentName" :post="post" w:m="b-4" />
-      <PostFooter :post="post" w:m="b-4" :text-color="textColor" @triggerFeedback="triggerFeedback" />
-      <PostComments :post="post" @commentsLoaded="$emit('updatePost', post.id)" />
+      <PostFooter
+        :post="post"
+        w:m="b-4"
+        :text-color="textColor"
+        @triggerFeedback="triggerFeedback"
+      />
+      <PostComments
+        :post="post"
+        @commentsLoaded="$emit('updatePost', post.id)"
+      />
     </div>
     <div v-else class="highlight-text" w:text="center">
       <p>{{ post.body }}</p>
     </div>
 
-    <SlideUp v-if="showFeedbackForm" :closable="true" @closeModal="showFeedbackForm = false">
-
-      <div w:p="6" >
+    <SlideUp
+      v-if="showFeedbackForm"
+      :closable="true"
+      @closeModal="showFeedbackForm = false"
+    >
+      <div w:p="6">
         <h3 w:mb="6" w:w="full">{{ $t('post.feedback') }}</h3>
 
         <template v-for="(option, index) in feedbackOptions">
-          <button v-if="! voted" class="btn-primary btn-outline" w:w="full" w:mt="4" @click.prevent="voteOption(option.id)">
+          <button
+            v-if="!voted"
+            class="btn-primary btn-outline"
+            w:w="full"
+            w:mt="4"
+            @click.prevent="voteOption(option.id)"
+          >
             {{ option.text }}
           </button>
           <div v-if="voted">
-            {{ option.text }}<br>
+            {{ option.text }}<br />
             <progress-bar
               :options="progressBarOptions"
-              :value="Math.round(100 / total * option.sum)"
+              :value="Math.round((100 / total) * option.sum)"
             />
           </div>
         </template>
       </div>
-
     </SlideUp>
   </div>
 </template>
 <script>
-
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
-import { TinyColor, readability } from '@ctrl/tinycolor';
+import { TinyColor, readability } from '@ctrl/tinycolor'
 import { feedbackApi } from '@/api/feedback'
 
 export default defineComponent({
   props: {
     post: {
       type: Object,
-      required: true
+      required: true,
     },
     campaignColor: {
       type: String,
-      default: '#FFFF00'
-    }
+      default: '#FFFF00',
+    },
   },
-  emits: [
-    'updatePost'
-  ],
+  emits: ['updatePost'],
   setup(props) {
-
     const { getOptions, selectOption, getFeedbackResults } = feedbackApi()
 
     const showFeedbackForm = ref(false)
@@ -63,7 +85,11 @@ export default defineComponent({
     const total = ref(0)
 
     const componentName = computed(() => {
-      return props.post.type ? 'PostTypes' + props.post.type.charAt(0).toUpperCase() + props.post.type.slice(1) : false
+      return props.post.type
+        ? 'PostTypes' +
+            props.post.type.charAt(0).toUpperCase() +
+            props.post.type.slice(1)
+        : false
     })
 
     const textColor = getContrastColorClass()
@@ -76,12 +102,12 @@ export default defineComponent({
         fontSize: 14,
         fontFamily: 'Helvetica',
         dynamicPosition: false,
-        hideText: false
+        hideText: false,
       },
       progress: {
         color: props.campaignColor,
         backgroundColor: '#2e2e2e',
-        inverted: true
+        inverted: true,
       },
       layout: {
         height: 35,
@@ -91,8 +117,8 @@ export default defineComponent({
         zeroOffset: 0,
         strokeWidth: 30,
         progressPadding: 0,
-        type: 'line'
-      }
+        type: 'line',
+      },
     }
 
     function getContrastColorClass() {
@@ -107,7 +133,7 @@ export default defineComponent({
 
       feedbackOptions.value.forEach((option, index) => {
         feedbackOptions.value[index].sum = 0
-        for (let result of results) {
+        for (const result of results) {
           if (result.id !== option.id) {
             continue
           }
@@ -149,8 +175,8 @@ export default defineComponent({
       voteOption,
       voted,
       total,
-      progressBarOptions
+      progressBarOptions,
     }
-  }
+  },
 })
 </script>

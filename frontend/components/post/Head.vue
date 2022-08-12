@@ -4,15 +4,23 @@
       <UserProfileImage :user="post.author" w:m="r-4" />
       <div w:flex="~ col">
         <span w:text="lg">{{ post.author.username }}</span>
-        <span :class="post.type !== 'playlist' ? 'highlight-text' : ''" w:text="sm" w:m="t-1">{{
-          $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
-            ? $dayjs(post.created).format('DD.MM.YYYY')
-            : $dayjs(post.created).fromNow()
-        }}</span>
+        <span
+          :class="post.type !== 'playlist' ? 'highlight-text' : ''"
+          w:text="sm"
+          w:m="t-1"
+          >{{
+            $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
+              ? $dayjs(post.created).format('DD.MM.YYYY')
+              : $dayjs(post.created).fromNow()
+          }}</span
+        >
       </div>
     </NuxtLink>
     <div @click="showAdditionalOptions = !showAdditionalOptions">
-      <ThreeDots w:cursor="pointer" :text-color="post.type === 'playlist' ? textColor : 'white'" />
+      <ThreeDots
+        w:cursor="pointer"
+        :text-color="post.type === 'playlist' ? textColor : 'white'"
+      />
     </div>
     <transition
       enter-active-class="duration-300 ease-out -bottom-full lg:opacity-0 lg:bottom-auto"
@@ -49,7 +57,10 @@
               </button>
             </li>
             <li w:my="6">
-              <button class="block btn-right" @click="openPlaylistSelectionModal">
+              <button
+                class="block btn-right"
+                @click="openPlaylistSelectionModal"
+              >
                 {{ $t('post.actions.addToPlaylist') }}
               </button>
             </li>
@@ -60,10 +71,15 @@
             -->
           </ul>
         </div>
-        <div w:flex="~ col 1" w:align="items-stretch" v-if="additionalPage">
-          <div w:flex="~ col 1" w:align="items-stretch" v-if="additionalPageContent === 'playlistSelection'">
+        <div v-if="additionalPage" w:flex="~ col 1" w:align="items-stretch">
+          <div
+            v-if="additionalPageContent === 'playlistSelection'"
+            w:flex="~ col 1"
+            w:align="items-stretch"
+          >
             <PlaylistSelection
-              w:flex="~ col 1" w:align="items-stretch"
+              w:flex="~ col 1"
+              w:align="items-stretch"
               @closeModal="additionalPage = false"
               @createPlaylist="addPostToNewPlaylist"
               @selectPlaylist="addPostToPlaylist"
@@ -75,7 +91,12 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  computed,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -86,8 +107,8 @@ export default defineComponent({
     },
     textColor: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props, context) {
     const { toggleBookmark, addToPlaylist, createPlaylistWithPost } = postApi()
@@ -119,7 +140,7 @@ export default defineComponent({
     }
 
     function addPostToNewPlaylist(playlistName) {
-      createPlaylistWithPost(props.post.id, playlistName).then(function() {
+      createPlaylistWithPost(props.post.id, playlistName).then(function () {
         $auth.fetchUser()
         additionalPage.value = false
         showAdditionalOptions.value = false

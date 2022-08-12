@@ -139,7 +139,11 @@
         leave-to-class="opacity-0"
       >
         <Modal v-if="openAddModalType !== ''">
-          <component :is="addComponentName" @abortPost="abortPost" @closeAddModal="closeAddModal" />
+          <component
+            :is="addComponentName"
+            @abortPost="abortPost"
+            @closeAddModal="closeAddModal"
+          />
         </Modal>
       </transition>
     </div>

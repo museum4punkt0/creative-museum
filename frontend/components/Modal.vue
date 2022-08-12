@@ -41,30 +41,32 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, onUnmounted } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  onMounted,
+  onUnmounted,
+} from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     closable: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  emits: [
-    'closeModal'
-  ],
+  emits: ['closeModal'],
   setup() {
     onMounted(() => {
       if (process.client) {
         const body = document.querySelector('body')
-        body.style.height ='100vh'
+        body.style.height = '100vh'
       }
-    });
+    })
     onUnmounted(() => {
       if (process.client) {
         const body = document.querySelector('body')
         body.style.height = 'auto'
       }
     })
-  }
+  },
 })
 </script>

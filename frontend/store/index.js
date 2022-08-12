@@ -2,7 +2,7 @@ export const state = () => ({
   showAddButton: false,
   currentCampaign: 0,
   newPostOnCampaign: 0,
-  showLogin: false
+  showLogin: false,
 })
 export const mutations = {
   SHOW_ADD_BUTTON(state) {
@@ -25,14 +25,14 @@ export const mutations = {
   },
   HIDE_LOGIN(state) {
     state.showLogin = false
-  }
+  },
 }
 
 export const actions = {
-  showAddButton ({ commit }) {
+  showAddButton({ commit }) {
     commit('SHOW_ADD_BUTTON')
   },
-  hideAddButton ({ commit }) {
+  hideAddButton({ commit }) {
     commit('HIDE_ADD_BUTTON')
   },
   setCurrentCampaign({ commit }, id) {
@@ -49,7 +49,7 @@ export const actions = {
   },
   hideLogin({ commit }) {
     commit('HIDE_LOGIN')
-  }
+  },
 }
 
 export const getters = {
@@ -64,5 +64,5 @@ export const getters = {
   },
   showLogin(state) {
     return state.showLogin
-  }
+  },
 }

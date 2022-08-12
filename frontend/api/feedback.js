@@ -11,7 +11,7 @@ export const feedbackApi = () => {
     return await $api.post(`post_feedbacks`, {
       user: `v1/users/${$auth.user.uuid}`,
       post: `v1/posts/${postId}`,
-      selection: `v1/campaign_feedback_options/${optionId}`
+      selection: `v1/campaign_feedback_options/${optionId}`,
     })
   }
 
@@ -22,6 +22,6 @@ export const feedbackApi = () => {
   return {
     getOptions,
     selectOption,
-    getFeedbackResults
+    getFeedbackResults,
   }
 }

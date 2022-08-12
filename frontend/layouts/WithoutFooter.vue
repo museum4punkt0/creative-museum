@@ -1,14 +1,11 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
     <div class="flex-1 overflow-y-auto" w:overflow="x-hidden">
-      <div
-        w:bg="grey"
-        w:shadow="lg black/20"
-      >
+      <div w:bg="grey" w:shadow="lg black/20">
         <PageHeader />
       </div>
       <div w:container="~" w:p="6">
-        <Nuxt/>
+        <Nuxt />
       </div>
     </div>
   </div>
@@ -17,6 +14,6 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'WithoutFooter'
+  name: 'WithoutFooter',
 })
 </script>

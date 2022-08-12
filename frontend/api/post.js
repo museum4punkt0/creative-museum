@@ -7,11 +7,11 @@ export const postApi = () => {
     return await $api.get(`posts/${postId}`)
   }
 
-  const getUserPosts = async() => {
+  const getUserPosts = async () => {
     return await $api.get(`posts?author=${$auth.user.uuid}`)
   }
 
-  const getUserBookmarks = async() => {
+  const getUserBookmarks = async () => {
     return await $api.get(`users/${$auth.user.uuid}/bookmarks`)
   }
 
@@ -25,9 +25,14 @@ export const postApi = () => {
     })
   }
 
-  const createPicturePost = async (campaignId, title, body, picture, altText) => {
-
-    let form = new FormData()
+  const createPicturePost = async (
+    campaignId,
+    title,
+    body,
+    picture,
+    altText
+  ) => {
+    const form = new FormData()
     form.append('file', picture.file)
     form.append('description', altText)
 
@@ -40,9 +45,7 @@ export const postApi = () => {
       title,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
-      files: [
-        `/v1/media_objects/` + fileId
-      ]
+      files: [`/v1/media_objects/` + fileId],
     })
   }
 
@@ -51,16 +54,15 @@ export const postApi = () => {
       type: 'playlist',
       author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
-      linkedPlaylist: `/v1/playlists/${playlistId}`
+      linkedPlaylist: `/v1/playlists/${playlistId}`,
     })
   }
 
   const createPollPost = async (campaignId, contents) => {
-
     const pollOptions = []
 
     for (const option of contents.options) {
-      pollOptions.push({title: option.value})
+      pollOptions.push({ title: option.value })
     }
 
     return await $api.post('posts', {
@@ -69,14 +71,14 @@ export const postApi = () => {
       author: `/v1/users/${$auth.user.uuid}`,
       question: contents.question,
       body: contents.description,
-      pollOptions
+      pollOptions,
     })
   }
 
   const votePollOption = async (pollOptionId) => {
     return await $api.post('poll_option_choices', {
       pollOption: `/v1/poll_options/${pollOptionId}`,
-      user: `/v1/users/${$auth.user.uuid}`
+      user: `/v1/users/${$auth.user.uuid}`,
     })
   }
 
@@ -93,10 +95,10 @@ export const postApi = () => {
   }
 
   const votePost = async (postId, direction) => {
-    return await $api.post(`votes`,{
+    return await $api.post(`votes`, {
       post: `/v1/posts/${postId}`,
       direction,
-      voter: `/v1/users/${$auth.user.uuid}`
+      voter: `/v1/users/${$auth.user.uuid}`,
     })
   }
 
@@ -113,9 +115,7 @@ export const postApi = () => {
     return await $api.post(`playlists`, {
       creator: `/v1/users/${$auth.user.uuid}`,
       title,
-      posts: [
-        `/v1/posts/${postId}`
-      ]
+      posts: [`/v1/posts/${postId}`],
     })
   }
 
@@ -125,7 +125,7 @@ export const postApi = () => {
       campaign: `/v1/campaigns/${campaignId}`,
       title,
       description,
-      audio
+      audio,
     })
   }
 
@@ -134,7 +134,7 @@ export const postApi = () => {
       author: `/v1/users/${$auth.user.uuid}`,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
-      postType: 'text'
+      postType: 'text',
     })
   }
 
@@ -155,6 +155,6 @@ export const postApi = () => {
     createAudioPost,
     votePollOption,
     getUserPosts,
-    getUserBookmarks
+    getUserBookmarks,
   }
 }

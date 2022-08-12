@@ -7,52 +7,41 @@
     w:shadow="md black/50"
     :style="`background-color: ${campaign.color}`"
   >
-
-      <article w:flex="~ col" w:h="full" :w:text="textColor">
-        <header>
-          <div
-            w:text="right"
-          >
-            <span
-              w:border="~ current rounded-full"
-              w:p="y-1 x-2"
-            >
-              {{ $t('duration')}}: {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
-              <template v-if="campaign.end && campaign.end !== campaign.start">
+    <article w:flex="~ col" w:h="full" :w:text="textColor">
+      <header>
+        <div w:text="right">
+          <span w:border="~ current rounded-full" w:p="y-1 x-2">
+            {{ $t('duration') }}:
+            {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
+            <template v-if="campaign.end && campaign.end !== campaign.start">
               – {{ $dayjs(campaign.end).format('DD.MM.YYYY') }}
-              </template>
-            </span>
-          </div>
-          <h1
-            v-if="campaign.title"
-            w:m="y-4"
-            w:text="xl lg:xxl"
-          >
-            <NuxtLink
-              :to="localePath(`/campaigns/${campaign.id}`)"
-            >
-              {{ campaign.title }}
-            </NuxtLink>
-          </h1>
-        </header>
-        <div v-if="campaign.shortDescription">
-          {{ campaign.shortDescription }}
+            </template>
+          </span>
         </div>
-        <footer w:m="t-auto">
-          {{ $t('campaign.partner')}}
-        </footer>
-      </article>
+        <h1 v-if="campaign.title" w:m="y-4" w:text="xl lg:xxl">
+          <NuxtLink :to="localePath(`/campaigns/${campaign.id}`)">
+            {{ campaign.title }}
+          </NuxtLink>
+        </h1>
+      </header>
+      <div v-if="campaign.shortDescription">
+        {{ campaign.shortDescription }}
+      </div>
+      <footer w:m="t-auto">
+        {{ $t('campaign.partner') }}
+      </footer>
+    </article>
   </div>
 </template>
 <script>
-import { TinyColor, readability } from '@ctrl/tinycolor';
+import { TinyColor, readability } from '@ctrl/tinycolor'
 import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     campaign: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const textColor = getContrastColorClass()
@@ -65,7 +54,7 @@ export default defineComponent({
 
     return {
       textColor,
-      getContrastColorClass
+      getContrastColorClass,
     }
   },
 })

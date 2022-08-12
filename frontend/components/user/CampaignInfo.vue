@@ -11,12 +11,8 @@
             w:rounded="full"
           />
         </div>
-        <p w:text="2xl">
-          {{ $auth.user.firstName }} {{ $auth.user.lastName }}
-        </p>
-        <p w:text="lg" w:mb="3" class="highlight-text">
-          @{{ fullName }}
-        </p>
+        <p w:text="2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
+        <p w:text="lg" w:mb="3" class="highlight-text">@{{ fullName }}</p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}
         </p>
@@ -74,7 +70,10 @@ export default defineComponent({
 
     const profilePicture = computed(() => {
       if ('profilePicture' in $auth.user) {
-        return 'https://backend.creative-museum.ddev.site' + $auth.user.profilePicture.contentUrl
+        return (
+          'https://backend.creative-museum.ddev.site' +
+          $auth.user.profilePicture.contentUrl
+        )
       }
       return '/images/placeholder_profile.png'
     })
@@ -85,7 +84,7 @@ export default defineComponent({
       campaignScore: computed(() =>
         context.$auth.$storage.getState('campaignScore')
       ),
-      isLargerThanLg
+      isLargerThanLg,
     }
   },
 })

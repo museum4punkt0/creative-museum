@@ -5,20 +5,22 @@ export const userApi = () => {
 
   const finishTutorial = async () => {
     const res = await $api.patch(`users/${$auth.user.uuid}`, {
-      tutorial: true
+      tutorial: true,
     })
     return res
   }
 
   const supplyUsername = async (username) => {
     const res = await $api.patch(`users/${$auth.user.uuid}`, {
-      username
+      username,
     })
     return res
   }
 
   const fetchUserInfoByCampaign = async (campaignId) => {
-    const res = await $api.get(`campaign_members?user=${$auth.user.id}&campaign=${campaignId}`)
+    const res = await $api.get(
+      `campaign_members?user=${$auth.user.id}&campaign=${campaignId}`
+    )
     return res[0]
   }
 
@@ -33,22 +35,26 @@ export const userApi = () => {
       delete userData.picture
     }
 
-    const res = await $api.patch(`users/${$auth.user.uuid}`, userData).then(async () => {
-      if (pictureData !== null) {
-        let form = new FormData()
-        form.append('file', pictureData.file)
-        form.append('description', userData.firstName + ' ' + userData.lastName)
+    const res = await $api
+      .patch(`users/${$auth.user.uuid}`, userData)
+      .then(async () => {
+        if (pictureData !== null) {
+          const form = new FormData()
+          form.append('file', pictureData.file)
+          form.append(
+            'description',
+            userData.firstName + ' ' + userData.lastName
+          )
 
-        const response = await $api.post('media_objects', form)
-        const fileId = response.id
+          const response = await $api.post('media_objects', form)
+          const fileId = response.id
 
-        await $api.patch(`users/${$auth.user.uuid}`, {
-          profilePicture: `/v1/media_objects/` + fileId
-        })
-      }
-      $auth.fetchUser()
-
-    })
+          await $api.patch(`users/${$auth.user.uuid}`, {
+            profilePicture: `/v1/media_objects/` + fileId,
+          })
+        }
+        $auth.fetchUser()
+      })
     return res
   }
 
@@ -56,6 +62,6 @@ export const userApi = () => {
     finishTutorial,
     supplyUsername,
     fetchUserInfoByCampaign,
-    updateUser
+    updateUser,
   }
 }

@@ -354,7 +354,8 @@ export default {
     },
 
     handleVolumePanmove(event) {
-      const playVolumeWrapRect = this.$refs.playVolumeWrap.getBoundingClientRect()
+      const playVolumeWrapRect =
+        this.$refs.playVolumeWrap.getBoundingClientRect()
       const pageY = event.y
       let offsetTop = 0
       let volume

@@ -1,8 +1,6 @@
 <template>
   <div class="campaign__wrapper">
-    <div
-      class="campaign__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl"
-    >
+    <div class="campaign__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl">
       <div
         v-for="campaign in stack"
         ref="card"
@@ -80,14 +78,14 @@ export default {
       isMobile: false,
       cardWidth: 650,
       mobileYOffset: 70,
-      initialized: false
+      initialized: false,
     }
   },
   computed: {
     _stackWidth() {
       if (!this.stackWidth) {
         return this.cardWidth + this.paddingHorizontal * 2
-      } else if (typeof this.stackWidth === "number") {
+      } else if (typeof this.stackWidth === 'number') {
         return this.stackWidth
       }
 
@@ -105,44 +103,49 @@ export default {
       return 20
     },
     isTouch() {
-      return "ontouchstart" in window
+      return 'ontouchstart' in window
     },
     dragEvent() {
-      return this.isTouch ? "touchmove" : "mousemove"
+      return this.isTouch ? 'touchmove' : 'mousemove'
     },
     touchStartEvent() {
-      return this.isTouch ? "touchstart" : "mousedown"
+      return this.isTouch ? 'touchstart' : 'mousedown'
     },
     touchEndEvent() {
-      return this.isTouch ? "touchend" : "mouseup"
+      return this.isTouch ? 'touchend' : 'mouseup'
     },
     stackRestPoints() {
       return this.campaigns.map((item, index) => {
-        const xOffset = document.getElementById('pageLogo').getBoundingClientRect().left + (((this.cardWidth / 2) - 100) * (index
-         - 1))
+        const xOffset =
+          document.getElementById('pageLogo').getBoundingClientRect().left +
+          (this.cardWidth / 2 - 100) * (index - 1)
 
         if (!index) {
           if (this.isMobile) {
             return {
               x: this.cardWidth * -1,
-              y: this.$refs.card[0].clientHeight * -1 + 20
+              y: this.$refs.card[0].clientHeight * -1 + 20,
             }
           } else {
             return {
               x: (this.cardWidth - 100) * -1,
-              y: 0
+              y: 0,
             }
           }
         } else if (index === 1) {
           if (this.isMobile) {
             return {
-              x: document.getElementById('pageLogo').getBoundingClientRect().left + this.paddingHorizontal,
-              y: this.mobileYOffset
+              x:
+                document.getElementById('pageLogo').getBoundingClientRect()
+                  .left + this.paddingHorizontal,
+              y: this.mobileYOffset,
             }
           } else {
             return {
-              x: document.getElementById('pageLogo').getBoundingClientRect().left + this.paddingHorizontal,
-              y: 0
+              x:
+                document.getElementById('pageLogo').getBoundingClientRect()
+                  .left + this.paddingHorizontal,
+              y: 0,
             }
           }
         } else {
@@ -150,12 +153,12 @@ export default {
           if (this.isMobile) {
             return {
               x: 0,
-              y: (-15 * index) + this.mobileYOffset
+              y: -15 * index + this.mobileYOffset,
             }
           } else {
             return {
               x: xOffset,
-              y: 0
+              y: 0,
             }
           }
         }
@@ -171,12 +174,37 @@ export default {
         }
 
         return {
-          xPos: !isMobile ? index < this._maxVisibleCampaigns ? xPos : document.getElementById('pageLogo').getBoundingClientRect().left + (this.cardWidth * (index - 1)) : 0,
-          yPos: isMobile ? index < this._maxVisibleCampaigns ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
-          rotate: index !== 1 ? Math.floor(Math.random() * ( 5 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
-          width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
-          zIndex: index !== 0 ? this.campaigns.length + index * -1 : this.isDraggingPrevious ? isMobile ? 0 : this._maxVisibleCampaigns : 0,
-          isDragging: this.isDragging
+          xPos: !isMobile
+            ? index < this._maxVisibleCampaigns
+              ? xPos
+              : document.getElementById('pageLogo').getBoundingClientRect()
+                  .left +
+                this.cardWidth * (index - 1)
+            : 0,
+          yPos: isMobile
+            ? index < this._maxVisibleCampaigns
+              ? index === 0
+                ? 10
+                : this.mobileYOffset + 10 * index * -1
+              : yPos - this.yPosOffset + this.mobileYOffset
+            : 50,
+          rotate:
+            index !== 1
+              ? Math.floor(Math.random() * (5 - 1 + 1) - 1) *
+                (Math.round(Math.random()) ? 1 : -1)
+              : 0,
+          width: isMobile
+            ? window.innerWidth - this.paddingHorizontal * 2
+            : this.cardWidth,
+          zIndex:
+            index !== 0
+              ? this.campaigns.length + index * -1
+              : this.isDraggingPrevious
+              ? isMobile
+                ? 0
+                : this._maxVisibleCampaigns
+              : 0,
+          isDragging: this.isDragging,
         }
       })
     },
@@ -205,19 +233,21 @@ export default {
   },
   mounted() {
     this.init()
-    window.addEventListener("resize", this.handleResize)
-    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart, {passive: true})
+    window.addEventListener('resize', this.handleResize)
+    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart, {
+      passive: true,
+    })
     document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
-  destroyed() {
-
-  },
+  destroyed() {},
   methods: {
     init() {
-
       this.stack = this.campaigns
 
-      document.documentElement.style.setProperty('--highlight', this.stack[0].color)
+      document.documentElement.style.setProperty(
+        '--highlight',
+        this.stack[0].color
+      )
 
       this.stack.unshift(this.stack.pop())
 
@@ -242,7 +272,10 @@ export default {
       this.$nextTick(() => {
         this.stack = this.stack.map((card, index) => {
           if (index === this.activeCardIndex) {
-            document.documentElement.style.setProperty('--highlight', card.color)
+            document.documentElement.style.setProperty(
+              '--highlight',
+              card.color
+            )
           }
           return {
             ...card,
@@ -251,7 +284,7 @@ export default {
         })
       })
     },
-    handleResize: debounce(function() {
+    handleResize: debounce(function () {
       this.width = this.$el.clientWidth
       this.rebuild()
     }, 250),
@@ -305,7 +338,8 @@ export default {
         }
         const rotate = isActiveCard
           ? '0'
-          : Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1)
+          : Math.floor(Math.random() * (3 - 1 + 1) - 1) *
+            (Math.round(Math.random()) ? 1 : -1)
 
         return {
           ...campaign,
@@ -358,5 +392,4 @@ export default {
   position: relative;
   overflow: hidden;
 }
-
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div>
     <div>
-      <div v-if="campaigns && campaigns.length > 0" class="px-container-padding" >
+      <div
+        v-if="campaigns && campaigns.length > 0"
+        class="px-container-padding"
+      >
         <CampaignStack :campaigns="campaigns" />
       </div>
-      <div v-else>
-        No Campaigns
-      </div>
+      <div v-else>No Campaigns</div>
     </div>
     <Modal v-if="tutorialOpen">
       <Tutorial @closeModal="tutorialOpen = false" />
@@ -14,7 +15,14 @@
   </div>
 </template>
 <script>
-import { defineComponent, useAsync, computed, useStore, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useAsync,
+  computed,
+  useStore,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
 export default defineComponent({
@@ -22,7 +30,7 @@ export default defineComponent({
   layout: 'WithoutContainer',
   setup() {
     const store = useStore()
-    const user = computed(() => store.state.auth.user);
+    const user = computed(() => store.state.auth.user)
     const tutorialOpen = ref(false)
     const { $auth } = useContext()
 
@@ -40,9 +48,8 @@ export default defineComponent({
 
     return {
       tutorialOpen,
-      campaigns
+      campaigns,
     }
-
-  }
+  },
 })
 </script>

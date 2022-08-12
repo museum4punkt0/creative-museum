@@ -2,9 +2,19 @@
   <div w:container="~" w:p="6">
     <h2 w:text="xl" w:m="b-10">{{ $t('post.new') }}</h2>
     <div w:grid="~ cols-2 md:cols-6 gap-4" w:max-w="lg:3xl">
-      <button v-for="(item, key) in addMenuItems" :key=key class="box-shadow" w:flex="~ col" w:justify="center" w:align="items-center" @click.prevent="openAddModal(item)">
+      <button
+        v-for="(item, key) in addMenuItems"
+        :key="key"
+        class="box-shadow"
+        w:flex="~ col"
+        w:justify="center"
+        w:align="items-center"
+        @click.prevent="openAddModal(item)"
+      >
         <component :is="`Post${item}Icon`" w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{ $t(`post.types.${item.toLowerCase()}.button`) }}</span>
+        <span w:display="block" w:text="center">{{
+          $t(`post.types.${item.toLowerCase()}.button`)
+        }}</span>
       </button>
     </div>
   </div>
@@ -25,22 +35,13 @@ export default defineComponent({
     PostPollIcon,
     PostAudioIcon,
     PostVideoIcon,
-    PostPlaylistIcon
+    PostPlaylistIcon,
   },
-  emits: [
-    'openAddModal'
-  ],
+  emits: ['openAddModal'],
   setup(_, context) {
     const openModal = ref('')
 
-    const addMenuItems = [
-      'Text',
-      'Image',
-      'Poll',
-      'Audio',
-      'Video',
-      'Playlist'
-    ]
+    const addMenuItems = ['Text', 'Image', 'Poll', 'Audio', 'Video', 'Playlist']
 
     function openAddModal($type) {
       context.emit('openAddModal', $type)
@@ -49,7 +50,7 @@ export default defineComponent({
     return {
       addMenuItems,
       openModal,
-      openAddModal
+      openAddModal,
     }
   },
 })

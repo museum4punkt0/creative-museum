@@ -1,13 +1,10 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
     <div class="" w:overflow="x-hidden">
-      <div
-        w:bg="grey"
-        w:shadow="lg black/20"
-      >
+      <div w:bg="grey" w:shadow="lg black/20">
         <PageHeader />
       </div>
-      <Nuxt/>
+      <Nuxt />
       <PageFooter />
     </div>
   </div>
@@ -16,7 +13,6 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'WithoutContainer'
+  name: 'WithoutContainer',
 })
 </script>
-

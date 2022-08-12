@@ -51,21 +51,25 @@ export default defineComponent({
   props: {
     campaign: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
   },
   setup(props) {
     const context = useContext()
     const showLongDescription = ref(false)
     const formattedShortDescription = computed(() => {
-      return props.campaign.description ? props.campaign.description
-        .split(' ')
-        .splice(0, 50)
-        .join(' ')
-        .replace(/(?:\r\n|\r|\n)/g, '<br />') : ''
+      return props.campaign.description
+        ? props.campaign.description
+            .split(' ')
+            .splice(0, 50)
+            .join(' ')
+            .replace(/(?:\r\n|\r|\n)/g, '<br />')
+        : ''
     })
     const formattedDescription = computed(() => {
-      return props.campaign.description ? props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />') : ''
+      return props.campaign.description
+        ? props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
+        : ''
     })
     const isLargerThanLg = computed(() => {
       return context.$breakpoints.lLg

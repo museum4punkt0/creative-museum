@@ -8,7 +8,11 @@
     w:justify="center"
     class="box-shadow"
   >
-    <span w:text="2xl" w:mr="2">{{campaignScore && campaignScore.value && campaignScore.value.score ? Math.abs(campaignScore.value.score).toLocaleString() : '0' }}</span>
+    <span w:text="2xl" w:mr="2">{{
+      campaignScore && campaignScore.value && campaignScore.value.score
+        ? Math.abs(campaignScore.value.score).toLocaleString()
+        : '0'
+    }}</span>
     <span>{{ $t('user.points') }}</span>
   </div>
 </template>
@@ -19,7 +23,9 @@ export default defineComponent({
   setup() {
     const context = useContext()
     return {
-      campaignScore: computed(() => context.$auth.$storage.getState('campaignScore'))
+      campaignScore: computed(() =>
+        context.$auth.$storage.getState('campaignScore')
+      ),
     }
   },
 })

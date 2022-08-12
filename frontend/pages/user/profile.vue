@@ -4,13 +4,18 @@
       <div w:grid="col-span-3" w:pr="10">
         <div w:p="6" w:display="md:hidden" class="page-header">
           <button class="back-btn" @click.prevent="backButton">
-            {{ $t('user.profile.self.headline', {firstName: user.firstName}) }}
+            {{
+              $t('user.profile.self.headline', { firstName: user.firstName })
+            }}
           </button>
         </div>
 
         <img
           v-if="'profilePicture' in user"
-          :src="'https://backend.creative-museum.ddev.site' + user.profilePicture.contentUrl"
+          :src="
+            'https://backend.creative-museum.ddev.site' +
+            user.profilePicture.contentUrl
+          "
           w:w="21"
           w:h="21"
           w:mb="4"
@@ -23,12 +28,27 @@
           {{ user.description }}
         </p>
 
-        <NuxtLink to="/user/update" w:align="md:self-start" w:mt="10" w:mb="12" class="btn-primary btn-outline"> {{ $t('user.editProfile') }}</NuxtLink>
+        <NuxtLink
+          to="/user/update"
+          w:align="md:self-start"
+          w:mt="10"
+          w:mb="12"
+          class="btn-primary btn-outline"
+        >
+          {{ $t('user.editProfile') }}</NuxtLink
+        >
 
         <h2 w:text="2xl">{{ $t('user.profile.self.points') }}</h2>
 
-        <div v-for="membership in user.memberships" w:align="self-stretch md:self-start" w:mt="3" w:mb="12">
-          <div w:text="sm" w:mb="2" class="highlight-text">{{ membership.campaign.title }}</div>
+        <div
+          v-for="membership in user.memberships"
+          w:align="self-stretch md:self-start"
+          w:mt="3"
+          w:mb="12"
+        >
+          <div w:text="sm" w:mb="2" class="highlight-text">
+            {{ membership.campaign.title }}
+          </div>
           <div
             w:px="4"
             w:py="2"
@@ -44,14 +64,50 @@
         </div>
       </div>
       <div w:grid="col-span-6" w:pr="10">
-
         <div w:flex="~row" w:justify="content-between">
-          <h2 w:text="2xl">{{ $t('user.profile.self.activities.headline') }}</h2>
+          <h2 w:text="2xl">
+            {{ $t('user.profile.self.activities.headline') }}
+          </h2>
         </div>
         <div class="filter" w:flex="~ row wrap" w:mt="6">
-          <button w:px="2" w:py="1" w:mr="3" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'" @click.prevent="showPosts">{{ $t('user.profile.self.activities.posts') }}</button>
-          <button w:px="2" w:py="1" w:mr="3" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'" @click.prevent="showBookmarks">{{ $t('user.profile.self.activities.bookmarks') }}</button>
-          <button w:px="2" w:py="1" w:mb="3" w:rounded="full" w:align="self-start" w:text="sm" :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'" @click.prevent="showPlaylists">{{ $t('user.profile.self.activities.playlists') }}</button>
+          <button
+            w:px="2"
+            w:py="1"
+            w:mr="3"
+            w:mb="3"
+            w:rounded="full"
+            w:align="self-start"
+            w:text="sm"
+            :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'"
+            @click.prevent="showPosts"
+          >
+            {{ $t('user.profile.self.activities.posts') }}
+          </button>
+          <button
+            w:px="2"
+            w:py="1"
+            w:mr="3"
+            w:mb="3"
+            w:rounded="full"
+            w:align="self-start"
+            w:text="sm"
+            :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'"
+            @click.prevent="showBookmarks"
+          >
+            {{ $t('user.profile.self.activities.bookmarks') }}
+          </button>
+          <button
+            w:px="2"
+            w:py="1"
+            w:mb="3"
+            w:rounded="full"
+            w:align="self-start"
+            w:text="sm"
+            :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'"
+            @click.prevent="showPlaylists"
+          >
+            {{ $t('user.profile.self.activities.playlists') }}
+          </button>
         </div>
         <div class="list">
           <div v-if="mode === 'posts'">
@@ -78,48 +134,79 @@
             </div>
           </div>
         </div>
-
       </div>
       <div w:grid="col-span-3" w:pr="10">
         <div w:mb="12">
           <h2 w:text="2xl">{{ $t('user.profile.self.notifications') }}</h2>
-
         </div>
         <div w:mb="12">
           <h2 w:text="2xl">{{ $t('user.profile.self.awards') }}</h2>
-
         </div>
         <div w:mb="12">
           <div w:flex="~ row" w:justify="content-between">
             <h2 w:text="2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
 
-            <button class="highlight-text" w:text="sm" w:flex="~ row" w:align="items-center" w:font="leading-none" w:cursor="pointer" @click.prevent="toggleShowMore">
-              <ArrowIcon w:pos="relative" w:w="2" w:top="0" w:m="r-0.5" w:display="inline-block" w:transition="all duration-200" :w:transform="readMore ? 'gpu rotate-180' : ''" />
-              <span v-if="! readMore">{{ $t('showAll') }}</span>
+            <button
+              class="highlight-text"
+              w:text="sm"
+              w:flex="~ row"
+              w:align="items-center"
+              w:font="leading-none"
+              w:cursor="pointer"
+              @click.prevent="toggleShowMore"
+            >
+              <ArrowIcon
+                w:pos="relative"
+                w:w="2"
+                w:top="0"
+                w:m="r-0.5"
+                w:display="inline-block"
+                w:transition="all duration-200"
+                :w:transform="readMore ? 'gpu rotate-180' : ''"
+              />
+              <span v-if="!readMore">{{ $t('showAll') }}</span>
               <span v-else>{{ $t('hide') }}</span>
             </button>
           </div>
 
-          <div v-if="index < 2 || readMore" v-for="(achievement, index) in user.achievements" w:flex="~ row" w:mb="6">
-            <img :src="'https://backend.creative-museum.ddev.site' + achievement.badge.picture.contentUrl" w:w="20" w:align="self-center" />
+          <div
+            v-for="(achievement, index) in user.achievements"
+            v-if="index < 2 || readMore"
+            w:flex="~ row"
+            w:mb="6"
+          >
+            <img
+              :src="
+                'https://backend.creative-museum.ddev.site' +
+                achievement.badge.picture.contentUrl
+              "
+              w:w="20"
+              w:align="self-center"
+            />
             <div w:ml="4" w:flex="~ col" w:justify="content-center">
               <span>{{ achievement.badge.title }}</span>
-              <span w:text="sm" class="highlight-text">{{ $t('user.profile.self.badges.points.' + achievement.badge.type, { threshold: achievement.badge.threshold })}}</span>
+              <span w:text="sm" class="highlight-text">{{
+                $t(
+                  'user.profile.self.badges.points.' + achievement.badge.type,
+                  { threshold: achievement.badge.threshold }
+                )
+              }}</span>
             </div>
           </div>
         </div>
-
       </div>
-
-
     </div>
   </div>
 </template>
 
-
 <script>
-
-import {defineComponent, computed, ref, useStore, onMounted} from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  ref,
+  useStore,
+  onMounted,
+} from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
 import { postApi } from '@/api/post'
@@ -127,10 +214,9 @@ import { postApi } from '@/api/post'
 export default defineComponent({
   name: 'ProfilePage',
   components: {
-    ArrowIcon
+    ArrowIcon,
   },
   setup() {
-
     const { getUserPosts, fetchPost, getUserBookmarks } = postApi()
     const { getNotifications } = notificationApi()
 
@@ -144,7 +230,7 @@ export default defineComponent({
     const bookmarks = ref(null)
 
     onMounted(async () => {
-      posts.value = await getUserPosts();
+      posts.value = await getUserPosts()
       playlists.value = store.$auth.state.user.playlists
       bookmarks.value = await getUserBookmarks()
     })
@@ -161,24 +247,20 @@ export default defineComponent({
       mode.value = 'playlists'
     }
 
-    function backButton() {
-
-    }
+    function backButton() {}
 
     function toggleShowMore() {
-      readMore.value = !readMore.value;
+      readMore.value = !readMore.value
     }
 
     function updatePost(postId) {
-
-      fetchPost(postId).then(function(response) {
-
-        posts.value.forEach(function(item, key) {
+      fetchPost(postId).then(function (response) {
+        posts.value.forEach(function (item, key) {
           if (item.id === postId) {
             posts.value[key].commentCount = response.commentCount
           }
         })
-        bookmarks.value.forEach(function(item, key) {
+        bookmarks.value.forEach(function (item, key) {
           if (item.id === postId) {
             bookmarks.value[key].commentCount = response.commentCount
           }
@@ -221,8 +303,8 @@ export default defineComponent({
       bookmarks,
       updatePost,
       toggleBookmarkState,
-      removeBookmark
+      removeBookmark,
     }
-  }
+  },
 })
 </script>

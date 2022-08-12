@@ -12,8 +12,8 @@ export default {
       {
         rel: 'preconnect',
         href: 'https://backend.creative-museum.ddev.site',
-        crossorigin: 'use-credentials'
-      }
+        crossorigin: 'use-credentials',
+      },
     ],
   },
   css: [
@@ -22,10 +22,10 @@ export default {
     'virtual:windi-components.css',
     'virtual:windi-utilities.css',
   ],
-  plugins:[
+  plugins: [
     '~/plugins/api',
-    {src: '~/plugins/vueRecord', mode: 'client'},
-    {src: '~/plugins/progressBar', mode: 'client'}
+    { src: '~/plugins/vueRecord', mode: 'client' },
+    { src: '~/plugins/progressBar', mode: 'client' },
   ],
   components: true,
   buildModules: [
@@ -34,7 +34,7 @@ export default {
     '@nuxtjs/svg',
     'nuxt-windicss',
     'nuxt-webpack-optimisations',
-    '@nuxt/postcss8'
+    '@nuxt/postcss8',
   ],
   modules: [
     '@nuxtjs/axios',
@@ -42,33 +42,30 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/i18n',
     '@nuxtjs/dayjs',
-    'nuxt-breakpoints'
+    'nuxt-breakpoints',
   ],
   breakpoints: {
     sm: 640,
     md: 768,
     lg: 1024,
     xl: 1280,
-    '2xl': 1536
+    '2xl': 1536,
   },
   i18n: {
     langDir: 'locales',
     locales: [
       { code: 'de', iso: 'de-DE', file: 'de.json', dir: 'ltr' },
-      { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' }
+      { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' },
     ],
     defaultLocale: 'de',
     vueI18n: {
       fallbackLocale: 'de',
-    }
+    },
   },
   dayjs: {
     locales: ['de', 'en'],
     defaultLocale: 'de',
-    plugins: [
-      'relativeTime',
-      'duration'
-    ]
+    plugins: ['relativeTime', 'duration'],
   },
   axios: {
     baseURL: 'https://backend.creative-museum.ddev.site/v1/',
@@ -80,7 +77,7 @@ export default {
       name: 'Creative Museum',
       nativeUI: true,
       mobileAppIOS: true,
-      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover'
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
     },
     manifest: {
       crossorigin: 'use-credentials',
@@ -89,8 +86,8 @@ export default {
       lang: 'de',
       background_color: '#2E2E2E',
       theme_color: '#2E2E2E',
-      useWebmanifestExtension: true
-    }
+      useWebmanifestExtension: true,
+    },
   },
   auth: {
     defaultStrategy: 'iam',
@@ -101,14 +98,14 @@ export default {
           authorization: 'https://identity-manager.ddev.site/authorize',
           token: 'https://identity-manager.ddev.site/token',
           userInfo: 'users/me',
-          logout: 'https://identity-manager.ddev.site/logout'
+          logout: 'https://identity-manager.ddev.site/logout',
         },
         token: {
           property: 'access_token',
-          type: 'Bearer'
+          type: 'Bearer',
         },
         user: {
-          property: false
+          property: false,
         },
         responseType: 'token',
         grantType: 'authorization_code',
@@ -120,12 +117,12 @@ export default {
         state: 'UNIQUE_AND_NON_GUESSABLE',
         codeChallengeMethod: 'S256',
         responseMode: 'token',
-        acrValues: ''
-      }
-    }
+        acrValues: '',
+      },
+    },
   },
   telemetry: false,
   router: {
-    middleware: ['user']
-  }
+    middleware: ['user'],
+  },
 }

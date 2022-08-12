@@ -19,13 +19,9 @@
               @toggle-bookmark-state="toggleBookmarkState"
             />
           </div>
-          <div v-else>
-            No Posts
-          </div>
+          <div v-else>No Posts</div>
         </div>
-        <div v-else>
-          No Campaign found
-        </div>
+        <div v-else>No Campaign found</div>
       </div>
       <div w:grid="col-span-3" w:pl="10">
         <div v-if="isLargerThanLg">
@@ -41,8 +37,17 @@
 </template>
 
 <script>
-
-import { defineComponent, useAsync, useRoute, useRouter, computed, useContext, ref, useStore, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useAsync,
+  useRoute,
+  useRouter,
+  computed,
+  useContext,
+  ref,
+  useStore,
+  watch,
+} from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import { userApi } from '@/api/user'
@@ -50,7 +55,6 @@ import { userApi } from '@/api/user'
 export default defineComponent({
   name: 'CampaignPage',
   setup(props) {
-
     const route = useRoute()
     const router = useRouter()
     const { $breakpoints, $auth } = useContext()
@@ -80,13 +84,25 @@ export default defineComponent({
 
     function loadCampaign() {
       if (route.value.params.id) {
-        campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
-        posts.value = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
+        campaign = useAsync(
+          () => fetchCampaign(route.value.params.id),
+          `campaign-${route.value.params.id}`
+        )
+        posts.value = useAsync(
+          () => fetchPostsByCampaign(route.value.params.id),
+          `posts-${route.value.params.id}`
+        )
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         }
         if ($auth.loggedIn) {
-          $auth.$storage.setState('campaignScore', useAsync(() => fetchUserInfoByCampaign(route.value.params.id), `userinfo-${route.value.params.id}-${$auth.user.id}`))
+          $auth.$storage.setState(
+            'campaignScore',
+            useAsync(
+              () => fetchUserInfoByCampaign(route.value.params.id),
+              `userinfo-${route.value.params.id}-${$auth.user.id}`
+            )
+          )
         }
       }
     }
@@ -94,9 +110,9 @@ export default defineComponent({
     loadCampaign()
 
     function updatePost(postId) {
-      posts.value.value.forEach(function(item, key) {
+      posts.value.value.forEach(function (item, key) {
         if (item.id === postId) {
-          fetchPost(postId).then(function(response) {
+          fetchPost(postId).then(function (response) {
             posts.value.value[key].commentCount = response.commentCount
           })
         }
@@ -113,7 +129,7 @@ export default defineComponent({
     }
 
     function hideCommentsFromOtherPosts(postId) {
-      posts.value.value.forEach(function(item, key) {
+      posts.value.value.forEach(function (item, key) {
         if (item.id === postId) {
           posts.value.value[key].showComments = true
         } else {
@@ -123,7 +139,7 @@ export default defineComponent({
     }
 
     store.dispatch('showAddButton')
-    store.dispatch('setCurrentCampaign',route.value.params.id)
+    store.dispatch('setCurrentCampaign', route.value.params.id)
 
     return {
       postComment,
@@ -134,8 +150,8 @@ export default defineComponent({
       loadCampaign,
       updatePost,
       toggleBookmarkState,
-      hideCommentsFromOtherPosts
+      hideCommentsFromOtherPosts,
     }
-  }
+  },
 })
 </script>

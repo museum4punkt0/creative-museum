@@ -10,11 +10,9 @@ export default defineComponent({
   props: {
     post: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  setup() {
-
-  },
+  setup() {},
 })
 </script>
