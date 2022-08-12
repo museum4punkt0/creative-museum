@@ -124,6 +124,7 @@ export default {
       }
     }
   },
+  telemetry: false,
   router: {
     middleware: ['user']
   }
