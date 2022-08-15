@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 cd $1/typo3 && composer install
