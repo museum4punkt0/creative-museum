@@ -125,4 +125,18 @@ export default {
   router: {
     middleware: ['user'],
   },
+  build: {
+    babel: {
+      presets({envName}) {
+        return [
+          [
+            '@nuxt/babel-preset-app',
+            {
+              corejs: {version: 3}
+            }
+          ]
+        ]
+      }
+    }
+  }
 }
