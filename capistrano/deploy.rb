@@ -7,3 +7,4 @@ set :ssh_cli, '/usr/bin/ssh'
 set :log_level, :info
 set :deploy_to, "~/#{fetch(:application)}-#{fetch(:stage)}"
 set :use_sudo, false
+set :pty, true
