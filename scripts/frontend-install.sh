@@ -1,5 +1,7 @@
 #!/usr/local/bin/bash
 
+truss -f
+
 exec > /tmp/bash.log 2>&1
 set -x
 
