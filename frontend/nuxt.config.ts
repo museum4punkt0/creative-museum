@@ -24,7 +24,6 @@ export default {
   ],
   plugins: [
     '~/plugins/api',
-    { src: '~/plugins/vueRecord', mode: 'client' },
     { src: '~/plugins/progressBar', mode: 'client' },
   ],
   components: true,
