@@ -6,5 +6,4 @@ set :php_cli, '/usr/local/bin/php'
 set :ssh_cli, '/usr/bin/ssh'
 set :log_level, :info
 set :deploy_to, "~/#{fetch(:application)}-#{fetch(:stage)}"
-set :use_sudo, true
-set :pty, true
+set :use_sudo, false
