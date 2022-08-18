@@ -116,7 +116,7 @@ export default {
         scope: ['default'],
         state: 'UNIQUE_AND_NON_GUESSABLE',
         codeChallengeMethod: 'S256',
-        responseMode: 'token',
+        responseMode: '',
         acrValues: '',
       },
     },
@@ -126,16 +126,9 @@ export default {
     middleware: ['user'],
   },
   build: {
-    babel: {
-      presets({envName}) {
-        return [
-          [
-            '@nuxt/babel-preset-app',
-            {
-              corejs: {version: 3}
-            }
-          ]
-        ]
+    typescript: {
+      typeCheck: {
+        memoryLimit: 512
       }
     }
   }
