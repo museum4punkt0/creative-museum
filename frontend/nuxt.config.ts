@@ -71,6 +71,7 @@ export default {
     baseURL: 'https://backend.creative-museum.ddev.site/v1/',
   },
   pwa: {
+    icon: false,
     meta: {
       charset: 'utf-8',
       author: 'Badisches Landesmuseum - Creative Museum',
