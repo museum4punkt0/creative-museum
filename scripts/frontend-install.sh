@@ -1,5 +1,8 @@
 #!/usr/local/bin/bash
 
+exec > /tmp/bash.log 2>&1
+set -x
+
 cd $1/frontend || exit
 npm ci || exit
 $1/frontend/node_modules/.bin/nuxt build || exit
