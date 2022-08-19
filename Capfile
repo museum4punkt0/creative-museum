@@ -6,4 +6,6 @@ require 'capistrano/deploy'
 require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
-Dir.glob('capistrano/tasks/*.rake').each { |r| import r }
+# import 'capistrano/tasks/backend.rake'
+import 'capistrano/tasks/frontend.rake'
+# import 'capistrano/tasks/typo3.rake'
