@@ -3,8 +3,8 @@ namespace :deploy do
         desc "Build Frontend"
         on roles(:all) do
             # execute "/usr/local/bin/bash #{release_path}/scripts/frontend-install.sh #{release_path}"
-            execute "cd #{release_path} && bash npm ci #{release_path}"
-            execute "node #{release_path}/frontend/node_modules/nuxt/bin/nuxt.js build"
+            execute "bash -c \"cd #{release_path} && bash npm ci\""
+            execute "bash -c \"node #{release_path}/frontend/node_modules/nuxt/bin/nuxt.js build\""
         end
     end
 end
