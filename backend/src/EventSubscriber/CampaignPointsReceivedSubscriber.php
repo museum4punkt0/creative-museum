@@ -56,23 +56,29 @@ class CampaignPointsReceivedSubscriber implements EventSubscriberInterface
     {
         $campaign = $this->campaignRepository->find($event->getCampaignId());
         $receiver = $this->userRepository->find($event->getReceiverId());
-        $test = $event->getPointsType();
 
         switch ($event->getPointsType()) {
             case PointsReceivedType::REGISTRATION->value:
-
+                $this->scoringService->handleRegistrationPoints($receiver,$campaign);
+                break;
             case PointsReceivedType::LOGIN->value:
-
-            case PointsReceivedType::AWARDED->value:
-
+                $this->scoringService->handleLoginPoints($receiver,$campaign);
+                break;
             case PointsReceivedType::AWARD_RECEIVED->value:
-
+                $this->scoringService->handleAwardReceivedPoints($receiver,$campaign);
+                break;
+            case PointsReceivedType::AWARDED->value:
+                $this->scoringService->handleAwardedPoints($receiver,$campaign);
+                break;
             case PointsReceivedType::POST_CREATED->value:
-
+                $this->scoringService->handlePostCreatedPoints($receiver,$campaign);
+                break;
             case PointsReceivedType::COMMENT_CREATED->value:
-
+                $this->scoringService->handleCommentCreatedPoints($receiver,$campaign);
+                break;
             case PointsReceivedType::UPVOTE->value:
                 $this->scoringService->handleUpvotePoints($receiver,$campaign);
+                break;
         }
     }
 }

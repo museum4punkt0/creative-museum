@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Awarded;
+use App\Enum\PointsReceivedType;
 use App\Event\CampaignPointsReceivedEvent;
 use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,19 +18,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class AwardedSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var int
+     * @var EventDispatcherInterface
      */
-    private int $rewardPoints;
-
-    /**
-     * @var int
-     */
-    private int $giverRewardScorePoints;
-
-    /**
-     * @var int
-     */
-    private int $winnerPopularityScorePoints;
+    private EventDispatcherInterface $eventDispatcher;
 
     /**
      * @var CampaignMemberRepository
@@ -41,26 +32,15 @@ class AwardedSubscriber implements EventSubscriberInterface
      */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        int $rewardPoints,
-        int $giverRewardScorePoints,
-        int $winnerPopularityScorePoints,
+        EventDispatcherInterface $eventDispatcher,
         CampaignMemberRepository $campaignMemberRepository,
         EntityManagerInterface   $entityManager,
-        EventDispatcherInterface $eventDispatcher,
     )
     {
-        $this->rewardPoints = $rewardPoints;
-        $this->giverRewardScorePoints = $giverRewardScorePoints;
-        $this->winnerPopularityScorePoints = $winnerPopularityScorePoints;
+        $this->eventDispatcher = $eventDispatcher;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -91,34 +71,22 @@ class AwardedSubscriber implements EventSubscriberInterface
             'user' => $awarded->getGiver()->getId(),
             'campaign' => $awarded->getAward()->getCampaign()->getId()
         ]);
-        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice() + $this->giverRewardScorePoints;
-
-        $awardGiver
-            ->setScore($newGiverScore)
-            ->setRewardPoints($awardGiver->getRewardPoints() + $this->rewardPoints);
-
+        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice();
+        $awardGiver->setScore($newGiverScore);
         $this->entityManager->persist($awardGiver);
+        $this->entityManager->flush();
 
         $giverPointsEvent = new CampaignPointsReceivedEvent(
             $awarded->getAward()->getCampaign()->getId(),
-            $awardGiver->getUser()->getId()
+            $awarded->getGiver()->getId(),
+            PointsReceivedType::AWARDED->value
         );
         $this->eventDispatcher->dispatch($giverPointsEvent, CampaignPointsReceivedEvent::NAME);
 
-        $awardWinner = $this->campaignMemberRepository->findOneBy([
-            'user' => $awarded->getWinner()->getId(),
-            'campaign' => $awarded->getAward()->getCampaign()->getId()
-        ]);
-
-        $awardWinner
-            ->setScore($awardWinner->getScore() + $this->winnerPopularityScorePoints);
-
-        $this->entityManager->persist($awardWinner);
-        $this->entityManager->flush();
-
         $winnerPointsEvent = new CampaignPointsReceivedEvent(
             $awarded->getAward()->getCampaign()->getId(),
-            $awardWinner->getUser()->getId()
+            $awarded->getWinner()->getId(),
+            PointsReceivedType::AWARD_RECEIVED->value
         );
         $this->eventDispatcher->dispatch($winnerPointsEvent, CampaignPointsReceivedEvent::NAME);
     }
