@@ -6,6 +6,6 @@ require 'capistrano/deploy'
 require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
-# import 'capistrano/tasks/backend.rake'
+import 'capistrano/tasks/backend.rake'
 import 'capistrano/tasks/frontend.rake'
-# import 'capistrano/tasks/typo3.rake'
+import 'capistrano/tasks/typo3.rake'
