@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6">
     <client-only>
-      <div w:flex="~ col" w:align="items-start" class="flex flex-col items-start">
+      <div class="flex flex-col items-start">
         <img
           v-if="files.length"
           :src="typeof files[0] === 'string' ? files[0] : files[0].blob"
@@ -15,7 +15,7 @@
           @input-file="inputFile"
           @input-filter="inputFilter"
         >
-          <div w:flex="~ row">
+          <div class="flex flex-row">
             <svg
               v-if="!files.length"
               viewBox="0 0 24 24"
@@ -92,7 +92,7 @@
       ></textarea>
     </div>
 
-    <div w:mb="12">
+    <div class="mb-12">
       <h2 class="text-2xl">{{ $t('user.profile.self.edit.personalData') }}</h2>
       <div class="mt-4">
         <label
@@ -107,7 +107,7 @@
           class="input-text"
         />
       </div>
-      <div w:mt="4">
+      <div class="mt-4">
         <label
           for="input_lastname"
           class="highlight-text pl-2 text-sm mb-3"
@@ -120,7 +120,7 @@
           class="input-text"
         />
       </div>
-      <div w:mt="4">
+      <div class="mt-4">
         <label
           for="input_email"
           class="highlight-text pl-2 text-sm mb-3"
@@ -133,7 +133,7 @@
           class="input-text"
         />
       </div>
-      <div w:mt="4">
+      <div class="mt-4">
         <label
           for="input_username"
           class="highlight-text pl-2 text-sm mb-3"

@@ -1,15 +1,11 @@
 <template>
   <div class="campaign__wrapper">
-    <div class="campaign__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl">
+    <div class="campaign__stack px-5 pt-10 md:pt-5 md:px-0 h-2xl lg:h-4xl">
       <div
         v-for="campaign in stack"
         ref="card"
         :key="campaign._id"
-        class="vue-card-stack__card"
-        w:select="none"
-        w:pos="absolute"
-        w:transform="origin-center"
-        :w:z-index="campaign.zIndex"
+        class="vue-card-stack__card select-none absolute transform origin-center"
         :style="{
           top: `${campaign.yPos}px`,
           width: `${campaign.width}px`,

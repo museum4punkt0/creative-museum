@@ -11,7 +11,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'preconnect',
-        href: 'https://backend.creative-museum.ddev.site',
+        href: process.env.BACKEND_URL,
         crossorigin: 'use-credentials',
       },
     ],
@@ -66,7 +66,7 @@ export default {
     plugins: ['relativeTime', 'duration'],
   },
   axios: {
-    baseURL: 'https://backend.creative-museum.ddev.site/v1/',
+    baseURL: `${process.env.BACKEND_URL}/v1/`,
   },
   pwa: {
     meta: {
@@ -93,10 +93,10 @@ export default {
       iam: {
         scheme: 'oauth2',
         endpoints: {
-          authorization: 'https://identity-manager.ddev.site/authorize',
-          token: 'https://identity-manager.ddev.site/token',
+          authorization: `${process.env.IAM_URL}/authorize`,
+          token: `${process.env.IAM_URL}/token`,
           userInfo: 'users/me',
-          logout: 'https://identity-manager.ddev.site/logout',
+          logout: `${process.env.IAM_URL}/logout`,
         },
         token: {
           property: 'access_token',
@@ -108,7 +108,7 @@ export default {
         responseType: 'token',
         grantType: 'authorization_code',
         accessType: undefined,
-        redirectUri: 'https://creative-museum.ddev.site/login',
+        redirectUri: `${process.env.BASE_URL}/login`,
         logoutRedirectUri: '/',
         clientId: 'bdlm_cm',
         scope: ['default'],
