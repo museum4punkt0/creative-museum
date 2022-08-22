@@ -3,9 +3,8 @@ set :stage_config_path, File.expand_path('capistrano/stages')
 
 require 'capistrano/setup'
 require 'capistrano/deploy'
-require 'capistrano/scm/git'
-install_plugin Capistrano::SCM::Git
+require 'capistrano/copy'
 
-import 'capistrano/tasks/backend.rake'
-import 'capistrano/tasks/frontend.rake'
-import 'capistrano/tasks/typo3.rake'
+#import 'capistrano/tasks/backend.rake'
+#import 'capistrano/tasks/frontend.rake'
+#import 'capistrano/tasks/typo3.rake'
