@@ -80,14 +80,14 @@
         <div
           v-show="isMenuVisible"
           key="0"
-          class="absolute top-12 md:top-16 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
+          class="absolute top-12 md:top-14 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
         >
           <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />
         </div>
         <div
           v-show="isAddVisible"
           key="1"
-          class="absolute top-12 md:top-16 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
+          class="absolute top-12 md:top-14 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
         >
           <PostAdd @openAddModal="openAddModal" />
         </div>
