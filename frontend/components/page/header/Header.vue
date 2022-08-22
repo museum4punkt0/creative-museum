@@ -21,7 +21,7 @@
         "
       />
       <div class="flex flex-row mr-5 space-x-4 items-center">
-        <PageHeaderUserInfo />
+
         <button
           class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out"
           type="button"
