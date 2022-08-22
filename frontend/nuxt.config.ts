@@ -32,7 +32,6 @@ export default {
     '@nuxtjs/composition-api/module',
     '@nuxtjs/svg',
     'nuxt-windicss',
-    'nuxt-webpack-optimisations',
     '@nuxt/postcss8',
   ],
   modules: [
@@ -70,7 +69,6 @@ export default {
     baseURL: 'https://backend.creative-museum.ddev.site/v1/',
   },
   pwa: {
-    icon: false,
     meta: {
       charset: 'utf-8',
       author: 'Badisches Landesmuseum - Creative Museum',
@@ -121,15 +119,7 @@ export default {
       },
     },
   },
-  telemetry: false,
   router: {
     middleware: ['user'],
-  },
-  build: {
-    typescript: {
-      typeCheck: {
-        memoryLimit: 512
-      }
-    }
   }
 }
