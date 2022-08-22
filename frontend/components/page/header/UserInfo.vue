@@ -56,6 +56,7 @@
               v-show="username.length > 3"
               class="btn-primary w-full"
               @click.prevent="submitUsername"
+              type="button"
             >
               {{ $t('submit') }}
             </button>

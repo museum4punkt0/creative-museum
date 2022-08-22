@@ -6,6 +6,7 @@
           v-if="!$auth.loggedIn"
           class="flex flex-row items-center font-bold leading-loose"
           @click.prevent="login"
+          type="button"
         >
           <LoginIcon class="w-6 h-6 mr-2" />
           <span>Login</span>
@@ -14,6 +15,7 @@
           v-else
           class="flex flex-row items-center font-bold leading-loose"
           @click.prevent="logout"
+          type="button"
         >
           <LogoutIcon class="mr-2" />
           <span>Logout</span>

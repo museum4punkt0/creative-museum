@@ -7,6 +7,7 @@
         :key="key"
         class="box-shadow flex flex-col justify-center items-center"
         @click.prevent="openAddModal(item)"
+        type="button"
       >
         <component :is="`Post${item}Icon`" class="w-8 h-8 mb-2" />
         <span class="block text-center">{{

@@ -41,6 +41,7 @@
             :key="index"
             class="btn-primary btn-outline w-full mt-4"
             @click.prevent="voteOption(option.id)"
+            type="button"
           >
             {{ option.text }}
           </button>

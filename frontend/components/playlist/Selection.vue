@@ -12,12 +12,13 @@
           :key="key"
           class="btn-primary"
           @click="$emit('selectPlaylist', item.id)"
+          type="button"
         >
           <span class="h-30 flex flex-col align-center justify-center">
             {{ item.title }}
           </span>
         </button>
-        <button v-if="addButton" class="btn-primary" @click.prevent="step = 2">
+        <button v-if="addButton" class="btn-primary" @click.prevent="step = 2" type="button">
           <span
             class="h-30 flex flex-col align-center items-center justify-center"
           >
@@ -45,7 +46,7 @@
         </div>
       </div>
       <div class="p-6 mt-auto">
-        <button class="btn-primary w-full" @click="createPlaylistWithPost">
+        <button class="btn-primary w-full" @click="createPlaylistWithPost" type="button">
           {{ $t('post.actions.playlist.createNew.submitButton') }}
         </button>
       </div>

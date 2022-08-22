@@ -6,16 +6,19 @@
     >
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 py-1 px-2"
+        type="button"
       >
         {{ $t('filter.newest') }}
       </button>
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
+        type="button"
       >
         {{ $t('filter.relevant') }}
       </button>
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
+        type="button"
       >
         {{ $t('filter.controversial') }}
       </button>
@@ -32,6 +35,7 @@
       />
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
+        type="button"
       >
         {{ $t('filter.playlist') }}
       </button>

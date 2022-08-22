@@ -16,7 +16,7 @@
       <div class="flex flex-col flex-grow">
         <p class="mb-1">Lorem Ipsum sit dolor</p>
         <p class="highlight-text text-sm">23.000 Punkte</p>
-        <button class="btn-outline self-start mt-2">
+        <button class="btn-outline self-start mt-2" type="button">
           Verschenken
         </button>
       </div>

@@ -227,6 +227,7 @@
     <button
       class="btn-primary md:self-start mb-12"
       @click.prevent="save"
+      type="button"
     >
       {{ $t('user.profile.self.edit.save') }}
     </button>
@@ -236,6 +237,7 @@
       <button
         class="btn-primary btn-outline md:self-start"
         @click.prevent="remove"
+        type="button"
       >
         {{ $t('user.profile.self.edit.deleteProfile') }}
       </button>

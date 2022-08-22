@@ -13,7 +13,8 @@
         v-if="closable"
         class="close-btn block h-4 w-4 absolute right-5 top-5 transform -translate-x-1/2 border rounded-full border-white"
         @click.prevent="$emit('closeModal')"
-      />
+        type="button"
+      ></button>
       <slot></slot>
     </div>
   </div>

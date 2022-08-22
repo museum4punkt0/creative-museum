@@ -60,6 +60,7 @@
         <button
           class="btn-primary block w-full mb-3"
           @click.prevent="goNext()"
+          type="button"
         >
           {{ $t('next') }}
         </button>
@@ -67,12 +68,14 @@
           v-if="step > 1"
           class="btn-outline block w-full py-2 mb-3"
           @click.prevent="goPrev()"
+          type="button"
         >
           {{ $t('prev') }}
         </button>
         <button
           class="btn-outline block w-full py-2"
           @click.prevent="finish()"
+          type="button"
         >
           {{ $t('tutorial.skipTutorial') }}
         </button>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="p-6 page-header">
-      <button class="back-btn" @click.prevent="abortPost">
+      <button class="back-btn" @click.prevent="abortPost" type="button">
         {{ $t('post.types.image.headline') }}
       </button>
     </div>

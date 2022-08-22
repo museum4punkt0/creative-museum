@@ -42,6 +42,7 @@
               <button
                 v-if="!post.bookmarked"
                 @click="addOrRemoveBookmark(post.id)"
+                type="button"
               >
                 {{ $t('post.actions.addBookmark') }}
               </button>
@@ -50,6 +51,7 @@
               <button
                 v-if="post.bookmarked"
                 @click="addOrRemoveBookmark(post.id)"
+                type="button"
               >
                 {{ $t('post.actions.removeBookmark') }}
               </button>
@@ -58,6 +60,7 @@
               <button
                 class="block btn-right"
                 @click="openPlaylistSelectionModal"
+                type="button"
               >
                 {{ $t('post.actions.addToPlaylist') }}
               </button>

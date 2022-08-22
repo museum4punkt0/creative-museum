@@ -4,6 +4,7 @@
       class="btn-outline btn-dropdown px-2 pr-6 py-1 mb-3 rounded-full self-start text-sm border border-white"
       :class="showOptions ? 'active' : ''"
       @click.prevent="toggleDropdown"
+      type="button"
     >
       {{ label }}
     </button>
@@ -17,6 +18,7 @@
         class="btn-outline border-dashed px-2 py-1 mb-3 rounded-full text-sm whitespace-nowrap border border-white self-start"
         :class="[key === selectedValue ? 'active' : '', key > 0 ? 'ml-3 lg:ml-0' : '']"
         @click="selectValue(key)"
+        type="button"
       >
         {{ item.text }}
       </button>

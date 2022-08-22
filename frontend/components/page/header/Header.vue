@@ -11,6 +11,7 @@
         />
       </NuxtLink>
       <button
+        type="button"
         v-show="isAddButtonVisible"
         class="add-btn avsikzte left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6"
         :class="isAddVisible ? 'visible' : ''"
@@ -23,6 +24,7 @@
         <PageHeaderUserInfo />
         <button
           class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out"
+          type="button"
           :class="
             isMenuVisible
               ? '~ rounded-full white' :
