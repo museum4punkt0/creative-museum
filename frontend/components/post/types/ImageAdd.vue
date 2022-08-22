@@ -1,26 +1,18 @@
 <template>
-  <div w:flex="~ col 1" w:h="full">
-    <div w:p="6" class="page-header">
+  <div class="flex flex-col flex-1 h-full">
+    <div class="p-6 page-header">
       <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.image.headline') }}
       </button>
     </div>
     <div
-      w:flex="~ col 1"
-      w:h="full"
-      w:justify="between"
-      w:pr="6"
-      w:pb="6"
-      w:pl="6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
     >
       <client-only>
         <img
           v-if="files.length"
           :src="files[0].blob"
-          w:max-h="1/3 lg:48"
-          w:w="auto"
-          w:border="rounded"
-          w:align="self-center"
+          class="max-h-1/3 lg:max-h-48 w-auto rounded self-center"
         />
 
         <file-upload
@@ -32,14 +24,7 @@
           @input-filter="inputFilter"
         >
           <div
-            class="box-shadow-inset"
-            w:pt="2"
-            w:pr="2"
-            w:pb="10"
-            w:pl="2"
-            w:border="rounded-xl"
-            w:text="left"
-            w:flex="~ row"
+            class="box-shadow-inset pt-2 pr-2 pb-10 pl-2 rounded-xl text-left flex flex-row"
           >
             {{
               $t(
@@ -48,9 +33,7 @@
               )
             }}
             <svg
-              w:w="6"
-              w:h="6"
-              w:ml="2"
+              class="w-6 h-6 ml-2"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -82,17 +65,14 @@
         <input
           v-model="imgAlt"
           type="text"
-          class="input-text"
-          w:pr="21"
+          class="input-text pr-21"
           :placeholder="$t('post.placeholder.image.alttext')"
           :maxlength="200"
         />
         <countdown
           :max-count="200"
           :text="imgAlt"
-          w:position="absolute"
-          w:bottom="1"
-          w:right="2"
+          class="absolute bottom-1 right-2"
         />
       </div>
 
@@ -100,42 +80,33 @@
         <input
           v-model="postTitle"
           type="text"
-          class="input-text"
-          w:pr="20"
+          class="input-text pr-20"
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
         <countdown
           :max-count="100"
           :text="postTitle"
-          w:position="absolute"
-          w:bottom="1"
-          w:right="2"
+          class="absolute bottom-1 right-2"
         />
       </div>
 
-      <div w:flex="~ col grow" w:position="relative" w:mt="4">
+      <div class="flex flex-col flex-grow relative mt-4">
         <textarea
           v-model="postBody"
           type="text"
-          class="input-text"
-          w:flex="grow"
-          w:pr="21"
+          class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
         <countdown
           :max-count="1000"
           :text="postBody"
-          w:position="absolute"
-          w:bottom="1"
-          w:right="2"
+          class="absolute bottom-1 right-2"
         />
       </div>
       <button
         type="submit"
-        class="btn-primary"
-        w:mt="6"
-        w:w="full"
+        class="btn-primary mt-6 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}

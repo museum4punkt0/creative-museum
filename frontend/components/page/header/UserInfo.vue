@@ -5,40 +5,19 @@
         <div w:position="relative">
           <img
             :src="profilePicture"
-            w:w="6"
-            w:h="6"
-            w:object="contain center"
-            w:rounded="full"
+            class="w-6 h-6 object-contain object-center rounded-full"
           />
           <span
-            class="highlight-bg"
-            w:pos="absolute"
-            w:h="2"
-            w:w="2"
-            w:top="0"
-            w:right="0"
-            w:rounded="full"
-            w:white
+            class="highlight-bg absolute h-2 w-2 top-0 right-0 rounded-full"
           />
           <span
             v-if="campaignScore && campaignScore.value"
-            class="highlight-bg"
-            w:pos="absolute"
-            w:top="1"
-            w:p="y-0.5 x-2"
-            w:m="-r-1"
-            w:right="full"
-            w:rounded="xl"
-            w:text="xs black space-nowrap"
+            class="highlight-bg absolute top-1 py-0.5 px-2 -mr-1 right-full rounded-xl text-xs text-black whitespace-nowrap"
             >{{ campaignScore.value.score.toLocaleString() }} P</span
           >
         </div>
         <span
-          w:text="sm overflow-ellipsis ..."
-          w:display="hidden md:inline-block"
-          w:overflow="hidden"
-          w:min-w="24"
-          w:max-w="32"
+          class="text-sm overflow-ellipsis hidden md:inline-block overflow-hidden min-w-24 max-w-32"
         >
           {{
             user.username
@@ -58,26 +37,24 @@
       leave-to-class="opacity-0"
     >
       <Modal v-if="user && !user.username" t="10">
-        <div w:flex="~ col 1" w:justify="between">
+        <div class="flex flex-col flex-1 justify-between">
           <div>
-            <h1 class="page-header" w:p="4">
+            <h1 class="page-header p-4">
               {{ $t('provideUsername.title') }}
             </h1>
-            <div w:p="x-4 b-4">
+            <div class="px-4 pb-4">
               <input
                 v-model="username"
                 type="text"
-                class="input-text"
+                class="input-text p-4"
                 placeholder="Username*"
-                w:p="4"
               />
             </div>
           </div>
-          <div w:p="6" w:mt="auto">
+          <div class="p-6 mt-auto">
             <button
               v-show="username.length > 3"
-              class="btn-primary"
-              w:w="full"
+              class="btn-primary w-full"
               @click.prevent="submitUsername"
             >
               {{ $t('submit') }}

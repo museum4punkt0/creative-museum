@@ -1,81 +1,64 @@
 <template>
-  <div w:flex="~ col 1" w:h="full">
-    <div w:p="6" class="page-header">
+  <div class="flex flex-col flex-1 h-full">
+    <div class="page-header p-6">
       <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.poll.headline') }}
       </button>
     </div>
 
     <div
-      w:flex="~ col 1"
-      w:h="full"
-      w:justify="between"
-      w:pr="6"
-      w:pb="6"
-      w:pl="6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
     >
-      <div w:flex="~ col grow">
-        <div w:position="relative">
+      <div class="flex flex-col flex-grow">
+        <div class="relative">
           <input
             v-model="question"
             type="text"
-            class="input-text"
-            w:pr="20"
+            class="input-text pr-20"
             :placeholder="$t('post.types.poll.pollTitle')"
             :maxlength="100"
           />
           <countdown
             :max-count="100"
             :text="question"
-            w:position="absolute"
-            w:bottom="1"
-            w:right="2"
+            class="absolute bottom-1 right-2"
           />
         </div>
         <div w:position="relative" w:mt="4" w:min-h="1/5">
           <textarea
             v-model="description"
             type="text"
-            class="input-text"
-            w:h="full"
-            w:pr="20"
+            class="input-text h-full pr-20"
             :placeholder="$t('post.types.poll.pollDescription')"
             :maxlength="100"
           />
           <countdown
             :max-count="100"
             :text="description"
-            w:position="absolute"
-            w:bottom="1"
-            w:right="2"
+            class="absolute bottom-1 right-2"
           />
         </div>
-        <div v-for="(option, index) of options" w:mt="4">
-          <label w:display="block" w:pb="1">{{
+        <div v-for="(option, index) of options" :key="index" class="mt-4">
+          <label class="block pb-1">{{
             $t('post.types.poll.option.' + index)
           }}</label>
-          <div w:flex="~ row" w:justify="between" w:align="items-center">
-            <div w:position="relative" w:flex="1">
+          <div class="flex flex-row justify-between items-center">
+            <div class="relative flex-1">
               <input
                 v-model="option.value"
                 type="text"
-                class="input-text"
-                w:pr="20"
+                class="input-text pr-20"
                 :maxlength="100"
               />
               <countdown
                 :max-count="100"
                 :text="option.value"
-                w:position="absolute"
-                w:bottom="1"
-                w:right="2"
+                class="absolute bottom-1 right-2"
               />
             </div>
             <svg
               v-if="options.length > 2"
-              w:w="6"
-              w:h="6"
-              w:ml="4"
+              class="w-6 h-6 ml-4"
               viewBox="0 0 26 25"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -99,10 +82,9 @@
           </div>
         </div>
         <div v-if="options.length < 5">
-          <div w:flex="~ col" w:align="items-center" w:mt="6">
+          <div class="flex flex-col items-center mt-6">
             <svg
-              w:w="6"
-              w:h="6"
+              class="w-6 h-6"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -134,8 +116,7 @@
       <div w:mt="6">
         <button
           type="submit"
-          class="btn-primary"
-          w:w="full"
+          class="btn-primary w-full"
           @click.prevent="submitPost"
         >
           {{ $t('post.share') }}

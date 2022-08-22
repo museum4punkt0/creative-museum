@@ -1,12 +1,9 @@
 <template>
-  <div w:p="x-5" w:grid="lg:~ lg:cols-4" w:container="~">
-    <div w:mb="10 lg:0">
+  <div class="lg:grid lg:grid-cols-4 px-5 container">
+    <div class="mb-10 lg:mb-0">
       <button
         v-if="!$auth.loggedIn"
-        w:text="white"
-        w:flex="~ row"
-        w:align="items-center"
-        w:font="bold leading-loose"
+        class="text-white flex flex-row items-center font-bold leading-loose"
         @click.prevent="login"
       >
         <LoginIcon />
@@ -14,28 +11,24 @@
       </button>
       <button
         v-else
-        w:text="white"
-        w:flex="~ row"
-        w:align="items-center"
-        w:font="bold leading-loose"
+        class="text-white flex flex-row items-center font-bold leading-loose"
         @click.prevent="logout"
       >
         <LogoutIcon w:m="r-2" />
         <span>Logout</span>
       </button>
     </div>
-    <div w:mb="10 lg:0">
-      <p w:text="lg" w:font="bold leading-loose" w:mb="4">
+    <div class="mb-10 lg:mb-0">
+      <p class="text-lg font-bold leading-loose mb-4">
         {{ $t('navigation.profile.header') }}
       </p>
       <NuxtLink
         to="/user/update"
-        w:display="block"
-        w:mb="4"
+        class="block mb-4"
         @click.native="closeMenu"
         >{{ $t('navigation.profile.settings') }}</NuxtLink
       >
-      <NuxtLink to="/" w:display="block" w:mb="4" @click.native="closeMenu">{{
+      <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.profile.search')
       }}</NuxtLink>
       <NuxtLink to="/" w:display="block" @click.native="closeMenu">{{
@@ -46,28 +39,26 @@
       <p w:text="lg" w:font="bold leading-loose" w:mb="4">
         {{ $t('navigation.museum.header') }}
       </p>
-      <NuxtLink to="/" w:display="block" w:mb="4" @click.native="closeMenu">{{
+      <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.museum.about')
       }}</NuxtLink>
-      <NuxtLink to="/" w:display="block" w:mb="4" @click.native="closeMenu">{{
+      <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.museum.firstSteps')
       }}</NuxtLink>
       <NuxtLink to="/" w:display="block" @click.native="closeMenu">{{
         $t('navigation.museum.faq')
       }}</NuxtLink>
     </div>
-    <div w:mb="10 lg:0">
-      <div w:flex="~ row" w:align="items-center" w:mb="4">
-        <div class="toggle" w:flex="~ row" w:overflow="hidden">
+    <div class="mb-10 lg:mb-0">
+      <div class="flex flex-row items-center mb-4">
+        <div class="toggle flex flex-row overflow-hidden">
           <div
             class="toggle__item"
             @click="$router.push(switchLocalePath('de'))"
           >
             <input
               id="de"
-              w:w="0"
-              w:h="0"
-              w:overflow="hidden"
+              class="w-0 h-0 overflow-hidden"
               type="radio"
               value="de"
               name="language"
@@ -75,10 +66,7 @@
             />
             <label
               for="de"
-              w:px="3"
-              w:display="inline-block"
-              w:font="leading-loose"
-              w:transition="background-color duration-300"
+              class="px-3 inline-block leading-loose transform-gpu transition-colors duration-300"
               >DE</label
             >
           </div>
@@ -88,9 +76,7 @@
           >
             <input
               id="en"
-              w:w="0"
-              w:h="0"
-              w:overflow="hidden"
+              class="w-0 h-0 overflow-hidden"
               type="radio"
               value="en"
               name="language"
@@ -98,21 +84,18 @@
             />
             <label
               for="en"
-              w:px="3"
-              w:display="inline-block"
-              w:font="leading-loose"
-              w:transition="background-color duration-300"
+              class="px-3 inline-block leading-loose transform transition-colors duration-300"
               >EN</label
             >
           </div>
         </div>
-        <p w:ml="4" w:font="leading-none">{{ $t('locale') }}</p>
+        <p class="ml-4 leading-none">{{ $t('locale') }}</p>
       </div>
-      <div w:flex="~ row" w:align="items-center" w:mb="4">
+      <div class="flex flex-row items-center mb-4">
         <SimpleLanguageIcon />
         <span>{{ $t('navigation.language.easyLanguage') }}</span>
       </div>
-      <div w:flex="~ row" w:align="items-center" w:mb="4">
+      <div class="flex flex-row items-center mb-4">
         <SignLanguageIcon />
         <span>{{ $t('navigation.language.signLanguage') }}</span>
       </div>

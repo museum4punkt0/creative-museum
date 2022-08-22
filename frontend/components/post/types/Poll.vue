@@ -1,20 +1,13 @@
 <template>
   <div>
-    <p w:text="lg" w:font="bold" w:mb="2">{{ post.question }}</p>
+    <p class="text-lg font-bold mb-2">{{ post.question }}</p>
     <p>{{ post.body }}</p>
 
-    <div class="poll-options" w:mt="4">
-      <div v-for="(option, index) of post.pollOptions">
-        <div w:flex="~ row" w:align="items-center" w:mb="4">
+    <div class="poll-options mt-4">
+      <div v-for="(option, index) of post.pollOptions" :key="index">
+        <div class="flex flex-row items-center mb-4">
           <span
-            w:w="10"
-            w:h="10"
-            w:mr="2"
-            w:border="rounded-full"
-            w:flex="~ row"
-            w:justify="center"
-            w:align="items-center"
-            class="highlight-bg"
+            class="highlight-bg w-10 h-10 mr-2 rounded-full flex flex-row justify-center items-center"
           >
             {{ $t('post.types.poll.shortOption.' + index) }}
           </span>

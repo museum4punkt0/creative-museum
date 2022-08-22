@@ -1,15 +1,11 @@
 <template>
-  <div w:flex="~ col 1">
-    <div v-show="step === 1" w:flex="~ col 1">
-      <div v-if="headline" w:p="6" class="page-header">
+  <div class="flex flex-col flex-1">
+    <div v-show="step === 1" class="flex flex-col flex-1">
+      <div v-if="headline" class="p-6 page-header">
         <a class="back-btn" @click="backLink">{{ $t('playlist.addTo') }}</a>
       </div>
       <div
-        w:p="6"
-        w:grid="~ cols-2 gap-6"
-        w:max-h="lg"
-        w:overflow="y-auto"
-        w:overscroll="y-auto"
+        class="p-6 grid grid-cols-2 gap-6 mx-h-lg overflow-y-auto overscroll-y-auto"
       >
         <button
           v-for="(item, key) in user.playlists"
@@ -17,36 +13,30 @@
           class="btn-primary"
           @click="$emit('selectPlaylist', item.id)"
         >
-          <span w:h="30" w:flex="~ col" w:align="center" w:justify="center">
+          <span class="h-30 flex flex-col align-center justify-center">
             {{ item.title }}
           </span>
         </button>
         <button v-if="addButton" class="btn-primary" @click.prevent="step = 2">
           <span
-            w:h="30"
-            w:flex="~ col"
-            w:align="center items-center"
-            w:justify="center"
+            class="h-30 flex flex-col align-center items-center justify-center"
           >
             <span
-              class="add-btn-inline"
-              w:display="block"
-              w:text="center"
-              w:m="y-4"
+              class="block text-center my-4 add-btn-inline"
             ></span>
             {{ $t('playlist.new') }}
           </span>
         </button>
       </div>
     </div>
-    <div v-show="step === 2" w:flex="~ col 1" w:justify="between">
+    <div v-show="step === 2" class="flex flex-col flex-1 justify-between">
       <div>
-        <div w:p="6" class="page-header">
+        <div class="p-6 page-header">
           <a class="back-btn" @click="backLink">{{
             $t('playlist.createNew')
           }}</a>
         </div>
-        <div w:p="6">
+        <div class="p-6">
           <input
             v-model="newPlaylistName"
             class="input-text"
@@ -54,8 +44,8 @@
           />
         </div>
       </div>
-      <div w:p="6" w:mt="auto">
-        <button class="btn-primary" w:w="full" @click="createPlaylistWithPost">
+      <div class="p-6 mt-auto">
+        <button class="btn-primary w-full" @click="createPlaylistWithPost">
           {{ $t('post.actions.playlist.createNew.submitButton') }}
         </button>
       </div>

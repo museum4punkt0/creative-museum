@@ -1,22 +1,22 @@
 <template>
-  <div w:text="center">
-    <LogoFull w:display="inline-block" w:my="6" w:w="24" />
-    <div w:mb="3">
+  <div class="text-center">
+    <LogoFull class="inline-block my-6 w-24"/>
+    <div class="mb-3">
       <strong>&copy; {{ $dayjs().year() }} Badisches Landesmuseum</strong>
     </div>
     <ul>
       <li>
-        <NuxtLink to="/legal/imprint" w:display="block" w:mb="2">{{
+        <NuxtLink to="/legal/imprint" class="block mb-2">{{
           $t('pages.imprint.title')
         }}</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/accessibility" w:display="block" w:mb="2">{{
+        <NuxtLink to="/accessibility" class="block mb-2">{{
           $t('pages.accessibility.title')
         }}</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/legal/privacy" w:display="block" w:mb="2">{{
+        <NuxtLink to="/legal/privacy" class="block mb-2">{{
           $t('pages.privacy.title')
         }}</NuxtLink>
       </li>
@@ -24,8 +24,7 @@
         <a
           :href="$t('pages.external.stateMuseum.url')"
           target="_blank"
-          w:display="block"
-          w:mb="2"
+          class="block mb-2"
           >{{ $t('pages.external.stateMuseum.title') }}</a
         >
       </li>
@@ -33,8 +32,7 @@
         <a
           :href="$t('pages.external.instagram.url')"
           target="_blank"
-          w:display="block"
-          w:mb="2"
+          class="block mb-2"
           >{{ $t('pages.external.instagram.title') }}</a
         >
       </li>
@@ -42,8 +40,7 @@
         <a
           :href="$t('pages.external.twitter.url')"
           target="_blank"
-          w:display="block"
-          w:mb="2"
+          class="block mb-2"
           >{{ $t('pages.external.twitter.title') }}</a
         >
       </li>
@@ -51,8 +48,7 @@
         <a
           :href="$t('pages.external.facebook.url')"
           target="_blank"
-          w:display="block"
-          w:mb="2"
+          class="block mb-2"
           >{{ $t('pages.external.facebook.title') }}</a
         >
       </li>

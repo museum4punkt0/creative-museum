@@ -5,8 +5,7 @@
       :src="
         'https://backend.creative-museum.ddev.site/' + post.files[0].contentUrl
       "
-      w:border="rounded"
-      w:mx="auto"
+      class="rounded mx-auto"
       :alt="
         post.files[0].description
           ? post.files[0].description
@@ -15,8 +14,8 @@
           : post.body
       "
     />
-    <div w:my="3">
-      <p v-if="post.title" w:text="lg" w:font="bold" w:mb="2">
+    <div class="my-3">
+      <p v-if="post.title" class="text-lg font-bold mb-2">
         {{ post.title }}
       </p>
       <p>{{ post.body }}</p>

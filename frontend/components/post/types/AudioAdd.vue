@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div w:p="6" class="page-header">
+    <div class="page-header p-6">
       <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.audio.headline') }}
       </button>

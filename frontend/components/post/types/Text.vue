@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="post.title" w:text="lg" w:font="bold" w:mb="2">{{ post.title }}</p>
+    <p v-if="post.title" class="text-lg font-bold mb-2">{{ post.title }}</p>
     <p>{{ post.body }}</p>
   </div>
 </template>

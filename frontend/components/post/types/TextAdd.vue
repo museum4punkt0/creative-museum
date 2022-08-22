@@ -1,33 +1,25 @@
 <template>
-  <div w:flex="~ col 1" w:h="full">
-    <div w:p="6" class="page-header">
+  <div class="flex flex-col flex-1 h-full">
+    <div class="page-header p-6">
       <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.text.headline') }}
       </button>
     </div>
     <div
-      w:flex="~ col 1"
-      w:h="full"
-      w:justify="between"
-      w:pr="6"
-      w:pb="6"
-      w:pl="6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
     >
       <div w:position="relative">
         <input
           v-model="postTitle"
           type="text"
-          class="input-text"
-          w:pr="20"
+          class="input-text pr-20"
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
         <countdown
           :max-count="100"
           :text="postTitle"
-          w:position="absolute"
-          w:bottom="1"
-          w:right="2"
+          class="absolute bottom-1 right-2"
         />
       </div>
 
@@ -35,24 +27,18 @@
         <textarea
           v-model="postBody"
           type="text"
-          class="input-text"
-          w:flex="grow"
-          w:pr="21"
+          class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
         <countdown
           :max-count="1000"
           :text="postBody"
-          w:position="absolute"
-          w:bottom="1"
-          w:right="2"
+          class="absolute bottom-1 right-2"
         />
       </div>
       <button
         type="submit"
-        class="btn-primary"
-        w:mt="6"
-        w:w="full"
+        class="btn-primary mt-6 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
