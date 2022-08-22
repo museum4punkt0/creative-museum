@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-show="user" class="flex flex-row md:space-x-4 items-center">
-      <client-only>
+    <client-only>
+      <div v-show="user" class="flex flex-row md:space-x-4 items-center">
         <div class="relative">
           <img
             :src="profilePicture"
@@ -27,43 +27,44 @@
               : $t('noUsername')
           }}
         </span>
-      </client-only>
-    </div>
-    <transition
-      enter-active-class="duration-300 ease-out opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="duration-200 ease-in"
-      leave-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <Modal v-if="user && !user.username" t="10">
-        <div class="flex flex-col flex-1 justify-between">
-          <div>
-            <h1 class="page-header p-4">
-              {{ $t('provideUsername.title') }}
-            </h1>
-            <div class="px-4 pb-4">
-              <input
-                v-model="username"
-                type="text"
-                class="input-text p-4"
-                placeholder="Username*"
-              />
+      </div>
+
+      <transition
+        enter-active-class="duration-300 ease-out opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <Modal v-if="user && !user.username">
+          <div class="flex flex-col flex-1 justify-between">
+            <div>
+              <h1 class="page-header p-4">
+                {{ $t('provideUsername.title') }}
+              </h1>
+              <div class="px-4 pb-4">
+                <input
+                  v-model="username"
+                  type="text"
+                  class="input-text p-4"
+                  placeholder="Username*"
+                />
+              </div>
+            </div>
+            <div class="p-6 mt-auto">
+              <button
+                v-show="username.length > 3"
+                class="btn-primary w-full"
+                @click.prevent="submitUsername"
+                type="button"
+              >
+                {{ $t('submit') }}
+              </button>
             </div>
           </div>
-          <div class="p-6 mt-auto">
-            <button
-              v-show="username.length > 3"
-              class="btn-primary w-full"
-              @click.prevent="submitUsername"
-              type="button"
-            >
-              {{ $t('submit') }}
-            </button>
-          </div>
-        </div>
-      </Modal>
-    </transition>
+        </Modal>
+      </transition>
+    </client-only>
   </div>
 </template>
 

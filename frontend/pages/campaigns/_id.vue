@@ -88,12 +88,12 @@ export default defineComponent({
           () => fetchCampaign(route.value.params.id),
           `campaign-${route.value.params.id}`
         )
-        console.log(campaign)
+
         posts.value = useAsync(
           () => fetchPostsByCampaign(route.value.params.id),
           `posts-${route.value.params.id}`
         )
-        console.log(posts)
+
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         }
