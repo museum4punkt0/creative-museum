@@ -2,7 +2,7 @@ image: php:8.0-alpine
 
 definitions:
     caches:
-        composer: /tmp/cache
+        composer: backend/vendor
         npm-cache: frontend/node_modules
 
 options:
