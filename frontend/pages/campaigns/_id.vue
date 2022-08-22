@@ -54,7 +54,7 @@ import { userApi } from '@/api/user'
 
 export default defineComponent({
   name: 'CampaignPage',
-  setup(props) {
+  setup() {
     const route = useRoute()
     const router = useRouter()
     const { $breakpoints, $auth } = useContext()

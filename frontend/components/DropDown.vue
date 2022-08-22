@@ -38,7 +38,7 @@ export default defineComponent({
     },
   },
   emits: ['dropdownChange', 'dropdownState'],
-  setup(props, context) {
+  setup(_, context) {
     const showOptions = ref(false)
     const selectedValue = ref(-1)
 

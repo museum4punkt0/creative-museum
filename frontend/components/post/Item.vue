@@ -141,7 +141,7 @@ export default defineComponent({
       })
     }
 
-    async function triggerFeedback(postId) {
+    async function triggerFeedback() {
       feedbackOptions.value = await getOptions(props.post.campaign.id)
 
       if (props.post.rated || voted.value) {

@@ -50,8 +50,7 @@
 import {
   defineComponent,
   ref,
-  useContext,
-  useRouter,
+  useContext
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 import Countdown from '~/components/Countdown'

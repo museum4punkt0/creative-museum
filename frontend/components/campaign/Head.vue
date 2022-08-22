@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component is="style" type="text/css">
+    <component :is="style" type="text/css">
       body { --highlight: {{ campaign.color }}; }
     </component>
     <div class="mb-6">

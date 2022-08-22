@@ -35,7 +35,8 @@
         <h2 class="text-2xl">{{ $t('user.profile.self.points') }}</h2>
 
         <div
-          v-for="membership in user.memberships"
+          v-for="(membership, key) in user.memberships"
+          :key="key"
           class="self-stretch md:self-start mt-3 mb-12"
         >
           <div class="highlight-text text-sm mb-2">
@@ -98,7 +99,7 @@
             />
           </div>
           <div v-if="mode === 'playlists'">
-            <div v-for="(item, key) in playlists">
+            <div v-for="(item, key) in playlists" :key="key">
               {{ item.title }} ({{ item.postCount }})
             </div>
           </div>
@@ -131,6 +132,7 @@
           <div
             v-for="(achievement, index) in user.achievements"
             v-if="index < 2 || readMore"
+            :key="index"
             class="flex flex-row mb-6"
           >
             <img

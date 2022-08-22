@@ -1,6 +1,6 @@
 <template>
   <div
-    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 border rounded-lg block"
+    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-lg block"
     :style="`background-color: ${campaign.color}`"
   >
     <article class="flex flex-col h-full" :class="`text-${textColor}`">

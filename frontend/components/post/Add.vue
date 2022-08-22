@@ -8,7 +8,7 @@
         class="box-shadow flex flex-col justify-center items-center"
         @click.prevent="openAddModal(item)"
       >
-        <component :is="`Post${item}Icon`"class="w-8 h-8 mb-2" />
+        <component :is="`Post${item}Icon`" class="w-8 h-8 mb-2" />
         <span class="block text-center">{{
           $t(`post.types.${item.toLowerCase()}.button`)
         }}</span>

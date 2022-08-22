@@ -111,7 +111,7 @@ export default {
       return this.isTouch ? 'touchend' : 'mouseup'
     },
     stackRestPoints() {
-      return this.campaigns.map((item, index) => {
+      return this.campaigns.map((_, index) => {
         const xOffset =
           document.getElementById('pageLogo').getBoundingClientRect().left +
           (this.cardWidth / 2 - 100) * (index - 1)
@@ -161,7 +161,7 @@ export default {
       })
     },
     cardDefaults() {
-      return this.campaigns.map((campaign, index) => {
+      return this.campaigns.map((_, index) => {
         const xPos = this.stackRestPoints[index].x
         const yPos = this.stackRestPoints[index].y
         let isMobile = false

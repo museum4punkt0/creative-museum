@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import LogoFull from '@/assets/images/logo_full.svg?inline'
 
 export default defineComponent({

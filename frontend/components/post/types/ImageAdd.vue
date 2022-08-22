@@ -69,7 +69,7 @@
           :placeholder="$t('post.placeholder.image.alttext')"
           :maxlength="200"
         />
-        <countdown
+        <countDown
           :max-count="200"
           :text="imgAlt"
           class="absolute bottom-1 right-2"
@@ -84,7 +84,7 @@
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
-        <countdown
+        <countDown
           :max-count="100"
           :text="postTitle"
           class="absolute bottom-1 right-2"
@@ -98,7 +98,7 @@
           class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
-        <countdown
+        <countDown
           :max-count="1000"
           :text="postBody"
           class="absolute bottom-1 right-2"
@@ -118,15 +118,12 @@
 import {
   defineComponent,
   ref,
-  useAsync,
   useContext,
 } from '@nuxtjs/composition-api'
 import { postApi } from '~/api/post'
-import Countdown from '~/components/Countdown.vue'
 
 export default defineComponent({
   components: {
-    Countdown,
     FileUpload: () => import('vue-upload-component'),
   },
   emits: ['abortPost'],
@@ -162,7 +159,7 @@ export default defineComponent({
       })
     }
 
-    function inputFile(newFile: any, oldFile: any, prevent: any) {
+    function inputFile( newFile: any, oldFile: any ) {
       if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
         newFile.blob = ''
         const URL = window.URL || window.webkitURL
@@ -175,7 +172,7 @@ export default defineComponent({
       }
     }
 
-    function inputFilter(newFile: any, oldFile: any, prevent: any) {
+    function inputFilter( newFile: any ) {
       console.log('inputFilter')
       if (newFile) {
         if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {

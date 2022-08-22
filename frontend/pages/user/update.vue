@@ -247,8 +247,7 @@ import {
   computed,
   defineComponent,
   useStore,
-  ref,
-  useContext,
+  ref
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 

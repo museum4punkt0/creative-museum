@@ -50,7 +50,7 @@
           <h2>{{ $t('tutorial.step5.title') }}</h2>
           <p>{{ $t('tutorial.step5.text') }}</p>
         </div>
-        <div class="absolute left-6 bottom-6 text-color1 text-sm"">
+        <div class="absolute left-6 bottom-6 text-color1 text-sm">
           5/5
         </div>
       </div>
