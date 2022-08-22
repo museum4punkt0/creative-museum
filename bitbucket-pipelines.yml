@@ -19,7 +19,7 @@ pipelines:
                         - npm-cache
                     script:
                         - cd frontend && npm ci
-                        - cd frontend && npm run build
+                        - npm run build
                     artifacts:
                         - frontend/node_modules/**
                         - frontend/.nuxt
@@ -28,7 +28,7 @@ pipelines:
                     image: composer:2.3.7
                     script:
                         - cd backend && composer validate
-                        - cd backend && composer install -n --prefer-dist --no-ansi --no-progress
+                        - composer install -n --prefer-dist --no-ansi --no-progress
                     caches:
                         - composer
                     artifacts:
