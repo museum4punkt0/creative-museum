@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
-      <div w:grid="col-span-3" w:pr="10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 lg:grid-gap-4">
+      <div class="grid col-span-3 pr-10">
         <div v-if="isLargerThanLg">
           <UserCampaignInfo :campaign="campaign" />
         </div>
       </div>
-      <div w:grid="lg:col-span-6">
+      <div class="grid lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead :campaign="campaign" />
           <div v-if="posts.value">
@@ -23,14 +23,14 @@
         </div>
         <div v-else>No Campaign found</div>
       </div>
-      <div w:grid="col-span-3" w:pl="10">
+      <div class="grid col-span-3 pl-10">
         <div v-if="isLargerThanLg">
           <UserNotifications :campaign="campaign" />
-          <UserAwards w:mt="14" w:mb="10" :campaign="campaign" />
+          <UserAwards :campaign="campaign" class="mt-14 mb-10" />
         </div>
       </div>
     </div>
-    <div v-if="!isLargerThanLg" w:display="xl:hidden">
+    <div v-if="!isLargerThanLg" class="xl:hidden">
       <PageFooter />
     </div>
   </div>
