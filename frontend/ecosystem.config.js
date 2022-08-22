@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'CreativeMuseumFrontend',
+      name: 'blm_cm',
       script: './node_modules/nuxt/bin/nuxt.js',
       args: 'start',
     },
