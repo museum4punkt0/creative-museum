@@ -27,7 +27,6 @@ pipelines:
                     name: Composer Setup
                     image: composer:2.3.7
                     script:
-                        - apk --no-cache add git openssh
                         - cd backend && composer validate
                         - cd backend && composer install -n --prefer-dist --no-ansi --no-progress
                     caches:
