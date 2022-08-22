@@ -18,7 +18,7 @@
             :placeholder="$t('post.types.poll.pollTitle')"
             :maxlength="100"
           />
-          <countdown
+          <CountDown
             :max-count="100"
             :text="question"
             class="absolute bottom-1 right-2"
@@ -32,7 +32,7 @@
             :placeholder="$t('post.types.poll.pollDescription')"
             :maxlength="100"
           />
-          <countdown
+          <CountDown
             :max-count="100"
             :text="description"
             class="absolute bottom-1 right-2"
@@ -50,7 +50,7 @@
                 class="input-text pr-20"
                 :maxlength="100"
               />
-              <countdown
+              <CountDown
                 :max-count="100"
                 :text="option.value"
                 class="absolute bottom-1 right-2"
@@ -135,12 +135,8 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
-import Countdown from '@/components/Countdown'
 
 export default defineComponent({
-  components: {
-    Countdown,
-  },
   emits: ['abortPost'],
   setup(_, context) {
     const { createPollPost } = postApi()

@@ -177,7 +177,6 @@ export default defineComponent({
       if (newFile) {
         if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
           console.log('Your choice is not a picture')
-          return prevent()
         }
       }
     }

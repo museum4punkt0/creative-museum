@@ -16,7 +16,7 @@
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
-        <countdown
+        <CountDown
           :max-count="100"
           :text="postTitle"
           class="absolute bottom-1 right-2"
@@ -30,7 +30,7 @@
           class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
-        <countdown
+        <CountDown
           :max-count="1000"
           :text="postBody"
           class="absolute bottom-1 right-2"
@@ -53,12 +53,8 @@ import {
   useContext
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
-import Countdown from '~/components/Countdown'
 
 export default defineComponent({
-  components: {
-    Countdown,
-  },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
     const { store } = useContext()

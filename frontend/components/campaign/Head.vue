@@ -1,8 +1,8 @@
 <template>
   <div>
-    <component :is="style" type="text/css">
+    <style type="text/css">
       body { --highlight: {{ campaign.color }}; }
-    </component>
+    </style>
     <div class="mb-6">
       <h1 class="page-header mt-0 mb-1">{{ campaign.title }}</h1>
       <div class="text-lg">
