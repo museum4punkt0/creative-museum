@@ -1,0 +1,283 @@
+
+:root {
+  --highlight: #ffff00;
+}
+
+.highlight-text {
+  color: var(--highlight);
+  transition: all 0.25s ease-in-out;
+  svg {
+    fill: var(--highlight);
+  }
+}
+
+.highlight-svg-stroke {
+  transition: all 0.25s ease-in-out;
+  * {
+    stroke: var(--highlight);
+  }
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+.highlight-bg {
+  background-color: var(--highlight);
+  transition: all 0.25s ease-in-out;
+}
+
+/* manrope-regular - latin-ext_latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  src: url('~/static/fonts/manrope-v12-latin-ext_latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+    url('~/static/fonts/manrope-v12-latin-ext_latin-regular.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-regular.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-regular.woff')
+      format('woff'),
+    /* Modern Browsers */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-regular.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-regular.svg#Manrope')
+      format('svg'); /* Legacy iOS */
+}
+/* manrope-600 - latin-ext_latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  src: url('~/static/fonts/manrope-v12-latin-ext_latin-600.eot'); /* IE9 Compat Modes */
+  src: local(''),
+    url('~/static/fonts/manrope-v12-latin-ext_latin-600.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('~/static/fonts/manrope-v12-latin-ext_latin-600.woff2')
+      format('woff2'),
+    /* Super Modern Browsers */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-600.woff')
+      format('woff'),
+    /* Modern Browsers */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-600.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */
+      url('~/static/fonts/manrope-v12-latin-ext_latin-600.svg#Manrope')
+      format('svg'); /* Legacy iOS */
+}
+
+html {
+  @apply bg-grey;
+}
+body {
+  @apply text-white;
+}
+
+.layout-enter-active,
+.page-enter-active,
+.layout-leave-active,
+.page-leave-active {
+  transition: opacity 400ms, transform 400ms;
+}
+
+.layout-enter,
+.page-enter {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+
+.layout-enter-to,
+.page-enter-to {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.layout-leave,
+.page-leave {
+  opacity: 1;
+}
+
+.layout-leave-to,
+.page-leave-to {
+  opacity: 0;
+}
+
+h2 {
+  @apply text-xl mb-2;
+}
+
+h3 {
+  @apply text-lg mb-2 font-bold;
+}
+
+.box-shadow {
+  @apply p-6;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35),
+    -3px -3px 8px rgba(100, 100, 100, 0.4);
+  border-radius: 16px;
+}
+
+.box-shadow-mobile {
+  @media (max-width: 1023px) {
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35),
+      -3px -3px 8px rgba(100, 100, 100, 0.4);
+    border-radius: 16px;
+  }
+}
+
+.box-shadow-inset {
+  box-shadow: inset -3px -3px 8px rgba(100, 100, 100, 0.4),
+    inset 3px 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+  @media (min-width: 1024px) {
+    @apply bg-grey;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35),
+      -3px -3px 8px rgba(100, 100, 100, 0.4);
+  }
+}
+
+.slideup {
+  @apply bg-grey;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.35),
+    -3px -3px 8px rgba(100, 100, 100, 0.4);
+}
+
+.input-text {
+  box-shadow: inset -3px -3px 8px rgba(100, 100, 100, 0.4),
+    inset 3px 3px 8px rgba(0, 0, 0, 0.4);
+  @apply block w-full px-4 py-3 rounded-2xl bg-grey;
+}
+
+.page-header {
+  @apply font-medium text-3xl my-6;
+}
+
+.add-btn {
+  box-shadow: 0 0 1px 0 theme('colors.white') inset,
+    0 0 1px 0 theme('colors.white');
+  @apply transform duration-200 ease-in-out -translate-x-1/2 cursor-pointer
+    before:(block content-[''] w-px h-4 bg-white absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
+    after:(block content-[''] w-4 h-px bg-white absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
+  &:hover {
+    @apply rotate-180 scale-125;
+  }
+  &.visible {
+    @apply before:(rotate-90);
+  }
+}
+
+.add-btn-inline {
+  @apply inline-block transform duration-200 ease-in-out -translate-x-1/2
+  before:(block content-[''] w-px h-4 bg-current absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
+  after:(block content-[''] w-4 h-px bg-current absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
+}
+
+.close-btn {
+  box-shadow: 0 0 1px 0 theme('colors.white') inset,
+    0 0 1px 0 theme('colors.white');
+  @apply transform duration-200 ease-in-out -translate-x-1/2 rotate-45
+    before:(block content-[''] w-px h-3 bg-white absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2)
+    after:(block content-[''] w-3 h-px bg-white absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2 );
+  &:hover {
+    @apply -rotate-135 scale-125;
+  }
+}
+
+.back-btn {
+  @apply relative pl-10;
+  &:before {
+    @apply content-[''] block absolute w-6 h-[3px] bg-white left-0 top-1/2 transform -translate-y-1/2;
+  }
+  &:after {
+    @apply content-[''] block absolute w-4 h-4 left-0 top-1/2 transform -translate-y-1/2 -rotate-45 border-t-3 border-t-white border-l-3 border-l-white;
+  }
+}
+
+.btn-outline {
+  transition: color 200ms, background-color 200ms, border-color 200ms;
+  &:hover,
+  &.active {
+    color: #2e2e2e;
+    background-color: var(--highlight);
+    border-color: var(--highlight);
+    cursor: pointer;
+  }
+}
+
+.btn-dropdown {
+  @apply relative;
+  &:after {
+    @apply content-[''] block absolute w-2 h-2 right-2 top-1.5 transform -rotate-135 border-t-1 border-t-current border-l-1 border-l-current;
+  }
+  &:hover,
+  &.active {
+    &:after {
+      @apply rotate-45 top-2;
+    }
+  }
+}
+
+.btn-right {
+  @apply relative w-full pr-4 text-left;
+  &:after {
+    @apply content-[''] block absolute w-3 h-3 right-2 top-1/2 transform rotate-45 border-t-1 border-t-current border-r-1 border-r-current transition-transform duration-200;
+  }
+  &:hover {
+    &:after {
+      @apply translate-x-3;
+    }
+  }
+}
+
+// ****************************** TOGGLE CUSTOM STYLES ******************************
+// **********************************************************************************
+.toggle {
+  position: relative;
+  border-radius: 16px;
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: inset -1px -1px 2px rgba(100, 100, 100, 0.4),
+      inset 1px 1px 2px rgba(0, 0, 0, 0.6);
+    border-radius: 16px;
+    content: '';
+    z-index: 1;
+    pointer-events: none;
+  }
+  &__item {
+    input[type='radio'] {
+      ~ label {
+        border-radius: 16px;
+        margin-left: -3px;
+      }
+      &:checked {
+        ~ label {
+          background-color: var(--highlight);
+        }
+      }
+    }
+  }
+}
+
+// *************************** FORM ELEMENT CUSTOM STYLES ***************************
+// **********************************************************************************
+.file-uploads {
+  label {
+    cursor: pointer;
+  }
+}
+
+.btn-text-black {
+  @apply !text-black !border-black;
+}

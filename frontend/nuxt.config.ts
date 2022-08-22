@@ -18,7 +18,7 @@ export default {
   },
   css: [
     'virtual:windi-base.css',
-    '@/assets/css/main.css',
+    '@/assets/css/main.scss',
     'virtual:windi-components.css',
     'virtual:windi-utilities.css',
   ],

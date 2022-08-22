@@ -1,9 +1,9 @@
 <template>
-  <div class="lg:grid lg:grid-cols-4 px-5 container">
+  <div class="lg:grid lg:grid-cols-4 px-5 container text-white">
     <div class="mb-10 lg:mb-0">
       <button
         v-if="!$auth.loggedIn"
-        class="text-white flex flex-row items-center font-bold leading-loose"
+        class="flex flex-row items-center font-bold leading-loose"
         @click.prevent="login"
       >
         <LoginIcon class="w-6 h-6 mr-2" />
@@ -11,7 +11,7 @@
       </button>
       <button
         v-else
-        class="text-white flex flex-row items-center font-bold leading-loose"
+        class="flex flex-row items-center font-bold leading-loose"
         @click.prevent="logout"
       >
         <LogoutIcon class="mr-2" />

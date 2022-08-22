@@ -10,7 +10,7 @@ export default defineConfig({
     'btn-outline':
       'block rounded-2xl border-1  px-2 text-center bg-transparent border-white text-white',
   },
-  safelist: 'bg-white bg-black',
+  safelist: 'bg-white bg-black btn-dropdown',
   theme: {
     container: {
       center: true,
