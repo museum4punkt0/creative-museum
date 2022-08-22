@@ -23,6 +23,7 @@ pipelines:
                     artifacts:
                         - frontend/node_modules/**
                         - frontend/.nuxt/**
+                        - frontend/static/sw.js
                 - step:
                     name: Composer Setup
                     image: composer:2.3.7
