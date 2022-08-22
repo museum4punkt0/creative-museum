@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-show="user" class="flex flex-row md:space-x-4 items-center">
-      <ClientOnly>
+      <client-only>
         <div class="relative">
           <img
             :src="profilePicture"
@@ -27,7 +27,7 @@
               : $t('noUsername')
           }}
         </span>
-      </ClientOnly>
+      </client-only>
     </div>
     <transition
       enter-active-class="duration-300 ease-out opacity-0"
@@ -66,13 +66,14 @@
     </transition>
   </div>
 </template>
+
 <script>
 import {
   useStore,
   useContext,
   computed,
   defineComponent,
-  ref,
+  ref
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 
@@ -92,8 +93,7 @@ export default defineComponent({
     const profilePicture = computed(() => {
       if (context.$auth.user && 'profilePicture' in context.$auth.user) {
         return (
-          'https://backend.creative-museum.ddev.site/' +
-          context.$auth.user.profilePicture.contentUrl
+          `${context.$config.backendUrl}/${context.$auth.user.profilePicture.contentUrl}`
         )
       }
       return '/images/placeholder_profile.png'

@@ -2,9 +2,7 @@
   <div>
     <img
       v-if="post.files.length"
-      :src="
-        'https://backend.creative-museum.ddev.site/' + post.files[0].contentUrl
-      "
+      :src=`${backendUrl}/${post.files[0].contentUrl}`
       class="rounded mx-auto"
       :alt="
         post.files[0].description
@@ -24,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -33,6 +31,14 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {},
+  setup() {
+
+    const context = useContext()
+
+    return {
+      backendUrl: context.$config.backendUrl
+    }
+
+  },
 })
 </script>

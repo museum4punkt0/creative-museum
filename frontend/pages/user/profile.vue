@@ -12,10 +12,7 @@
 
         <img
           v-if="'profilePicture' in user"
-          :src="
-            'https://backend.creative-museum.ddev.site' +
-            user.profilePicture.contentUrl
-          "
+          :src=`${backendUrl}/${user.profilePicture.contentUrl}`
           class="rounded-full mb-4 h-21 w-21"
         />
 
@@ -140,10 +137,7 @@
             class="flex flex-row mb-6"
           >
             <img
-              :src="
-                'https://backend.creative-museum.ddev.site' +
-                achievement.badge.picture.contentUrl
-              "
+              :src=`${backendUrl}/${achievement.badge.picture.contentUrl}`
               class="self-center w-20"
             />
             <div class="content-center flex flex-col ml-4">
@@ -169,6 +163,7 @@ import {
   ref,
   useStore,
   onMounted,
+  useContext,
 } from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
@@ -186,6 +181,9 @@ export default defineComponent({
     const readMore = ref(false)
     const mode = ref('posts')
     const store = useStore()
+
+    const { $config } = useContext()
+
     const user = computed(() => store.state.auth.user)
     const notifications = getNotifications()
     const posts = ref(null)
@@ -267,6 +265,7 @@ export default defineComponent({
       updatePost,
       toggleBookmarkState,
       removeBookmark,
+      backendUrl: $config.backendUrl
     }
   },
 })

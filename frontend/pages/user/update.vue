@@ -249,6 +249,7 @@ import {
   computed,
   defineComponent,
   useStore,
+  useContext,
   ref
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
@@ -261,6 +262,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const user = computed(() => store.state.auth.user)
+    const { $config } = useContext()
 
     const title = ref('Stammgast')
     const description = ref(user.value.description)
@@ -277,8 +279,7 @@ export default defineComponent({
 
     if ('profilePicture' in user.value) {
       files.value = [
-        'https://backend.creative-museum.ddev.site' +
-          user.value.profilePicture.contentUrl,
+        $config.backendUrl + user.value.profilePicture.contentUrl,
       ]
     }
 
@@ -337,6 +338,7 @@ export default defineComponent({
       save,
       remove,
       changed,
+      backendUrl: $config.backendUrl,
     }
   },
 })

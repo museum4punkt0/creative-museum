@@ -48,7 +48,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const { $auth, $breakpoints } = useContext()
+    const { $auth, $breakpoints, $config } = useContext()
     const fullName = computed(() => {
       return $auth.user
         ? $auth.user.firstName
@@ -65,8 +65,7 @@ export default defineComponent({
     const profilePicture = computed(() => {
       if ('profilePicture' in $auth.user) {
         return (
-          'https://backend.creative-museum.ddev.site' +
-          $auth.user.profilePicture.contentUrl
+          `${$config.backendUrl}/${$auth.user.profilePicture.contentUrl}`
         )
       }
       return '/images/placeholder_profile.png'
@@ -79,6 +78,7 @@ export default defineComponent({
         context.$auth.$storage.getState('campaignScore')
       ),
       isLargerThanLg,
+      backendUrl: $config.backendUrl
     }
   },
 })

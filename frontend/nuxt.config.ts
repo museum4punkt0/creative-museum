@@ -123,6 +123,11 @@ export default {
   router: {
     middleware: ['user'],
   },
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    idpURL: process.env.IAM_URL,
+    backendUrl: process.env.BACKEND_URL
+  },
   htmlValidator: {
     usePrettier: false,
     failOnError: false,

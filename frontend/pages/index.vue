@@ -38,6 +38,8 @@ export default defineComponent({
     const { fetchCampaigns } = campaignApi()
 
     const campaigns = useAsync(() => fetchCampaigns(), 'campaigns')
+    console.log('campaaaaaaigns')
+    console.log(campaigns)
 
     $auth.$storage.removeState('campaignScore')
 
