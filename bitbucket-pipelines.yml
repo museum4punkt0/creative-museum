@@ -15,8 +15,6 @@ pipelines:
                 - step:
                     name: Install frontend packages and build frontend
                     image: node:16.15.1
-                    caches:
-                        - npm-cache
                     script:
                         - cd frontend
                         - touch .env
