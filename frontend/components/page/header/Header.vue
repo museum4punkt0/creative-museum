@@ -3,88 +3,65 @@
     <div
       id="globalHeader"
       ref="globalHeader"
-      w:pos="relative"
-      w:container="~"
-      w:flex="~ row"
-      w:justify="between"
-      w:z="100"
-      w:align="items-center"
+      class="relative container flex flex-row justify-between z-100 items-center"
     >
       <NuxtLink id="pageLogo" :to="localePath('/')">
         <Logo
-          w:text="white/50 hover:$highlight"
-          w:h="8 md:12"
-          w:m="l-5 y-3"
-          w:transition="all duration-300 ease-in-out"
-          w:transform="gpu hover:scale-125"
-          w:cursor="pointer"
+          class="text-white/50 hover:text-$highlight h-8 md:h12 ml-5 my-3 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
         />
       </NuxtLink>
       <button
         v-show="isAddButtonVisible"
-        class="add-btn"
+        class="add-btn avsikzte left-1/2 -translate-x-1/2 block rounded-full border-white h-6 w-6"
         :class="isAddVisible ? 'visible' : ''"
-        w:pos="absolute"
-        w:left="1/2"
-        w:transform="-translate-x-1/2"
-        w:display="block"
-        w:border="~ rounded-full white"
-        w:h="6"
-        w:w="6"
         @click.prevent="
           isAddVisible = !isAddVisible
           isMenuVisible = false
         "
       />
-      <div w:flex="~ row" w:m="r-5" w:space="x-4" w:align="items-center">
+      <div class="flex flex-row mr-5 space-x-4 items-center">
         <PageHeaderUserInfo />
         <button
-          w:transition="scale duration-300 ease-in-out"
-          w:transform="gpu hover:scale-125"
-          w:h="6"
-          w:w="6"
-          :w:border="
+          class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out"
+          :class="
             isMenuVisible
-              ? '~ rounded-full white'
-              : '~ rounded-none transparent'
-          "
+              ? '~ rounded-full white' :
+              '~ rounded-none transparent'
+            "
           @click.prevent="
             isMenuVisible = !isMenuVisible
             isAddVisible = false
           "
         >
           <span
-            w:pointer-events="none"
-            w:space="y-1"
-            w:display="block"
-            :w:m="isMenuVisible ? '-t-0.5' : ''"
+            class="pointer-events-none space-y-1 block"
+            :class="
+              isMenuVisible
+                ? '-mt-0.5'
+                : ''
+            "
           >
             <span
-              w:display="block"
-              w:h="px"
-              w:bg="white"
-              w:transition="all duration-300"
-              :w:transform="
+              class="block h-px bg-white transition-all duration-300"
+              :class="
                 isMenuVisible
-                  ? 'gpu rotate-45 origin-center translate-y-1.5 scale-x-75'
+                  ? 'transform-gpu rotate-45 origin-center translate-y-1.5 scale-x-75'
                   : ''
               "
             />
             <span
-              w:display="block"
-              w:h="px"
-              w:bg="white"
-              w:transition="all duration-500"
-              :w:transform="isMenuVisible ? 'gpu translate-x-10 opacity-0' : ''"
+              class="block h-px bg-white transform-gpu transition-all duration-500"
+              :class="
+                isMenuVisible
+                  ? 'transform-gpu translate-x-10 opacity-0'
+                  : ''
+              "
             />
             <span
-              w:display="block"
-              w:h="px"
-              w:bg="white"
-              w:transition="all duration-300"
-              :w:transform="
+              class="block h-px bg-white tranform-gpu transition-all duration-300"
+              :class="
                 isMenuVisible
-                  ? 'gpu -rotate-45 origin-center -translate-y-1 scale-x-75'
+                  ? 'transform-gpu -rotate-45 origin-center -translate-y-1 scale-x-75'
                   : ''
               "
             />
@@ -103,30 +80,14 @@
         <div
           v-show="isMenuVisible"
           key="0"
-          w:pos="absolute"
-          w:top="12 md:16"
-          w:left="0"
-          w:right="0"
-          w:p="t-10 md:t-20 b-10"
-          w:min-h="sm"
-          w:bg="grey"
-          w:shadow="lg black/20"
-          w:z="50"
+          class="absolute top-12 md:top-16 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
         >
           <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />
         </div>
         <div
           v-show="isAddVisible"
           key="1"
-          w:pos="absolute"
-          w:top="12 md:16"
-          w:left="0"
-          w:right="0"
-          w:p="t-10 md:t-20 b-10"
-          w:min-h="sm"
-          w:bg="grey"
-          w:shadow="lg black/20"
-          w:z="50"
+          class="absolute top-12 md:top-16 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
         >
           <PostAdd @openAddModal="openAddModal" />
         </div>

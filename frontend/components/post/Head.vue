@@ -1,13 +1,12 @@
 <template>
-  <div v-if="post.author" w:flex="~ row" w:justify="between">
-    <NuxtLink :to="localePath(`/user/${post.author.username}`)" w:flex="~ row">
-      <UserProfileImage :user="post.author" w:m="r-4" />
-      <div w:flex="~ col">
-        <span w:text="lg">{{ post.author.username }}</span>
+  <div v-if="post.author" class="flex flex-row justify-between">
+    <NuxtLink :to="localePath(`/user/${post.author.username}`)" class="flex flex-row">
+      <UserProfileImage :user="post.author" class="mr-4" />
+      <div class="flex flex-col">
+        <span class="text-lg">{{ post.author.username }}</span>
         <span
           :class="post.type !== 'playlist' ? 'highlight-text' : ''"
-          w:text="sm"
-          w:m="t-1"
+          class="text-sm mt-1"
           >{{
             $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
               ? $dayjs(post.created).format('DD.MM.YYYY')
@@ -18,7 +17,7 @@
     </NuxtLink>
     <div @click="showAdditionalOptions = !showAdditionalOptions">
       <ThreeDots
-        w:cursor="pointer"
+        class="cursor-pointer"
         :text-color="post.type === 'playlist' ? textColor : 'white'"
       />
     </div>
@@ -32,15 +31,14 @@
       <component
         :is="modalType"
         v-if="showAdditionalOptions"
-        w:h="full"
-        w:flex="~ col"
+        class="flex flex-col h-full"
         :closable="modalType === 'SlideUp' ? true : false"
         @closeModal="showAdditionalOptions = false"
       >
-        <div v-if="!additionalPage" w:flex="~ col" w:p="6" w:mr="12">
-          <h3 w:mb="6">{{ $t('post.moreActions') }}</h3>
-          <ul w:text="base">
-            <li w:my="6">
+        <div v-if="!additionalPage" class="flex flex-col p-6 mr-12">
+          <h3 class="mb-6">{{ $t('post.moreActions') }}</h3>
+          <ul class="text-base">
+            <li class="my-6">
               <button
                 v-if="!post.bookmarked"
                 @click="addOrRemoveBookmark(post.id)"
@@ -48,7 +46,7 @@
                 {{ $t('post.actions.addBookmark') }}
               </button>
             </li>
-            <li w:my="6">
+            <li class="my-6">
               <button
                 v-if="post.bookmarked"
                 @click="addOrRemoveBookmark(post.id)"
@@ -56,7 +54,7 @@
                 {{ $t('post.actions.removeBookmark') }}
               </button>
             </li>
-            <li w:my="6">
+            <li class="my-6">
               <button
                 class="block btn-right"
                 @click="openPlaylistSelectionModal"
@@ -64,22 +62,15 @@
                 {{ $t('post.actions.addToPlaylist') }}
               </button>
             </li>
-            <!--
-            <li>Teilen</li>
-            <li>Kopieren</li>
-            <li>Melden</li>
-            -->
           </ul>
         </div>
-        <div v-if="additionalPage" w:flex="~ col 1" w:align="items-stretch">
+        <div v-if="additionalPage" class="flex flex-col flex-1 items-stretch">
           <div
             v-if="additionalPageContent === 'playlistSelection'"
-            w:flex="~ col 1"
-            w:align="items-stretch"
+            class="flex flex-col flex-1 items-stretch"
           >
             <PlaylistSelection
-              w:flex="~ col 1"
-              w:align="items-stretch"
+              class="flex flex-col flex-1 items-stretch"
               @closeModal="additionalPage = false"
               @createPlaylist="addPostToNewPlaylist"
               @selectPlaylist="addPostToPlaylist"
