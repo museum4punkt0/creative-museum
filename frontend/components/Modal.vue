@@ -1,39 +1,17 @@
 <template>
   <div
-    w:pos="fixed"
-    w:top="15"
-    w:right="0"
-    w:bottom="0"
-    w:left="0"
-    w:backdrop="~ lg:blur-lg"
-    w:z="40 lg:100"
+    class="fixed top-15 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg"
   >
     <div
-      class="modal"
-      w:bg="grey"
-      w:text="white"
-      w:pos="fixed"
-      w:flex="~ col 1"
-      w:top="15 lg:1/2"
-      w:right="0 lg:auto"
-      w:left="0 lg:1/2"
-      w:min-w="full lg:2xl"
-      w:min-h=" lg:xl"
-      w:bottom="0 lg:auto"
-      w:border="rounded-xl"
-      w:transform="lg:~ lg:-translate-x-1/2 lg:-translate-y-1/2"
+      class="
+        modal bg-grey text-white fixed flex flex-col flex-1 top-15 lg:top-1/2 right-0
+        lg:auto left-0 lg:left-1/2 min-w-full lg:min-w-2xl lg:min-h-xl bottom-0 lg:bottom-auto rounded-xl
+        lg:transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2
+      "
     >
       <button
         v-if="closable"
-        class="close-btn"
-        w:display="block"
-        w:h="4"
-        w:w="4"
-        w:pos="absolute"
-        w:right="5"
-        w:top="5"
-        w:transform="-translate-x-1/2"
-        w:border="~ rounded-full white"
+        class="close-btn block h-4 w-4 absolute right-5 top-5 transform -translate-x-1/2 border rounded-full border-white"
         @click.prevent="$emit('closeModal')"
       />
       <slot></slot>

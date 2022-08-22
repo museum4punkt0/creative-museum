@@ -1,18 +1,15 @@
 <template>
-  <div w:container="~" w:p="6">
-    <h2 w:text="xl" w:m="b-10">{{ $t('post.new') }}</h2>
-    <div w:grid="~ cols-2 md:cols-6 gap-4" w:max-w="lg:3xl">
+  <div class="container p-6">
+    <h2 class="text-xl mb-10">{{ $t('post.new') }}</h2>
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-4 lh:max-w-3xl">
       <button
         v-for="(item, key) in addMenuItems"
         :key="key"
-        class="box-shadow"
-        w:flex="~ col"
-        w:justify="center"
-        w:align="items-center"
+        class="box-shadow flex flex-col justify-center items-center"
         @click.prevent="openAddModal(item)"
       >
-        <component :is="`Post${item}Icon`" w:w="8" w:h="8" w:m="b-2" />
-        <span w:display="block" w:text="center">{{
+        <component :is="`Post${item}Icon`"class="w-8 h-8 mb-2" />
+        <span class="block text-center">{{
           $t(`post.types.${item.toLowerCase()}.button`)
         }}</span>
       </button>

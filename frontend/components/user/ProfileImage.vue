@@ -1,14 +1,12 @@
 <template>
-  <div class="highlight-bg" w:rounded="full" w:w="8" w:h="8">
+  <div class="highlight-bg rounded-full w-8 h-8">
     <img
       v-if="'profilePicture' in user"
       :src="
         'https://backend.creative-museum.ddev.site' +
         user.profilePicture.contentUrl
       "
-      w:w="8"
-      w:h="8"
-      w:rounded="full"
+      class="w-8 h-8 rounded-full"
     />
   </div>
 </template>

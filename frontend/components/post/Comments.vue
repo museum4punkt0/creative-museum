@@ -1,16 +1,16 @@
 <template>
   <div>
     <div
+      class="cursor-pointer text-sm"
       :class="post.type !== 'playlist' ? 'highlight-text' : ''"
-      w:cursor="pointer"
-      w:text="sm"
     >
       <ArrowIcon
+        class="relative w-3 mr-0.5 inline-block transform-gpu"
         w:pos="relative"
         w:w="3"
         w:m="r-0.5"
         w:display="inline-block"
-        :w:transform="showComments || showCommentForm ? 'gpu rotate-180' : ''"
+        :class="showComments || showCommentForm ? 'transform-gpu rotate-180' : ''"
       />
       <span
         v-if="post.comments && post.commentCount > 0"
@@ -39,37 +39,22 @@
       </div>
       <form
         v-if="showCommentForm"
-        w:pos="sticky lg:static"
-        w:bottom="0"
-        w:left="0"
-        w:right="0"
-        w:p="t-4 b-4 x-4 lg:(x-0 b-0)"
-        w:m="-b-10 -r-10 -l-10 lg:(b-0 r-0 l-0)"
+        class="sticky lg:static bottom-0 left-0 right-0 pt-4 pb-4 px-4 lg:(px-0 pb-0) -mb-10 -mr-10 -ml-10 lg:(mb-0 mr-0 ml-0)"
         @submit.prevent="submitComment"
       >
         <div w:container="~ lg:none" w:pos="relative">
           <textarea
             v-model="commentBody"
             v-autogrow
-            class="input-text"
-            w:p="x-4 y-2 r-8"
+            class="input-text px-4 py-2 pr-8 text-white text-base resize-none"
             rows="1"
-            w:text="white md"
-            w:resize="none"
             :placeholder="$t('post.commentPlaceholder')"
             @keyup.enter="submitComment"
             @click.prevent="showLoginIfNotLoggedIn"
           ></textarea>
           <button
             type="submit"
-            w:pos="absolute"
-            w:w="3"
-            w:right="3"
-            w:top="2.5"
-            w:maxh="3xl"
-            w:transform="gpu rotate-180"
-            w:text="white/50"
-            w:z="100"
+            class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 z-100"
           >
             <ArrowIcon />
           </button>

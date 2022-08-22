@@ -1,5 +1,5 @@
 <template>
-  <p w:text="right" class="highlight-text">
+  <p class="highlight-text text-right">
     {{ maxCount - text.length }} / {{ maxCount }}
   </p>
 </template>

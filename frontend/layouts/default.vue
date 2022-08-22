@@ -1,10 +1,10 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
-    <div class="flex-1 overflow-y-auto" w:overflow="x-hidden">
-      <div w:bg="grey" w:shadow="lg black/20" w:pos="sticky" w:z="10" w:top="0">
+    <div class="flex-1 overflow-y-auto overflow-x-hidden">
+      <div class="bg-grey shadow-lg shadow-black/20 sticky z-10 top-0">
         <PageHeader />
       </div>
-      <div w:container="~" w:p="6 lg:t-20">
+      <div class="container p-6 lg:pt-20">
         <Nuxt />
       </div>
     </div>

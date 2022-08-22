@@ -1,7 +1,7 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
-    <div class="flex-1 overflow-y-auto" w:overflow="x-hidden">
-      <div w:bg="grey" w:shadow="lg black/20">
+    <div class="flex-1 overflow-y-auto overflow-x-hidden">
+      <div class="bg-grey shadow-lg shadow-black/20">
         <PageHeader />
       </div>
       <div w:container="~" w:p="6">

@@ -1,43 +1,37 @@
 <template>
   <div>
     <div v-if="$auth.loggedIn">
-      <div w:mb="10">
-        <div w:w="21" w:h="21" w:rounded="full" w:mb="4" class="highlight-bg">
+      <div class="mb-10" >
+        <div class="highlight-bg w-21 h-21 rounded-full mb-4">
           <img
             :src="profilePicture"
-            w:w="21"
-            w:h="21"
-            w:object="contain center"
-            w:rounded="full"
+            class="w-21 h-21 object-contain object-center rounded-full"
           />
         </div>
-        <p w:text="2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
-        <p w:text="lg" w:mb="3" class="highlight-text">@{{ fullName }}</p>
+        <p class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
+        <p class="highlight-text text-lg mb-3">@{{ fullName }}</p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}
         </p>
         <NuxtLink
           to="/user/profile"
-          w:mt="10"
-          w:py="2"
-          w:w="full"
-          class="btn-outline"
+          class="btn-outline mt-10 py-2 w-full"
         >
           {{ $t('user.editProfile') }}
         </NuxtLink>
       </div>
-      <div w:mb="10">
-        <p w:font="bold" w:mb="3">
+      <div class="mb-10">
+        <p class="font-bold mb-3">
           {{ $t('user.score') }}
         </p>
         <UserScore :campaign="campaign" />
       </div>
     </div>
-    <div w:mb="10">
+    <div class="mb-10">
       <CampaignFilter :campaign="campaign" />
     </div>
     <div v-if="isLargerThanLg">
-      <div w:mb="10">
+      <div class="mb-10">
         <PageFooter />
       </div>
     </div>

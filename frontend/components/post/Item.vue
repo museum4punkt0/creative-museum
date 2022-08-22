@@ -1,21 +1,20 @@
 <template>
-  <div w:m="t-10">
+  <div class="mt-10">
     <div
       v-if="post.type !== 'system'"
       class="box-shadow"
-      :w:text="post.type === 'playlist' ? textColor : ''"
-      :class="[post.type === 'playlist' ? `highlight-bg` : '']"
+      :class="[post.type === 'playlist' ? `text-${textColor} highlight-bg` : '']"
     >
       <PostHead
         :post="post"
-        w:m="b-4"
+        class="mb-4"
         :text-color="textColor"
         @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)"
       />
-      <component :is="componentName" :post="post" w:m="b-4" />
+      <component :is="componentName" :post="post" class="mb-4" />
       <PostFooter
         :post="post"
-        w:m="b-4"
+        class="mb-4"
         :text-color="textColor"
         @triggerFeedback="triggerFeedback"
       />
@@ -24,7 +23,7 @@
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
-    <div v-else class="highlight-text" w:text="center">
+    <div v-else class="highlight-text text-center">
       <p>{{ post.body }}</p>
     </div>
 
@@ -33,20 +32,19 @@
       :closable="true"
       @closeModal="showFeedbackForm = false"
     >
-      <div w:p="6">
-        <h3 w:mb="6" w:w="full">{{ $t('post.feedback') }}</h3>
+      <div class="p-6">
+        <h3 class="mb-6 w-full">{{ $t('post.feedback') }}</h3>
 
         <template v-for="(option, index) in feedbackOptions">
           <button
             v-if="!voted"
-            class="btn-primary btn-outline"
-            w:w="full"
-            w:mt="4"
+            :key="index"
+            class="btn-primary btn-outline w-full mt-4"
             @click.prevent="voteOption(option.id)"
           >
             {{ option.text }}
           </button>
-          <div v-if="voted">
+          <div v-if="voted" :key="index">
             {{ option.text }}<br />
             <progress-bar
               :options="progressBarOptions"

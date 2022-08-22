@@ -1,14 +1,8 @@
 <template>
   <div
-    w:px="4"
-    w:py="2"
-    w:rounded="full"
-    w:flex="~ row"
-    w:align="items-end"
-    w:justify="center"
-    class="box-shadow"
+    class="box-shadow px-4 py-2 rounded-full flex flex-row items-end justify-center"
   >
-    <span w:text="2xl" w:mr="2">{{
+    <span class="text-2xl mr-2">{{
       campaignScore && campaignScore.value && campaignScore.value.score
         ? Math.abs(campaignScore.value.score).toLocaleString()
         : '0'

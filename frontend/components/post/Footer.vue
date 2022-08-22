@@ -1,7 +1,8 @@
 <template>
-  <div w:flex="~ row" w:justify="between">
-    <span w:flex="~ row" w:align="items-center" w:text="sm">
+  <div class="flex flex-row justify-between">
+    <span class="flex flex-row items-center text-sm">
       <LibraryIcon
+        class="mr-2 cursor-pointer"
         :class="
           (yourVote &&
             yourVote.value &&
@@ -15,8 +16,6 @@
             ? 'highlight-text'
             : 'fill-white'
         "
-        w:m="r-2"
-        w:cursor="pointer"
         @click.prevent="doVotePost('up')"
       />
       {{
@@ -25,6 +24,7 @@
           : post.votestotal
       }}
       <LibraryIcon
+        class="ml-2 transform-gpu rotate-180 cursor-pointer"
         :class="
           (yourVote &&
             yourVote.value &&
@@ -38,16 +38,12 @@
             ? 'highlight-text'
             : 'fill-white'
         "
-        w:m="l-2"
-        w:transform="gpu rotate-180"
-        w:cursor="pointer"
         @click.prevent="doVotePost('down')"
       />
     </span>
 
     <button
-      class="btn-outline"
-      w:text="sm"
+      class="btn-outline text-sm"
       :class="post.type === 'playlist' ? `btn-text-${textColor}` : ''"
       @click.prevent="$emit('triggerFeedback', post.id)"
     >

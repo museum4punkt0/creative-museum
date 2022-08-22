@@ -1,91 +1,77 @@
 <template>
   <div>
-    <div w:p="6" class="page-header">
+    <div class="page-header p-6">
       <NuxtLink :to="localePath('/')" class="back-btn">{{
         $t('tutorial.firstSteps')
       }}</NuxtLink>
     </div>
     <div
-      class="box-shadow-mobile"
-      w:pos="relative"
-      w:m="6 lg:0"
-      w:p="6"
-      w:text="center"
+      class="box-shadow-mobile relative m-6 lg:m-0 p-6 text-center"
     >
       <div v-show="step === 1">
-        <Logo w:text="white/50" w:h="20" w:m="x-auto y-6" />
-        <div w:text="left" w:m="b-10">
+        <Logo class="text-white/50 h-20 mx-auto my-6" />
+        <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step1.title') }}</h2>
           <p>{{ $t('tutorial.step1.text') }}</p>
         </div>
-        <div w:pos="absolute" w:left="6" w:bottom="6" w:text="color1 sm">
+        <div class="absolute left-6 bottom-6 text-color1 text-sm">
           1/5
         </div>
       </div>
       <div v-show="step === 2">
-        <div w:text="left" w:m="b-10">
+        <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step2.title') }}</h2>
           <p>{{ $t('tutorial.step2.text') }}</p>
         </div>
-        <div w:pos="absolute" w:left="6" w:bottom="6" w:text="color1 sm">
+        <div class="absolute left-6 bottom-6 text-color1 text-sm">
           2/5
         </div>
       </div>
       <div v-show="step === 3">
-        <div w:text="left" w:m="b-10">
+        <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step3.title') }}</h2>
           <p>{{ $t('tutorial.step3.text') }}</p>
         </div>
-        <div w:pos="absolute" w:left="6" w:bottom="6" w:text="color1 sm">
+        <div class="absolute left-6 bottom-6 text-color1 text-sm">
           3/5
         </div>
       </div>
       <div v-show="step === 4">
-        <div w:text="left" w:m="b-10">
+        <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step4.title') }}</h2>
           <p>{{ $t('tutorial.step4.text') }}</p>
         </div>
-        <div w:pos="absolute" w:left="6" w:bottom="6" w:text="color1 sm">
+        <div class="absolute left-6 bottom-6 text-color1 text-sm">
           4/5
         </div>
       </div>
       <div v-show="step === 5">
-        <div w:text="left" w:m="b-10">
+        <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step5.title') }}</h2>
           <p>{{ $t('tutorial.step5.text') }}</p>
         </div>
-        <div w:pos="absolute" w:left="6" w:bottom="6" w:text="color1 sm">
+        <div class="absolute left-6 bottom-6 text-color1 text-sm"">
           5/5
         </div>
       </div>
     </div>
     <div>
-      <div w:p="6" w:m="t-10">
+      <div class="p-6 mt-10">
         <button
-          class="btn-primary"
-          w:display="block"
-          w:w="full"
-          w:m="b-3"
+          class="btn-primary block w-full mb-3"
           @click.prevent="goNext()"
         >
           {{ $t('next') }}
         </button>
         <button
           v-if="step > 1"
-          class="btn-outline"
-          w:display="block"
-          w:w="full"
-          w:p="y-2"
-          w:m="b-3"
+          class="btn-outline block w-full py-2 mb-3"
           @click.prevent="goPrev()"
         >
           {{ $t('prev') }}
         </button>
         <button
-          class="btn-outline"
-          w:display="block"
-          w:w="full"
-          w:p="y-2"
+          class="btn-outline block w-full py-2"
           @click.prevent="finish()"
         >
           {{ $t('tutorial.skipTutorial') }}

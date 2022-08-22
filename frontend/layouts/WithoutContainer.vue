@@ -1,7 +1,7 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
     <div class="" w:overflow="x-hidden">
-      <div w:bg="grey" w:shadow="lg black/20">
+      <div class="bg-grey shadow-lg shadow-black/20">
         <PageHeader />
       </div>
       <Nuxt />

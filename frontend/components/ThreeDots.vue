@@ -1,34 +1,16 @@
 <template>
-  <div w:w="4" w:h="5" w:pos="relative">
+  <div class="relative w-4 h-5">
     <span
-      w:pos="absolute"
-      w:left="1/2"
-      w:top="0"
-      w:display="block"
-      w:h="0.75"
-      w:w="0.75"
+      class="absolute left-1/2 top-0 block h-0.75 w-0.75 rounded-full"
       :class="`bg-${textColor}`"
-      w:border="rounded-full"
     ></span>
     <span
-      w:pos="absolute"
-      w:left="1/2"
-      w:top="2"
-      w:display="block"
-      w:h="0.75"
-      w:w="0.75"
+      class="absolute left-1/2 top-2 block h-0.75 w-0.75 rounded-full"
       :class="`bg-${textColor}`"
-      w:border="rounded-full"
     ></span>
     <span
-      w:pos="absolute"
-      w:left="1/2"
-      w:top="4"
-      w:display="block"
-      w:h="0.75"
-      w:w="0.75"
+      class="absolute left-1/2 top-4 block h-0.75 w-0.75 rounded-full"
       :class="`bg-${textColor}`"
-      w:border="rounded-full"
     ></span>
   </div>
 </template>
