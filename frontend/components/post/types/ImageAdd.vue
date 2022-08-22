@@ -187,7 +187,6 @@ export default defineComponent({
         postBody.value = ''
         imgAlt.value = ''
         files.value = []
-        context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
       })
     }
@@ -218,10 +217,10 @@ export default defineComponent({
     return {
       abortPost,
       submitPost,
-      files,
       inputFile,
       inputFilter,
       edit,
+      files,
       postTitle,
       postBody,
       imgAlt,
