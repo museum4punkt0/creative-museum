@@ -9,7 +9,7 @@
       <div class="grid lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead :campaign="campaign" />
-          <div v-if="posts.value">
+          <div v-if="posts && posts.value">
             <PostItem
               v-for="(post, key) in posts.value"
               :key="key"
