@@ -61,7 +61,7 @@
         </file-upload>
       </client-only>
 
-      <div w:position="relative" w:mt="4">
+      <div class="relative mt-4">
         <input
           v-model="imgAlt"
           type="text"
@@ -76,7 +76,7 @@
         />
       </div>
 
-      <div w:position="relative" w:mt="4">
+      <div class="relative mt-4">
         <input
           v-model="postTitle"
           type="text"

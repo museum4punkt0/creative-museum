@@ -6,10 +6,6 @@
     >
       <ArrowIcon
         class="relative w-3 mr-0.5 inline-block transform-gpu"
-        w:pos="relative"
-        w:w="3"
-        w:m="r-0.5"
-        w:display="inline-block"
         :class="showComments || showCommentForm ? 'transform-gpu rotate-180' : ''"
       />
       <span
@@ -31,7 +27,7 @@
       }}</span>
     </div>
 
-    <div v-if="(comments && showComments) || showCommentForm" w:pos="relative">
+    <div v-if="(comments && showComments) || showCommentForm" class="relative">
       <div v-if="comments && showComments">
         <div v-for="(comment, key) in comments.value" :key="key">
           <PostCommentItem :comment="comment" />
@@ -42,7 +38,7 @@
         class="sticky lg:static bottom-0 left-0 right-0 pt-4 pb-4 px-4 lg:(px-0 pb-0) -mb-10 -mr-10 -ml-10 lg:(mb-0 mr-0 ml-0)"
         @submit.prevent="submitComment"
       >
-        <div w:container="~ lg:none" w:pos="relative">
+        <div class="container lg:container-none relative">
           <textarea
             v-model="commentBody"
             v-autogrow

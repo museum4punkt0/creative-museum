@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="user" w:flex="~ row" w:space="md:x-4" w:align="items-center">
+    <div v-if="user" class="flex flex-row md:space-x-4 items-center">
       <ClientOnly>
-        <div w:position="relative">
+        <div class="relative">
           <img
             :src="profilePicture"
             class="w-6 h-6 object-contain object-center rounded-full"

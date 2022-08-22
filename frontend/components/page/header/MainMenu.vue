@@ -14,7 +14,7 @@
         class="text-white flex flex-row items-center font-bold leading-loose"
         @click.prevent="logout"
       >
-        <LogoutIcon w:m="r-2" />
+        <LogoutIcon class="mr-2" />
         <span>Logout</span>
       </button>
     </div>
@@ -31,12 +31,12 @@
       <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.profile.search')
       }}</NuxtLink>
-      <NuxtLink to="/" w:display="block" @click.native="closeMenu">{{
+      <NuxtLink to="/" class="block" @click.native="closeMenu">{{
         $t('navigation.profile.invite')
       }}</NuxtLink>
     </div>
-    <div w:mb="10 lg:0">
-      <p w:text="lg" w:font="bold leading-loose" w:mb="4">
+    <div class="mb-10 lg:0">
+      <p class="text-lg font-bold leading-loose mb-4">
         {{ $t('navigation.museum.header') }}
       </p>
       <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
@@ -45,7 +45,7 @@
       <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.museum.firstSteps')
       }}</NuxtLink>
-      <NuxtLink to="/" w:display="block" @click.native="closeMenu">{{
+      <NuxtLink to="/" class="block" @click.native="closeMenu">{{
         $t('navigation.museum.faq')
       }}</NuxtLink>
     </div>

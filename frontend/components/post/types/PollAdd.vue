@@ -24,7 +24,7 @@
             class="absolute bottom-1 right-2"
           />
         </div>
-        <div w:position="relative" w:mt="4" w:min-h="1/5">
+        <div class="relative mt-4 min-h-1/5">
           <textarea
             v-model="description"
             type="text"
@@ -113,7 +113,7 @@
           </div>
         </div>
       </div>
-      <div w:mt="6">
+      <div class="mt-6">
         <button
           type="submit"
           class="btn-primary w-full"

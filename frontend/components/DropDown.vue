@@ -15,7 +15,7 @@
         v-for="(item, key) in options"
         :key="key"
         class="btn-outline border-dashed px-2 py-1 mb-3 rounded-full text-sm whitespace-nowrap border border-white self-start"
-        :class="[key === selectedValue ? 'active' : '', key > 0 ? 'ml-3 lg:ml-0']"
+        :class="[key === selectedValue ? 'active' : '', key > 0 ? 'ml-3 lg:ml-0' : '']"
         @click="selectValue(key)"
       >
         {{ item.text }}

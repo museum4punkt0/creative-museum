@@ -8,7 +8,7 @@
     <div
       class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
     >
-      <div w:position="relative">
+      <div class="relative">
         <input
           v-model="postTitle"
           type="text"
@@ -23,7 +23,7 @@
         />
       </div>
 
-      <div w:flex="~ col grow" w:mt="4" w:position="relative">
+      <div class="flex flex-col flex-grow mt-4 relative">
         <textarea
           v-model="postBody"
           type="text"
