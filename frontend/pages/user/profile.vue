@@ -106,10 +106,10 @@
       </div>
       <div class="grid col-span-3 pr-10">
         <div class="mb-12">
-          <h2 w:text="2xl">{{ $t('user.profile.self.notifications') }}</h2>
+          <h2 class="text-2xl">{{ $t('user.profile.self.notifications') }}</h2>
         </div>
         <div class="mb-12">
-          <h2 w:text="2xl">{{ $t('user.profile.self.awards') }}</h2>
+          <h2 class="text-2xl">{{ $t('user.profile.self.awards') }}</h2>
         </div>
         <div class="mb-12">
           <div class="flex flex-row content-between">
