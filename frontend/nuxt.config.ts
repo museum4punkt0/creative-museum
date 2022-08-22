@@ -31,7 +31,6 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',
     '@nuxtjs/svg',
-    '@nuxtjs/dotenv',
     'nuxt-windicss',
     '@nuxt/postcss8',
   ],

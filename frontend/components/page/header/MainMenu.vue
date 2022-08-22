@@ -6,7 +6,7 @@
         class="text-white flex flex-row items-center font-bold leading-loose"
         @click.prevent="login"
       >
-        <LoginIcon />
+        <LoginIcon class="w-6 h-6 mr-2" />
         <span>Login</span>
       </button>
       <button
@@ -92,11 +92,11 @@
         <p class="ml-4 leading-none">{{ $t('locale') }}</p>
       </div>
       <div class="flex flex-row items-center mb-4">
-        <SimpleLanguageIcon />
+        <SimpleLanguageIcon class="w-6 h-6 mr-4" />
         <span>{{ $t('navigation.language.easyLanguage') }}</span>
       </div>
       <div class="flex flex-row items-center mb-4">
-        <SignLanguageIcon />
+        <SignLanguageIcon class="w-6 h-6 mr-4" />
         <span>{{ $t('navigation.language.signLanguage') }}</span>
       </div>
     </div>
