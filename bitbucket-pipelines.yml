@@ -18,11 +18,10 @@ pipelines:
                     caches:
                         - npm-cache
                     script:
-                        - cd frontend && npm ci
-                        - npm run build
+                        - cd frontend && npm ci && npm run build
                     artifacts:
                         - frontend/node_modules/**
-                        - frontend/.nuxt
+                        - frontend/.nuxt/**
                 - step:
                     name: Composer Setup
                     image: composer:2.3.7

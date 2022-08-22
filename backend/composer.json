@@ -1,4 +1,6 @@
 {
+    "name": "jwied/creative-museum",
+    "description": "Creative museum API and Frontend",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
