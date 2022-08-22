@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div w:grid="~ cols-1 lg:cols-12 lg:gap-4">
-      <div w:grid="col-span-3" w:pr="10">
-        <div w:p="6" w:display="md:hidden" class="page-header">
+    <div class="grid grid-cols-1 lg:grid-cols-12 lg:gap-4">
+      <div class="grid col-span-3 pr-10">
+        <div class="page-header p-6 md:hidden">
           <button class="back-btn" @click.prevent="backButton">
             {{
               $t('user.profile.self.headline', { firstName: user.firstName })
@@ -16,93 +16,62 @@
             'https://backend.creative-museum.ddev.site' +
             user.profilePicture.contentUrl
           "
-          w:w="21"
-          w:h="21"
-          w:mb="4"
-          w:rounded="full"
+          class="rounded-full mb-4 h-21 w-21"
         />
 
-        <h1 w:text="2xl">{{ user.firstName }} {{ user.lastName }}</h1>
-        <p class="highlight-text" w:mb="2">@{{ user.username }}</p>
+        <h1 class="text-2xl">{{ user.firstName }} {{ user.lastName }}</h1>
+        <p class="highlight-text mb-2">@{{ user.username }}</p>
         <p>
           {{ user.description }}
         </p>
 
         <NuxtLink
           to="/user/update"
-          w:align="md:self-start"
-          w:mt="10"
-          w:mb="12"
-          class="btn-primary btn-outline"
+          class="btn-primary btn-outline md:self-start mt-10 mb-12"
         >
           {{ $t('user.editProfile') }}</NuxtLink
         >
 
-        <h2 w:text="2xl">{{ $t('user.profile.self.points') }}</h2>
+        <h2 class="text-2xl">{{ $t('user.profile.self.points') }}</h2>
 
         <div
           v-for="membership in user.memberships"
-          w:align="self-stretch md:self-start"
-          w:mt="3"
-          w:mb="12"
+          class="self-stretch md:self-start mt-3 mb-12"
         >
-          <div w:text="sm" w:mb="2" class="highlight-text">
+          <div class="highlight-text text-sm mb-2">
             {{ membership.campaign.title }}
           </div>
           <div
-            w:px="4"
-            w:py="2"
-            w:rounded="full"
-            w:flex="~ row"
-            w:align="items-end"
-            w:justify="center"
-            class="box-shadow"
+            class="box-shadow justify-center items-end flex flex-row rounded-full py-2 px-4"
           >
-            <span w:text="2xl" w:mr="2">{{ membership.score }}</span>
+            <span class="text-2xl mr-2">{{ membership.score }}</span>
             <span>{{ $t('user.profile.self.score') }}</span>
           </div>
         </div>
       </div>
-      <div w:grid="col-span-6" w:pr="10">
-        <div w:flex="~row" w:justify="content-between">
-          <h2 w:text="2xl">
+      <div class="grid col-span-6 pr-10">
+        <div class="flex flex-row content-between">
+          <h2 class="text-2xl">
             {{ $t('user.profile.self.activities.headline') }}
           </h2>
         </div>
-        <div class="filter" w:flex="~ row wrap" w:mt="6">
+        <div class="filter flex flex-row flex-wrap mt-6">
           <button
-            w:px="2"
-            w:py="1"
-            w:mr="3"
-            w:mb="3"
-            w:rounded="full"
-            w:align="self-start"
-            w:text="sm"
+            class="text-sm self-start rounded-full mb-3 mr-3 py-1 px-2"
             :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'"
             @click.prevent="showPosts"
           >
             {{ $t('user.profile.self.activities.posts') }}
           </button>
           <button
-            w:px="2"
-            w:py="1"
-            w:mr="3"
-            w:mb="3"
-            w:rounded="full"
-            w:align="self-start"
-            w:text="sm"
+            class="px-2 py-1 mr-3 mb-3 rounded-full self-start text-sm"
             :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'"
             @click.prevent="showBookmarks"
           >
             {{ $t('user.profile.self.activities.bookmarks') }}
           </button>
           <button
-            w:px="2"
-            w:py="1"
-            w:mb="3"
-            w:rounded="full"
-            w:align="self-start"
-            w:text="sm"
+            class="px-2 py-1 mb-3 rounded-full self-start text-sm"
             :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'"
             @click.prevent="showPlaylists"
           >
@@ -135,34 +104,24 @@
           </div>
         </div>
       </div>
-      <div w:grid="col-span-3" w:pr="10">
-        <div w:mb="12">
+      <div class="grid col-span-3 pr-10">
+        <div class="mb-12">
           <h2 w:text="2xl">{{ $t('user.profile.self.notifications') }}</h2>
         </div>
-        <div w:mb="12">
+        <div class="mb-12">
           <h2 w:text="2xl">{{ $t('user.profile.self.awards') }}</h2>
         </div>
-        <div w:mb="12">
-          <div w:flex="~ row" w:justify="content-between">
-            <h2 w:text="2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
+        <div class="mb-12">
+          <div class="flex flex-row content-between">
+            <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
 
             <button
-              class="highlight-text"
-              w:text="sm"
-              w:flex="~ row"
-              w:align="items-center"
-              w:font="leading-none"
-              w:cursor="pointer"
+              class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
               @click.prevent="toggleShowMore"
             >
               <ArrowIcon
-                w:pos="relative"
-                w:w="2"
-                w:top="0"
-                w:m="r-0.5"
-                w:display="inline-block"
-                w:transition="all duration-200"
-                :w:transform="readMore ? 'gpu rotate-180' : ''"
+                class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
+                :class="readMore ? 'transform-gpu rotate-180' : ''"
               />
               <span v-if="!readMore">{{ $t('showAll') }}</span>
               <span v-else>{{ $t('hide') }}</span>
@@ -172,20 +131,18 @@
           <div
             v-for="(achievement, index) in user.achievements"
             v-if="index < 2 || readMore"
-            w:flex="~ row"
-            w:mb="6"
+            class="flex flex-row mb-6"
           >
             <img
               :src="
                 'https://backend.creative-museum.ddev.site' +
                 achievement.badge.picture.contentUrl
               "
-              w:w="20"
-              w:align="self-center"
+              class="self-center w-20"
             />
-            <div w:ml="4" w:flex="~ col" w:justify="content-center">
+            <div class="content-center flex flex-col ml-4">
               <span>{{ achievement.badge.title }}</span>
-              <span w:text="sm" class="highlight-text">{{
+              <span class="highlight-text text-sm">{{
                 $t(
                   'user.profile.self.badges.points.' + achievement.badge.type,
                   { threshold: achievement.badge.threshold }

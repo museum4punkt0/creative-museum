@@ -28,6 +28,7 @@ import { campaignApi } from '@/api/campaign'
 export default defineComponent({
   name: 'IndexPage',
   layout: 'WithoutContainer',
+  auth: false,
   setup() {
     const store = useStore()
     const user = computed(() => store.state.auth.user)

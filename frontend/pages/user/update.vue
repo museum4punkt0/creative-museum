@@ -1,22 +1,11 @@
 <template>
-  <div
-    w:flex="~ col 1"
-    w:h="full"
-    w:justify="between"
-    w:pr="6"
-    w:pb="6"
-    w:pl="6"
-  >
+  <div class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6">
     <client-only>
-      <div w:flex="~ col" w:align="items-start">
+      <div w:flex="~ col" w:align="items-start" class="flex flex-col items-start">
         <img
           v-if="files.length"
           :src="typeof files[0] === 'string' ? files[0] : files[0].blob"
-          w:w="32"
-          w:mr="2"
-          w:mb="2"
-          w:border="rounded-full"
-          w:align="self-start"
+          class="w-32 mr-2 mb-2 rounded-full self-start"
         />
         <file-upload
           ref="upload"
@@ -29,13 +18,10 @@
           <div w:flex="~ row">
             <svg
               v-if="!files.length"
-              w:w="6"
-              w:h="6"
-              w:mr="2"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              class="highlight-svg-stroke"
+              class="highlight-svg-stroke w-6 -h6 mr-2"
             >
               <path
                 d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
@@ -55,13 +41,10 @@
             </svg>
             <svg
               v-if="files.length"
-              w:w="6"
-              w:h="6"
-              w:mr="2"
               viewBox="0 0 18 18"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              class="highlight-svg-stroke"
+              class="highlight-svg-stroke w-6 h-6 mr-2"
             >
               <path
                 d="M12.812 13.1936C13.4218 12.6459 13.9076 11.9743 14.2368 11.2238C14.5661 10.4732 14.7313 9.66098 14.7213 8.84143C14.7207 7.29236 14.1051 5.8069 13.0098 4.71154C11.9144 3.61618 10.429 3.00057 8.87988 3"
@@ -97,28 +80,24 @@
       </div>
     </client-only>
 
-    <div w:mb="12">
-      <h1 w:text="2xl" w:mt="6">{{ firstName }} {{ lastName }}</h1>
-      <p class="highlight-text" w:mb="4">{{ title }} @{{ user.username }}</p>
+    <div class="mb-12">
+      <h1 class="text-2xl mt-6">{{ firstName }} {{ lastName }}</h1>
+      <p class="highlight-text mb-4">{{ title }} @{{ user.username }}</p>
       <textarea
         v-model="description"
         type="text"
-        class="input-text"
+        class="input-text flex-grow"
         :placeholder="$t('user.profile.self.edit.placeholder.description')"
-        w:flex="grow"
         :maxlength="1000"
       ></textarea>
     </div>
 
     <div w:mb="12">
-      <h2 w:text="2xl">{{ $t('user.profile.self.edit.personalData') }}</h2>
-      <div w:mt="4">
+      <h2 class="text-2xl">{{ $t('user.profile.self.edit.personalData') }}</h2>
+      <div class="mt-4">
         <label
           for="input_firstname"
-          w:pl="2"
-          w:text="sm"
-          w:mb="3"
-          class="highlight-text"
+          class="highlight-text pl-2 text-sm mb-3"
           >{{ $t('user.profile.self.edit.firstName') }}</label
         >
         <input
@@ -131,10 +110,7 @@
       <div w:mt="4">
         <label
           for="input_lastname"
-          w:pl="2"
-          w:text="sm"
-          w:mb="3"
-          class="highlight-text"
+          class="highlight-text pl-2 text-sm mb-3"
           >{{ $t('user.profile.self.edit.lastName') }}</label
         >
         <input
@@ -147,10 +123,7 @@
       <div w:mt="4">
         <label
           for="input_email"
-          w:pl="2"
-          w:text="sm"
-          w:mb="3"
-          class="highlight-text"
+          class="highlight-text pl-2 text-sm mb-3"
           >{{ $t('user.profile.self.edit.email') }}</label
         >
         <input
@@ -163,10 +136,7 @@
       <div w:mt="4">
         <label
           for="input_username"
-          w:pl="2"
-          w:text="sm"
-          w:mb="3"
-          class="highlight-text"
+          class="highlight-text pl-2 text-sm mb-3"
           >{{ $t('user.profile.self.edit.username') }}</label
         >
         <input
@@ -178,96 +148,76 @@
       </div>
     </div>
 
-    <div w:mb="12">
-      <h2 w:text="2xl">{{ $t('user.profile.self.edit.notifications') }}</h2>
-      <p class="highlight-text" w:text="sm" w:mt="4" w:mb="3">
+    <div class="mb-12">
+      <h2 class="text-2xl">{{ $t('user.profile.self.edit.notifications') }}</h2>
+      <p class="highlight-text text-sm mt-4 mb-3">
         Persönliche Benachrichtigungen
       </p>
-      <div w:display="inline-block">
-        <div class="toggle" w:flex="~ row" w:overflow="hidden">
+      <div class="inline-block">
+        <div class="toggle flex flex row overflow-hidden">
           <div class="toggle__item">
             <input
               id="persNotifyOn"
-              w:w="0"
-              w:h="0"
-              w:overflow="hidden"
               type="radio"
               value="0"
               name="persNotify"
               checked
+              class="w-0 h-0 overflow-hidden"
             />
             <label
               for="persNotifyOn"
-              w:px="3"
-              w:display="inline-block"
-              w:font="leading-loose"
-              w:transition="background-color duration-300"
+              class="px-3 inline-block leading-loose transition transition-colors duration-300"
               >Ja</label
             >
           </div>
           <div class="toggle__item">
             <input
               id="persNotifyOff"
-              w:w="0"
-              w:h="0"
-              w:overflow="hidden"
               type="radio"
               value="1"
               name="persNotify"
+              class="w-0 h-0 overflow-hidden"
             />
             <label
               for="persNotifyOff"
-              w:px="3"
-              w:display="inline-block"
-              w:font="leading-loose"
-              w:transition="background-color duration-300"
+              class="px-3 inline-block leading-loose transition transition-colors duration-300"
               >Nein</label
             >
           </div>
         </div>
       </div>
 
-      <p class="highlight-text" w:text="sm" w:mt="4" w:mb="3">
+      <p class="highlight-text text-sm mt-3 mb-3">
         Creative Museum Benachrichtigungen
       </p>
-      <div w:display="inline-block">
-        <div class="toggle" w:flex="~ row" w:overflow="hidden">
+      <div class="inline-block">
+        <div class="toggle flex flex-row overflow-hidden">
           <div class="toggle__item">
             <input
               id="globalNotifyOn"
-              w:w="0"
-              w:h="0"
-              w:overflow="hidden"
               type="radio"
               value="0"
               name="globalNotify"
+              class="w-0 h-0 overflow-hidden"
             />
             <label
               for="globalNotifyOn"
-              w:px="3"
-              w:display="inline-block"
-              w:font="leading-loose"
-              w:transition="background-color duration-300"
+              class="px-3 inline-block leading-loose transition transition-colors duration-300"
               >Ja</label
             >
           </div>
           <div class="toggle__item">
             <input
               id="globalNotifyOff"
-              w:w="0"
-              w:h="0"
-              w:overflow="hidden"
               type="radio"
               value="1"
               name="globalNotify"
               checked
+              class="w-0 h-0 overflow-hidden"
             />
             <label
               for="globalNotifyOff"
-              w:px="3"
-              w:display="inline-block"
-              w:font="leading-loose"
-              w:transition="background-color duration-300"
+              class="px-3 inline-block leading-loose transition transition-colors duration-300"
               >Nein</label
             >
           </div>
@@ -275,19 +225,16 @@
       </div>
     </div>
     <button
-      w:align="md:self-start"
-      class="btn-primary"
-      w:mb="12"
+      class="btn-primary md:self-start mb-12"
       @click.prevent="save"
     >
       {{ $t('user.profile.self.edit.save') }}
     </button>
 
-    <div w:flex="~ col">
-      <h2 w:text="2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
+    <div class="flex flex-col">
+      <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
       <button
-        w:align="md:self-start"
-        class="btn-primary btn-outline"
+        class="btn-primary btn-outline md:self-start"
         @click.prevent="remove"
       >
         {{ $t('user.profile.self.edit.deleteProfile') }}

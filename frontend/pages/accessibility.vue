@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 w:text="primary 2xl bold" w:p="7">
+    <h1 class="text-2xl font-bold p-7">
       {{ $t('pages.accessibility.title') }}
     </h1>
   </div>
