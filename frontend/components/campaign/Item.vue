@@ -1,16 +1,12 @@
 <template>
   <div
-    w:display="block"
-    w:border="rounded-lg"
-    w:p="y-6 x-4"
-    w:h="xl lg:3xl"
-    w:shadow="md black/50"
+    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 border rounded-lg block"
     :style="`background-color: ${campaign.color}`"
   >
-    <article w:flex="~ col" w:h="full" :w:text="textColor">
+    <article class="flex flex-col h-full" :class="`text-${textColor}`">
       <header>
-        <div w:text="right">
-          <span w:border="~ current rounded-full" w:p="y-1 x-2">
+        <div class="text-right">
+          <span class="border border-current rounded-full py-1 px-2">
             {{ $t('duration') }}:
             {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
             <template v-if="campaign.end && campaign.end !== campaign.start">
@@ -18,7 +14,7 @@
             </template>
           </span>
         </div>
-        <h1 v-if="campaign.title" w:m="y-4" w:text="xl lg:xxl">
+        <h1 v-if="campaign.title" class="my-4 text-xl lg:text-xxl">
           <NuxtLink :to="localePath(`/campaigns/${campaign.id}`)">
             {{ campaign.title }}
           </NuxtLink>
@@ -27,7 +23,7 @@
       <div v-if="campaign.shortDescription">
         {{ campaign.shortDescription }}
       </div>
-      <footer w:m="t-auto">
+      <footer class="mt-auto">
         {{ $t('campaign.partner') }}
       </footer>
     </article>

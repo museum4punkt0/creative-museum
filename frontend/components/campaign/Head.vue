@@ -3,15 +3,15 @@
     <component is="style" type="text/css">
       body { --highlight: {{ campaign.color }}; }
     </component>
-    <div w:m="b-6">
-      <h1 class="page-header" w:m="t-0 b-1">{{ campaign.title }}</h1>
-      <div w:text="lg">
-        <span w:text="capitalize">{{ $t('till') }}</span>
+    <div class="mb-6">
+      <h1 class="page-header mt-0 mb-1">{{ campaign.title }}</h1>
+      <div class="text-lg">
+        <span class="capitalize">{{ $t('till') }}</span>
         {{ $dayjs(campaign.stop).format('DD.MM.YYYY') }}
       </div>
     </div>
     <div v-show="!showLongDescription">
-      <p w:m="b-6" v-html="formattedShortDescription" />
+      <p class="mb-6" v-html="formattedShortDescription" />
       <a
         v-if="formattedShortDescription !== formattedDescription"
         class="highlight-text"
@@ -21,7 +21,7 @@
       >
     </div>
     <div v-show="showLongDescription">
-      <p w:m="b-6" v-html="formattedDescription" />
+      <p class="mb-6" v-html="formattedDescription" />
       <a
         class="highlight-text"
         href="#"
@@ -29,9 +29,9 @@
         >{{ $t('readLess') }}</a
       >
     </div>
-    <div v-if="!isLargerThanLg" w:display="xl:hidden">
-      <div w:mb="10">
-        <p w:text="lg" w:font="bold" w:mt="10" w:mb="3">
+    <div v-if="!isLargerThanLg" class="xl:hidden">
+      <div class="mb-10">
+        <p class="text-lg font-bold mt-10 mb-3">
           {{ $t('user.yourCurrentScore') }}
         </p>
         <UserScore :campaign="campaign" />

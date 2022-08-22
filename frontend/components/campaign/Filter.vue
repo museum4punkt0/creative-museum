@@ -1,50 +1,21 @@
 <template>
   <div>
     <div
-      w:pos="relative"
-      w:m="-x-6 lg:0"
-      w:p="x-6 lg:0"
-      :w:h="dropdownHeight ? '20 lg:auto' : 'auto'"
-      w:flex="~ row nowrap md:col"
-      w:snap="x"
-      w:overflow="x-auto"
-      class="snap snap-mandatory snap-x scrollbar-hide"
+      class="snap snap-mandatory snap-x scrollbar-hide relative -mx-6 lg:mx-0 px-6 lg:px-0 flex flew-row flex-nowrap md:flex-col overflow-x-auto"
+      :class="dropdownHeight ? 'h-20 lg:h-auto' : 'h-auto'"
     >
       <button
-        w:px="2"
-        w:py="1"
-        w:mb="3"
-        w:rounded="full"
-        w:align="self-start"
-        w:text="sm"
-        w:border="1 white"
-        class="btn-outline"
+        class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 py-1 px-2"
       >
         {{ $t('filter.newest') }}
       </button>
       <button
-        w:px="2"
-        w:py="1"
-        w:ml="3 lg:0"
-        w:mb="3"
-        w:rounded="full"
-        w:align="self-start"
-        w:text="sm"
-        w:border="1 white"
-        class="btn-outline"
+        class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
       >
         {{ $t('filter.relevant') }}
       </button>
       <button
-        w:px="2"
-        w:py="1"
-        w:ml="3 lg:0"
-        w:mb="3"
-        w:rounded="full"
-        w:align="self-start"
-        w:text="sm"
-        w:border="1 white"
-        class="btn-outline"
+        class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
       >
         {{ $t('filter.controversial') }}
       </button>
@@ -54,21 +25,13 @@
           campaign.feedbackOptions &&
           campaign.feedbackOptions.length > 0
         "
-        w:ml="3 lg:0"
         :options="campaign.feedbackOptions"
         label="Feedback"
+        class="ml-3 lg:ml-0"
         @dropdownState="setHeight"
       />
       <button
-        w:px="2"
-        w:py="1"
-        w:ml="3 lg:0"
-        w:mb="3"
-        w:rounded="full"
-        w:align="self-start"
-        w:text="sm"
-        w:border="1 white"
-        class="btn-outline"
+        class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
       >
         {{ $t('filter.playlist') }}
       </button>
