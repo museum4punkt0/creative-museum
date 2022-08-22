@@ -18,7 +18,10 @@ pipelines:
                     caches:
                         - npm-cache
                     script:
-                        - cd frontend && npm ci && npm run build
+                        - cd frontend
+                        - touch .env
+                        - echo BACKEND_URL=$API_STAGING_URL\\nIAM_URL=$IDP_STAGING_URL\\nBASE_URL=$STAGING_URL >> .env
+                        - npm ci && npm run build
                     artifacts:
                         - frontend/node_modules/**
                         - frontend/.nuxt/**
