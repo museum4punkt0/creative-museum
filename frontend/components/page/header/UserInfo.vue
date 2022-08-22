@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="user" class="flex flex-row md:space-x-4 items-center">
+    <div v-show="user" class="flex flex-row md:space-x-4 items-center">
       <ClientOnly>
         <div class="relative">
           <img
@@ -20,7 +20,7 @@
           class="text-sm overflow-ellipsis hidden md:inline-block overflow-hidden min-w-24 max-w-32"
         >
           {{
-            user.username
+            user && user.username
               ? `@${user.username}`
               : username
               ? `@${username}`
@@ -89,10 +89,10 @@ export default defineComponent({
     }
 
     const profilePicture = computed(() => {
-      if ('profilePicture' in store.state.auth.user) {
+      if (context.$auth.user && 'profilePicture' in context.$auth.user) {
         return (
           'https://backend.creative-museum.ddev.site/' +
-          store.state.auth.user.profilePicture.contentUrl
+          context.$auth.user.profilePicture.contentUrl
         )
       }
       return '/images/placeholder_profile.png'

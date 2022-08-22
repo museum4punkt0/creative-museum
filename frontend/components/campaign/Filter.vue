@@ -20,7 +20,7 @@
         {{ $t('filter.controversial') }}
       </button>
       <DropDown
-        v-if="
+        v-show="
           campaign &&
           campaign.feedbackOptions &&
           campaign.feedbackOptions.length > 0

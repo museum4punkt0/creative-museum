@@ -1,22 +1,24 @@
 <template>
   <div class="lg:grid lg:grid-cols-4 px-5 container text-white">
     <div class="mb-10 lg:mb-0">
-      <button
-        v-if="!$auth.loggedIn"
-        class="flex flex-row items-center font-bold leading-loose"
-        @click.prevent="login"
-      >
-        <LoginIcon class="w-6 h-6 mr-2" />
-        <span>Login</span>
-      </button>
-      <button
-        v-else
-        class="flex flex-row items-center font-bold leading-loose"
-        @click.prevent="logout"
-      >
-        <LogoutIcon class="mr-2" />
-        <span>Logout</span>
-      </button>
+      <client-only>
+        <button
+          v-if="!$auth.loggedIn"
+          class="flex flex-row items-center font-bold leading-loose"
+          @click.prevent="login"
+        >
+          <LoginIcon class="w-6 h-6 mr-2" />
+          <span>Login</span>
+        </button>
+        <button
+          v-else
+          class="flex flex-row items-center font-bold leading-loose"
+          @click.prevent="logout"
+        >
+          <LogoutIcon class="mr-2" />
+          <span>Logout</span>
+        </button>
+      </client-only>
     </div>
     <div class="mb-10 lg:mb-0">
       <p class="text-lg font-bold leading-loose mb-4">
