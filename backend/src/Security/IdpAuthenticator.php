@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace App\Security;
 
+use App\Entity\CampaignMember;
 use App\Entity\User;
+use App\Enum\PointsReceivedType;
+use App\Event\CampaignPointsReceivedEvent;
 use App\Event\NewUserRegisteredEvent;
 use App\OauthProvider\IdpOauthProvider;
+use App\Repository\CampaignMemberRepository;
+use App\Repository\CampaignRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -30,15 +36,23 @@ class IdpAuthenticator extends AbstractAuthenticator
 
     private EventDispatcherInterface $eventDispatcher;
 
+    private CampaignRepository $campaignRepository;
+    
+    private CampaignMemberRepository $campaignMemberRepository;
+
     public function __construct(
         JWTTokenManagerInterface $jwtManager,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher
-
-    ) {
+        EntityManagerInterface   $entityManager,
+        EventDispatcherInterface $eventDispatcher,
+        CampaignRepository       $campaignRepository,
+        CampaignMemberRepository $campaignMemberRepository
+    )
+    {
         $this->jwtManager = $jwtManager;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->campaignRepository = $campaignRepository;
+        $this->campaignMemberRepository = $campaignMemberRepository;
     }
 
     public function supports(Request $request): ?bool
@@ -67,10 +81,38 @@ class IdpAuthenticator extends AbstractAuthenticator
                 $existingUser = $this->entityManager->getRepository(User::class)
                     ->findOneBy(['uuid' => $token['sub']]);
 
+                $newestCampaign = $this->campaignRepository->getNewestActiveCampaign();
+
                 if ($existingUser) {
-                    if (! $existingUser->getActive()) {
+                    if (!$existingUser->getActive()) {
                         throw new AuthenticationException('User is inactive');
                     }
+
+                    $lastLogin = new Carbon($existingUser->getLastLogin());
+                    
+                    $existingCampignMember = $this->campaignMemberRepository->findOneBy([
+                        'campaign' => $newestCampaign->getId(),
+                        'user' => $existingUser->getId()
+                    ]);
+
+                    if (!$existingCampignMember) {
+                        $newCampaignMember = new CampaignMember();
+                        $newCampaignMember
+                            ->setCampaign($newestCampaign)
+                            ->setUser($existingUser);
+                        $this->entityManager->persist($newCampaignMember);
+                        $this->entityManager->flush();
+                    }
+                    
+                    if (!$lastLogin->isToday()) {
+                        $registrationScorePoints = new CampaignPointsReceivedEvent($newestCampaign->getId(), $existingUser->getId(), PointsReceivedType::LOGIN->value);
+                        $this->eventDispatcher->dispatch($registrationScorePoints, CampaignPointsReceivedEvent::NAME);
+                    }
+
+                    $existingUser->setLastLogin(new \DateTimeImmutable());
+                    $this->entityManager->persist($existingUser);
+                    $this->entityManager->flush();
+
                     return $existingUser;
                 }
 
@@ -81,7 +123,7 @@ class IdpAuthenticator extends AbstractAuthenticator
                 ]);
 
                 $idpToken = $provider->getAccessToken(
-                    'client_credentials', [ 'scope' => 'api' ]
+                    'client_credentials', ['scope' => 'api']
                 );
 
                 $req = $provider->getAuthenticatedRequest(
@@ -98,12 +140,22 @@ class IdpAuthenticator extends AbstractAuthenticator
                 $user->setLastName($response['lastName']);
                 $user->setEmail($response['email']);
                 $user->setActive(true);
+                $user->setLastLogin(new \DateTimeImmutable());
 
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
+                $newCampaignMember = new CampaignMember();
+                $newCampaignMember
+                    ->setCampaign($newestCampaign)
+                    ->setUser($user);
+                $this->entityManager->persist($newCampaignMember);
+                $this->entityManager->flush();
+
                 $userRegisteredEvent = new NewUserRegisteredEvent($user->getId());
                 $this->eventDispatcher->dispatch($userRegisteredEvent, NewUserRegisteredEvent::NAME);
+                $registrationScorePoints = new CampaignPointsReceivedEvent($newestCampaign->getId(), $user->getId(), PointsReceivedType::REGISTRATION->value);
+                $this->eventDispatcher->dispatch($registrationScorePoints, CampaignPointsReceivedEvent::NAME);
 
                 return $user;
             })

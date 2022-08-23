@@ -118,6 +118,10 @@ class User implements UserInterface
     #[Groups(["read:me", "write:me"])]
     private $description;
 
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(["write:me", "read:me"])]
+    private $lastLogin;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -433,6 +437,18 @@ class User implements UserInterface
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

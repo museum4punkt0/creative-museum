@@ -74,6 +74,29 @@ class CampaignRepository extends ServiceEntityRepository
         return $activeCampaigns;
     }
 
+    /**
+     * @return Campaign
+     */
+    public function getNewestActiveCampaign(): Campaign
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $newestCampaign = $qb
+            ->select('campaign')
+            ->from(Campaign::class, 'campaign')
+            ->andWhere(
+                $qb->expr()->lte('campaign.start', ':now'),
+                $qb->expr()->gte('campaign.stop', ':now'),
+                $qb->expr()->eq('campaign.active', 1),
+            )
+            ->orderBy('campaign.start', 'DESC')
+            ->setParameter('now', new \DateTime(), Types::DATETIME_MUTABLE)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+
+        return $newestCampaign[0];
+    }
+
     // /**
     //  * @return Campaign[] Returns an array of Campaign objects
     //  */
