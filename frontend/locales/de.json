@@ -13,7 +13,7 @@
   "duration": "Dauer",
   "provideUsername": {
     "title": "Username festlegen",
-    "notice": "Unerlaubte Zeichen im Usernamen  + Erklärung, welche vorkommen dürfen.",
+    "notice": "Unerlaubte Zeichen im Usernamen.",
     "alreadyTaken": "Ups! Der Username ist leider schon vergeben."
   },
   "tutorial": {
@@ -33,7 +33,7 @@
     },
     "step4": {
       "title": "Awards",
-      "text": "Du kannst in jeder Kampgane verschiedene Awards freischalten indem du Punkte sammelst und diese dann an andere Teilnehmer*innen verleihen."
+      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten indem du Punkte sammelst und diese dann an andere Teilnehmer*innen verleihen."
     },
     "step5": {
       "title": "Badges",

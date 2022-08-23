@@ -1,29 +1,230 @@
 {
-  "locale": "English",
+  "locale": "German",
+  "next": "Next",
+  "prev": "Back",
+  "submit": "Submit",
+  "close": "Close",
+  "till": "until",
+  "readLess": "Read less",
+  "readMore": "Read more",
+  "showAll": "Show all",
+  "hide": "Hide",
+  "noUsername": "No username",
+  "duration": "Duration",
+  "provideUsername": {
+    "title": "Provide Username",
+    "notice": "Illegal characters in username.",
+    "alreadyTaken": "Oops! Sorry, this username is already taken."
+  },
   "tutorial": {
+    "firstSteps": "First steps",
+    "skipTutorial": "Straight to Creative Museum",
     "step1": {
-      "title": "Welcome to Creative Museum!"
+      "title": "Welcome to Creative Museum!",
+      "text": "Glad you're a part of Creative Museum. We'll introduce you to the main features in the following steps."
+    },
+    "step2": {
+      "title": "Points",
+      "text": "All your actions in Creative Museum will earn you points. Points can be redeemed later for awards and other surprises. So here we go: Start collecting!"
+    },
+    "step3": {
+      "title": "Create Posts",
+      "text": "There are several ways you can participate in the Creative Museum. One of the most important of them is posts that you can create and share yourself. Choose from image, text, video, and audio posts, or even create your own poll or playlist!"
+    },
+    "step4": {
+      "title": "Awards",
+      "text": "You can unlock different awards in each campaign by collecting points and then awarding them to other participants."
+    },
+    "step5": {
+      "title": "Badges",
+      "text": "Badges are awarded to you by completing various activities in Creative Museum. Why not try it now and comment on three posts!"
     }
   },
   "navigation": {
     "profile": {
       "header": "Profile",
       "settings": "Settings",
-      "search": "Search profile",
+      "search": "Search profiles",
       "invite": "Invite friends"
     },
     "museum": {
       "header": "Creative Museum",
       "about": "About Creative Museum",
-      "firstSteps": "First steps",
+      "firstSteps": "First Steps",
       "faq": "FAQ"
     },
     "language": {
-      "easyLanguage": "Easy Language",
-      "signLanguage": "English sign language"
+      "easyLanguage": "Easy German Language",
+      "signLanguage": "German Sign Language (DGS)"
     }
   },
+  "post": {
+    "types": {
+      "text": {
+        "button": "Text",
+        "headline": "Upload text"
+      },
+      "image": {
+        "button": "Image",
+        "headline": "Upload image",
+        "uploader": {
+          "add": "Add image",
+          "replace": "Replace image"
+        }
+      },
+      "poll": {
+        "button": "Poll",
+        "headline": "Upload poll",
+        "pollTitle": "Poll title",
+        "pollDescription": "Explanation of poll question",
+        "option": {
+          "0": "Option A",
+          "1": "Option B",
+          "2": "Option C",
+          "3": "Option D",
+          "4": "Option E"
+        },
+        "shortOption": {
+          "0": "A",
+          "1": "B",
+          "2": "C",
+          "3": "D",
+          "4": "E"
+        },
+        "addOption": "Add option",
+        "removeOption": "Delete"
+      },
+      "audio": {
+        "button": "Audio",
+        "headline": "Upload audio"
+      },
+      "video": {
+        "button": "Video",
+        "headline": "Upload video"
+      },
+      "playlist": {
+        "button": "Playlist",
+        "headline": "Upload playlist"
+      }
+    },
+    "new": "New post",
+    "placeholder": {
+      "title": "Add title (optional)",
+      "image": {
+        "alttext": "Description for persons with visual impairment (optional)"
+      }
+    },
+    "share": "Share",
+    "feedback": "Feedback",
+    "postComment": "Comment...",
+    "showComments": "Show all {count} comments",
+    "hideComments": "Hide all {count} comments",
+    "commentPlaceholder": "Post your comment...",
+    "moreActions": "Further actions",
+    "actions": {
+      "addBookmark": "Add to watchlist",
+      "removeBookmark": "Remove from watchlist",
+      "addToPlaylist": "Add to playlist",
+      "playlist": {
+        "createNew": {
+          "cta": "Create new playlist",
+          "submitButton": "Create playlist",
+          "placeholder": "Playlist name"
+        }
+      }
+    },
+    "errors": {
+      "1657590177": "The description text is too long."
+    }
+  },
+  "playlist": {
+    "addTo": "Add to playlist",
+    "createNew": "Create new playlist",
+    "new": "New playlist"
+  },
   "user": {
-    "points": "Points"
+    "points": "Points",
+    "editProfile": "Edit profile",
+    "score": "Score",
+    "yourCurrentScore": "Your current score",
+    "profile": {
+      "self": {
+        "headline": "Hello {firstName}",
+        "points": "Score",
+        "score": "Points",
+        "notifications": "Latest notifications",
+        "awards": "Awards",
+        "badges": {
+          "headline": "Badges",
+          "points": {
+            "scoring": "You have collected {threshold} points.",
+            "awards": "You have awarded {threshold} Awards",
+            "reward_points": "You have awarded {threshold} Awards verliehen.",
+            "postcount": "You have created {threshold} Posts.",
+            "likes": "You have voted on {threshold} posts."
+          }
+        },
+        "activities": {
+          "headline": "My activities",
+          "posts": "Posts",
+          "bookmarks": "Watchlist",
+          "playlists": "Playlists"
+        },
+        "edit": {
+          "personalData": "Personal Settings",
+          "firstName": "First name",
+          "lastName": "Last name",
+          "email": "E-Mail",
+          "username": "Username",
+          "notifications": "Notifications",
+          "save": "Save changes",
+          "removal": "Delete profile",
+          "deleteProfile": "Delete profile",
+          "placeholder": {
+            "description": "Profile description and status of the user."
+          }
+        }
+      }
+    }
+  },
+  "campaign": {
+    "partner": "Campaign partners",
+    "latestPosts": "Latest notifications",
+    "awards": "Awards"
+  },
+  "filter": {
+    "newest": "Newest",
+    "relevant": "Relevant",
+    "controversial": "Controversial",
+    "playlist": "Playlists"
+  },
+  "pages": {
+    "imprint": {
+      "title": "Imprint"
+    },
+    "privacy": {
+      "title": "Privacy"
+    },
+    "accessibility": {
+      "title": "Accessibility Statement"
+    },
+    "external": {
+      "stateMuseum": {
+        "title": "Badisches Landesmuseum",
+        "url": "https://www.landesmuseum.de/museum"
+      },
+      "instagram": {
+        "title": "Instagram",
+        "url": "https://www.instagram.com/?hl=de"
+      },
+      "twitter": {
+        "title": "Twitter",
+        "url": "https://twitter.com/?lang=de"
+      },
+      "facebook": {
+        "title": "Facebook",
+        "url": "https://www.facebook.com/"
+      }
+    }
   }
 }
