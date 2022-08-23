@@ -4,7 +4,7 @@
   >
     <div
       class="
-        slideup bg-grey text-white fixed flex flex-col flex-1 right-2 lg:right-auto left-2 lg:left-auto
+        slideup bg-grey text-white fixed flex flex-col flex-1 right-2 lg:right-auto left-2 lg:left-1/2
         lg:min-w-2xl min-h-xl top-auto lg:top-1/2 rounded-xl transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2"
 
     >
