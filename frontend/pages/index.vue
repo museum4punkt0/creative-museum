@@ -22,6 +22,7 @@ import {
   useStore,
   ref,
   useContext,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
@@ -30,14 +31,17 @@ export default defineComponent({
   layout: 'WithoutContainer',
   auth: false,
   setup() {
+
     const store = useStore()
     const user = computed(() => store.state.auth.user)
     const tutorialOpen = ref(false)
     const { $auth } = useContext()
-
     const { fetchCampaigns } = campaignApi()
+    const campaigns = ref(null)
 
-    const campaigns = useAsync(() => fetchCampaigns(), 'campaigns')
+    onMounted(async () => {
+      campaigns.value = await fetchCampaigns()
+    })
 
     $auth.$storage.removeState('campaignScore')
 
