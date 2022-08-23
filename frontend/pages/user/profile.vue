@@ -12,7 +12,7 @@
 
         <img
           v-if="'profilePicture' in user"
-          :src=`${backendUrl}/${user.profilePicture.contentUrl}`
+          :src="`${backendUrl}/${user.profilePicture.contentUrl}`"
           class="rounded-full mb-4 h-21 w-21"
         />
 
@@ -137,7 +137,7 @@
             class="flex flex-row mb-6"
           >
             <img
-              :src=`${backendUrl}/${achievement.badge.picture.contentUrl}`
+              :src="`${backendUrl}/${achievement.badge.picture.contentUrl}`"
               class="self-center w-20"
             />
             <div class="content-center flex flex-col ml-4">

@@ -2,7 +2,7 @@
   <div>
     <img
       v-if="post.files.length"
-      :src=`${backendUrl}/${post.files[0].contentUrl}`
+      :src="`${backendUrl}/${post.files[0].contentUrl}`"
       class="rounded mx-auto"
       :alt="
         post.files[0].description
