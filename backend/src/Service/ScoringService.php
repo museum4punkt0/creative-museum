@@ -85,7 +85,7 @@ class ScoringService
         int                      $upvoteScorePoints,
         CampaignMemberRepository $campaignMemberRepository,
         EntityManagerInterface   $entityManager,
-        MessageBusInterface      $bus
+        MessageBusInterface      $bus,
     )
     {
         $this->rewardPoints = $rewardPoints;

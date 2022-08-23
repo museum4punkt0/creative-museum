@@ -2,9 +2,12 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\CampaignMember;
+use App\Entity\Awarded;
+use App\Entity\PollOptionChoice;
 use App\Entity\Post;
-use App\Repository\CampaignMemberRepository;
+use App\Entity\PostFeedback;
+use App\Entity\Votes;
+use App\Service\CampaignMemberService;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +17,11 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 
 class CampaignMemberSubscriber implements EventSubscriberInterface
 {
-    private CampaignMemberRepository $campaignMemberRepository;
+    private CampaignMemberService $campaignMemberService;
 
-    public function __construct(CampaignMemberRepository $campaignMemberRepository)
+    public function __construct(CampaignMemberService $campaignMemberService)
     {
-        $this->campaignMemberRepository = $campaignMemberRepository;
+        $this->campaignMemberService = $campaignMemberService;
     }
 
     /**
@@ -40,32 +43,32 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
      */
     public function addCampaignMember(ViewEvent $event): void
     {
-        $post = $event->getControllerResult();
+        $userInteractionObject = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$post instanceof Post || Request::METHOD_POST !== $method || $this->isCampaignMember($post)) {
+        if ($userInteractionObject instanceof Post) {
+            $user = $userInteractionObject->getAuthor();
+            $campaign = $userInteractionObject->getCampaign();
+        } elseif (is_array($userInteractionObject) && $userInteractionObject['vote'] instanceof Votes) {
+            $user = $userInteractionObject['vote']->getVoter();
+            $campaign = $userInteractionObject['vote']->getPost()->getCampaign();
+        } elseif ($userInteractionObject instanceof PostFeedback) {
+            $user = $userInteractionObject->getUser();
+            $campaign = $userInteractionObject->getPost()->getCampaign();
+        } elseif ($userInteractionObject instanceof Awarded) {
+            $user = $userInteractionObject->getGiver();
+            $campaign = $userInteractionObject->getAward()->getCampaign();
+        } elseif ($userInteractionObject instanceof PollOptionChoice) {
+            $user = $userInteractionObject->getUser();
+            $campaign = $userInteractionObject->getPollOption()->getPost()->getCampaign();
+        } else {
             return;
         }
 
-        $campaignMember = new CampaignMember();
-        $campaignMember
-            ->setCampaign($post->getCampaign())
-            ->setUser($post->getAuthor());
+        if (Request::METHOD_POST !== $method || $this->campaignMemberService->isCampaignMember($campaign, $user)) {
+            return;
+        }
 
-        $this->campaignMemberRepository->add($campaignMember);
-    }
-
-    /**
-     * @param Post $post
-     * @return bool
-     */
-    private function isCampaignMember(Post $post): bool
-    {
-        $result = $this->campaignMemberRepository->findBy([
-            'user' => $post->getAuthor()->getId(),
-            'campaign' => $post->getCampaign()->getId()
-        ]);
-
-        return !empty($result);
+        $this->campaignMemberService->createCampaignMember($campaign, $user);
     }
 }

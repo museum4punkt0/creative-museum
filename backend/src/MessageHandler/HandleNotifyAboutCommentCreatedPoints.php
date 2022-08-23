@@ -63,7 +63,7 @@ class HandleNotifyAboutCommentCreatedPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("Du hast {$points} Punkte für dein Kommentar in der Kampange {$campaign->getTitle()} erhalten!")
+            ->setText("Du hast {$points} Punkte für deinen Kommentar in der Kampange {$campaign->getTitle()} erhalten!")
             ->setCampaign($campaign)
             ->setSilent($receiver->getNotificationSettings() === NotificationType::NONE)
             ->setColor($campaign->getColor())

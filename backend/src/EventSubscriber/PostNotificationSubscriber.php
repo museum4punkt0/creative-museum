@@ -26,7 +26,7 @@ class PostNotificationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['handleAwardNotification', EventPriorities::POST_WRITE]
+            KernelEvents::VIEW => ['handlePostNotification', EventPriorities::POST_WRITE]
         ];
     }
 
@@ -34,7 +34,7 @@ class PostNotificationSubscriber implements EventSubscriberInterface
      * @param ViewEvent $event
      * @return void
      */
-    public function handleAwardNotification(ViewEvent $event): void
+    public function handlePostNotification(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
