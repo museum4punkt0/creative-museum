@@ -52,6 +52,9 @@ class Notification
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     private $campaign;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $scorePoints;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +140,18 @@ class Notification
     public function setCampaign(?Campaign $campaign): self
     {
         $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    public function getScorePoints(): ?int
+    {
+        return $this->scorePoints;
+    }
+
+    public function setScorePoints(?int $scorePoints): self
+    {
+        $this->scorePoints = $scorePoints;
 
         return $this;
     }

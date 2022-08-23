@@ -5,8 +5,16 @@ namespace App\Service;
 use App\Entity\Campaign;
 use App\Entity\CampaignMember;
 use App\Entity\User;
+use App\Message\NotifyAboutAwardedPoints;
+use App\Message\NotifyAboutAwardReceivedPoints;
+use App\Message\NotifyAboutCommentCreatedPoints;
+use App\Message\NotifyAboutLoginPoints;
+use App\Message\NotifyAboutPostCreatedPoints;
+use App\Message\NotifyAboutRegistrationPoints;
+use App\Message\NotifyAboutUpvotePoints;
 use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class ScoringService
 {
@@ -60,6 +68,11 @@ class ScoringService
      */
     private EntityManagerInterface $entityManager;
 
+    /**
+     * @var MessageBusInterface
+     */
+    private MessageBusInterface $bus;
+
     public function __construct
     (
         int                      $rewardPoints,
@@ -71,7 +84,8 @@ class ScoringService
         int                      $commentCreatedScorePoints,
         int                      $upvoteScorePoints,
         CampaignMemberRepository $campaignMemberRepository,
-        EntityManagerInterface   $entityManager
+        EntityManagerInterface   $entityManager,
+        MessageBusInterface      $bus
     )
     {
         $this->rewardPoints = $rewardPoints;
@@ -84,6 +98,7 @@ class ScoringService
         $this->upvoteScorePoints = $upvoteScorePoints;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
+        $this->bus = $bus;
     }
 
     /**
@@ -117,9 +132,8 @@ class ScoringService
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutRegistrationPoints($receiver->getId(), $this->registrationScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 
     /**
@@ -135,9 +149,8 @@ class ScoringService
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutLoginPoints($receiver->getId(), $this->loginScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 
     /**
@@ -153,9 +166,8 @@ class ScoringService
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutAwardReceivedPoints($receiver->getId(), $this->awardReceivedScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 
     /**
@@ -172,9 +184,8 @@ class ScoringService
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutAwardedPoints($receiver->getId(), $this->awardedScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 
     /**
@@ -187,13 +198,11 @@ class ScoringService
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
 
         $campaignMember->setScore($campaignMember->getScore() + $this->postCreatedScorePoints);
-        $campaignMember->setRewardPoints($campaignMember->getRewardPoints() + $this->rewardPoints);
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutPostCreatedPoints($receiver->getId(), $this->postCreatedScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 
     /**
@@ -206,13 +215,11 @@ class ScoringService
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
 
         $campaignMember->setScore($campaignMember->getScore() + $this->commentCreatedScorePoints);
-        $campaignMember->setRewardPoints($campaignMember->getRewardPoints() + $this->rewardPoints);
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutCommentCreatedPoints($receiver->getId(), $this->commentCreatedScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 
     /**
@@ -228,8 +235,7 @@ class ScoringService
         $this->entityManager->persist($campaignMember);
         $this->entityManager->flush();
 
-        /**
-         * @todo Notification
-         */
+        $pointsNotification = new NotifyAboutUpvotePoints($receiver->getId(), $this->upvoteScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
     }
 }
