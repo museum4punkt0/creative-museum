@@ -7,6 +7,8 @@ export default defineConfig({
   shortcuts: {
     'btn-primary':
       'block rounded-2xl border-1  p-2 text-center bg-color1 border-color1 text-black',
+    'btn-highlight':
+      'block rounded-2xl border-1  p-2 text-center bg-$highlight border-$highlight text-black',
     'btn-outline':
       'block rounded-2xl border-1  px-2 text-center bg-transparent border-white text-white',
   },

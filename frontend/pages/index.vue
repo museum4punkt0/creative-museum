@@ -22,11 +22,11 @@
 <script>
 import {
   defineComponent,
-  computed,
   useStore,
   ref,
   useContext,
   onMounted,
+  watch
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
@@ -37,7 +37,6 @@ export default defineComponent({
   setup() {
 
     const store = useStore()
-    const user = computed(() => store.state.auth.user)
     const tutorialOpen = ref(false)
     const { $auth } = useContext()
     const { fetchCampaigns } = campaignApi()
@@ -49,9 +48,13 @@ export default defineComponent({
 
     $auth.$storage.removeState('campaignScore')
 
-    if (user.value !== null && !user.value.tutorial && user.value.username) {
+    if ($auth.loggedIn && !$auth.user.tutorial && $auth.user.username) {
       tutorialOpen.value = true
     }
+
+    $auth.$storage.watchState('user.username', _ => {
+      tutorialOpen.value = true
+    })
 
     store.dispatch('hideAddButton')
 

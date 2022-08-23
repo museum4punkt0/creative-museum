@@ -5,7 +5,7 @@
         <PageHeader />
       </div>
       <div class="container p-6 lg:pt-20">
-        <Nuxt />
+        <Nuxt @noPosts="console.log('no posts')" />
       </div>
     </div>
     <SlideUp v-if="showLogin" variant="bottom"> LOGIN! </SlideUp>

@@ -11,7 +11,6 @@
         />
       </NuxtLink>
       <button
-        type="button"
         v-show="isAddButtonVisible"
         class="add-btn avsikzte left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6"
         :class="isAddVisible ? 'visible' : ''"
@@ -118,6 +117,7 @@ import {
   ref,
   useStore,
   computed,
+  watch
 } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
 
@@ -155,6 +155,14 @@ export default defineComponent({
       store.dispatch('showAddButton')
       openAddModalType.value = ''
     }
+
+    watch(() => store.getters.showAddModal, function() {
+      isAddVisible.value = true
+    })
+
+    watch(() => isAddVisible.value, function() {
+      store.dispatch('hideAddModal')
+    })
 
     return {
       isAddButtonVisible: computed(() => store.state.showAddButton),

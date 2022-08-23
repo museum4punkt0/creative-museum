@@ -19,7 +19,7 @@
               @toggle-bookmark-state="toggleBookmarkState"
             />
           </div>
-          <div v-else>No Posts</div>
+          <div v-else><button class="btn-highlight" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
         </div>
         <div v-else>
           <div class="container text-center min-h-2xl relative">
@@ -43,7 +43,6 @@
 <script>
 import {
   defineComponent,
-  useAsync,
   useRoute,
   useRouter,
   computed,
@@ -103,6 +102,11 @@ export default defineComponent({
       }
     }
 
+    function showAddModal() {
+      store.dispatch('showAddModal')
+    }
+
+
     onMounted(async () => {
       await loadCampaign()
     })
@@ -149,6 +153,7 @@ export default defineComponent({
       updatePost,
       toggleBookmarkState,
       hideCommentsFromOtherPosts,
+      showAddModal
     }
   },
 })

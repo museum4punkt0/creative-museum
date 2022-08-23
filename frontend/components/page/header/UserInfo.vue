@@ -47,8 +47,13 @@
                   v-model="username"
                   type="text"
                   class="input-text p-4"
+                  :class="violations ? 'border border-red-500' : ''"
                   placeholder="Username*"
+                  @keyup="violations = null"
                 />
+                <div class="px-4 py-2 text-red-500" v-for="(violation, key) in violations" :key="key">
+                  {{ $t(`user.violation.${violation.code}`) }}
+                </div>
               </div>
             </div>
             <div class="p-6 mt-auto">
@@ -83,11 +88,13 @@ export default defineComponent({
     const context = useContext()
     const store = useStore()
     const username = ref('')
+    const violations = ref(null)
     const { supplyUsername } = userApi()
 
     function submitUsername() {
-      supplyUsername(username.value).then(function () {
+      supplyUsername(username.value).then(function (response) {
         context.$auth.fetchUser()
+        violations.value = response.error.response.data.violations
       })
     }
 
@@ -106,8 +113,9 @@ export default defineComponent({
         context.$auth.$storage.getState('campaignScore')
       ),
       username,
-      submitUsername,
+      violations,
       profilePicture,
+      submitUsername
     }
   },
 })

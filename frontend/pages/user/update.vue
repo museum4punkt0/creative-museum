@@ -225,7 +225,7 @@
       </div>
     </div>
     <button
-      class="btn-primary highlight-bg md:self-start mb-12"
+      class="btn-highlight md:self-start mb-12"
       @click.prevent="save"
     >
       {{ $t('user.profile.self.edit.save') }}

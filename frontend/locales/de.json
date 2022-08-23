@@ -147,6 +147,9 @@
     "editProfile": "Profil bearbeiten",
     "score": "Punktestand",
     "yourCurrentScore": "Dein aktueller Punktestand",
+    "violation": {
+      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Benutzername bereits vergeben."
+    },
     "profile": {
       "self": {
         "headline": "Guten Tag {firstName}",

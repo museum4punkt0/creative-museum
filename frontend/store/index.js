@@ -5,6 +5,7 @@ export const state = () => ({
   currentCampaign: 0,
   newPostOnCampaign: 0,
   showLogin: false,
+  showAddModal: false
 })
 
 export const mutations = {
@@ -13,6 +14,12 @@ export const mutations = {
   },
   HIDE_ADD_BUTTON(state) {
     state.showAddButton = false
+  },
+  SHOW_ADD_MODAL(state) {
+    state.showAddModal = true
+  },
+  HIDE_ADD_MODAL(state) {
+    state.showAddModal = false
   },
   SET_CURRENT_CAMPAIGN(state, id) {
     state.currentCampaign = id
@@ -38,6 +45,12 @@ export const actions = {
   hideAddButton({ commit }) {
     commit('HIDE_ADD_BUTTON')
   },
+  showAddModal({ commit }) {
+    commit('SHOW_ADD_MODAL')
+  },
+  hideAddModal({ commit }) {
+    commit('HIDE_ADD_MODAL')
+  },
   setCurrentCampaign({ commit }, id) {
     commit('SET_CURRENT_CAMPAIGN', id)
   },
@@ -58,6 +71,9 @@ export const actions = {
 export const getters = {
   showAddButton(state) {
     return state.showAddButton
+  },
+  showAddModal(state) {
+    return state.showAddModal
   },
   currentCampaign(state) {
     return state.currentCampaign
