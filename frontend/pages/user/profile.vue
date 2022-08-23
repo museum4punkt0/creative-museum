@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="lg:grid grid-cols-1 lg:grid-cols-12 lg:gap-4">
-      <div class="grid lg:ol-span-3 pr-10">
+      <div class="lg:grid lg:col-span-3 pr-10">
         <div class="page-header p-6 md:hidden">
           <button type="button" class="back-btn" @click.prevent="backButton">
             {{
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="grid lg:col-span-6 pr-10">
+      <div class="lg:grid lg:col-span-6 pr-10">
         <div class="flex flex-row content-between">
           <h2 class="text-2xl">
             {{ $t('user.profile.self.activities.headline') }}
@@ -58,7 +58,6 @@
             class="text-sm self-start rounded-full mb-3 mr-3 py-1 px-2"
             :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'"
             @click.prevent="showPosts"
-            type="button"
           >
             {{ $t('user.profile.self.activities.posts') }}
           </button>
@@ -66,7 +65,6 @@
             class="px-2 py-1 mr-3 mb-3 rounded-full self-start text-sm"
             :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'"
             @click.prevent="showBookmarks"
-            type="button"
           >
             {{ $t('user.profile.self.activities.bookmarks') }}
           </button>
@@ -74,7 +72,6 @@
             class="px-2 py-1 mb-3 rounded-full self-start text-sm"
             :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'"
             @click.prevent="showPlaylists"
-            type="button"
           >
             {{ $t('user.profile.self.activities.playlists') }}
           </button>
@@ -119,7 +116,6 @@
             <button
               class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
               @click.prevent="toggleShowMore"
-              type="button"
             >
               <ArrowIcon
                 class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
