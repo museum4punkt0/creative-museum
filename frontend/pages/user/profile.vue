@@ -192,7 +192,7 @@ export default defineComponent({
 
     onMounted(async () => {
       posts.value = await getUserPosts()
-      playlists.value = store.$auth.state.user.playlists
+      playlists.value = store.$auth.$state.user.playlists
       bookmarks.value = await getUserBookmarks()
     })
 
