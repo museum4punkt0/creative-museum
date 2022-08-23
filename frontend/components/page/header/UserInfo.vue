@@ -5,7 +5,7 @@
         <div class="relative">
           <img
             :src="profilePicture"
-            class="w-6 h-6 object-contain object-center rounded-full"
+            class="w-6 h-6 object-cover object-center rounded-full"
           />
           <span
             class="highlight-bg absolute h-2 w-2 top-0 right-0 rounded-full"

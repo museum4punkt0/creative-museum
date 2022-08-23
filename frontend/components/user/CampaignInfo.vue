@@ -5,7 +5,7 @@
         <div class="highlight-bg w-21 h-21 rounded-full mb-4">
           <img
             :src="profilePicture"
-            class="w-21 h-21 object-contain object-center rounded-full"
+            class="w-21 h-21 object-cover object-center rounded-full"
           />
         </div>
         <p class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
