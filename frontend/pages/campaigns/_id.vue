@@ -21,7 +21,11 @@
           </div>
           <div v-else>No Posts</div>
         </div>
-        <div v-else>No Campaign found</div>
+        <div v-else>
+          <div class="container text-center min-h-2xl relative">
+            <UtilitiesLoadingIndicator class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+        </div>
       </div>
       <div class="lg:grid lg:col-span-3 pl-10">
         <div v-if="isLargerThanLg">

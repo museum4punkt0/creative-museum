@@ -225,9 +225,8 @@
       </div>
     </div>
     <button
-      class="btn-primary md:self-start mb-12"
+      class="btn-primary highlight-bg md:self-start mb-12"
       @click.prevent="save"
-      type="button"
     >
       {{ $t('user.profile.self.edit.save') }}
     </button>
@@ -235,9 +234,8 @@
     <div class="flex flex-col">
       <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
       <button
-        class="btn-primary btn-outline md:self-start"
+        class="btn-outline md:self-start"
         @click.prevent="remove"
-        type="button"
       >
         {{ $t('user.profile.self.edit.deleteProfile') }}
       </button>
