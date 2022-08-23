@@ -4,3 +4,5 @@ set :stage_config_path, File.expand_path('capistrano/stages')
 require 'capistrano/setup'
 require 'capistrano/deploy'
 require 'capistrano/copy'
+
+Dir.glob('capistrano/tasks/*.rake').each { |r| import r }
