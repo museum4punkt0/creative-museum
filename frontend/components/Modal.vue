@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-15 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg"
+    class="fixed top-15 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"
   >
     <div
       class="
@@ -12,8 +12,8 @@
       <button
         v-if="closable"
         class="close-btn block h-4 w-4 absolute right-5 top-5 transform -translate-x-1/2 border rounded-full border-white"
-        @click.prevent="$emit('closeModal')"
         type="button"
+        @click.prevent="$emit('closeModal')"
       ></button>
       <slot></slot>
     </div>

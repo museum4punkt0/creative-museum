@@ -17,7 +17,6 @@
 <script>
 import {
   defineComponent,
-  useAsync,
   computed,
   useStore,
   ref,
@@ -45,7 +44,7 @@ export default defineComponent({
 
     $auth.$storage.removeState('campaignScore')
 
-    if (user.value !== null && !user.value.tutorial) {
+    if (user.value !== null && !user.value.tutorial && user.value.username) {
       tutorialOpen.value = true
     }
 
