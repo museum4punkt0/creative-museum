@@ -23,7 +23,7 @@ export default {
     'virtual:windi-utilities.css',
   ],
   plugins: [
-    { src: '~/plugins/api', mode: 'client' },
+    '~/plugins/api',
     { src: '~/plugins/progressBar', mode: 'client' },
   ],
   components: true,
