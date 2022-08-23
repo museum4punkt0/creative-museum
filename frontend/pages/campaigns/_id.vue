@@ -9,9 +9,9 @@
       <div class="grid lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead :campaign="campaign" />
-          <div v-if="posts && posts.value">
+          <div v-if="posts && posts.length">
             <PostItem
-              v-for="(post, key) in posts.value"
+              v-for="(post, key) in posts"
               :key="key"
               :post="post"
               :campaign-color="campaign.color"
@@ -47,6 +47,7 @@ import {
   ref,
   useStore,
   watch,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
@@ -59,8 +60,9 @@ export default defineComponent({
     const router = useRouter()
     const { $breakpoints, $auth } = useContext()
     const store = useStore()
-
+    const posts = ref(null)
     const postComment = ref(false)
+    const campaign = ref(null)
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
@@ -79,20 +81,11 @@ export default defineComponent({
       return $breakpoints.lLg
     })
 
-    let campaign = null
-    const posts = ref(null)
-
-    function loadCampaign() {
+    async function loadCampaign() {
       if (route.value.params.id) {
-        campaign = useAsync(
-          () => fetchCampaign(route.value.params.id),
-          `campaign-${route.value.params.id}`
-        )
 
-        posts.value = useAsync(
-          () => fetchPostsByCampaign(route.value.params.id),
-          `posts-${route.value.params.id}`
-        )
+        campaign.value = await fetchCampaign(route.value.params.id)
+        posts.value = await fetchPostsByCampaign(route.value.params.id)
 
         if (campaign.value && campaign.value.error) {
           router.push('/404')
@@ -100,42 +93,41 @@ export default defineComponent({
         if ($auth.loggedIn) {
           $auth.$storage.setState(
             'campaignScore',
-            useAsync(
-              () => fetchUserInfoByCampaign(route.value.params.id),
-              `userinfo-${route.value.params.id}-${$auth.user.id}`
-            )
+            await fetchUserInfoByCampaign(route.value.params.id)
           )
         }
       }
     }
 
-    loadCampaign()
+    onMounted(async () => {
+      await loadCampaign()
+    })
 
     function updatePost(postId) {
-      posts.value.value.forEach(function (item, key) {
+      posts.value.forEach(function (item, key) {
         if (item.id === postId) {
           fetchPost(postId).then(function (response) {
-            posts.value.value[key].commentCount = response.commentCount
+            posts.value[key].commentCount = response.commentCount
           })
         }
       })
     }
 
     function toggleBookmarkState(postId) {
-      posts.value.value.forEach((item, key) => {
+      posts.value.forEach((item, key) => {
         if (item.id !== postId) {
           return
         }
-        posts.value.value[key].bookmarked = !posts.value.value[key].bookmarked
+        posts.value[key].bookmarked = !posts.value[key].bookmarked
       })
     }
 
     function hideCommentsFromOtherPosts(postId) {
-      posts.value.value.forEach(function (item, key) {
+      posts.value.forEach(function (item, key) {
         if (item.id === postId) {
-          posts.value.value[key].showComments = true
+          posts.value[key].showComments = true
         } else {
-          posts.value.value[key].showComments = false
+          posts.value[key].showComments = false
         }
       })
     }
