@@ -1,9 +1,12 @@
+export const strict = false
+
 export const state = () => ({
   showAddButton: false,
   currentCampaign: 0,
   newPostOnCampaign: 0,
   showLogin: false,
 })
+
 export const mutations = {
   SHOW_ADD_BUTTON(state) {
     state.showAddButton = true
