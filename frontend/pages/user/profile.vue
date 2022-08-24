@@ -186,6 +186,9 @@ export default defineComponent({
     const playlists = ref(null)
     const bookmarks = ref(null)
 
+
+    store.dispatch('hideAddButton')
+
     onMounted(async () => {
       posts.value = await getUserPosts()
       playlists.value = store.$auth.$state.user.playlists
