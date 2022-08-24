@@ -89,24 +89,26 @@ class IdpAuthenticator extends AbstractAuthenticator
                     }
 
                     $lastLogin = new Carbon($existingUser->getLastLogin());
-                    
-                    $existingCampignMember = $this->campaignMemberRepository->findOneBy([
-                        'campaign' => $newestCampaign->getId(),
-                        'user' => $existingUser->getId()
-                    ]);
 
-                    if (!$existingCampignMember) {
-                        $newCampaignMember = new CampaignMember();
-                        $newCampaignMember
-                            ->setCampaign($newestCampaign)
-                            ->setUser($existingUser);
-                        $this->entityManager->persist($newCampaignMember);
-                        $this->entityManager->flush();
-                    }
-                    
-                    if (!$lastLogin->isToday()) {
-                        $registrationScorePoints = new CampaignPointsReceivedEvent($newestCampaign->getId(), $existingUser->getId(), PointsReceivedType::LOGIN->value);
-                        $this->eventDispatcher->dispatch($registrationScorePoints, CampaignPointsReceivedEvent::NAME);
+                    if (!is_null($newestCampaign)) {
+                        $existingCampignMember = $this->campaignMemberRepository->findOneBy([
+                            'campaign' => $newestCampaign->getId(),
+                            'user' => $existingUser->getId()
+                        ]);
+
+                        if (!$existingCampignMember) {
+                            $newCampaignMember = new CampaignMember();
+                            $newCampaignMember
+                                ->setCampaign($newestCampaign)
+                                ->setUser($existingUser);
+                            $this->entityManager->persist($newCampaignMember);
+                            $this->entityManager->flush();
+                        }
+
+                        if (!$lastLogin->isToday()) {
+                            $registrationScorePoints = new CampaignPointsReceivedEvent($newestCampaign->getId(), $existingUser->getId(), PointsReceivedType::LOGIN->value);
+                            $this->eventDispatcher->dispatch($registrationScorePoints, CampaignPointsReceivedEvent::NAME);
+                        }
                     }
 
                     $existingUser->setLastLogin(new \DateTimeImmutable());
@@ -145,17 +147,20 @@ class IdpAuthenticator extends AbstractAuthenticator
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
 
-                $newCampaignMember = new CampaignMember();
-                $newCampaignMember
-                    ->setCampaign($newestCampaign)
-                    ->setUser($user);
-                $this->entityManager->persist($newCampaignMember);
-                $this->entityManager->flush();
+                if (!is_null($newestCampaign)) {
+                    $newCampaignMember = new CampaignMember();
+                    $newCampaignMember
+                        ->setCampaign($newestCampaign)
+                        ->setUser($user);
+                    $this->entityManager->persist($newCampaignMember);
+                    $this->entityManager->flush();
+
+                    $registrationScorePoints = new CampaignPointsReceivedEvent($newestCampaign->getId(), $user->getId(), PointsReceivedType::REGISTRATION->value);
+                    $this->eventDispatcher->dispatch($registrationScorePoints, CampaignPointsReceivedEvent::NAME);
+                }
 
                 $userRegisteredEvent = new NewUserRegisteredEvent($user->getId());
                 $this->eventDispatcher->dispatch($userRegisteredEvent, NewUserRegisteredEvent::NAME);
-                $registrationScorePoints = new CampaignPointsReceivedEvent($newestCampaign->getId(), $user->getId(), PointsReceivedType::REGISTRATION->value);
-                $this->eventDispatcher->dispatch($registrationScorePoints, CampaignPointsReceivedEvent::NAME);
 
                 return $user;
             })
