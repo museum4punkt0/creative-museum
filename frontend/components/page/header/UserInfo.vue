@@ -11,9 +11,9 @@
             class="highlight-bg absolute h-2 w-2 top-0 right-0 rounded-full"
           />
           <span
-            v-if="campaignScore && campaignScore.value"
+            v-if="campaignScore"
             class="highlight-bg absolute top-1 py-0.5 px-2 -mr-1 right-full rounded-xl text-xs text-black whitespace-nowrap"
-            >{{ campaignScore.value.score.toLocaleString() }} P</span
+            >{{ campaignScore.toLocaleString() }} P</span
           >
         </div>
         <span
@@ -98,6 +98,23 @@ export default defineComponent({
       })
     }
 
+    const campaignScore = computed(() => {
+      if (! context.$auth.loggedIn || ! store.state.currentCampaign) {
+        return null
+      }
+      if (! context.$auth.user.hasOwnProperty('memberships')) {
+        return null
+      }
+      for (const id in context.$auth.user.memberships) {
+        const membership = context.$auth.user.memberships[id]
+        if (membership.campaign.id !== parseInt(store.state.currentCampaign)) {
+          continue
+        }
+        return membership.score
+      }
+      return 0
+    })
+
     const profilePicture = computed(() => {
       if (context.$auth.user && 'profilePicture' in context.$auth.user) {
         return (
@@ -109,9 +126,7 @@ export default defineComponent({
 
     return {
       user: computed(() => store.state.auth.user),
-      campaignScore: computed(() =>
-        context.$auth.$storage.getState('campaignScore')
-      ),
+      campaignScore,
       username,
       violations,
       profilePicture,

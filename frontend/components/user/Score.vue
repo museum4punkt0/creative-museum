@@ -21,11 +21,11 @@ export default defineComponent({
     const { $auth } = useContext()
 
     const campaignScore = computed(() => {
-      if (! $auth.user.hasOwnProperty('memberships')) {
+      if (! $auth.loggedIn || ! $auth.user.hasOwnProperty('memberships')) {
         return 0
       }
-      for (let id in $auth.user.memberships) {
-        let membership = $auth.user.memberships[id]
+      for (const id in $auth.user.memberships) {
+        const membership = $auth.user.memberships[id]
         if (membership.campaign.id !== props.campaign.id) {
           continue
         }

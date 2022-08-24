@@ -188,6 +188,7 @@ export default defineComponent({
 
 
     store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
 
     onMounted(async () => {
       posts.value = await getUserPosts()

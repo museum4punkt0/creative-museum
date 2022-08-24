@@ -57,6 +57,7 @@ export default defineComponent({
     })
 
     store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
 
     return {
       tutorialOpen,

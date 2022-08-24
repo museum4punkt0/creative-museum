@@ -74,9 +74,6 @@ export default defineComponent({
     return {
       fullName,
       profilePicture,
-      campaignScore: computed(() =>
-        context.$auth.$storage.getState('campaignScore')
-      ),
       isLargerThanLg,
       backendUrl: $config.backendUrl
     }

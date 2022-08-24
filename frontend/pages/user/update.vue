@@ -274,6 +274,7 @@ export default defineComponent({
     const { updateUser } = userApi()
 
     store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
 
     if ('profilePicture' in user.value) {
       files.value = [

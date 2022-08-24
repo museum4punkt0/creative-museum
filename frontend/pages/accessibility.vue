@@ -12,6 +12,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
   },
 })
 </script>

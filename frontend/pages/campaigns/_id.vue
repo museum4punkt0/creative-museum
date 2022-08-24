@@ -95,13 +95,6 @@ export default defineComponent({
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         }
-
-        if ($auth.loggedIn) {
-          $auth.$storage.setState(
-            'campaignScore',
-            await fetchUserInfoByCampaign(route.value.params.id)
-          )
-        }
       }
     }
 
