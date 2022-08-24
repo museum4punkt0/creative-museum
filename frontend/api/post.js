@@ -16,13 +16,16 @@ export const postApi = () => {
   }
 
   const createTextPost = async (campaignId, title, body) => {
-    return await $api.post('posts', {
+    const response = await $api.post('posts', {
       type: 'text',
       author: `/v1/users/${$auth.user.uuid}`,
       title,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
     })
+    await $auth.fetchUser()
+
+    return response
   }
 
   const createPicturePost = async (
@@ -39,7 +42,7 @@ export const postApi = () => {
     const response = await $api.post('media_objects', form)
     const fileId = response.id
 
-    return await $api.post('posts', {
+    const postResponse =  await $api.post('posts', {
       type: 'image',
       author: `/v1/users/${$auth.user.uuid}`,
       title,
@@ -47,15 +50,21 @@ export const postApi = () => {
       campaign: `/v1/campaigns/${campaignId}`,
       files: [`/v1/media_objects/` + fileId],
     })
+    await $auth.fetchUser()
+
+    return postResponse
   }
 
   const createPlaylistPost = async (campaignId, playlistId) => {
-    return await $api.post('posts', {
+    const response = await $api.post('posts', {
       type: 'playlist',
       author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
       linkedPlaylist: `/v1/playlists/${playlistId}`,
     })
+    await $auth.fetchUser()
+
+    return response
   }
 
   const createPollPost = async (campaignId, contents) => {
@@ -65,7 +74,7 @@ export const postApi = () => {
       pollOptions.push({ title: option.value })
     }
 
-    return await $api.post('posts', {
+    const response =  await $api.post('posts', {
       campaign: `/v1/campaigns/${campaignId}`,
       type: 'poll',
       author: `/v1/users/${$auth.user.uuid}`,
@@ -73,6 +82,9 @@ export const postApi = () => {
       body: contents.description,
       pollOptions,
     })
+    await $auth.fetchUser()
+
+    return response
   }
 
   const votePollOption = async (pollOptionId) => {
@@ -115,13 +127,17 @@ export const postApi = () => {
   }
 
   const createAudioPost = async (campaignId, title, description, audio) => {
-    return await $api.post(`audio`, {
+    const response = await $api.post(`audio`, {
       creator: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
       title,
       description,
       audio,
     })
+
+    await $auth.fetchUser()
+
+    return response
   }
 
   const submitCommentByPost = async (postId, body, campaignId) => {
