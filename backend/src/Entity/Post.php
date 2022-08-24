@@ -565,18 +565,18 @@ class Post
     }
 
     /**
-     * @return ?Votes
+     * @return ?Vote
      */
-    public function getMyVote(): ?Votes
+    public function getMyVote(): ?Vote
     {
         return $this->myVote;
     }
 
     /**
-     * @param Votes $myVote
+     * @param Vote $myVote
      * @return Post
      */
-    public function setMyVote(Votes $myVote): self
+    public function setMyVote(Vote $myVote): self
     {
         $this->myVote = $myVote;
         return $this;

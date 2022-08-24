@@ -7,7 +7,7 @@ use App\Entity\Post;
 use App\Repository\PollOptionChoiceRepository;
 use App\Repository\PostFeedbackRepository;
 use App\Repository\PostRepository;
-use App\Repository\VotesRepository;
+use App\Repository\VoteRepository;
 use App\Service\PollOptionChoiceService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,9 +23,9 @@ class DeletePostSubscriber implements EventSubscriberInterface
     private PostRepository $postRepository;
 
     /**
-     * @var VotesRepository
+     * @var VoteRepository
      */
-    private VotesRepository $votesRepository;
+    private VoteRepository $votesRepository;
 
     /**
      * @var EntityManagerInterface
@@ -50,7 +50,7 @@ class DeletePostSubscriber implements EventSubscriberInterface
     public function __construct
     (
         PostRepository             $postRepository,
-        VotesRepository            $votesRepository,
+        VoteRepository             $votesRepository,
         EntityManagerInterface     $entityManager,
         PollOptionChoiceService    $choiceService,
         PollOptionChoiceRepository $pollOptionChoiceRepository,
