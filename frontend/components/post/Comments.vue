@@ -45,7 +45,7 @@
             class="input-text px-4 py-2 pr-8 text-white text-base resize-none"
             rows="1"
             :placeholder="$t('post.commentPlaceholder')"
-            @keyup.enter="submitComment"
+            @keydown.enter.prevent="submitComment"
             @click.prevent="showLoginIfNotLoggedIn"
           ></textarea>
           <button
@@ -101,21 +101,14 @@ export default defineComponent({
     const { fetchPostsByPost, submitCommentByPost } = postApi()
 
     async function fetchComments() {
-      newComments.value = await fetchPostsByPost(props.post.id)
-
-      if (comments.value.length > 0 && comments.value.length < newComments.value.length) {
-        comments.value.push(newComments.value.splice(comments.value.length))
-      } else {
-        comments.value = newComments.value
-      }
-
+      comments.value = await fetchPostsByPost(props.post.id)
       showCommentForm.value = true
       showComments.value = true
     }
 
-    function submitComment() {
+    async function submitComment() {
       if ($auth.loggedIn) {
-        submitCommentByPost(
+        await submitCommentByPost(
           props.post.id,
           commentBody.value,
           props.post.campaign.id
@@ -135,6 +128,7 @@ export default defineComponent({
 
     return {
       comments,
+      newComments,
       showComments,
       showCommentForm,
       commentBody,
