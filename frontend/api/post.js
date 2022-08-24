@@ -114,13 +114,19 @@ export const postApi = () => {
     })
   }
 
-  const createAudioPost = async (campaignId, title, description, audio) => {
-    return await $api.post(`audio`, {
-      creator: `/v1/users/${$auth.user.uuid}`,
+  const createAudioPost = async (campaignId, title, audio, image) => {
+
+    const form = new FormData()
+    form.append('file', audio, 'voicemessage.wav')
+    const response = await $api.post('media_objects', form)
+    const audioFileId = response.id
+
+    return await $api.post('posts', {
+      author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
+      type: 'audio',
       title,
-      description,
-      audio,
+      files: [`/v1/media_objects/` + audioFileId]
     })
   }
 

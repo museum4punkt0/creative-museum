@@ -126,7 +126,7 @@ export default defineComponent({
   components: {
     FileUpload: () => import('vue-upload-component'),
   },
-  emits: ['abortPost'],
+  emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
     const { store } = useContext()
 
@@ -155,6 +155,7 @@ export default defineComponent({
         postBody.value = ''
         imgAlt.value = ''
         files.value = []
+        context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
       })
     }

@@ -13,7 +13,7 @@ export default defineComponent({
   props: {
     campaign: {
       type: Object,
-      required: true
+      default: () => {},
     },
   },
   setup(props) {

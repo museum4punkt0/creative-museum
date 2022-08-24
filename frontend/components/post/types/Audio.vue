@@ -1,0 +1,31 @@
+<template>
+  <div>
+    <p v-if="post.title" class="text-lg font-bold mb-2">{{ post.title }}</p>
+    <audio :src="audio[0]" controls />
+  </div>
+</template>
+<script lang="ts">
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+    props: {
+        post: {
+            type: Object,
+            required: true,
+        },
+    },
+    setup(props) {
+      const { $config } = useContext()
+
+      const audio = computed(() => {
+        return props.post.files.map(function(item : any) {
+            return $config.backendUrl + item.contentUrl;
+        })
+      })
+
+      return {
+        audio
+      }
+    },
+})
+</script>
