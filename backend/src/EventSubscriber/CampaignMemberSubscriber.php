@@ -6,7 +6,7 @@ use App\Entity\Awarded;
 use App\Entity\PollOptionChoice;
 use App\Entity\Post;
 use App\Entity\PostFeedback;
-use App\Entity\Votes;
+use App\Entity\Vote;
 use App\Service\CampaignMemberService;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -49,7 +49,7 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         if ($userInteractionObject instanceof Post) {
             $user = $userInteractionObject->getAuthor();
             $campaign = $userInteractionObject->getCampaign();
-        } elseif (is_array($userInteractionObject) && $userInteractionObject['vote'] instanceof Votes) {
+        } elseif (is_array($userInteractionObject) && $userInteractionObject['vote'] instanceof Vote) {
             $user = $userInteractionObject['vote']->getVoter();
             $campaign = $userInteractionObject['vote']->getPost()->getCampaign();
         } elseif ($userInteractionObject instanceof PostFeedback) {

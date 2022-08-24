@@ -4,10 +4,10 @@ namespace App\Serializer\Normalizer;
 
 use App\Entity\Post;
 use App\Entity\User;
-use App\Entity\Votes;
+use App\Entity\Vote;
 use App\Repository\PostFeedbackRepository;
 use App\Repository\PostRepository;
-use App\Repository\VotesRepository;
+use App\Repository\VoteRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -31,9 +31,9 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     private PostFeedbackRepository $feedbackRepository;
 
     /**
-     * @var VotesRepository
+     * @var VoteRepository
      */
-    private VotesRepository $votesRepository;
+    private VoteRepository $votesRepository;
 
     /**
      * @var Security
@@ -41,11 +41,11 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     private Security $security;
 
     public function __construct(
-        ObjectNormalizer $normalizer,
-        PostRepository $postRepository,
+        ObjectNormalizer       $normalizer,
+        PostRepository         $postRepository,
         PostFeedbackRepository $feedbackRepository,
-        VotesRepository $votesRepository,
-        Security $security
+        VoteRepository         $votesRepository,
+        Security               $security
     ) {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
@@ -76,7 +76,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
             }
 
             $myVote = $this->votesRepository->findOneBy(['voter' => $user, 'post' => $object]);
-            if ($myVote instanceof Votes) {
+            if ($myVote instanceof Vote) {
                 $data['my_vote'] = $this->normalizer->normalize($myVote, $format, $context);
             }
 

@@ -8,11 +8,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\PostVoteController;
 use App\Enum\BadgeType;
 use App\Enum\VoteDirection;
-use App\Repository\VotesRepository;
+use App\Repository\VoteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: VotesRepository::class)]
+#[ORM\Entity(repositoryClass: VoteRepository::class)]
 #[ApiResource(
     collectionOperations: [
         "get" => [
@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['voter' => 'exact','post' => 'exact'])]
-class Votes
+class Vote
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

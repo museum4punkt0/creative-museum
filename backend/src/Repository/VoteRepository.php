@@ -2,32 +2,32 @@
 
 namespace App\Repository;
 
-use App\Entity\Votes;
+use App\Entity\Vote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Votes>
+ * @extends ServiceEntityRepository<Vote>
  *
- * @method Votes|null find($id, $lockMode = null, $lockVersion = null)
- * @method Votes|null findOneBy(array $criteria, array $orderBy = null)
- * @method Votes[]    findAll()
- * @method Votes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Vote|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Vote|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Vote[]    findAll()
+ * @method Vote[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class VotesRepository extends ServiceEntityRepository
+class VoteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Votes::class);
+        parent::__construct($registry, Vote::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Votes $entity, bool $flush = true): void
+    public function add(Vote $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -39,7 +39,7 @@ class VotesRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Votes $entity, bool $flush = true): void
+    public function remove(Vote $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -48,7 +48,7 @@ class VotesRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Votes[] Returns an array of Votes objects
+    //  * @return Vote[] Returns an array of Vote objects
     //  */
     /*
     public function findByExampleField($value)
@@ -65,7 +65,7 @@ class VotesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Votes
+    public function findOneBySomeField($value): ?Vote
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

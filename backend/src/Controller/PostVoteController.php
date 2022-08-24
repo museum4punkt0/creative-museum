@@ -3,13 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Votes;
+use App\Entity\Vote;
 use App\Enum\PointsReceivedType;
 use App\Enum\VoteDirection;
 use App\Event\CampaignPointsReceivedEvent;
 use App\Event\NewPostVoteEvent;
 use App\Repository\PostRepository;
-use App\Repository\VotesRepository;
+use App\Repository\VoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +18,9 @@ use Symfony\Component\Security\Core\Security;
 class PostVoteController extends AbstractController
 {
     /**
-     * @var VotesRepository
+     * @var VoteRepository
      */
-    private VotesRepository $votesRepository;
+    private VoteRepository $votesRepository;
 
     /**
      * @var EntityManagerInterface
@@ -44,7 +44,7 @@ class PostVoteController extends AbstractController
 
     public function __construct
     (
-        VotesRepository          $votesRepository,
+        VoteRepository           $votesRepository,
         EntityManagerInterface   $entityManager,
         EventDispatcherInterface $eventDispatcher,
         Security                 $security,
@@ -58,7 +58,7 @@ class PostVoteController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    public function __invoke(Votes $data): array
+    public function __invoke(Vote $data): array
     {
         $user = $this->security->getUser();
 
