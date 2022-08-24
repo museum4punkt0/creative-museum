@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="lg:grid grid-cols-1 lg:grid-cols-12 lg:gap-4">
-      <div class="lg:grid lg:col-span-3 pr-10">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-4">
+      <div class="lg:col-span-3 pr-10">
         <div class="page-header p-6 md:hidden">
           <button type="button" class="back-btn" @click.prevent="backButton">
             {{
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="lg:grid lg:col-span-6 pr-10">
+      <div class="lg:col-span-6 pr-10">
         <div class="flex flex-row content-between">
           <h2 class="text-2xl">
             {{ $t('user.profile.self.activities.headline') }}
@@ -102,7 +102,7 @@
           </div>
         </div>
       </div>
-      <div class="grid lg:col-span-3 pr-10">
+      <div class="lg:col-span-3 pr-10">
         <div class="mb-12">
           <h2 class="text-2xl">{{ $t('user.profile.self.notifications') }}</h2>
         </div>
