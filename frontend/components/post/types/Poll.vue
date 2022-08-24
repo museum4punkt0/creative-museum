@@ -7,7 +7,7 @@
       <div v-for="(option, index) of post.pollOptions" :key="index">
         <div class="flex flex-row items-center mb-4">
           <span
-            class="highlight-bg w-10 h-10 mr-2 rounded-full flex flex-row justify-center items-center"
+            class="bg-$highlight text-$highlight-contrast w-10 h-10 mr-2 rounded-full flex flex-row justify-center items-center"
           >
             {{ $t('post.types.poll.shortOption.' + index) }}
           </span>
