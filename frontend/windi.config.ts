@@ -6,11 +6,11 @@ export default defineConfig({
   },
   shortcuts: {
     'btn-primary':
-      'block rounded-2xl border-1  p-2 text-center bg-color1 border-color1 text-black',
+      'block rounded-3xl border-1 p-2 text-center bg-color1 border-color1 text-black',
     'btn-highlight':
-      'block rounded-2xl border-1  p-2 text-center bg-$highlight border-$highlight text-black',
+      'block rounded-3xl border-1 p-2 text-center bg-$highlight border-$highlight text-$highlight-contrast',
     'btn-outline':
-      'block rounded-2xl border-1  px-2 text-center bg-transparent border-white text-white',
+      'block rounded-3xl border-1 p-2 text-center bg-transparent border-white text-white',
   },
   safelist: 'bg-white bg-black btn-dropdown',
   theme: {

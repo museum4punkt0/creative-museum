@@ -1,7 +1,10 @@
 <template>
   <div>
     <style type="text/css">
-      body { --highlight: {{ campaign.color }}; }
+      body {
+        --highlight: {{ campaign.color }};
+        --highlight-contrast: {{ campaignContrastColor }};
+      }
     </style>
     <div class="mb-6">
       <h1 class="page-header mt-0 mb-1">{{ campaign.title }}</h1>
@@ -47,6 +50,9 @@ import {
   computed,
   ref,
 } from '@nuxtjs/composition-api'
+
+import { TinyColor, readability } from '@ctrl/tinycolor'
+
 export default defineComponent({
   props: {
     campaign: {
@@ -57,6 +63,7 @@ export default defineComponent({
   setup(props) {
     const context = useContext()
     const showLongDescription = ref(false)
+
     const formattedShortDescription = computed(() => {
       return props.campaign.description
         ? props.campaign.description
@@ -66,19 +73,30 @@ export default defineComponent({
             .replace(/(?:\r\n|\r|\n)/g, '<br />')
         : ''
     })
+
     const formattedDescription = computed(() => {
       return props.campaign.description
         ? props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
         : ''
     })
+
     const isLargerThanLg = computed(() => {
       return context.$breakpoints.lLg
     })
+
+    const bgColor = new TinyColor(props.campaign.color)
+    const fgColor = new TinyColor('#FFFFFF')
+
+    const campaignContrastColor = computed(() => {
+      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+    })
+
     return {
       formattedShortDescription,
       formattedDescription,
       showLongDescription,
       isLargerThanLg,
+      campaignContrastColor
     }
   },
 })

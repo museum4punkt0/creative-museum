@@ -11,6 +11,14 @@
   }
 }
 
+.highlight-contrast-text {
+  color: var(--highlight-contrast);
+  transition: all 0.25s ease-in-out;
+  svg {
+    fill: var(--highlight-contrast);
+  }
+}
+
 .highlight-svg-stroke {
   transition: all 0.25s ease-in-out;
   * {
@@ -264,6 +272,7 @@ h3 {
       &:checked {
         ~ label {
           background-color: var(--highlight);
+          color: var(--highlight-contrast);
         }
       }
     }

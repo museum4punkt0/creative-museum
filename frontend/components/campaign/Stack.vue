@@ -28,6 +28,7 @@
   </div>
 </template>
 <script>
+import { TinyColor, readability } from '@ctrl/tinycolor'
 import { debounce } from '@/utilities/debounce'
 
 export default {
@@ -237,12 +238,22 @@ export default {
   },
   destroyed() {},
   methods: {
+    getContrastColor(color) {
+      const bgColor = new TinyColor(color)
+      const fgColor = new TinyColor('#FFFFFF')
+      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+    },
     init() {
       this.stack = this.campaigns
 
       document.documentElement.style.setProperty(
         '--highlight',
         this.stack[0].color
+      )
+
+      document.documentElement.style.setProperty(
+        '--highlight-contrast',
+        this.getContrastColor(this.stack[0].color)
       )
 
       this.stack.unshift(this.stack.pop())
@@ -271,6 +282,10 @@ export default {
             document.documentElement.style.setProperty(
               '--highlight',
               card.color
+            )
+            document.documentElement.style.setProperty(
+              '--highlight-contrast',
+              this.getContrastColor(card.color)
             )
           }
           return {

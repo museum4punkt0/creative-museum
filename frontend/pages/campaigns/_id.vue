@@ -41,6 +41,7 @@
 </template>
 
 <script>
+
 import {
   defineComponent,
   useRoute,
@@ -52,6 +53,7 @@ import {
   watch,
   onMounted,
 } from '@nuxtjs/composition-api'
+
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import { userApi } from '@/api/user'
@@ -93,6 +95,7 @@ export default defineComponent({
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         }
+
         if ($auth.loggedIn) {
           $auth.$storage.setState(
             'campaignScore',
@@ -105,7 +108,6 @@ export default defineComponent({
     function showAddModal() {
       store.dispatch('showAddModal')
     }
-
 
     onMounted(async () => {
       await loadCampaign()
