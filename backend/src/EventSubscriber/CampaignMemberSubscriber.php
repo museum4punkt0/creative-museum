@@ -49,7 +49,7 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
         if ($userInteractionObject instanceof Post) {
             $user = $userInteractionObject->getAuthor();
             $campaign = $userInteractionObject->getCampaign();
-        } elseif (is_array($userInteractionObject) && $userInteractionObject['vote'] instanceof Vote) {
+        } elseif (is_array($userInteractionObject) && array_key_exists('vote', $userInteractionObject) && $userInteractionObject['vote'] instanceof Vote) {
             $user = $userInteractionObject['vote']->getVoter();
             $campaign = $userInteractionObject['vote']->getPost()->getCampaign();
         } elseif ($userInteractionObject instanceof PostFeedback) {
