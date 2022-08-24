@@ -10,6 +10,6 @@ set :use_sudo, false
 set :pty, true
 
 set :linked_dirs, fetch(:linked_dirs, []).push('typo3/public/fileadmin', 'typo3/public/typo3temp', 'typo3/public/uploads', 'backend/public/media')
-set :linked_files, ['backend/.env', 'typo3/.env', 'frontend/.env', 'backend/config/jwt/public.pem']
+set :linked_files, ['backend/.env', 'typo3/.env', 'frontend/.env', 'backend/config/jwt/public.pem', 'backend/public/flush.php']
 
 Rake::Task['deploy:updated'].prerequisites.delete('composer:install')
