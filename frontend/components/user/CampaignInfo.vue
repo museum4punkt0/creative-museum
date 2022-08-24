@@ -44,7 +44,7 @@ export default defineComponent({
   props: {
     campaign: {
       type: Object,
-      default: () => {},
+      required: true,
     },
   },
   setup() {

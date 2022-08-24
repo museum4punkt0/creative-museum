@@ -3,12 +3,12 @@
     <div class="lg:grid lg:grid-cols-12 lg:gap-4">
       <div class="lg:col-span-3 pr-10">
         <div v-if="isLargerThanLg">
-          <UserCampaignInfo :campaign="campaign" />
+          <UserCampaignInfo v-if="campaign" :campaign="campaign" />
         </div>
       </div>
       <div class="lg:col-span-6">
         <div v-if="campaign">
-          <CampaignHead :campaign="campaign" />
+          <CampaignHead v-if="campaign" :campaign="campaign" />
           <div v-if="posts && posts.length">
             <PostItem
               v-for="(post, key) in posts"
