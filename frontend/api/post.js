@@ -8,7 +8,7 @@ export const postApi = () => {
   }
 
   const getUserPosts = async () => {
-    return await $api.get(`posts?author=${$auth.user.uuid}`)
+    return await $api.get(`posts?author=${$auth.user.id}`)
   }
 
   const getUserBookmarks = async () => {
