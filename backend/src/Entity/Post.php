@@ -191,6 +191,9 @@ class Post
     #[Groups(["write:post", "read:post"])]
     private $linkedPlaylist;
 
+    #[Groups(["read:post"])]
+    private $myVote = null;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -558,6 +561,24 @@ class Post
     {
         $this->linkedPlaylist = $linkedPlaylist;
 
+        return $this;
+    }
+
+    /**
+     * @return ?Votes
+     */
+    public function getMyVote(): ?Votes
+    {
+        return $this->myVote;
+    }
+
+    /**
+     * @param Votes $myVote
+     * @return Post
+     */
+    public function setMyVote(Votes $myVote): self
+    {
+        $this->myVote = $myVote;
         return $this;
     }
 }

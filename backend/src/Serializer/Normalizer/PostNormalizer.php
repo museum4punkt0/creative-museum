@@ -4,8 +4,10 @@ namespace App\Serializer\Normalizer;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Votes;
 use App\Repository\PostFeedbackRepository;
 use App\Repository\PostRepository;
+use App\Repository\VotesRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -29,6 +31,11 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     private PostFeedbackRepository $feedbackRepository;
 
     /**
+     * @var VotesRepository
+     */
+    private VotesRepository $votesRepository;
+
+    /**
      * @var Security
      */
     private Security $security;
@@ -37,12 +44,14 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
         ObjectNormalizer $normalizer,
         PostRepository $postRepository,
         PostFeedbackRepository $feedbackRepository,
+        VotesRepository $votesRepository,
         Security $security
     ) {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
         $this->security = $security;
         $this->feedbackRepository = $feedbackRepository;
+        $this->votesRepository = $votesRepository;
     }
 
     public function normalize($object, $format = null, array $context = array()): array
@@ -64,6 +73,11 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
 
             if ($user->getBookmarks()->contains($object)) {
                 $data['bookmarked'] = true;
+            }
+
+            $myVote = $this->votesRepository->findOneBy(['voter' => $user, 'post' => $object]);
+            if ($myVote instanceof Votes) {
+                $data['my_vote'] = $this->normalizer->normalize($myVote, $format, $context);
             }
 
             $feedback = $this->feedbackRepository->findBy(['user' => $user, 'post' => $object]);

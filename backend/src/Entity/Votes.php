@@ -39,18 +39,18 @@ class Votes
     private $id;
 
     #[ORM\Column(type: 'votedirection')]
-    #[Groups(["write:vote","read:vote"])]
+    #[Groups(["write:vote", "read:vote", "read:post"])]
     #[ORM\JoinColumn(nullable: false)]
     private VoteDirection $direction;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(["write:vote","read:vote"])]
+    #[Groups(["write:vote", "read:vote"])]
     #[ORM\JoinColumn(nullable: false)]
     public $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:vote","read:vote"])]
+    #[Groups(["read:vote"])]
     private $post;
 
     public function getId(): ?int

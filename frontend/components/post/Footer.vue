@@ -3,41 +3,13 @@
     <span class="flex flex-row items-center text-sm">
       <LibraryIcon
         class="mr-2 cursor-pointer"
-        :class="
-          (yourVote &&
-            yourVote.value &&
-            yourVote.value.direction &&
-            yourVote.value.direction === 'up') ||
-          (yourVote &&
-            yourVote.value &&
-            yourVote.value.vote &&
-            yourVote.value.vote.direction &&
-            yourVote.value.vote.direction === 'up')
-            ? 'highlight-text'
-            : 'fill-white'
-        "
+        :class="myVote === 'up' ? 'highlight-text' : 'fill-white'"
         @click.prevent="doVotePost('up')"
       />
-      {{
-        yourVote && yourVote.value && Math.abs(yourVote.value.votestotal) >= 0
-          ? yourVote.value.votestotal
-          : post.votestotal
-      }}
+      {{ votesTotal }}
       <LibraryIcon
         class="ml-2 transform-gpu rotate-180 cursor-pointer"
-        :class="
-          (yourVote &&
-            yourVote.value &&
-            yourVote.value.direction &&
-            yourVote.value.direction === 'down') ||
-          (yourVote &&
-            yourVote.value &&
-            yourVote.value.vote &&
-            yourVote.value.vote.direction &&
-            yourVote.value.vote.direction === 'down')
-            ? 'highlight-text'
-            : 'fill-white'
-        "
+        :class="myVote === 'down' ? 'highlight-text' : 'fill-white'"
         @click.prevent="doVotePost('down')"
       />
     </span>
@@ -56,8 +28,8 @@
 import {
   defineComponent,
   ref,
-  useAsync,
   useContext,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import LibraryIcon from '@/assets/icons/library.svg?inline'
 import { postApi } from '@/api/post'
@@ -78,28 +50,33 @@ export default defineComponent({
   },
   emits: ['triggerFeedback'],
   setup(props) {
-    const yourVote = ref(null)
-    const voteCount = ref(null)
+    const myVote = ref(null)
+    const votesTotal = ref(null)
     const { $auth } = useContext()
     const { votePost, fetchYourVoteByPost } = postApi()
 
-    if ($auth.loggedIn) {
-      yourVote.value = useAsync(
-        () => fetchYourVoteByPost(props.post.id),
-        `post_yourvote_${props.post.id}`
-      )
-    }
+    onMounted(async () => {
+      votesTotal.value = props.post.votestotal
+      if ($auth.loggedIn) {
+        if (props.post.hasOwnProperty('my_vote')) {
+          myVote.value = props.post.my_vote.direction
+        }
+      }
+    })
 
-    function doVotePost(direction) {
-      yourVote.value = useAsync(
-        () => votePost(props.post.id, direction),
-        `post_yourvote_${props.post.id}`
-      )
+    async function doVotePost(direction) {
+      if (!$auth.loggedIn) {
+        // @TODO trigger login
+        return
+      }
+      const voteResponse = await votePost(props.post.id, direction)
+      myVote.value = voteResponse.vote.direction
+      votesTotal.value = voteResponse.votestotal
     }
 
     return {
-      yourVote,
-      voteCount,
+      myVote,
+      votesTotal,
       doVotePost,
     }
   },
