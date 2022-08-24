@@ -7,8 +7,6 @@
     </div>
     <div class="box-shadow">
       <client-only>
-
-
           <UtilitiesAudioPlayer
             v-if="audioURL"
             ref="audioPlayer"

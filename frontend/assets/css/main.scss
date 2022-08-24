@@ -213,7 +213,7 @@ h3 {
   transition: color 200ms, background-color 200ms, border-color 200ms;
   &:hover,
   &.active {
-    color: #2e2e2e;
+    color: var(--highlight-contrast);
     background-color: var(--highlight);
     border-color: var(--highlight);
     cursor: pointer;

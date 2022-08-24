@@ -28,6 +28,7 @@
 import {
   defineComponent,
   ref,
+  onMounted,
   useContext,
 } from '@nuxtjs/composition-api'
 import LibraryIcon from '@/assets/icons/library.svg?inline'
@@ -54,12 +55,14 @@ export default defineComponent({
     const { $auth } = useContext()
     const { votePost } = postApi()
 
-    votesTotal.value = props.post.votestotal
-    if ($auth.loggedIn) {
-      if (props.post.hasOwnProperty('my_vote')) {
-        myVote.value = props.post.my_vote.direction
+    onMounted(() => {
+      votesTotal.value = props.post.votestotal
+      if ($auth.loggedIn) {
+        if (props.post.hasOwnProperty('my_vote')) {
+          myVote.value = props.post.my_vote.direction
+        }
       }
-    }
+    })
 
     async function doVotePost(direction) {
       if (!$auth.loggedIn) {

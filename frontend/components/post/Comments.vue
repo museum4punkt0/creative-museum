@@ -29,8 +29,8 @@
 
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
       <div v-if="comments && showComments">
-        <div v-for="(comment, key) in comments.value" :key="key">
-          <PostCommentItem :comment="comment" />
+        <div v-for="(comment, key) in comments" :key="key">
+          <PostCommentItem :comment="comment" :post-type="post.type" />
         </div>
       </div>
       <form
@@ -59,7 +59,7 @@
     </div>
     <div v-else-if="post.comments && !showComments">
       <div v-for="(comment, key) in post.comments" :key="key">
-        <PostCommentItem :comment="comment" />
+        <PostCommentItem :comment="comment" :post-type="post.type" />
       </div>
     </div>
   </div>
@@ -67,7 +67,6 @@
 <script>
 import {
   defineComponent,
-  useAsync,
   ref,
   useContext,
   useStore,
@@ -92,6 +91,7 @@ export default defineComponent({
   emits: ['commentsLoaded'],
   setup(props, context) {
     const comments = ref([])
+    const newComments = ref([])
     const showComments = ref(false)
     const showCommentForm = ref(false)
     const commentBody = ref('')
@@ -100,16 +100,13 @@ export default defineComponent({
 
     const { fetchPostsByPost, submitCommentByPost } = postApi()
 
-    function fetchComments() {
-      const newComments = useAsync(
-        () => fetchPostsByPost(props.post.id),
-        `comments_${props.post.id}`
-      )
+    async function fetchComments() {
+      newComments.value = await fetchPostsByPost(props.post.id)
 
-      if (comments.value.length > 0) {
-        comments.value.push(newComments.splice(comments.value.length))
+      if (comments.value.length > 0 && comments.value.length < newComments.value.length) {
+        comments.value.push(newComments.value.splice(comments.value.length))
       } else {
-        comments.value = newComments
+        comments.value = newComments.value
       }
 
       showCommentForm.value = true

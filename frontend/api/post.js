@@ -106,11 +106,6 @@ export const postApi = () => {
     return await $api.get(`playlists/${playlistId}/add-post/${postId}`)
   }
 
-  const fetchYourVoteByPost = async (postId) => {
-    const res = await $api.get(`votes?voter=${$auth.user.id}&post=${postId}`)
-    return res[0]
-  }
-
   const createPlaylistWithPost = async (postId, title) => {
     return await $api.post(`playlists`, {
       creator: `/v1/users/${$auth.user.uuid}`,
@@ -147,7 +142,6 @@ export const postApi = () => {
     fetchPostsByPost,
     votePost,
     addToPlaylist,
-    fetchYourVoteByPost,
     submitCommentByPost,
     createPlaylistWithPost,
     createPlaylistPost,
