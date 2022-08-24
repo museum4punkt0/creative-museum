@@ -75,9 +75,9 @@ class CampaignRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Campaign
+     * @return Campaign|null
      */
-    public function getNewestActiveCampaign(): Campaign
+    public function getNewestActiveCampaign(): ?Campaign
     {
         $qb = $this->_em->createQueryBuilder();
         $newestCampaign = $qb
@@ -94,7 +94,7 @@ class CampaignRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
 
-        return $newestCampaign[0];
+        return $newestCampaign[0] ?? null;
     }
 
     // /**
