@@ -133,6 +133,7 @@
             class="flex flex-row mb-6"
           >
             <img
+              v-if="'picture' in achievement.badge"
               :src="`${backendUrl}/${achievement.badge.picture.contentUrl}`"
               class="self-center w-20"
             />

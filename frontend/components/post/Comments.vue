@@ -112,11 +112,12 @@ export default defineComponent({
           props.post.id,
           commentBody.value,
           props.post.campaign.id
-        ).then(function () {
+      ).then(function () {
           commentBody.value = ''
           fetchComments()
           context.emit('commentsLoaded', props.post.id)
         })
+        $auth.fetchUser()
       }
     }
 

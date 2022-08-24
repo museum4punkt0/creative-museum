@@ -70,6 +70,7 @@ export default defineComponent({
         return
       }
       const voteResponse = await votePost(props.post.id, direction)
+      await $auth.fetchUser()
       myVote.value = voteResponse.vote.direction
       votesTotal.value = voteResponse.votestotal
     }
