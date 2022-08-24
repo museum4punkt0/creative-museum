@@ -2,11 +2,7 @@
   <div
     class="box-shadow px-4 py-2 rounded-full flex flex-row items-end justify-center"
   >
-    <span class="text-2xl mr-2">{{
-      campaignScore && campaignScore.value && campaignScore.value.score
-        ? Math.abs(campaignScore.value.score).toLocaleString()
-        : '0'
-    }}</span>
+    <span class="text-2xl mr-2">{{ Math.abs(campaignScore).toLocaleString() }}</span>
     <span>{{ $t('user.points') }}</span>
   </div>
 </template>
@@ -14,12 +10,32 @@
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  setup() {
-    const context = useContext()
+  props: {
+    campaign: {
+      type: Object,
+      required: true
+    },
+  },
+  setup(props) {
+
+    const { $auth } = useContext()
+
+    const campaignScore = computed(() => {
+      if (! $auth.user.hasOwnProperty('memberships')) {
+        return 0
+      }
+      for (let id in $auth.user.memberships) {
+        let membership = $auth.user.memberships[id]
+        if (membership.campaign.id !== props.campaign.id) {
+          continue
+        }
+        return membership.score
+      }
+      return 0
+    })
+
     return {
-      campaignScore: computed(() =>
-        context.$auth.$storage.getState('campaignScore')
-      ),
+      campaignScore
     }
   },
 })
