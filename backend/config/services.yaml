@@ -6,12 +6,13 @@
 parameters:
     rewardPoints: 1
     registrationScorePoints: 2000
-    loginScorePoints: 1000
+    loginScorePoints: 2000
     awardedScorePoints: 10000
     awardReceivedScorePoints: 20000
     postCreatedScorePoints: 10000
     commentCreatedScorePoints: 5000
     upvoteScorePoints: 2000
+    feedBackScorePoints: 3000
 
     textPostBodyLength: 1000
     imagePostBodyLength: 1000
@@ -78,3 +79,4 @@ services:
             - '%postCreatedScorePoints%'
             - '%commentCreatedScorePoints%'
             - '%upvoteScorePoints%'
+            - '%feedBackScorePoints%'

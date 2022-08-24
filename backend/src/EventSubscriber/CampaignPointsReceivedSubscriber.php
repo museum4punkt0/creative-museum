@@ -91,6 +91,9 @@ class CampaignPointsReceivedSubscriber implements EventSubscriberInterface
             case PointsReceivedType::UPVOTE->value:
                 $this->scoringService->handleUpvotePoints($receiver, $campaign);
                 break;
+            case PointsReceivedType::FEEDBACK->value:
+                $this->scoringService->handleFeedbackPoints($receiver, $campaign);
+                break;
         }
     }
 }

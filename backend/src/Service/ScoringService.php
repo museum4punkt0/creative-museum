@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Message\NotifyAboutAwardedPoints;
 use App\Message\NotifyAboutAwardReceivedPoints;
 use App\Message\NotifyAboutCommentCreatedPoints;
+use App\Message\NotifyAboutFeedbackPoints;
 use App\Message\NotifyAboutLoginPoints;
 use App\Message\NotifyAboutPostCreatedPoints;
 use App\Message\NotifyAboutRegistrationPoints;
@@ -59,6 +60,11 @@ class ScoringService
     private int $upvoteScorePoints;
 
     /**
+     * @var int
+     */
+    private int $feedBackScorePoints;
+
+    /**
      * @var CampaignMemberRepository
      */
     private CampaignMemberRepository $campaignMemberRepository;
@@ -83,6 +89,7 @@ class ScoringService
         int                      $postCreatedScorePoints,
         int                      $commentCreatedScorePoints,
         int                      $upvoteScorePoints,
+        int                      $feedBackScorePoints,
         CampaignMemberRepository $campaignMemberRepository,
         EntityManagerInterface   $entityManager,
         MessageBusInterface      $bus,
@@ -96,6 +103,7 @@ class ScoringService
         $this->postCreatedScorePoints = $postCreatedScorePoints;
         $this->commentCreatedScorePoints = $commentCreatedScorePoints;
         $this->upvoteScorePoints = $upvoteScorePoints;
+        $this->feedBackScorePoints = $feedBackScorePoints;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
         $this->bus = $bus;
@@ -236,6 +244,18 @@ class ScoringService
         $this->entityManager->flush();
 
         $pointsNotification = new NotifyAboutUpvotePoints($receiver->getId(), $this->upvoteScorePoints, $campaign->getId());
+        $this->bus->dispatch($pointsNotification);
+    }
+
+    public function handleFeedbackPoints(User $receiver, Campaign $campaign): void
+    {
+        $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
+
+        $campaignMember->setScore($campaignMember->getScore() + $this->feedBackScorePoints);
+        $this->entityManager->persist($campaignMember);
+        $this->entityManager->flush();
+
+        $pointsNotification = new NotifyAboutFeedbackPoints($receiver->getId(), $this->feedBackScorePoints, $campaign->getId());
         $this->bus->dispatch($pointsNotification);
     }
 }

@@ -17,4 +17,6 @@ enum PointsReceivedType: string
     case COMMENT_CREATED = 'comment_created';
 
     case UPVOTE = 'upvote';
+
+    case FEEDBACK = 'feedback';
 }
