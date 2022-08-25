@@ -82,6 +82,7 @@ class MediaObject
     public ?File $file = null;
 
     #[ORM\Column(type: 'filetype')]
+    #[Groups(['media_object:read', 'read:post'])]
     private $type;
 
     public function getId(): ?int
