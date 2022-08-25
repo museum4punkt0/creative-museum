@@ -15,7 +15,7 @@
         <input
           v-model="postTitle"
           type="text"
-          class="input-text pr-20"
+          class="input-text pr-20 mb-4"
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />

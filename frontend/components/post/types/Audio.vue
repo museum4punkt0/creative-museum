@@ -1,7 +1,7 @@
 <template>
   <div>
     <p v-if="post.title" class="text-lg font-bold mb-2">{{ post.title }}</p>
-    <audio :src="audio[0]" controls />
+    <UtilitiesAudioPlayer :audio-list="[audio]" />
   </div>
 </template>
 <script lang="ts">

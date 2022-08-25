@@ -1,59 +1,58 @@
 <template>
-  <div class="audioControls" :style="cssProps">
+  <div class="flex items-center">
     <div>
       <div
-        v-if="!recordAudioState"
+        v-if="!audioFile && !recordAudioState"
         title="Start recording"
-        class="ar-icon"
+        class="rounded-full h-8 w-8 text-center py-1"
         :class="
           permissionStatus === 'denied' || audioIsPlaying
-            ? 'recorder-start-error'
-            : 'recorder-start pointer'
+            ? 'bg-grey'
+            : 'cursor-pointer'
         "
         @click="permissionStatus === 'denied' || audioIsPlaying === false ? recordAudio() : false"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path
-            fill="#FFF"
-            d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"
-          ></path>
-          <path d="M0 0h24v24H0z" fill="none"></path>
-        </svg>
+        <MicrophoneIcon class="h-6" />
       </div>
       <div
         v-if="recordAudioState"
         title="Stop recording"
-        class="ar-icon recorder-stop pointer"
+        class="rounded-full bg-red recorder-stop h-8 w-8 text-center py-1 cursor-pointer"
         @click="stopRecordAudio"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M0 0h24v24H0z" fill="none"></path>
-          <path d="M6 6h12v12H6z" fill="#FFF"></path>
-        </svg>
+        <MicrophoneIcon class="h-6" />
       </div>
     </div>
-    <div v-show="audioFile && !recordAudioState" ref="audio" class="audio audioStyle">
-      <audio controls="controls" class="audioStyle"></audio>
+    <div v-show="audioFile && !recordAudioState" ref="audio">
+      <UtilitiesAudioPlayer :audio-list="[audioFile]" />
     </div>
-    <div v-show="recordAudioState && timer">
-      <span class="audioTimer" ref="audioTimer"></span>
+    <div v-show="!audioFile" class="flex flex-row flex-1 flex-grow items-center">
+      <div ref="progress" class="h-px flex-1 mx-3 bg-white/30 relative">
+        <span ref="progressPercent" class="h-px bg-white absolute top-0 left-0" />
+        <span ref="progressDot" class="bg-$highlight w-2 h-2 rounded-full absolute left-0 top-0 transform -translate-x-1/2 -translate-y-1/2" />
+      </div>
+      <span ref="audioTimer" class="block py-1 self-end min-w-20 ml-2 text-center bg-white rounded-xl text-xs text-black whitespace-nowrap">0:00 / 1:00</span>
     </div>
     <div v-show="audioFile && !recordAudioState">
       <button
         title="Delete Audio"
         :disabled="audioIsPlaying"
-        class="deleteAudio pointer"
+        class="bg-red-500 rounded-full cursor-pointer w-6 ml-2"
         @click="deleteAudioFile"
       >
-        X
+        x
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import MicrophoneIcon from '@/assets/icons/microphone.svg?inline'
 export default {
   name: 'AudioRecorder',
+  components: {
+    MicrophoneIcon
+  },
   props: {
     timer: {
       type: Boolean,
@@ -93,16 +92,6 @@ export default {
       initialTime: Date.now(),
     };
   },
-  computed: {
-    cssProps() {
-      return {
-        '--font-size': `${this.timerFontSize}em`,
-        '--font-color': this.timerColor,
-        '--timer-background': this.timerBackground,
-        '--audio-width': `${this.audioWidth}px`,
-      };
-    },
-  },
   watch: {
     uploadedAudioFile(value) {
       this.$emit('audioFile', value);
@@ -127,7 +116,14 @@ export default {
       const TIMER = this.$refs.audioTimer;
       const timeDifference = Date.now() - this.initialTime;
       const formatted = this.convertAudioTime(timeDifference);
-      TIMER.innerHTML = `${formatted}`;
+
+      const progressPercent = this.$refs.progressPercent
+      const progressDot = this.$refs.progressDot
+
+      progressPercent.style.width = timeDifference / 1000 + '%'
+      progressDot.style.left = timeDifference / 1000 + '%'
+
+      TIMER.innerHTML = `${formatted} / 1:00`;
       if (timeDifference > this.maxDuration) {
         this.stopRecordAudio()
       }
@@ -202,14 +198,6 @@ export default {
 </script>
 
 <style scoped>
-.audioControls {
-  display: flex;
-  align-items: center;
-}
-
-.audioStyle {
-  width: var(--audio-width);
-}
 
 .ar-icon {
   width: 40px;
@@ -228,16 +216,8 @@ audio {
 .audio {
   margin: 0 5px;
 }
-.recorder-start {
-  background: green;
-}
-.recorder-start-error {
-  background: gray;
-}
 
 .recorder-stop {
-  background: red;
-  box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
   animation: pulse 1500ms infinite;
 }
 
@@ -256,16 +236,6 @@ audio {
     transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
   }
-}
-
-.audioTimer {
-  background: var(--timer-background);
-  padding: 5px 20px;
-  color: var(--font-color);
-  border-radius: 5%;
-  font-size: var(--font-size);
-  font-weight: bold;
-  margin: 0 0 0 5px;
 }
 
 .deleteAudio {
