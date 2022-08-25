@@ -15,7 +15,6 @@
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
         :class="currentSorting === 'votestotal' ? 'active' : ''"
-
         type="button"
         @click.prevent="toggleRelevanceFilter"
       >
@@ -48,15 +47,30 @@
       >
         {{ $t('filter.playlist') }}
       </button>
-
-      <a v-if="reversable" @click.prevent="changeSortDirection">Sortierung umkehren</a>
+    </div>
+    <div class="mt-2">
+      <a
+        v-if="reversable"
+        class="text-xs text-$highlight flex flex-row items-center justify-end"
+        @click.prevent="changeSortDirection"
+        >
+          <div><ReverseSortingIcon class="h-4 inline-block mr-2" /></div><span>{{ $t('filter.order.reverse') }}</span>
+      </a>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
-
+import {
+  defineComponent,
+  ref,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
+import ReverseSortingIcon from '@/assets/icons/reverseSorting.svg?inline'
 export default defineComponent({
+  components: {
+    ReverseSortingIcon,
+  },
   props: {
     campaign: {
       type: Object,
@@ -64,17 +78,12 @@ export default defineComponent({
     },
   },
   setup() {
-
     const context = useContext()
 
     const currentSorting = computed(() => context.store.state.currentSorting)
 
     const reversable = computed(() => {
-      const reversableProps = [
-        'date',
-        'playlist',
-        'votestotal',
-      ]
+      const reversableProps = ['date', 'playlist', 'votestotal']
       return reversableProps.includes(context.store.state.currentSorting)
     })
 
@@ -85,17 +94,14 @@ export default defineComponent({
         resetFilter()
         return
       }
-      context.store.dispatch(
-        'setCurrentSortingWithDirection',
-        ['votestotal', 'desc']
-      )
+      context.store.dispatch('setCurrentSortingWithDirection', [
+        'votestotal',
+        'desc',
+      ])
     }
 
     function resetFilter() {
-      context.store.dispatch(
-        'setCurrentSortingWithDirection',
-        ['date', 'desc']
-      )
+      context.store.dispatch('setCurrentSortingWithDirection', ['date', 'desc'])
     }
 
     function togglePlaylistFilter() {
@@ -103,10 +109,10 @@ export default defineComponent({
         resetFilter()
         return
       }
-      context.store.dispatch(
-        'setCurrentSortingWithDirection',
-        ['playlist', 'desc']
-      )
+      context.store.dispatch('setCurrentSortingWithDirection', [
+        'playlist',
+        'desc',
+      ])
     }
 
     function setHeight(params) {
@@ -132,7 +138,7 @@ export default defineComponent({
       togglePlaylistFilter,
       toggleRelevanceFilter,
       resetFilter,
-      currentSorting
+      currentSorting,
     }
   },
 })

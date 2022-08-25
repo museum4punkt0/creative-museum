@@ -4,15 +4,14 @@
   >
     <div
       class="
-        slideup bg-grey text-white fixed flex flex-col flex-1 right-2 lg:right-auto left-2 lg:left-1/2
-        lg:min-w-2xl min-h-xl top-auto lg:top-1/2 rounded-xl transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2"
+        slideup bg-grey text-white fixed flex flex-col flex-1 right-2 lg:right-auto left-2 lg:left-1/2 pb-4 lg:pb-0
+        lg:min-w-2xl lg:min-h-xl bottom-0 lg:bottom-auto lg:top-1/2 rounded-xl transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2"
 
     >
       <button
         v-if="closable"
-        class="close-btn block h-4 w-4 absolute right-5 top-5 transform -translate-x-1/2 border rounded-full border-white"
+        class="close-btn block h-4 w-4 absolute right-4 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
         @click.prevent="$emit('closeModal')"
-        type="button"
       ></button>
       <slot></slot>
     </div>

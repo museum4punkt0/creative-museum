@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="lg:grid lg:grid-cols-12 lg:gap-4">
-      <div class="lg:col-span-3 pr-10">
+      <div class="lg:col-span-3 pr-5">
         <div v-if="isLargerThanLg">
           <UserCampaignInfo v-if="campaign" :campaign="campaign" />
         </div>
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <div class="lg:col-span-3 pl-10">
+      <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
           <UserNotifications :campaign="campaign" />
           <UserAwards :campaign="campaign" class="mt-14 mb-10" />
