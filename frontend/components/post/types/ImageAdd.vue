@@ -24,7 +24,7 @@
           @input-filter="inputFilter"
         >
           <div
-            class="box-shadow-inset pt-2 pr-2 pb-10 pl-2 rounded-xl text-left flex flex-row"
+            class="box-shadow-inset pt-2 pr-2 pb-10 pl-4 rounded-xl text-left flex flex-row"
           >
             {{
               $t(
