@@ -5,7 +5,7 @@
       v-if="image.length > 0"
       :src="image[0]"
       :data-url="image[0]"
-      class="rounded mx-auto mb-6"
+      class="rounded mx-auto mb-6 max-h-xl"
       :alt="post.title ? post.title : ''"
     />
     <UtilitiesAudioPlayer :audio-list="[audio]" class="mt-4" />

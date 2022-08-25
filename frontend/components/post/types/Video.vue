@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video v-if="post.files.length" class="w-full h-auto rounded-lg" controls>
+    <video v-if="post.files.length" class="w-full h-auto rounded-lg max-h-xl" controls>
       <source :src="`${backendUrl}/${post.files[0].contentUrl}`" />
       <p v-if="post.files[0].description">{{ post.files[0].description }}</p>
     </video>

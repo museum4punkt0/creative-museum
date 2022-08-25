@@ -4,7 +4,7 @@
       v-if="post.files.length"
       :src="`${backendUrl}/${post.files[0].contentUrl}`"
       :data-url="`${backendUrl}/${post.files[0].contentUrl}`"
-      class="rounded mx-auto"
+      class="rounded mx-auto max-h-xl"
       :alt="
         post.files[0].description
           ? post.files[0].description
