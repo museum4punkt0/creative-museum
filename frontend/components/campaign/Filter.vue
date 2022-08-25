@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="snap snap-mandatory snap-x scrollbar-hide relative -mx-6 lg:mx-0 px-6 lg:px-0 flex flew-row flex-nowrap md:flex-col overflow-x-auto"
+      class="snap snap-mandatory snap-x scrollbar-hide relative -mx-6 lg:mx-0 px-6 lg:px-0 flex flew-row flex-nowrap lg:flex-col overflow-x-auto"
       :class="dropdownHeight ? 'h-20 lg:h-auto' : 'h-auto'"
     >
       <button
