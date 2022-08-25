@@ -94,7 +94,7 @@ export default defineComponent({
 
     const { store } = useContext()
     const postTitle = ref('')
-    let fileToSubmit = null
+    let fileToSubmit: any | null = null
 
     const images = ref([])
 
