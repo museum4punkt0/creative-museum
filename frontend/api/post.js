@@ -28,15 +28,15 @@ export const postApi = () => {
     return response
   }
 
-  const createPicturePost = async (
+  const createImagePost = async (
     campaignId,
     title,
     body,
-    picture,
+    image,
     altText
   ) => {
     const form = new FormData()
-    form.append('file', picture.file)
+    form.append('file', image.file)
     form.append('description', altText)
     form.append('type', 'image')
 
@@ -45,6 +45,34 @@ export const postApi = () => {
 
     const postResponse =  await $api.post('posts', {
       type: 'image',
+      author: `/v1/users/${$auth.user.uuid}`,
+      title,
+      body,
+      campaign: `/v1/campaigns/${campaignId}`,
+      files: [`/v1/media_objects/` + fileId],
+    })
+    await $auth.fetchUser()
+
+    return postResponse
+  }
+
+  const createVideoPost = async (
+    campaignId,
+    title,
+    body,
+    video,
+    altText
+  ) => {
+    const form = new FormData()
+    form.append('file', video.file)
+    form.append('description', altText)
+    form.append('type', 'video')
+
+    const response = await $api.post('media_objects', form)
+    const fileId = response.id
+
+    const postResponse =  await $api.post('posts', {
+      type: 'video',
       author: `/v1/users/${$auth.user.uuid}`,
       title,
       body,
@@ -177,7 +205,8 @@ export const postApi = () => {
     fetchPost,
     toggleBookmark,
     createTextPost,
-    createPicturePost,
+    createImagePost,
+    createVideoPost,
     fetchPostsByCampaign,
     fetchPostsByPost,
     votePost,

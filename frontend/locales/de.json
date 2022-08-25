@@ -100,7 +100,11 @@
       },
       "video": {
         "button": "Video",
-        "headline": "Video hochladen"
+        "headline": "Video hochladen",
+        "uploader": {
+          "add": "Video hinzufügen",
+          "replace": "Video ersetzen"
+        }
       },
       "playlist": {
         "button": "Playlist",

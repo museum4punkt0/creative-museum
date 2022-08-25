@@ -135,7 +135,7 @@ export default defineComponent({
     const postTitle = ref('')
     const postBody = ref('')
     const imgAlt = ref('')
-    const { createPicturePost } = postApi()
+    const { createImagePost } = postApi()
 
     function abortPost() {
       context.emit('abortPost')
@@ -144,7 +144,7 @@ export default defineComponent({
     function submitPost() {
       const pictureArray = files.value
 
-      createPicturePost(
+      createImagePost(
         store.state.currentCampaign,
         postTitle.value,
         postBody.value,
