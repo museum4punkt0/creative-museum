@@ -1,14 +1,14 @@
 <template>
   <div>
+    <p v-if="post.title" class="text-lg font-bold mb-4">{{ post.title }}</p>
     <img
       v-if="image.length > 0"
       :src="image[0]"
       :data-url="image[0]"
-      class="rounded mx-auto"
+      class="rounded mx-auto mb-6"
       :alt="post.title ? post.title : ''"
     />
-    <p v-if="post.title" class="text-lg font-bold mb-2">{{ post.title }}</p>
-    <UtilitiesAudioPlayer :audio-list="[audio]" />
+    <UtilitiesAudioPlayer :audio-list="[audio]" class="mt-4" />
   </div>
 </template>
 <script lang="ts">
