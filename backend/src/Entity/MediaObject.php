@@ -81,6 +81,9 @@ class MediaObject
     #[Assert\File(groups: ['media_object_create'])]
     public ?File $file = null;
 
+    #[ORM\Column(type: 'filetype')]
+    private $type;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -144,6 +147,18 @@ class MediaObject
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
