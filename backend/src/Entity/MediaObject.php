@@ -162,5 +162,7 @@ class MediaObject
     public function setType(FileType $type): self
     {
         $this->type = $type;
+
+        return $this;
     }
 }
