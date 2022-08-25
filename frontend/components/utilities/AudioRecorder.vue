@@ -23,8 +23,8 @@
         <MicrophoneIcon class="h-6" />
       </div>
     </div>
-    <div v-show="audioFile && !recordAudioState" ref="audio">
-      <UtilitiesAudioPlayer :audio-list="[audioFile]" />
+    <div v-show="audioFile && !recordAudioState" ref="audio" class="flex flex-row items-center w-full">
+      <UtilitiesAudioPlayer :audio-list="[audioFile]" class="flex-grow flex-1" />
     </div>
     <div v-show="!audioFile" class="flex flex-row flex-1 flex-grow items-center">
       <div ref="progress" class="h-px flex-1 mx-3 bg-white/30 relative">
@@ -69,10 +69,6 @@ export default {
     timerBackground: {
       type: String,
       default: '#ccc',
-    },
-    audioWidth: {
-      type: Number,
-      default: 200,
     },
     maxDuration: {
       type: Number,
@@ -148,22 +144,6 @@ export default {
               const blob = new Blob(items, { type: this.audioType });
               this.audioFile = URL.createObjectURL(blob);
               this.uploadedAudioFile = blob;
-              const { audio } = this.$refs;
-              audio.innerHTML = '';
-              const mainaudio = document.createElement('audio');
-              mainaudio.setAttribute('controls', 'controls');
-              mainaudio.setAttribute('style', `width: ${this.audioWidth}px`);
-              audio.appendChild(mainaudio);
-              mainaudio.innerHTML = `<source src="${this.audioFile}" type="${this.audioType}" />`;
-              mainaudio.onplay = () => {
-                this.audioIsPlaying = true;
-              };
-              mainaudio.onpause = () => {
-                this.audioIsPlaying = false;
-              };
-              mainaudio.onended = () => {
-                this.audioIsPlaying = false;
-              };
             }
           };
           this.recordAudioState = true;
@@ -197,7 +177,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .ar-icon {
   width: 40px;
@@ -223,18 +203,15 @@ audio {
 
 @keyframes pulse {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+    @apply text-$highlight;
   }
 
   70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    @apply text-white;
   }
 
   100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    @apply text-$highlight;
   }
 }
 

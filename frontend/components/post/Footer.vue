@@ -3,13 +3,13 @@
     <span class="flex flex-row items-center text-sm">
       <LibraryIcon
         class="mr-2 cursor-pointer"
-        :class="myVote === 'up' ? 'highlight-text' : 'fill-white'"
+        :class="myVote === 'up' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
         @click.prevent="doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
         class="ml-2 transform-gpu rotate-180 cursor-pointer"
-        :class="myVote === 'down' ? 'highlight-text' : 'fill-white'"
+        :class="myVote === 'down' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
         @click.prevent="doVotePost('down')"
       />
     </span>
@@ -70,7 +70,6 @@ export default defineComponent({
         return
       }
       const voteResponse = await votePost(props.post.id, direction)
-      await $auth.fetchUser()
       myVote.value = voteResponse.vote.direction
       votesTotal.value = voteResponse.votestotal
     }

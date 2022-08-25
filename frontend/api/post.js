@@ -38,6 +38,7 @@ export const postApi = () => {
     const form = new FormData()
     form.append('file', picture.file)
     form.append('description', altText)
+    form.append('type', 'image')
 
     const response = await $api.post('media_objects', form)
     const fileId = response.id
@@ -74,7 +75,7 @@ export const postApi = () => {
       pollOptions.push({ title: option.value })
     }
 
-    const response =  await $api.post('posts', {
+    const response = await $api.post('posts', {
       campaign: `/v1/campaigns/${campaignId}`,
       type: 'poll',
       author: `/v1/users/${$auth.user.uuid}`,
@@ -82,6 +83,7 @@ export const postApi = () => {
       body: contents.description,
       pollOptions,
     })
+
     await $auth.fetchUser()
 
     return response
@@ -128,18 +130,34 @@ export const postApi = () => {
 
   const createAudioPost = async (campaignId, title, audio, image) => {
 
-    const form = new FormData()
-    form.append('file', audio, 'voicemessage.wav')
-    const response = await $api.post('media_objects', form)
-    const audioFileId = response.id
 
-    return await $api.post('posts', {
+    const postBody = {
       author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
       type: 'audio',
       title,
-      files: [`/v1/media_objects/` + audioFileId]
-    })
+      files: []
+    }
+
+    if (audio) {
+      const formAudio = new FormData()
+      formAudio.append('file', audio, 'voicemessage.wav')
+      formAudio.append('type', 'audio')
+      const responseAudio = await $api.post('media_objects', formAudio)
+      const audioFileId = responseAudio.id
+      postBody.files.push(`/v1/media_objects/` + audioFileId)
+    }
+
+    if (image) {
+      const formImage = new FormData()
+      formImage.append('file', image.file)
+      formImage.append('type', 'image')
+      const responseImage = await $api.post('media_objects', formImage)
+      const imageFileId = responseImage.id
+      postBody.files.push(`/v1/media_objects/` + imageFileId)
+    }
+
+    const response = await $api.post('posts', postBody)
 
     await $auth.fetchUser()
 

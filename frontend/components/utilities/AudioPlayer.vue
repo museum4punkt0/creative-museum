@@ -13,7 +13,7 @@
         <div v-else class="cursor-pointer">
           <div
             v-if="!isPlaying"
-            class="transform -translate-y-px"
+            class="transform translate-y-[-3px]"
             @click.stop="play"
           >
             <PlayIcon class="fill-white" />
