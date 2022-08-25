@@ -83,6 +83,7 @@ class MediaObject
     public ?File $file = null;
 
     #[ORM\Column(type: 'filetype')]
+    #[Assert\NotNull(groups: ['media_object_create'])]
     #[Groups(['media_object:read', 'read:post'])]
     private FileType $type = FileType::IMAGE;
 
@@ -153,18 +154,12 @@ class MediaObject
         return $this;
     }
 
-    /**
-     * @return FileType
-     */
     public function getType(): FileType
     {
         return $this->type;
     }
 
-    /**
-     * @param FileType $type
-     */
-    public function setType(FileType $type): void
+    public function setType(FileType $type): self
     {
         $this->type = $type;
     }

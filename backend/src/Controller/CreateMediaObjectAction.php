@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\MediaObject;
+use App\Enum\FileType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -26,7 +27,10 @@ class CreateMediaObjectAction extends AbstractController
         }
 
         if (null !== $request->get('type')) {
-            $mediaObject->setType($request->get('type'));
+            $type = FileType::tryFrom($request->get('type')) ?? null;
+            if (!is_null($type)) {
+                $mediaObject->setType($type);
+            }
         }
 
         return $mediaObject;
