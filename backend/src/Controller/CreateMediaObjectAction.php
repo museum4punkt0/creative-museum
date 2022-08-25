@@ -25,6 +25,10 @@ class CreateMediaObjectAction extends AbstractController
             $mediaObject->setDescription($request->get('description'));
         }
 
+        if (null !== $request->get('type')) {
+            $mediaObject->setType($request->get('type'));
+        }
+
         return $mediaObject;
     }
 }

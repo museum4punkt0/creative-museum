@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\CreateMediaObjectAction;
+use App\Enum\FileType;
 use App\Repository\MediaObjectRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -83,7 +84,7 @@ class MediaObject
 
     #[ORM\Column(type: 'filetype')]
     #[Groups(['media_object:read', 'read:post'])]
-    private $type;
+    private FileType $type = FileType::IMAGE;
 
     public function getId(): ?int
     {
@@ -152,15 +153,19 @@ class MediaObject
         return $this;
     }
 
-    public function getType()
+    /**
+     * @return FileType
+     */
+    public function getType(): FileType
     {
         return $this->type;
     }
 
-    public function setType($type): self
+    /**
+     * @param FileType $type
+     */
+    public function setType(FileType $type): void
     {
         $this->type = $type;
-
-        return $this;
     }
 }
