@@ -38,7 +38,8 @@
       </div>
       <button
         type="submit"
-        class="btn-primary mt-6 w-full"
+        :disabled="disableSubmitButton"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -50,7 +51,8 @@
 import {
   defineComponent,
   ref,
-  useContext
+  useContext,
+  computed
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
@@ -60,12 +62,19 @@ export default defineComponent({
     const { store } = useContext()
 
     const postTitle = ref('')
-
     const postBody = ref('')
+    const submitting = ref(false)
+
+    const disableSubmitButton = computed(() => {
+      return postBody.value.length === 0 || submitting.value
+    })
 
     const { createTextPost } = postApi()
 
     function submitPost() {
+
+      submitting.value = true
+
       createTextPost(
         store.state.currentCampaign,
         postTitle.value,
@@ -73,6 +82,7 @@ export default defineComponent({
       ).then(function () {
         postTitle.value = ''
         postBody.value = ''
+        submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
       })
@@ -85,6 +95,8 @@ export default defineComponent({
     return {
       postTitle,
       postBody,
+      disableSubmitButton,
+      submitting,
       abortPost,
       submitPost,
     }

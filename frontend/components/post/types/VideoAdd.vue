@@ -103,7 +103,8 @@
       </div>
       <button
         type="submit"
-        class="btn-primary mt-6 w-full"
+        :disabled="disableSubmitButton"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -112,7 +113,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -127,6 +128,11 @@ export default defineComponent({
     const postBody = ref('')
     const videoAlt = ref('')
     const videos = ref([])
+    const submitting = ref(false)
+
+    const disableSubmitButton = computed(() => {
+      return videos.value.length === 0 || submitting.value
+    })
 
     const { createVideoPost } = postApi()
 
@@ -160,6 +166,8 @@ export default defineComponent({
 
       const videoArray = videos.value
 
+      submitting.value = true
+
       createVideoPost(
         store.state.currentCampaign,
         postTitle.value,
@@ -171,6 +179,7 @@ export default defineComponent({
         postBody.value = ''
         videos.value = []
         videoAlt.value = ''
+        submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
       })
@@ -181,6 +190,8 @@ export default defineComponent({
       postBody,
       videos,
       videoAlt,
+      submitting,
+      disableSubmitButton,
       inputFile,
       inputFilter,
       abortPost,

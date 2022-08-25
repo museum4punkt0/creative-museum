@@ -115,8 +115,10 @@
       </div>
       <div class="mt-6">
         <button
+          ref="submitButton"
           type="submit"
-          class="btn-primary w-full"
+          :disabled="disableSubmitButton"
+          class="btn-highlight disabled:opacity-30 w-full"
           @click.prevent="submitPost"
         >
           {{ $t('post.share') }}
@@ -146,7 +148,13 @@ export default defineComponent({
     const question = ref('')
     const description = ref('')
 
+    const submitting = ref(false)
+
     const options = ref(initialOptions)
+
+    const disableSubmitButton = computed(() => {
+      return question.value.length === 0 || description.value.length === 0 || options.value[0].value.length === 0 || options.value[1].value.length === 0 || submitting.value
+    })
 
     const optionCount = computed(() => options.value.length)
 
@@ -170,13 +178,15 @@ export default defineComponent({
         options: options.value,
       }
 
+      submitting.value = true
+
       createPollPost(store.state.currentCampaign, postData).then(function () {
         question.value = ''
         description.value = ''
         options.value = initialOptions
-
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        submitting.value = false
       })
     }
 
@@ -187,6 +197,8 @@ export default defineComponent({
       description,
       options,
       optionCount,
+      disableSubmitButton,
+      submitting,
       addOption,
       removeOption,
     }

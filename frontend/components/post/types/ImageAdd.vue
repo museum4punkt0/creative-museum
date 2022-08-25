@@ -105,8 +105,10 @@
         />
       </div>
       <button
+        ref="submitButton"
         type="submit"
-        class="btn-primary mt-6 w-full"
+        :disabled="disableSubmitButton"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -119,6 +121,7 @@ import {
   defineComponent,
   ref,
   useContext,
+  computed
 } from '@nuxtjs/composition-api'
 import { postApi } from '~/api/post'
 
@@ -135,7 +138,12 @@ export default defineComponent({
     const postTitle = ref('')
     const postBody = ref('')
     const imgAlt = ref('')
+    const submitting = ref(false)
     const { createImagePost } = postApi()
+
+    const disableSubmitButton = computed(() => {
+      return files.value.length === 0 || postBody.value.length === 0 || submitting.value
+    })
 
     function abortPost() {
       context.emit('abortPost')
@@ -143,6 +151,8 @@ export default defineComponent({
 
     function submitPost() {
       const pictureArray = files.value
+
+      submitting.value = true
 
       createImagePost(
         store.state.currentCampaign,
@@ -155,6 +165,7 @@ export default defineComponent({
         postBody.value = ''
         imgAlt.value = ''
         files.value = []
+        submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
       })
@@ -192,6 +203,8 @@ export default defineComponent({
       postTitle,
       postBody,
       imgAlt,
+      disableSubmitButton,
+      submitting
     }
   },
 })

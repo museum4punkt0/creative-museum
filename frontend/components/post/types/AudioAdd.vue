@@ -35,7 +35,7 @@
           @input-filter="inputFilter"
         >
           <div
-            class="box-shadow-inset pt-2 pr-2 pb-10 pl-2 rounded-xl text-left flex flex-row"
+            class="box-shadow-inset pt-2 pr-2 pb-10 pl-4 rounded-xl text-left flex flex-row"
           >
             {{
               $t(
@@ -73,7 +73,8 @@
       </client-only>
       <button
         type="submit"
-        class="btn-primary mt-6 w-full"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full"
+        :disabled="disableSubmitButton"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -82,7 +83,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -94,14 +95,18 @@ export default defineComponent({
 
     const { store } = useContext()
     const postTitle = ref('')
-    let fileToSubmit: any | null = null
-
+    const fileToSubmit: any | null = ref(null)
     const images = ref([])
+    const submitting = ref(false)
+
+    const disableSubmitButton = computed(() => {
+      return fileToSubmit.value === null || submitting.value
+    })
 
     const { createAudioPost } = postApi()
 
     function inputAudioFile(audioFile: any) {
-      fileToSubmit = audioFile
+      fileToSubmit.value = audioFile
     }
 
     function abortPost() {
@@ -134,15 +139,18 @@ export default defineComponent({
 
       const pictureArray = images.value
 
+      submitting.value = true
+
       createAudioPost(
         store.state.currentCampaign,
         postTitle.value,
-        fileToSubmit,
+        fileToSubmit.value,
         pictureArray[0]
       ).then(function () {
         postTitle.value = ''
         fileToSubmit.value = null
         images.value = []
+        submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
       })
@@ -152,6 +160,8 @@ export default defineComponent({
       postTitle,
       images,
       fileToSubmit,
+      submitting,
+      disableSubmitButton,
       inputAudioFile,
       inputFile,
       inputFilter,
