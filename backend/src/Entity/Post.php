@@ -88,7 +88,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'type' => 'exact', 'reported' => 'exact', 'author' => 'exact'])]
-#[ApiFilter(OrderFilter::class, properties: ['created'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(OrderFilter::class, properties: ['created', 'votestotal'], arguments: ['orderParameterName' => 'order'])]
 #[ORM\HasLifecycleCallbacks]
 class Post
 {

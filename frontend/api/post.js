@@ -124,8 +124,21 @@ export const postApi = () => {
     })
   }
 
-  const fetchPostsByCampaign = async (campaignId) => {
-    return await $api.get(`posts/?campaign=${campaignId}`)
+  const fetchPostsByCampaign = async (campaignId, sorting, direction) => {
+
+    let orderParams = ''
+
+    if (sorting === 'date') {
+      orderParams = `&order[created]=${direction === 'asc' ? 'asc' : 'desc'}`
+    }
+    if (sorting === 'votestotal') {
+      orderParams = `&order[votestotal]=${direction === 'asc' ? 'asc' : 'desc'}`
+    }
+    if (sorting === 'playlist') {
+      orderParams = `&oder[created]=${direction === 'asc' ? 'asc' : 'desc'}&type=playlist`
+    }
+
+    return await $api.get(`posts/?campaign=${campaignId}${orderParams}`)
   }
 
   const fetchPostsByPost = async (postId) => {

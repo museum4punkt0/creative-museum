@@ -6,13 +6,18 @@
     >
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 py-1 px-2"
+        @click.prevent="resetFilter"
+        :class="currentSorting === 'date' ? 'active' : ''"
         type="button"
       >
         {{ $t('filter.newest') }}
       </button>
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
+        :class="currentSorting === 'votestotal' ? 'active' : ''"
+
         type="button"
+        @click.prevent="toggleRelevanceFilter"
       >
         {{ $t('filter.relevant') }}
       </button>
@@ -22,6 +27,7 @@
       >
         {{ $t('filter.controversial') }}
       </button>
+
       <DropDown
         v-if="
           campaign &&
@@ -33,17 +39,22 @@
         class="ml-3 lg:ml-0"
         @dropdownState="setHeight"
       />
+
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
+        :class="currentSorting === 'playlist' ? 'active' : ''"
         type="button"
+        @click.prevent="togglePlaylistFilter"
       >
         {{ $t('filter.playlist') }}
       </button>
+
+      <a v-if="reversable" @click.prevent="changeSortDirection">Sortierung umkehren</a>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -53,7 +64,51 @@ export default defineComponent({
     },
   },
   setup() {
+
+    const context = useContext()
+
+    const currentSorting = computed(() => context.store.state.currentSorting)
+
+    const reversable = computed(() => {
+      const reversableProps = [
+        'date',
+        'playlist',
+        'votestotal',
+      ]
+      return reversableProps.includes(context.store.state.currentSorting)
+    })
+
     const dropdownHeight = ref(false)
+
+    function toggleRelevanceFilter() {
+      if (currentSorting.value === 'votestotal') {
+        resetFilter()
+        return
+      }
+      context.store.dispatch(
+        'setCurrentSortingWithDirection',
+        ['votestotal', 'desc']
+      )
+    }
+
+    function resetFilter() {
+      context.store.dispatch(
+        'setCurrentSortingWithDirection',
+        ['date', 'desc']
+      )
+    }
+
+    function togglePlaylistFilter() {
+      if (currentSorting.value === 'playlist') {
+        resetFilter()
+        return
+      }
+      context.store.dispatch(
+        'setCurrentSortingWithDirection',
+        ['playlist', 'desc']
+      )
+    }
+
     function setHeight(params) {
       if (params === true) {
         dropdownHeight.value = true
@@ -61,9 +116,23 @@ export default defineComponent({
         dropdownHeight.value = false
       }
     }
+
+    function changeSortDirection() {
+      context.store.dispatch(
+        'setCurrentSortingDirection',
+        context.store.state.currentSortingDirection === 'asc' ? 'desc' : 'asc'
+      )
+    }
+
     return {
       dropdownHeight,
       setHeight,
+      reversable,
+      changeSortDirection,
+      togglePlaylistFilter,
+      toggleRelevanceFilter,
+      resetFilter,
+      currentSorting
     }
   },
 })
