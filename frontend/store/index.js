@@ -3,6 +3,8 @@ export const strict = false
 export const state = () => ({
   showAddButton: false,
   currentCampaign: 0,
+  currentSorting: 'date',
+  currentSortingDirection: 'desc',
   newPostOnCampaign: 0,
   showLogin: false,
   showAddModal: false
@@ -23,6 +25,12 @@ export const mutations = {
   },
   SET_CURRENT_CAMPAIGN(state, id) {
     state.currentCampaign = id
+  },
+  SET_CURRENT_SORTING(state, propertyName) {
+    state.currentSorting = propertyName
+  },
+  SET_CURRENT_SORTING_DIRECTION(state, direction) {
+    state.currentSortingDirection = direction
   },
   SET_NEW_POST_ON_CAMPAIGN(state, id) {
     state.newPostOnCampaign = id
@@ -50,6 +58,16 @@ export const actions = {
   },
   hideAddModal({ commit }) {
     commit('HIDE_ADD_MODAL')
+  },
+  setCurrentSorting({ commit }, propertyName) {
+    commit('SET_CURRENT_SORTING', propertyName)
+  },
+  setCurrentSortingDirection({ commit }, direction) {
+    commit('SET_CURRENT_SORTING_DIRECTION', direction)
+  },
+  setCurrentSortingWithDirection({ commit }, data) {
+    commit('SET_CURRENT_SORTING', data[0])
+    commit('SET_CURRENT_SORTING_DIRECTION', data[1])
   },
   setCurrentCampaign({ commit }, id) {
     commit('SET_CURRENT_CAMPAIGN', id)

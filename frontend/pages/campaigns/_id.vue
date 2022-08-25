@@ -11,8 +11,8 @@
           <CampaignHead v-if="campaign" :campaign="campaign" />
           <div v-if="posts && posts.length">
             <PostItem
-              v-for="(post, key) in posts"
-              :key="key"
+              v-for="(post) in posts"
+              :key="post.id"
               :post="post"
               :campaign-color="campaign.color"
               @updatePost="updatePost"
@@ -71,11 +71,17 @@ export default defineComponent({
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
+    const sortingKey = computed(() => (store.state.currentSorting + store.state.currentSortingDirection))
+
     watch(newPost, (newValue) => {
       if (newValue === route.value.params.id) {
         loadCampaign()
         store.dispatch('resetNewPostOnCampaign')
       }
+    })
+
+    watch (sortingKey, () => {
+      loadCampaign()
     })
 
     const { fetchCampaign } = campaignApi()
@@ -88,9 +94,12 @@ export default defineComponent({
 
     async function loadCampaign() {
       if (route.value.params.id) {
-
         campaign.value = await fetchCampaign(route.value.params.id)
-        posts.value = await fetchPostsByCampaign(route.value.params.id)
+        posts.value = await fetchPostsByCampaign(
+          route.value.params.id,
+          store.state.currentSorting,
+          store.state.currentSortingDirection
+        )
 
         if (campaign.value && campaign.value.error) {
           router.push('/404')
