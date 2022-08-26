@@ -64,6 +64,8 @@
     }
   },
   "post": {
+    "upvotes": "Upvote(s)",
+    "downvotes": "Downvote(s)",
     "types": {
       "text": {
         "button": "Text",

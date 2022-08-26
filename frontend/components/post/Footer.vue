@@ -2,12 +2,14 @@
   <div class="flex flex-row justify-between">
     <span class="flex flex-row items-center text-sm">
       <LibraryIcon
+        v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
         class="mr-2 cursor-pointer"
         :class="myVote === 'up' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
         @click.prevent="doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
+        v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
         class="ml-2 transform-gpu rotate-180 cursor-pointer"
         :class="myVote === 'down' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
         @click.prevent="doVotePost('down')"
