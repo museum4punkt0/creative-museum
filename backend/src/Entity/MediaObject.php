@@ -61,7 +61,7 @@ class MediaObject
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
-    #[Groups(['media_object:read', 'read:post', 'read:me'])]
+    #[Groups(['media_object:read', 'read:post', 'read:me', 'campaigns:read'])]
     public ?string $contentUrl = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

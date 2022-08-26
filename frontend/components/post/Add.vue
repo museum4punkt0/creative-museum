@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext, useStore } from '@nuxtjs/composition-api'
 import PostTextIcon from '@/assets/icons/postText.svg?inline'
 import PostImageIcon from '@/assets/icons/postImage.svg?inline'
 import PostPollIcon from '@/assets/icons/postPoll.svg?inline'
@@ -37,12 +37,20 @@ export default defineComponent({
   },
   emits: ['openAddModal'],
   setup(_, context) {
+
+    const { $auth } = useContext()
+    const store = useStore()
+
     const openModal = ref('')
 
     const addMenuItems = ['Text', 'Image', 'Poll', 'Audio', 'Video', 'Playlist']
 
     function openAddModal($type) {
-      context.emit('openAddModal', $type)
+      if (!$auth.loggedIn) {
+        store.dispatch('showLogin')
+      } else {
+        context.emit('openAddModal', $type)
+      }
     }
 
     return {

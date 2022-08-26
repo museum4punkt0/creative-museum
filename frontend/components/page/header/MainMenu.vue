@@ -23,19 +23,20 @@
       </client-only>
     </div>
     <div class="mb-10 lg:mb-0">
-      <p class="text-lg font-bold leading-loose mb-4">
+      <p v-if="$auth.loggedIn" class="text-lg font-bold leading-loose mb-4">
         {{ $t('navigation.profile.header') }}
       </p>
       <NuxtLink
+        v-if="$auth.loggedIn"
         to="/user/update"
         class="block mb-4"
         @click.native="closeMenu"
         >{{ $t('navigation.profile.settings') }}</NuxtLink
       >
-      <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
+      <NuxtLink v-if="$auth.loggedIn" to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.profile.search')
       }}</NuxtLink>
-      <NuxtLink to="/" class="block" @click.native="closeMenu">{{
+      <NuxtLink v-if="$auth.loggedIn" to="/" class="block" @click.native="closeMenu">{{
         $t('navigation.profile.invite')
       }}</NuxtLink>
     </div>

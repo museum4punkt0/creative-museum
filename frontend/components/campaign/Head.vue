@@ -33,13 +33,13 @@
       >
     </div>
     <div v-if="!isLargerThanLg" class="xl:hidden">
-      <div class="mb-10">
+      <div v-if="$auth.loggedIn">
         <p class="text-lg font-bold mt-10 mb-3">
           {{ $t('user.yourCurrentScore') }}
         </p>
         <UserScore :campaign="campaign" />
       </div>
-      <CampaignFilter :campaign="campaign" />
+      <CampaignFilter :campaign="campaign" class="mt-10" />
     </div>
   </div>
 </template>

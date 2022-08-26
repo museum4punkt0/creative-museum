@@ -1,6 +1,17 @@
 <template>
   <div>
-    <SlideUp v-if="showLogin" :closable="true" @closeModal="showLogin = false"> LOGIN! </SlideUp>
+    <SlideUp v-if="showLogin" :closable="true" @closeModal="showLogin = false">
+      <div class="page-header p-6">
+        <a class="back-btn" @click.prevent="showLogin = false">
+        {{ $t('globalLogin.header') }}</a>
+      </div>
+      <div class="p-6">
+        <p class="mb-6">
+          {{ $t('globalLogin.text') }}
+        </p>
+        <button class="btn-highlight w-full">{{ $t('globalLogin.button') }}</button>
+      </div>
+    </SlideUp>
   </div>
 </template>
 <script>

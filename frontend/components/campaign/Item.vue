@@ -23,15 +23,29 @@
       <div v-if="campaign.shortDescription">
         {{ campaign.shortDescription }}
       </div>
-      <footer class="mt-auto">
+      <footer v-if="campaign.partners.length > 0" class="mt-auto">
         {{ $t('campaign.partner') }}
+        <div class="flex flex-row flex-wrap">
+          <div v-for="(partner, key) in campaign.partners" :key="key" class="mt-6">
+            <img
+              v-if="partner.logo"
+              :src="`${backendUrl}/${partner.logo.contentUrl}`"
+              :data-url="`${backendUrl}/${partner.logo.contentUrl}`"
+              :alt="partner.title"
+              class="max-w-40"
+            />
+            <p v-else>
+              {{ partner.title }}
+            </p>
+          </div>
+        </div>
       </footer>
     </article>
   </div>
 </template>
 <script>
 import { TinyColor, readability } from '@ctrl/tinycolor'
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     campaign: {
@@ -41,6 +55,7 @@ export default defineComponent({
   },
   setup(props) {
     const textColor = getContrastColorClass()
+    const context = useContext()
 
     function getContrastColorClass() {
       const bgColor = new TinyColor(props.campaign.color)
@@ -51,6 +66,7 @@ export default defineComponent({
     return {
       textColor,
       getContrastColorClass,
+      backendUrl: context.$config.backendUrl
     }
   },
 })

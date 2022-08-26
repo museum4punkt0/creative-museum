@@ -11,6 +11,11 @@
   "hide": "Ausblenden",
   "noUsername": "Kein Benutzername",
   "duration": "Dauer",
+  "globalLogin": {
+    "header": "Login",
+    "text": "Melde dich an und verdiene Punkte mit deinen Aktionen.",
+    "button": "Jetzt anmelden"
+  },
   "provideUsername": {
     "title": "Username festlegen",
     "notice": "Unerlaubte Zeichen im Usernamen.",

@@ -38,6 +38,7 @@ class Partner
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups(["campaigns:read"])]
     private $logo;
 
     public function getId(): ?int

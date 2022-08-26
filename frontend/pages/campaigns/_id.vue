@@ -19,7 +19,7 @@
               @toggle-bookmark-state="toggleBookmarkState"
             />
           </div>
-          <div v-else><button class="btn-highlight" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
+          <div v-else><button class="btn-highlight w-full mt-10" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
         </div>
         <div v-else>
           <div class="container text-center min-h-2xl relative">
@@ -86,7 +86,6 @@ export default defineComponent({
 
     const { fetchCampaign } = campaignApi()
     const { fetchPost, fetchPostsByCampaign } = postApi()
-    const { fetchUserInfoByCampaign } = userApi()
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
