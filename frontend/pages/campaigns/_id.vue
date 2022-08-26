@@ -119,6 +119,8 @@ export default defineComponent({
         if (item.id === postId) {
           fetchPost(postId).then(function (response) {
             posts.value[key].commentCount = response.commentCount
+            posts.value[key].upvotes = response.upvotes
+            posts.value[key].downvotes = response.downvotes
           })
         }
       })

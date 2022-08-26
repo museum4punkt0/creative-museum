@@ -17,6 +17,7 @@
         class="mb-4"
         :text-color="textColor"
         @triggerFeedback="triggerFeedback"
+        @voted="$emit('updatePost', post.id)"
       />
       <PostComments
         :post="post"

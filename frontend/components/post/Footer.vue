@@ -51,7 +51,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['triggerFeedback'],
+  emits: ['triggerFeedback', 'voted'],
   setup(props, context) {
     const store = useStore()
     const myVote = ref(null)
@@ -75,6 +75,7 @@ export default defineComponent({
         const voteResponse = await votePost(props.post.id, direction)
         myVote.value = voteResponse.vote.direction
         votesTotal.value = voteResponse.votestotal
+        context.emit('voted', props.post.id)
       }
     }
 
