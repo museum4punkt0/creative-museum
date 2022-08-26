@@ -24,7 +24,6 @@ export default {
   ],
   plugins: [
     '~/plugins/api',
-    { src: '~/plugins/progressBar', mode: 'client' },
     { src: '~/plugins/tooltip', mode: 'client' },
   ],
   components: true,

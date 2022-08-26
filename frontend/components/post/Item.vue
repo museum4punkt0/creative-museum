@@ -46,12 +46,11 @@
           >
             {{ option.text }}
           </button>
-          <div v-if="voted" :key="index">
-            {{ option.text }}<br />
-            <progress-bar
-              :options="progressBarOptions"
-              :value="Math.round((100 / total) * option.sum)"
-            />
+          <div v-if="voted" :key="index" class="mb-6">
+            <div class="mb-2">{{ option.text }}</div>
+            <div class="box-shadow-inset rounded-xl">
+              <div class="bg-$highlight rounded-xl text-$highlight-contrast text-center" :style="`width: ${Math.round((100 / total) * option.sum)}%`"><span class="px-3 py-0.5 inline-block" :class="Math.round((100 / total) * option.sum) < 10 ? 'text-white' : ''">{{ Math.round((100 / total) * option.sum) }}%</span></div>
+            </div>
           </div>
         </template>
       </div>

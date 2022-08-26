@@ -20,7 +20,6 @@
       class="btn-outline text-sm"
       :class="post.type === 'playlist' ? `btn-text-${textColor}` : ''"
       @click.prevent="triggerFeedback()"
-      type="button"
     >
       {{ $t('post.feedback') }}
     </button>
