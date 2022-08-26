@@ -9,7 +9,7 @@
         <p class="mb-6">
           {{ $t('globalLogin.text') }}
         </p>
-        <button class="btn-highlight w-full">{{ $t('globalLogin.button') }}</button>
+        <button class="btn-highlight w-full" @click.prevent="$auth.login()">{{ $t('globalLogin.button') }}</button>
       </div>
     </SlideUp>
   </div>
