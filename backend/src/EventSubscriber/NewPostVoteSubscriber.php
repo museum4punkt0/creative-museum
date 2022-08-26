@@ -73,6 +73,7 @@ class NewPostVoteSubscriber implements EventSubscriberInterface
                 $post->setVotestotal($post->getVotestotal() + 1);
             }
         }
+        $post->setVotesSpread($post->getDownvotes() + $post->getUpvotes());
 
         $this->entityManager->persist($post);
         $this->entityManager->flush();

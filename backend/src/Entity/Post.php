@@ -88,7 +88,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'type' => 'exact', 'reported' => 'exact', 'author' => 'exact'])]
-#[ApiFilter(OrderFilter::class, properties: ['created', 'votestotal'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(OrderFilter::class, properties: ['created', 'votestotal','votesSpread'], arguments: ['orderParameterName' => 'order'])]
 #[ORM\HasLifecycleCallbacks]
 class Post
 {
@@ -193,6 +193,10 @@ class Post
 
     #[Groups(["read:post"])]
     private $myVote = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(["read:post"])]
+    private $votesSpread = 0;
 
     public function __construct()
     {
@@ -579,6 +583,18 @@ class Post
     public function setMyVote(Vote $myVote): self
     {
         $this->myVote = $myVote;
+        return $this;
+    }
+
+    public function getVotesSpread(): ?int
+    {
+        return $this->votesSpread;
+    }
+
+    public function setVotesSpread(?int $votesSpread): self
+    {
+        $this->votesSpread = $votesSpread;
+
         return $this;
     }
 }
