@@ -4,7 +4,7 @@ namespace App\Event;
 
 use \Symfony\Contracts\EventDispatcher\Event;
 
-class NewUserRegisteredEvent extends Event
+final class NewUserRegisteredEvent extends Event
 {
     /**
      * Event Identifier

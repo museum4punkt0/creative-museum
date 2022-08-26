@@ -4,7 +4,7 @@ namespace App\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class NewActiveCampaignEvent extends Event
+final class NewActiveCampaignEvent extends Event
 {
     /**
      * Event Identifier
