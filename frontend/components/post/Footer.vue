@@ -80,7 +80,7 @@ export default defineComponent({
       if (!$auth.loggedIn) {
         store.dispatch('showLogin')
       } else {
-        context.$emit('triggerFeedback', props.post.id)
+        context.emit('triggerFeedback', props.post.id)
       }
     }
 
