@@ -4,6 +4,7 @@ export const state = () => ({
   showAddButton: false,
   currentCampaign: 0,
   currentSorting: 'date',
+  filterId: 0,
   currentSortingDirection: 'desc',
   newPostOnCampaign: 0,
   showLogin: false,
@@ -25,6 +26,11 @@ export const mutations = {
   },
   SET_CURRENT_CAMPAIGN(state, id) {
     state.currentCampaign = id
+  },
+  SET_SORTING_FEEDBACK(state, id) {
+    state.filterId = id
+    state.currentSorting = 'feedback'
+    state.currentSortingDirection = 'desc'
   },
   SET_CURRENT_SORTING(state, propertyName) {
     state.currentSorting = propertyName
@@ -64,6 +70,9 @@ export const actions = {
   },
   setCurrentSortingDirection({ commit }, direction) {
     commit('SET_CURRENT_SORTING_DIRECTION', direction)
+  },
+  setSortByCampaignFeedback({ commit }, id) {
+    commit('SET_SORTING_FEEDBACK', id)
   },
   setCurrentSortingWithDirection({ commit }, data) {
     commit('SET_CURRENT_SORTING', data[0])

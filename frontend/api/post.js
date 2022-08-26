@@ -1,7 +1,8 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useContext, useStore } from '@nuxtjs/composition-api'
 
 export const postApi = () => {
   const { $api, $auth } = useContext()
+  const store = useStore()
 
   const fetchPost = async (postId) => {
     return await $api.get(`posts/${postId}`)
@@ -129,6 +130,9 @@ export const postApi = () => {
     let orderParams = ''
     const directionKey = direction === 'asc' ? 'asc' : 'desc'
 
+    if (sorting === 'feedback') {
+      orderParams = `&order[leadingFeedbackCount]=${directionKey}&leadingFeedbackOption=${store.state.filterId}`
+    }
     if (sorting === 'date') {
       orderParams = `&order[created]=${directionKey}`
     }

@@ -71,7 +71,9 @@ export default defineComponent({
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
-    const sortingKey = computed(() => (store.state.currentSorting + store.state.currentSortingDirection))
+    const sortingKey = computed(() => (
+      store.state.currentSorting + store.state.currentSortingDirection + store.state.filterId
+    ))
 
     watch(newPost, (newValue) => {
       if (newValue === route.value.params.id) {

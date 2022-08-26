@@ -6,6 +6,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\PostFeedback;
 use App\Enum\PointsReceivedType;
 use App\Event\CampaignPointsReceivedEvent;
+use App\Event\FeedbackCreatedEvent;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -48,6 +49,9 @@ class FeedbackCreatedSubscriber implements EventSubscriberInterface
         if (!$feedback instanceof PostFeedback  || Request::METHOD_POST !== $method){
             return;
         }
+
+        $createdEvent = new FeedbackCreatedEvent($feedback);
+        $this->eventDispatcher->dispatch($createdEvent, FeedbackCreatedEvent::NAME);
 
         $feedbackPointsEvent = new CampaignPointsReceivedEvent(
             $feedback->getPost()->getCampaign()->getId(),
