@@ -38,7 +38,9 @@
         :options="campaign.feedbackOptions"
         label="Feedback"
         class="ml-3 lg:ml-0"
+        ref="feedbacksDropdown"
         @dropdownState="setHeight"
+        @dropdownChange="setFeedbackFilter"
       />
 
       <button
@@ -81,17 +83,27 @@ export default defineComponent({
   },
   setup() {
     const context = useContext()
+    const feedbacksDropdown = ref(null)
 
     const currentSorting = computed(() => context.store.state.currentSorting)
 
     const reversable = computed(() => {
-      const reversableProps = ['date', 'playlist', 'votestotal']
+      const reversableProps = ['date', 'playlist', 'votestotal', 'controversial']
       return reversableProps.includes(context.store.state.currentSorting)
     })
 
     const dropdownHeight = ref(false)
 
+    function setFeedbackFilter(id) {
+      if (currentSorting.value === 'feedback' && context.store.state.filterId === id) {
+        resetFilter()
+        return
+      }
+      context.store.dispatch('setSortByCampaignFeedback', id)
+    }
+
     function toggleRelevanceFilter() {
+      feedbacksDropdown.value.closeDropdown()
       if (currentSorting.value === 'votestotal') {
         resetFilter()
         return
@@ -103,6 +115,7 @@ export default defineComponent({
     }
 
     function toggleControversialFilter() {
+      feedbacksDropdown.value.closeDropdown()
       if (currentSorting.value === 'controversial') {
         resetFilter()
         return
@@ -114,10 +127,12 @@ export default defineComponent({
     }
 
     function resetFilter() {
+      feedbacksDropdown.value.closeDropdown()
       context.store.dispatch('setCurrentSortingWithDirection', ['date', 'desc'])
     }
 
     function togglePlaylistFilter() {
+      feedbacksDropdown.value.closeDropdown()
       if (currentSorting.value === 'playlist') {
         resetFilter()
         return
@@ -129,11 +144,7 @@ export default defineComponent({
     }
 
     function setHeight(params) {
-      if (params === true) {
-        dropdownHeight.value = true
-      } else {
-        dropdownHeight.value = false
-      }
+      dropdownHeight.value = params === true
     }
 
     function changeSortDirection() {
@@ -153,6 +164,8 @@ export default defineComponent({
       toggleControversialFilter,
       resetFilter,
       currentSorting,
+      feedbacksDropdown,
+      setFeedbackFilter,
     }
   },
 })

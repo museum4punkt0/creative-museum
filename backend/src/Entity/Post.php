@@ -87,8 +87,21 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
     ]
 )]
-#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'type' => 'exact', 'reported' => 'exact', 'author' => 'exact'])]
-#[ApiFilter(OrderFilter::class, properties: ['created', 'votestotal','votesSpread'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'campaign' => 'exact',
+        'type' => 'exact',
+        'reported' => 'exact',
+        'author' => 'exact',
+        'leadingFeedbackOption' => 'exact'
+    ]
+)]
+#[ApiFilter(
+    OrderFilter::class,
+    properties: ['created', 'votestotal','votesSpread', 'leadingFeedbackCount'],
+    arguments: ['orderParameterName' => 'order'])
+]
 #[ORM\HasLifecycleCallbacks]
 class Post
 {
@@ -197,6 +210,12 @@ class Post
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Groups(["read:post"])]
     private $votesSpread = 0;
+
+    #[ORM\ManyToOne(targetEntity: CampaignFeedbackOption::class)]
+    private $leadingFeedbackOption;
+
+    #[ORM\Column(type: 'integer')]
+    private $leadingFeedbackCount = 0;
 
     public function __construct()
     {
@@ -594,6 +613,30 @@ class Post
     public function setVotesSpread(?int $votesSpread): self
     {
         $this->votesSpread = $votesSpread;
+
+        return $this;
+    }
+
+    public function getLeadingFeedbackOption(): ?CampaignFeedbackOption
+    {
+        return $this->leadingFeedbackOption;
+    }
+
+    public function setLeadingFeedbackOption(?CampaignFeedbackOption $leadingFeedbackOption): self
+    {
+        $this->leadingFeedbackOption = $leadingFeedbackOption;
+
+        return $this;
+    }
+
+    public function getLeadingFeedbackCount(): int
+    {
+        return $this->leadingFeedbackCount;
+    }
+
+    public function setLeadingFeedbackCount(int $leadingFeedbackCount): self
+    {
+        $this->leadingFeedbackCount = $leadingFeedbackCount;
 
         return $this;
     }
