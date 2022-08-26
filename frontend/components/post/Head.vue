@@ -15,7 +15,7 @@
         >
       </div>
     </NuxtLink>
-    <div @click="showAdditionalOptions = !showAdditionalOptions">
+    <div @click.prevent="onShowAdditionalOptions">
       <ThreeDots
         class="cursor-pointer"
         :text-color="post.type === 'playlist' ? textColor : 'white'"
@@ -90,6 +90,7 @@ import {
   ref,
   computed,
   useContext,
+  useStore
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
@@ -106,6 +107,8 @@ export default defineComponent({
   },
   setup(props, context) {
     const { toggleBookmark, addToPlaylist, createPlaylistWithPost } = postApi()
+
+    const store = useStore()
 
     const showAdditionalOptions = ref(false)
     const additionalPage = ref(false)
@@ -141,6 +144,14 @@ export default defineComponent({
       })
     }
 
+    function onShowAdditionalOptions() {
+      if (!$auth.loggedIn) {
+        store.dispatch('showLogin')
+      } else {
+        showAdditionalOptions.value = true
+      }
+    }
+
     return {
       showAdditionalOptions,
       additionalPage,
@@ -150,6 +161,7 @@ export default defineComponent({
       openPlaylistSelectionModal,
       addPostToPlaylist,
       addPostToNewPlaylist,
+      onShowAdditionalOptions
     }
   },
 })
