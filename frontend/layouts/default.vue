@@ -8,7 +8,7 @@
         <Nuxt @noPosts="console.log('no posts')" />
       </div>
     </div>
-    <SlideUp v-if="showLogin" variant="bottom"> LOGIN! </SlideUp>
+    <GlobalLogin />
   </div>
 </template>
 <script>
@@ -16,13 +16,5 @@ import { defineComponent, computed, useStore } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'LayoutDefault',
-  setup() {
-    const store = useStore()
-    const showLogin = computed(() => store.state.showLogin)
-
-    return {
-      showLogin,
-    }
-  },
 })
 </script>

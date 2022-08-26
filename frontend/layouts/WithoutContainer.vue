@@ -7,6 +7,7 @@
       <Nuxt />
       <PageFooter />
     </div>
+    <GlobalLogin />
   </div>
 </template>
 <script>

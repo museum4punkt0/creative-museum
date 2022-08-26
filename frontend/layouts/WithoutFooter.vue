@@ -8,6 +8,7 @@
         <Nuxt />
       </div>
     </div>
+    <GlobalLogin />
   </div>
 </template>
 <script>

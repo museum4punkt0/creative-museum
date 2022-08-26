@@ -49,8 +49,8 @@
             @click.prevent="showLoginIfNotLoggedIn"
           ></textarea>
           <button
-            type="submit"
             class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 z-100"
+            @click.prevent="submitComment"
           >
             <ArrowIcon />
           </button>
@@ -118,6 +118,8 @@ export default defineComponent({
           context.emit('commentsLoaded', props.post.id)
         })
         $auth.fetchUser()
+      } else {
+        store.dispatch('showLogin')
       }
     }
 
@@ -136,7 +138,7 @@ export default defineComponent({
       store,
       fetchComments,
       submitComment,
-      showLoginIfNotLoggedIn,
+      showLoginIfNotLoggedIn
     }
   },
 })

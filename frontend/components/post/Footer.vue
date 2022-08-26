@@ -17,7 +17,7 @@
     <button
       class="btn-outline text-sm"
       :class="post.type === 'playlist' ? `btn-text-${textColor}` : ''"
-      @click.prevent="$emit('triggerFeedback', post.id)"
+      @click.prevent="triggerFeedback()"
       type="button"
     >
       {{ $t('post.feedback') }}
@@ -30,6 +30,7 @@ import {
   ref,
   onMounted,
   useContext,
+  useStore
 } from '@nuxtjs/composition-api'
 import LibraryIcon from '@/assets/icons/library.svg?inline'
 import { postApi } from '@/api/post'
@@ -49,7 +50,8 @@ export default defineComponent({
     },
   },
   emits: ['triggerFeedback'],
-  setup(props) {
+  setup(props, context) {
+    const store = useStore()
     const myVote = ref(null)
     const votesTotal = ref(null)
     const { $auth } = useContext()
@@ -66,18 +68,27 @@ export default defineComponent({
 
     async function doVotePost(direction) {
       if (!$auth.loggedIn) {
-        // @TODO trigger login
-        return
+        store.dispatch('showLogin')
+      } else {
+        const voteResponse = await votePost(props.post.id, direction)
+        myVote.value = voteResponse.vote.direction
+        votesTotal.value = voteResponse.votestotal
       }
-      const voteResponse = await votePost(props.post.id, direction)
-      myVote.value = voteResponse.vote.direction
-      votesTotal.value = voteResponse.votestotal
+    }
+
+    function triggerFeedback() {
+      if (!$auth.loggedIn) {
+        store.dispatch('showLogin')
+      } else {
+        context.$emit('triggerFeedback', props.post.id)
+      }
     }
 
     return {
       myVote,
       votesTotal,
       doVotePost,
+      triggerFeedback
     }
   },
 })
