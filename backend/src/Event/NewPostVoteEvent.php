@@ -2,7 +2,9 @@
 
 namespace App\Event;
 
-class NewPostVoteEvent
+use Symfony\Contracts\EventDispatcher\Event;
+
+class NewPostVoteEvent extends Event
 {
     /**
      * Event Identifier
