@@ -127,15 +127,19 @@ export const postApi = () => {
   const fetchPostsByCampaign = async (campaignId, sorting, direction) => {
 
     let orderParams = ''
+    const directionKey = direction === 'asc' ? 'asc' : 'desc'
 
     if (sorting === 'date') {
-      orderParams = `&order[created]=${direction === 'asc' ? 'asc' : 'desc'}`
+      orderParams = `&order[created]=${directionKey}`
     }
     if (sorting === 'votestotal') {
-      orderParams = `&order[votestotal]=${direction === 'asc' ? 'asc' : 'desc'}`
+      orderParams = `&order[votestotal]=${directionKey}`
     }
     if (sorting === 'playlist') {
-      orderParams = `&oder[created]=${direction === 'asc' ? 'asc' : 'desc'}&type=playlist`
+      orderParams = `&order[created]=${directionKey}&type=playlist`
+    }
+    if (sorting === 'controversial') {
+      orderParams = `&order[votesSpread]=${directionKey}`
     }
 
     return await $api.get(`posts/?campaign=${campaignId}${orderParams}`)

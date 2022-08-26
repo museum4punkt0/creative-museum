@@ -22,7 +22,9 @@
       </button>
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
+        :class="currentSorting === 'controversial' ? 'active' : ''"
         type="button"
+        @click.prevent="toggleControversialFilter"
       >
         {{ $t('filter.controversial') }}
       </button>
@@ -100,6 +102,17 @@ export default defineComponent({
       ])
     }
 
+    function toggleControversialFilter() {
+      if (currentSorting.value === 'controversial') {
+        resetFilter()
+        return
+      }
+      context.store.dispatch('setCurrentSortingWithDirection', [
+        'controversial',
+        'desc'
+      ])
+    }
+
     function resetFilter() {
       context.store.dispatch('setCurrentSortingWithDirection', ['date', 'desc'])
     }
@@ -137,6 +150,7 @@ export default defineComponent({
       changeSortDirection,
       togglePlaylistFilter,
       toggleRelevanceFilter,
+      toggleControversialFilter,
       resetFilter,
       currentSorting,
     }
