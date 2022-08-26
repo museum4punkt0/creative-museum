@@ -93,33 +93,6 @@ export default defineComponent({
 
     const textColor = getContrastColorClass()
 
-    const progressBarOptions = {
-      text: {
-        color: textColor,
-        shadowEnable: false,
-        shadowColor: '#000000',
-        fontSize: 14,
-        fontFamily: 'Helvetica',
-        dynamicPosition: false,
-        hideText: false,
-      },
-      progress: {
-        color: props.campaignColor,
-        backgroundColor: '#2e2e2e',
-        inverted: true,
-      },
-      layout: {
-        height: 35,
-        width: 200,
-        verticalTextAlign: 61,
-        horizontalTextAlign: 43,
-        zeroOffset: 0,
-        strokeWidth: 30,
-        progressPadding: 0,
-        type: 'line',
-      },
-    }
-
     function getContrastColorClass() {
       const bgColor = new TinyColor(props.campaignColor)
       const fgColor = new TinyColor('#FFFFFF')
@@ -174,7 +147,6 @@ export default defineComponent({
       voteOption,
       voted,
       total,
-      progressBarOptions,
     }
   },
 })

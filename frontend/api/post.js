@@ -158,11 +158,16 @@ export const postApi = () => {
   }
 
   const votePost = async (postId, direction) => {
-    return await $api.post(`votes`, {
+    const response = await $api.post(`votes`, {
       post: `/v1/posts/${postId}`,
       direction,
       voter: `/v1/users/${$auth.user.uuid}`,
     })
+
+    await $auth.fetchUser()
+
+    return response
+
   }
 
   const addToPlaylist = async (playlistId, postId) => {
