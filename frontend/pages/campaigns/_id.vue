@@ -29,7 +29,7 @@
       </div>
       <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
-          <UserSidebarRight :campaign="campaign" />
+          <SidebarRight :campaign="campaign" />
         </div>
       </div>
     </div>

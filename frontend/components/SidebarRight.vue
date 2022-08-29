@@ -4,10 +4,10 @@
       <UserNotifications :campaign="campaign" />
     </div>
     <div class="mb-12">
-      <UserAwards :campaign="campaign" />
+      <AwardList :campaign="campaign" />
     </div>
-    <div class="mb-12">
-      <UserBadges :campaign="campaign" />
+    <div v-if="!campaign" class="mb-12">
+      <BadgeList :campaign="campaign" />
     </div>
   </div>
 </template>

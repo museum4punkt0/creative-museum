@@ -22,7 +22,7 @@
       </div>
       <div class="mb-10">
         <p class="font-bold mb-3">
-          {{ $t('user.score') }}
+          {{ $t('score') }}
         </p>
         <UserScore :campaign="campaign" />
       </div>
