@@ -29,8 +29,7 @@
       </div>
       <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
-          <UserNotifications :campaign="campaign" />
-          <UserAwards :campaign="campaign" class="mt-14 mb-10" />
+          <UserSidebarRight :campaign="campaign" />
         </div>
       </div>
     </div>

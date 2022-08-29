@@ -27,6 +27,12 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  props: {
+    campaign: {
+      type: Object,
+      default: () => {}
+    }
+  },
   setup() {},
 })
 </script>

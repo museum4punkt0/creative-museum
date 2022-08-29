@@ -16,6 +16,7 @@ export default {
       },
     ],
   },
+  components: true,
   css: [
     'virtual:windi-base.css',
     '@/assets/css/main.scss',
@@ -26,7 +27,6 @@ export default {
     '~/plugins/api',
     { src: '~/plugins/tooltip', mode: 'client' },
   ],
-  components: true,
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',

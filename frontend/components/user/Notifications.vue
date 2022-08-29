@@ -49,3 +49,24 @@
     </div>
   </div>
 </template>
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+import { notificationApi } from '@/api/notification'
+
+export default defineComponent({
+  props: {
+    campaign: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  setup() {
+    const { getNotifications } = notificationApi()
+    const notifications = getNotifications()
+
+    return {
+      notifications
+    }
+  },
+})
+</script>
