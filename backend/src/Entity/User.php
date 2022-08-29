@@ -476,7 +476,7 @@ class User implements UserInterface
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function setFullName(string $fullName): self
+    public function setFullName(): self
     {
         $this->fullName = $this->getFirstName().' '.$this->getLastName();
 
