@@ -1,21 +1,22 @@
 <template>
   <div>
     <div class="flex flex-row justify-between">
-        <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
+      <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
 
-        <button
-          class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
-          @click.prevent="toggleShowMore"
-        >
-          <ArrowIcon
-            class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
-            :class="readMore ? 'transform-gpu rotate-180' : ''"
-          />
-          <span v-if="!readMore">{{ $t('showAll') }}</span>
-          <span v-else>{{ $t('hide') }}</span>
-        </button>
-      </div>
+      <button
+        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
+        @click.prevent="toggleShowMore"
+      >
+        <ArrowIcon
+          class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
+          :class="readMore ? 'transform-gpu rotate-180' : ''"
+        />
+        <span v-if="!readMore">{{ $t('showAll') }}</span>
+        <span v-else>{{ $t('hide') }}</span>
+      </button>
+    </div>
 
+    <div v-if="$auth.loggedIn">
       <div
         v-for="(achievement, index) in user.achievements"
         :key="index"
@@ -37,25 +38,29 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 <script>
-import { defineComponent, useStore, ref, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useStore,
+  ref,
+  computed,
+} from '@nuxtjs/composition-api'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
-
 
 export default defineComponent({
   components: {
-    ArrowIcon
+    ArrowIcon,
   },
   props: {
     campaign: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   setup() {
-
     const store = useStore()
     const user = computed(() => store.state.auth.user)
 
@@ -68,7 +73,7 @@ export default defineComponent({
     return {
       user,
       readMore,
-      toggleShowMore
+      toggleShowMore,
     }
   },
 })

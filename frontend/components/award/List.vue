@@ -24,10 +24,10 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { $auth } = useContext()
+    const { $auth }:any = useContext()
     const unavailableAwards:any = []
     const availableAwards = computed(() => {
-      if (props.campaign && 'awards' in props.campaign) {
+      if ($auth.loggedIn && props.campaign && 'awards' in props.campaign) {
         return props.campaign.awards.filter(function (item: any) {
           const currentCampaign = $auth.user.memberships.filter((membership: any) => {
             return membership.campaign.id === props.campaign.id
