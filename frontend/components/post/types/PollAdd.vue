@@ -38,9 +38,9 @@
             class="absolute bottom-1 right-2"
           />
         </div>
-        <div v-for="(option, index) of options" :key="index" class="mt-4">
+        <div v-for="(option, key) of options" :key="key" class="mt-4">
           <label class="block pb-1">{{
-            $t('post.types.poll.option.' + index)
+            $t('post.types.poll.option.' + key)
           }}</label>
           <div class="flex flex-row justify-between items-center">
             <div class="relative flex-1">
@@ -63,7 +63,7 @@
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               :aria-label="$t('post.types.poll.removeOption')"
-              @click.prevent="removeOption(index)"
+              @click.prevent="removeOption(key)"
             >
               <path
                 d="M13 24.5C19.6274 24.5 25 19.1274 25 12.5C25 5.87258 19.6274 0.5 13 0.5C6.37258 0.5 1 5.87258 1 12.5C1 19.1274 6.37258 24.5 13 24.5Z"

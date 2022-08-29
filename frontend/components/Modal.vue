@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-15 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"
+    class="fixed top-14 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"
   >
     <div
       class="

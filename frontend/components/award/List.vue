@@ -26,6 +26,7 @@ export default defineComponent({
   setup(props) {
     const { $auth }:any = useContext()
     const unavailableAwards:any = []
+    console.log(unavailableAwards)
     const availableAwards = computed(() => {
       if ($auth.loggedIn && props.campaign && 'awards' in props.campaign) {
         return props.campaign.awards.filter(function (item: any) {

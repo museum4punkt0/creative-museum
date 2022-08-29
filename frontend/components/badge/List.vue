@@ -18,11 +18,11 @@
 
     <div v-if="$auth.loggedIn">
       <div
-        v-for="(achievement, index) in user.achievements"
-        :key="index"
+        v-for="(achievement, key) in user.achievements"
+        :key="key"
         class="flex flex-row mb-6"
       >
-        <div v-if="index < 2 || readMore">
+        <div v-if="key < 2 || readMore">
           <img
             v-if="'picture' in achievement.badge"
             :src="`${backendUrl}/${achievement.badge.picture.contentUrl}`"

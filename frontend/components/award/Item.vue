@@ -5,6 +5,7 @@
         class="w-18 h-18 rounded-full mr-3 overflow-hidden flex-shrink-0"
       >
         <img
+          v-if="award.picture"
           :src="`${backendUrl}/${award.picture.contentUrl}`"
           :alt="award.title"
           class="max-w-18 h-auto"
@@ -25,7 +26,7 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <Modal v-if="awardDetailOpen === true" :closable="true" @closeModal="awardDetailOpen = false">
+      <Modal v-if="awardDetailOpen === true" @closeModal="awardDetailOpen = false">
         <AwardDetail :award="award" @closeAwardDetail="awardDetailOpen = false" />
       </Modal>
     </transition>
