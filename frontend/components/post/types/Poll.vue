@@ -5,7 +5,7 @@
 
     <div class="poll-options mt-4 grid grid-cols-2 gap-4">
       <div v-for="(option, key) of post.pollOptions" :key="key">
-        <div class="flex flex-row items-center mb-4 cursor-pointer" @click.prevent="vote(option.id)">
+        <div class="flex flex-row items-center cursor-pointer" @click.prevent="vote(option.id)">
           <span
             class="bg-$highlight text-$highlight-contrast w-10 h-10 mr-2 rounded-full flex flex-row justify-center items-center flex-shrink-0 flex-grow-0 mr-4"
           >
