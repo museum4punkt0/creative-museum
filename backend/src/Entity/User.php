@@ -53,13 +53,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(
     SearchFilter::class,
     properties: [
-        'firstName' => 'partial',
-        'lastName' => 'partial',
         'username' => 'partial',
+        'fullName' => 'partial',
         'email' => 'partial'
     ]
 )]
 #[UniqueEntity('username')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface
 {
     #[ORM\Id]
@@ -139,6 +139,10 @@ class User implements UserInterface
     #[ORM\Column(type: 'datetime')]
     #[Groups(['write:me', 'read:me'])]
     private $lastLogin;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['read:me', 'write:me'])]
+    private $fullName;
 
     public function __construct()
     {
@@ -461,6 +465,20 @@ class User implements UserInterface
     public function setLastLogin(\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $this->getFirstName().' '.$this->getLastName();
 
         return $this;
     }
