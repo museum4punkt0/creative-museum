@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:grid lg:grid-cols-12 lg:gap-4">
+  <div v-if="$auth.loggedIn" class="lg:grid lg:grid-cols-12 lg:gap-4">
     <div class="lg:col-span-3 pr-10">
       <div class="page-header p-6 md:hidden">
         <button type="button" class="back-btn" @click.prevent="backButton">
@@ -115,6 +115,7 @@ import {
   useStore,
   onMounted,
   useContext,
+  useRouter
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
@@ -125,14 +126,18 @@ export default defineComponent({
 
     const mode = ref('posts')
     const store = useStore()
+    const router = useRouter()
 
-    const { $config } = useContext()
+    const { $config, $auth } = useContext()
 
     const user = computed(() => store.state.auth.user)
     const posts = ref(null)
     const playlists = ref(null)
     const bookmarks = ref(null)
 
+    if (!$auth.loggedIn) {
+      router.push('/404')
+    }
 
     store.dispatch('hideAddButton')
     store.dispatch('setCurrentCampaign', null)
