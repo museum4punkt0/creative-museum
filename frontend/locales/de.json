@@ -207,7 +207,8 @@
   "awards": {
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",
-    "gift": "Verschenken"
+    "gift": "Verschenken",
+    "detailHeadline": "Award"
   },
   "filter": {
     "newest": "Neueste",

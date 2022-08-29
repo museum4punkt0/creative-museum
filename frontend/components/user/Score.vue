@@ -3,7 +3,7 @@
     class="box-shadow px-4 py-2 rounded-full flex flex-row items-end justify-center"
   >
     <span class="text-2xl mr-2">{{ Math.abs(campaignScore).toLocaleString() }}</span>
-    <span>{{ $t(' points') }}</span>
+    <span>{{ $t('points') }}</span>
   </div>
 </template>
 <script>

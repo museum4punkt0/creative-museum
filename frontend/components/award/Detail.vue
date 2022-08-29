@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="page-header p-6">
-      <NuxtLink :to="localePath('/')" class="back-btn">{{
-        $t('tutorial.firstSteps')
-      }}</NuxtLink>
+      <a class="back-btn" @click.prevent="$emit('closeAwardDetail')">{{
+        $t('awards.detailHeadline')
+      }}</a>
     </div>
     <div
       class="box-shadow-mobile relative m-6 lg:m-0 p-6 text-center"
@@ -22,6 +22,7 @@ export default defineComponent({
       required: true
     }
   },
+  emits: ['closeAwardDetail'],
   setup() {
 
   },
