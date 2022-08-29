@@ -1,22 +1,29 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\PartnerRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Repository\PartnerRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PartnerRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
-        "get",
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+        'get',
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 class Partner
@@ -24,23 +31,23 @@ class Partner
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotNull]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $logo;
 
     public function getId(): ?int

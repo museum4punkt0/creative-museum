@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use App\Enum\PointsReceivedType;
@@ -12,34 +19,20 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CampaignPointsReceivedSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var ScoringService
-     */
     private ScoringService $scoringService;
 
-    /**
-     * @var CampaignRepository
-     */
     private CampaignRepository $campaignRepository;
 
-    /**
-     * @var UserRepository
-     */
     private UserRepository $userRepository;
 
-    /**
-     * @var CampaignMemberService
-     */
     private CampaignMemberService $campaignMemberService;
 
-    public function __construct
-    (
-        ScoringService        $scoringService,
-        CampaignRepository    $campaignRepository,
-        UserRepository        $userRepository,
+    public function __construct(
+        ScoringService $scoringService,
+        CampaignRepository $campaignRepository,
+        UserRepository $userRepository,
         CampaignMemberService $campaignMemberService
-    )
-    {
+    ) {
         $this->scoringService = $scoringService;
         $this->campaignRepository = $campaignRepository;
         $this->userRepository = $userRepository;
@@ -56,10 +49,6 @@ class CampaignPointsReceivedSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param CampaignPointsReceivedEvent $event
-     * @return void
-     */
     public function onCampaignPointsReceived(CampaignPointsReceivedEvent $event): void
     {
         $campaign = $this->campaignRepository->find($event->getCampaignId());

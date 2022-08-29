@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Validator;
 
 use App\Entity\PostFeedback;
@@ -12,9 +19,6 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class FeedbackGivenValidator extends ConstraintValidator
 {
-    /**
-     * @var PostFeedbackService
-     */
     private PostFeedbackService $feedbackService;
 
     public function __construct(PostFeedbackService $feedbackService)

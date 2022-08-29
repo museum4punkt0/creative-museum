@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventListener;
 
 use App\Entity\Badge;
@@ -12,14 +19,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class CampaignMemberChanged
 {
-    /**
-     * @var BadgeService
-     */
     private BadgeService $badgeService;
 
-    /**
-     * @var MessageBusInterface
-     */
     private MessageBusInterface $bus;
 
     public function __construct(BadgeService $badgeService, MessageBusInterface $bus)
@@ -30,7 +31,7 @@ class CampaignMemberChanged
 
     public function preUpdate(CampaignMember $campaignMember, PreUpdateEventArgs $event): void
     {
-        if (!array_key_exists('score',$event->getEntityChangeSet()) && !array_key_exists('rewardPoints',$event->getEntityChangeSet())){
+        if (!array_key_exists('score', $event->getEntityChangeSet()) && !array_key_exists('rewardPoints', $event->getEntityChangeSet())) {
             return;
         }
 
@@ -40,9 +41,9 @@ class CampaignMemberChanged
          * @var Badge $badge
          */
         foreach ($unbadged as $badge) {
-            if (($badge->getType() === BadgeType::SCORING && $campaignMember->getScore() >= $badge->getThreshold()) || ($badge->getType() === BadgeType::REWARD_POINTS && $campaignMember->getRewardPoints() >= $badge->getThreshold())) {
-                $this->badgeService->createBadged($badge,$campaignMember->getUser());
-                $this->bus->dispatch(new NotifyNewBadgeReceived($campaignMember->getUser()->getId(),$badge->getId()));
+            if ((BadgeType::SCORING === $badge->getType() && $campaignMember->getScore() >= $badge->getThreshold()) || (BadgeType::REWARD_POINTS === $badge->getType() && $campaignMember->getRewardPoints() >= $badge->getThreshold())) {
+                $this->badgeService->createBadged($badge, $campaignMember->getUser());
+                $this->bus->dispatch(new NotifyNewBadgeReceived($campaignMember->getUser()->getId(), $badge->getId()));
             }
         }
     }

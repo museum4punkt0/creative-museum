@@ -1,50 +1,39 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Message;
 
 class NotifyAboutAwardedPoints
 {
-    /**
-     * @var int
-     */
     private int $userId;
 
-    /**
-     * @var int
-     */
     private int $points;
 
-    /**
-     * @var int
-     */
     private int $campaignId;
 
-    public function __construct(int $userId, int $points,int $campaignId)
+    public function __construct(int $userId, int $points, int $campaignId)
     {
         $this->userId = $userId;
         $this->points = $points;
         $this->campaignId = $campaignId;
     }
 
-    /**
-     * @return int
-     */
     public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @return int
-     */
     public function getPoints(): int
     {
         return $this->points;
     }
 
-    /**
-     * @return int
-     */
     public function getCampaignId(): int
     {
         return $this->campaignId;

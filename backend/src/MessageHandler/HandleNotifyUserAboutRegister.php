@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Notification;
@@ -12,9 +19,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class HandleNotifyUserAboutRegister implements MessageHandlerInterface
 {
-    /**
-     * @var UserRepository
-     */
     private UserRepository $userRepository;
 
     private EntityManagerInterface $entityManager;
@@ -29,23 +33,19 @@ class HandleNotifyUserAboutRegister implements MessageHandlerInterface
     {
         $user = $this->userRepository->find($user->getUserId());
 
-        if (!$user){
+        if (!$user) {
             return;
         }
         $this->handleNewUserRegisteredNotification($user);
     }
 
-    /**
-     * @param User $user
-     * @return void
-     */
     private function handleNewUserRegisteredNotification(User $user): void
     {
         $notification = new Notification();
         $notification
             ->setReceiver($user)
             ->setText('Herzlich Willkommen im Creative Museum')
-            ->setSilent($user->getNotificationSettings() === NotificationType::NONE);
+            ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
         $this->entityManager->persist($notification);
         $this->entityManager->flush();
     }

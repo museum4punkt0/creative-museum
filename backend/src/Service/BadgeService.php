@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\Badge;
@@ -12,31 +19,20 @@ use Doctrine\ORM\Query\Expr;
 
 class BadgeService
 {
-    /**
-     * @var BadgedRepository
-     */
     private BadgedRepository $badgedRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     public function __construct(
-        BadgedRepository         $badgedRepository,
-        EntityManagerInterface   $em
-    )
-    {
+        BadgedRepository $badgedRepository,
+        EntityManagerInterface $em
+    ) {
         $this->badgedRepository = $badgedRepository;
         $this->em = $em;
     }
 
     /**
-     * Returns all badges which are not badged to the user by campaign and user
-     *
-     * @param Campaign $campaign
-     * @param User $user
-     * @return array
+     * Returns all badges which are not badged to the user by campaign and user.
      */
     public function getUnbadged(Campaign $campaign, User $user): array
     {
@@ -62,11 +58,6 @@ class BadgeService
         return $unbadgedArr;
     }
 
-    /**
-     * @param Badge $badge
-     * @param User $user
-     * @return void
-     */
     public function createBadged(Badge $badge, User $user): void
     {
         $newBadged = new Badged();

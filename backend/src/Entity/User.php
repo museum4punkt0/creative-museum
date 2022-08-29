@@ -1,44 +1,50 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiSubresource;
-use App\Enum\NotificationType;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Controller\MeController;
+use App\Enum\NotificationType;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "me" => [
-            "method" => "GET",
-            "path" => "/users/me",
-            "normalization_context" => ["groups" => ["read:me"]],
-            "controller" => MeController::class,
-            "output_formats" => [
-                "json" => "application/json"
-            ]
+        'me' => [
+            'method' => 'GET',
+            'path' => '/users/me',
+            'normalization_context' => ['groups' => ['read:me']],
+            'controller' => MeController::class,
+            'output_formats' => [
+                'json' => 'application/json',
+            ],
         ],
-        "get",
+        'get',
     ],
     itemOperations: [
-        "get",
-        "patch" => [
-            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
-            "denormalization_context" => ["groups" => ["write:me"]],
-            "normalization_context" => ["groups" => ["read:me"]],
+        'get',
+        'patch' => [
+            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object == user",
+            'denormalization_context' => ['groups' => ['write:me']],
+            'normalization_context' => ['groups' => ['read:me']],
         ],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"]
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"],
     ],
 )]
 #[UniqueEntity('username')]
@@ -47,7 +53,7 @@ class User implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     #[ApiProperty(identifier: false)]
     private int $id;
 
@@ -55,7 +61,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(["read:me", "read:post"])]
+    #[Groups(['read:me', 'read:post'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -63,29 +69,29 @@ class User implements UserInterface
     private Collection $posts;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private Collection $playlists;
 
     #[ORM\Column(type: 'notficationtype')]
     private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['read:me', 'write:me'])]
     private bool $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
     private bool $active = true;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private int $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private Collection $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private Collection $achievements;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
@@ -94,32 +100,32 @@ class User implements UserInterface
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['read:me', 'write:me'])]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['read:me', 'write:me'])]
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["read:me", "write:me", "read:post"])]
+    #[Groups(['read:me', 'write:me', 'read:post'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(["read:post", "write:me", "read:me"])]
+    #[Groups(['read:post', 'write:me', 'read:me'])]
     private $profilePicture;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 100)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['read:me', 'write:me'])]
     private $description;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["write:me", "read:me"])]
+    #[Groups(['write:me', 'read:me'])]
     private $lastLogin;
 
     public function __construct()
@@ -224,17 +230,11 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return NotificationType
-     */
     public function getNotificationSettings(): NotificationType
     {
         return $this->notificationSettings;
     }
 
-    /**
-     * @param NotificationType $notificationSettings
-     */
     public function setNotificationSettings(NotificationType $notificationSettings): self
     {
         $this->notificationSettings = $notificationSettings;

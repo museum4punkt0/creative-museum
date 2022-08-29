@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -17,40 +24,23 @@ use Symfony\Component\Security\Core\Security;
 
 class PostVoteController extends AbstractController
 {
-    /**
-     * @var VoteRepository
-     */
     private VoteRepository $votesRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @var EventDispatcherInterface
-     */
     private EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var Security
-     */
     private Security $security;
 
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
-    public function __construct
-    (
-        VoteRepository           $votesRepository,
-        EntityManagerInterface   $entityManager,
+    public function __construct(
+        VoteRepository $votesRepository,
+        EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
-        Security                 $security,
-        PostRepository           $postRepository,
-    )
-    {
+        Security $security,
+        PostRepository $postRepository,
+    ) {
         $this->votesRepository = $votesRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
@@ -68,7 +58,7 @@ class PostVoteController extends AbstractController
 
         $dbVote = $this->votesRepository->findOneBy([
             'voter' => $user->getId(),
-            'post' => $data->getPost()->getId()
+            'post' => $data->getPost()->getId(),
         ]);
         $data->setVoter($user);
         $oldDirection = null;
@@ -82,7 +72,7 @@ class PostVoteController extends AbstractController
                 PointsReceivedType::UPVOTE->value
             );
             $this->eventDispatcher->dispatch($campaignPointsEvent, CampaignPointsReceivedEvent::NAME);
-        }elseif ($dbVote->getDirection()->value === $data->getDirection()->value) {
+        } elseif ($dbVote->getDirection()->value === $data->getDirection()->value) {
             $oldDirection = $dbVote->getDirection()->value;
             $dbVote->setDirection(VoteDirection::NONE);
             $this->entityManager->persist($dbVote);
@@ -99,7 +89,7 @@ class PostVoteController extends AbstractController
 
         $result = [
             'vote' => $dbVote,
-            'votestotal' => $this->postRepository->find($data->getPost())->getVotestotal()
+            'votestotal' => $this->postRepository->find($data->getPost())->getVotestotal(),
         ];
 
         return $result;

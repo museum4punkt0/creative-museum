@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -11,14 +18,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 #[ApiResource(
-    attributes: ["security" => "is_granted('ROLE_USER')"],
+    attributes: ['security' => "is_granted('ROLE_USER')"],
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.creator == user"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.creator == user"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.creator == user and previous_object.creator == user)"]
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.creator == user and previous_object.creator == user)"],
     ],
 )]
 class Playlist
@@ -26,11 +33,11 @@ class Playlist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:me", "read:post"])]
+    #[Groups(['read:me', 'read:post'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me", "read:post"])]
+    #[Groups(['read:me', 'read:post'])]
     private $title;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
@@ -98,10 +105,7 @@ class Playlist
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     public function getPostCount(): int
     {
         return $this->getPosts()->count();

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Validator;
 
 use App\Entity\Post;
@@ -15,8 +22,6 @@ class PollTypeValidator extends ConstraintValidator
 {
     /**
      * @param $value
-     * @param Constraint $constraint
-     * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -24,17 +29,17 @@ class PollTypeValidator extends ConstraintValidator
             return;
         }
 
-        if (!($value->getPostType() === PostType::POLL)) {
+        if (!(PostType::POLL === $value->getPostType())) {
             return;
         }
 
         /**
-         * @var Post $value
+         * @var Post     $value
          * @var PollType $constraint
          */
         if ($value->getPollOptions()->count() > 5) {
             $this->context->buildViolation($constraint->tooMuchPollOptions)->addViolation();
-        }elseif ($value->getPollOptions()->count() < 2) {
+        } elseif ($value->getPollOptions()->count() < 2) {
             $this->context->buildViolation($constraint->tooFewPollOptions)->addViolation();
         }
 

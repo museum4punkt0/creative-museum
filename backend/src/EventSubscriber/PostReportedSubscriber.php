@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -13,17 +20,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Security;
 
-
 class PostReportedSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var MessageBusInterface
-     */
     private MessageBusInterface $bus;
 
-    /**
-     * @var Security
-     */
     private Security $security;
 
     public function __construct(MessageBusInterface $bus, Security $security)
@@ -55,7 +55,7 @@ class PostReportedSubscriber implements EventSubscriberInterface
             return null;
         }
 
-        $notification = new NotifyUserAboutReportingSuccess($user->getId(),$post->getId());
+        $notification = new NotifyUserAboutReportingSuccess($user->getId(), $post->getId());
         $this->bus->dispatch($notification);
     }
 }

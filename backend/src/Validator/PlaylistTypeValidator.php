@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Validator;
 
 use App\Entity\Post;
@@ -14,19 +21,17 @@ final class PlaylistTypeValidator extends ConstraintValidator
 {
     /**
      * @param $value
-     * @param Constraint $constraint
-     * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value instanceof Post){
+        if (!$value instanceof Post) {
             return;
         }
 
         /**
          * @var Post $value
          */
-        if ($value->getPostType() === PostType::PLAYLIST && ! $value->getLinkedPlaylist()) {
+        if (PostType::PLAYLIST === $value->getPostType() && !$value->getLinkedPlaylist()) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }
     }

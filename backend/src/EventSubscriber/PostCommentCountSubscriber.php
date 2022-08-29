@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -13,9 +20,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class PostCommentCountSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
     public function __construct(PostRepository $postRepository)
@@ -26,7 +30,7 @@ class PostCommentCountSubscriber implements EventSubscriberInterface
     /**
      * @return array[]
      */
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -34,10 +38,6 @@ class PostCommentCountSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
     public function increaseCommentCount(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
@@ -50,13 +50,9 @@ class PostCommentCountSubscriber implements EventSubscriberInterface
         $this->postRepository->increaseCommentCount($post);
     }
 
-    /**
-     * @param Post $post
-     * @return bool
-     */
     private function isComment(Post $post): bool
     {
-        if (is_null($post->getParent())){
+        if (is_null($post->getParent())) {
             return false;
         }
 

@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Security;
 
 use App\Entity\CampaignMember;
@@ -28,7 +35,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class IdpAuthenticator extends AbstractAuthenticator
 {
-    const AUTH_HEADER_NAME = 'authorization';
+    public const AUTH_HEADER_NAME = 'authorization';
 
     private JWTTokenManagerInterface $jwtManager;
 
@@ -37,17 +44,16 @@ class IdpAuthenticator extends AbstractAuthenticator
     private EventDispatcherInterface $eventDispatcher;
 
     private CampaignRepository $campaignRepository;
-    
+
     private CampaignMemberRepository $campaignMemberRepository;
 
     public function __construct(
         JWTTokenManagerInterface $jwtManager,
-        EntityManagerInterface   $entityManager,
+        EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
-        CampaignRepository       $campaignRepository,
+        CampaignRepository $campaignRepository,
         CampaignMemberRepository $campaignMemberRepository
-    )
-    {
+    ) {
         $this->jwtManager = $jwtManager;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
@@ -76,7 +82,6 @@ class IdpAuthenticator extends AbstractAuthenticator
 
         return new SelfValidatingPassport(
             new UserBadge($token['sub'], function () use ($token) {
-
                 /** @var User $existingUser */
                 $existingUser = $this->entityManager->getRepository(User::class)
                     ->findOneBy(['uuid' => $token['sub']]);
@@ -93,7 +98,7 @@ class IdpAuthenticator extends AbstractAuthenticator
                     if (!is_null($newestCampaign)) {
                         $existingCampignMember = $this->campaignMemberRepository->findOneBy([
                             'campaign' => $newestCampaign->getId(),
-                            'user' => $existingUser->getId()
+                            'user' => $existingUser->getId(),
                         ]);
 
                         if (!$existingCampignMember) {
@@ -121,7 +126,7 @@ class IdpAuthenticator extends AbstractAuthenticator
                 $provider = new IdpOauthProvider([
                     'clientId' => $_ENV['IDP_OAUTH_CLIENT_ID'],
                     'clientSecret' => $_ENV['IDP_OAUTH_CLIENT_SECRET'],
-                    'verify' => 'dev' !== $_ENV['APP_ENV']
+                    'verify' => 'dev' !== $_ENV['APP_ENV'],
                 ]);
 
                 $idpToken = $provider->getAccessToken(
@@ -175,6 +180,7 @@ class IdpAuthenticator extends AbstractAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());
+
         return new Response($message, Response::HTTP_UNAUTHORIZED);
     }
 }

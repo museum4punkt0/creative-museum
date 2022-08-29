@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -9,29 +16,24 @@ use App\Event\CampaignPointsReceivedEvent;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpFoundation\Request;
-
 
 class PostCreatedSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @return array[]
      */
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -39,10 +41,6 @@ class PostCreatedSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
     public function postCreated(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
@@ -52,13 +50,13 @@ class PostCreatedSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($post->getParent()){
+        if ($post->getParent()) {
             $postPointsEvent = new CampaignPointsReceivedEvent(
                 $post->getCampaign()->getId(),
                 $post->getAuthor()->getId(),
                 PointsReceivedType::COMMENT_CREATED->value
             );
-        }else{
+        } else {
             $postPointsEvent = new CampaignPointsReceivedEvent(
                 $post->getCampaign()->getId(),
                 $post->getAuthor()->getId(),
