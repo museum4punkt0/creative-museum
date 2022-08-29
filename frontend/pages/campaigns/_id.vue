@@ -19,6 +19,7 @@
               @toggle-bookmark-state="toggleBookmarkState"
             />
           </div>
+          <UtilitiesLoadingIndicator v-else-if="!posts" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           <div v-else><button class="btn-highlight w-full mt-10" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
         </div>
         <div v-else>
