@@ -15,7 +15,9 @@
         type="button"
         @click.prevent="$emit('closeModal')"
       ></button>
-      <slot></slot>
+      <div class="overflow-y-scroll max-h-screen">
+        <slot />
+      </div>
     </div>
   </div>
 </template>

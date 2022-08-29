@@ -1,4 +1,5 @@
 import { defineConfig } from 'windicss/helpers'
+
 export default defineConfig({
   extract: {
     include: ['**/*.{vue,html,jsx,tsx}'],
@@ -41,5 +42,8 @@ export default defineConfig({
       },
     },
   },
-  plugins: [require('tailwindcss-container-bleed')],
+  plugins: [
+    require('tailwindcss-container-bleed'),
+    require('windicss/plugin/scroll-snap')
+  ],
 })
