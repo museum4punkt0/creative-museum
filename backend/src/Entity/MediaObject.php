@@ -63,7 +63,7 @@ class MediaObject
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['media_object:read', 'read:post'])]
+    #[Groups(['media_object:read', 'read:post', 'campaigns:read'])]
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
@@ -74,7 +74,7 @@ class MediaObject
     public ?string $filepath = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['media_object:read', 'read:post'])]
+    #[Groups(['media_object:read', 'read:post', 'campaigns:read'])]
     private string $description;
 
     #[ORM\Column(type: 'datetime_immutable')]

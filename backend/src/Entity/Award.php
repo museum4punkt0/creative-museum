@@ -46,6 +46,7 @@ class Award
     private $description;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['campaigns:read'])]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'awards')]
@@ -53,6 +54,7 @@ class Award
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups(['campaigns:read'])]
     private $picture;
 
     public function getId(): ?int
