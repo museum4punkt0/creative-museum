@@ -9,12 +9,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\MeController;
 use App\Enum\NotificationType;
 use App\Repository\UserRepository;
+use App\SearchFilter\FullTextSearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -46,6 +49,15 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"],
     ],
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'firstName' => 'partial',
+        'lastName' => 'partial',
+        'username' => 'partial',
+        'email' => 'partial'
+    ]
 )]
 #[UniqueEntity('username')]
 class User implements UserInterface
@@ -149,7 +161,7 @@ class User implements UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->uuid;
+        return (string)$this->uuid;
     }
 
     /**
