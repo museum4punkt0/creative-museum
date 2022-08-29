@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -13,12 +20,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
-        "get",
+        'get',
     ],
     itemOperations: [
-        "get",
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
-        'patch' => ['normalization_context' => ['groups' => ['patch']]]
+        'get',
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
+        'patch' => ['normalization_context' => ['groups' => ['patch']]],
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'receiver' => 'exact'])]
@@ -46,7 +53,7 @@ class Notification
     private $silent = false;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["patch"])]
+    #[Groups(['patch'])]
     private $viewed = false;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]

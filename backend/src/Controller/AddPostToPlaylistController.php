@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Playlist;
@@ -13,12 +20,6 @@ use Symfony\Component\Security\Core\Security;
 
 class AddPostToPlaylistController extends AbstractController
 {
-    /**
-     * @param PlaylistRepository $playlistRepository
-     * @param PostRepository $postRepository
-     * @param EntityManagerInterface $entityManager
-     * @param Security $security
-     */
     public function __construct(
         PlaylistRepository $playlistRepository,
         PostRepository $postRepository,
@@ -31,8 +32,8 @@ class AddPostToPlaylistController extends AbstractController
         $this->security = $security;
     }
 
-    public function __invoke(int $playlistId, int $postId): Response {
-
+    public function __invoke(int $playlistId, int $postId): Response
+    {
         $user = $this->security->getUser();
 
         if (null === $user) {
@@ -42,7 +43,7 @@ class AddPostToPlaylistController extends AbstractController
         $playlist = $this->playlistRepository->findOneBy(['id' => $playlistId]);
         $post = $this->postRepository->findOneBy(['id' => $postId]);
 
-        if (! $playlist instanceof Playlist || ! $post instanceof Post) {
+        if (!$playlist instanceof Playlist || !$post instanceof Post) {
             return new Response('Post or playlist doesn\'t exist', Response::HTTP_BAD_REQUEST);
         }
 

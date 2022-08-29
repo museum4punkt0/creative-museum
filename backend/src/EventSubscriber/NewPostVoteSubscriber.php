@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use App\Enum\VoteDirection;
@@ -10,14 +17,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NewPostVoteSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
     public function __construct(PostRepository $postRepository, EntityManagerInterface $entityManager)
@@ -37,7 +38,6 @@ class NewPostVoteSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param NewPostVoteEvent $event
      * @return void
      */
     public function onPostVoteReceived(NewPostVoteEvent $event)

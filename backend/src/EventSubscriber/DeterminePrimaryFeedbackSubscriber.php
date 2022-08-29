@@ -1,5 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 namespace App\EventSubscriber;
 
@@ -15,10 +23,6 @@ class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
 
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @param PostFeedbackRepository $feedbackRepository
-     * @param EntityManagerInterface $entityManager
-     */
     public function __construct(
         PostFeedbackRepository $feedbackRepository,
         EntityManagerInterface $entityManager
@@ -27,7 +31,7 @@ class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
-    #[ArrayShape([FeedbackCreatedEvent::NAME => "string"])]
+    #[ArrayShape([FeedbackCreatedEvent::NAME => 'string'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -35,10 +39,6 @@ class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FeedbackCreatedEvent $feedbackCreatedEvent
-     * @return void
-     */
     public function onFeedbackCreated(FeedbackCreatedEvent $feedbackCreatedEvent): void
     {
         $post = $feedbackCreatedEvent->getPostFeedback()->getPost();
@@ -48,14 +48,14 @@ class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
         $calc = [];
 
         foreach ($feedbacks as $feedback) {
-            if (!isset ($calc[$feedback->getId()])) {
+            if (!isset($calc[$feedback->getId()])) {
                 $calc[$feedback->getId()] = ['feedback' => $feedback->getSelection(), 'count' => 1];
                 continue;
             }
-            $calc[$feedback->getId()]['count'] += 1;
+            ++$calc[$feedback->getId()]['count'];
         }
 
-        uasort($calc, function($a, $b) {
+        uasort($calc, function ($a, $b) {
             return $b['count'] <=> $a['count'];
         });
 

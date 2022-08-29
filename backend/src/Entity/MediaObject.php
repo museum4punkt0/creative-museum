@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
@@ -12,7 +19,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 
 /**
  * @Vich\Uploadable
@@ -37,8 +43,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                         'format' => 'binary',
                                     ],
                                     'description' => [
-                                        'type' => 'string'
-                                    ]
+                                        'type' => 'string',
+                                    ],
                                 ],
                             ],
                         ],

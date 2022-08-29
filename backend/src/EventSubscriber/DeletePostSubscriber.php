@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -17,46 +24,26 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class DeletePostSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
-    /**
-     * @var VoteRepository
-     */
     private VoteRepository $votesRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @var PollOptionChoiceService
-     */
     private PollOptionChoiceService $choiceService;
 
-    /**
-     * @var PollOptionChoiceRepository
-     */
     private PollOptionChoiceRepository $pollOptionChoiceRepository;
 
-    /**
-     * @var PostFeedbackRepository
-     */
     private PostFeedbackRepository $postFeedbackRepository;
 
-    public function __construct
-    (
-        PostRepository             $postRepository,
-        VoteRepository             $votesRepository,
-        EntityManagerInterface     $entityManager,
-        PollOptionChoiceService    $choiceService,
+    public function __construct(
+        PostRepository $postRepository,
+        VoteRepository $votesRepository,
+        EntityManagerInterface $entityManager,
+        PollOptionChoiceService $choiceService,
         PollOptionChoiceRepository $pollOptionChoiceRepository,
-        PostFeedbackRepository     $postFeedbackRepository
-    )
-    {
+        PostFeedbackRepository $postFeedbackRepository
+    ) {
         $this->postRepository = $postRepository;
         $this->votesRepository = $votesRepository;
         $this->entityManager = $entityManager;
@@ -68,13 +55,13 @@ class DeletePostSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['onDeletePostAction', EventPriorities::PRE_WRITE]
+            KernelEvents::VIEW => ['onDeletePostAction', EventPriorities::PRE_WRITE],
         ];
     }
 
     /**
-     * @param ViewEvent $event
      * @return void
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -95,7 +82,7 @@ class DeletePostSubscriber implements EventSubscriberInterface
             $this->entityManager->flush();
         } else {
             $votes = $this->votesRepository->findBy([
-                'post' => $post->getId()
+                'post' => $post->getId(),
             ]);
             foreach ($votes as $vote) {
                 $this->votesRepository->remove($vote);
@@ -107,7 +94,7 @@ class DeletePostSubscriber implements EventSubscriberInterface
             }
 
             $postFeedbacks = $this->postFeedbackRepository->findBy([
-                'post' => $post->getId()
+                'post' => $post->getId(),
             ]);
             foreach ($postFeedbacks as $feedback) {
                 $this->postFeedbackRepository->remove($feedback);

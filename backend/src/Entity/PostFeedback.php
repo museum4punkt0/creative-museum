@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -16,19 +23,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: PostFeedbackRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get" => ["normalization_context" => ["groups" => ["read:feedbacks"]]],
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
-        "get_post_feedback_results" => [
-            "method" => "GET",
-            "path" => "/posts/{postId}/feedback_results",
-            "read" => false,
-            "controller" => GetPostFeedbackResultsController::class
+        'get' => ['normalization_context' => ['groups' => ['read:feedbacks']]],
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'get_post_feedback_results' => [
+            'method' => 'GET',
+            'path' => '/posts/{postId}/feedback_results',
+            'read' => false,
+            'controller' => GetPostFeedbackResultsController::class,
         ],
     ],
     itemOperations: [
-        "get" => ["security" => "is_granted('ROLE_ADMIN') or object.user == user"],
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"]
+        'get' => ['security' => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['post' => 'exact', 'user' => 'exact'])]

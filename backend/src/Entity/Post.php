@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -12,11 +19,11 @@ use App\Controller\SetBookmarkController;
 use App\Controller\SetCommentController;
 use App\Enum\PostType;
 use App\Repository\PostRepository;
+use App\Validator\Constraints\PlaylistType;
 use App\Validator\Constraints\PollType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Validator\Constraints\PlaylistType;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Serializer\Annotation\SerializedName;
@@ -24,29 +31,30 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Secured resource.
+ *
  * @PlaylistType
  * @PollType
  * @\App\Validator\Constraints\PostBodyLength
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(
-    order: ["created" => "DESC"],
+    order: ['created' => 'DESC'],
     collectionOperations: [
-        "get" => [
-            "normalization_context" => ["groups" => ["read:post"]]
+        'get' => [
+            'normalization_context' => ['groups' => ['read:post']],
         ],
-        "post" => [
-            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.author == user",
-            "denormalization_context" => ["groups" => ["write:post"]],
-            "normalization_context" => ["groups" => ["read:post"]]
+        'post' => [
+            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.author == user",
+            'denormalization_context' => ['groups' => ['write:post']],
+            'normalization_context' => ['groups' => ['read:post']],
         ],
-        "post_comment" => [
-            "method" => "POST",
-            "path" => "/posts/{id}/comments",
-            "requirements" => ["id" => "\d+", "comment" => "array"],
-            "controller" => SetCommentController::class,
+        'post_comment' => [
+            'method' => 'POST',
+            'path' => '/posts/{id}/comments',
+            'requirements' => ['id' => "\d+", 'comment' => 'array'],
+            'controller' => SetCommentController::class,
             'normalization_context' => ['groups' => 'write:comment'],
-        ]
+        ],
     ],
     subresourceOperations: [
         'api_posts_comments_get_subresource' => [
@@ -54,36 +62,36 @@ use Symfony\Component\Validator\Constraints as Assert;
             'normalization_context' => [
                 'groups' => ['read:post'],
             ],
-            "maxDepth" => 2,
-            "order" => ["created" => "ASC"]
+            'maxDepth' => 2,
+            'order' => ['created' => 'ASC'],
         ],
         'api_users_bookmarks_get_subresource' => [
             'normalization_context' => [
-                'groups' => ['read:post']
-            ]
+                'groups' => ['read:post'],
+            ],
         ],
     ],
     itemOperations: [
-        "get" => [
-            "normalization_context" => ["groups" => ["read:post"]]
+        'get' => [
+            'normalization_context' => ['groups' => ['read:post']],
         ],
-        "add_post_to_playlist" => [
-            "method" => "GET",
-            "path" => "/playlists/{playlistId}/add-post/{postId}",
-            "read" => false,
-            "controller" => AddPostToPlaylistController::class
+        'add_post_to_playlist' => [
+            'method' => 'GET',
+            'path' => '/playlists/{playlistId}/add-post/{postId}',
+            'read' => false,
+            'controller' => AddPostToPlaylistController::class,
         ],
-        "bookmark" => [
-            "method" => "GET",
-            "path" => "/posts/{id}/bookmark",
-            "requirements" => ["id" => "\d+"],
-            "controller" => SetBookmarkController::class,
-            "normalization_context" => ['groups' => 'write:post:bookmarks']
+        'bookmark' => [
+            'method' => 'GET',
+            'path' => '/posts/{id}/bookmark',
+            'requirements' => ['id' => "\d+"],
+            'controller' => SetBookmarkController::class,
+            'normalization_context' => ['groups' => 'write:post:bookmarks'],
         ],
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
-        "delete" => [
-            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)",
-            "normalization_context" => ["groups" => ["delete:post"]]
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
+        'delete' => [
+            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)",
+            'normalization_context' => ['groups' => ['delete:post']],
         ],
     ]
 )]
@@ -94,12 +102,12 @@ use Symfony\Component\Validator\Constraints as Assert;
         'type' => 'exact',
         'reported' => 'exact',
         'author' => 'exact',
-        'leadingFeedbackOption' => 'exact'
+        'leadingFeedbackOption' => 'exact',
     ]
 )]
 #[ApiFilter(
     OrderFilter::class,
-    properties: ['created', 'votestotal','votesSpread', 'leadingFeedbackCount'],
+    properties: ['created', 'votestotal', 'votesSpread', 'leadingFeedbackCount'],
     arguments: ['orderParameterName' => 'order'])
 ]
 #[ORM\HasLifecycleCallbacks]
@@ -108,107 +116,107 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     private $body;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["write:post", "read:post", "write:comment", "write:vote", "read:vote"])]
+    #[Groups(['write:post', 'read:post', 'write:comment', 'write:vote', 'read:vote'])]
     private $votestotal = 0;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ["persist","remove"])]
-    #[Groups(["write:post", "read:post"])]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ['persist', 'remove'])]
+    #[Groups(['write:post', 'read:post'])]
     #[Assert\Valid]
     private $pollOptions;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments',)]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments', )]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(["write:comment", "delete:post"])]
+    #[Groups(['write:comment', 'delete:post'])]
     #[Ignore]
     private $parent;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class, cascade: ["persist","remove"])]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class, cascade: ['persist', 'remove'])]
     #[ApiSubresource]
     #[ORM\OrderBy(['created' => 'ASC'])]
     private $comments;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post", "read:post", "write:comment"])]
+    #[Groups(['write:post', 'read:post', 'write:comment'])]
     private $campaign;
 
-    #[ORM\ManyToMany(targetEntity: Playlist::class, cascade: ["persist","remove"])]
-    #[Groups(["write:post", "read:post"])]
+    #[ORM\ManyToMany(targetEntity: Playlist::class, cascade: ['persist', 'remove'])]
+    #[Groups(['write:post', 'read:post'])]
     private $playlist;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     #[Assert\Length(max: 100)]
     private $question;
 
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     private $files;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $commentCount = 0;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     private $blocked = false;
 
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $bookmarked = false;
 
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $rated = false;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     private $reported = false;
 
     #[ORM\ManyToOne(targetEntity: Playlist::class)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     private $linkedPlaylist;
 
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $myVote = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $votesSpread = 0;
 
     #[ORM\ManyToOne(targetEntity: CampaignFeedbackOption::class)]
@@ -271,19 +279,13 @@ class Post
         return $this;
     }
 
-    /**
-     * @return PostType
-     */
     public function getPostType(): PostType
     {
         return $this->type;
     }
 
-    /**
-     * @param PostType $type
-     */
     #[SerializedName('postType')]
-    #[Groups(["write:post"])]
+    #[Groups(['write:post'])]
     public function setPostType(PostType $type): self
     {
         $this->type = $type;
@@ -299,6 +301,7 @@ class Post
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -355,7 +358,7 @@ class Post
      */
     public function onPrePersist()
     {
-        $this->created = new \DateTime("now");
+        $this->created = new \DateTime('now');
         $this->updatedAt = $this->created;
         $this->upvotes = 0;
         $this->downvotes = 0;
@@ -367,7 +370,7 @@ class Post
      */
     public function onPreUpdate()
     {
-        $this->updatedAt = new \DateTime("now");
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**
@@ -525,7 +528,8 @@ class Post
 
     public function increaseCommentCount(): self
     {
-        $this->commentCount++;
+        ++$this->commentCount;
+
         return $this;
     }
 
@@ -549,6 +553,7 @@ class Post
     public function setBookmarked(bool $bookmarked): self
     {
         $this->bookmarked = $bookmarked;
+
         return $this;
     }
 
@@ -560,6 +565,7 @@ class Post
     public function setRated(bool $rated): self
     {
         $this->rated = $rated;
+
         return $this;
     }
 
@@ -596,12 +602,12 @@ class Post
     }
 
     /**
-     * @param Vote $myVote
      * @return Post
      */
     public function setMyVote(Vote $myVote): self
     {
         $this->myVote = $myVote;
+
         return $this;
     }
 

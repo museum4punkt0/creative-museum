@@ -1,27 +1,33 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\AwardedRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Secured resource.
+ *
  * @\App\Validator\Constraints\Awarded
  */
 #[ORM\Entity(repositoryClass: AwardedRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.giver == user"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.giver == user"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.giver == user and previous_object.giver == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.giver == user and previous_object.giver == user)"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 class Awarded

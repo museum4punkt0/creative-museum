@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -13,14 +20,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class CampaignNotificationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var MessageBusInterface
-     */
     private MessageBusInterface $bus;
 
-    /**
-     * @var CampaignRepository
-     */
     private CampaignRepository $campaignRepository;
 
     public function __construct(MessageBusInterface $bus, CampaignRepository $campaignRepository)
@@ -38,13 +39,12 @@ class CampaignNotificationSubscriber implements EventSubscriberInterface
 
     /**
      * @param RequestEvent $event
-     * @return void
      */
     public function handleNewCampaignNotification(ViewEvent $event): void
     {
         $campaigns = $this->campaignRepository->getUnnotifiedActive();
 
-        if (empty($campaigns)){
+        if (empty($campaigns)) {
             return;
         }
 

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\Campaign;
@@ -10,9 +17,6 @@ use App\Repository\CampaignMemberRepository;
 
 class CampaignMemberService
 {
-    /**
-     * @var CampaignMemberRepository
-     */
     private CampaignMemberRepository $campaignMemberRepository;
 
     public function __construct(CampaignMemberRepository $campaignMemberRepository)
@@ -22,13 +26,12 @@ class CampaignMemberService
 
     /**
      * @param Post $post
-     * @return bool
      */
     public function isCampaignMember(Campaign $campaign, User $user): bool
     {
         $result = $this->campaignMemberRepository->findBy([
             'campaign' => $campaign->getId(),
-            'user' => $user->getId()
+            'user' => $user->getId(),
         ]);
 
         return !empty($result);

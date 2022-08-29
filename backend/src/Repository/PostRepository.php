@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Post;
@@ -48,7 +55,6 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Post $comment
      * @return void
      */
     public function increaseCommentCount(Post $comment)
@@ -63,7 +69,7 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * @param Post $post
-     * @param int $limit
+     *
      * @return float|int|mixed|string
      */
     public function getRecentPostComments(int $postId, int $limit = 2)

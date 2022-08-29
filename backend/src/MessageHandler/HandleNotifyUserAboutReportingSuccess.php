@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Notification;
@@ -14,28 +21,17 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
 {
-    /**
-     * @var UserRepository
-     */
     private UserRepository $userRepository;
 
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
-    public function __construct
-    (
+    public function __construct(
         UserRepository $userRepository,
         PostRepository $postRepository,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->postRepository = $postRepository;
         $this->entityManager = $entityManager;
@@ -46,11 +42,11 @@ class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
         $user = $this->userRepository->find($report->getUserId());
         $post = $this->postRepository->find($report->getPostId());
 
-        if (!$user || !$post){
+        if (!$user || !$post) {
             return;
         }
 
-        $this->handlePostReportedSuccessNotification($user,$post);
+        $this->handlePostReportedSuccessNotification($user, $post);
     }
 
     private function handlePostReportedSuccessNotification(User $reporter, Post $post)
@@ -60,7 +56,7 @@ class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
             ->setReceiver($reporter)
             ->setPost($post)
             ->setText('Danke, wir kümmern uns und prüfen den Post.')
-            ->setSilent($reporter->getNotificationSettings() === NotificationType::NONE);
+            ->setSilent(NotificationType::NONE === $reporter->getNotificationSettings());
         $this->entityManager->persist($reporterNotification);
 
         $postAuthorNotification = new Notification();
@@ -68,7 +64,7 @@ class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
             ->setReceiver($post->getAuthor())
             ->setPost($post)
             ->setText('Ihr Beitrag wird von der Redaktion auf unangemessene Inhalte geprüft.')
-            ->setSilent($post->getAuthor()->getNotificationSettings() === NotificationType::NONE);
+            ->setSilent(NotificationType::NONE === $post->getAuthor()->getNotificationSettings());
         $this->entityManager->persist($postAuthorNotification);
         $this->entityManager->flush();
     }

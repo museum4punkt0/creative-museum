@@ -1,7 +1,13 @@
 <?php
 
-namespace App\Validator;
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
+namespace App\Validator;
 
 use App\Entity\Post;
 use App\Enum\PostType;
@@ -13,32 +19,19 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class PostBodyLengthValidator extends ConstraintValidator
 {
-    /**
-     * @var int
-     */
     private int $textPostBodyLength;
 
-    /**
-     * @var int
-     */
     private int $imagePostBodyLength;
 
-    /**
-     * @var int
-     */
     private int $videoPostBodyLength;
 
-    /**
-     * @var Constraint
-     */
     private Constraint $constraint;
 
     public function __construct(
         int $textPostBodyLength,
         int $imagePostBodyLength,
         int $videoPostBodyLength
-    )
-    {
+    ) {
         $this->textPostBodyLength = $textPostBodyLength;
         $this->imagePostBodyLength = $imagePostBodyLength;
         $this->videoPostBodyLength = $videoPostBodyLength;
@@ -46,8 +39,6 @@ class PostBodyLengthValidator extends ConstraintValidator
 
     /**
      * @param $value
-     * @param Constraint $constraint
-     * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -69,12 +60,6 @@ class PostBodyLengthValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param string $bodyValue
-     * @param string $postType
-     * @param int $maxLength
-     * @return void
-     */
     private function validateBodyLength(string $bodyValue, string $postType, int $maxLength): void
     {
         if (strlen($bodyValue) > $maxLength) {

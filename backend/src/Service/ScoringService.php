@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\Campaign;
@@ -19,82 +26,44 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class ScoringService
 {
-    /**
-     * @var int
-     */
     private int $rewardPoints;
 
-    /**
-     * @var int
-     */
     private int $registrationScorePoints;
 
-    /**
-     * @var int
-     */
     private int $loginScorePoints;
 
-    /**
-     * @var int
-     */
     private int $awardedScorePoints;
 
-    /**
-     * @var int
-     */
     private int $awardReceivedScorePoints;
 
-    /**
-     * @var int
-     */
     private int $postCreatedScorePoints;
 
-    /**
-     * @var int
-     */
     private int $commentCreatedScorePoints;
 
-    /**
-     * @var int
-     */
     private int $upvoteScorePoints;
 
-    /**
-     * @var int
-     */
     private int $feedBackScorePoints;
 
-    /**
-     * @var CampaignMemberRepository
-     */
     private CampaignMemberRepository $campaignMemberRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
-    /**
-     * @var MessageBusInterface
-     */
     private MessageBusInterface $bus;
 
-    public function __construct
-    (
-        int                      $rewardPoints,
-        int                      $registrationScorePoints,
-        int                      $loginScorePoints,
-        int                      $awardedScorePoints,
-        int                      $awardReceivedScorePoints,
-        int                      $postCreatedScorePoints,
-        int                      $commentCreatedScorePoints,
-        int                      $upvoteScorePoints,
-        int                      $feedBackScorePoints,
+    public function __construct(
+        int $rewardPoints,
+        int $registrationScorePoints,
+        int $loginScorePoints,
+        int $awardedScorePoints,
+        int $awardReceivedScorePoints,
+        int $postCreatedScorePoints,
+        int $commentCreatedScorePoints,
+        int $upvoteScorePoints,
+        int $feedBackScorePoints,
         CampaignMemberRepository $campaignMemberRepository,
-        EntityManagerInterface   $entityManager,
-        MessageBusInterface      $bus,
-    )
-    {
+        EntityManagerInterface $entityManager,
+        MessageBusInterface $bus,
+    ) {
         $this->rewardPoints = $rewardPoints;
         $this->registrationScorePoints = $registrationScorePoints;
         $this->loginScorePoints = $loginScorePoints;
@@ -109,11 +78,6 @@ class ScoringService
         $this->bus = $bus;
     }
 
-    /**
-     * @param int $receiverId
-     * @param int $campaignId
-     * @return CampaignMember
-     */
     private function getCampaignMember(int $receiverId, int $campaignId): CampaignMember
     {
         /**
@@ -121,17 +85,12 @@ class ScoringService
          */
         $campaignMember = $this->campaignMemberRepository->findOneBy([
             'user' => $receiverId,
-            'campaign' => $campaignId
+            'campaign' => $campaignId,
         ]);
 
         return $campaignMember;
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handleRegistrationPoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
@@ -144,11 +103,6 @@ class ScoringService
         $this->bus->dispatch($pointsNotification);
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handleLoginPoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
@@ -161,11 +115,6 @@ class ScoringService
         $this->bus->dispatch($pointsNotification);
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handleAwardReceivedPoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
@@ -178,11 +127,6 @@ class ScoringService
         $this->bus->dispatch($pointsNotification);
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handleAwardedPoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
@@ -196,11 +140,6 @@ class ScoringService
         $this->bus->dispatch($pointsNotification);
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handlePostCreatedPoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
@@ -213,11 +152,6 @@ class ScoringService
         $this->bus->dispatch($pointsNotification);
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handleCommentCreatedPoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());
@@ -230,11 +164,6 @@ class ScoringService
         $this->bus->dispatch($pointsNotification);
     }
 
-    /**
-     * @param User $receiver
-     * @param Campaign $campaign
-     * @return void
-     */
     public function handleUpvotePoints(User $receiver, Campaign $campaign): void
     {
         $campaignMember = $this->getCampaignMember($receiver->getId(), $campaign->getId());

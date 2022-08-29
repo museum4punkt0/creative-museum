@@ -1,27 +1,34 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Enum\BadgeType;
 use App\Enum\PostType;
 use App\Repository\BadgeRepository;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ApiResource(
     attributes: [
-        "security" => "is_granted('ROLE_ADMIN')"
+        'security' => "is_granted('ROLE_ADMIN')",
     ],
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 class Badge
@@ -84,9 +91,6 @@ class Badge
         return $this->type;
     }
 
-    /**
-     * @param BadgeType $type
-     */
     public function setType(BadgeType $type): self
     {
         $this->type = $type;
@@ -102,9 +106,6 @@ class Badge
         return $this->postType;
     }
 
-    /**
-     * @param PostType $postType
-     */
     public function setPostType(PostType $postType): self
     {
         $this->postType = $postType;

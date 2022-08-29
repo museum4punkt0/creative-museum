@@ -1,5 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 namespace App\Entity;
 
@@ -13,7 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 /**
  * @\App\Validator\Constraints\FeedbackOptionCount
  */
@@ -24,15 +31,15 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     normalizationContext: ['groups' => ['campaigns:read']],
     denormalizationContext: ['groups' => ['campaign:write']],
-    order: ["start" => "DESC"],
+    order: ['start' => 'DESC'],
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 #[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
@@ -42,62 +49,62 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaigns:read","read:post", "read:me"])]
+    #[Groups(['campaigns:read', 'read:post', 'read:me'])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read","campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $start;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $stop;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write", "read:me"])]
+    #[Groups(['campaigns:read', 'campaign:write', 'read:me'])]
     private $title;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $shortDescription;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(["campaigns:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $description;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, orphanRemoval: true)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $awards;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, orphanRemoval: true)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $badges;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
-    #[Groups(["campaigns:read"])]
+    #[Groups(['campaigns:read'])]
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["campaigns:read", "campaign:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $color;
 
     #[ORM\Column(type: 'boolean')]
     private $notified = false;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: CampaignFeedbackOption::class, cascade: ["persist","remove"])]
-    #[Groups(["campaigns:read","campaign:write"])]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: CampaignFeedbackOption::class, cascade: ['persist', 'remove'])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     #[Assert\Valid]
     private $feedbackOptions;
 
@@ -362,7 +369,7 @@ class Campaign
      */
     public function onPrePersist()
     {
-        $this->created = new \DateTime("now");
+        $this->created = new \DateTime('now');
         $this->updatedAt = $this->created;
     }
 
@@ -371,6 +378,6 @@ class Campaign
      */
     public function onPreUpdate()
     {
-        $this->updatedAt = new \DateTime("now");
+        $this->updatedAt = new \DateTime('now');
     }
 }

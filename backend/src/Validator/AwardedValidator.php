@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Validator;
 
 use App\Entity\Award;
@@ -28,69 +35,62 @@ final class AwardedValidator extends ConstraintValidator
 
     /**
      * @param $value
-     * @param Constraint $constraint
-     * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value instanceof Awarded){
+        if (!$value instanceof Awarded) {
             return;
         }
 
         $continue = true;
 
         /**
-         * @var Awarded $value
+         * @var Awarded                            $value
          * @var \App\Validator\Constraints\Awarded $constraint
          */
-        if (!$this->isCampaignMember($value->getAward()->getCampaign(),$value->getGiver())){
+        if (!$this->isCampaignMember($value->getAward()->getCampaign(), $value->getGiver())) {
             $this->context->buildViolation($constraint->giverNotCampaignMember)->addViolation();
             $continue = false;
         }
 
-        if (!$this->isCampaignMember($value->getAward()->getCampaign(),$value->getWinner())){
+        if (!$this->isCampaignMember($value->getAward()->getCampaign(), $value->getWinner())) {
             $this->context->buildViolation($constraint->receiverNotCampaignMember)->addViolation();
             $continue = false;
         }
 
-        if (!$continue){
+        if (!$continue) {
             return;
         }
 
-        if ($value->getAward()->getPrice() > $this->getCampaignScore($value->getAward()->getCampaign(),$value->getGiver())){
+        if ($value->getAward()->getPrice() > $this->getCampaignScore($value->getAward()->getCampaign(), $value->getGiver())) {
             $this->context->buildViolation($constraint->notEnoughPoints)->addViolation();
+
             return;
         }
 
-        if ($this->hasAlreadyAwarded($value->getAward(),$value->getGiver())){
+        if ($this->hasAlreadyAwarded($value->getAward(), $value->getGiver())) {
             $this->context->buildViolation($constraint->alreadyAwarded)->addViolation();
         }
     }
 
     /**
      * @param Awarded $awarded
-     * @return bool
      */
     private function isCampaignMember(Campaign $campaign, User $user): bool
     {
         $result = $this->campaignMemberRepository->findBy([
             'user' => $user->getId(),
-            'campaign' => $campaign->getId()
+            'campaign' => $campaign->getId(),
         ]);
 
         return !empty($result);
     }
 
-    /**
-     * @param Campaign $campaign
-     * @param User $user
-     * @return int
-     */
     private function getCampaignScore(Campaign $campaign, User $user): int
     {
         $result = $this->campaignMemberRepository->findOneBy([
             'user' => $user->getId(),
-            'campaign' => $campaign->getId()
+            'campaign' => $campaign->getId(),
         ]);
 
         return $result->getScore();
@@ -100,7 +100,7 @@ final class AwardedValidator extends ConstraintValidator
     {
         $result = $this->awardedRepository->findBy([
             'giver' => $user->getId(),
-            'award' => $award->getId()
+            'award' => $award->getId(),
         ]);
 
         return !empty($result);

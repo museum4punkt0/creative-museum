@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -16,9 +23,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class FeedbackCreatedSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     private EventDispatcherInterface $eventDispatcher;
 
     public function __construct(EventDispatcherInterface $eventDispatcher)
@@ -29,7 +33,7 @@ class FeedbackCreatedSubscriber implements EventSubscriberInterface
     /**
      * @return array[]
      */
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -37,16 +41,12 @@ class FeedbackCreatedSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
     public function handleFeedback(ViewEvent $event): void
     {
         $feedback = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$feedback instanceof PostFeedback  || Request::METHOD_POST !== $method){
+        if (!$feedback instanceof PostFeedback || Request::METHOD_POST !== $method) {
             return;
         }
 

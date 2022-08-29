@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\CampaignFeedbackOption;
@@ -10,9 +17,6 @@ use Doctrine\ORM\Query\Expr;
 
 class PostFeedbackService
 {
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -20,10 +24,6 @@ class PostFeedbackService
         $this->em = $em;
     }
 
-    /**
-     * @param int $postId
-     * @return array
-     */
     public function getFeedbackResultsForPost(int $postId): array
     {
         $qb = $this->em->createQueryBuilder();
@@ -47,8 +47,6 @@ class PostFeedbackService
 
     /**
      * @param int $postId
-     * @param int $userId
-     * @return array
      */
     public function getGivenFeedbackByPostAndUser(Post $post, int $userId): array
     {

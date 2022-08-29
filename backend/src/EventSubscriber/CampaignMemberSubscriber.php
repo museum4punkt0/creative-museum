@@ -1,7 +1,15 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
+use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Awarded;
 use App\Entity\PollOptionChoice;
 use App\Entity\Post;
@@ -13,7 +21,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use ApiPlatform\Core\EventListener\EventPriorities;
 
 class CampaignMemberSubscriber implements EventSubscriberInterface
 {
@@ -27,7 +34,7 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
     /**
      * @return array[]
      */
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -36,8 +43,6 @@ class CampaignMemberSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ViewEvent $event
-     * @return void
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */

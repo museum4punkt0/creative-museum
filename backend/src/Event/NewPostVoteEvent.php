@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
@@ -7,23 +14,14 @@ use Symfony\Contracts\EventDispatcher\Event;
 final class NewPostVoteEvent extends Event
 {
     /**
-     * Event Identifier
+     * Event Identifier.
      */
     public const NAME = 'post.vote.received';
 
-    /**
-     * @var int
-     */
     protected int $postId;
 
-    /**
-     * @var string
-     */
     protected string $direction;
 
-    /**
-     * @var string|null
-     */
     protected ?string $oldDirection;
 
     public function __construct(int $postId, string $direction, string $oldDirection = null)
@@ -33,25 +31,16 @@ final class NewPostVoteEvent extends Event
         $this->oldDirection = $oldDirection;
     }
 
-    /**
-     * @return int
-     */
     public function getPostId(): int
     {
         return $this->postId;
     }
 
-    /**
-     * @return string
-     */
     public function getDirection(): string
     {
         return $this->direction;
     }
 
-    /**
-     * @return string|null
-     */
     public function getOldDirection(): ?string
     {
         return $this->oldDirection;

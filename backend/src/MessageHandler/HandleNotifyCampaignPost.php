@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Notification;
@@ -21,18 +28,16 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        PostRepository           $postRepository,
+        PostRepository $postRepository,
         CampaignMemberRepository $campaignMemberRepository,
-        EntityManagerInterface   $entityManager
-    )
-    {
+        EntityManagerInterface $entityManager
+    ) {
         $this->postRepository = $postRepository;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
     }
 
     /**
-     * @param NotifyCampaignMembersAboutNewPost $post
      * @return void
      */
     public function __invoke(NotifyCampaignMembersAboutNewPost $post)
@@ -46,14 +51,10 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
         $this->handleNewCampaignPost($post);
     }
 
-    /**
-     * @param Post $post
-     * @return void
-     */
     private function handleNewCampaignPost(Post $post): void
     {
         $campaignMembers = $this->campaignMemberRepository->findBy([
-            'campaign' => $post->getCampaign()->getId()
+            'campaign' => $post->getCampaign()->getId(),
         ]);
         $campaignColor = $post->getCampaign()->getColor();
 
@@ -64,7 +65,7 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
                 ->setText("Neuer Post in der Kampange {$post->getCampaign()->getTitle()} von {$campaignMember->getUser()->getUserIdentifier()}")
                 ->setPost($post)
                 ->setColor($campaignColor)
-                ->setSilent($campaignMember->getUser()->getNotificationSettings() === NotificationType::NONE);
+                ->setSilent(NotificationType::NONE === $campaignMember->getUser()->getNotificationSettings());
             $this->entityManager->persist($notification);
             $this->entityManager->flush();
         }
@@ -72,6 +73,6 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
 
     private function isSilentNotification(User $user): bool
     {
-        return $user->getNotificationSettings() === NotificationType::NONE;
+        return NotificationType::NONE === $user->getNotificationSettings();
     }
 }

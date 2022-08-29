@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -10,15 +17,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignMemberRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact','campaign' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact', 'campaign' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
-        "get" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+        'get' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 class CampaignMember
@@ -30,11 +37,11 @@ class CampaignMember
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
@@ -42,7 +49,7 @@ class CampaignMember
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(["read:me"])]
+    #[Groups(['read:me'])]
     private $rewardPoints = 0;
 
     public function getId(): ?int

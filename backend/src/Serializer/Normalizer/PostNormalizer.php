@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Serializer\Normalizer;
 
 use App\Entity\Post;
@@ -15,37 +22,22 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
-    /**
-     * @var ObjectNormalizer
-     */
     private ObjectNormalizer $normalizer;
 
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
-    /**
-     * @var PostFeedbackRepository
-     */
     private PostFeedbackRepository $feedbackRepository;
 
-    /**
-     * @var VoteRepository
-     */
     private VoteRepository $votesRepository;
 
-    /**
-     * @var Security
-     */
     private Security $security;
 
     public function __construct(
-        ObjectNormalizer       $normalizer,
-        PostRepository         $postRepository,
+        ObjectNormalizer $normalizer,
+        PostRepository $postRepository,
         PostFeedbackRepository $feedbackRepository,
-        VoteRepository         $votesRepository,
-        Security               $security
+        VoteRepository $votesRepository,
+        Security $security
     ) {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
@@ -54,7 +46,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
         $this->votesRepository = $votesRepository;
     }
 
-    public function normalize($object, $format = null, array $context = array()): array
+    public function normalize($object, $format = null, array $context = []): array
     {
         $postId = $object->getId();
         $data = $this->normalizer->normalize($object, $format, $context);

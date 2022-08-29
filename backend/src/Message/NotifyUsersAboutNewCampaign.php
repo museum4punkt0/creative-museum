@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Message;
 
 class NotifyUsersAboutNewCampaign
 {
-    /**
-     * @var int
-     */
     private int $campaignId;
 
     public function __construct(int $campaignId)
@@ -14,9 +18,6 @@ class NotifyUsersAboutNewCampaign
         $this->campaignId = $campaignId;
     }
 
-    /**
-     * @return int
-     */
     public function getCampaignId(): int
     {
         return $this->campaignId;

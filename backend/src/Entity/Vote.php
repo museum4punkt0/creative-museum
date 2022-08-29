@@ -1,12 +1,18 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\PostVoteController;
-use App\Enum\BadgeType;
 use App\Enum\VoteDirection;
 use App\Repository\VoteRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,22 +21,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get" => [
-            "normalization_context" => ["groups" => "read:vote"],
+        'get' => [
+            'normalization_context' => ['groups' => 'read:vote'],
         ],
-        "post" => [
-            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.voter == user",
-            "controller" => PostVoteController::class,
-            "normalization_context" => ["groups" => "write:vote"],
+        'post' => [
+            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.voter == user",
+            'controller' => PostVoteController::class,
+            'normalization_context' => ['groups' => 'write:vote'],
         ],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"]
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.voter == user and previous_object.voter == user)"],
     ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['voter' => 'exact','post' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['voter' => 'exact', 'post' => 'exact'])]
 class Vote
 {
     #[ORM\Id]
@@ -39,18 +45,18 @@ class Vote
     private $id;
 
     #[ORM\Column(type: 'votedirection')]
-    #[Groups(["write:vote", "read:vote", "read:post"])]
+    #[Groups(['write:vote', 'read:vote', 'read:post'])]
     #[ORM\JoinColumn(nullable: false)]
     private VoteDirection $direction;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(["write:vote", "read:vote"])]
+    #[Groups(['write:vote', 'read:vote'])]
     #[ORM\JoinColumn(nullable: false)]
     public $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["read:vote"])]
+    #[Groups(['read:vote'])]
     private $post;
 
     public function getId(): ?int

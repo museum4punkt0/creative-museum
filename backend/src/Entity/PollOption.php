@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -12,14 +19,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: PollOptionRepository::class)]
 #[ApiResource(
     collectionOperations: [],
-    itemOperations: ["get"]
+    itemOperations: ['get']
 )]
 class PollOption
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:post"])]
+    #[Groups(['read:post'])]
     private $id;
 
     /**
@@ -27,13 +34,13 @@ class PollOption
      */
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'pollOptions')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["write:post"])]
+    #[Groups(['write:post'])]
     private $post;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["write:post", "read:post"])]
+    #[Groups(['write:post', 'read:post'])]
     #[Assert\NotNull]
-    #[Assert\Length(min:1, max: 100)]
+    #[Assert\Length(min: 1, max: 100)]
     private $title;
 
     public function getId(): ?int

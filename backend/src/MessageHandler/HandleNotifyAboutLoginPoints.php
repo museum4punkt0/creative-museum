@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Campaign;
@@ -14,27 +21,17 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class HandleNotifyAboutLoginPoints implements MessageHandlerInterface
 {
-    /**
-     * @var UserRepository
-     */
     private UserRepository $userRepository;
 
-    /**
-     * @var CampaignRepository
-     */
     private CampaignRepository $campaignRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         UserRepository $userRepository,
         CampaignRepository $campaignRepository,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->campaignRepository = $campaignRepository;
         $this->entityManager = $entityManager;
@@ -46,17 +43,13 @@ class HandleNotifyAboutLoginPoints implements MessageHandlerInterface
         $campaign = $this->campaignRepository->find($loginPointsMessage->getCampaignId());
         $points = $loginPointsMessage->getPoints();
 
-        if (!$receiver || !$campaign){
+        if (!$receiver || !$campaign) {
             return;
         }
 
         $this->notifyAboutLoginPoints($receiver, $campaign, $points);
     }
 
-    /**
-     * @param User $receiver
-     * @return void
-     */
     private function notifyAboutLoginPoints(User $receiver, Campaign $campaign, int $points): void
     {
         $pointsNotification = new Notification();
@@ -65,7 +58,7 @@ class HandleNotifyAboutLoginPoints implements MessageHandlerInterface
             ->setReceiver($receiver)
             ->setText("Du hast {$points} Punkte für deinen Login in der Kampange {$campaign->getTitle()} erhalten!")
             ->setCampaign($campaign)
-            ->setSilent($receiver->getNotificationSettings() === NotificationType::NONE)
+            ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setColor($campaign->getColor())
             ->setScorePoints($points);
 

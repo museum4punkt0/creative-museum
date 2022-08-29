@@ -1,10 +1,16 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Campaign;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -74,9 +80,6 @@ class CampaignRepository extends ServiceEntityRepository
         return $activeCampaigns;
     }
 
-    /**
-     * @return Campaign|null
-     */
     public function getNewestActiveCampaign(): ?Campaign
     {
         $qb = $this->_em->createQueryBuilder();

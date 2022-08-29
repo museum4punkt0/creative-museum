@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -17,27 +24,17 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AwardedSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
     private EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var CampaignMemberRepository
-     */
     private CampaignMemberRepository $campaignMemberRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
 
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         CampaignMemberRepository $campaignMemberRepository,
-        EntityManagerInterface   $entityManager,
-    )
-    {
+        EntityManagerInterface $entityManager,
+    ) {
         $this->eventDispatcher = $eventDispatcher;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
@@ -46,7 +43,7 @@ class AwardedSubscriber implements EventSubscriberInterface
     /**
      * @return array[]
      */
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -54,10 +51,6 @@ class AwardedSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
     public function createAwardedPoints(ViewEvent $event): void
     {
         $awarded = $event->getControllerResult();
@@ -69,7 +62,7 @@ class AwardedSubscriber implements EventSubscriberInterface
 
         $awardGiver = $this->campaignMemberRepository->findOneBy([
             'user' => $awarded->getGiver()->getId(),
-            'campaign' => $awarded->getAward()->getCampaign()->getId()
+            'campaign' => $awarded->getAward()->getCampaign()->getId(),
         ]);
         $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice();
         $awardGiver->setScore($newGiverScore);

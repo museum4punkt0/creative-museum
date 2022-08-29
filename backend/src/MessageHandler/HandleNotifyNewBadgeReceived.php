@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Badged;
@@ -12,32 +19,26 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class HandleNotifyNewBadgeReceived implements MessageHandlerInterface
 {
-    /**
-     * @var BadgedRepository 
-     */
     private BadgedRepository $badgedRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
-    
+
     public function __construct(BadgedRepository $badgedRepository, EntityManagerInterface $entityManager)
     {
         $this->badgedRepository = $badgedRepository;
         $this->entityManager = $entityManager;
     }
-    
+
     public function __invoke(NotifyNewBadgeReceived $notifyNewBadgeReceived)
     {
         $badged = $this->badgedRepository->findOneBy(
             [
                 'user' => $notifyNewBadgeReceived->getUserId(),
-                'badge' => $notifyNewBadgeReceived->getBadgeId()
+                'badge' => $notifyNewBadgeReceived->getBadgeId(),
             ]
         );
-        
-        if (!$badged){
+
+        if (!$badged) {
             return;
         }
         $this->handleNewBadgeReceivedNotification($badged);
@@ -50,7 +51,7 @@ class HandleNotifyNewBadgeReceived implements MessageHandlerInterface
             ->setReceiver($badged->getUser())
             ->setText("Du hast das Badge {$badged->getBadge()->getTitle()} erhalten")
             ->setColor($badged->getBadge()->getCampaign()->getColor())
-            ->setSilent($badged->getUser()->getNotificationSettings() === NotificationType::NONE)
+            ->setSilent(NotificationType::NONE === $badged->getUser()->getNotificationSettings())
             ->setCampaign($badged->getBadge()->getCampaign());
         $this->entityManager->persist($notification);
         $this->entityManager->flush();

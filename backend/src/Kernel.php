@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App;
 
 use App\DoctrineType\AbstractEnumType;
@@ -21,7 +28,7 @@ class Kernel extends BaseKernel implements CompilerPassInterface
         $taggedEnums = $container->findTaggedServiceIds('app.doctrine_enum_type');
 
         foreach ($taggedEnums as $enumType => $definition) {
-            /** @var $enumType AbstractEnumType */
+            /* @var $enumType AbstractEnumType */
             $typesDefinition[$enumType::NAME] = ['class' => $enumType];
         }
         $container->setParameter('doctrine.dbal.connection_factory.types', $typesDefinition);
