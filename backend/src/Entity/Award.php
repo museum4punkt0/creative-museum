@@ -77,10 +77,10 @@ class Award
     #[Groups(['awards:read', 'campaigns:read'])]
     private $picture;
 
-    #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
+    #[Groups(['campaigns:read', 'awards:read'])]
     private bool $taken = false;
 
-    #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
+    #[Groups(['campaigns:read', 'awards:read'])]
     private bool $available = false;
 
     public function getId(): ?int
