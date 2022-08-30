@@ -11,6 +11,8 @@ namespace App\Serializer\Normalizer;
 
 use App\Entity\Award;
 use App\Entity\Awarded;
+use App\Entity\CampaignMember;
+use App\Entity\User;
 use App\Repository\AwardedRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
@@ -28,9 +30,23 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
     public function normalize($object, $format = null, array $context = []): array
     {
         $data = $this->normalizer->normalize($object, $format, $context);
+        /** @var User $user */
+        $user = $this->security->getUser();
 
-        if (null === $this->security->getUser()) {
+        if (null === $user) {
             return $data;
+        }
+
+        $memberships = $user->getMemberships()->filter(function ($membership) {
+            /** @var CampaignMember $membership */
+            /** @var Award $object */
+            return $membership->getCampaign()->getId() === $object->getCampaign()->getId();
+        });
+
+        if (count($memberships) > 0) {
+            /** @var CampaignMember $membership */
+            $membership = $memberships[0];
+            $data['available'] = $membership->getScore() > $object->getPrice();
         }
 
         $awarded = $this->awardedRepository->findOneBy([

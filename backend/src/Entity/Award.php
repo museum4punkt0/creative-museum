@@ -78,6 +78,9 @@ class Award
     #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
     private bool $taken = false;
 
+    #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
+    private bool $available = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -152,6 +155,17 @@ class Award
     {
         $this->taken = $taken;
 
+        return $this;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->available;
+    }
+
+    public function setAvailable(bool $available): self
+    {
+        $this->available = $available;
         return $this;
     }
 }
