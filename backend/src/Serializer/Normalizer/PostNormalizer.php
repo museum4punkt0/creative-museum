@@ -12,6 +12,9 @@ namespace App\Serializer\Normalizer;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Vote;
+use App\Enum\PostType;
+use App\Repository\PollOptionChoiceRepository;
+use App\Repository\PollOptionRepository;
 use App\Repository\PostFeedbackRepository;
 use App\Repository\PostRepository;
 use App\Repository\VoteRepository;
@@ -30,19 +33,28 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
 
     private VoteRepository $votesRepository;
 
+    private PollOptionChoiceRepository $pollOptionChoiceRepository;
+
+    private PollOptionRepository $pollOptionRepository;
+
     private Security $security;
 
     public function __construct(
-        ObjectNormalizer $normalizer,
-        PostRepository $postRepository,
-        PostFeedbackRepository $feedbackRepository,
-        VoteRepository $votesRepository,
-        Security $security
-    ) {
+        ObjectNormalizer           $normalizer,
+        PostRepository             $postRepository,
+        PostFeedbackRepository     $feedbackRepository,
+        VoteRepository             $votesRepository,
+        PollOptionChoiceRepository $pollOptionChoiceRepository,
+        PollOptionRepository       $pollOptionRepository,
+        Security                   $security
+    )
+    {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
         $this->security = $security;
         $this->feedbackRepository = $feedbackRepository;
+        $this->pollOptionChoiceRepository = $pollOptionChoiceRepository;
+        $this->pollOptionRepository = $pollOptionRepository;
         $this->votesRepository = $votesRepository;
     }
 
@@ -59,7 +71,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
             }
         }
 
-        if (null !== $this->security->getUser()) {
+        if ($this->security->getUser() !== null) {
             /** @var User $user */
             $user = $this->security->getUser();
 
@@ -76,6 +88,33 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
             if (count($feedback)) {
                 $data['rated'] = true;
             }
+        }
+
+        if (isset($data['type']) && $data['type'] === PostType::POLL->value) {
+            $pollOptions = $this->pollOptionRepository->findBy(
+                [
+                    'post' => $data['id']
+                ]
+            );
+
+            foreach ($pollOptions as $index => $pollOption) {
+                $choices = $this->pollOptionChoiceRepository->findBy([
+                    'pollOption' => $pollOption->getId()
+                ]);
+                $pollOption->setVotes(count($choices));
+
+                if (!is_null($this->security->getUser())) {
+                    $pollOption->setMyChoice(
+                        $this->pollOptionChoiceRepository->userVotedForPollOption(
+                            $this->security->getUser()->getId(),
+                            $pollOption->getId()
+                        )
+                    );
+                }
+                $pollOptions[$index] = $this->normalizer->normalize($pollOption,$format,$context);
+            }
+
+            $data['pollOptions'] = $pollOptions;
         }
 
         return $data;

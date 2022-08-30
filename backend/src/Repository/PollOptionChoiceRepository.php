@@ -54,6 +54,16 @@ class PollOptionChoiceRepository extends ServiceEntityRepository
         }
     }
 
+    public function userVotedForPollOption(int $userId, int $pollOptionId): bool
+    {
+        $choice = $this->findOneBy([
+            'user' => $userId,
+            'pollOption' => $pollOptionId
+        ]);
+
+        return !empty($choice);
+    }
+
     // /**
     //  * @return PollOptionChoice[] Returns an array of PollOptionChoice objects
     //  */

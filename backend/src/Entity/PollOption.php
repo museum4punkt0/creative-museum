@@ -43,6 +43,12 @@ class PollOption
     #[Assert\Length(min: 1, max: 100)]
     private $title;
 
+    #[Groups(['read:post'])]
+    private $votes = 0;
+
+    #[Groups(['read:post'])]
+    private $myChoice = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +74,31 @@ class PollOption
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+
+    public function getVotes(): int
+    {
+        return $this->votes;
+    }
+
+    public function setVotes(int $votes): self
+    {
+        $this->votes = $votes;
+
+        return $this;
+    }
+
+    public function getMyChoice(): bool
+    {
+        return $this->myChoice;
+    }
+
+    public function setMyChoice(bool $myChoice): self
+    {
+        $this->myChoice = $myChoice;
 
         return $this;
     }
