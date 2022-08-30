@@ -3,7 +3,7 @@
   "next": "Weiter",
   "prev": "Zurück",
   "submit": "Abschicken",
-  "close": "Close",
+  "close": "Schließen",
   "till": "bis",
   "readLess": "weniger lesen",
   "readMore": "mehr lesen",
@@ -11,6 +11,8 @@
   "hide": "Ausblenden",
   "noUsername": "Kein Benutzername",
   "duration": "Dauer",
+  "selectProfile": "Profil auswählen",
+  "confirmSelection": "Auswahl bestätigen",
   "globalLogin": {
     "header": "Login",
     "text": "Melde dich an und verdiene Punkte mit deinen Aktionen.",
@@ -208,6 +210,7 @@
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",
     "gift": "Verschenken",
+    "giftAward": "Award verschenken",
     "detailHeadline": "Award"
   },
   "filter": {

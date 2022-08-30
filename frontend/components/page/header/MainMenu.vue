@@ -21,7 +21,7 @@
       </client-only>
     </div>
     <div class="mb-10 lg:mb-0">
-      <NuxtLink v-if="$auth.loggedIn" to="/user/profile" class="text-lg font-bold leading-loose mb-4" @click.native="closeMenu">
+      <NuxtLink v-if="$auth.loggedIn" to="/user/profile" class="block text-lg font-bold leading-loose mb-4" @click.native="closeMenu">
         {{ $t('navigation.profile.header') }}
       </NuxtLink>
       <NuxtLink
