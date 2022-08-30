@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+    normalizationContext: ['groups' => ['campaigns:read']],
 )]
 #[ApiFilter(
     SearchFilter::class,
