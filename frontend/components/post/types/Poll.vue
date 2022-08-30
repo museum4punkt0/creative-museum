@@ -21,7 +21,18 @@
       </div>
     </div>
     <div v-else>
-      Show Result
+
+      <template v-for="(option, key) in post.pollOptions">
+        <div :key="key" class="mb-6 mt-6">
+          <div class="mb-2">{{ option.title }}</div>
+          <div class="box-shadow-inset rounded-xl">
+            <div
+              class="bg-$highlight rounded-xl text-$highlight-contrast text-center"
+              :style="`width: ${Math.round((100 / post.choicesTotal) * option.votes)}%`"><span class="px-3 py-0.5 inline-block" :class="Math.round((100 / post.choicesTotal) * option.votes) < 10 ? 'text-white' : ''">{{ Math.round((100 / post.choicesTotal) * option.votes) }}%</span></div>
+          </div>
+        </div>
+      </template>
+
     </div>
   </div>
 </template>
