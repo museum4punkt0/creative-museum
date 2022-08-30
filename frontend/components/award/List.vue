@@ -1,9 +1,9 @@
 <template>
-  <div v-if="availableAwards || unavailableAwards">
+  <div v-if="availableAwards.length || unavailableAwards.length">
     <div class="flex flex-row justify-between mb-10">
       <span class="text-2xl">{{ $t('campaign.awards') }}</span>
     </div>
-    <div v-if="availableAwards" class="mb-6">
+    <div v-if="availableAwards.length" class="mb-6">
       <div class="text-$highlight text-sm mb-2">
         {{ $t('awards.available') }}
       </div>
@@ -13,7 +13,7 @@
         :award="award"
       />
     </div>
-    <div v-if="unavailableAwards" class="mb-6">
+    <div v-if="unavailableAwards.length" class="mb-6">
       <div class="text-$highlight text-sm mb-2">
         {{ $t('awards.unavailable') }}
       </div>

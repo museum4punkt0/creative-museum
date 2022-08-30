@@ -62,7 +62,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $breakpoints, $auth } = useContext()
+    const { $breakpoints } = useContext()
     const store = useStore()
     const posts = ref(null)
     const postComment = ref(false)

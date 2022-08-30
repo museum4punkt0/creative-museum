@@ -1,5 +1,11 @@
 <template>
-  <div :style="styleAttr">
+  <div>
+    <style type="text/css">
+      body {
+        --highlight: {{ campaign.color }};
+        --highlight-contrast: {{ campaignContrastColor }};
+      }
+    </style>
     <div class="mb-6">
       <h1 class="page-header mt-0 mb-1">{{ campaign.title }}</h1>
       <div class="text-lg">
@@ -85,12 +91,7 @@ export default defineComponent({
       return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
     })
 
-    const styleAttr = computed(() => {
-      return `--highlight: ${props.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
-    })
-
     return {
-      styleAttr,
       formattedShortDescription,
       formattedDescription,
       showLongDescription,
