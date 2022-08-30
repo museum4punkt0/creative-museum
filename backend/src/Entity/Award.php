@@ -9,16 +9,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AwardRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AwardRepository::class)]
 #[ApiResource(
-    attributes: [
-        'security' => "is_granted('ROLE_ADMIN')",
-    ],
     collectionOperations: [
         'get',
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
@@ -28,6 +28,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'campaign' => 'exact',
+    ]
+)]
+#[ApiFilter(
+    BooleanFilter::class,
+    properties: [
+        'campaign.active'
+    ]
 )]
 class Award
 {
@@ -56,6 +68,9 @@ class Award
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
     #[Groups(['campaigns:read'])]
     private $picture;
+
+    #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
+    private bool $taken = false;
 
     public function getId(): ?int
     {
@@ -118,6 +133,18 @@ class Award
     public function setPicture(?MediaObject $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function isTaken(): bool
+    {
+        return $this->taken;
+    }
+
+    public function setTaken(bool $taken): self
+    {
+        $this->taken = $taken;
 
         return $this;
     }

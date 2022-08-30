@@ -130,7 +130,8 @@ class IdpAuthenticator extends AbstractAuthenticator
                 ]);
 
                 $idpToken = $provider->getAccessToken(
-                    'client_credentials', ['scope' => 'api']
+                    'client_credentials',
+                    ['scope' => 'api']
                 );
 
                 $req = $provider->getAuthenticatedRequest(
