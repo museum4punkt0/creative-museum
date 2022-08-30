@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <div class="flex flex-row items-center mb-2" @click.prevent="awardDetailOpen = true">
+  <div :data-id="`award-${award.id}`">
+    <style type="text/css" scoped>
+      [data-id="award-{{award.id}}"] {
+        --highlight: {{ award.campaign.color }};
+      }
+    </style>
+    <div class="flex flex-row items-center mb-2 award-item" @click.prevent="awardDetailOpen = true">
       <div
         class="w-18 h-18 rounded-full mr-3 overflow-hidden flex-shrink-0"
       >
@@ -13,7 +18,7 @@
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ award.description }}</p>
-        <p class="highlight-text text-sm">{{ award.price.toLocaleString() + ' ' + $t('points') }}</p>
+        <p class="text-$highlight text-sm">{{ award.price.toLocaleString() + ' ' + $t('points') }}</p>
         <button class="btn-outline self-start mt-2 text-xs p-1" type="button">
           {{ $t('awards.gift') }}
         </button>

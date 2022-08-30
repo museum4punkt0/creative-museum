@@ -56,7 +56,6 @@ import {
 
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
-import { userApi } from '@/api/user'
 
 export default defineComponent({
   name: 'CampaignPage',
