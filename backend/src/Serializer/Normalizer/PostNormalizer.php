@@ -107,15 +107,22 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
                 $choicesTotal += $optionChoicesCount;
 
                 if (!is_null($this->security->getUser())) {
+                    $choiced = $this->pollOptionChoiceRepository->userVotedForPollOption(
+                        $this->security->getUser()->getId(),
+                        $pollOption->getId()
+                    );
+
+                    if ($choiced){
+                        $data['userChoiced'] = true;
+                    }
+
                     $pollOption->setMyChoice(
-                        $this->pollOptionChoiceRepository->userVotedForPollOption(
-                            $this->security->getUser()->getId(),
-                            $pollOption->getId()
-                        )
+                        $choiced
                     );
                 }
                 $pollOptions[$index] = $this->normalizer->normalize($pollOption,$format,$context);
             }
+
             $data['choicesTotal'] = $choicesTotal;
             $data['pollOptions'] = $pollOptions;
         }

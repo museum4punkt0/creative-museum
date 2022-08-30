@@ -228,6 +228,9 @@ class Post
     #[Groups(['read:post'])]
     private $choicesTotal = 0;
 
+    #[Groups(['read:post'])]
+    private $userChoiced = false;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -658,6 +661,18 @@ class Post
     public function setChoicesTotal(int $choicesTotal): self
     {
         $this->choicesTotal = $choicesTotal;
+
+        return $this;
+    }
+
+    public function getUserChoiced(): bool
+    {
+        return $this->userChoiced;
+    }
+
+    public function setUserChoiced(bool $userChoiced): self
+    {
+        $this->userChoiced = $userChoiced;
 
         return $this;
     }
