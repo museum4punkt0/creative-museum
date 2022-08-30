@@ -3,7 +3,7 @@
     <p class="text-lg font-bold mb-2">{{ post.question }}</p>
     <p>{{ post.body }}</p>
 
-    <div class="poll-options mt-4 grid grid-cols-2 gap-4">
+    <div v-if="!post.userChoiced && campaignActive" class="poll-options mt-4 grid grid-cols-2 gap-4">
       <div v-for="(option, key) of post.pollOptions" :key="key">
         <div class="flex flex-row items-center cursor-pointer" @click.prevent="vote(option.id)">
           <span
@@ -20,6 +20,9 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      Show Result
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -32,12 +35,19 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    campaignActive: {
+      type: Boolean,
+      default: true
+    }
   },
-  setup() {
+  emits: ['updatePost'],
+  setup(_, context) {
     const { votePollOption } = postApi()
 
-    function vote(optionId: any) {
-      votePollOption(optionId)
+    async function vote(optionId: any) {
+      await votePollOption(optionId).then(function() {
+        context.emit('updatePost')
+      })
     }
 
     return {

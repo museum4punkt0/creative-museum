@@ -11,7 +11,7 @@
         :text-color="textColor"
         @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)"
       />
-      <component :is="componentName" :post="post" class="mb-4" />
+      <component :is="componentName" :post="post" class="mb-4" @updatePost="$emit('updatePost', post.id)" />
       <PostFooter
         :post="post"
         class="mb-4"
@@ -70,6 +70,10 @@ export default defineComponent({
     campaignColor: {
       type: String,
       default: '#FFFF00',
+    },
+    campaignActive: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['updatePost'],

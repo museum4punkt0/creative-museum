@@ -15,6 +15,7 @@
               :key="post.id"
               :post="post"
               :campaign-color="campaign.color"
+              :campaign-active="campaign.active"
               @updatePost="updatePost"
               @toggle-bookmark-state="toggleBookmarkState"
             />
@@ -30,7 +31,7 @@
       </div>
       <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
-          <SidebarRight :campaign="campaign" />
+          <SidebarRight v-if="campaign" :campaign="campaign" />
         </div>
       </div>
     </div>
@@ -122,6 +123,11 @@ export default defineComponent({
             posts.value[key].commentCount = response.commentCount
             posts.value[key].upvotes = response.upvotes
             posts.value[key].downvotes = response.downvotes
+            if (response.userChoiced && response.pollOptions && response.choicesTotal) {
+              posts.value[key].choicesTotal = response.choicesTotal
+              posts.value[key].userChoiced = response.userChoiced
+              posts.value[key].pollOptions = response.pollOptions
+            }
           })
         }
       })
