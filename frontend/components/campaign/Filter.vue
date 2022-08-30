@@ -58,7 +58,7 @@
         class="text-xs text-$highlight flex flex-row items-center justify-end"
         @click.prevent="changeSortDirection"
         >
-          <div><ReverseSortingIcon class="h-4 inline-block mr-2" /></div><span>{{ $t('filter.order.reverse') }}</span>
+          <div><ReverseSortingIcon class="h-4 w-auto inline-block mr-2" /></div><span>{{ $t('filter.order.reverse') }}</span>
       </a>
     </div>
   </div>
