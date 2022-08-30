@@ -17,7 +17,7 @@
           @click.prevent="logout"
           type="button"
         >
-          <LogoutIcon class="mr-2" />
+          <LogoutIcon class="mr-2 w-auto" />
           <span>Logout</span>
         </button>
       </client-only>

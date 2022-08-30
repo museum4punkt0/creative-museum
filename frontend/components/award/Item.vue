@@ -12,9 +12,9 @@
         />
       </div>
       <div class="flex flex-col flex-grow">
-        <p class="mb-1">{{ award.description }}</p>
+        <p class="mb-1">{{ award.title }}</p>
         <p class="text-$highlight text-sm">{{ award.price.toLocaleString() + ' ' + $t('points') }}</p>
-        <button class="btn-outline self-start mt-2 text-xs p-1" type="button">
+        <button v-if="award.available" class="btn-outline self-start mt-2 text-xs p-1" type="button">
           {{ $t('awards.gift') }}
         </button>
       </div>

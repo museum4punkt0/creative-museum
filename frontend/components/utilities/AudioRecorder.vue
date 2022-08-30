@@ -12,7 +12,7 @@
         "
         @click="permissionStatus === 'denied' || audioIsPlaying === false ? recordAudio() : false"
       >
-        <MicrophoneIcon class="h-6" />
+        <MicrophoneIcon class="h-6 w-auto" />
       </div>
       <div
         v-if="recordAudioState"
@@ -20,7 +20,7 @@
         class="rounded-full bg-red recorder-stop h-8 w-8 text-center py-1 cursor-pointer"
         @click="stopRecordAudio"
       >
-        <MicrophoneIcon class="h-6" />
+        <MicrophoneIcon class="h-6 w-auto" />
       </div>
     </div>
     <div v-show="audioFile && !recordAudioState" ref="audio" class="flex flex-row items-center w-full">
