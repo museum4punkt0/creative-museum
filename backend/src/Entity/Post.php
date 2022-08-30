@@ -225,6 +225,9 @@ class Post
     #[ORM\Column(type: 'integer')]
     private $leadingFeedbackCount = 0;
 
+    #[Groups(['read:post'])]
+    private $choicesTotal = 0;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -643,6 +646,18 @@ class Post
     public function setLeadingFeedbackCount(int $leadingFeedbackCount): self
     {
         $this->leadingFeedbackCount = $leadingFeedbackCount;
+
+        return $this;
+    }
+
+    public function getChoicesTotal(): int
+    {
+        return $this->choicesTotal;
+    }
+
+    public function setChoicesTotal(int $choicesTotal): self
+    {
+        $this->choicesTotal = $choicesTotal;
 
         return $this;
     }

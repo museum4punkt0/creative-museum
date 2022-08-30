@@ -91,6 +91,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
         }
 
         if (isset($data['type']) && $data['type'] === PostType::POLL->value) {
+            $choicesTotal = 0;
             $pollOptions = $this->pollOptionRepository->findBy(
                 [
                     'post' => $data['id']
@@ -101,7 +102,9 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
                 $choices = $this->pollOptionChoiceRepository->findBy([
                     'pollOption' => $pollOption->getId()
                 ]);
-                $pollOption->setVotes(count($choices));
+                $optionChoicesCount = count($choices);
+                $pollOption->setVotes($optionChoicesCount);
+                $choicesTotal += $optionChoicesCount;
 
                 if (!is_null($this->security->getUser())) {
                     $pollOption->setMyChoice(
@@ -113,7 +116,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
                 }
                 $pollOptions[$index] = $this->normalizer->normalize($pollOption,$format,$context);
             }
-
+            $data['choicesTotal'] = $choicesTotal;
             $data['pollOptions'] = $pollOptions;
         }
 
