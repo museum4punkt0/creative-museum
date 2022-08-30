@@ -42,7 +42,7 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
             return $membership->getCampaign()->getId() === $object->getCampaign()->getId();
         });
 
-        if (count($memberships) > 0) {
+        if (null !== $memberships[0] ?? null) {
             /** @var CampaignMember $membership */
             $membership = $memberships[0];
             $data['available'] = $membership->getScore() > $object->getPrice();
