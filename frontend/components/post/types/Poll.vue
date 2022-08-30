@@ -37,7 +37,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -54,8 +54,14 @@ export default defineComponent({
   emits: ['updatePost'],
   setup(_, context) {
     const { votePollOption } = postApi()
+    const { $auth } = useContext()
+    const store = useStore()
 
     async function vote(optionId: any) {
+      if (!$auth.loggedIn) {
+        store.dispatch('showLogin')
+        return
+      }
       await votePollOption(optionId).then(function() {
         context.emit('updatePost')
       })

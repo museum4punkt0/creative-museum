@@ -21,7 +21,6 @@
       "@nuxtjs/axios",
       "@types/node",
       "@nuxtjs/auth-next",
-      "nuxt-webpack-optimisations",
       "@nuxtjs/i18n",
       "@nuxtjs/dayjs",
       "dayjs/plugin/relativeTime",
