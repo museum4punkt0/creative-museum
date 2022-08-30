@@ -29,7 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
-    normalizationContext: ['groups' => ['campaigns:read']],
+    normalizationContext: ['groups' => ['awards:read']],
 )]
 #[ApiFilter(
     SearchFilter::class,
@@ -53,27 +53,28 @@ class Award
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['awards:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['awards:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['awards:read'])]
     private $description;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['awards:read'])]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'awards')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['awards:read'])]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['awards:read'])]
     private $picture;
 
     #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
