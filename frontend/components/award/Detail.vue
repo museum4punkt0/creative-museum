@@ -8,12 +8,21 @@
     <div
       class="box-shadow-mobile relative m-6 lg:m-0 p-6 text-center"
     >
-      HALLO WELT
+      <img
+        v-if="award.picture"
+        :src="`${backendUrl}/${award.picture.contentUrl}`"
+        :alt="award.title"
+        class="w-full max-w-32 h-auto"
+      />
+      <div class="text-left">
+        <h1 class="text-2xl">{{ award.title }}</h1>
+        <p>{{ award.description }}</p>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -24,6 +33,11 @@ export default defineComponent({
   },
   emits: ['closeAwardDetail'],
   setup() {
+    const context = useContext()
+
+    return {
+      backendUrl: context.$config.backendUrl
+    }
 
   },
 })

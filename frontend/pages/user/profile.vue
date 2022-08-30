@@ -1,6 +1,6 @@
 <template>
   <div v-if="$auth.loggedIn" class="lg:grid lg:grid-cols-12 lg:gap-4">
-    <div class="lg:col-span-3 pr-10">
+    <div class="lg:col-span-3 lg:pr-10">
       <div class="page-header p-6 md:hidden">
         <button type="button" class="back-btn" @click.prevent="backButton">
           {{
@@ -46,7 +46,7 @@
         </div>
       </div>
     </div>
-    <div class="lg:col-span-6 pr-10">
+    <div class="lg:col-span-6 lg:pr-10">
       <div class="flex flex-row content-between">
         <h2 class="text-2xl">
           {{ $t('user.profile.self.activities.headline') }}
@@ -101,7 +101,7 @@
         </div>
       </div>
     </div>
-    <div class="lg:col-span-3 pr-10">
+    <div class="lg:col-span-3 lg:pr-10">
       <SidebarRight />
     </div>
   </div>

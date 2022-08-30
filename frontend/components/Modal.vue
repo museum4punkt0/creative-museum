@@ -4,7 +4,7 @@
   >
     <div
       class="
-        modal bg-grey text-white fixed flex flex-col flex-1 top-15 lg:top-1/2 right-0
+        modal bg-grey text-white fixed flex flex-col flex-1 top-14 lg:top-1/2 right-0
         lg:auto left-0 lg:left-1/2 min-w-full lg:min-w-2xl lg:min-h-xl bottom-0 lg:bottom-auto rounded-xl
         lg:transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2
       "

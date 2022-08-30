@@ -6,7 +6,6 @@
           v-if="!$auth.loggedIn"
           class="flex flex-row items-center font-bold leading-loose"
           @click.prevent="login"
-          type="button"
         >
           <LoginIcon class="w-6 h-6 mr-2" />
           <span>Login</span>
@@ -15,7 +14,6 @@
           v-else
           class="flex flex-row items-center font-bold leading-loose"
           @click.prevent="logout"
-          type="button"
         >
           <LogoutIcon class="mr-2 w-auto" />
           <span>Logout</span>
@@ -23,9 +21,9 @@
       </client-only>
     </div>
     <div class="mb-10 lg:mb-0">
-      <p v-if="$auth.loggedIn" class="text-lg font-bold leading-loose mb-4">
+      <NuxtLink v-if="$auth.loggedIn" to="/user/profile" class="text-lg font-bold leading-loose mb-4" @click.native="closeMenu">
         {{ $t('navigation.profile.header') }}
-      </p>
+      </NuxtLink>
       <NuxtLink
         v-if="$auth.loggedIn"
         to="/user/update"
