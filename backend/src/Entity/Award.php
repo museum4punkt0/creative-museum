@@ -12,6 +12,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AwardRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,6 +41,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
     properties: [
         'campaign.active'
     ]
+)]
+#[ApiFilter(
+    OrderFilter::class,
+    properties: ['price', 'campaign.start'],
+    arguments: ['orderParameterName' => 'order']
 )]
 class Award
 {
