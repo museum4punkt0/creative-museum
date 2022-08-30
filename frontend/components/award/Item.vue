@@ -1,10 +1,5 @@
 <template>
-  <div :data-id="`award-${award.id}`">
-    <style type="text/css" scoped>
-      [data-id="award-{{award.id}}"] {
-        --highlight: {{ award.campaign.color }};
-      }
-    </style>
+  <div :style="styleAttr">
     <div class="flex flex-row items-center mb-2 award-item" @click.prevent="awardDetailOpen = true">
       <div
         class="w-18 h-18 rounded-full mr-3 overflow-hidden flex-shrink-0"
@@ -38,7 +33,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, useContext, ref } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, ref, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -47,11 +42,16 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const context = useContext()
     const awardDetailOpen = ref(false)
 
+    const styleAttr = computed(() => {
+      return `--highlight: ${props.award.campaign.color}`
+    })
+
     return {
+      styleAttr,
       awardDetailOpen,
       backendUrl: context.$config.backendUrl
     }
