@@ -37,9 +37,8 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
             return $data;
         }
 
-        $memberships = $user->getMemberships()->filter(function ($membership) {
+        $memberships = $user->getMemberships()->filter(function ($membership) use ($object) {
             /** @var CampaignMember $membership */
-            /** @var Award $object */
             return $membership->getCampaign()->getId() === $object->getCampaign()->getId();
         });
 
