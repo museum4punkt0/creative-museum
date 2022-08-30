@@ -53,19 +53,19 @@ class Award
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['awards:read'])]
+    #[Groups(['awards:read', 'campaigns:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read'])]
+    #[Groups(['awards:read', 'campaigns:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read'])]
+    #[Groups(['awards:read', 'campaigns:read'])]
     private $description;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['awards:read'])]
+    #[Groups(['awards:read', 'campaigns:read'])]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'awards')]
@@ -74,7 +74,7 @@ class Award
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['awards:read'])]
+    #[Groups(['awards:read', 'campaigns:read'])]
     private $picture;
 
     #[Groups(['campaigns:read', 'awards:read', 'award:read'])]
