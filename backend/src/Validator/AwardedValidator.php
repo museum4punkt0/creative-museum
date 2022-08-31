@@ -24,6 +24,14 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 final class AwardedValidator extends ConstraintValidator
 {
+    const VIOLATION_CODE_SELF = 1661952434;
+
+    const VIOLATION_CODE_NO_CAMPAIGN_MEMBER = 1661952502;
+
+    const VIOLATION_CODE_INSUFFICIENT_POINTS = 1661952537;
+
+    const VIOLATION_CODE_ALREADY_AWARDED = 1661952565;
+
     public function __construct(
         private readonly CampaignMemberRepository $campaignMemberRepository,
         private readonly AwardedRepository $awardedRepository,
@@ -48,22 +56,34 @@ final class AwardedValidator extends ConstraintValidator
         $campaign = $value->getAward()->getCampaign();
 
         if ($value->getWinner() === $this->security->getUser()) {
-            $this->context->buildViolation($constraint->canNotAwardSelf)->addViolation();
+            $this->context
+                ->buildViolation($constraint->canNotAwardSelf)
+                ->setCode(self::VIOLATION_CODE_SELF)
+                ->addViolation();
             return;
         }
 
         if (! $this->isCampaignMember($campaign, $value->getGiver())) {
-            $this->context->buildViolation($constraint->giverNotCampaignMember)->addViolation();
+            $this->context
+                ->buildViolation($constraint->giverNotCampaignMember)
+                ->setCode(self::VIOLATION_CODE_NO_CAMPAIGN_MEMBER)
+                ->addViolation();
             return;
         }
 
         if ($value->getAward()->getPrice() > $this->getCampaignScore($campaign, $value->getGiver())) {
-            $this->context->buildViolation($constraint->notEnoughPoints)->addViolation();
+            $this->context
+                ->buildViolation($constraint->notEnoughPoints)
+                ->setCode(self::VIOLATION_CODE_INSUFFICIENT_POINTS)
+                ->addViolation();
             return;
         }
 
         if ($this->hasAlreadyAwarded($value->getAward(), $value->getGiver())) {
-            $this->context->buildViolation($constraint->alreadyAwarded)->addViolation();
+            $this->context
+                ->buildViolation($constraint->alreadyAwarded)
+                ->setCode(self::VIOLATION_CODE_ALREADY_AWARDED)
+                ->addViolation();
         }
     }
 
