@@ -39,31 +39,31 @@ class Badge
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups('read:me')]
+    #[Groups('user:me:read')]
     private $threshold;
 
     #[ORM\Column(type: 'badgetype')]
-    #[Groups('read:me')]
+    #[Groups('user:me:read')]
     private BadgeType $type;
 
     #[ORM\Column(type: 'posttype')]
     private PostType $postType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('read:me')]
+    #[Groups('user:me:read')]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('read:me')]
+    #[Groups('user:me:read')]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('read:me')]
+    #[Groups('user:me:read')]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups('read:me')]
+    #[Groups('user:me:read')]
     private $picture;
 
     public function getId(): ?int

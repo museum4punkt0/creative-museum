@@ -37,11 +37,11 @@ class CampaignMember
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
@@ -49,7 +49,7 @@ class CampaignMember
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private $rewardPoints = 0;
 
     public function getId(): ?int

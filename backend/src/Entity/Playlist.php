@@ -33,11 +33,11 @@ class Playlist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:me', 'post:read'])]
+    #[Groups(['user:me:read', 'post:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'post:read'])]
+    #[Groups(['user:me:read', 'post:read'])]
     private $title;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
@@ -105,7 +105,7 @@ class Playlist
         return $this;
     }
 
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     public function getPostCount(): int
     {
         return $this->getPosts()->count();

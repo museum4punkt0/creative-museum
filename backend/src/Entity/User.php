@@ -32,14 +32,14 @@ use Symfony\Component\Validator\Constraints as Assert;
         'me' => [
             'method' => 'GET',
             'path' => '/users/me',
-            'normalization_context' => ['groups' => ['read:me']],
+            'normalization_context' => ['groups' => ['user:me:read']],
             'controller' => MeController::class,
             'output_formats' => [
                 'json' => 'application/json',
             ],
         ],
         'get' => [
-            'normalization_context' => ['groups' => ['read:users']],
+            'normalization_context' => ['groups' => ['users:read']],
         ],
     ],
     itemOperations: [
@@ -47,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'patch' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object == user",
             'denormalization_context' => ['groups' => ['write:me']],
-            'normalization_context' => ['groups' => ['read:me']],
+            'normalization_context' => ['groups' => ['user:me:read']],
         ],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"],
     ],
@@ -68,7 +68,7 @@ class User implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:me', 'read:users'])]
+    #[Groups(['user:me:read', 'users:read'])]
     #[ApiProperty(identifier: false)]
     private int $id;
 
@@ -76,7 +76,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(['read:me', 'read:post', 'read:users'])]
+    #[Groups(['user:me:read', 'post:read', 'users:read'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -84,29 +84,29 @@ class User implements UserInterface
     private Collection $posts;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private Collection $playlists;
 
     #[ORM\Column(type: 'notficationtype')]
     private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['read:me', 'write:me'])]
+    #[Groups(['user:me:read', 'write:me'])]
     private bool $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
     private bool $active = true;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private int $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private Collection $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]
-    #[Groups(['read:me'])]
+    #[Groups(['user:me:read'])]
     private Collection $achievements;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
@@ -115,36 +115,36 @@ class User implements UserInterface
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'write:me', 'read:users'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'write:me', 'read:users'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:me', 'write:me', 'read:post', 'read:post', 'read:users'])]
+    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'read:users'])]
+    #[Groups(['user:me:read', 'users:read'])]
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['read:post', 'write:me', 'read:me', 'read:users'])]
+    #[Groups(['post:read', 'write:me', 'user:me:read', 'users:read'])]
     private $profilePicture;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 100)]
-    #[Groups(['read:me', 'write:me'])]
+    #[Groups(['user:me:read', 'write:me'])]
     private $description;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['write:me', 'read:me'])]
+    #[Groups(['write:me', 'user:me:read'])]
     private $lastLogin;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'write:me', 'read:users'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
     private $fullName;
 
     public function __construct()
