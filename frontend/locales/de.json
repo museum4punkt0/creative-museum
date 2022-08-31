@@ -212,6 +212,8 @@
     "gift": "Verschenken",
     "given": "Award verliehen",
     "giftAward": "Award verschenken",
+    "gifted": "Verliehene Awards",
+    "received": "Erhaltene Awards",
     "givenConfirmText": "Du hast den Award \"{title}\" für {price} Punkte an @{username} verschenkt!",
     "pointsLeft": "Restpunktestand {score} Punkte",
     "confirmSelection": "Auswahl bestätigen",

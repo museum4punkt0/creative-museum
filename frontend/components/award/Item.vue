@@ -1,6 +1,6 @@
 <template>
   <div :style="styleAttr">
-    <div class="flex flex-row items-center mb-2 award-item" @click.prevent="awardDetailOpen = true">
+    <div class="flex flex-row items-center mb-2 award-item" @click.prevent="awardDetailOpen = award.available && !award.taken">
       <div class="w-18 h-18 rounded-full mr-3 overflow-hidden flex-shrink-0">
         <img
           v-if="award.picture"
@@ -12,7 +12,7 @@
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ award.title }}</p>
         <p class="text-$highlight text-sm">{{ award.price.toLocaleString() + ' ' + $t('points') }}</p>
-        <button v-if="award.available" class="btn-outline self-start mt-2 text-xs p-1" type="button">
+        <button v-if="award.available && !award.taken" class="btn-outline self-start mt-2 text-xs p-1" type="button">
           {{ $t('awards.gift') }}
         </button>
       </div>
@@ -25,7 +25,7 @@
       leave-to-class="opacity-0"
     >
       <Modal v-if="awardDetailOpen === true" @closeModal="awardDetailOpen = false">
-        <AwardDetail :award="award" @closeAwardDetail="awardDetailOpen = false" />
+        <AwardDetail :award="award" @closeAwardDetail="awardDetailOpen = false; $emit('awardsChange')" />
       </Modal>
     </transition>
   </div>
@@ -40,6 +40,7 @@ export default defineComponent({
       required: true
     }
   },
+  emits: ['awardsChange'],
   setup(props) {
     const context = useContext()
     const awardDetailOpen = ref(false)

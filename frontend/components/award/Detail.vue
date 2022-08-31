@@ -75,7 +75,7 @@
         <p>
           {{ $t('awards.givenConfirmText', {title: award.title, price: award.price.toLocaleString(), username: selectedUsername}) }}
         </p>
-        <p class="text-xs text-$highlight">{{ $t('awards.pointsLeft', { score: (currentCampaignPoints[0] - award.price).toLocaleString()}) }}</p>
+        <p class="text-xs text-$highlight">{{ $t('awards.pointsLeft', { score: currentCampaignPoints[0].toLocaleString() }) }}</p>
       </div>
 
       <div class="mx-6 mb-6">

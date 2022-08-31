@@ -5,15 +5,19 @@ export const awardApi = () => {
 
   const fetchAwards = async (campaign) => {
 
-    let res = null
+    let response = null
 
     if (campaign) {
-      res = await $api.get(`awards?campaign=${campaign}`)
+      response = await $api.get(`awards?campaign=${campaign}`)
     } else {
-      res = await $api.get('awards?campaign.active=1&order[campaign.start]=asc&order[price]=asc')
+      response = await $api.get('awards?campaign.active=1&order[campaign.start]=asc&order[price]=asc')
     }
 
-    return res
+    return response
+  }
+
+  const fetchAwarded = async () => {
+    return await $api.get(`awardeds?winner=${$auth.user.id}`)
   }
 
   const awardUser = async (awardId, userId) => {
@@ -29,6 +33,7 @@ export const awardApi = () => {
 
   return {
     fetchAwards,
+    fetchAwarded,
     awardUser,
   }
 }

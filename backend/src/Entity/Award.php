@@ -65,7 +65,7 @@ class Award
     private $description;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['awards:read', 'campaigns:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'awarded:read'])]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'awards')]
