@@ -26,7 +26,7 @@ export const userApi = () => {
 
   const searchUser = async (searchString) => {
     return await $api.get(
-      `users?or[fullName]=${searchString}&or[email]=${searchString}`
+      `users?or[fullName]=${searchString}&or[email]=${searchString}&or[username]=${searchString}`
     )
   }
 

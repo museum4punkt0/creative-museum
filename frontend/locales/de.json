@@ -210,12 +210,18 @@
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",
     "gift": "Verschenken",
-    "given": "Award verschenkt",
+    "given": "Award verliehen",
     "giftAward": "Award verschenken",
     "givenConfirmText": "Du hast den Award \"{title}\" für {price} Punkte an @{username} verschenkt!",
     "pointsLeft": "Restpunktestand {score} Punkte",
     "confirmSelection": "Auswahl bestätigen",
-    "detailHeadline": "Award"
+    "detailHeadline": "Award",
+    "violations": {
+      "1661952434": "Du kannst Dir nicht selber einen Award verleihen ;)",
+      "1661952502": "Du musst Teilnehmer der Kampagne sein um einem anderen Teilnehmer diesen Award zu verleihen.",
+      "1661952537": "Du hast leider nicht genug Punkte. Verdiene mehr indem Du dich an der Kampagne beteiligst.",
+      "1661952565": "Du hast diesen Award bereits verliehen."
+    }
   },
   "filter": {
     "newest": "Neueste",

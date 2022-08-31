@@ -3,7 +3,7 @@
     <img
       v-if="'profilePicture' in user"
       :src="backendUrl + user.profilePicture.contentUrl"
-      class="w-8 h-8 rounded-full"
+      class="w-full h-full rounded-full"
     />
   </div>
 </template>

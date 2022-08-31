@@ -1,12 +1,12 @@
 <template>
   <div :style="styleAttr" class="flex flex-col justify-between h-full">
     <template v-if="mode === 'detail'">
-      <div class="page-header p-6">
+      <div class="page-header p-6 self-start">
         <a class="back-btn" @click.prevent="$emit('closeAwardDetail')">
           {{ $t('awards.detailHeadline') }}
         </a>
       </div>
-      <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
+      <div class="box-shadow-mobile relative m-6 lg:m-0 p-6 flex-1">
         <img
           v-if="award.picture"
           :src="`${backendUrl}/${award.picture.contentUrl}`"
@@ -29,35 +29,35 @@
       </div>
     </template>
     <template v-if="mode === 'giveaway'">
-      <div class="page-header p-6">
+      <div class="page-header p-6 pb-0">
         <a class="back-btn" @click.prevent="mode = 'detail'">
           {{ $t('selectProfile') }}
         </a>
       </div>
 
-      <div class="relative p-6">
-        <input type="text" class="input-text" v-model="searchField" />
+      <div class="relative px-6">
+        <input v-model="searchField" class="input-text my-6" autocomplete="off" name="attr1" />
         <template v-if="userList">
-          <div v-for="user in userList" :key="user.uuid">
-            <div
-              class="flex flex-row items-center mb-2 award-item"
+          <ul v-for="user in userList" :key="user.uuid">
+            <li
+              v-if="user.uuid !== $auth.user.uuid"
+              class="flex flex-row items-center my-2 award-item"
               :class="{'border rounded' : user.uuid === selectedUser}"
               @click.prevent="select(user.uuid)"
             >
-              <div class="w-18 h-18 rounded-full mr-3 overflow-hidden flex-shrink-0">
-                <img
-                  v-if="user.profilePicture"
-                  :src="`${backendUrl}/${user.profilePicture.contentUrl}`"
-                  :alt="user.fullName"
-                  class="max-w-18 h-auto"
-                />
+              <UserProfileImage :user="user" class="w-12 h-12 mr-4" />
+              <div class="flex flex-col">
+                <p>{{ user.fullName }}</p>
+                <p class="text-$highlight text-sm">@{{ user.username }}</p>
               </div>
-              <div class="flex flex-col flex-grow">
-                <p class="mb-1">{{ user.fullName }}</p>
-              </div>
-            </div>
-          </div>
+            </li>
+          </ul>
         </template>
+        <ul v-if="violations" class="text-sm text-red-500 my-6">
+          <li v-for="(violation, key) in violations" :key="key">
+            {{ $t('awards.violations.' + violation.code) }}
+          </li>
+        </ul>
       </div>
 
       <div class="mx-6 mb-6">
@@ -73,14 +73,15 @@
       </div>
       <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
         <p>
-          {{ $t('awards.givenConfirmText', {title: award.title, price: award.price, username: selectedUsername}) }}
+          {{ $t('awards.givenConfirmText', {title: award.title, price: award.price.toLocaleString(), username: selectedUsername}) }}
         </p>
+        <p class="text-xs text-$highlight">{{ $t('awards.pointsLeft', { score: (currentCampaignPoints[0] - award.price).toLocaleString()}) }}</p>
       </div>
 
       <div class="mx-6 mb-6">
         <button
-          @click.prevent="resetView"
           class="btn-outline w-full"
+          @click.prevent="resetView"
         >
           {{ $t('close') }}
         </button>
@@ -90,7 +91,7 @@
 
 </template>
 <script>
-import { defineComponent, useContext, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, ref, computed, use } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
 import { userApi } from '@/api/user'
 import { awardApi } from '~/api/award'
@@ -103,7 +104,7 @@ export default defineComponent({
     }
   },
   emits: ['closeAwardDetail'],
-  setup(props) {
+  setup(props, ctx) {
     const { searchUser } = userApi()
     const { awardUser } = awardApi()
 
@@ -111,6 +112,18 @@ export default defineComponent({
     const mode = ref('detail')
     const userList = ref(null)
     const selectedUser = ref(null)
+    const violations = ref(null)
+    const currentCampaignPoints = computed(() => {
+      return context.$auth.user.memberships.filter(function(membership) {
+        if (membership.campaign.id === props.award.campaign.id) {
+          return true
+        } else {
+          return false
+        }
+      }).map(function(item) {
+        return item.score
+      })
+    })
 
     const bgColor = new TinyColor(props.award.campaign.color)
     const fgColor = new TinyColor('#FFFFFF')
@@ -142,8 +155,7 @@ export default defineComponent({
       selectedUser.value = null
       debouncedSearchField.value = ''
       mode.value = 'detail'
-      context.emit('closeAwardDetail')
-
+      ctx.emit('closeAwardDetail')
     }
 
     const selectedUsername = computed(() => {
@@ -156,8 +168,14 @@ export default defineComponent({
     })
 
     async function giveAway() {
-      const result = await awardUser(props.award.id, selectedUser.value)
-      mode.value = 'giftComplete'
+      await awardUser(props.award.id, selectedUser.value).then(function(response) {
+        if ('error' in response) {
+          violations.value = response.error.response.data.violations
+        } else {
+          mode.value = 'giftComplete'
+        }
+      })
+
     }
 
     const searchField = computed({
@@ -189,7 +207,9 @@ export default defineComponent({
       selectedUser,
       giveAway,
       resetView,
-      selectedUsername
+      selectedUsername,
+      currentCampaignPoints,
+      violations
     }
 
   },

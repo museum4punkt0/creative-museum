@@ -17,11 +17,14 @@ export const awardApi = () => {
   }
 
   const awardUser = async (awardId, userId) => {
-    return await $api.post(`awardeds`, {
+    const response = await $api.post(`awardeds`, {
       giver: `/v1/users/${$auth.user.uuid}`,
       winner: `/v1/users/${userId}`,
       award: `/v1/awards/${awardId}`
     })
+
+    await $auth.fetchUser()
+    return response
   }
 
   return {
