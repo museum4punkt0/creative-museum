@@ -63,18 +63,18 @@ class MediaObject
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['media_object:read', 'read:post', 'campaigns:read', 'awards:read'])]
+    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'awards:read'])]
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
-    #[Groups(['media_object:read', 'read:post', 'read:me', 'campaigns:read', 'awards:read'])]
+    #[Groups(['media_object:read', 'post:read', 'read:me', 'campaigns:read', 'awards:read'])]
     public ?string $contentUrl = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     public ?string $filepath = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['media_object:read', 'read:post', 'campaigns:read', 'awards:read'])]
+    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'awards:read'])]
     private string $description;
 
     #[ORM\Column(type: 'datetime_immutable')]
@@ -90,7 +90,7 @@ class MediaObject
 
     #[ORM\Column(type: 'filetype')]
     #[Assert\NotNull(groups: ['media_object_create'])]
-    #[Groups(['media_object:read', 'read:post'])]
+    #[Groups(['media_object:read', 'post:read'])]
     private FileType $type = FileType::IMAGE;
 
     public function getId(): ?int

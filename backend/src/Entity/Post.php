@@ -41,39 +41,39 @@ use Symfony\Component\Validator\Constraints as Assert;
     order: ['created' => 'DESC'],
     collectionOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['read:post']],
+            'normalization_context' => ['groups' => ['post:read']],
         ],
         'post' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.author == user",
-            'denormalization_context' => ['groups' => ['write:post']],
-            'normalization_context' => ['groups' => ['read:post']],
+            'denormalization_context' => ['groups' => ['post:write']],
+            'normalization_context' => ['groups' => ['post:read']],
         ],
         'post_comment' => [
             'method' => 'POST',
             'path' => '/posts/{id}/comments',
             'requirements' => ['id' => "\d+", 'comment' => 'array'],
             'controller' => SetCommentController::class,
-            'normalization_context' => ['groups' => 'write:comment'],
+            'normalization_context' => ['groups' => 'post:comment:write'],
         ],
     ],
     subresourceOperations: [
         'api_posts_comments_get_subresource' => [
             'method' => 'GET',
             'normalization_context' => [
-                'groups' => ['read:post'],
+                'groups' => ['post:read'],
             ],
             'maxDepth' => 2,
             'order' => ['created' => 'ASC'],
         ],
         'api_users_bookmarks_get_subresource' => [
             'normalization_context' => [
-                'groups' => ['read:post'],
+                'groups' => ['post:read'],
             ],
         ],
     ],
     itemOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['read:post']],
+            'normalization_context' => ['groups' => ['post:read']],
         ],
         'add_post_to_playlist' => [
             'method' => 'GET',
@@ -86,12 +86,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             'path' => '/posts/{id}/bookmark',
             'requirements' => ['id' => "\d+"],
             'controller' => SetBookmarkController::class,
-            'normalization_context' => ['groups' => 'write:post:bookmarks'],
+            'normalization_context' => ['groups' => 'post:bookmarks:write'],
         ],
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         'delete' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)",
-            'normalization_context' => ['groups' => ['delete:post']],
+            'normalization_context' => ['groups' => ['post:delete']],
         ],
     ]
 )]
@@ -116,54 +116,54 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     private $body;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['write:post', 'read:post', 'write:comment', 'write:vote', 'read:vote'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'vote:write', 'vote:read'])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ['persist', 'remove'])]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     #[Assert\Valid]
     private $pollOptions;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments', )]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['write:comment', 'delete:post'])]
+    #[Groups(['post:comment:write', 'post:delete'])]
     #[Ignore]
     private $parent;
 
@@ -174,49 +174,49 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['write:post', 'read:post', 'write:comment'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
     private $campaign;
 
     #[ORM\ManyToMany(targetEntity: Playlist::class, cascade: ['persist', 'remove'])]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     private $playlist;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     #[Assert\Length(max: 100)]
     private $question;
 
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     private $files;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $commentCount = 0;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     private $blocked = false;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $bookmarked = false;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $rated = false;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     private $reported = false;
 
     #[ORM\ManyToOne(targetEntity: Playlist::class)]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     private $linkedPlaylist;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $myVote = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $votesSpread = 0;
 
     #[ORM\ManyToOne(targetEntity: CampaignFeedbackOption::class)]
@@ -225,10 +225,10 @@ class Post
     #[ORM\Column(type: 'integer')]
     private $leadingFeedbackCount = 0;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $choicesTotal = 0;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $userChoiced = false;
 
     public function __construct()
@@ -291,7 +291,7 @@ class Post
     }
 
     #[SerializedName('postType')]
-    #[Groups(['write:post'])]
+    #[Groups(['post:write'])]
     public function setPostType(PostType $type): self
     {
         $this->type = $type;

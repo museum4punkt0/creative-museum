@@ -22,12 +22,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     collectionOperations: [
         'get' => [
-            'normalization_context' => ['groups' => 'read:vote'],
+            'normalization_context' => ['groups' => 'vote:read'],
         ],
         'post' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.voter == user",
             'controller' => PostVoteController::class,
-            'normalization_context' => ['groups' => 'write:vote'],
+            'normalization_context' => ['groups' => 'vote:write'],
         ],
     ],
     itemOperations: [
@@ -45,18 +45,18 @@ class Vote
     private $id;
 
     #[ORM\Column(type: 'votedirection')]
-    #[Groups(['write:vote', 'read:vote', 'read:post'])]
+    #[Groups(['vote:write', 'vote:read', 'post:read'])]
     #[ORM\JoinColumn(nullable: false)]
     private VoteDirection $direction;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[Groups(['write:vote', 'read:vote'])]
+    #[Groups(['vote:write', 'vote:read'])]
     #[ORM\JoinColumn(nullable: false)]
     public $voter;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:vote'])]
+    #[Groups(['vote:read'])]
     private $post;
 
     public function getId(): ?int

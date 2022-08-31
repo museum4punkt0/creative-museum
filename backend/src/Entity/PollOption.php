@@ -26,7 +26,7 @@ class PollOption
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $id;
 
     /**
@@ -34,19 +34,19 @@ class PollOption
      */
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'pollOptions')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['write:post'])]
+    #[Groups(['post:write'])]
     private $post;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['write:post', 'read:post'])]
+    #[Groups(['post:write', 'post:read'])]
     #[Assert\NotNull]
     #[Assert\Length(min: 1, max: 100)]
     private $title;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $votes = 0;
 
-    #[Groups(['read:post'])]
+    #[Groups(['post:read'])]
     private $myChoice = false;
 
     public function getId(): ?int

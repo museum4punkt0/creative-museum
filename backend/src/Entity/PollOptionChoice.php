@@ -41,7 +41,7 @@ class PollOptionChoice
 
     #[ORM\ManyToOne(targetEntity: PollOption::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['write:pollOptionChoice', 'read:post'])]
+    #[Groups(['write:pollOptionChoice', 'post:read'])]
     private $pollOption;
 
     #[ORM\ManyToOne(targetEntity: User::class)]

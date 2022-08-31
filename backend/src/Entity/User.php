@@ -73,7 +73,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(['read:me', 'read:post'])]
+    #[Groups(['read:me', 'post:read'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -120,7 +120,7 @@ class User implements UserInterface
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:me', 'write:me', 'read:post'])]
+    #[Groups(['read:me', 'write:me', 'post:read'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -128,7 +128,7 @@ class User implements UserInterface
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['read:post', 'write:me', 'read:me'])]
+    #[Groups(['post:read', 'write:me', 'read:me'])]
     private $profilePicture;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
