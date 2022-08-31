@@ -1,7 +1,7 @@
 <template>
   <div>
     <p class="text-lg font-bold mb-2">{{ post.question }}</p>
-    <p>{{ post.body }}</p>
+    <p class="break-words">{{ post.body }}</p>
 
     <div v-if="!post.userChoiced && campaignActive" class="poll-options mt-4 grid lg:grid-cols-2 gap-4">
       <div v-for="(option, key) of post.pollOptions" :key="key">
