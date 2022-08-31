@@ -1,7 +1,7 @@
 import { useContext } from '@nuxtjs/composition-api'
 
 export const awardApi = () => {
-  const { $api } = useContext()
+  const { $api, $auth } = useContext()
 
   const fetchAwards = async (campaign) => {
 
@@ -16,7 +16,16 @@ export const awardApi = () => {
     return res
   }
 
+  const awardUser = async (awardId, userId) => {
+    return await $api.post(`awardeds`, {
+      giver: `/v1/users/${$auth.user.uuid}`,
+      winner: `/v1/users/${userId}`,
+      award: `/v1/awards/${awardId}`
+    })
+  }
+
   return {
     fetchAwards,
+    awardUser,
   }
 }

@@ -17,9 +17,7 @@
 
       <h1 class="text-2xl">{{ user.firstName }} {{ user.lastName }}</h1>
       <p class="highlight-text mb-2">@{{ user.username }}</p>
-      <p>
-        {{ user.description }}
-      </p>
+      <p>{{ user.description }}</p>
 
       <NuxtLink
         to="/user/update"
@@ -39,9 +37,7 @@
         <div class="text-$highlight text-sm mb-2">
           {{ membership.campaign.title }}
         </div>
-        <div
-          class="box-shadow justify-center items-end flex flex-row rounded-full py-2 px-4"
-        >
+        <div class="box-shadow justify-center items-end flex flex-row rounded-full py-2 px-4">
           <span class="text-2xl mr-2">{{ membership.score.toLocaleString() }}</span>
           <span>{{ $t('points') }}</span>
         </div>

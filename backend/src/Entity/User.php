@@ -17,10 +17,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\MeController;
 use App\Enum\NotificationType;
 use App\Repository\UserRepository;
-use App\SearchFilter\FullTextSearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Metaclass\FilterBundle\Filter\FilterLogic;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -38,7 +38,9 @@ use Symfony\Component\Validator\Constraints as Assert;
                 'json' => 'application/json',
             ],
         ],
-        'get',
+        'get' => [
+            'normalization_context' => ['groups' => ['read:users']],
+        ],
     ],
     itemOperations: [
         'get',
@@ -58,6 +60,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'email' => 'partial'
     ]
 )]
+#[ApiFilter(FilterLogic::class)]
 #[UniqueEntity('username')]
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface
@@ -65,7 +68,7 @@ class User implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:me'])]
+    #[Groups(['read:me', 'read:users'])]
     #[ApiProperty(identifier: false)]
     private int $id;
 
@@ -73,7 +76,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(['read:me', 'post:read'])]
+    #[Groups(['read:me', 'read:post', 'read:users'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -112,23 +115,23 @@ class User implements UserInterface
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'write:me'])]
+    #[Groups(['read:me', 'write:me', 'read:users'])]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'write:me'])]
+    #[Groups(['read:me', 'write:me', 'read:users'])]
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:me', 'write:me', 'post:read'])]
+    #[Groups(['read:me', 'write:me', 'read:post', 'read:post', 'read:users'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me'])]
+    #[Groups(['read:me', 'read:users'])]
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['post:read', 'write:me', 'read:me'])]
+    #[Groups(['read:post', 'write:me', 'read:me', 'read:users'])]
     private $profilePicture;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -141,7 +144,7 @@ class User implements UserInterface
     private $lastLogin;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:me', 'write:me'])]
+    #[Groups(['read:me', 'write:me', 'read:users'])]
     private $fullName;
 
     public function __construct()
