@@ -19,7 +19,7 @@ class Awarded extends Constraint
 {
     public $giverNotCampaignMember = 'Giver is not a campaign member';
 
-    public $receiverNotCampaignMember = 'Receiver is not a campaign member';
+    public $canNotAwardSelf = 'You can not give an award to yourself';
 
     public $notEnoughPoints = 'Giver has not enough points';
 
