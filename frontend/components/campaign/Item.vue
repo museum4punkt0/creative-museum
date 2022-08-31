@@ -1,6 +1,7 @@
 <template>
-  <div
-    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-lg block"
+  <NuxtLink
+    :to="localePath('/campaigns/' + campaign.id)"
+    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-lg block lg:pointer-events-none"
     :style="`background-color: ${campaign.color}`"
   >
     <article class="flex flex-col h-full" :class="`text-${textColor}`">
@@ -15,9 +16,7 @@
           </span>
         </div>
         <h1 v-if="campaign.title" class="my-4 text-xl lg:text-xxl">
-          <NuxtLink :to="localePath(`/campaigns/${campaign.id}`)">
-            {{ campaign.title }}
-          </NuxtLink>
+          {{ campaign.title }}
         </h1>
       </header>
       <div v-if="campaign.shortDescription">
@@ -41,7 +40,7 @@
         </div>
       </footer>
     </article>
-  </div>
+  </NuxtLink>
 </template>
 <script>
 import { TinyColor, readability } from '@ctrl/tinycolor'

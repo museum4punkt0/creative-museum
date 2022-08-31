@@ -5,6 +5,7 @@
         v-for="campaign in stack"
         ref="card"
         :key="campaign._id"
+        :data-href="localePath('/campaigns/' + campaign.id)"
         class="vue-card-stack__card select-none absolute transform origin-center"
         :style="{
           top: `${campaign.yPos}px`,
@@ -76,6 +77,7 @@ export default {
       cardWidth: 650,
       mobileYOffset: 70,
       initialized: false,
+      touchElement: ''
     }
   },
   computed: {
@@ -372,16 +374,23 @@ export default {
       return this.isTouch ? e.touches[0].clientY : e.clientY
     },
     onTouchStart(e) {
+      this.touchElement = e.target.getAttribute('data-href')
       this.isDragging = true
       this.dragStartX = this.getDragXPos(e) - this.elementXPosOffset
       this.dragStartY = this.getDragYPos(e) - this.elementYPosOffset
 
       document.addEventListener(this.dragEvent, this.onDrag)
     },
-    onTouchEnd() {
+    onTouchEnd(e) {
+      if (!this.isMobile && (Math.abs(this.getDragXPos(e) - this.dragStartX) < 10)) {
+        this.$router.push(this.touchElement)
+      }
+
       this.isDragging = false
       this.dragStartX = 0
       this.dragStartY = 0
+
+
       document.removeEventListener(this.dragEvent, this.onDrag)
       this.updateStack()
     },

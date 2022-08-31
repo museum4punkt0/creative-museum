@@ -26,6 +26,7 @@ export default {
   plugins: [
     '~/plugins/api',
     { src: '~/plugins/tooltip', mode: 'client' },
+    { src: '~/plugins/touchEvents', mode: 'client' },
   ],
   buildModules: [
     '@nuxt/typescript-build',

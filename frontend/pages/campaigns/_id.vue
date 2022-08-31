@@ -101,7 +101,6 @@ export default defineComponent({
           store.state.currentSorting,
           store.state.currentSortingDirection
         )
-
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         }
