@@ -143,7 +143,7 @@ export const postApi = () => {
       orderParams = `&order[created]=${directionKey}&type=playlist`
     }
     if (sorting === 'controversial') {
-      orderParams = `&order[votesSpread]=${directionKey}`
+      orderParams = `&order[commentCount]=${directionKey}`
     }
 
     return await $api.get(`posts?campaign=${campaignId}${orderParams}`)
