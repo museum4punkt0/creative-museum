@@ -146,7 +146,7 @@ export const postApi = () => {
       orderParams = `&order[votesSpread]=${directionKey}`
     }
 
-    return await $api.get(`posts/?campaign=${campaignId}${orderParams}`)
+    return await $api.get(`posts?campaign=${campaignId}${orderParams}`)
   }
 
   const fetchPostsByPost = async (postId) => {
