@@ -104,4 +104,13 @@ class CampaignMember
 
         return $this;
     }
+
+    public static function create(Campaign $campaign, User $user): CampaignMember {
+        $member = new self();
+        $member->setCampaign($campaign);
+        $member->setUser($user);
+        $member->setScore(0);
+        $member->setRewardPoints(0);
+        return $member;
+    }
 }

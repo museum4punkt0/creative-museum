@@ -15,6 +15,7 @@ use App\Entity\Campaign;
 use App\Entity\User;
 use App\Repository\AwardedRepository;
 use App\Repository\CampaignMemberRepository;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -23,18 +24,15 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 final class AwardedValidator extends ConstraintValidator
 {
-    private CampaignMemberRepository $campaignMemberRepository;
-
-    private AwardedRepository $awardedRepository;
-
-    public function __construct(CampaignMemberRepository $campaignMemberRepository, AwardedRepository $awardedRepository)
-    {
-        $this->campaignMemberRepository = $campaignMemberRepository;
-        $this->awardedRepository = $awardedRepository;
-    }
+    public function __construct(
+        private readonly CampaignMemberRepository $campaignMemberRepository,
+        private readonly AwardedRepository $awardedRepository,
+        private readonly Security $security
+    ) {}
 
     /**
-     * @param $value
+     * @param Awarded $value
+     * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -42,27 +40,24 @@ final class AwardedValidator extends ConstraintValidator
             return;
         }
 
-        $continue = true;
-
         /**
-         * @var Awarded                            $value
-         * @var \App\Validator\Constraints\Awarded $constraint
+         * @var Awarded $value
+         * @var Constraints\Awarded $constraint
          */
-        if (!$this->isCampaignMember($value->getAward()->getCampaign(), $value->getGiver())) {
-            $this->context->buildViolation($constraint->giverNotCampaignMember)->addViolation();
-            $continue = false;
-        }
 
-        if (!$this->isCampaignMember($value->getAward()->getCampaign(), $value->getWinner())) {
-            $this->context->buildViolation($constraint->receiverNotCampaignMember)->addViolation();
-            $continue = false;
-        }
+        $campaign = $value->getAward()->getCampaign();
 
-        if (!$continue) {
+        if ($value->getWinner() === $this->security->getUser()) {
+            $this->context->buildViolation($constraint->canNotAwardSelf)->addViolation();
             return;
         }
 
-        if ($value->getAward()->getPrice() > $this->getCampaignScore($value->getAward()->getCampaign(), $value->getGiver())) {
+        if (! $this->isCampaignMember($campaign, $value->getGiver())) {
+            $this->context->buildViolation($constraint->giverNotCampaignMember)->addViolation();
+            return;
+        }
+
+        if ($value->getAward()->getPrice() > $this->getCampaignScore($campaign, $value->getGiver())) {
             $this->context->buildViolation($constraint->notEnoughPoints)->addViolation();
             return;
         }
@@ -72,9 +67,6 @@ final class AwardedValidator extends ConstraintValidator
         }
     }
 
-    /**
-     * @param Awarded $awarded
-     */
     private function isCampaignMember(Campaign $campaign, User $user): bool
     {
         $result = $this->campaignMemberRepository->findBy([
@@ -97,11 +89,11 @@ final class AwardedValidator extends ConstraintValidator
 
     private function hasAlreadyAwarded(Award $award, User $user): bool
     {
-        $result = $this->awardedRepository->findBy([
+        $awarded = $this->awardedRepository->findOneBy([
             'giver' => $user->getId(),
             'award' => $award->getId(),
         ]);
 
-        return !empty($result);
+        return $awarded !== null;
     }
 }
