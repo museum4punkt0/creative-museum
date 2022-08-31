@@ -9,7 +9,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AwardedRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,12 @@ use Doctrine\ORM\Mapping as ORM;
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.giver == user and previous_object.giver == user)"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'winner' => 'exact',
+    ]
 )]
 class Awarded
 {
