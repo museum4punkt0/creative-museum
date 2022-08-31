@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AwardedRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Secured resource.
@@ -23,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AwardedRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        'get',
+        'get' => ['normalization_context' => ['groups' => ['awarded:read']],],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.giver == user"],
     ],
     itemOperations: [
@@ -55,6 +56,7 @@ class Awarded
 
     #[ORM\ManyToOne(targetEntity: Award::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['awarded:read'])]
     private $award;
 
     public function getId(): ?int

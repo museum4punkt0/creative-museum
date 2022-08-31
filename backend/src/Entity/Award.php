@@ -57,11 +57,11 @@ class Award
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read', 'campaigns:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'awarded:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read', 'campaigns:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'awarded:read'])]
     private $description;
 
     #[ORM\Column(type: 'integer')]
@@ -74,7 +74,7 @@ class Award
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['awards:read', 'campaigns:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'awarded:read'])]
     private $picture;
 
     #[Groups(['campaigns:read', 'awards:read'])]
