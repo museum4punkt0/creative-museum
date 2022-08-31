@@ -116,9 +116,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
                         $data['userChoiced'] = true;
                     }
 
-                    $pollOption->setMyChoice(
-                        $choiced
-                    );
+                    $pollOption->setMyChoice($choiced);
                 }
                 $pollOptions[$index] = $this->normalizer->normalize($pollOption,$format,$context);
             }

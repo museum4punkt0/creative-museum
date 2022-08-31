@@ -108,6 +108,10 @@ class Campaign
     #[Assert\Valid]
     private $feedbackOptions;
 
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
+    private $closed = false;
+
     public function __construct()
     {
         $this->badges = new ArrayCollection();
@@ -379,5 +383,17 @@ class Campaign
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTime('now');
+    }
+
+    public function getClosed(): ?bool
+    {
+        return $this->closed;
+    }
+
+    public function setClosed(bool $closed): self
+    {
+        $this->closed = $closed;
+
+        return $this;
     }
 }
