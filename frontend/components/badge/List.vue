@@ -47,6 +47,7 @@ import {
   useStore,
   ref,
   computed,
+  useContext
 } from '@nuxtjs/composition-api'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
 
@@ -63,6 +64,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const user = computed(() => store.state.auth.user)
+    const context = useContext()
 
     const readMore = ref(false)
 
@@ -74,6 +76,7 @@ export default defineComponent({
       user,
       readMore,
       toggleShowMore,
+      backendUrl: context.$config.backendUrl,
     }
   },
 })

@@ -24,6 +24,12 @@ export const userApi = () => {
     return res[0]
   }
 
+  const searchUser = async (searchString) => {
+    return await $api.get(
+      `users?or[fullName]=${searchString}&or[email]=${searchString}`
+    )
+  }
+
   const updateUser = async (userData) => {
     delete userData.uuid
     delete userData.id
@@ -63,5 +69,6 @@ export const userApi = () => {
     supplyUsername,
     fetchUserInfoByCampaign,
     updateUser,
+    searchUser,
   }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c87606c348ee9a6613c97acfdda93beb",
+    "content-hash": "8682bbdab96c019579c37702f31bba65",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2599,6 +2599,57 @@
                 }
             ],
             "time": "2022-04-08T12:31:19+00:00"
+        },
+        {
+            "name": "metaclass-nl/filter-bundle",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/metaclass-nl/filter-bundle.git",
+                "reference": "79fb554aa01e92be26a0e9fa646e7a7dd96ef7c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/metaclass-nl/filter-bundle/zipball/79fb554aa01e92be26a0e9fa646e7a7dd96ef7c8",
+                "reference": "79fb554aa01e92be26a0e9fa646e7a7dd96ef7c8",
+                "shasum": ""
+            },
+            "require": {
+                "api-platform/core": "^2.5",
+                "doctrine/orm": "^2.7",
+                "php": ">=7.2.5",
+                "symfony/http-kernel": "^4.4 || ^5.1 || ^6.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Metaclass\\FilterBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MetaClass",
+                    "homepage": "http://www.metaclass.nl/"
+                }
+            ],
+            "description": "Filter bundle for API Platform, Filter Logic",
+            "keywords": [
+                "API Platform",
+                "api-platform.com",
+                "doctrine orm",
+                "filter",
+                "logic",
+                "wherefilter"
+            ],
+            "support": {
+                "issues": "https://github.com/metaclass-nl/filter-bundle/issues",
+                "source": "https://github.com/metaclass-nl/filter-bundle/tree/v1.0.2"
+            },
+            "time": "2022-08-10T08:59:04+00:00"
         },
         {
             "name": "namshi/jose",
