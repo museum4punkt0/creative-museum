@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10">
+  <div class="mt-10" :style="styleAttr">
     <div
       v-if="post.type !== 'system'"
       class="box-shadow"
@@ -67,10 +67,6 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    campaignColor: {
-      type: String,
-      default: '#FFFF00',
-    },
     campaignActive: {
       type: Boolean,
       default: true,
@@ -96,11 +92,20 @@ export default defineComponent({
 
     const textColor = getContrastColorClass()
 
-    function getContrastColorClass() {
-      const bgColor = new TinyColor(props.campaignColor)
-      const fgColor = new TinyColor('#FFFFFF')
+    const bgColor = new TinyColor(props.post.campaign.color)
+    const fgColor = new TinyColor('#FFFFFF')
+
+    const campaignContrastColor = computed(() => {
+      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+    })
+
+    function  getContrastColorClass() {
       return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
     }
+
+    const styleAttr = computed(() => {
+      return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
+    })
 
     async function getResults() {
       const results = await getFeedbackResults(props.post.id)
@@ -140,14 +145,15 @@ export default defineComponent({
     }
 
     return {
-      componentName,
-      textColor,
       getContrastColorClass,
       triggerFeedback,
+      voteOption,
+      componentName,
+      textColor,
+      styleAttr,
       showFeedbackForm,
       selectedFeedbackOptions,
       feedbackOptions,
-      voteOption,
       voted,
       total,
     }

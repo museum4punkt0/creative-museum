@@ -34,8 +34,9 @@
         v-for="(membership, key) in user.memberships"
         :key="key"
         class="self-stretch md:self-start mt-3 mb-12"
+        :style="`--highlight: ${membership.campaign.color};`"
       >
-        <div class="highlight-text text-sm mb-2">
+        <div class="text-$highlight text-sm mb-2">
           {{ membership.campaign.title }}
         </div>
         <div

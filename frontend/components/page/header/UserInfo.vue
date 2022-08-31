@@ -1,7 +1,7 @@
 <template>
   <div>
     <client-only>
-      <div v-show="user" class="flex flex-row md:space-x-4 items-center">
+      <NuxtLink  v-if="user" to="/user/profile" class="flex flex-row md:space-x-4 items-center">
         <div class="relative">
           <img
             :src="profilePicture"
@@ -27,7 +27,7 @@
               : $t('noUsername')
           }}
         </span>
-      </div>
+      </NuxtLink>
 
       <transition
         enter-active-class="duration-300 ease-out opacity-0"
