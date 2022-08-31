@@ -64,7 +64,6 @@ final class AwardedValidator extends ConstraintValidator
 
         if ($value->getAward()->getPrice() > $this->getCampaignScore($value->getAward()->getCampaign(), $value->getGiver())) {
             $this->context->buildViolation($constraint->notEnoughPoints)->addViolation();
-
             return;
         }
 

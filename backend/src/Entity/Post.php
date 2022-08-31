@@ -107,7 +107,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 #[ApiFilter(
     OrderFilter::class,
-    properties: ['created', 'votestotal', 'votesSpread', 'leadingFeedbackCount'],
+    properties: ['created', 'votestotal', 'votesSpread', 'leadingFeedbackCount', 'commentCount'],
     arguments: ['orderParameterName' => 'order']
 )]
 #[ORM\HasLifecycleCallbacks]
