@@ -72,6 +72,11 @@ export default defineComponent({
     })
 
      async function fetchAllAwards() {
+
+      if (!$auth.loggedIn) {
+        return
+      }
+
       availableAwards.value = []
       unavailableAwards.value = []
       giftedAwards.value = []
