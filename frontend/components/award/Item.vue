@@ -1,6 +1,6 @@
 <template>
   <div :style="styleAttr">
-    <div class="flex flex-row items-center mb-2 award-item" @click.prevent="awardDetailOpen = award.available && !award.taken">
+    <div class="flex flex-row items-center mb-2 award-item cursor-pointer" @click.prevent="awardDetailOpen = true">
       <div class="w-18 h-18 rounded-full mr-3 overflow-hidden flex-shrink-0">
         <img
           v-if="award.picture"

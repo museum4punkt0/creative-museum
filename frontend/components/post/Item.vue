@@ -16,11 +16,13 @@
         :post="post"
         class="mb-4"
         :text-color="textColor"
+        :campaign-active="campaignActive"
         @triggerFeedback="triggerFeedback"
         @voted="$emit('updatePost', post.id)"
       />
       <PostComments
         :post="post"
+        :campaign-active="campaignActive"
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
@@ -38,17 +40,17 @@
 
         <template v-for="(option, key) in feedbackOptions">
           <button
-            v-if="!voted"
+            v-if="!voted && campaignActive"
             :key="key"
             class="btn-primary btn-outline w-full mt-4"
             @click.prevent="voteOption(option.id)"
           >
             {{ option.text }}
           </button>
-          <div v-if="voted" :key="key" class="mb-6">
+          <div v-if="voted || !campaignActive" :key="key" class="mb-6">
             <div class="mb-2">{{ option.text }}</div>
             <div class="box-shadow-inset rounded-xl">
-              <div class="bg-$highlight rounded-xl text-$highlight-contrast text-center" :style="`width: ${Math.round((100 / total) * option.sum)}%`"><span class="px-3 py-0.5 inline-block" :class="Math.round((100 / total) * option.sum) < 10 ? 'text-white' : ''">{{ Math.round((100 / total) * option.sum) }}%</span></div>
+              <div class="bg-$highlight rounded-xl text-$highlight-contrast text-center" :style="`width: ${Math.round((100 / total ) * option.sum)}%`"><span class="px-3 py-0.5 inline-block" :class="Math.round((100 / total) * option.sum) < 10 ? 'text-white' : ''">{{ Math.round((100 / total) * option.sum) }}%</span></div>
             </div>
           </div>
         </template>
@@ -109,7 +111,7 @@ export default defineComponent({
 
     async function getResults() {
       const results = await getFeedbackResults(props.post.id)
-      total.value = 0
+      total.value = results.length > 0 ? 0 : 100
 
       feedbackOptions.value.forEach((option, index) => {
         feedbackOptions.value[index].sum = 0
@@ -126,7 +128,7 @@ export default defineComponent({
     async function triggerFeedback() {
       feedbackOptions.value = await getOptions(props.post.campaign.id)
 
-      if (props.post.rated || voted.value) {
+      if (props.post.rated || voted.value || !props.campaignActive) {
         await getResults()
         voted.value = true
       }

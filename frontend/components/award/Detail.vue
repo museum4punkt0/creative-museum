@@ -1,25 +1,27 @@
 <template>
-  <div :style="styleAttr" class="flex flex-col justify-between h-full">
+  <div :style="styleAttr" class="flex flex-col flex-1 justify-between h-full">
     <template v-if="mode === 'detail'">
       <div class="page-header p-6 self-start">
         <a class="back-btn" @click.prevent="$emit('closeAwardDetail')">
           {{ $t('awards.detailHeadline') }}
         </a>
       </div>
-      <div class="box-shadow-mobile relative m-6 lg:m-0 p-6 flex-1">
-        <img
-          v-if="award.picture"
-          :src="`${backendUrl}/${award.picture.contentUrl}`"
-          :alt="award.title"
-          class="w-full max-w-32 h-auto mx-auto"
-        />
-        <h1 class="text-2xl">{{ award.title }}</h1>
-        <p>{{ award.description }}</p>
-        <div class="text-$highlight">{{ award.price.toLocaleString() + ' ' + $t('points') }} </div>
+      <div class="flex-1">
+        <div class="box-shadow relative m-6 ">
+          <img
+            v-if="award.picture"
+            :src="`${backendUrl}/${award.picture.contentUrl}`"
+            :alt="award.title"
+            class="h-40 w-auto mx-auto"
+          />
+          <h1 class="text-2xl">{{ award.title }}</h1>
+          <p>{{ award.description }}</p>
+          <div class="text-$highlight">{{ award.price.toLocaleString() + ' ' + $t('points') }} </div>
+        </div>
       </div>
-
       <div class="mx-6 mb-6">
         <button
+          v-if="award.available && !award.taken"
           class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
           @click.prevent="mode = 'giveaway'"
         >
@@ -35,7 +37,7 @@
         </a>
       </div>
 
-      <div class="relative px-6">
+      <div class="relative px-6 flex-auto">
         <input v-model="searchField" class="input-text my-6" autocomplete="off" name="attr1" />
         <template v-if="userList">
           <ul v-for="user in userList" :key="user.uuid">

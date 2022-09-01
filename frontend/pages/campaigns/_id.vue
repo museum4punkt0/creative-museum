@@ -103,6 +103,13 @@ export default defineComponent({
         )
         if (campaign.value && campaign.value.error) {
           router.push('/404')
+        } else {
+          store.dispatch('setCurrentCampaign', route.value.params.id)
+          if (campaign.value.active) {
+            store.dispatch('showAddButton')
+          } else {
+            store.dispatch('hideAddButton')
+          }
         }
       }
     }
@@ -150,9 +157,6 @@ export default defineComponent({
         }
       })
     }
-
-    store.dispatch('showAddButton')
-    store.dispatch('setCurrentCampaign', route.value.params.id)
 
     return {
       postComment,

@@ -34,7 +34,7 @@
         </div>
       </div>
       <form
-        v-if="showCommentForm"
+        v-if="campaignActive && showCommentForm"
         class="sticky lg:static bottom-0 left-0 right-0 pt-4 pb-4 px-4 lg:(px-0 pb-0) -mb-10 -mr-10 -ml-10 lg:(mb-0 mr-0 ml-0)"
         @submit.prevent="submitComment"
       >
@@ -86,6 +86,10 @@ export default defineComponent({
     post: {
       type: Object,
       required: true,
+    },
+    campaignActive: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['commentsLoaded'],
