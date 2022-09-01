@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        'get',
+        'get' => ['normalization_context' => ['groups' => ['badge:read']]],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
@@ -47,35 +47,36 @@ class Badge
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $threshold;
 
     #[ORM\Column(type: 'badgetype')]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private BadgeType $type;
 
     #[ORM\Column(type: 'posttype')]
+    #[Groups('badge:read')]
     private PostType $postType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups('user:me:read')]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $picture;
 
     public function getId(): ?int
