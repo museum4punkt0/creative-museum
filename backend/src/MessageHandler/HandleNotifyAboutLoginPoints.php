@@ -56,7 +56,7 @@ class HandleNotifyAboutLoginPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("Du hast {$points} Punkte für deinen Login in der Kampange {$campaign->getTitle()} erhalten!")
+            ->setText("1662032913")
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setColor($campaign->getColor())

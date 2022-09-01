@@ -50,7 +50,7 @@ class HandleNotifyUser implements MessageHandlerInterface
         $winnerNotification = new Notification();
         $winnerNotification
             ->setReceiver($awarded->getWinner())
-            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} von {$awarded->getGiver()->getUserIdentifier()} erhalten")
+            ->setText("1662033414")
             ->setColor($awarded->getAward()->getCampaign()->getColor())
             ->setSilent(NotificationType::NONE === $awarded->getWinner()->getNotificationSettings());
 

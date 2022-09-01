@@ -4,7 +4,6 @@ namespace App\Command;
 
 use App\Repository\CampaignRepository;
 use Carbon\Carbon;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
