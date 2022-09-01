@@ -56,7 +56,7 @@ class HandleNotifyAboutFeedbackPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("Du hast {$points} Punkte für dein Feedback in der Kampange {$campaign->getTitle()} erhalten!")
+            ->setText("1662032840")
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setColor($campaign->getColor())

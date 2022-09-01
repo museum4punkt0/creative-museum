@@ -87,12 +87,10 @@ class CampaignRepository extends ServiceEntityRepository
             ->select('campaign')
             ->from(Campaign::class, 'campaign')
             ->andWhere(
-                $qb->expr()->lte('campaign.start', ':now'),
-                $qb->expr()->gte('campaign.stop', ':now'),
                 $qb->expr()->eq('campaign.active', 1),
+                $qb->expr()->eq('campaign.closed', 0)
             )
             ->orderBy('campaign.start', 'DESC')
-            ->setParameter('now', new \DateTime(), Types::DATETIME_MUTABLE)
             ->setMaxResults(1)
             ->getQuery()
             ->execute();

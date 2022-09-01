@@ -56,7 +56,7 @@ class HandleNotifyAboutAwardedPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("Du hast {$points} Punkte für die Vergabe eines Awards, in der Kampange {$campaign->getTitle()}, erhalten!")
+            ->setText("1662032613")
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setColor($campaign->getColor())

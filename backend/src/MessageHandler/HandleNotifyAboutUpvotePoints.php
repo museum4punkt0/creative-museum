@@ -56,7 +56,7 @@ class HandleNotifyAboutUpvotePoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("Du hast {$points} Punkte für deinen Upvote in der Kampange {$campaign->getTitle()} erhalten!")
+            ->setText("1662033222")
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setColor($campaign->getColor())

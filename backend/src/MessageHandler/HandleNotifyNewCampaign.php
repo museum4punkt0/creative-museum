@@ -58,7 +58,7 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
             $notification = new Notification();
             $notification
                 ->setReceiver($user)
-                ->setText("Neue Kampange {$campaign->getTitle()} verfügbar")
+                ->setText("1662033370")
                 ->setColor($campaign->getColor())
                 ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
             $this->entityManager->persist($notification);

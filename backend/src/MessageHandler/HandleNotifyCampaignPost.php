@@ -62,7 +62,7 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
             $notification = new Notification();
             $notification
                 ->setReceiver($campaignMember->getUser())
-                ->setText("Neuer Post in der Kampange {$post->getCampaign()->getTitle()} von {$campaignMember->getUser()->getUserIdentifier()}")
+                ->setText("1662033266")
                 ->setPost($post)
                 ->setColor($campaignColor)
                 ->setSilent(NotificationType::NONE === $campaignMember->getUser()->getNotificationSettings());

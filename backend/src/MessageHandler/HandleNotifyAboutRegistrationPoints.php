@@ -56,7 +56,7 @@ class HandleNotifyAboutRegistrationPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("Du hast {$points} Punkte für deine Registrierung in der Kampange {$campaign->getTitle()} erhalten!")
+            ->setText("1662033166")
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setColor($campaign->getColor())
