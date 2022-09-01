@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @\App\Validator\Constraints\FeedbackOptionCount
  */
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
+#[ORM\Index(fields: ['active', 'notified', 'start', 'stop'], name: 'campaign_collection_index')]
 #[ApiResource(
     attributes: [
         'filters' => ['campaign.date_filter'],
@@ -53,7 +54,7 @@ class Campaign
     private $id;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['campaigns:read', 'campaign:write', 'post:read', 'awards:read'])]
+    #[Groups(['campaigns:read', 'campaign:write', 'awards:read', 'post:read'])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]
