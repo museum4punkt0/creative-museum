@@ -32,7 +32,7 @@
         :key="key"
       >
         <div v-if="key < 2 || readMore">
-          <BadgeItem :badge="badge" :class="achievementIds.includes(badge.id) ? 'opacity-100' : 'opacity-20'" />
+          <BadgeItem :badge="badge" :class="achievementIds.includes(badge.id) ? 'opacity-100' : 'opacity-50 hover:opacity-100'" />
         </div>
       </div>
     </div>

@@ -225,6 +225,9 @@
       "1661952565": "Du hast diesen Award bereits verliehen."
     }
   },
+  "badges": {
+    "detailHeadline": "Badges"
+  },
   "filter": {
     "newest": "Neueste",
     "relevant": "Relevant",

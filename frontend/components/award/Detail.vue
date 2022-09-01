@@ -93,7 +93,7 @@
 
 </template>
 <script>
-import { defineComponent, useContext, ref, computed, use } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, ref, computed } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
 import { userApi } from '@/api/user'
 import { awardApi } from '~/api/award'
