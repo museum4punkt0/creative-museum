@@ -3,7 +3,7 @@
     <div v-if="$auth.user && 'achievements' in $auth.user" class="flex flex-row justify-between">
       <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
       <button
-        v-if="$auth.user.achievements.length > 2"
+        v-if="!campaign && $auth.user.achievements.length > 2 || campaign && badgesAndAchievements.length > 2"
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
         @click.prevent="toggleShowMore"
       >
@@ -28,7 +28,7 @@
     </div>
     <div v-else-if="$auth.loggedIn">
       <div
-        v-for="(badge, key) in badges"
+        v-for="(badge, key) in badgesAndAchievements"
         :key="key"
       >
         <div v-if="key < 2 || readMore">
@@ -65,13 +65,14 @@ export default defineComponent({
     const readMore = ref(false)
     const achievementIds = ref([])
     const badges = ref(null)
+    const badgesAndAchievements = ref([])
 
     function toggleShowMore() {
       readMore.value = !readMore.value
     }
     onMounted(async () => {
 
-      if ($auth.user) {
+      if ($auth.user && props.campaign) {
         $auth.user.achievements.forEach((item) => {
           if (item.badge.campaign.id === props.campaign.id) {
             achievementIds.value.push(item.badge.id)
@@ -81,11 +82,20 @@ export default defineComponent({
 
       badges.value = await fetchBadges(props.campaign ? props.campaign.id : null)
 
+      badges.value.forEach(function(item) {
+        if (achievementIds.value.includes(item.id)) {
+          badgesAndAchievements.value = [item, ...badgesAndAchievements.value]
+        } else {
+          badgesAndAchievements.value = [...badgesAndAchievements.value, item]
+        }
+      })
+
     })
 
     return {
       readMore,
       badges,
+      badgesAndAchievements,
       achievementIds,
       toggleShowMore
     }
