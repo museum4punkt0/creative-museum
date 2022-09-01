@@ -72,7 +72,7 @@
           {{ $t('user.profile.self.activities.playlists') }}
         </button>
       </div>
-      <div class="list">
+      <div class="relative pb-10 list">
         <div v-if="mode === 'posts'">
           <PostItem
             v-for="(post, key) in posts"
@@ -97,7 +97,7 @@
           </div>
         </div>
         <InfiniteLoading @infinite="infiniteHandler">
-          <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 transform -translate-x-1/2" :small="true" /></div>
+          <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 bottom-0 transform -translate-x-1/2" :small="true" /></div>
           <div slot="no-more" class="mt-4 text-sm text-white/50">{{ $t('campaign.noMorePosts') }}</div>
         </InfiniteLoading>
       </div>
