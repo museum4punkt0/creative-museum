@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="$auth.user && 'achievements' in $auth.user" class="flex flex-row justify-between">
+    <div v-if="$auth.user && 'achievements' in $auth.user" class="flex flex-row justify-between mb-10">
       <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
       <button
         v-if="!campaign && $auth.user.achievements.length > 2 || campaign && badgesAndAchievements.length > 2"
