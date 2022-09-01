@@ -5,14 +5,14 @@
         v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
         class="mr-2 w-auto cursor-pointer"
         :class="myVote === 'up' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
-        @click.prevent="campaignActive && doVotePost('up')"
+        @click.prevent="post.campaign.active && doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
         v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
         class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer"
         :class="myVote === 'down' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
-        @click.prevent="campaignActive && doVotePost('down')"
+        @click.prevent="post.campaign.active && doVotePost('down')"
       />
     </span>
 
@@ -48,10 +48,6 @@ export default defineComponent({
     textColor: {
       type: String,
       required: true,
-    },
-    campaignActive: {
-      type: Boolean,
-      default: true,
     },
   },
   emits: ['triggerFeedback', 'voted'],

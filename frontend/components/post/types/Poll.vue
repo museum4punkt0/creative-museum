@@ -3,7 +3,7 @@
     <p class="text-lg font-bold mb-2">{{ post.question }}</p>
     <p class="break-words">{{ post.body }}</p>
 
-    <div v-if="!post.userChoiced && campaignActive" class="poll-options mt-4 grid lg:grid-cols-2 gap-4">
+    <div v-if="!post.userChoiced && post.campaign.active" class="poll-options mt-4 grid lg:grid-cols-2 gap-4">
       <div v-for="(option, key) of post.pollOptions" :key="key">
         <div class="flex flex-row items-center cursor-pointer" @click.prevent="vote(option.id)">
           <span
@@ -46,10 +46,6 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    campaignActive: {
-      type: Boolean,
-      default: true
-    }
   },
   emits: ['updatePost'],
   setup(_, context) {

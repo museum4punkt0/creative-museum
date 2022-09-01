@@ -16,13 +16,11 @@
         :post="post"
         class="mb-4"
         :text-color="textColor"
-        :campaign-active="campaignActive"
         @triggerFeedback="triggerFeedback"
         @voted="$emit('updatePost', post.id)"
       />
       <PostComments
         :post="post"
-        :campaign-active="campaignActive"
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
@@ -40,14 +38,14 @@
 
         <template v-for="(option, key) in feedbackOptions">
           <button
-            v-if="!voted && campaignActive"
+            v-if="!voted && post.campaign.active"
             :key="key"
             class="btn-primary btn-outline w-full mt-4"
             @click.prevent="voteOption(option.id)"
           >
             {{ option.text }}
           </button>
-          <div v-if="voted || !campaignActive" :key="key" class="mb-6">
+          <div v-if="voted || !post.campaign.active" :key="key" class="mb-6">
             <div class="mb-2">{{ option.text }}</div>
             <div class="box-shadow-inset rounded-xl">
               <div class="bg-$highlight rounded-xl text-$highlight-contrast text-center" :style="`width: ${Math.round((100 / total ) * option.sum)}%`"><span class="px-3 py-0.5 inline-block" :class="Math.round((100 / total) * option.sum) < 10 ? 'text-white' : ''">{{ Math.round((100 / total) * option.sum) }}%</span></div>
@@ -68,10 +66,6 @@ export default defineComponent({
     post: {
       type: Object,
       required: true,
-    },
-    campaignActive: {
-      type: Boolean,
-      default: true,
     },
   },
   emits: ['updatePost'],
@@ -128,7 +122,7 @@ export default defineComponent({
     async function triggerFeedback() {
       feedbackOptions.value = await getOptions(props.post.campaign.id)
 
-      if (props.post.rated || voted.value || !props.campaignActive) {
+      if (props.post.rated || voted.value || !props.post.campaign.active) {
         await getResults()
         voted.value = true
       }
