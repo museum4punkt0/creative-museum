@@ -84,8 +84,7 @@
 import {
   defineComponent,
   ref,
-  useStore,
-  computed,
+  useContext,
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 import Logo from '@/assets/images/logo.svg?inline'
@@ -97,8 +96,7 @@ export default defineComponent({
   emits: ['closeModal'],
   setup(_, context) {
     const step = ref(1)
-    const store = useStore()
-    const user = computed(() => store.state.auth.user)
+    const { $auth } = useContext()
 
     const { finishTutorial } = userApi()
 
@@ -115,7 +113,7 @@ export default defineComponent({
     }
 
     function finish() {
-      finishTutorial(user.value.uuid)
+      finishTutorial($auth.user.uuid)
       context.emit('closeModal')
     }
 

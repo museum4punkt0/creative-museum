@@ -7,18 +7,19 @@
       <div
         class="p-6 grid grid-cols-2 gap-6 mx-h-lg overflow-y-auto overscroll-y-auto"
       >
-        <button
-          v-for="(item, key) in user.playlists"
-          :key="key"
-          class="btn-primary"
-          @click="$emit('selectPlaylist', item.id)"
-          type="button"
-        >
-          <span class="h-30 flex flex-col align-center justify-center">
-            {{ item.title }}
-          </span>
-        </button>
-        <button v-if="addButton" class="btn-primary" @click.prevent="step = 2" type="button">
+        <template v-if="'playlists' in $auth.user">
+          <button
+            v-for="(item, key) in $auth.user.playlists"
+            :key="key"
+            class="btn-primary"
+            @click="$emit('selectPlaylist', item.id)"
+          >
+            <span class="h-30 flex flex-col align-center justify-center">
+              {{ item.title }}
+            </span>
+          </button>
+        </template>
+        <button v-if="addButton" class="btn-primary" @click.prevent="step = 2">
           <span
             class="h-30 flex flex-col align-center items-center justify-center"
           >
@@ -58,8 +59,6 @@
 import {
   defineComponent,
   ref,
-  useStore,
-  computed,
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
@@ -78,8 +77,6 @@ export default defineComponent({
   emits: ['closeModal', 'selectPlaylist'],
   setup(_, context) {
     const step = ref(1)
-    const store = useStore()
-    const user = computed(() => store.state.auth.user)
 
     const newPlaylistName = ref('')
 
@@ -103,7 +100,6 @@ export default defineComponent({
       finish,
       backLink,
       step,
-      user,
       newPlaylistName,
       createPlaylistWithPost,
     }

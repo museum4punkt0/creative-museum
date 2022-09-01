@@ -9,7 +9,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Enum\BadgeType;
 use App\Enum\PostType;
 use App\Repository\BadgeRepository;
@@ -18,9 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ApiResource(
-    attributes: [
-        'security' => "is_granted('ROLE_ADMIN')",
-    ],
     collectionOperations: [
         'get',
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
@@ -31,11 +31,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'campaign' => 'exact'
+    ]
+)]
+#[ApiFilter(
+    OrderFilter::class,
+    properties: ['threshold', 'campaign.start'],
+    arguments: ['orderParameterName' => 'order']
+)]
 class Badge
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups('user:me:read')]
     private $id;
 
     #[ORM\Column(type: 'integer')]

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="(availableAwards.length || unavailableAwards.length) && campaign.active">
+  <div v-if="(availableAwards.length || unavailableAwards.length) && (!campaign || campaign.active)">
     <div class="flex flex-row justify-between mb-10">
       <span class="text-2xl">{{ $t('campaign.awards') }}</span>
     </div>

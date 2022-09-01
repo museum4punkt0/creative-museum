@@ -6,7 +6,7 @@
     <div class="mb-12">
       <AwardList :campaign="campaign" />
     </div>
-    <div v-if="!campaign" class="mb-12">
+    <div class="mb-12">
       <BadgeList :campaign="campaign" />
     </div>
   </div>

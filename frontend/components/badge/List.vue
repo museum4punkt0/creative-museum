@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="flex flex-row justify-between">
+    <div v-if="$auth.user && 'achievements' in $auth.user" class="flex flex-row justify-between">
       <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
-
       <button
+        v-if="$auth.user.achievements.length > 2"
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
         @click.prevent="toggleShowMore"
       >
@@ -16,26 +16,23 @@
       </button>
     </div>
 
-    <div v-if="$auth.loggedIn">
+    <div v-if="$auth.loggedIn && !campaign">
       <div
-        v-for="(achievement, key) in user.achievements"
+        v-for="(achievement, key) in $auth.user.achievements"
         :key="key"
-        class="flex flex-row mb-6"
       >
         <div v-if="key < 2 || readMore">
-          <img
-            v-if="'picture' in achievement.badge"
-            :src="`${backendUrl}/${achievement.badge.picture.contentUrl}`"
-            class="self-center w-20"
-          />
-          <div class="content-center flex flex-col ml-4">
-            <span>{{ achievement.badge.title }}</span>
-            <span class="highlight-text text-sm">{{
-              $t('user.profile.self.badges.points.' + achievement.badge.type, {
-                threshold: achievement.badge.threshold,
-              })
-            }}</span>
-          </div>
+          <BadgeItem :badge="achievement.badge" />
+        </div>
+      </div>
+    </div>
+    <div v-else-if="$auth.loggedIn">
+      <div
+        v-for="(badge, key) in badges"
+        :key="key"
+      >
+        <div v-if="key < 2 || readMore">
+          <BadgeItem :badge="badge" :class="achievementIds.includes(badge.id) ? 'opacity-100' : 'opacity-20'" />
         </div>
       </div>
     </div>
@@ -44,12 +41,12 @@
 <script>
 import {
   defineComponent,
-  useStore,
   ref,
-  computed,
-  useContext
+  useContext,
+  onMounted
 } from '@nuxtjs/composition-api'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
+import { badgeApi } from '@/api/badge'
 
 export default defineComponent({
   components: {
@@ -61,22 +58,36 @@ export default defineComponent({
       default: () => {},
     },
   },
-  setup() {
-    const store = useStore()
-    const user = computed(() => store.state.auth.user)
-    const context = useContext()
+  setup(props) {
+    const { $auth } = useContext()
+    const { fetchBadges } = badgeApi()
 
     const readMore = ref(false)
+    const achievementIds = ref([])
+    const badges = ref(null)
 
     function toggleShowMore() {
       readMore.value = !readMore.value
     }
+    onMounted(async () => {
+
+      if ($auth.user) {
+        $auth.user.achievements.forEach((item) => {
+          if (item.badge.campaign.id === props.campaign.id) {
+            achievementIds.value.push(item.badge.id)
+          }
+        })
+      }
+
+      badges.value = await fetchBadges(props.campaign ? props.campaign.id : null)
+
+    })
 
     return {
-      user,
       readMore,
-      toggleShowMore,
-      backendUrl: context.$config.backendUrl,
+      badges,
+      achievementIds,
+      toggleShowMore
     }
   },
 })
