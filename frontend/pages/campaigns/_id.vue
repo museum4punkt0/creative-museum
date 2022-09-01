@@ -22,6 +22,7 @@
             <InfiniteLoading @infinite="infiniteHandler">
               <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 transform -translate-x-1/2 bottom-0" :small="true" /></div>
               <div slot="no-more" class="mt-4 text-sm text-white/50">{{ $t('campaign.noMorePosts') }}</div>
+              <div slot="no-results"></div>
             </InfiniteLoading>
           </div>
           <UtilitiesLoadingIndicator v-else-if="!posts" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
@@ -112,8 +113,6 @@ export default defineComponent({
           currentPage.value
         )
 
-        currentPage.value += 1
-
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         } else {
@@ -128,6 +127,7 @@ export default defineComponent({
     }
 
     async function infiniteHandler($state) {
+      currentPage.value += 1
       await fetchPostsByCampaign(
         route.value.params.id,
         store.state.currentSorting,
@@ -135,7 +135,6 @@ export default defineComponent({
         currentPage.value
       ).then(( response ) => {
         if (response.length) {
-          currentPage.value += 1;
           posts.value.push(...response);
           $state.loaded();
         } else {
