@@ -18,6 +18,9 @@ use App\Repository\VoteRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * @\App\Validator\Constraints\CampaignInactive
+ */
 #[ORM\Entity(repositoryClass: VoteRepository::class)]
 #[ApiResource(
     collectionOperations: [

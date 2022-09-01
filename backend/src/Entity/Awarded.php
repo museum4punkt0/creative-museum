@@ -20,6 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Secured resource.
  *
  * @\App\Validator\Constraints\Awarded
+ * @\App\Validator\Constraints\CampaignInactive
  */
 #[ORM\Entity(repositoryClass: AwardedRepository::class)]
 #[ApiResource(

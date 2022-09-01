@@ -35,6 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @PlaylistType
  * @PollType
  * @\App\Validator\Constraints\PostBodyLength
+ * @\App\Validator\Constraints\CampaignInactive
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(

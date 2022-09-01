@@ -19,6 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @\App\Validator\Constraints\FeedbackGiven
+ * @\App\Validator\Constraints\CampaignInactive
  */
 #[ORM\Entity(repositoryClass: PostFeedbackRepository::class)]
 #[ApiResource(
