@@ -12,7 +12,7 @@
       </NuxtLink>
       <button
         v-show="isAddButtonVisible"
-        class="add-btn avsikzte left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6"
+        class="add-btn absolute left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6"
         :class="isAddVisible ? 'visible' : ''"
         @click.prevent="
           isAddVisible = !isAddVisible
