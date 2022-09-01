@@ -8,8 +8,8 @@ export const postApi = () => {
     return await $api.get(`posts/${postId}`)
   }
 
-  const getUserPosts = async () => {
-    return await $api.get(`posts?author=${$auth.user.id}`)
+  const getUserPosts = async (page) => {
+    return await $api.get(`posts?author=${$auth.user.id}&page=${page}`)
   }
 
   const getUserBookmarks = async () => {
@@ -125,7 +125,7 @@ export const postApi = () => {
     })
   }
 
-  const fetchPostsByCampaign = async (campaignId, sorting, direction) => {
+  const fetchPostsByCampaign = async (campaignId, sorting, direction, page) => {
 
     let orderParams = ''
     const directionKey = direction === 'asc' ? 'asc' : 'desc'
@@ -146,7 +146,7 @@ export const postApi = () => {
       orderParams = `&order[commentCount]=${directionKey}`
     }
 
-    return await $api.get(`posts?campaign=${campaignId}${orderParams}`)
+    return await $api.get(`posts?campaign=${campaignId}${orderParams}&page=${page}`)
   }
 
   const fetchPostsByPost = async (postId) => {

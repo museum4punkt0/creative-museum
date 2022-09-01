@@ -96,6 +96,10 @@
             {{ item.title }} ({{ item.postCount }})
           </div>
         </div>
+        <InfiniteLoading @infinite="infiniteHandler">
+          <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 transform -translate-x-1/2" :small="true" /></div>
+          <div slot="no-more" class="mt-4 text-sm text-white/50">{{ $t('campaign.noMorePosts') }}</div>
+        </InfiniteLoading>
       </div>
     </div>
     <div class="lg:col-span-3 lg:pr-10">
@@ -105,6 +109,7 @@
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
 import {
   defineComponent,
   computed,
@@ -118,6 +123,9 @@ import { postApi } from '@/api/post'
 
 export default defineComponent({
   name: 'ProfilePage',
+  components: {
+    InfiniteLoading
+  },
   setup() {
     const { getUserPosts, fetchPost, getUserBookmarks } = postApi()
 
@@ -131,6 +139,7 @@ export default defineComponent({
     const posts = ref(null)
     const playlists = ref(null)
     const bookmarks = ref(null)
+    const currentPage = ref(1)
 
     if (!$auth.loggedIn) {
       router.push('/404')
@@ -140,7 +149,8 @@ export default defineComponent({
     store.dispatch('setCurrentCampaign', null)
 
     onMounted(async () => {
-      posts.value = await getUserPosts()
+      posts.value = await getUserPosts(currentPage.value)
+      currentPage.value += 1
       playlists.value = store.$auth.$state.user.playlists
       bookmarks.value = await getUserBookmarks()
     })
@@ -194,6 +204,20 @@ export default defineComponent({
       bookmarks.value = await getUserBookmarks()
     }
 
+    async function infiniteHandler($state) {
+      await getUserPosts(
+        currentPage.value
+      ).then(( response ) => {
+        if (response.length) {
+          currentPage.value += 1;
+          posts.value.push(...response);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      })
+    }
+
     return {
       user,
       backButton,
@@ -207,6 +231,8 @@ export default defineComponent({
       updatePost,
       toggleBookmarkState,
       removeBookmark,
+      currentPage,
+      infiniteHandler,
       backendUrl: $config.backendUrl
     }
   },

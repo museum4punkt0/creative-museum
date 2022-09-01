@@ -204,7 +204,8 @@
   "campaign": {
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
-    "awards": "Awards"
+    "awards": "Awards",
+    "noMorePosts": "Keine weiteren Beiträge."
   },
   "awards": {
     "available": "Verfügbare Awards",

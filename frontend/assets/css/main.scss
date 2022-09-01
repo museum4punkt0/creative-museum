@@ -159,6 +159,7 @@ h3 {
 }
 
 .input-text {
+  -webkit-appearance: none;
   box-shadow: inset -3px -3px 8px rgba(100, 100, 100, 0.4),
     inset 3px 3px 8px rgba(0, 0, 0, 0.4);
   @apply block w-full px-4 py-3 rounded-2xl bg-grey;

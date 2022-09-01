@@ -9,7 +9,7 @@
       <div class="lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead v-if="campaign" :campaign="campaign" />
-          <div v-if="posts && posts.length">
+          <div v-if="posts && posts.length" class="relative pb-10">
             <PostItem
               v-for="(post) in posts"
               :key="post.id"
@@ -19,6 +19,10 @@
               @updatePost="updatePost"
               @toggle-bookmark-state="toggleBookmarkState"
             />
+            <InfiniteLoading @infinite="infiniteHandler">
+              <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 transform -translate-x-1/2" :small="true" /></div>
+              <div slot="no-more" class="mt-4 text-sm text-white/50">{{ $t('campaign.noMorePosts') }}</div>
+            </InfiniteLoading>
           </div>
           <UtilitiesLoadingIndicator v-else-if="!posts" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           <div v-else><button class="btn-highlight w-full mt-10" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
@@ -43,6 +47,7 @@
 
 <script>
 
+import InfiniteLoading from 'vue-infinite-loading';
 import {
   defineComponent,
   useRoute,
@@ -60,6 +65,9 @@ import { postApi } from '@/api/post'
 
 export default defineComponent({
   name: 'CampaignPage',
+  components: {
+    InfiniteLoading
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -68,6 +76,7 @@ export default defineComponent({
     const posts = ref(null)
     const postComment = ref(false)
     const campaign = ref(null)
+    const currentPage = ref(1)
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
@@ -99,8 +108,12 @@ export default defineComponent({
         posts.value = await fetchPostsByCampaign(
           route.value.params.id,
           store.state.currentSorting,
-          store.state.currentSortingDirection
+          store.state.currentSortingDirection,
+          currentPage.value
         )
+
+        currentPage.value += 1
+
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         } else {
@@ -112,6 +125,23 @@ export default defineComponent({
           }
         }
       }
+    }
+
+    async function infiniteHandler($state) {
+      await fetchPostsByCampaign(
+        route.value.params.id,
+        store.state.currentSorting,
+        store.state.currentSortingDirection,
+        currentPage.value
+      ).then(( response ) => {
+        if (response.length) {
+          currentPage.value += 1;
+          posts.value.push(...response);
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      })
     }
 
     function showAddModal() {
@@ -164,11 +194,13 @@ export default defineComponent({
       posts,
       newPost,
       isLargerThanLg,
+      currentPage,
       loadCampaign,
       updatePost,
       toggleBookmarkState,
       hideCommentsFromOtherPosts,
-      showAddModal
+      showAddModal,
+      infiniteHandler
     }
   },
 })
