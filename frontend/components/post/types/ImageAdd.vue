@@ -69,7 +69,7 @@
           :placeholder="$t('post.placeholder.image.alttext')"
           :maxlength="200"
         />
-        <countDown
+        <CountDown
           :max-count="200"
           :text="imgAlt"
           class="absolute bottom-1 right-2"
@@ -84,7 +84,7 @@
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
-        <countDown
+        <CountDown
           :max-count="100"
           :text="postTitle"
           class="absolute bottom-1 right-2"
@@ -98,7 +98,7 @@
           class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
-        <countDown
+        <CountDown
           :max-count="1000"
           :text="postBody"
           class="absolute bottom-1 right-2"
