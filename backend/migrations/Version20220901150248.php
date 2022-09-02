@@ -21,13 +21,13 @@ final class Version20220901150248 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP INDEX IF EXISTS active ON campaign');
-        $this->addSql('CREATE INDEX campaign_collection_index ON campaign (active, notified, start, stop)');
+        $this->addSql('CREATE INDEX IF NOT EXISTS campaign_collection_index ON campaign (active, notified, start, stop)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX campaign_collection_index ON campaign');
+        $this->addSql('DROP INDEX IF EXISTS campaign_collection_index ON campaign');
         $this->addSql('CREATE INDEX IF NOT EXISTS active ON campaign (active, notified, start, stop)');
     }
 }
