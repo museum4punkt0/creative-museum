@@ -29,6 +29,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'receiver' => 'exact'])]
+#[ORM\HasLifecycleCallbacks]
 class Notification
 {
     #[ORM\Id]
@@ -61,6 +62,9 @@ class Notification
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $scorePoints;
+
+    #[ORM\Column(type: 'datetime')]
+    private $created;
 
     public function getId(): ?int
     {
@@ -159,6 +163,19 @@ class Notification
     public function setScorePoints(?int $scorePoints): self
     {
         $this->scorePoints = $scorePoints;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreated(): self
+    {
+        $this->created = new \DateTimeImmutable();
 
         return $this;
     }
