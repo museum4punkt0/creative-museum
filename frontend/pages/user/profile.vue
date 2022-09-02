@@ -206,21 +206,25 @@ export default defineComponent({
     }
 
     async function infiniteHandler($state) {
-      currentPage.value += 1;
-      await getUserPosts(
-        currentPage.value
-      ).then(( response ) => {
-        if (response.length) {
-          if (posts.value) {
-            posts.value.push(...response);
+      if (posts.value && posts.value.length >= $config.postsPerPage) {
+        currentPage.value += 1;
+        await getUserPosts(
+          currentPage.value
+        ).then(( response ) => {
+          if (response.length) {
+            if (posts.value) {
+              posts.value.push(...response);
+            } else {
+              posts.value = response
+            }
+            $state.loaded();
           } else {
-            posts.value = response
+            $state.complete();
           }
-          $state.loaded();
-        } else {
-          $state.complete();
-        }
-      })
+        })
+      } else {
+        $state.complete();
+      }
     }
 
     return {

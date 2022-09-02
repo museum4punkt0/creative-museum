@@ -72,7 +72,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $breakpoints } = useContext()
+    const { $config, $breakpoints } = useContext()
     const store = useStore()
     const posts = ref(null)
     const postComment = ref(false)
@@ -127,20 +127,24 @@ export default defineComponent({
     }
 
     async function infiniteHandler($state) {
-      currentPage.value += 1
-      await fetchPostsByCampaign(
-        route.value.params.id,
-        store.state.currentSorting,
-        store.state.currentSortingDirection,
-        currentPage.value
-      ).then(( response ) => {
-        if (response.length) {
-          posts.value.push(...response);
-          $state.loaded();
-        } else {
-          $state.complete();
-        }
-      })
+      if (posts.value.length >= $config.postsPerPage) {
+        currentPage.value += 1
+        await fetchPostsByCampaign(
+          route.value.params.id,
+          store.state.currentSorting,
+          store.state.currentSortingDirection,
+          currentPage.value
+        ).then(( response ) => {
+          if (response.length) {
+            posts.value.push(...response);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+        })
+      } else {
+        $state.complete();
+      }
     }
 
     function showAddModal() {
@@ -193,7 +197,6 @@ export default defineComponent({
       posts,
       newPost,
       isLargerThanLg,
-      currentPage,
       loadCampaign,
       updatePost,
       toggleBookmarkState,
