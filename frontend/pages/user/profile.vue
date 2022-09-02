@@ -211,7 +211,11 @@ export default defineComponent({
         currentPage.value
       ).then(( response ) => {
         if (response.length) {
-          posts.value.push(...response);
+          if (posts.value) {
+            posts.value.push(...response);
+          } else {
+            posts.value = response
+          }
           $state.loaded();
         } else {
           $state.complete();
