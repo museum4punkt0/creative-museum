@@ -14,6 +14,7 @@ namespace App\Entity;
 use     ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use App\Controller\GetCampaignLeaderBoardController;
 use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -36,6 +37,12 @@ use Symfony\Component\Validator\Constraints as Assert;
     collectionOperations: [
         'get',
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'get_leaderboard' => [
+            'method' => 'GET',
+            'path' => '/campaigns/result/{campaignId}',
+            'requirements' => ['id' => "\d+"],
+            'controller' => GetCampaignLeaderBoardController::class,
+        ],
     ],
     itemOperations: [
         'get',

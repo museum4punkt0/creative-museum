@@ -54,6 +54,21 @@ class CampaignMemberRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCampaignLeaders(int $campaignId)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        return $qb
+            ->select('members')
+            ->from(CampaignMember::class, 'members')
+            ->andWhere(
+                $qb->expr()->eq('members.campaign', $campaignId)
+            )
+            ->orderBy('members.rewardPoints', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->execute();
+    }
+
     // /**
     //  * @return CampaignMember[] Returns an array of CampaignMember objects
     //  */
