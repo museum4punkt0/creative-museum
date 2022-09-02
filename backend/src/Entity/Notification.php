@@ -66,6 +66,12 @@ class Notification
     #[ORM\Column(type: 'datetime')]
     private $created;
 
+    #[ORM\ManyToOne(targetEntity: Award::class)]
+    private $award;
+
+    #[ORM\ManyToOne(targetEntity: Badge::class)]
+    private $badge;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -176,6 +182,30 @@ class Notification
     public function setCreated(): self
     {
         $this->created = new \DateTimeImmutable();
+
+        return $this;
+    }
+
+    public function getAward(): ?Award
+    {
+        return $this->award;
+    }
+
+    public function setAward(?Award $award): self
+    {
+        $this->award = $award;
+
+        return $this;
+    }
+
+    public function getBadge(): ?Badge
+    {
+        return $this->badge;
+    }
+
+    public function setBadge(?Badge $badge): self
+    {
+        $this->badge = $badge;
 
         return $this;
     }

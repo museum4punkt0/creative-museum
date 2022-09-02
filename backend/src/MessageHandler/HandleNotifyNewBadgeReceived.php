@@ -52,7 +52,8 @@ class HandleNotifyNewBadgeReceived implements MessageHandlerInterface
             ->setText("1662033328")
             ->setColor($badged->getBadge()->getCampaign()->getColor())
             ->setSilent(NotificationType::NONE === $badged->getUser()->getNotificationSettings())
-            ->setCampaign($badged->getBadge()->getCampaign());
+            ->setCampaign($badged->getBadge()->getCampaign())
+            ->setBadge($badged->getBadge());
         $this->entityManager->persist($notification);
         $this->entityManager->flush();
     }

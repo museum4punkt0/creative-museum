@@ -11,7 +11,7 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Awarded;
-use App\Message\NotifyUserAboutNewAwarded;
+use App\Message\NotifyAboutNewAwarded;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -46,7 +46,7 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $notification = new NotifyUserAboutNewAwarded($awarded->getId());
+        $notification = new NotifyAboutNewAwarded($awarded->getId());
         $this->bus->dispatch($notification);
     }
 }

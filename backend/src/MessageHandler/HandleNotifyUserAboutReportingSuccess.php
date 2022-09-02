@@ -63,7 +63,7 @@ class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
         $postAuthorNotification
             ->setReceiver($post->getAuthor())
             ->setPost($post)
-            ->setText('Ihr Beitrag wird von der Redaktion auf unangemessene Inhalte geprüft.')
+            ->setText('1662114392')
             ->setSilent(NotificationType::NONE === $post->getAuthor()->getNotificationSettings());
         $this->entityManager->persist($postAuthorNotification);
         $this->entityManager->flush();
