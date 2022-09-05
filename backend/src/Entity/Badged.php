@@ -12,6 +12,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BadgedRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgedRepository::class)]
@@ -25,6 +26,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+)]
+#[UniqueEntity(
+    fields: ['user', 'badge'],
+    message: 'This user already received this badge.',
+    errorPath: 'badge',
 )]
 class Badged
 {

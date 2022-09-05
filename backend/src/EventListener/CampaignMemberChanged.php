@@ -12,21 +12,20 @@ namespace App\EventListener;
 use App\Entity\Badge;
 use App\Entity\CampaignMember;
 use App\Enum\BadgeType;
+use App\Event\CheckForBadgesEvent;
 use App\Message\NotifyNewBadgeReceived;
 use App\Service\BadgeService;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class CampaignMemberChanged
 {
-    private BadgeService $badgeService;
+    private EventDispatcherInterface $eventDispatcher;
 
-    private MessageBusInterface $bus;
-
-    public function __construct(BadgeService $badgeService, MessageBusInterface $bus)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        $this->badgeService = $badgeService;
-        $this->bus = $bus;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function preUpdate(CampaignMember $campaignMember, PreUpdateEventArgs $event): void
@@ -35,16 +34,8 @@ class CampaignMemberChanged
             return;
         }
 
-        $unbadged = $this->badgeService->getUnbadged($campaignMember->getCampaign(), $campaignMember->getUser());
 
-        /**
-         * @var Badge $badge
-         */
-        foreach ($unbadged as $badge) {
-            if ((BadgeType::SCORING === $badge->getType() && $campaignMember->getScore() >= $badge->getThreshold()) || (BadgeType::REWARD_POINTS === $badge->getType() && $campaignMember->getRewardPoints() >= $badge->getThreshold())) {
-                $this->badgeService->createBadged($badge, $campaignMember->getUser());
-                $this->bus->dispatch(new NotifyNewBadgeReceived($campaignMember->getUser()->getId(), $badge->getId()));
-            }
-        }
+        $checkForBadgesEvent = new CheckForBadgesEvent($campaignMember->getUser()->getId(),$campaignMember->getCampaign()->getId());
+        $this->eventDispatcher->dispatch($checkForBadgesEvent, CheckForBadgesEvent::NAME);
     }
 }
