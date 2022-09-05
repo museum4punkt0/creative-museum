@@ -17,7 +17,10 @@ use Symfony\Component\Validator\Constraint;
  */
 class PostBodyLength extends Constraint
 {
-    public $tooPostBodyMessage = 'The value of field body is too long for post type %type% (Max. %max%).';
+    public $tooLongPostBodyMessage = 'The value of field body is too long for post type %type% (Max. %max%).';
+
+    public $tooShortBodyMessage = 'The value of field body is too short for (Min. %min%).';
+
 
     public function getTargets()
     {

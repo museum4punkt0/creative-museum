@@ -42,14 +42,15 @@ class PostBodyLengthValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value instanceof Post || empty($value->getBody())) {
+
+        if (!$value instanceof Post) {
             return;
         }
         $this->constraint = $constraint;
 
         switch ($value->getPostType()) {
             case PostType::TEXT:
-                $this->validateBodyLength($value->getBody(), PostType::TEXT->value, $this->textPostBodyLength);
+                $this->validateBodyLength($value->getBody(), PostType::TEXT->value, $this->textPostBodyLength,1);
                 break;
             case PostType::IMAGE:
                 $this->validateBodyLength($value->getBody(), PostType::IMAGE->value, $this->imagePostBodyLength);
@@ -58,15 +59,23 @@ class PostBodyLengthValidator extends ConstraintValidator
                 $this->validateBodyLength($value->getBody(), PostType::VIDEO->value, $this->videoPostBodyLength);
                 break;
         }
+        if (!is_null($value->getParent())){
+            $this->validateBodyLength($value->getBody(), PostType::VIDEO->value, $this->videoPostBodyLength,1);
+        }
     }
 
-    private function validateBodyLength(string $bodyValue, string $postType, int $maxLength): void
+    private function validateBodyLength(string $bodyValue, string $postType, int $maxLength, int $minLength = 0): void
     {
         if (strlen($bodyValue) > $maxLength) {
-            $this->context->buildViolation($this->constraint->tooPostBodyMessage)
+            $this->context->buildViolation($this->constraint->tooLongPostBodyMessage)
                 ->setParameter('%type%', $postType)
                 ->setParameter('%max%', $maxLength)
                 ->setCode(1657590177)
+                ->addViolation();
+        }elseif (strlen($bodyValue) < $minLength){
+            $this->context->buildViolation($this->constraint->tooShortBodyMessage)
+                ->setParameter('%min%', $maxLength)
+                ->setCode(1662115657)
                 ->addViolation();
         }
     }
