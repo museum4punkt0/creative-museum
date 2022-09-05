@@ -19,7 +19,7 @@ class PostBodyLength extends Constraint
 {
     public $tooLongPostBodyMessage = 'The value of field body is too long for post type %type% (Max. %max%).';
 
-    public $tooShortBodyMessage = 'The value of field body is too short for (Min. %min%).';
+    public $tooShortBodyMessage = 'The value of field body is too short (Min. %min%).';
 
 
     public function getTargets()

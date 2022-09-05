@@ -26,7 +26,6 @@ class SetCommentController extends AbstractController
     {
         $parent = $this->postRepository->find($id);
         $data->setParent($parent);
-        $this->postRepository->add($data);
 
         return $data;
     }

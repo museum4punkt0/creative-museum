@@ -59,9 +59,6 @@ class PostBodyLengthValidator extends ConstraintValidator
                 $this->validateBodyLength($value->getBody(), PostType::VIDEO->value, $this->videoPostBodyLength);
                 break;
         }
-        if (!is_null($value->getParent())){
-            $this->validateBodyLength($value->getBody(), PostType::VIDEO->value, $this->videoPostBodyLength,1);
-        }
     }
 
     private function validateBodyLength(string $bodyValue, string $postType, int $maxLength, int $minLength = 0): void
@@ -74,7 +71,7 @@ class PostBodyLengthValidator extends ConstraintValidator
                 ->addViolation();
         }elseif (strlen($bodyValue) < $minLength){
             $this->context->buildViolation($this->constraint->tooShortBodyMessage)
-                ->setParameter('%min%', $maxLength)
+                ->setParameter('%min%', $minLength)
                 ->setCode(1662115657)
                 ->addViolation();
         }
