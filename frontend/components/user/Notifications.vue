@@ -50,22 +50,47 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref, onMounted } from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
   props: {
     campaign: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
-  setup() {
+  setup(props) {
     const { getNotifications } = notificationApi()
-    const notifications = getNotifications()
+    const notifications = ref(null)
+    const notificationsGrouped = ref([])
+
+    onMounted(() => {
+      fetchNotifications()
+    })
+
+    async function fetchNotifications() {
+      notifications.value = await getNotifications(
+        props.campaign ? props.campaign.id : null
+      ).then(function() {
+        if (notifications.value) {
+          notifications.value.forEach(item => {
+            const day = $dayjs(item.created).format('DD.MM.YYYY')
+            if (notificationsGrouped.value[day]) {
+              notificationsGrouped.value[day].push(item)
+            } else {
+              notificationsGrouped.value[day] = []
+              notificationsGrouped.value[day].push(item)
+            }
+          })
+        }
+      })
+    }
 
     return {
-      notifications
+      notifications,
+      notificationsGrouped,
+      fetchNotifications,
     }
   },
 })

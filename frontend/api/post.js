@@ -8,11 +8,11 @@ export const postApi = () => {
     return await $api.get(`posts/${postId}`)
   }
 
-  const getUserPosts = async (page) => {
-    return await $api.get(`posts?author=${$auth.user.id}&page=${page}`)
+  const fetchUserPosts = async (userId, page) => {
+    return await $api.get(`posts?author=${userId}&page=${page}`)
   }
 
-  const getUserBookmarks = async () => {
+  const fetchUserBookmarks = async () => {
     return await $api.get(`users/${$auth.user.uuid}/bookmarks`)
   }
 
@@ -243,7 +243,7 @@ export const postApi = () => {
     createPollPost,
     createAudioPost,
     votePollOption,
-    getUserPosts,
-    getUserBookmarks,
+    fetchUserPosts,
+    fetchUserBookmarks,
   }
 }

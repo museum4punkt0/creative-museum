@@ -2,22 +2,22 @@
   <div class="lg:grid lg:grid-cols-4 px-5 container text-white">
     <div class="mb-10 lg:mb-0">
       <client-only>
-        <button
+        <a
           v-if="!$auth.loggedIn"
-          class="flex flex-row items-center font-bold leading-loose"
+          class="flex flex-row items-center font-bold leading-loose cursor-pointer"
           @click.prevent="login"
         >
           <LoginIcon class="w-6 h-6 mr-2" />
           <span>Login</span>
-        </button>
-        <button
+        </a>
+        <a
           v-else
-          class="flex flex-row items-center font-bold leading-loose"
+          class="flex flex-row items-center font-bold leading-loose cursor-pointer"
           @click.prevent="logout"
         >
           <LogoutIcon class="mr-2 w-auto" />
           <span>Logout</span>
-        </button>
+        </a>
       </client-only>
     </div>
     <div class="mb-10 lg:mb-0">

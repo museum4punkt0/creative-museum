@@ -113,14 +113,13 @@ import {
   onMounted,
   useContext,
   useRouter,
-  useRoute
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
   name: 'ProfilePage',
   setup() {
-    const { getUserPosts, fetchPost, getUserBookmarks } = postApi()
+    const { fetchUserPosts, fetchPost, fetchUserBookmarks } = postApi()
 
     const mode = ref('posts')
     const store = useStore()
@@ -141,9 +140,9 @@ export default defineComponent({
     store.dispatch('setCurrentCampaign', null)
 
     onMounted(async () => {
-      posts.value = await getUserPosts()
+      posts.value = await fetchUserPosts()
       playlists.value = store.$auth.$state.user.playlists
-      bookmarks.value = await getUserBookmarks()
+      bookmarks.value = await fetchUserBookmarks()
     })
 
     function showPosts() {
@@ -182,7 +181,7 @@ export default defineComponent({
         }
         posts.value[key].bookmarked = !posts.value[key].bookmarked
       })
-      bookmarks.value = await getUserBookmarks()
+      bookmarks.value = await fetchUserBookmarks()
     }
 
     async function removeBookmark(postId) {
@@ -192,7 +191,7 @@ export default defineComponent({
         }
         bookmarks.value[key].bookmarked = !bookmarks.value[key].bookmarked
       })
-      bookmarks.value = await getUserBookmarks()
+      bookmarks.value = await fetchUserBookmarks()
     }
 
     return {

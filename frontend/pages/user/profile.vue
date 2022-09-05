@@ -4,20 +4,20 @@
       <div class="page-header p-6 md:hidden">
         <button type="button" class="back-btn" @click.prevent="backButton">
           {{
-            $t('user.profile.self.headline', { firstName: user.firstName })
+            $t('user.profile.self.headline', { firstName: $auth.user.firstName })
           }}
         </button>
       </div>
 
       <img
-        v-if="'profilePicture' in user"
-        :src="`${backendUrl}/${user.profilePicture.contentUrl}`"
+        v-if="'profilePicture' in $auth.user"
+        :src="`${backendUrl}/${$auth.user.profilePicture.contentUrl}`"
         class="rounded-full mb-4 h-21 w-21"
       />
 
-      <h1 class="text-2xl">{{ user.firstName }} {{ user.lastName }}</h1>
-      <p class="highlight-text mb-2">@{{ user.username }}</p>
-      <p>{{ user.description }}</p>
+      <h1 class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</h1>
+      <p class="highlight-text mb-2">@{{ $auth.user.username }}</p>
+      <p>{{ $auth.user.description }}</p>
 
       <NuxtLink
         to="/user/update"
@@ -29,7 +29,7 @@
       <h2 class="text-2xl">{{ $t('points') }}</h2>
 
       <div
-        v-for="(membership, key) in user.memberships"
+        v-for="(membership, key) in $auth.user.memberships"
         :key="key"
         class="self-stretch md:self-start mt-3 mb-12"
         :style="`--highlight: ${membership.campaign.color};`"
@@ -74,13 +74,7 @@
       </div>
       <div class="relative pb-10 list">
         <div v-if="mode === 'posts'">
-          <PostItem
-            v-for="(post, key) in posts"
-            :key="'post_' + key"
-            :post="post"
-            @updatePost="updatePost"
-            @toggle-bookmark-state="toggleBookmarkState"
-          />
+          <PostList v-if="posts && posts.length" :posts="posts" source="userprofile" />
         </div>
         <div v-if="mode === 'bookmarks'">
           <PostItem
@@ -96,11 +90,6 @@
             {{ item.title }} ({{ item.postCount }})
           </div>
         </div>
-        <InfiniteLoading @infinite="infiniteHandler">
-          <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 bottom-0 transform -translate-x-1/2" :small="true" /></div>
-          <div slot="no-more" class="mt-4 text-sm text-white/50">{{ $t('campaign.noMorePosts') }}</div>
-          <div slot="no-results"></div>
-        </InfiniteLoading>
       </div>
     </div>
     <div class="lg:col-span-3 lg:pr-10">
@@ -110,10 +99,8 @@
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
 import {
   defineComponent,
-  computed,
   ref,
   useStore,
   onMounted,
@@ -124,11 +111,8 @@ import { postApi } from '@/api/post'
 
 export default defineComponent({
   name: 'ProfilePage',
-  components: {
-    InfiniteLoading
-  },
   setup() {
-    const { getUserPosts, fetchPost, getUserBookmarks } = postApi()
+    const { fetchUserPosts, fetchUserBookmarks } = postApi()
 
     const mode = ref('posts')
     const store = useStore()
@@ -136,11 +120,9 @@ export default defineComponent({
 
     const { $config, $auth } = useContext()
 
-    const user = computed(() => store.state.auth.user)
     const posts = ref(null)
     const playlists = ref(null)
     const bookmarks = ref(null)
-    const currentPage = ref(1)
 
     if (!$auth.loggedIn) {
       router.push('/404')
@@ -150,10 +132,9 @@ export default defineComponent({
     store.dispatch('setCurrentCampaign', null)
 
     onMounted(async () => {
-      posts.value = await getUserPosts(currentPage.value)
-      currentPage.value += 1
-      playlists.value = store.$auth.$state.user.playlists
-      bookmarks.value = await getUserBookmarks()
+      posts.value = await fetchUserPosts($auth.user.id, 1)
+      playlists.value = $auth.user.playlists
+      bookmarks.value = await fetchUserBookmarks()
     })
 
     function showPosts() {
@@ -170,65 +151,7 @@ export default defineComponent({
 
     function backButton() {}
 
-    function updatePost(postId) {
-      fetchPost(postId).then(function (response) {
-        posts.value.forEach(function (item, key) {
-          if (item.id === postId) {
-            posts.value[key].commentCount = response.commentCount
-          }
-        })
-        bookmarks.value.forEach(function (item, key) {
-          if (item.id === postId) {
-            bookmarks.value[key].commentCount = response.commentCount
-          }
-        })
-      })
-    }
-
-    async function toggleBookmarkState(postId) {
-      posts.value.forEach((item, key) => {
-        if (item.id !== postId) {
-          return
-        }
-        posts.value[key].bookmarked = !posts.value[key].bookmarked
-      })
-      bookmarks.value = await getUserBookmarks()
-    }
-
-    async function removeBookmark(postId) {
-      bookmarks.value.forEach((item, key) => {
-        if (item.id !== postId) {
-          return
-        }
-        bookmarks.value[key].bookmarked = !bookmarks.value[key].bookmarked
-      })
-      bookmarks.value = await getUserBookmarks()
-    }
-
-    async function infiniteHandler($state) {
-      if (posts.value && posts.value.length >= $config.postsPerPage) {
-        currentPage.value += 1;
-        await getUserPosts(
-          currentPage.value
-        ).then(( response ) => {
-          if (response.length) {
-            if (posts.value) {
-              posts.value.push(...response);
-            } else {
-              posts.value = response
-            }
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        })
-      } else {
-        $state.complete();
-      }
-    }
-
     return {
-      user,
       backButton,
       mode,
       showPosts,
@@ -237,11 +160,6 @@ export default defineComponent({
       posts,
       playlists,
       bookmarks,
-      updatePost,
-      toggleBookmarkState,
-      removeBookmark,
-      currentPage,
-      infiniteHandler,
       backendUrl: $config.backendUrl
     }
   },
