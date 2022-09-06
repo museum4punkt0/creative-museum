@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ post.linkedPlaylist.title }}
+    <NuxtLink :to="`/playlist/${post.linkedPlaylist.id}`">{{ post.linkedPlaylist.title }}</NuxtLink>
   </div>
 </template>
 <script lang="ts">
