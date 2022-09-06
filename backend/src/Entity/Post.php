@@ -138,7 +138,7 @@ class Post
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['post:write', 'post:read', 'playlist:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read', 'notifications:read'])]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]

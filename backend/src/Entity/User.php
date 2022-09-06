@@ -125,7 +125,7 @@ class User implements UserInterface
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read'])]
+    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read', 'notifications:read'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]

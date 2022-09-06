@@ -63,7 +63,7 @@ class Badge
     private PostType $postType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'notifications:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
