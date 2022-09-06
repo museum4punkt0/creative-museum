@@ -83,6 +83,12 @@ class Notification
     #[Groups(['notifications:read', 'notification:write'])]
     private $badge;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $awardGiver;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $awardWinner;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -217,6 +223,30 @@ class Notification
     public function setBadge(?Badge $badge): self
     {
         $this->badge = $badge;
+
+        return $this;
+    }
+
+    public function getAwardGiver(): ?User
+    {
+        return $this->awardGiver;
+    }
+
+    public function setAwardGiver(?User $awardGiver): self
+    {
+        $this->awardGiver = $awardGiver;
+
+        return $this;
+    }
+
+    public function getAwardWinner(): ?User
+    {
+        return $this->awardWinner;
+    }
+
+    public function setAwardWinner(?User $awardWinner): self
+    {
+        $this->awardWinner = $awardWinner;
 
         return $this;
     }
