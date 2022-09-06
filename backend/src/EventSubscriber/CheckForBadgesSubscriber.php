@@ -42,7 +42,7 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
             usleep(100000);
             $i++;
         }
-        if ($i > 10){
+        if ($i > 5){
             return;
         }
 
