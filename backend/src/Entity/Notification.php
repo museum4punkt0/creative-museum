@@ -17,18 +17,19 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact', 'campaign' => 'exact', 'receiver' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
         'get',
     ],
+    normalizationContext: ['groups' => ['notifications:read']],
+    denormalizationContext: ['groups' => ['notification:write']],
     itemOperations: [
         'get',
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
         'patch' => ['normalization_context' => ['groups' => ['patch']]],
     ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'receiver' => 'exact'])]
 #[ORM\HasLifecycleCallbacks]
 class Notification
 {
@@ -39,37 +40,47 @@ class Notification
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $receiver;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $text;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $post;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $color;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $silent = false;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['patch'])]
+    #[Groups(['patch', 'notifications:read', 'notification:write'])]
     private $viewed = false;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $campaign;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $scorePoints;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $created;
 
     #[ORM\ManyToOne(targetEntity: Award::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $award;
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $badge;
 
     public function getId(): ?int

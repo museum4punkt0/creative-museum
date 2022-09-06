@@ -81,7 +81,7 @@ class Campaign
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['campaigns:read', 'campaign:write', 'user:me:read', 'awards:read', 'playlist:read'])]
+    #[Groups(['campaigns:read', 'campaign:write', 'user:me:read', 'awards:read', 'playlist:read', 'notifications:read'])]
     private $title;
 
     #[ORM\Column(type: 'text')]
