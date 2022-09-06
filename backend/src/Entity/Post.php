@@ -117,7 +117,7 @@ class Post
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['post:read'])]
+    #[Groups(['post:read', 'playlist:read'])]
     private $id;
 
     #[ORM\Column(type: 'datetime')]
@@ -130,35 +130,35 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
-    #[Groups(['post:write', 'post:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read'])]
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['post:write', 'post:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read'])]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $body;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $upvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $downvotes = 0;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write', 'vote:write', 'vote:read'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'vote:write', 'vote:read', 'playlist:read'])]
     private $votestotal = 0;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ['persist', 'remove'])]
-    #[Groups(['post:write', 'post:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read'])]
     #[Assert\Valid]
     private $pollOptions;
 
@@ -175,7 +175,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $campaign;
 
     #[ORM\ManyToMany(targetEntity: Playlist::class, cascade: ['persist', 'remove'])]
@@ -183,16 +183,16 @@ class Post
     private $playlist;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['post:write', 'post:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read'])]
     #[Assert\Length(max: 100)]
     private $question;
 
     #[ORM\ManyToMany(targetEntity: MediaObject::class)]
-    #[Groups(['post:write', 'post:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read'])]
     private $files;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['post:read'])]
+    #[Groups(['post:read', 'playlist:read'])]
     private $commentCount = 0;
 
     #[ORM\Column(type: 'boolean')]

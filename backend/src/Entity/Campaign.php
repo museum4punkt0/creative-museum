@@ -57,7 +57,7 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read', 'post:read', 'user:me:read', 'awards:read', 'badge:read'])]
+    #[Groups(['campaigns:read', 'post:read', 'user:me:read', 'awards:read', 'badge:read', 'playlist:read'])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
@@ -81,7 +81,7 @@ class Campaign
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['campaigns:read', 'campaign:write', 'user:me:read', 'awards:read'])]
+    #[Groups(['campaigns:read', 'campaign:write', 'user:me:read', 'awards:read', 'playlist:read'])]
     private $title;
 
     #[ORM\Column(type: 'text')]
@@ -105,7 +105,7 @@ class Campaign
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write', 'awards:read', 'post:read', 'user:me:read', 'awarded:read', 'badge:read'])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write', 'awards:read', 'post:read', 'user:me:read', 'awarded:read', 'badge:read', 'playlist:read'])]
     private $color;
 
     #[ORM\Column(type: 'boolean')]
