@@ -1,22 +1,19 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
-    <div class="flex-1 overflow-y-auto">
-      <div
-        w:bg="grey"
-        w:shadow="lg black/20"
-      >
+    <div class="" w:overflow="x-hidden">
+      <div class="bg-grey shadow-lg shadow-black/20">
         <PageHeader />
       </div>
-      <Nuxt/>
+      <Nuxt />
       <PageFooter />
     </div>
+    <GlobalLogin />
   </div>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'WithoutContainer'
+  name: 'WithoutContainer',
 })
 </script>
-

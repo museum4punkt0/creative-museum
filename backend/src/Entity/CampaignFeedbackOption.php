@@ -1,40 +1,52 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\CampaignFeedbackOptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CampaignFeedbackOptionRepository::class)]
 #[ApiResource(
-    attributes: [
-        "security" => "is_granted('ROLE_ADMIN')"
-    ],
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get' => ['normalization_context' => ['groups' => 'read:feedbacks']],
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact'])]
 class CampaignFeedbackOption
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['campaigns:read', 'read:feedbacks'])]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'feedbackOptions')]
     #[ORM\JoinColumn(nullable: false)]
     private $campaign;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(min: 1, max: 25)]
+    #[Groups(['campaigns:read', 'campaign:write', 'read:feedbacks'])]
     private $text;
 
     #[ORM\OneToMany(mappedBy: 'selection', targetEntity: PostFeedback::class)]

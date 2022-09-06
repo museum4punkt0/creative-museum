@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Awarded;
@@ -8,8 +15,7 @@ use App\Enum\NotificationType;
 use App\Message\NotifyUserAboutNewAwarded;
 use App\Repository\AwardedRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use \Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class HandleNotifyUser implements MessageHandlerInterface
 {
@@ -18,16 +24,14 @@ class HandleNotifyUser implements MessageHandlerInterface
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        AwardedRepository      $awardedRepository,
+        AwardedRepository $awardedRepository,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->awardedRepository = $awardedRepository;
         $this->entityManager = $entityManager;
     }
 
     /**
-     * @param NotifyUserAboutNewAwarded $awarded
      * @return void
      */
     public function __invoke(NotifyUserAboutNewAwarded $awarded)
@@ -41,19 +45,15 @@ class HandleNotifyUser implements MessageHandlerInterface
         $this->handleNewAwarded($awarded);
     }
 
-    /**
-     * @param Awarded $awarded
-     * @return void
-     */
     private function handleNewAwarded(Awarded $awarded): void
     {
         $winnerNotification = new Notification();
         $winnerNotification
             ->setReceiver($awarded->getWinner())
-            ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} von {$awarded->getGiver()->getUserIdentifier()} erhalten")
+            ->setText("1662033414")
             ->setColor($awarded->getAward()->getCampaign()->getColor())
-            ->setSilent($awarded->getWinner()->getNotificationSettings() === NotificationType::NONE);
-        ;
+            ->setSilent(NotificationType::NONE === $awarded->getWinner()->getNotificationSettings());
+
         $this->entityManager->persist($winnerNotification);
 
         $giverNotification = new Notification();
@@ -61,7 +61,7 @@ class HandleNotifyUser implements MessageHandlerInterface
             ->setReceiver($awarded->getGiver())
             ->setText("Sie haben den Award {$awarded->getAward()->getTitle()} an {$awarded->getWinner()->getUserIdentifier()} vergeben")
             ->setColor($awarded->getAward()->getCampaign()->getColor())
-            ->setSilent($awarded->getGiver()->getNotificationSettings() === NotificationType::NONE);
+            ->setSilent(NotificationType::NONE === $awarded->getGiver()->getNotificationSettings());
         $this->entityManager->persist($giverNotification);
         $this->entityManager->flush();
     }

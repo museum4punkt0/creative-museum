@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -26,15 +33,11 @@ class PostNotificationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['handleAwardNotification', EventPriorities::POST_WRITE]
+            KernelEvents::VIEW => ['handlePostNotification', EventPriorities::POST_WRITE],
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
-    public function handleAwardNotification(ViewEvent $event): void
+    public function handlePostNotification(ViewEvent $event): void
     {
         $post = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

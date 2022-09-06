@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\Campaign;
 use App\Message\NotifyUsersAboutNewCampaign;
+use App\Repository\CampaignRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -15,35 +22,35 @@ class CampaignNotificationSubscriber implements EventSubscriberInterface
 {
     private MessageBusInterface $bus;
 
-    public function __construct(MessageBusInterface $bus)
+    private CampaignRepository $campaignRepository;
+
+    public function __construct(MessageBusInterface $bus, CampaignRepository $campaignRepository)
     {
         $this->bus = $bus;
+        $this->campaignRepository = $campaignRepository;
     }
 
-    /**
-     * @return array[]
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::VIEW => ['handleNewCampaignNotification', EventPriorities::POST_WRITE]
+            KernelEvents::VIEW => ['handleNewCampaignNotification', EventPriorities::PRE_RESPOND],
         ];
     }
 
     /**
-     * @param ViewEvent $event
-     * @return void
+     * @param RequestEvent $event
      */
     public function handleNewCampaignNotification(ViewEvent $event): void
     {
-        $campaign = $event->getControllerResult();
-        $method = $event->getRequest()->getMethod();
+        $campaigns = $this->campaignRepository->getUnnotifiedActive();
 
-        if (!$campaign instanceof Campaign || Request::METHOD_POST !== $method) {
+        if (empty($campaigns)) {
             return;
         }
 
-        $notification = new NotifyUsersAboutNewCampaign($campaign->getId());
-        $this->bus->dispatch($notification);
+        foreach ($campaigns as $campaign) {
+            $notification = new NotifyUsersAboutNewCampaign($campaign->getId());
+            $this->bus->dispatch($notification);
+        }
     }
 }

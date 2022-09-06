@@ -1,51 +1,74 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
-use App\Enum\NotificationType;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\MeController;
+use App\Enum\NotificationType;
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Metaclass\FilterBundle\Filter\FilterLogic;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "me" => [
-            "method" => "GET",
-            "path" => "/users/me",
-            "normalization_context" => ["groups" => ["read:me"]],
-            "controller" => MeController::class,
-            "output_formats" => [
-                "json" => "application/json"
-            ]
+        'me' => [
+            'method' => 'GET',
+            'path' => '/users/me',
+            'normalization_context' => ['groups' => ['user:me:read']],
+            'controller' => MeController::class,
+            'output_formats' => [
+                'json' => 'application/json',
+            ],
         ],
-        "get",
+        'get' => [
+            'normalization_context' => ['groups' => ['users:read']],
+        ],
     ],
     itemOperations: [
-//        "get" => ["security" => "is_granted('ROLE_ADMIN') or object == user"],
-        "get",
-        "patch" => [
-            "security_post_denormalize" => "is_granted('ROLE_ADMIN') or object == user",
-            "denormalization_context" => ["groups" => ["write:me"]],
-            "normalization_context" => ["groups" => ["read:me"]],
+        'get',
+        'patch' => [
+            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object == user",
+            'denormalization_context' => ['groups' => ['write:me']],
+            'normalization_context' => ['groups' => ['user:me:read']],
         ],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"]
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"],
     ],
 )]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'username' => 'partial',
+        'fullName' => 'partial',
+        'email' => 'partial'
+    ]
+)]
+#[ApiFilter(FilterLogic::class)]
 #[UniqueEntity('username')]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:me"])]
+    #[Groups(['user:me:read', 'users:read'])]
     #[ApiProperty(identifier: false)]
     private int $id;
 
@@ -53,7 +76,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(["read:me"])]
+    #[Groups(['user:me:read', 'post:read', 'users:read'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -61,50 +84,68 @@ class User implements UserInterface
     private Collection $posts;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
+    #[Groups(['user:me:read'])]
     private Collection $playlists;
 
     #[ORM\Column(type: 'notficationtype')]
     private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['user:me:read', 'write:me'])]
     private bool $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
     private bool $active = true;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["read:me"])]
+    #[Groups(['user:me:read'])]
     private int $score = 0;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
+    #[Groups(['user:me:read'])]
     private Collection $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]
-    #[Groups(["read:me"])]
+    #[Groups(['user:me:read'])]
     private Collection $achievements;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
+    #[ORM\JoinTable(name: 'user_bookmark')]
+    #[ApiSubresource(maxDepth: 1)]
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["read:me", "write:me"])]
+    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["read:me"])]
+    #[Groups(['user:me:read', 'users:read'])]
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups(['post:read', 'write:me', 'user:me:read', 'users:read'])]
     private $profilePicture;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(max: 100)]
+    #[Groups(['user:me:read', 'write:me'])]
+    private $description;
+
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['write:me', 'user:me:read'])]
+    private $lastLogin;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
+    private $fullName;
 
     public function __construct()
     {
@@ -127,7 +168,7 @@ class User implements UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->uuid;
+        return (string)$this->uuid;
     }
 
     /**
@@ -208,17 +249,11 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return NotificationType
-     */
     public function getNotificationSettings(): NotificationType
     {
         return $this->notificationSettings;
     }
 
-    /**
-     * @param NotificationType $notificationSettings
-     */
     public function setNotificationSettings(NotificationType $notificationSettings): self
     {
         $this->notificationSettings = $notificationSettings;
@@ -409,6 +444,44 @@ class User implements UserInterface
     public function setProfilePicture(?MediaObject $profilePicture): self
     {
         $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setFullName(): self
+    {
+        $this->fullName = $this->getFirstName().' '.$this->getLastName();
 
         return $this;
     }

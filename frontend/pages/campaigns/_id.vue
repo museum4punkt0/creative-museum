@@ -1,62 +1,125 @@
 <template>
   <div>
-    <div w:grid="~ cols-1 lg:cols-12">
-      <div w:display="hidden lg:block" w:grid="col-span-3">
-        Sidebar Left
+    <div class="lg:grid lg:grid-cols-12 lg:gap-4">
+      <div class="lg:col-span-3 pr-5">
+        <div v-if="isLargerThanLg">
+          <UserCampaignInfo v-if="campaign" :campaign="campaign" />
+        </div>
       </div>
-      <div w:grid="lg:col-span-6">
+      <div class="lg:col-span-6">
         <div v-if="campaign">
-          <CampaignHead :campaign="campaign" />
-          <div v-if="posts">
-            <PostItem
-              v-for="(post, key) in posts"
-              :key="key"
-              :post="post"
-            />
-          </div>
-          <div v-else>
-            No Posts
-          </div>
+          <CampaignHead v-if="campaign" :campaign="campaign" />
+          <PostList v-if="posts && posts.length" :posts="posts" source="campaign" />
+          <UtilitiesLoadingIndicator v-else-if="!posts" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          <div v-else><button class="btn-highlight w-full mt-10" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
         </div>
         <div v-else>
-          No Campaign found
+          <div class="container text-center min-h-2xl relative">
+            <UtilitiesLoadingIndicator class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
         </div>
       </div>
-      <div w:display="hidden lg:block" w:grid="col-span-3">
-        Sidebar Right
+      <div class="lg:col-span-3 pl-5">
+        <div v-if="isLargerThanLg">
+          <SidebarRight v-if="campaign" :campaign="campaign" />
+        </div>
       </div>
+    </div>
+    <div v-if="!isLargerThanLg" class="xl:hidden">
+      <PageFooter />
     </div>
   </div>
 </template>
 
 <script>
 
-import { defineComponent, useAsync, useRoute } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useRoute,
+  useRouter,
+  computed,
+  useContext,
+  ref,
+  useStore,
+  watch,
+  onMounted,
+} from '@nuxtjs/composition-api'
+
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
   name: 'CampaignPage',
   setup() {
-
     const route = useRoute()
+    const router = useRouter()
+    const { $breakpoints } = useContext()
+    const store = useStore()
+    const posts = ref(null)
+    const campaign = ref(null)
+
+    const newPost = computed(() => store.state.newPostOnCampaign)
+
+    const sortingKey = computed(() => (
+      store.state.currentSorting + store.state.currentSortingDirection + store.state.filterId
+    ))
+
+    watch(newPost, (newValue) => {
+      if (newValue === route.value.params.id) {
+        loadCampaign()
+        store.dispatch('resetNewPostOnCampaign')
+      }
+    })
+
+    watch (sortingKey, () => {
+      loadCampaign()
+    })
 
     const { fetchCampaign } = campaignApi()
     const { fetchPostsByCampaign } = postApi()
 
-    let campaign = null
-    let posts = null
+    const isLargerThanLg = computed(() => {
+      return $breakpoints.lLg
+    })
 
-    if (route.value.params.id) {
-      campaign = useAsync(() => fetchCampaign(route.value.params.id), `campaign-${route.value.params.id}`)
-      posts = useAsync(() => fetchPostsByCampaign(route.value.params.id), `posts-${route.value.params.id}`)
+    async function loadCampaign() {
+      if (route.value.params.id) {
+        campaign.value = await fetchCampaign(route.value.params.id)
+        posts.value = await fetchPostsByCampaign(
+          route.value.params.id,
+          store.state.currentSorting,
+          store.state.currentSortingDirection,
+          1
+        )
+
+        if (campaign.value && campaign.value.error) {
+          router.push('/404')
+        } else {
+          store.dispatch('setCurrentCampaign', route.value.params.id)
+          if (campaign.value.active) {
+            store.dispatch('showAddButton')
+          } else {
+            store.dispatch('hideAddButton')
+          }
+        }
+      }
     }
+
+    function showAddModal() {
+      store.dispatch('showAddModal')
+    }
+
+    onMounted(async () => {
+      await loadCampaign()
+    })
 
     return {
       campaign,
-      posts
+      posts,
+      newPost,
+      isLargerThanLg,
+      showAddModal
     }
-
   },
 })
 </script>

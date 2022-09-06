@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Campaign;
@@ -20,18 +27,16 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        UserRepository      $userRepository,
+        UserRepository $userRepository,
         CampaignRepository $campaignRepository,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
         $this->campaignRepository = $campaignRepository;
         $this->entityManager = $entityManager;
     }
 
     /**
-     * @param NotifyUsersAboutNewCampaign $campaign
      * @return void
      */
     public function __invoke(NotifyUsersAboutNewCampaign $campaign)
@@ -45,10 +50,6 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
         $this->handleNewCampaignNotification($campaign);
     }
 
-    /**
-     * @param Campaign $campaign
-     * @return void
-     */
     private function handleNewCampaignNotification(Campaign $campaign): void
     {
         $users = $this->userRepository->getActiveUsers();
@@ -57,11 +58,14 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
             $notification = new Notification();
             $notification
                 ->setReceiver($user)
-                ->setText("Neue Kampange {$campaign->getTitle()} verfügbar")
+                ->setText("1662033370")
                 ->setColor($campaign->getColor())
-                ->setSilent($user->getNotificationSettings() === NotificationType::NONE);
+                ->setCampaign($campaign)
+                ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
             $this->entityManager->persist($notification);
-            $this->entityManager->flush();
         }
+        $campaign->setNotified(true);
+        $this->entityManager->persist($campaign);
+        $this->entityManager->flush();
     }
 }

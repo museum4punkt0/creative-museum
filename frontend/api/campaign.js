@@ -9,8 +9,7 @@ export const campaignApi = () => {
   }
 
   const fetchCampaigns = async () => {
-    const res = await $api.get('campaigns')
-    return res
+    return await $api.get('campaigns')
   }
 
   return {

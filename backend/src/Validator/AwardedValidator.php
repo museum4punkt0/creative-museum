@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Validator;
 
 use App\Entity\Award;
@@ -8,6 +15,7 @@ use App\Entity\Campaign;
 use App\Entity\User;
 use App\Repository\AwardedRepository;
 use App\Repository\CampaignMemberRepository;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -16,76 +24,84 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 final class AwardedValidator extends ConstraintValidator
 {
-    private CampaignMemberRepository $campaignMemberRepository;
+    const VIOLATION_CODE_SELF = 1661952434;
 
-    private AwardedRepository $awardedRepository;
+    const VIOLATION_CODE_NO_CAMPAIGN_MEMBER = 1661952502;
 
-    public function __construct(CampaignMemberRepository $campaignMemberRepository, AwardedRepository $awardedRepository)
-    {
-        $this->campaignMemberRepository = $campaignMemberRepository;
-        $this->awardedRepository = $awardedRepository;
-    }
+    const VIOLATION_CODE_INSUFFICIENT_POINTS = 1661952537;
 
+    const VIOLATION_CODE_ALREADY_AWARDED = 1661952565;
+
+    public function __construct(
+        private readonly CampaignMemberRepository $campaignMemberRepository,
+        private readonly AwardedRepository $awardedRepository,
+        private readonly Security $security
+    ) {}
+
+    /**
+     * @param Awarded $value
+     * @param Constraint $constraint
+     */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value instanceof Awarded){
+        if (!$value instanceof Awarded) {
             return;
         }
-
-        $continue = true;
 
         /**
          * @var Awarded $value
-         * @var \App\Validator\Constraints\Awarded $constraint
+         * @var Constraints\Awarded $constraint
          */
-        if (!$this->isCampaignMember($value->getAward()->getCampaign(),$value->getGiver())){
-            $this->context->buildViolation($constraint->giverNotCampaignMember)->addViolation();
-            $continue = false;
-        }
 
-        if (!$this->isCampaignMember($value->getAward()->getCampaign(),$value->getWinner())){
-            $this->context->buildViolation($constraint->receiverNotCampaignMember)->addViolation();
-            $continue = false;
-        }
+        $campaign = $value->getAward()->getCampaign();
 
-        if (!$continue){
+        if ($value->getWinner() === $this->security->getUser()) {
+            $this->context
+                ->buildViolation($constraint->canNotAwardSelf)
+                ->setCode(self::VIOLATION_CODE_SELF)
+                ->addViolation();
             return;
         }
 
-        if ($value->getAward()->getPrice() > $this->getCampaignScore($value->getAward()->getCampaign(),$value->getGiver())){
-            $this->context->buildViolation($constraint->notEnoughPoints)->addViolation();
+        if (! $this->isCampaignMember($campaign, $value->getGiver())) {
+            $this->context
+                ->buildViolation($constraint->giverNotCampaignMember)
+                ->setCode(self::VIOLATION_CODE_NO_CAMPAIGN_MEMBER)
+                ->addViolation();
             return;
         }
 
-        if ($this->hasAlreadyAwarded($value->getAward(),$value->getGiver())){
-            $this->context->buildViolation($constraint->alreadyAwarded)->addViolation();
+        if ($value->getAward()->getPrice() > $this->getCampaignScore($campaign, $value->getGiver())) {
+            $this->context
+                ->buildViolation($constraint->notEnoughPoints)
+                ->setCode(self::VIOLATION_CODE_INSUFFICIENT_POINTS)
+                ->addViolation();
+            return;
+        }
+
+        if ($this->hasAlreadyAwarded($value->getAward(), $value->getGiver())) {
+            $this->context
+                ->buildViolation($constraint->alreadyAwarded)
+                ->setCode(self::VIOLATION_CODE_ALREADY_AWARDED)
+                ->addViolation();
         }
     }
 
-    /**
-     * @param Awarded $awarded
-     * @return bool
-     */
     private function isCampaignMember(Campaign $campaign, User $user): bool
     {
         $result = $this->campaignMemberRepository->findBy([
             'user' => $user->getId(),
-            'campaign' => $campaign->getId()
+            'campaign' => $campaign->getId(),
         ]);
 
         return !empty($result);
     }
 
-    /**
-     * @param Campaign $campaign
-     * @param User $user
-     * @return int
-     */
     private function getCampaignScore(Campaign $campaign, User $user): int
     {
         $result = $this->campaignMemberRepository->findOneBy([
             'user' => $user->getId(),
-            'campaign' => $campaign->getId()
+            'campaign' => $campaign->getId(),
         ]);
 
         return $result->getScore();
@@ -93,11 +109,11 @@ final class AwardedValidator extends ConstraintValidator
 
     private function hasAlreadyAwarded(Award $award, User $user): bool
     {
-        $result = $this->awardedRepository->findBy([
+        $awarded = $this->awardedRepository->findOneBy([
             'giver' => $user->getId(),
-            'award' => $award->getId()
+            'award' => $award->getId(),
         ]);
 
-        return !empty($result);
+        return $awarded !== null;
     }
 }

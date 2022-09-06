@@ -1,9 +1,17 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Awarded;
+use App\Enum\PointsReceivedType;
 use App\Event\CampaignPointsReceivedEvent;
 use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,33 +24,26 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AwardedSubscriber implements EventSubscriberInterface
 {
-    private const REWARD_POINTS = 1;
-
-    private const GIVER_REWARD_SCORE_POINTS = 10000;
-
-    private const WINNER_POPULARITY_SCORE_POINTS = 20000;
+    private EventDispatcherInterface $eventDispatcher;
 
     private CampaignMemberRepository $campaignMemberRepository;
 
     private EntityManagerInterface $entityManager;
 
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
+        EventDispatcherInterface $eventDispatcher,
         CampaignMemberRepository $campaignMemberRepository,
-        EntityManagerInterface   $entityManager,
-        EventDispatcherInterface $eventDispatcher
-    )
-    {
+        EntityManagerInterface $entityManager,
+    ) {
+        $this->eventDispatcher = $eventDispatcher;
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @return array[]
      */
-    #[ArrayShape([KernelEvents::VIEW => "array"])]
+    #[ArrayShape([KernelEvents::VIEW => 'array'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -50,10 +51,6 @@ class AwardedSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
     public function createAwardedPoints(ViewEvent $event): void
     {
         $awarded = $event->getControllerResult();
@@ -65,36 +62,24 @@ class AwardedSubscriber implements EventSubscriberInterface
 
         $awardGiver = $this->campaignMemberRepository->findOneBy([
             'user' => $awarded->getGiver()->getId(),
-            'campaign' => $awarded->getAward()->getCampaign()->getId()
+            'campaign' => $awarded->getAward()->getCampaign()->getId(),
         ]);
-        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice() + self::GIVER_REWARD_SCORE_POINTS;
-
-        $awardGiver
-            ->setScore($newGiverScore)
-            ->setRewardPoints($awardGiver->getRewardPoints() + self::REWARD_POINTS);
-
+        $newGiverScore = $awardGiver->getScore() - $awarded->getAward()->getPrice();
+        $awardGiver->setScore($newGiverScore);
         $this->entityManager->persist($awardGiver);
+        $this->entityManager->flush();
 
         $giverPointsEvent = new CampaignPointsReceivedEvent(
             $awarded->getAward()->getCampaign()->getId(),
-            $awardGiver->getUser()->getId()
+            $awarded->getGiver()->getId(),
+            PointsReceivedType::AWARDED->value
         );
         $this->eventDispatcher->dispatch($giverPointsEvent, CampaignPointsReceivedEvent::NAME);
 
-        $awardWinner = $this->campaignMemberRepository->findOneBy([
-            'user' => $awarded->getWinner()->getId(),
-            'campaign' => $awarded->getAward()->getCampaign()->getId()
-        ]);
-
-        $awardWinner
-            ->setScore($awardWinner->getScore() + self::WINNER_POPULARITY_SCORE_POINTS);
-
-        $this->entityManager->persist($awardWinner);
-        $this->entityManager->flush();
-
         $winnerPointsEvent = new CampaignPointsReceivedEvent(
             $awarded->getAward()->getCampaign()->getId(),
-            $awardWinner->getUser()->getId()
+            $awarded->getWinner()->getId(),
+            PointsReceivedType::AWARD_RECEIVED->value
         );
         $this->eventDispatcher->dispatch($winnerPointsEvent, CampaignPointsReceivedEvent::NAME);
     }

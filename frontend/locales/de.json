@@ -1,13 +1,30 @@
 {
+  "locale": "Deutsch",
   "next": "Weiter",
   "prev": "Zurück",
   "submit": "Abschicken",
-  "close": "Close",
+  "close": "Schließen",
+  "till": "bis",
+  "readLess": "weniger lesen",
+  "readMore": "mehr lesen",
+  "showAll": "Alle anzeigen",
+  "hide": "Ausblenden",
   "noUsername": "Kein Benutzername",
+  "duration": "Dauer",
+  "selectProfile": "Profil auswählen",
+  "confirmSelection": "Auswahl bestätigen",
+  "globalLogin": {
+    "header": "Login",
+    "text": "Melde dich an und verdiene Punkte mit deinen Aktionen.",
+    "button": "Jetzt anmelden"
+  },
   "provideUsername": {
-    "title": "Please provide a Username"
+    "title": "Username festlegen",
+    "notice": "Unerlaubte Zeichen im Usernamen.",
+    "alreadyTaken": "Ups! Der Username ist leider schon vergeben."
   },
   "tutorial": {
+    "firstSteps": "Erste Schritte",
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
       "title": "Willkommen im Creative Museum!",
@@ -23,14 +40,247 @@
     },
     "step4": {
       "title": "Awards",
-      "text": "Du kannst in jeder Kampgane verschiedene Awards freischalten indem du Punkte sammelst und diese dann an andere Teilnehmer*innen verleihen."
+      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten indem du Punkte sammelst und diese dann an andere Teilnehmer*innen verleihen."
     },
     "step5": {
       "title": "Badges",
       "text": "Badges werden dir verliehen, indem du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und kommentiere drei Posts!"
     }
   },
+  "navigation": {
+    "profile": {
+      "header": "Profil",
+      "settings": "Einstellungen",
+      "search": "Profil suchen",
+      "invite": "Freunde einladen"
+    },
+    "museum": {
+      "header": "Creative Museum",
+      "about": "Über Creative Museum",
+      "firstSteps": "Erste Schritte",
+      "faq": "FAQ"
+    },
+    "language": {
+      "easyLanguage": "Leichte Sprache",
+      "signLanguage": "Deutsche Gebärdensprache (DGS)"
+    }
+  },
+  "post": {
+    "upvotes": "Upvote(s)",
+    "downvotes": "Downvote(s)",
+    "types": {
+      "text": {
+        "button": "Text",
+        "headline": "Text hochladen"
+      },
+      "image": {
+        "button": "Bild",
+        "headline": "Bild hochladen",
+        "uploader": {
+          "add": "Bild hinzufügen",
+          "replace": "Bild ersetzen"
+        }
+      },
+      "poll": {
+        "button": "Umfrage",
+        "headline": "Umfrage hochladen",
+        "pollTitle": "Titel der Umfrage",
+        "pollDescription": "Erläuterung der Fragestellung",
+        "option": {
+          "0": "Option A",
+          "1": "Option B",
+          "2": "Option C",
+          "3": "Option D",
+          "4": "Option E"
+        },
+        "shortOption": {
+          "0": "A",
+          "1": "B",
+          "2": "C",
+          "3": "D",
+          "4": "E"
+        },
+        "addOption": "Option hinzufügen",
+        "removeOption": "Löschen"
+      },
+      "audio": {
+        "button": "Audio",
+        "headline": "Audio hochladen"
+      },
+      "video": {
+        "button": "Video",
+        "headline": "Video hochladen",
+        "uploader": {
+          "add": "Video hinzufügen",
+          "replace": "Video ersetzen"
+        }
+      },
+      "playlist": {
+        "button": "Playlist",
+        "headline": "Playlist hochladen"
+      }
+    },
+    "new": "Neuer Beitrag",
+    "placeholder": {
+      "title": "Titel hinzufügen (optional)",
+      "image": {
+        "alttext": "Beschreibung für Personen mit Sehbehinderung (optional)"
+      }
+    },
+    "share": "teilen",
+    "feedback": "Feedback",
+    "postComment": "Kommentar...",
+    "showComments": "Alle {count} Kommentare anzeigen",
+    "hideComments": "Alle {count} Kommentare ausblenden",
+    "commentPlaceholder": "Deinen Kommentar schreiben...",
+    "moreActions": "Weitere Aktionen",
+    "actions": {
+      "addBookmark": "Hinzufügen zur Merkliste",
+      "removeBookmark": "Von Merkliste entfernen",
+      "addToPlaylist": "Zu Playlist hinzufügen",
+      "playlist": {
+        "createNew": {
+          "cta": "Neue Playlist erstellen",
+          "submitButton": "Playlist erstellen",
+          "placeholder": "Name der Playlist"
+        }
+      }
+    },
+    "errors": {
+      "1657590177": "Der Beschreibungstext ist zu lang."
+    }
+  },
+  "playlist": {
+    "addTo": "Zu Playlist hinzufügen",
+    "createNew": "Neue Playlist erstellen",
+    "new": "Neue Playlist"
+  },
+  "points": "Punkte",
+  "score": "Punktestand",
+  "user": {
+    "editProfile": "Profil bearbeiten",
+    "yourCurrentScore": "Dein aktueller Punktestand",
+    "violation": {
+      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Benutzername bereits vergeben."
+    },
+    "profile": {
+      "self": {
+        "headline": "Guten Tag {firstName}",
+        "notifications": "Neueste Mitteilungen",
+        "awards": "Awards",
+        "badges": {
+          "headline": "Badges",
+          "points": {
+            "scoring": "Du hast {threshold} Punkte gesammelt.",
+            "awards": "Du hast {threshold} Awards verliehen.",
+            "reward_points": "Du hast {threshold} Awards verliehen.",
+            "postcount": "Du hast {threshold} Beitrage verfasst.",
+            "likes": "Du hast {threshold} Beiträge bewertet."
+          }
+        },
+        "activities": {
+          "headline": "Meine Aktivitäten",
+          "posts": "Beiträge",
+          "bookmarks": "Merkliste",
+          "playlists": "Playlists"
+        },
+        "edit": {
+          "personalData": "Persönliche Einstellungen",
+          "firstName": "Vorname",
+          "lastName": "Nachname",
+          "email": "E-Mail",
+          "username": "Benutzername",
+          "notifications": "Benachrichtigungen",
+          "save": "Änderungen speichern",
+          "removal": "Profil löschen",
+          "deleteProfile": "Profil löschen",
+          "placeholder": {
+            "description": "Profil Beschreibung und Status des Useres. Es kann natürlich länger werden."
+          }
+        }
+      }
+    }
+  },
   "campaign": {
-    "partner": "Kampagnenpartner"
+    "partner": "Kampagnenpartner",
+    "latestPosts": "Neueste Mitteilungen",
+    "awards": "Awards",
+    "noMorePosts": "Keine weiteren Beiträge."
+  },
+  "awards": {
+    "available": "Verfügbare Awards",
+    "unavailable": "Demnächst verfügbar",
+    "gift": "Verschenken",
+    "given": "Award verliehen",
+    "giftAward": "Award verschenken",
+    "gifted": "Verliehene Awards",
+    "received": "Erhaltene Awards",
+    "givenConfirmText": "Du hast den Award \"{title}\" für {price} Punkte an @{username} verschenkt!",
+    "pointsLeft": "Restpunktestand {score} Punkte",
+    "confirmSelection": "Auswahl bestätigen",
+    "detailHeadline": "Award",
+    "violations": {
+      "1661952434": "Du kannst Dir nicht selber einen Award verleihen ;)",
+      "1661952502": "Du musst Teilnehmer der Kampagne sein um einem anderen Teilnehmer diesen Award zu verleihen.",
+      "1661952537": "Du hast leider nicht genug Punkte. Verdiene mehr indem Du dich an der Kampagne beteiligst.",
+      "1661952565": "Du hast diesen Award bereits verliehen."
+    }
+  },
+  "badges": {
+    "detailHeadline": "Badges"
+  },
+  "filter": {
+    "newest": "Neueste",
+    "relevant": "Relevant",
+    "controversial": "Kontrovers",
+    "playlist": "Playlist",
+    "order": {
+      "reverse": "Sortierung umkehren"
+    }
+  },
+  "pages": {
+    "imprint": {
+      "title": "Impressum"
+    },
+    "privacy": {
+      "title": "Datenschutz"
+    },
+    "accessibility": {
+      "title": "Erklärung zur Barrierefreiheit"
+    },
+    "external": {
+      "stateMuseum": {
+        "title": "Badisches Landesmuseum",
+        "url": "https://www.landesmuseum.de/museum"
+      },
+      "instagram": {
+        "title": "Instagram",
+        "url": "https://www.instagram.com/?hl=de"
+      },
+      "twitter": {
+        "title": "Twitter",
+        "url": "https://twitter.com/?lang=de"
+      },
+      "facebook": {
+        "title": "Facebook",
+        "url": "https://www.facebook.com/"
+      }
+    }
+  },
+  "notifications": {
+    "1662032613": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampange {$campaign}, erhalten!",
+    "1662032722": "Du hast {points} Punkte erhalten, weil du einen Award in der Kampange {campaign} erhalten hast!",
+    "1662032767": "Du hast {points} Punkte für deinen Kommentar in der Kampange {campaign} erhalten!",
+    "1662032840": "Du hast {points} Punkte für dein Feedback in der Kampange {campaign} erhalten!",
+    "1662032913": "Du hast {points} Punkte für deinen Login in der Kampange {campaign} erhalten!",
+    "1662032958": "Du hast {points} Punkte für deinen Post in der Kampange {campaign} erhalten!",
+    "1662033166": "Du hast {points} Punkte für deine Registrierung in der Kampange {campaign} erhalten!",
+    "1662033222": "Du hast {$points} Punkte für deinen Upvote in der Kampange {campaign} erhalten!",
+    "1662033266": "Neuer Post in der Kampange {campaign} von {user}!",
+    "1662033328": "Du hast das Badge {badge} erhalten!",
+    "1662033370": "Neue Kampange {campaign} verfügbar!",
+    "1662033414": "Sie haben den Award {award} von {awardGiver} erhalten!",
+    "1662033487": "Herzlich Willkommen im Creative Museum!",
+    "1662033562": "Danke, wir kümmern uns und prüfen den Post."
   }
 }

@@ -1,33 +1,53 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
+use     ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use App\Controller\GetCampaignLeaderBoardController;
 use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @\App\Validator\Constraints\FeedbackOptionCount
+ */
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
+#[ORM\Index(fields: ['active', 'notified', 'start', 'stop'], name: 'campaign_collection_index')]
 #[ApiResource(
     attributes: [
         'filters' => ['campaign.date_filter'],
     ],
     normalizationContext: ['groups' => ['campaigns:read']],
     denormalizationContext: ['groups' => ['campaign:write']],
-    order: ["start" => "DESC"],
+    order: ['start' => 'DESC'],
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'get_leaderboard' => [
+            'method' => 'GET',
+            'path' => '/campaigns/result/{campaignId}',
+            'requirements' => ['id' => "\d+"],
+            'controller' => GetCampaignLeaderBoardController::class,
+        ],
     ],
     itemOperations: [
-        "get" => ["normalization_context" => ["groups" => ['campaign:read']]],
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
 #[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
@@ -37,62 +57,75 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaigns:read", "campaign:read"])]
+    #[Groups(['campaigns:read', 'post:read', 'user:me:read', 'awards:read', 'badge:read', 'playlist:read'])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
+    #[Groups(['campaigns:read', 'campaign:write', 'awards:read', 'post:read'])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:read"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $start;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $stop;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(["campaigns:read", "campaign:read"])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
+    #[Groups(['campaigns:read', 'campaign:write', 'user:me:read', 'awards:read', 'playlist:read'])]
     private $title;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
+    #[ORM\Column(type: 'text')]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $shortDescription;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaigns:read", "campaign:write", "campaign:read"])]
+    #[ORM\Column(type: 'text')]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $description;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, orphanRemoval: true)]
-    #[Groups(["campaigns:read", "campaign:read"])]
+    #[Groups(['campaigns:read'])]
     private $awards;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, orphanRemoval: true)]
-    #[Groups(["campaigns:read", "campaign:read", "campaign:write"])]
+    #[Groups(['campaigns:read'])]
     private $badges;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
-    #[Groups(["campaigns:read", "campaign:read"])]
+    #[Groups(['campaigns:read'])]
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(["campaigns:read", "campaign:read", "campaign:write"])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write', 'awards:read', 'post:read', 'user:me:read', 'awarded:read', 'badge:read', 'playlist:read'])]
     private $color;
+
+    #[ORM\Column(type: 'boolean')]
+    private $notified = false;
+
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: CampaignFeedbackOption::class, cascade: ['persist', 'remove'])]
+    #[Groups(['campaigns:read', 'campaign:write'])]
+    #[Assert\Valid]
+    private $feedbackOptions;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
+    private $closed = false;
 
     public function __construct()
     {
         $this->badges = new ArrayCollection();
         $this->awards = new ArrayCollection();
         $this->partners = new ArrayCollection();
+        $this->feedbackOptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -120,7 +153,7 @@ class Campaign
     #[ORM\PrePersist]
     public function setCreated(): self
     {
-        $this->created = new \DateTime();
+        $this->created = new \DateTimeImmutable();
 
         return $this;
     }
@@ -158,7 +191,7 @@ class Campaign
     #[ORM\PreUpdate]
     public function setUpdatedAt(): self
     {
-        $this->updatedAt = new \DateTime();
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -230,11 +263,11 @@ class Campaign
     }
 
     /**
-     * @return Badge[]
+     * @return Collection<int, Badge>
      */
-    public function getBadges(): array
+    public function getBadges(): Collection
     {
-        return $this->badges->getValues();
+        return $this->badges;
     }
 
     public function addBadge(Badge $badge): self
@@ -297,6 +330,77 @@ class Campaign
     public function setColor(?string $color): self
     {
         $this->color = $color;
+
+        return $this;
+    }
+
+    public function getNotified(): ?bool
+    {
+        return $this->notified;
+    }
+
+    public function setNotified(bool $notified): self
+    {
+        $this->notified = $notified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CampaignFeedbackOption>
+     */
+    public function getFeedbackOptions(): Collection
+    {
+        return $this->feedbackOptions;
+    }
+
+    public function addFeedbackOption(CampaignFeedbackOption $feedbackOption): self
+    {
+        if (!$this->feedbackOptions->contains($feedbackOption)) {
+            $this->feedbackOptions[] = $feedbackOption;
+            $feedbackOption->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedbackOption(CampaignFeedbackOption $feedbackOption): self
+    {
+        if ($this->feedbackOptions->removeElement($feedbackOption)) {
+            // set the owning side to null (unless already changed)
+            if ($feedbackOption->getCampaign() === $this) {
+                $feedbackOption->setCampaign(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->created = new \DateTime('now');
+        $this->updatedAt = $this->created;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTime('now');
+    }
+
+    public function getClosed(): ?bool
+    {
+        return $this->closed;
+    }
+
+    public function setClosed(bool $closed): self
+    {
+        $this->closed = $closed;
 
         return $this;
     }

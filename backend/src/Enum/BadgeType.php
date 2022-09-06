@@ -1,16 +1,23 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Enum;
 
 enum BadgeType: string
 {
-    case SCORING = 'scoring';
-
     case AWARDS = 'awards';
 
-    // Logic not implemented yet
-    // case POSTCOUNT = 'postcount';
+    case SCORING = 'scoring';
 
-    // Logic not implemented yet
-    // case LIKES = 'likes';
+    case POSTCOUNT = 'postcount';
+
+    case LIKES = 'likes';
+
+    case REWARD_POINTS = 'reward_points';
 }

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Repository;
 
 use App\Entity\CampaignMember;
@@ -45,6 +52,21 @@ class CampaignMemberRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function getCampaignLeaders(int $campaignId)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        return $qb
+            ->select('members')
+            ->from(CampaignMember::class, 'members')
+            ->andWhere(
+                $qb->expr()->eq('members.campaign', $campaignId)
+            )
+            ->orderBy('members.rewardPoints', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->execute();
     }
 
     // /**

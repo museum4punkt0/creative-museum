@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -7,19 +14,22 @@ use App\Repository\PollOptionChoiceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+/**
+ * @\App\Validator\Constraints\PollOptionChoiced
+ */
 #[ORM\Entity(repositoryClass: PollOptionChoiceRepository::class)]
 #[ApiResource(
     attributes: [
-        "security" => "is_granted('ROLE_ADMIN')",
-        "denormalization_context" => ["groups" => ["write:pollOptionChoice"]]
+        'denormalization_context' => ['groups' => ['write:pollOptionChoice']],
     ],
     collectionOperations: [
-        "post" => [
-            "security_post_denormalize" => "object.user == user",
+        'post' => [
+            'security_post_denormalize' => 'object.user == user',
         ],
     ],
     itemOperations: [
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
 )]
 class PollOptionChoice
@@ -31,13 +41,13 @@ class PollOptionChoice
 
     #[ORM\ManyToOne(targetEntity: PollOption::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['write:pollOptionChoice'])]
+    #[Groups(['write:pollOptionChoice', 'post:read'])]
     private $pollOption;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['write:pollOptionChoice'])]
-    private $user;
+    public $user;
 
     public function getId(): ?int
     {

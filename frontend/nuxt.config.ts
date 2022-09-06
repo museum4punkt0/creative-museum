@@ -1,6 +1,6 @@
 export default {
   head: {
-    title: 'Creative Musuem - Badisches Landesmuseum',
+    title: 'Creative Museum - Badisches Landesmuseum',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -11,53 +11,62 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'preconnect',
-        href: 'https://backend.creative-museum.ddev.site',
-        crossorigin: 'use-credentials'
-      }
+        href: process.env.BACKEND_URL,
+        crossorigin: 'use-credentials',
+      },
     ],
   },
+  components: true,
   css: [
     'virtual:windi-base.css',
     '@/assets/css/main.scss',
     'virtual:windi-components.css',
     'virtual:windi-utilities.css',
   ],
-  plugins:[
-    'plugins/api'
+  plugins: [
+    '~/plugins/api',
+    { src: '~/plugins/tooltip', mode: 'client' },
   ],
-  components: true,
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/composition-api/module',
     '@nuxtjs/svg',
     'nuxt-windicss',
-    'nuxt-webpack-optimisations',
-    '@nuxt/postcss8'
+    '@nuxt/postcss8',
   ],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     '@nuxtjs/pwa',
     '@nuxtjs/i18n',
-    '@nuxtjs/dayjs'
+    '@nuxtjs/dayjs',
+    'nuxt-breakpoints',
   ],
+  breakpoints: {
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1280,
+    '2xl': 1536,
+  },
   i18n: {
     langDir: 'locales',
     locales: [
       { code: 'de', iso: 'de-DE', file: 'de.json', dir: 'ltr' },
-      { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' }
+      { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' },
     ],
     defaultLocale: 'de',
     vueI18n: {
       fallbackLocale: 'de',
-    }
+    },
   },
   dayjs: {
     locales: ['de', 'en'],
-    defaultLocale: 'de'
+    defaultLocale: 'de',
+    plugins: ['relativeTime', 'duration'],
   },
   axios: {
-    baseURL: 'https://backend.creative-museum.ddev.site/v1/',
+    baseURL: `${process.env.BACKEND_URL}/v1/`,
   },
   pwa: {
     meta: {
@@ -66,7 +75,7 @@ export default {
       name: 'Creative Museum',
       nativeUI: true,
       mobileAppIOS: true,
-      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover'
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
     },
     manifest: {
       crossorigin: 'use-credentials',
@@ -75,8 +84,8 @@ export default {
       lang: 'de',
       background_color: '#2E2E2E',
       theme_color: '#2E2E2E',
-      useWebmanifestExtension: true
-    }
+      useWebmanifestExtension: true,
+    },
   },
   auth: {
     defaultStrategy: 'iam',
@@ -84,33 +93,39 @@ export default {
       iam: {
         scheme: 'oauth2',
         endpoints: {
-          authorization: 'https://identity-manager.ddev.site/authorize',
-          token: 'https://identity-manager.ddev.site/token',
+          authorization: `${process.env.IAM_URL}/authorize`,
+          token: `${process.env.IAM_URL}/token`,
           userInfo: 'users/me',
-          logout: 'https://identity-manager.ddev.site/logout'
+          logout: `${process.env.IAM_URL}/logout`,
         },
         token: {
           property: 'access_token',
-          type: 'Bearer'
+          type: 'Bearer',
         },
         user: {
-          property: false
+          property: false,
         },
         responseType: 'token',
         grantType: 'authorization_code',
         accessType: undefined,
-        redirectUri: 'https://creative-museum.ddev.site/login',
+        redirectUri: `${process.env.BASE_URL}/login`,
         logoutRedirectUri: '/',
         clientId: 'bdlm_cm',
         scope: ['default'],
         state: 'UNIQUE_AND_NON_GUESSABLE',
         codeChallengeMethod: 'S256',
-        responseMode: 'token',
-        acrValues: ''
-      }
-    }
+        responseMode: '',
+        acrValues: '',
+      },
+    },
   },
   router: {
-    middleware: ['user']
-  }
+    middleware: ['user'],
+  },
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+    idpURL: process.env.IAM_URL,
+    backendUrl: process.env.BACKEND_URL,
+    postsPerPage: 30
+  },
 }

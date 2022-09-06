@@ -1,14 +1,16 @@
 <template>
   <div>
-    <h1 w:text="primary 2xl bold" w:p="7" @click="login">Login</h1>
+      <h1 class="text-2xl font-bold p-7">Login</h1>
   </div>
 </template>
 <script>
-export default {
-  methods: {
-    login () {
-      this.$auth.login()
-    }
-  }
-}
+import { defineComponent, useStore } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  setup() {
+    const store = useStore()
+    store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
+  },
+})
 </script>

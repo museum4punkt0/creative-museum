@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Enum\BadgeType;
 use App\Enum\PostType;
 use App\Repository\BadgeRepository;
@@ -11,53 +21,62 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgeRepository::class)]
 #[ApiResource(
-    attributes: [
-        "security" => "is_granted('ROLE_ADMIN')"
-    ],
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get' => ['normalization_context' => ['groups' => ['badge:read']]],
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"],
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'campaign' => 'exact'
+    ]
+)]
+#[ApiFilter(
+    OrderFilter::class,
+    properties: ['threshold', 'campaign.start'],
+    arguments: ['orderParameterName' => 'order']
 )]
 class Badge
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaign:read"])]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(["campaign:read"])]
-    private $threshold = 0;
+    #[Groups(['user:me:read', 'badge:read'])]
+    private $threshold;
 
     #[ORM\Column(type: 'badgetype')]
-    #[Groups(["campaign:read"])]
-    private BadgeType $type = BadgeType::SCORING;
+    #[Groups(['user:me:read', 'badge:read'])]
+    private BadgeType $type;
 
     #[ORM\Column(type: 'posttype')]
-    #[Groups(["campaign:read"])]
-    private PostType $postType = PostType::TEXT;
+    #[Groups('badge:read')]
+    private PostType $postType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read"])]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(["campaign:read"])]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $description;
 
-    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges', cascade: ['persist'])]
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(["campaign:read"])]
+    #[Groups(['user:me:read', 'badge:read'])]
     private $picture;
 
     public function getId(): ?int
@@ -80,14 +99,11 @@ class Badge
     /**
      * @return BadgeType
      */
-    public function getType(): BadgeType
+    public function getType(): ?BadgeType
     {
         return $this->type;
     }
 
-    /**
-     * @param BadgeType $type
-     */
     public function setType(BadgeType $type): self
     {
         $this->type = $type;
@@ -98,14 +114,11 @@ class Badge
     /**
      * @return PostType
      */
-    public function getPostType(): PostType
+    public function getPostType(): ?PostType
     {
         return $this->postType;
     }
 
-    /**
-     * @param PostType $postType
-     */
     public function setPostType(PostType $postType): self
     {
         $this->postType = $postType;
@@ -159,10 +172,5 @@ class Badge
         $this->picture = $picture;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return 'Badge #' . $this->id . ' - ' . $this->title;
     }
 }

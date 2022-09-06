@@ -1,17 +1,20 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SetCommentController extends AbstractController
 {
-    /**
-     * @var PostRepository
-     */
     private PostRepository $postRepository;
 
     public function __construct(PostRepository $postRepository)
@@ -19,9 +22,10 @@ class SetCommentController extends AbstractController
         $this->postRepository = $postRepository;
     }
 
-    public function __invoke(Post $data): Post
+    public function __invoke($id, Post $data): Post
     {
-        $this->postRepository->add($data);
+        $parent = $this->postRepository->find($id);
+        $data->setParent($parent);
 
         return $data;
     }

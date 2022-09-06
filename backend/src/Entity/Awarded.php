@@ -1,28 +1,44 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AwardedRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Secured resource.
+ *
  * @\App\Validator\Constraints\Awarded
+ * @\App\Validator\Constraints\CampaignInactive
  */
 #[ORM\Entity(repositoryClass: AwardedRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.giver == user"],
+        'get' => ['normalization_context' => ['groups' => ['awarded:read']],],
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.giver == user"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.giver == user and previous_object.giver == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.giver == user and previous_object.giver == user)"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'winner' => 'exact',
+    ]
 )]
 class Awarded
 {
@@ -41,6 +57,7 @@ class Awarded
 
     #[ORM\ManyToOne(targetEntity: Award::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['awarded:read'])]
     private $award;
 
     public function getId(): ?int

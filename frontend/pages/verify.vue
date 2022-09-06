@@ -4,9 +4,15 @@
     <nuxt-link to="/sample">Sample</nuxt-link>
   </div>
 </template>
-
 <script>
-export default {
-  middleware: 'auth'
-}
+import { defineComponent, useStore } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  middleware: 'auth',
+  setup() {
+    const store = useStore()
+    store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
+  },
+})
 </script>

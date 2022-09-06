@@ -4,6 +4,21 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    rewardPoints: 1
+    registrationScorePoints: 2000
+    loginScorePoints: 2000
+    awardedScorePoints: 10000
+    awardReceivedScorePoints: 20000
+    postCreatedScorePoints: 10000
+    commentCreatedScorePoints: 5000
+    upvoteScorePoints: 2000
+    feedBackScorePoints: 3000
+
+    textPostBodyLength: 1000
+    imagePostBodyLength: 1000
+    videoPostBodyLength: 2000
+    postQuestionLength: 100
+
 
 services:
     # default configuration for services in *this* file
@@ -25,7 +40,10 @@ services:
 
     App\Serializer\Normalizer\EnumNormalizer:
         tags:
-            - { name: serializer.normalizer, priority: -916 }
+            - { name: serializer.normalizer, priority: 110 }
+    App\Serializer\Normalizer\PostNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 100}
 
     campaign.date_filter:
         parent: 'api_platform.doctrine.orm.date_filter'
@@ -39,3 +57,26 @@ services:
     App\QueryExtension\PostCollectionQueryExtension:
         tags:
             - { name: api_platform.doctrine.orm.query_extension.collection }
+
+    App\EventListener\CampaignMemberChanged:
+        tags:
+            - # these are the options required to define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\CampaignMember'
+    App\Validator\PostBodyLengthValidator:
+        arguments:
+            1: '%textPostBodyLength%'
+            2: '%imagePostBodyLength%'
+            3: '%videoPostBodyLength%'
+    App\Service\ScoringService:
+        arguments:
+            - '%rewardPoints%'
+            - '%registrationScorePoints%'
+            - '%loginScorePoints%'
+            - '%awardedScorePoints%'
+            - '%awardReceivedScorePoints%'
+            - '%postCreatedScorePoints%'
+            - '%commentCreatedScorePoints%'
+            - '%upvoteScorePoints%'
+            - '%feedBackScorePoints%'

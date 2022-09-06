@@ -1,17 +1,24 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\CreateMediaObjectAction;
+use App\Enum\FileType;
 use App\Repository\MediaObjectRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
 
 /**
  * @Vich\Uploadable
@@ -35,6 +42,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
                                         'type' => 'string',
                                         'format' => 'binary',
                                     ],
+                                    'description' => [
+                                        'type' => 'string',
+                                    ],
                                 ],
                             ],
                         ],
@@ -53,15 +63,19 @@ class MediaObject
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['media_object:read'])]
+    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'awards:read'. 'users:read', 'awarded:read', 'badge:read'])]
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
-    #[Groups(['media_object:read'])]
+    #[Groups(['media_object:read', 'post:read', 'user:me:read', 'campaigns:read', 'awards:read', 'users:read', 'awarded:read', 'badge:read'])]
     public ?string $contentUrl = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     public ?string $filepath = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'awards:read', 'awarded:read', 'badge:read'])]
+    private string $description;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['media_object:read'])]
@@ -73,6 +87,11 @@ class MediaObject
     #[Assert\NotNull(groups: ['media_object_create'])]
     #[Assert\File(groups: ['media_object_create'])]
     public ?File $file = null;
+
+    #[ORM\Column(type: 'filetype')]
+    #[Assert\NotNull(groups: ['media_object_create'])]
+    #[Groups(['media_object:read', 'post:read'])]
+    private FileType $type = FileType::IMAGE;
 
     public function getId(): ?int
     {
@@ -125,6 +144,30 @@ class MediaObject
     public function setFile(?File $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getType(): FileType
+    {
+        return $this->type;
+    }
+
+    public function setType(FileType $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

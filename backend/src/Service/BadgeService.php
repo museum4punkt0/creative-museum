@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\Badge;
@@ -7,52 +14,34 @@ use App\Entity\Badged;
 use App\Entity\Campaign;
 use App\Entity\User;
 use App\Repository\BadgedRepository;
-use App\Repository\CampaignMemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 
 class BadgeService
 {
-    /**
-     * @var CampaignMemberRepository
-     */
-    private CampaignMemberRepository $campaignMemberRepository;
-
-    /**
-     * @var BadgedRepository
-     */
     private BadgedRepository $badgedRepository;
 
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     public function __construct(
-        CampaignMemberRepository $campaignMemberRepository,
-        BadgedRepository         $badgedRepository,
-        EntityManagerInterface   $em
-    )
-    {
-        $this->campaignMemberRepository = $campaignMemberRepository;
+        BadgedRepository $badgedRepository,
+        EntityManagerInterface $em
+    ) {
         $this->badgedRepository = $badgedRepository;
         $this->em = $em;
     }
 
     /**
-     * @param Campaign $campaign
-     * @param User $user
-     * @return Badge|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * Returns all badges which are not badged to the user by campaign and user.
      */
-    public function getNextHigherBadge(Campaign $campaign, User $user): ?Badge
+    public function getUnbadged(Campaign $campaign, User $user): array
     {
         $qb = $this->em->createQueryBuilder();
-        $nextBadge = $qb->select('badge')
+        $unbadgedArr = $qb->select('badge')
             ->from(Badge::class, 'badge')
             ->andWhere(
                 $qb->expr()->eq('badge.campaign', $campaign->getId()),
-                $qb->expr()->isNull('badged.id')
+                $qb->expr()->isNull('badged.id'),
             )
             ->leftJoin(
                 Badged::class,
@@ -63,11 +52,18 @@ class BadgeService
                     $qb->expr()->eq('badged.user', $user->getId())
                 )
             )
-            ->orderBy('badge.price','ASC')
-            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->execute();
 
-        return $nextBadge;
+        return $unbadgedArr;
+    }
+
+    public function createBadged(Badge $badge, User $user): void
+    {
+        $newBadged = new Badged();
+        $newBadged
+            ->setBadge($badge)
+            ->setUser($user);
+        $this->badgedRepository->add($newBadged);
     }
 }

@@ -1,22 +1,36 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BadgedRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BadgedRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        "get",
-        "post" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'get',
+        'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
-        "get",
-        "patch" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
-        "delete" => ["security_post_denormalize" => "is_granted('ROLE_ADMIN')"]
+        'get',
+        'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.user == user and previous_object.user == user)"],
+        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+)]
+#[UniqueEntity(
+    fields: ['user', 'badge'],
+    message: 'This user already received this badge.',
+    errorPath: 'badge',
 )]
 class Badged
 {
@@ -31,6 +45,7 @@ class Badged
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('user:me:read')]
     private $badge;
 
     public function getId(): ?int

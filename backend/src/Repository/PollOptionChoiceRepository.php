@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Repository;
 
 use App\Entity\PollOptionChoice;
@@ -45,6 +52,16 @@ class PollOptionChoiceRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function userVotedForPollOption(int $userId, int $pollOptionId): bool
+    {
+        $choice = $this->findOneBy([
+            'user' => $userId,
+            'pollOption' => $pollOptionId
+        ]);
+
+        return !empty($choice);
     }
 
     // /**

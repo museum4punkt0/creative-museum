@@ -1,20 +1,25 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
-use App\Entity\Awarded;
-use App\Message\NotifyUserAboutNewAwarded;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\Awarded;
+use App\Message\NotifyAboutNewAwarded;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
-
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class AwardedNotificationSubscriber implements EventSubscriberInterface
 {
-
     private MessageBusInterface $bus;
 
     public function __construct(MessageBusInterface $bus)
@@ -28,14 +33,10 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['handleAwardNotification', EventPriorities::POST_WRITE]
+            KernelEvents::VIEW => ['handleAwardNotification', EventPriorities::POST_WRITE],
         ];
     }
 
-    /**
-     * @param ViewEvent $event
-     * @return void
-     */
     public function handleAwardNotification(ViewEvent $event): void
     {
         $awarded = $event->getControllerResult();
@@ -45,7 +46,7 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $notification = new NotifyUserAboutNewAwarded($awarded->getId());
+        $notification = new NotifyAboutNewAwarded($awarded->getId());
         $this->bus->dispatch($notification);
     }
 }

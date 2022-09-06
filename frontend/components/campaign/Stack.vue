@@ -1,17 +1,12 @@
 <template>
   <div class="campaign__wrapper">
-    <div
-      class="campaign__stack" w:p="x-5 t-10 md:t-5 md:x-0" w:h="2xl lg:4xl"
-    >
+    <div class="campaign__stack px-5 pt-10 md:pt-5 md:px-0 h-2xl lg:h-4xl">
       <div
         v-for="campaign in stack"
         ref="card"
         :key="campaign._id"
-        class="vue-card-stack__card"
-        w:select="none"
-        w:pos="absolute"
-        w:transform="origin-center"
-        :w:z-index="campaign.zIndex"
+        :data-href="localePath('/campaigns/' + campaign.id)"
+        class="vue-card-stack__card select-none absolute transform origin-center"
         :style="{
           top: `${campaign.yPos}px`,
           width: `${campaign.width}px`,
@@ -34,6 +29,7 @@
   </div>
 </template>
 <script>
+import { TinyColor, readability } from '@ctrl/tinycolor'
 import { debounce } from '@/utilities/debounce'
 
 export default {
@@ -80,14 +76,15 @@ export default {
       isMobile: false,
       cardWidth: 650,
       mobileYOffset: 70,
-      initialized: false
+      initialized: false,
+      touchElement: ''
     }
   },
   computed: {
     _stackWidth() {
       if (!this.stackWidth) {
         return this.cardWidth + this.paddingHorizontal * 2
-      } else if (typeof this.stackWidth === "number") {
+      } else if (typeof this.stackWidth === 'number') {
         return this.stackWidth
       }
 
@@ -105,44 +102,49 @@ export default {
       return 20
     },
     isTouch() {
-      return "ontouchstart" in window
+      return 'ontouchstart' in window
     },
     dragEvent() {
-      return this.isTouch ? "touchmove" : "mousemove"
+      return this.isTouch ? 'touchmove' : 'mousemove'
     },
     touchStartEvent() {
-      return this.isTouch ? "touchstart" : "mousedown"
+      return this.isTouch ? 'touchstart' : 'mousedown'
     },
     touchEndEvent() {
-      return this.isTouch ? "touchend" : "mouseup"
+      return this.isTouch ? 'touchend' : 'mouseup'
     },
     stackRestPoints() {
-      return this.campaigns.map((item, index) => {
-        const xOffset = document.getElementById('pageLogo').getBoundingClientRect().left + (((this.cardWidth / 2) - 100) * (index
-         - 1))
+      return this.campaigns.map((_, index) => {
+        const xOffset =
+          document.getElementById('pageLogo').getBoundingClientRect().left +
+          (this.cardWidth / 2 - 100) * (index - 1)
 
         if (!index) {
           if (this.isMobile) {
             return {
               x: this.cardWidth * -1,
-              y: this.$refs.card[0].clientHeight * -1 + 20
+              y: this.$refs.card[0].clientHeight * -1 + 20,
             }
           } else {
             return {
               x: (this.cardWidth - 100) * -1,
-              y: 0
+              y: 0,
             }
           }
         } else if (index === 1) {
           if (this.isMobile) {
             return {
-              x: document.getElementById('pageLogo').getBoundingClientRect().left + this.paddingHorizontal,
-              y: this.mobileYOffset
+              x:
+                document.getElementById('pageLogo').getBoundingClientRect()
+                  .left + this.paddingHorizontal,
+              y: this.mobileYOffset,
             }
           } else {
             return {
-              x: document.getElementById('pageLogo').getBoundingClientRect().left + this.paddingHorizontal,
-              y: 0
+              x:
+                document.getElementById('pageLogo').getBoundingClientRect()
+                  .left + this.paddingHorizontal,
+              y: 0,
             }
           }
         } else {
@@ -150,19 +152,19 @@ export default {
           if (this.isMobile) {
             return {
               x: 0,
-              y: (-15 * index) + this.mobileYOffset
+              y: -15 * index + this.mobileYOffset,
             }
           } else {
             return {
               x: xOffset,
-              y: 0
+              y: 0,
             }
           }
         }
       })
     },
     cardDefaults() {
-      return this.campaigns.map((campaign, index) => {
+      return this.campaigns.map((_, index) => {
         const xPos = this.stackRestPoints[index].x
         const yPos = this.stackRestPoints[index].y
         let isMobile = false
@@ -171,12 +173,37 @@ export default {
         }
 
         return {
-          xPos: !isMobile ? index < this._maxVisibleCampaigns ? xPos : document.getElementById('pageLogo').getBoundingClientRect().left + (this.cardWidth * (index - 1)) : 0,
-          yPos: isMobile ? index < this._maxVisibleCampaigns ? index === 0 ? 10 : this.mobileYOffset + (10 * index) * -1 : yPos - this.yPosOffset + this.mobileYOffset : 50,
-          rotate: index !== 1 ? Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1): 0,
-          width: isMobile ? window.innerWidth - this.paddingHorizontal * 2 : this.cardWidth,
-          zIndex: index !== 0 ? this.campaigns.length + index * -1 : this.isDraggingPrevious ? isMobile ? 0 : this._maxVisibleCampaigns : 0,
-          isDragging: this.isDragging
+          xPos: !isMobile
+            ? index < this._maxVisibleCampaigns
+              ? xPos
+              : document.getElementById('pageLogo').getBoundingClientRect()
+                  .left +
+                this.cardWidth * (index - 1)
+            : 0,
+          yPos: isMobile
+            ? index < this._maxVisibleCampaigns
+              ? index === 0
+                ? 10
+                : this.mobileYOffset + 10 * index * -1
+              : yPos - this.yPosOffset + this.mobileYOffset
+            : 50,
+          rotate:
+            index !== 1
+              ? Math.floor(Math.random() * (5 - 1 + 1) - 1) *
+                (Math.round(Math.random()) ? 1 : -1)
+              : 0,
+          width: isMobile
+            ? window.innerWidth - this.paddingHorizontal * 2
+            : this.cardWidth,
+          zIndex:
+            index !== 0
+              ? this.campaigns.length + index * -1
+              : this.isDraggingPrevious
+              ? isMobile
+                ? 0
+                : this._maxVisibleCampaigns
+              : 0,
+          isDragging: this.isDragging,
         }
       })
     },
@@ -205,13 +232,31 @@ export default {
   },
   mounted() {
     this.init()
-    window.addEventListener("resize", this.handleResize)
-    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart)
+    window.addEventListener('resize', this.handleResize)
+    this.$el.addEventListener(this.touchStartEvent, this.onTouchStart, {
+      passive: true,
+    })
     document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
+  destroyed() {},
   methods: {
+    getContrastColor(color) {
+      const bgColor = new TinyColor(color)
+      const fgColor = new TinyColor('#FFFFFF')
+      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+    },
     init() {
       this.stack = this.campaigns
+
+      document.documentElement.style.setProperty(
+        '--highlight',
+        this.stack[0].color
+      )
+
+      document.documentElement.style.setProperty(
+        '--highlight-contrast',
+        this.getContrastColor(this.stack[0].color)
+      )
 
       this.stack.unshift(this.stack.pop())
 
@@ -235,6 +280,16 @@ export default {
     rebuild() {
       this.$nextTick(() => {
         this.stack = this.stack.map((card, index) => {
+          if (index === this.activeCardIndex) {
+            document.documentElement.style.setProperty(
+              '--highlight',
+              card.color
+            )
+            document.documentElement.style.setProperty(
+              '--highlight-contrast',
+              this.getContrastColor(card.color)
+            )
+          }
           return {
             ...card,
             ...this.cardDefaults[index],
@@ -242,7 +297,7 @@ export default {
         })
       })
     },
-    handleResize: debounce(function() {
+    handleResize: debounce(function () {
       this.width = this.$el.clientWidth
       this.rebuild()
     }, 250),
@@ -263,7 +318,6 @@ export default {
       const minDistanceToTravel =
         (this.cardWidth + this.paddingHorizontal) / (1 / this.sensitivity)
 
-      this.$emit("move", 0)
       if (this.isDraggingPrevious) {
         if (distanceTravelledX > minDistanceToTravel) {
           this.onPrevious()
@@ -277,11 +331,6 @@ export default {
     moveStack(dragXPos) {
       const activeCardOffsetX = dragXPos - this.dragStartX
       const activeCardOffsetY = 0
-
-      this.$emit(
-        "move",
-        activeCardOffsetX / (this.cardWidth + this.paddingHorizontal)
-      )
 
       this.stack = this.stack.map((campaign, index) => {
         const isActiveCard = index === this.activeCardIndex
@@ -302,7 +351,8 @@ export default {
         }
         const rotate = isActiveCard
           ? '0'
-          : Math.floor(Math.random() * ( 3 - 1 + 1 ) -  1) * (Math.round(Math.random()) ? 1 : -1)
+          : Math.floor(Math.random() * (3 - 1 + 1) - 1) *
+            (Math.round(Math.random()) ? 1 : -1)
 
         return {
           ...campaign,
@@ -324,16 +374,23 @@ export default {
       return this.isTouch ? e.touches[0].clientY : e.clientY
     },
     onTouchStart(e) {
+      this.touchElement = e.target.getAttribute('data-href')
       this.isDragging = true
       this.dragStartX = this.getDragXPos(e) - this.elementXPosOffset
       this.dragStartY = this.getDragYPos(e) - this.elementYPosOffset
 
       document.addEventListener(this.dragEvent, this.onDrag)
     },
-    onTouchEnd() {
+    onTouchEnd(e) {
+      if (!this.isMobile && (Math.abs(this.getDragXPos(e) - this.dragStartX) < 10)) {
+        this.$router.push(this.touchElement)
+      }
+
       this.isDragging = false
       this.dragStartX = 0
       this.dragStartY = 0
+
+
       document.removeEventListener(this.dragEvent, this.onDrag)
       this.updateStack()
     },
@@ -355,5 +412,4 @@ export default {
   position: relative;
   overflow: hidden;
 }
-
 </style>
