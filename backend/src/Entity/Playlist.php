@@ -32,11 +32,11 @@ class Playlist
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read', 'post:read', 'playlist:read'])]
+    #[Groups(['user:me:read', 'post:read', 'playlist:read', 'users:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'post:read', 'playlist:read'])]
+    #[Groups(['user:me:read', 'post:read', 'playlist:read', 'users:read'])]
     private $title;
 
     #[ORM\ManyToMany(targetEntity: Post::class)]

@@ -9,7 +9,7 @@
           />
         </div>
         <p class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
-        <p class="highlight-text text-lg mb-3">@{{ fullName }}</p>
+        <p class="highlight-text text-lg mb-3">@{{ $auth.user.username }}</p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}
         </p>
@@ -49,15 +49,6 @@ export default defineComponent({
   },
   setup() {
     const { $auth, $breakpoints, $config } = useContext()
-    const fullName = computed(() => {
-      return $auth.user
-        ? $auth.user.firstName
-          ? $auth.user.firstName
-          : '' + $auth.user.lastName
-          ? ' ' + $auth.user.lastName
-          : ''
-        : ''
-    })
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
     })
@@ -72,7 +63,6 @@ export default defineComponent({
     })
 
     return {
-      fullName,
       profilePicture,
       isLargerThanLg,
       backendUrl: $config.backendUrl

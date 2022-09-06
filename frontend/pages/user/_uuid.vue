@@ -1,12 +1,12 @@
 <template>
-  <div v-if="$auth.loggedIn" class="lg:grid lg:grid-cols-12 lg:gap-4">
+  <div class="lg:grid lg:grid-cols-12 lg:gap-4">
     <div class="lg:col-span-3 lg:pr-10">
-      <SidebarLeft />
+      <SidebarLeft v-if="user" :user="user"/>
     </div>
     <div class="lg:col-span-6 lg:pr-10">
       <div class="flex flex-row content-between">
         <h2 class="text-2xl">
-          {{ $t('user.profile.self.activities.headline') }}
+          {{ $t('user.profile.activities.headline') }}
         </h2>
       </div>
       <div class="filter flex flex-row flex-wrap mt-6">
@@ -16,13 +16,6 @@
           @click.prevent="showPosts"
         >
           {{ $t('user.profile.self.activities.posts') }}
-        </button>
-        <button
-          class="px-2 py-1 mr-3 mb-3 rounded-full self-start text-sm"
-          :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'"
-          @click.prevent="showBookmarks"
-        >
-          {{ $t('user.profile.self.activities.bookmarks') }}
         </button>
         <button
           class="px-2 py-1 mb-3 rounded-full self-start text-sm"
@@ -35,15 +28,6 @@
       <div class="relative pb-10 list">
         <div v-if="mode === 'posts'">
           <PostList v-if="posts && posts.length" :posts="posts" source="userprofile" />
-        </div>
-        <div v-if="mode === 'bookmarks'">
-          <PostItem
-            v-for="(post, key) in bookmarks"
-            :key="'bookmark_' + key"
-            :post="post"
-            @updatePost="updatePost"
-            @toggle-bookmark-state="removeBookmark"
-          />
         </div>
         <div v-if="mode === 'playlists'" class="grid grid-cols-2 gap-6 mt-4">
           <a
@@ -87,38 +71,45 @@ import {
   useStore,
   onMounted,
   useContext,
+  useRoute,
   useRouter,
   watch
 } from '@nuxtjs/composition-api'
+import { userApi } from '@/api/user'
 import { postApi } from '@/api/post'
 import { playlistApi } from '@/api/playlist'
 
 export default defineComponent({
     name: "ProfilePage",
     setup() {
-        const { fetchUserPosts, fetchUserBookmarks } = postApi()
+        const { fetchUser } = userApi()
+        const { fetchUserPosts } = postApi()
         const { fetchPlaylist } = playlistApi()
+        const user = ref(null)
         const mode = ref("posts")
         const store = useStore()
+        const route = useRoute()
         const router = useRouter()
         const { $config, $auth } = useContext()
         const posts = ref(null)
         const playlists = ref(null)
         const playlistPosts = ref(null)
-        const bookmarks = ref(null)
 
         const showPlaylist = ref(0)
 
-        if (!$auth.loggedIn) {
-            router.push('/404')
-        }
         store.dispatch('hideAddButton')
         store.dispatch('setCurrentCampaign', null)
 
         onMounted(async () => {
-            posts.value = await fetchUserPosts($auth.user.id, 1)
-            playlists.value = $auth.user.playlists
-            bookmarks.value = await fetchUserBookmarks()
+
+            user.value = await fetchUser(route.value.params.uuid)
+
+            if (user.value && user.value.error) {
+              router.push('/404')
+            }
+
+            posts.value = await fetchUserPosts(user.value.id, 1)
+            playlists.value = user.value.playlists
         })
 
         watch(showPlaylist, (currentValue) => {
@@ -130,9 +121,6 @@ export default defineComponent({
         function showPosts() {
             mode.value = 'posts'
         }
-        function showBookmarks() {
-            mode.value = 'bookmarks'
-        }
         function showPlaylists() {
             mode.value = 'playlists'
         }
@@ -143,17 +131,16 @@ export default defineComponent({
 
         function backButton() { }
         return {
+            user,
             backButton,
             mode,
             showPlaylist,
             showPosts,
-            showBookmarks,
             showPlaylists,
             loadPlaylist,
             posts,
             playlists,
             playlistPosts,
-            bookmarks,
             backendUrl: $config.backendUrl
         };
     },

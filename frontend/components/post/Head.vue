@@ -1,6 +1,6 @@
 <template>
   <div v-if="post.author" class="flex flex-row justify-between">
-    <NuxtLink :to="localePath(`/user/${post.author.username}`)" class="flex flex-row">
+    <NuxtLink :to="localePath(`/user/${post.author.uuid}`)" class="flex flex-row">
       <UserProfileImage :user="post.author" class="mr-4" />
       <div class="flex flex-col">
         <span class="text-lg">{{ post.author.username }}</span>

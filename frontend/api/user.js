@@ -17,6 +17,14 @@ export const userApi = () => {
     return res
   }
 
+
+  const fetchUser = async (uuid) => {
+    const res = await $api.get(
+      `users/${uuid}`
+    )
+    return res
+  }
+
   const fetchUserInfoByCampaign = async (campaignId) => {
     const res = await $api.get(
       `campaign_members?user=${$auth.user.id}&campaign=${campaignId}`
@@ -67,6 +75,7 @@ export const userApi = () => {
   return {
     finishTutorial,
     supplyUsername,
+    fetchUser,
     fetchUserInfoByCampaign,
     updateUser,
     searchUser,

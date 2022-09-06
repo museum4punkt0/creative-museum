@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
-        'get' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
+        'get',
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
@@ -37,11 +37,11 @@ class CampaignMember
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['user:me:read'])]
+    #[Groups(['user:me:read', 'users:read'])]
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read'])]
+    #[Groups(['user:me:read', 'users:read'])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
@@ -49,7 +49,7 @@ class CampaignMember
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['user:me:read'])]
+    #[Groups(['user:me:read', 'users:read'])]
     private $rewardPoints = 0;
 
     public function getId(): ?int
