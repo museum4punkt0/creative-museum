@@ -34,7 +34,9 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
     public function checkForBadges(CheckForBadgesEvent $event)
     {
         $lock = $this->lockFactory->createLock(
-            'check-badges-' . $event->getCampaignId() . '-' . $event->getUserId()
+            'check-badges-' . $event->getCampaignId() . '-' . $event->getUserId(),
+            300,
+            false
         );
 
         $i = 0;
