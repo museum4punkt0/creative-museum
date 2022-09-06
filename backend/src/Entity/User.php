@@ -76,7 +76,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(['user:me:read', 'post:read', 'users:read'])]
+    #[Groups(['user:me:read', 'post:read', 'users:read', 'playlist:read'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
@@ -115,15 +115,15 @@ class User implements UserInterface
     private Collection $bookmarks;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'write:me', 'users:read'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read', 'playlist:read'])]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'write:me', 'users:read'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read', 'playlist:read'])]
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read'])]
+    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -131,12 +131,12 @@ class User implements UserInterface
     private string $email;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['post:read', 'write:me', 'user:me:read', 'users:read'])]
+    #[Groups(['post:read', 'write:me', 'user:me:read', 'users:read', 'playlist:read'])]
     private $profilePicture;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 100)]
-    #[Groups(['user:me:read', 'write:me'])]
+    #[Groups(['user:me:read', 'write:me', 'playlist:read'])]
     private $description;
 
     #[ORM\Column(type: 'datetime')]

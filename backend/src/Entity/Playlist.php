@@ -25,8 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     itemOperations: [
         'get' => ['normalization_context' => ['groups' => ['playlist:read']]],
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.creator == user and previous_object.creator == user)"],
-    ],
-    attributes: ['security' => "is_granted('ROLE_USER')"],
+    ]
 )]
 class Playlist
 {
