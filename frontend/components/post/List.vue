@@ -4,8 +4,6 @@
         v-for="(post) in postsRef"
         :key="post.id"
         :post="post"
-        :campaign-color="post.campaign.color"
-        :campaign-active="post.campaign.active"
         @updatePost="updatePost"
         @toggle-bookmark-state="toggleBookmarkState"
       />

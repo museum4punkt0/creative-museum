@@ -48,7 +48,7 @@ class Vote
     private $id;
 
     #[ORM\Column(type: 'votedirection')]
-    #[Groups(['vote:write', 'vote:read', 'post:read'])]
+    #[Groups(['vote:write', 'vote:read', 'post:read', 'playlist:read'])]
     #[ORM\JoinColumn(nullable: false)]
     private VoteDirection $direction;
 

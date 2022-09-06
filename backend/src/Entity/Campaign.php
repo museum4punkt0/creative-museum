@@ -61,7 +61,7 @@ class Campaign
     private $id;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['campaigns:read', 'campaign:write', 'awards:read', 'post:read'])]
+    #[Groups(['campaigns:read', 'campaign:write', 'awards:read', 'post:read', 'playlist:read'])]
     private $active;
 
     #[ORM\Column(type: 'datetime')]

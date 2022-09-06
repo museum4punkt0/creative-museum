@@ -45,10 +45,32 @@
             @toggle-bookmark-state="removeBookmark"
           />
         </div>
-        <div v-if="mode === 'playlists'">
-          <div v-for="(item, key) in playlists" :key="key">
-            {{ item.title }} ({{ item.postCount }})
+        <div v-if="mode === 'playlists'" class="grid grid-cols-2 gap-6 mt-4">
+          <div
+            v-for="(playlist, key) in playlists"
+            :key="key"
+            class="btn-primary"
+            @click.prevent="showPlaylist = playlist.id"
+          >
+            <span class="h-30 flex flex-col align-center justify-center">
+              {{ playlist.title }} ({{ playlist.postCount }})
+            </span>
           </div>
+
+          <Modal v-if="showPlaylist > 0 && playlistPosts" @closeModal="showPlaylist = 0">
+            <div class="flex flex-col flex-1 justify-between">
+              <div>
+                <div class="page-header p-6">
+                  <button type="button" class="back-btn" @click.prevent="showPlaylist = 0">
+                    {{ playlistPosts.title }}
+                  </button>
+                </div>
+                <div class="px-4 pb-4">
+                  <PostList v-if="playlistPosts" :posts="playlistPosts.posts" source="playlist" class="playlist-items" />
+                </div>
+              </div>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>
@@ -65,54 +87,75 @@ import {
   useStore,
   onMounted,
   useContext,
-  useRouter
+  useRouter,
+  watch
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
-import SidebarLeft from '~/components/SidebarLeft.vue'
+import { playlistApi } from '@/api/playlist'
 
 export default defineComponent({
     name: "ProfilePage",
     setup() {
-        const { fetchUserPosts, fetchUserBookmarks } = postApi();
-        const mode = ref("posts");
-        const store = useStore();
-        const router = useRouter();
-        const { $config, $auth } = useContext();
-        const posts = ref(null);
-        const playlists = ref(null);
-        const bookmarks = ref(null);
+        const { fetchUserPosts, fetchUserBookmarks } = postApi()
+        const { fetchPlaylist } = playlistApi()
+        const mode = ref("posts")
+        const store = useStore()
+        const router = useRouter()
+        const { $config, $auth } = useContext()
+        const posts = ref(null)
+        const playlists = ref(null)
+        const playlistPosts = ref(null)
+        const bookmarks = ref(null)
+
+        const showPlaylist = ref(0)
+
         if (!$auth.loggedIn) {
-            router.push("/404");
+            router.push('/404')
         }
-        store.dispatch("hideAddButton");
-        store.dispatch("setCurrentCampaign", null);
+        store.dispatch('hideAddButton')
+        store.dispatch('setCurrentCampaign', null)
+
         onMounted(async () => {
-            posts.value = await fetchUserPosts($auth.user.id, 1);
-            playlists.value = $auth.user.playlists;
-            bookmarks.value = await fetchUserBookmarks();
-        });
+            posts.value = await fetchUserPosts($auth.user.id, 1)
+            playlists.value = $auth.user.playlists
+            bookmarks.value = await fetchUserBookmarks()
+        })
+
+        watch(showPlaylist, (currentValue) => {
+          if (currentValue > 0) {
+            loadPlaylist()
+          }
+        })
+
         function showPosts() {
-            mode.value = "posts";
+            mode.value = 'posts'
         }
         function showBookmarks() {
-            mode.value = "bookmarks";
+            mode.value = 'bookmarks'
         }
         function showPlaylists() {
-            mode.value = "playlists";
+            mode.value = 'playlists'
         }
+
+        async function loadPlaylist() {
+          playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
+        }
+
         function backButton() { }
         return {
             backButton,
             mode,
+            showPlaylist,
             showPosts,
             showBookmarks,
             showPlaylists,
+            loadPlaylist,
             posts,
             playlists,
+            playlistPosts,
             bookmarks,
             backendUrl: $config.backendUrl
         };
     },
-    components: { SidebarLeft }
 })
 </script>
