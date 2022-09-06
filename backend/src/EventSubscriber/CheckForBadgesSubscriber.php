@@ -40,7 +40,7 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
         );
 
         $i = 0;
-        while ($lock->isAcquired() && $i <= 5){
+        while (!$lock->acquire() && $i <= 5){
             usleep(100000);
             $i++;
         }
