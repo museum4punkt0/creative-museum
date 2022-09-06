@@ -15,21 +15,21 @@
           :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'"
           @click.prevent="showPosts"
         >
-          {{ $t('user.profile.self.activities.posts') }}
+          {{ $t('user.profile.activities.posts') }}
         </button>
         <button
           class="px-2 py-1 mr-3 mb-3 rounded-full self-start text-sm"
           :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'"
           @click.prevent="showBookmarks"
         >
-          {{ $t('user.profile.self.activities.bookmarks') }}
+          {{ $t('user.profile.activities.bookmarks') }}
         </button>
         <button
           class="px-2 py-1 mb-3 rounded-full self-start text-sm"
           :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'"
           @click.prevent="showPlaylists"
         >
-          {{ $t('user.profile.self.activities.playlists') }}
+          {{ $t('user.profile.activities.playlists') }}
         </button>
       </div>
       <div class="relative pb-10 list">

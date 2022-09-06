@@ -164,10 +164,16 @@
       "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Benutzername bereits vergeben."
     },
     "profile": {
+      "activities": {
+        "headline": "Aktivitäten",
+        "posts": "Beiträge",
+        "bookmarks": "Merkliste",
+        "playlists": "Playlists",
+        "awards": "Awards",
+        "notifications": "Neueste Mitteilungen"
+      },
       "self": {
         "headline": "Guten Tag {firstName}",
-        "notifications": "Neueste Mitteilungen",
-        "awards": "Awards",
         "badges": {
           "headline": "Badges",
           "points": {
@@ -179,10 +185,7 @@
           }
         },
         "activities": {
-          "headline": "Meine Aktivitäten",
-          "posts": "Beiträge",
-          "bookmarks": "Merkliste",
-          "playlists": "Playlists"
+          "headline": "Meine Aktivitäten"
         },
         "edit": {
           "personalData": "Persönliche Einstellungen",
