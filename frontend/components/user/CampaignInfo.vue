@@ -17,7 +17,7 @@
           to="/user/profile"
           class="btn-outline mt-10 py-2 w-full"
         >
-          {{ $t('user.editProfile') }}
+          {{ $t('user.showProfile') }}
         </NuxtLink>
       </div>
       <div class="mb-10">
