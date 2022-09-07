@@ -1,5 +1,5 @@
 <template>
-  <UtilitiesModal v-if="showProfileUpdate" :closable="true" @closeModal="showProfileUpdate = false">
+  <UtilitiesModal v-if="showProfileUpdate" @closeModal="showProfileUpdate = false">
     <div v-show="!showDeleteUser" class="px-6 pb-6">
       <div class="page-header">
         <a class="back-btn" @click.prevent="showProfileUpdate = false">

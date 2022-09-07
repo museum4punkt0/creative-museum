@@ -4,7 +4,7 @@
       <div class="bg-grey shadow-lg shadow-black/20 sticky z-10 top-0">
         <PageHeader />
       </div>
-      <div class="container p-6 lg:pt-20">
+      <div class="container px-6 lg:pt-20">
         <Nuxt @noPosts="console.log('no posts')" />
       </div>
     </div>

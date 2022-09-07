@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page-header p-6 md:hidden">
+    <div class="page-header md:hidden">
       <button type="button" class="back-btn" @click.prevent="backButton">
         {{
           $auth.loggedIn ? $t('user.profile.self.headline', { firstName: $auth.user.firstName }) : userData ? userData.firstname + ' ' + userData.lastname : ''
@@ -95,11 +95,16 @@ export default defineComponent({
       store.dispatch('showProfileUpdate')
     }
 
+    function backButton() {
+      history.back()
+    }
+
     return {
       userData,
       isLargerThanLg,
       backendUrl: $config.backendUrl,
-      showProfileUpdate
+      showProfileUpdate,
+      backButton
     }
 
   },
