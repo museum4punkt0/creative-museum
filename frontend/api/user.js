@@ -3,14 +3,14 @@ import { useContext } from '@nuxtjs/composition-api'
 export const userApi = () => {
   const { $api, $auth } = useContext()
 
-  const finishTutorial = async () => {
+  async function finishTutorial() {
     const res = await $api.patch(`users/${$auth.user.uuid}`, {
       tutorial: true,
     })
     return res
   }
 
-  const supplyUsername = async (username) => {
+  async function supplyUsername(username) {
     const res = await $api.patch(`users/${$auth.user.uuid}`, {
       username,
     })
@@ -18,27 +18,27 @@ export const userApi = () => {
   }
 
 
-  const fetchUser = async (uuid) => {
+  async function fetchUser(uuid) {
     const res = await $api.get(
       `users/${uuid}`
     )
     return res
   }
 
-  const fetchUserInfoByCampaign = async (campaignId) => {
+  async function fetchUserInfoByCampaign(campaignId) {
     const res = await $api.get(
       `campaign_members?user=${$auth.user.id}&campaign=${campaignId}`
     )
     return res[0]
   }
 
-  const searchUser = async (searchString) => {
+  async function searchUser(searchString) {
     return await $api.get(
       `users?or[fullName]=${searchString}&or[email]=${searchString}&or[username]=${searchString}`
     )
   }
 
-  const updateUser = async (userData) => {
+  async function updateUser(userData) {
     delete userData.uuid
     delete userData.id
 
@@ -72,12 +72,30 @@ export const userApi = () => {
     return res
   }
 
+  async function deleteUser(anonymizeOrDelete) {
+
+    if (anonymizeOrDelete === 'delete') {
+      const res = await $api.delete(`users/${$auth.user.uuid}`)
+      return res
+    } else {
+      $api.patch(`users/${$auth.user.uuid}`, {
+        profilePicture: null,
+      })
+      userData.firstname = 'Anonymous'
+      userData.lastname = 'Anonymous'
+      userData.username = `Anonymous_____${Math.floor(Date.now())}`
+      const res = await $api.patch(`users/${$auth.user.uuid}`, userData)
+      return res
+    }
+  }
+
   return {
     finishTutorial,
     supplyUsername,
     fetchUser,
     fetchUserInfoByCampaign,
     updateUser,
+    deleteUser,
     searchUser,
   }
 }

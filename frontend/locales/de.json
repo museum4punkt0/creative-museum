@@ -19,7 +19,17 @@
     "button": "Jetzt anmelden"
   },
   "globalProfileUpdate": {
-    "header": "Profil bearbeiten"
+    "header": "Profil bearbeiten",
+    "deleteUser": {
+      "header": "Profil löschen",
+      "subheader": "Bestätigen Sie bitte die Profillöschung und folgende Konsequenzen.",
+      "options": {
+        "permanent": "Ich möchte alle meine Beiträge und Kommentare permanent löschen.",
+        "anonymize": "Ich stimme zu, dass meine Beiträge anonym erhalten bleiben."
+      },
+      "abort": "Abbrechen",
+      "confirm": "Profil permanent löschen"
+    }
   },
   "provideUsername": {
     "title": "Username festlegen",

@@ -1,6 +1,6 @@
 <template>
   <UtilitiesModal v-if="showProfileUpdate" :closable="true" @closeModal="showProfileUpdate = false">
-    <div class="flex flex-col flex-1 h-full justify-between px-6 pb-6">
+    <div v-show="!showDeleteUser" class="px-6 pb-6">
       <div class="page-header">
         <a class="back-btn" @click.prevent="showProfileUpdate = false">
         {{ $t('globalProfileUpdate.header') }}</a>
@@ -232,19 +232,65 @@
         </div>
       </div>
       <button
-        class="btn-highlight md:self-start mb-12 min-w-xs"
+        class="btn-highlight mb-12 w-full md:w-auto md:min-w-xs"
         @click.prevent="save"
       >
         {{ $t('user.profile.self.edit.save') }}
       </button>
 
-      <div class="flex flex-col mb-12">
+      <div class="mb-12">
         <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
         <button
-          class="btn-outline md:self-start min-w-xs"
-          @click.prevent="remove"
+          class="btn-outline w-full md:w-auto md:min-w-xs"
+          @click.prevent="showDeleteUser = true"
         >
           {{ $t('user.profile.self.edit.deleteProfile') }}
+        </button>
+      </div>
+    </div>
+    <div v-show="showDeleteUser" class="flex flex-col flex-1 h-full justify-between px-6 pb-6">
+      <div>
+        <div class="page-header">
+          <a class="back-btn" @click.prevent="showDeleteUser = false">
+            {{ $t('globalProfileUpdate.deleteUser.header') }}
+          </a>
+        </div>
+        <div class="box-shadow-mobile p-6 md:p-0 mb-4">
+          <p class="text-xl mb-4">{{ $t('globalProfileUpdate.deleteUser.subheader') }}</p>
+          <div class="form-check flex flex-row mb-4">
+            <div class="flex-grow-0">
+              <div class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2">
+                <input id="deleteUserModeDelete" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="flexRadioDefault">
+              </div>
+            </div>
+            <label class="form-check-label inline-block -t-1" for="deleteUserModeDelete">
+              {{ $t('globalProfileUpdate.deleteUser.options.permanent')}}
+            </label>
+          </div>
+          <div class="form-check flex flex-row">
+            <div class="flex-grow-0">
+              <div class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2">
+                <input id="deleteUserModeAnonymize" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="flexRadioDefault" checked>
+              </div>
+            </div>
+            <label class="form-check-label inline-block -t-1" for="deleteUserModeAnonymize">
+              {{ $t('globalProfileUpdate.deleteUser.options.anonymize')}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-4 md:(grid-cols-2)">
+        <button
+          class="btn-highlight w-full md:min-w-xs"
+          @click.prevent="showDeleteUser = showProfileUpdate = false"
+        >
+          {{ $t('globalProfileUpdate.deleteUser.abort')}}
+        </button>
+        <button
+          class="btn-outline w-full md:min-w-xs"
+          @click.prevent="showDeleteUser = showProfileUpdate = false"
+        >
+          {{ $t('globalProfileUpdate.deleteUser.confirm')}}
         </button>
       </div>
     </div>
@@ -277,6 +323,7 @@
       const username = ref(user.value.username)
       const files = ref([])
       const changed = ref(false)
+      const showDeleteUser = ref(false)
 
       const showProfileUpdate = computed({
         get() { return store.state.showProfileUpdate },
@@ -285,7 +332,7 @@
         }
       })
 
-      const { updateUser } = userApi()
+      const { updateUser, removeUser } = userApi()
 
       store.dispatch('hideAddButton')
       store.dispatch('setCurrentCampaign', null)
@@ -323,7 +370,7 @@
           firstName: firstName.value,
           lastName: lastName.value,
           description: description.value,
-          username: username.value,
+          username: username.value
         }
 
         if (changed.value && files.value.length > 0) {
@@ -331,13 +378,17 @@
         }
 
         updateUser(updateData)
+
+        showProfileUpdate.value = false
+
       }
 
       function remove() {
-        console.log('deleting user')
+
       }
 
       return {
+        showDeleteUser,
         showProfileUpdate,
         files,
         user,
