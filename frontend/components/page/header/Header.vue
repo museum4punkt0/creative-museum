@@ -3,7 +3,7 @@
     <div
       id="globalHeader"
       ref="globalHeader"
-      class="relative container flex flex-row justify-between z-100 items-center"
+      class="relative container flex flex-row justify-between z-20 items-center"
     >
       <NuxtLink id="pageLogo" :to="localePath('/')">
         <Logo

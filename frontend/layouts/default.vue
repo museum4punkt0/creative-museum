@@ -5,7 +5,9 @@
         <PageHeader />
       </div>
       <div class="container px-6 lg:pt-20">
-        <Nuxt @noPosts="console.log('no posts')" />
+        <div class="padding-safe">
+          <Nuxt />
+        </div>
       </div>
     </div>
     <OverlaysWrapper />

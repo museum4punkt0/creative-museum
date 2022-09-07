@@ -171,6 +171,9 @@ h3 {
 
 .page-header {
   @apply font-medium text-3xl my-6;
+  button {
+    @apply text-left;
+  }
 }
 
 .add-btn {
@@ -205,7 +208,7 @@ h3 {
 }
 
 .back-btn {
-  @apply relative pl-10;
+  @apply relative pl-10 block;
   &:before {
     @apply content-[''] block absolute w-6 h-[3px] bg-white left-0 top-1/2 transform -translate-y-1/2;
   }
@@ -409,4 +412,8 @@ h3 {
 
 .max-height-without-header {
   max-height: calc(100vh - 50px);
+}
+
+.padding-safe {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }

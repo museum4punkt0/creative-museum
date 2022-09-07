@@ -238,7 +238,7 @@
         {{ $t('user.profile.self.edit.save') }}
       </button>
 
-      <div class="mb-12">
+      <div class="">
         <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
         <button
           class="btn-outline w-full md:w-auto md:min-w-xs"
