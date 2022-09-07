@@ -26,12 +26,12 @@
         <p>{{ userData.description }}</p>
       </div>
 
-      <NuxtLink
+      <a
         v-if="$auth.loggedIn && !user"
-        to="/user/update"
-        class="btn-primary btn-outline md:self-start"
+        class="btn-primary btn-outline md:self-start cursor-pointer"
+        @click="showProfileUpdate"
       >
-        {{ $t('user.editProfile') }}</NuxtLink
+        {{ $t('user.editProfile') }}</a
       >
 
       <div v-if="userData.memberships.length">
@@ -64,7 +64,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, computed, useStore } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -75,6 +75,7 @@ export default defineComponent({
   },
   setup(props) {
     const { $auth, $config, $breakpoints } = useContext()
+    const store = useStore()
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
@@ -90,10 +91,15 @@ export default defineComponent({
       }
     })
 
+    function showProfileUpdate() {
+      store.dispatch('showProfileUpdate')
+    }
+
     return {
       userData,
       isLargerThanLg,
-      backendUrl: $config.backendUrl
+      backendUrl: $config.backendUrl,
+      showProfileUpdate
     }
 
   },

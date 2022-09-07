@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:grid lg:grid-cols-4 px-5 container text-white">
+  <div class="lg:grid lg:grid-cols-4 p-6 container text-white">
     <div class="mb-10 lg:mb-0">
       <client-only>
         <a
@@ -24,12 +24,11 @@
       <NuxtLink v-if="$auth.loggedIn" to="/user/profile" class="block text-lg font-bold leading-loose mb-4" @click.native="closeMenu">
         {{ $t('navigation.profile.header') }}
       </NuxtLink>
-      <NuxtLink
+      <a
         v-if="$auth.loggedIn"
-        to="/user/update"
         class="block mb-4"
-        @click.native="closeMenu"
-        >{{ $t('navigation.profile.settings') }}</NuxtLink
+        @click.prevent="showProfileUpdate"
+        >{{ $t('navigation.profile.settings') }}</a
       >
       <NuxtLink v-if="$auth.loggedIn" to="/" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.profile.search')
@@ -106,7 +105,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useStore } from '@nuxtjs/composition-api'
 import LoginIcon from '@/assets/icons/login.svg?inline'
 import LogoutIcon from '@/assets/icons/logout.svg?inline'
 import SimpleLanguageIcon from '@/assets/icons/simpleLanguage.svg?inline'
@@ -121,6 +120,7 @@ export default defineComponent({
   },
   setup(_, context) {
     const { $auth } = useContext()
+    const store = useStore()
 
     function login() {
       $auth.login().then(closeMenu())
@@ -128,6 +128,11 @@ export default defineComponent({
 
     function logout() {
       $auth.logout().then(closeMenu())
+    }
+
+    function showProfileUpdate() {
+      store.dispatch('showProfileUpdate')
+      closeMenu()
     }
 
     function closeMenu() {
@@ -138,6 +143,7 @@ export default defineComponent({
       login,
       logout,
       closeMenu,
+      showProfileUpdate
     }
   },
 })

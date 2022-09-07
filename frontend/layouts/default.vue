@@ -8,7 +8,7 @@
         <Nuxt @noPosts="console.log('no posts')" />
       </div>
     </div>
-    <GlobalLogin />
+    <GlobalElements />
   </div>
 </template>
 <script>

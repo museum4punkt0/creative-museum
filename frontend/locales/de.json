@@ -164,6 +164,9 @@
       "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Benutzername bereits vergeben."
     },
     "profile": {
+      "badges": {
+        "headline": "Badges"
+      },
       "activities": {
         "headline": "Aktivitäten",
         "posts": "Beiträge",
@@ -175,7 +178,6 @@
       "self": {
         "headline": "Guten Tag {firstName}",
         "badges": {
-          "headline": "Badges",
           "points": {
             "scoring": "Du hast {threshold} Punkte gesammelt.",
             "awards": "Du hast {threshold} Awards verliehen.",
