@@ -8,7 +8,7 @@
             class="w-21 h-21 object-cover object-center rounded-full"
           />
         </div>
-        <p class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
+        <p class="text-2xl">{{ $auth.user.fullName }}</p>
         <p class="highlight-text text-lg mb-3">@{{ $auth.user.username }}</p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}

@@ -20,7 +20,7 @@
 
       <div class="mb-10">
         <h1 class="text-2xl">
-          {{ userData.firstName }} {{ userData.lastName }}
+          {{ userData.fullName }}
         </h1>
         <p class="highlight-text mb-2">@{{ userData.username }}</p>
         <p>{{ userData.description }}</p>

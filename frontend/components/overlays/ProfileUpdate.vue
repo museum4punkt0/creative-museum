@@ -88,7 +88,7 @@
       </client-only>
 
       <div class="mb-12">
-        <h1 class="text-2xl mt-6">{{ firstName }} {{ lastName }}</h1>
+        <h1 class="text-2xl mt-6">{{ fullName }}</h1>
         <p class="highlight-text mb-4">{{ title }} @{{ user.username }}</p>
         <textarea
           v-model="description"
