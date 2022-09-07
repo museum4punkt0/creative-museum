@@ -18,6 +18,9 @@
     "text": "Melde dich an und verdiene Punkte mit deinen Aktionen.",
     "button": "Jetzt anmelden"
   },
+  "globalProfileUpdate": {
+    "header": "Profil bearbeiten"
+  },
   "provideUsername": {
     "title": "Username festlegen",
     "notice": "Unerlaubte Zeichen im Usernamen.",

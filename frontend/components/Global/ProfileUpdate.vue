@@ -1,13 +1,19 @@
 <template>
   <Modal v-if="showProfileUpdate" :closable="true" @closeModal="showProfileUpdate = false">
-    <div class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6">
+    <div class="flex flex-col flex-1 h-full justify-between px-6 pb-6">
+      <div class="page-header">
+        <a class="back-btn" @click.prevent="showProfileUpdate = false">
+        {{ $t('globalProfileUpdate.header') }}</a>
+      </div>
       <client-only>
         <div class="flex flex-col items-start">
-          <img
-            v-if="files.length"
-            :src="typeof files[0] === 'string' ? files[0] : files[0].blob"
-            class="w-32 mr-2 mb-2 rounded-full self-start"
-          />
+          <div class="w-32 h-32 overflow-hidden mr-2 mb-2 rounded-full self-start border border-$highlight">
+            <img
+              v-if="files.length"
+              :src="typeof files[0] === 'string' ? files[0] : files[0].blob"
+              class="object-center w-32 h-32"
+            />
+          </div>
           <file-upload
             ref="upload"
             v-model="files"
