@@ -13,23 +13,17 @@ namespace App\EventSubscriber;
 
 use App\Event\FeedbackCreatedEvent;
 use App\Repository\PostFeedbackRepository;
+use App\Service\PostFeedbackService;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
 {
-    private PostFeedbackRepository $feedbackRepository;
-
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        PostFeedbackRepository $feedbackRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->feedbackRepository = $feedbackRepository;
-        $this->entityManager = $entityManager;
-    }
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PostFeedbackService $postFeedbackService
+    ) {}
 
     #[ArrayShape([FeedbackCreatedEvent::NAME => 'string'])]
     public static function getSubscribedEvents(): array
@@ -43,23 +37,7 @@ class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
     {
         $post = $feedbackCreatedEvent->getPostFeedback()->getPost();
 
-        $feedbacks = $this->feedbackRepository->findBy(['post' => $post]);
-
-        $calc = [];
-
-        foreach ($feedbacks as $feedback) {
-            if (!isset($calc[$feedback->getId()])) {
-                $calc[$feedback->getId()] = ['feedback' => $feedback->getSelection(), 'count' => 1];
-                continue;
-            }
-            ++$calc[$feedback->getId()]['count'];
-        }
-
-        uasort($calc, function ($a, $b) {
-            return $b['count'] <=> $a['count'];
-        });
-
-        $leading = reset($calc);
+        $leading = $this->postFeedbackService->getLeadingFeedbackWithCount($post);
 
         $post->setLeadingFeedbackOption($leading['feedback']);
         $post->setLeadingFeedbackCount($leading['count']);

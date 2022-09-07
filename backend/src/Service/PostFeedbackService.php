@@ -12,17 +12,16 @@ namespace App\Service;
 use App\Entity\CampaignFeedbackOption;
 use App\Entity\Post;
 use App\Entity\PostFeedback;
+use App\Repository\PostFeedbackRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 
 class PostFeedbackService
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
+    public function __construct(
+        private EntityManagerInterface $em,
+        private readonly PostFeedbackRepository $postFeedbackRepository
+    ) {}
 
     public function getFeedbackResultsForPost(int $postId): array
     {
@@ -70,5 +69,36 @@ class PostFeedbackService
             ->execute();
 
         return $givenFeedback;
+    }
+
+    /**
+     * @param Post $post
+     * @param CampaignFeedbackOption|null $excludedOption
+     * The option to be excluded from the calculation @see CampaignFeedbackOptionDeleteListener
+     * @return array
+     */
+    public function getLeadingFeedbackWithCount(Post $post, ?CampaignFeedbackOption $excludedOption = null): array
+    {
+        $feedbacks = $this->postFeedbackRepository->findBy(['post' => $post]);
+
+        $calc = [];
+
+        foreach ($feedbacks as $feedback) {
+            if (null !== $excludedOption && $feedback->getSelection() === $excludedOption) {
+                continue;
+            }
+            if (!isset($calc[$feedback->getId()])) {
+                $calc[$feedback->getId()] = ['feedback' => $feedback->getSelection(), 'count' => 1];
+                continue;
+            }
+            ++$calc[$feedback->getId()]['count'];
+        }
+
+        uasort($calc, function ($a, $b) {
+            return $b['count'] <=> $a['count'];
+        });
+
+        reset($calc);
+        return $calc;
     }
 }
