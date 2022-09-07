@@ -8,11 +8,11 @@
         <Nuxt @noPosts="console.log('no posts')" />
       </div>
     </div>
-    <GlobalElements />
+    <OverlaysWrapper />
   </div>
 </template>
 <script>
-import { defineComponent, computed, useStore } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'LayoutDefault',

@@ -7,7 +7,7 @@
       <Nuxt />
       <PageFooter />
     </div>
-    <GlobalElements />
+    <OverlaysWrapper />
   </div>
 </template>
 <script>

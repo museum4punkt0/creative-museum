@@ -8,7 +8,7 @@
         <Nuxt />
       </div>
     </div>
-    <GlobalElements />
+    <OverlaysWrapper />
   </div>
 </template>
 <script>
