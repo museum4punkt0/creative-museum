@@ -29,7 +29,7 @@
       leave-to-class="bottom-full lg:bottom-auto lg:opacity-0"
     >
       <component
-        :is="modalType"
+        :is="`Utilities${modalType}`"
         v-if="showAdditionalOptions"
         class="flex flex-col h-full"
         :closable="modalType === 'SlideUp' ? true : false"
@@ -112,7 +112,7 @@ export default defineComponent({
     const additionalPageContent = ref('')
 
     const modalType = computed(() => {
-      return 'Utilities' + additionalPage.value ? 'Modal' : 'SlideUp'
+      return additionalPage.value ? 'Modal' : 'SlideUp'
     })
 
     const { $auth } = useContext()

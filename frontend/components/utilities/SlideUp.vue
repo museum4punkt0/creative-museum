@@ -13,7 +13,9 @@
         class="close-btn block h-4 w-4 absolute right-4 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
         @click.prevent="$emit('closeModal')"
       ></button>
-      <slot></slot>
+      <div class="overflow-y-scroll max-h-screen h-full flex flex-col flex-1">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
