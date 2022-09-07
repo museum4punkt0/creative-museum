@@ -26,7 +26,7 @@
       </NuxtLink>
       <a
         v-if="$auth.loggedIn"
-        class="block mb-4"
+        class="block mb-4 cursor-pointer"
         @click.prevent="showProfileUpdate"
         >{{ $t('navigation.profile.settings') }}</a
       >

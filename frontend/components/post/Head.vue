@@ -16,7 +16,7 @@
       </div>
     </NuxtLink>
     <div @click.prevent="onShowAdditionalOptions">
-      <ThreeDots
+      <UtilitiesThreeDots
         class="cursor-pointer"
         :text-color="post.type === 'playlist' ? textColor : 'white'"
       />
@@ -42,7 +42,6 @@
               <button
                 v-if="!post.bookmarked"
                 @click="addOrRemoveBookmark(post.id)"
-                type="button"
               >
                 {{ $t('post.actions.addBookmark') }}
               </button>
@@ -51,7 +50,6 @@
               <button
                 v-if="post.bookmarked"
                 @click="addOrRemoveBookmark(post.id)"
-                type="button"
               >
                 {{ $t('post.actions.removeBookmark') }}
               </button>
@@ -60,7 +58,6 @@
               <button
                 class="block btn-right"
                 @click="openPlaylistSelectionModal"
-                type="button"
               >
                 {{ $t('post.actions.addToPlaylist') }}
               </button>
@@ -115,7 +112,7 @@ export default defineComponent({
     const additionalPageContent = ref('')
 
     const modalType = computed(() => {
-      return additionalPage.value ? 'Modal' : 'SlideUp'
+      return 'Utilities' + additionalPage.value ? 'Modal' : 'SlideUp'
     })
 
     const { $auth } = useContext()

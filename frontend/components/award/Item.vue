@@ -24,9 +24,9 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <Modal v-if="awardDetailOpen === true" @closeModal="awardDetailOpen = false">
+      <UtilitiesModal v-if="awardDetailOpen === true" @closeModal="awardDetailOpen = false">
         <AwardDetail :award="award" @closeAwardDetail="awardDetailOpen = false; $emit('awardsChange')" />
-      </Modal>
+      </UtilitiesModal>
     </transition>
   </div>
 </template>
@@ -56,8 +56,4 @@ export default defineComponent({
     }
   }
 })
-</script>
->
-
-
 </script>

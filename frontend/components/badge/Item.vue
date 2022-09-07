@@ -21,9 +21,9 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <Modal v-if="badgeDetailOpen === true" @closeModal="badgeDetailOpen = false">
+      <UtilitiesModal v-if="badgeDetailOpen === true" @closeModal="badgeDetailOpen = false">
         <badgeDetail :badge="badge" @closebadgeDetail="badgeDetailOpen = false; $emit('awardsChange')" />
-      </Modal>
+      </UtilitiesModal>
     </transition>
   </div>
 </template>
@@ -52,8 +52,4 @@ export default defineComponent({
     }
   }
 })
-</script>
->
-
-
 </script>

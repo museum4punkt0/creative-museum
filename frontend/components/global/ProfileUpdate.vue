@@ -1,5 +1,5 @@
 <template>
-  <Modal v-if="showProfileUpdate" :closable="true" @closeModal="showProfileUpdate = false">
+  <UtilitiesModal v-if="showProfileUpdate" :closable="true" @closeModal="showProfileUpdate = false">
     <div class="flex flex-col flex-1 h-full justify-between px-6 pb-6">
       <div class="page-header">
         <a class="back-btn" @click.prevent="showProfileUpdate = false">
@@ -232,23 +232,23 @@
         </div>
       </div>
       <button
-        class="btn-highlight md:self-start mb-12"
+        class="btn-highlight md:self-start mb-12 min-w-xs"
         @click.prevent="save"
       >
         {{ $t('user.profile.self.edit.save') }}
       </button>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col mb-12">
         <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
         <button
-          class="btn-outline md:self-start"
+          class="btn-outline md:self-start min-w-xs"
           @click.prevent="remove"
         >
           {{ $t('user.profile.self.edit.deleteProfile') }}
         </button>
       </div>
     </div>
-  </Modal>
+  </UtilitiesModal>
 </template>
 <script>
   import {
@@ -261,7 +261,6 @@
   import { userApi } from '@/api/user'
 
   export default defineComponent({
-    name: 'UserUpdate',
     components: {
       FileUpload: () => import('vue-upload-component'),
     },

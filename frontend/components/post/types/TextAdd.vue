@@ -16,7 +16,7 @@
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
-        <CountDown
+        <UtilitiesCountDown
           :max-count="100"
           :text="postTitle"
           class="absolute bottom-1 right-2"
@@ -30,7 +30,7 @@
           class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
-        <CountDown
+        <UtilitiesCountDown
           :max-count="1000"
           :text="postBody"
           class="absolute bottom-1 right-2"

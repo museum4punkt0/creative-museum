@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, useContext, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
 
 export default defineComponent({

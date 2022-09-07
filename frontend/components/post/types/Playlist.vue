@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="text-2xl py-2 block" @click.prevent="!post.disableLink && onShowPlaylist()">{{ post.linkedPlaylist.title }}</button>
-    <Modal v-if="showPlaylist" @closeModal="showPlaylist = false">
+    <UtilitiesModal v-if="showPlaylist" @closeModal="showPlaylist = false">
       <div class="flex flex-col flex-1 justify-between">
         <div>
           <div class="page-header px-6">
@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-    </Modal>
+    </UtilitiesModal>
   </div>
 </template>
 <script>

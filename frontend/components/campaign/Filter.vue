@@ -29,7 +29,7 @@
         {{ $t('filter.controversial') }}
       </button>
 
-      <DropDown
+      <UtilitiesDropDown
         v-if="
           campaign &&
           campaign.feedbackOptions &&

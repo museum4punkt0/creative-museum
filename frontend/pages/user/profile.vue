@@ -57,7 +57,7 @@
             </span>
           </a>
 
-          <Modal v-if="showPlaylist > 0 && playlistPosts" @closeModal="showPlaylist = 0">
+          <UtilitiesModal v-if="showPlaylist > 0 && playlistPosts" @closeModal="showPlaylist = 0">
             <div class="flex flex-col flex-1 justify-between">
               <div>
                 <div class="page-header p-6">
@@ -70,7 +70,7 @@
                 </div>
               </div>
             </div>
-          </Modal>
+          </UtilitiesModal>
         </div>
       </div>
     </div>

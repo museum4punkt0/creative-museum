@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="page-header px-6">
-      <button class="back-btn" @click.prevent="abortPost" type="button">
+      <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.audio.headline') }}
       </button>
     </div>

@@ -18,7 +18,7 @@
             :placeholder="$t('post.types.poll.pollTitle')"
             :maxlength="100"
           />
-          <CountDown
+          <UtilitiesCountDown
             :max-count="100"
             :text="question"
             class="absolute bottom-1 right-2"
@@ -32,7 +32,7 @@
             :placeholder="$t('post.types.poll.pollDescription')"
             :maxlength="100"
           />
-          <CountDown
+          <UtilitiesCountDown
             :max-count="100"
             :text="description"
             class="absolute bottom-1 right-2"
@@ -50,7 +50,7 @@
                 class="input-text pr-20"
                 :maxlength="100"
               />
-              <CountDown
+              <UtilitiesCountDown
                 :max-count="100"
                 :text="option.value"
                 class="absolute bottom-1 right-2"

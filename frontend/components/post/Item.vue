@@ -28,7 +28,7 @@
       <p>{{ post.body }}</p>
     </div>
 
-    <SlideUp
+    <UtilitiesSlideUp
       v-if="showFeedbackForm"
       :closable="true"
       @closeModal="showFeedbackForm = false"
@@ -53,7 +53,7 @@
           </div>
         </template>
       </div>
-    </SlideUp>
+    </UtilitiesSlideUp>
   </div>
 </template>
 <script>
