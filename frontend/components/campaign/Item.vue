@@ -10,8 +10,8 @@
           <span class="border border-current rounded-full py-1 px-2">
             {{ $t('duration') }}:
             {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
-            <template v-if="campaign.end && campaign.end !== campaign.start">
-              – {{ $dayjs(campaign.end).format('DD.MM.YYYY') }}
+            <template v-if="campaign.stop && campaign.stop !== campaign.start">
+              – {{ $dayjs(campaign.stop).format('DD.MM.YYYY') }}
             </template>
           </span>
         </div>
