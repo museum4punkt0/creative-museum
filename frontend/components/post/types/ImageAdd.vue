@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
-    <div class="p-6 page-header">
+    <div class="page-header px-6">
       <button class="back-btn" @click.prevent="abortPost" type="button">
         {{ $t('post.types.image.headline') }}
       </button>

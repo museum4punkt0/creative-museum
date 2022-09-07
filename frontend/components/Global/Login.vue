@@ -1,7 +1,7 @@
 <template>
   <div>
     <SlideUp v-if="showLogin" :closable="true" @closeModal="showLogin = false">
-      <div class="page-header p-6">
+      <div class="page-header px-6">
         <a class="back-btn" @click.prevent="showLogin = false">
         {{ $t('globalLogin.header') }}</a>
       </div>

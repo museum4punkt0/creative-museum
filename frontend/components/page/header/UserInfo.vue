@@ -39,10 +39,10 @@
         <Modal v-if="user && !user.username">
           <div class="flex flex-col flex-1 justify-between">
             <div>
-              <h1 class="page-header p-4">
+              <h1 class="page-header px-6">
                 {{ $t('provideUsername.title') }}
               </h1>
-              <div class="px-4 pb-4">
+              <div class="px-6 pb-4">
                 <input
                   v-model="username"
                   type="text"
@@ -51,7 +51,7 @@
                   placeholder="Username*"
                   @keyup="violations = null"
                 />
-                <div class="px-4 py-2 text-red-500" v-for="(violation, key) in violations" :key="key">
+                <div class="px-6 py-2 text-red-500" v-for="(violation, key) in violations" :key="key">
                   {{ $t(`user.violation.${violation.code}`) }}
                 </div>
               </div>

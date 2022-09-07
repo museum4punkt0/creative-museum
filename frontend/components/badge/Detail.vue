@@ -1,6 +1,6 @@
 <template>
   <div :style="styleAttr" class="flex flex-col flex-1 justify-between h-full">
-    <div class="page-header p-6 self-start">
+    <div class="page-header px-6 self-start">
       <a class="back-btn" @click.prevent="$emit('closebadgeDetail')">
         {{ $t('badges.detailHeadline') }}
       </a>

@@ -4,7 +4,7 @@
     <Modal v-if="showPlaylist" @closeModal="showPlaylist = false">
       <div class="flex flex-col flex-1 justify-between">
         <div>
-          <div class="page-header p-6">
+          <div class="page-header px-6">
             <button type="button" class="back-btn" @click.prevent="showPlaylist = false">
               {{ $t('post.types.playlist.button') }}
             </button>

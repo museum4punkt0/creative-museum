@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1">
     <div v-show="step === 1" class="flex flex-col flex-1">
-      <div v-if="headline" class="p-6 page-header">
+      <div v-if="headline" class="page-header px-6">
         <a class="back-btn" @click="backLink">{{ $t('playlist.addTo') }}</a>
       </div>
       <div

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="page-header p-6">
+  <div class="flex flex-col flex-1 h-full">
+    <div class="page-header px-6">
       <NuxtLink :to="localePath('/')" class="back-btn">{{
         $t('tutorial.firstSteps')
       }}</NuxtLink>
