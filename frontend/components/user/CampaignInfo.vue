@@ -9,7 +9,7 @@
           />
         </div>
         <p class="text-2xl">{{ $auth.user.fullName }}</p>
-        <p class="highlight-text text-lg mb-3">@{{ $auth.user.username }}</p>
+        <p v-if="$auth.user.achievements.length" class="highlight-text text-lg mb-3">{{ $auth.user.achievements[0].badge.title }} @{{ $auth.user.username }}</p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}
         </p>

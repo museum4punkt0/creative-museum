@@ -88,12 +88,12 @@
       </client-only>
 
       <div class="mb-12">
-        <h1 class="text-2xl mt-6">{{ fullName }}</h1>
-        <p class="highlight-text mb-4">{{ title }} @{{ user.username }}</p>
+        <h1 class="text-2xl mt-6">{{ user.fullName }}</h1>
+        <p v-if="user.achievements.length" class="highlight-text">{{ user.achievements[0].badge.title }} @{{ user.username }}</p>
         <textarea
           v-model="description"
           type="text"
-          class="input-text flex-grow"
+          class="input-text flex-grow mt-4"
           :placeholder="$t('user.profile.self.edit.placeholder.description')"
           :maxlength="1000"
         ></textarea>
@@ -315,7 +315,6 @@
       const user = computed(() => store.state.auth.user)
       const { $config } = useContext()
 
-      const title = ref('Stammgast')
       const description = ref(user.value.description)
       const firstName = ref(user.value.firstName)
       const lastName = ref(user.value.lastName)
@@ -397,7 +396,6 @@
         lastName,
         email,
         username,
-        title,
         inputFile,
         inputFilter,
         save,

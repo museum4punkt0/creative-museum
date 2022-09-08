@@ -22,7 +22,7 @@
         <h1 class="text-2xl">
           {{ userData.fullName }}
         </h1>
-        <p class="highlight-text mb-2">@{{ userData.username }}</p>
+        <p v-if="userData.achievements.length" class="highlight-text mb-3">{{ userData.achievements[0].badge.title }} @{{ userData.username }}</p>
         <p>{{ userData.description }}</p>
       </div>
 
