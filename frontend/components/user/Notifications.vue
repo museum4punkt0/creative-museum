@@ -1,18 +1,16 @@
 <template>
-  <div>
+  <div v-if="notifications">
     <div class="mb-10">
       <p class="text-2xl">
         {{ $t('campaign.latestPosts') }}
       </p>
     </div>
-    <div class="mb-10">
 
-      <div v-for="(notificationGroup, key) in notificationsGrouped" :key="key">
+      <div v-for="(notificationGroup, key) in notificationsGrouped" :key="key" class="mb-10">
         <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
         <NotificationItem v-for="notification in notificationGroup" :key="notification.id" :notification="notification" />
       </div>
 
-    </div>
   </div>
 </template>
 <script>
