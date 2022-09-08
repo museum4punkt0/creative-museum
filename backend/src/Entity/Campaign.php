@@ -105,7 +105,7 @@ class Campaign
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write', 'awards:read', 'post:read', 'user:me:read', 'awarded:read', 'badge:read', 'playlist:read', 'users:read'])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write', 'awards:read', 'post:read', 'user:me:read', 'awarded:read', 'badge:read', 'playlist:read', 'users:read', 'notifications:read'])]
     private $color;
 
     #[ORM\Column(type: 'boolean')]

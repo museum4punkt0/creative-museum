@@ -19,6 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 #[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact', 'campaign' => 'exact', 'receiver' => 'exact'])]
 #[ApiResource(
+    order: ["created" => "DESC"],
     collectionOperations: [
         'get',
     ],
@@ -51,10 +52,6 @@ class Notification
     #[Groups(['notifications:read', 'notification:write'])]
     private $post;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['notifications:read', 'notification:write'])]
-    private $color;
-
     #[ORM\Column(type: 'boolean')]
     #[Groups(['notifications:read', 'notification:write'])]
     private $silent = false;
@@ -84,9 +81,11 @@ class Notification
     private $badge;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['notifications:read'])]
     private $awardGiver;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['notifications:read'])]
     private $awardWinner;
 
     public function getId(): ?int
@@ -126,18 +125,6 @@ class Notification
     public function setPost(?Post $post): self
     {
         $this->post = $post;
-
-        return $this;
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(?string $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }

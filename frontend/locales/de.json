@@ -286,20 +286,71 @@
       }
     }
   },
+  "today": "Heute",
   "notifications": {
-    "1662032613": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampange {$campaign}, erhalten!",
-    "1662032722": "Du hast {points} Punkte erhalten, weil du einen Award in der Kampange {campaign} erhalten hast!",
-    "1662032767": "Du hast {points} Punkte für deinen Kommentar in der Kampange {campaign} erhalten!",
-    "1662032840": "Du hast {points} Punkte für dein Feedback in der Kampange {campaign} erhalten!",
-    "1662032913": "Du hast {points} Punkte für deinen Login in der Kampange {campaign} erhalten!",
-    "1662032958": "Du hast {points} Punkte für deinen Post in der Kampange {campaign} erhalten!",
-    "1662033166": "Du hast {points} Punkte für deine Registrierung in der Kampange {campaign} erhalten!",
-    "1662033222": "Du hast {$points} Punkte für deinen Upvote in der Kampange {campaign} erhalten!",
-    "1662033266": "Neuer Post in der Kampange {campaign} von {user}!",
-    "1662033328": "Du hast das Badge {badge} erhalten!",
-    "1662033370": "Neue Kampange {campaign} verfügbar!",
-    "1662033414": "Sie haben den Award {award} von {awardGiver} erhalten!",
-    "1662033487": "Herzlich Willkommen im Creative Museum!",
-    "1662033562": "Danke, wir kümmern uns und prüfen den Post."
+    "1662032613": {
+      "title": "{award}",
+      "text": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampange {campaign}, erhalten!"
+    },
+    "1662032722": {
+      "title": "{award}",
+      "text": "Du hast {points} Punkte erhalten, weil du einen Award in der Kampange {campaign} erhalten hast!"
+    },
+    "1662032767": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Kommentar in der Kampange {campaign} erhalten!"
+    },
+    "1662032840": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für dein Feedback in der Kampange {campaign} erhalten!"
+    },
+    "1662032913": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Login in der Kampange {campaign} erhalten!"
+    },
+    "1662032958": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Beitrag in der Kampange {campaign} erhalten!"
+    },
+    "1662033166": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deine Registrierung in der Kampange {campaign} erhalten!"
+    },
+    "1662033222": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Upvote in der Kampange {campaign} erhalten!"
+    },
+    "1662033266": {
+      "title": "###TBD###",
+      "text": "Neuer Beitrag in der Kampange {campaign} von @{author}!"
+    },
+    "1662033328": {
+      "title": "{badge}",
+      "text": "Du hast das Badge {badge} erhalten!"
+    },
+    "1662033370": {
+      "title": "Badisches Landesmuseum",
+      "text": "Neue Kampange {campaign} verfügbar!"
+    },
+    "1662033414": {
+      "title": "{award}",
+      "text": "Sie haben den Award {award} von {awardGiver} erhalten!"
+    },
+    "1662033487": {
+      "title": "Badisches Landesmuseum",
+      "text": "Herzlich Willkommen im Creative Museum!"
+    },
+    "1662033562": {
+      "title": "Badisches Landesmuseum",
+      "text": "Danke, wir kümmern uns und prüfen den Beitrag."
+    },
+    "1662114392": {
+      "title": "Badisches Landesmuseum",
+      "text": "Einer Deiner Beiträge wird auf Anstößigkeit geprüft!"
+    },
+    "1662114293": {
+      "title": "{award}",
+      "text": "Du hast den Award {award} an {awardWinner} vergeben!"
+    }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mb-12">
+    <div v-if="$auth.loggedIn" class="mb-12">
       <UserNotifications :campaign="campaign" />
     </div>
     <div class="mb-12">

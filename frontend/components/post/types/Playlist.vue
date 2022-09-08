@@ -9,7 +9,7 @@
               {{ $t('post.types.playlist.button') }}
             </button>
           </div>
-          <div class="px-4 pb-4">
+          <div class="px-6 pb-4">
             <PostList v-if="playlist.posts.length" :posts="playlist.posts" source="playlist" class="playlist-items" />
           </div>
         </div>

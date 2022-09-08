@@ -59,7 +59,6 @@ class HandleNotifyAboutAwardedPoints implements MessageHandlerInterface
             ->setText("1662032613")
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
-            ->setColor($campaign->getColor())
             ->setScorePoints($points);
 
         $this->entityManager->persist($pointsNotification);

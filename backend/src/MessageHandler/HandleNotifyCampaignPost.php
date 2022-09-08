@@ -56,7 +56,6 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
         $campaignMembers = $this->campaignMemberRepository->findBy([
             'campaign' => $post->getCampaign()->getId(),
         ]);
-        $campaignColor = $post->getCampaign()->getColor();
 
         foreach ($campaignMembers as $campaignMember) {
             $notification = new Notification();
@@ -64,7 +63,7 @@ class HandleNotifyCampaignPost implements MessageHandlerInterface
                 ->setReceiver($campaignMember->getUser())
                 ->setText("1662033266")
                 ->setPost($post)
-                ->setColor($campaignColor)
+                ->setCampaign($post->getCampaign())
                 ->setSilent(NotificationType::NONE === $campaignMember->getUser()->getNotificationSettings());
             $this->entityManager->persist($notification);
             $this->entityManager->flush();

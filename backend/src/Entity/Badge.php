@@ -76,7 +76,7 @@ class Badge
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['user:me:read', 'badge:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'notifications:read'])]
     private $picture;
 
     public function getId(): ?int
