@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none z-30"></div>
+    <div class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"></div>
     <div
       class="fixed top-14 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"
     >
@@ -17,7 +17,7 @@
           type="button"
           @click.prevent="$emit('closeModal')"
         ></button>
-        <div class="overflow-y-scroll padding-safe max-height-without-header lg:h-full flex flex-col flex-1">
+        <div class="overflow-y-scroll pb-safe max-height-without-header lg:h-full flex flex-col flex-1">
           <slot />
         </div>
       </div>
@@ -42,13 +42,13 @@ export default defineComponent({
     onMounted(() => {
       if (process.client) {
         const body = document.querySelector('body')
-        body.style.height = '100vh'
+        body.classList.add('modal-open')
       }
     })
     onUnmounted(() => {
       if (process.client) {
         const body = document.querySelector('body')
-        body.style.height = 'auto'
+        body.classList.remove('modal-open')
       }
     })
   },

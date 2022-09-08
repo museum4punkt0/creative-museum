@@ -6,7 +6,7 @@
       </button>
     </div>
     <div
-      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-12 md:pb-6 pl-6"
     >
       <div>
         <PlaylistSelection

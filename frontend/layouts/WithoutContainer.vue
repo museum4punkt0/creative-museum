@@ -1,6 +1,6 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
-    <div class="" w:overflow="x-hidden">
+    <div class="overflow-x-hidden page-inner">
       <div class="bg-grey shadow-lg shadow-black/20">
         <PageHeader />
       </div>

@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="page-header px-6">
-      <button class="back-btn" @click.prevent="abortPost" type="button">
+      <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.poll.headline') }}
       </button>
     </div>
 
     <div
-      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
       <div class="flex flex-col flex-grow">
         <div class="relative">

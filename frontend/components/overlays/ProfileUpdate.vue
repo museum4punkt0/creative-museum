@@ -238,7 +238,7 @@
         {{ $t('user.profile.self.edit.save') }}
       </button>
 
-      <div class="">
+      <div class="mb-12 md:mb-0">
         <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
         <button
           class="btn-outline w-full md:w-auto md:min-w-xs"
@@ -279,7 +279,7 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-1 gap-4 md:(grid-cols-2)">
+      <div class="grid grid-cols-1 gap-4 md:(grid-cols-2) mb-12 md:mb-0">
         <button
           class="btn-highlight w-full md:min-w-xs"
           @click.prevent="showDeleteUser = showProfileUpdate = false"

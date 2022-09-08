@@ -108,7 +108,7 @@
         ref="submitButton"
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full  mb-12 md:mb-0"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
