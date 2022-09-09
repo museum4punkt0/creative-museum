@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, onMounted, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, onMounted, useContext, useStore, computed, watch } from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
@@ -25,12 +25,15 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { getNotifications } = notificationApi()
+    const store = useStore()
+    const { fetchNotifications } = notificationApi()
     const notifications = ref(null)
     const { $dayjs } = useContext()
+
     const today = computed(() => {
       return $dayjs().format('DD.MM.YYYY')
     })
+
     const notificationsGrouped = computed(() => {
       if (notifications.value) {
         const group = {}
@@ -47,22 +50,28 @@ export default defineComponent({
       }
     })
 
-
-    onMounted(async () => {
-      await fetchNotifications()
+    watch(() => store.getters.notificationsUpdated, async function(newVal) {
+      if (newVal === false) {
+        await getNotifications()
+      }
     })
 
-    async function fetchNotifications() {
-      notifications.value = await getNotifications(
+    onMounted(async () => {
+      await getNotifications()
+    })
+
+    async function getNotifications() {
+      notifications.value = await fetchNotifications(
         props.campaign ? props.campaign.id : null
       )
+      store.dispatch('updatedNotifications')
     }
 
     return {
       today,
       notifications,
       notificationsGrouped,
-      fetchNotifications,
+      getNotifications,
     }
   },
 })

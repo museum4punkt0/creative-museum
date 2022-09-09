@@ -3,7 +3,7 @@ import { useContext } from '@nuxtjs/composition-api'
 export const notificationApi = () => {
   const { $auth, $api } = useContext()
 
-  const getNotifications = async (campaign) => {
+  const fetchNotifications = async (campaign) => {
     if (campaign) {
       return await $api.get(`notifications?campaign=${campaign}&receiver=${$auth.user.id}`)
     }
@@ -12,6 +12,6 @@ export const notificationApi = () => {
   }
 
   return {
-    getNotifications,
+    fetchNotifications,
   }
 }

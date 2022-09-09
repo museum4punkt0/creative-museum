@@ -9,7 +9,8 @@ export const state = () => ({
   newPostOnCampaign: 0,
   showLogin: false,
   showAddModal: false,
-  showProfileUpdate: false
+  showProfileUpdate: false,
+  notificationsUpdated: false
 })
 
 export const mutations = {
@@ -57,6 +58,12 @@ export const mutations = {
   HIDE_PROFILE_UPDATE(state) {
     state.showProfileUpdate = false
   },
+  UPDATE_NOTIFICATIONS(state) {
+    state.notificationsUpdated = false
+  },
+  UPDATED_NOTIFICATIONS(state) {
+    state.notificationsUpdated = true
+  }
 }
 
 export const actions = {
@@ -106,6 +113,12 @@ export const actions = {
   hideProfileUpdate({ commit }) {
     commit('HIDE_PROFILE_UPDATE')
   },
+  updateNotifications({ commit }) {
+    commit('UPDATE_NOTIFICATIONS')
+  },
+  updatedNotifications({ commit }) {
+    commit('UPDATED_NOTIFICATIONS')
+  }
 }
 
 export const getters = {
@@ -127,4 +140,7 @@ export const getters = {
   showProfileUpdate(state) {
     return state.showProfileUpdate
   },
+  notificationsUpdated(state) {
+    return state.notificationsUpdated
+  }
 }

@@ -1,4 +1,4 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useContext, useStore } from '@nuxtjs/composition-api'
 
 export const userApi = () => {
   const { $api, $auth } = useContext()
@@ -16,7 +16,6 @@ export const userApi = () => {
     })
     return res
   }
-
 
   async function fetchUser(uuid) {
     const res = await $api.get(
