@@ -1,14 +1,8 @@
 <template>
   <div>
-    <div v-if="$auth.loggedIn" class="mb-12">
-      <UserNotifications :campaign="campaign" />
-    </div>
-    <div class="mb-12">
-      <AwardList :campaign="campaign" />
-    </div>
-    <div class="mb-12">
-      <BadgeList :campaign="campaign" />
-    </div>
+    <UserNotifications v-if="$auth.loggedIn" :campaign="campaign" />
+    <AwardList :campaign="campaign" />
+    <BadgeList :campaign="campaign" />
   </div>
 </template>
 <script>

@@ -158,7 +158,7 @@
       <div class="mb-12">
         <h2 class="text-2xl">{{ $t('user.profile.self.edit.notifications') }}</h2>
         <p class="highlight-text text-sm mt-4 mb-3">
-          Persönliche Benachrichtigungen
+          {{ $t('user.profile.self.edit.personalNotifications') }}
         </p>
         <div class="inline-block">
           <div class="toggle flex flex row overflow-hidden">
@@ -174,7 +174,7 @@
               <label
                 for="persNotifyOn"
                 class="px-3 inline-block leading-loose transition transition-colors duration-300"
-                >Ja</label
+                >{{ $t('yes') }}</label
               >
             </div>
             <div class="toggle__item">
@@ -188,14 +188,14 @@
               <label
                 for="persNotifyOff"
                 class="px-3 inline-block leading-loose transition transition-colors duration-300"
-                >Nein</label
+                >{{ $t('no') }}</label
               >
             </div>
           </div>
         </div>
 
         <p class="highlight-text text-sm mt-3 mb-3">
-          Creative Museum Benachrichtigungen
+          {{  $t('user.profile.self.edit.cmNotifications') }}
         </p>
         <div class="inline-block">
           <div class="toggle flex flex-row overflow-hidden">
@@ -210,7 +210,7 @@
               <label
                 for="globalNotifyOn"
                 class="px-3 inline-block leading-loose transition transition-colors duration-300"
-                >Ja</label
+                >{{ $t('yes') }}</label
               >
             </div>
             <div class="toggle__item">
@@ -225,7 +225,7 @@
               <label
                 for="globalNotifyOff"
                 class="px-3 inline-block leading-loose transition transition-colors duration-300"
-                >Nein</label
+                >{{ $t('no') }}</label
               >
             </div>
           </div>

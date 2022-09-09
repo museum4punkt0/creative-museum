@@ -1,5 +1,5 @@
 <template>
-  <div v-if="(availableAwards.length || unavailableAwards.length) && (!campaign || campaign.active)">
+  <div v-if="(availableAwards.length || unavailableAwards.length) && (!campaign || campaign.active)" class="mb-12">
     <div class="flex flex-row justify-between mb-10">
       <span class="text-2xl">{{ $t('campaign.awards') }}</span>
     </div>
@@ -16,7 +16,7 @@
     </div>
     <div v-if="unavailableAwards.length" class="mb-6">
       <div class="text-$highlight text-sm mb-2">
-        {{ $t('awards.unavailable') }}
+        {{ $auth.loggedIn ? $t('awards.unavailable') : $t('awards.loginToReceiveAwards')}}
       </div>
       <AwardItem
         v-for="(award, key) in unavailableAwards"
@@ -73,10 +73,6 @@ export default defineComponent({
 
      async function fetchAllAwards() {
 
-      if (!$auth.loggedIn) {
-        return
-      }
-
       availableAwards.value = []
       unavailableAwards.value = []
       giftedAwards.value = []
@@ -95,9 +91,13 @@ export default defineComponent({
               unavailableAwards.value.push(item)
             }
           })
+        } else {
+          unavailableAwards.value = response
         }
       })
-      receivedAwards.value = await fetchAwarded()
+      if ($auth.loggedIn) {
+        receivedAwards.value = await fetchAwarded()
+      }
     }
 
     return {

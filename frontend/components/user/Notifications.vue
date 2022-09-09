@@ -1,5 +1,5 @@
 <template>
-  <div v-if="notifications">
+  <div v-if="notifications && notifications.length > 0"  class="mb-12">
     <div class="mb-10">
       <p class="text-2xl">
         {{ $t('campaign.latestPosts') }}
