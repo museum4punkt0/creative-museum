@@ -1,36 +1,38 @@
 <template>
-  <div :style="styleAttr">
-    <div
-      class="bg-$highlight w-10 h-10 rounded-full mb-4 mr-3 overflow-hidden flex-shrink-0"
-    >
-      <img
-          v-if="notificationPicture"
-          :src="`${backendUrl}/${notificationPicture}`"
-          class="max-w-18 h-auto"
-        />
+  <div class="flex flex-col flex-1 h-full justify-between" :style="styleAttr">
+    <div class="box-shadow mx-6 my-auto">
+      <div
+        class="bg-$highlight w-32 h-32 rounded-full mb-4 overflow-hidden flex-shrink-0 mx-auto"
+      >
+        <img
+            v-if="notificationPicture"
+            :src="`${backendUrl}/${notificationPicture}`"
+            class="max-w-32 h-auto"
+          />
+      </div>
+      <div class="flex flex-col flex-grow">
+        <p class="mb-1">
+          {{
+            $t(`notifications.${notification.text}.title`, {
+              award: notification.award ? notification.award.title : '',
+              badge: notification.badge ? notification.badge.title : ''
+            })
+          }}
+        </p>
+        <p class="text-$highlight text-sm">
+          {{
+            $t(`notifications.${notification.text}.text`, {
+              campaign: notification.campaign.title,
+              points: notification.scorePoints ? notification.scorePoints.toLocaleString() : '',
+              author: notification.post ? notification.post.author.username : '',
+              badge: notification.badge ? notification.badge.title : '',
+              award: notification.award ? notification.award.title : ''
+            })
+          }}
+        </p>
+      </div>
     </div>
-    <div class="flex flex-col flex-grow">
-      <p class="mb-1">
-        {{
-          $t(`notifications.${notification.text}.title`, {
-            award: notification.award ? notification.award.title : '',
-            badge: notification.badge ? notification.badge.title : ''
-          })
-        }}
-      </p>
-      <p class="text-$highlight text-sm">
-        {{
-          $t(`notifications.${notification.text}.text`, {
-            campaign: notification.campaign.title,
-            points: notification.scorePoints ? notification.scorePoints.toLocaleString() : '',
-            author: notification.post ? notification.post.author.username : '',
-            badge: notification.badge ? notification.badge.title : '',
-            award: notification.award ? notification.award.title : ''
-          })
-        }}
-      </p>
-      <button @click.prevent="markNotificationAsViewed">Close</button>
-    </div>
+    <button class="btn-outline m-6" @click.prevent="markNotificationAsViewed">{{ $t('close') }}</button>
   </div>
 </template>
 <script>
