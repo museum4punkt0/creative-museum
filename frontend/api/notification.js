@@ -11,7 +11,20 @@ export const notificationApi = () => {
     return await $api.get(`notifications?receiver=${$auth.user.id}`)
   }
 
+  const fetchUnviewedNotifications = async () => {
+    return await $api.get(`notifications?viewed=0&receiver=${$auth.user.id}`)
+  }
+
+  const updateNotificationAsViewed = async (notificationId) => {
+    return await $api.patch(`notifications/${notificationId}`, {
+      receiver: `/v1/users/${$auth.user.uuid}`,
+      viewed: true
+    })
+  }
+
   return {
     fetchNotifications,
+    fetchUnviewedNotifications,
+    updateNotificationAsViewed
   }
 }

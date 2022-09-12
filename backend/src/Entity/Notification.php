@@ -37,6 +37,7 @@ class Notification
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['notifications:read'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
