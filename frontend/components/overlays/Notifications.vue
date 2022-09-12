@@ -8,7 +8,7 @@
       leave-to-class="opacity-0"
     >
       <UtilitiesModal>
-        <OverlaysNotificationItem v-for="notification in notifications" :key="notification.id" :notification="notification" @refetchNotifications="getNotifications" />
+        <OverlaysNotificationItem :notification="notifications[0]" @refetchNotifications="getNotifications" />
       </UtilitiesModal>
     </transition>
   </div>
