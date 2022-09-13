@@ -62,6 +62,14 @@
                 {{ $t('post.actions.addToPlaylist') }}
               </button>
             </li>
+            <li v-if="( $auth.loggedIn && $auth.user ) && ($auth.user.uuid === post.author.uuid)" class="my-6">
+              <button
+                class="block"
+                @click="showDeleteDialog"
+              >
+                {{ $t('post.actions.delete.button') }}
+              </button>
+            </li>
           </ul>
         </div>
         <div v-if="additionalPage" class="flex flex-col flex-1 items-stretch">
@@ -75,6 +83,23 @@
               @createPlaylist="addPostToNewPlaylist"
               @selectPlaylist="addPostToPlaylist"
             />
+          </div>
+          <div
+            v-if="additionalPageContent === 'deleteDialog'"
+            class="flex flex-col flex-1 h-full justify-between"
+          >
+            <div>
+              <p class="m-6 text-lg">{{ $t('post.actions.delete.confirmation') }}</p>
+            </div>
+            <div class="mx-6 mb-6">
+              <button
+                class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
+                @click.prevent="deletePost"
+              >
+              {{ $t('post.actions.delete.button')}}
+              </button>
+              <button class="btn-outline w-full" @click.prevent="additionalPageContent = ''; additionalPage = false">{{ $t('close') }}</button>
+            </div>
           </div>
         </div>
       </component>
@@ -102,8 +127,12 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: [
+    'toggleBookmarkState',
+    'postDeleted'
+  ],
   setup(props, context) {
-    const { toggleBookmark, addToPlaylist, createPlaylistWithPost } = postApi()
+    const { toggleBookmark, addToPlaylist, createPlaylistWithPost, deletePostById } = postApi()
 
     const store = useStore()
 
@@ -119,7 +148,7 @@ export default defineComponent({
 
     async function addOrRemoveBookmark(postId) {
       await toggleBookmark(postId)
-      context.emit('toggle-bookmark-state', postId)
+      context.emit('toggleBookmarkState', postId)
     }
 
     function openPlaylistSelectionModal() {
@@ -149,16 +178,30 @@ export default defineComponent({
       }
     }
 
+    function showDeleteDialog() {
+      additionalPageContent.value = 'deleteDialog'
+      additionalPage.value = true
+    }
+
+    async function deletePost() {
+      await deletePostById(props.post.id)
+      context.emit('postDeleted')
+      additionalPageContent.value = ''
+      additionalPage.value = false
+    }
+
     return {
       showAdditionalOptions,
       additionalPage,
       additionalPageContent,
       modalType,
+      showDeleteDialog,
       addOrRemoveBookmark,
       openPlaylistSelectionModal,
       addPostToPlaylist,
       addPostToNewPlaylist,
-      onShowAdditionalOptions
+      onShowAdditionalOptions,
+      deletePost
     }
   },
 })

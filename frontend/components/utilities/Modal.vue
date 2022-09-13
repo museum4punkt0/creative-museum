@@ -28,7 +28,7 @@
 import {
   defineComponent,
   onMounted,
-  onUnmounted,
+  onUnmounted
 } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {

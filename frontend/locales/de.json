@@ -159,6 +159,10 @@
           "submitButton": "Playlist erstellen",
           "placeholder": "Name der Playlist"
         }
+      },
+      "delete": {
+        "button": "Beitrag löschen",
+        "confirmation": "Beitrag wirklich löschen?"
       }
     },
     "errors": {

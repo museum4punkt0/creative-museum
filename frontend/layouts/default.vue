@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <OverlaysWrapper keep-alive />
+    <OverlaysWrapper />
   </div>
 </template>
 <script>

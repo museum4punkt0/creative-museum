@@ -242,6 +242,10 @@ export const postApi = () => {
     return response
   }
 
+  const deletePostById = async (postId) => {
+    return await $api.delete(`posts/${postId}`)
+  }
+
   return {
     fetchPost,
     toggleBookmark,
@@ -260,5 +264,6 @@ export const postApi = () => {
     votePollOption,
     fetchUserPosts,
     fetchUserBookmarks,
+    deletePostById
   }
 }
