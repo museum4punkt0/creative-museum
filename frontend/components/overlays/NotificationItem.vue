@@ -11,7 +11,7 @@
           />
       </div>
       <div class="flex flex-col flex-grow">
-        <p class="mb-1">
+        <p v-if="notification.text"  class="mb-1">
           {{
             $t(`notifications.${notification.text}.title`, {
               award: notification.award ? notification.award.title : '',
@@ -19,7 +19,7 @@
             })
           }}
         </p>
-        <p class="text-$highlight text-sm">
+        <p v-if="notification.text" class="text-$highlight text-sm">
           {{
             $t(`notifications.${notification.text}.text`, {
               campaign: notification.campaign.title,
