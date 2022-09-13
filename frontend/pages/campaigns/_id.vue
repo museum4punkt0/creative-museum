@@ -9,7 +9,15 @@
       <div class="lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead v-if="campaign" :campaign="campaign" />
-          <button v-if="newPostsAvailable" class="btn-outline mx-auto px-6" @click.prevent="showNewPosts">{{ $t('campaign.newPosts') }}</button>
+          <transition
+            enter-active-class="duration-300 ease-out opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="duration-200 ease-in"
+            leave-class="opacity-100"
+            leave-to-class="opacity-0"
+          >
+            <button v-if="newPostsAvailable" class="btn-outline mx-auto px-6" @click.prevent="showNewPosts">{{ $t('campaign.newPosts') }}</button>
+          </transition>
           <PostList v-if="posts && posts.length" :posts="posts" source="campaign" />
           <UtilitiesLoadingIndicator v-else-if="!posts" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           <div v-else><button class="btn-highlight w-full mt-10" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
