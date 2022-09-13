@@ -232,7 +232,8 @@
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards",
-    "noMorePosts": "Keine weiteren Beiträge."
+    "noMorePosts": "Keine weiteren Beiträge.",
+    "newPosts": "Neue Beiträge"
   },
   "awards": {
     "available": "Verfügbare Awards",
