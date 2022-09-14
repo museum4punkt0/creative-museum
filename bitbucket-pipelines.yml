@@ -18,7 +18,7 @@ pipelines:
                     script:
                         - cd frontend
                         - touch .env
-                        - echo BACKEND_URL=$API_STAGING_URL >> .env && echo IAM_URL=$IDP_STAGING_URL >> .env && echo BASE_URL=$STAGING_URL >> .env
+                        - echo BACKEND_URL=$API_STAGING_URL >> .env && echo IAM_URL=$IDP_STAGING_URL >> .env && echo BASE_URL=$STAGING_URL >> .env && echo USER_CENTRICS_ID=$USER_CENTRICS_ID >> .env
                         - npm ci && npm run build
                     artifacts:
                         - frontend/node_modules/**
