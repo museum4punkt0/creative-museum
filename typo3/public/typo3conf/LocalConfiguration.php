@@ -36,6 +36,12 @@ return [
             'loginLogo' => '',
             'loginLogoAlt' => '',
         ],
+        'creativemuseum' => [
+            'baseUrl' => 'https://backend.creative-museum.ddev.site',
+            'clientId' => 'bdlm_cm',
+            'clientSecret' => 'e14a3e0e80a56d02cfda808efc10466a1109c61dd9429b3d13170987bc541a104f44ddf1bcd5448fa6ff980559816075b4a518715ab17a41b701c68d9cbda3f8',
+            'tokenUrl' => 'https://ddev-identity-manager-web/token',
+        ],
         'extensionmanager' => [
             'automaticInstallation' => '1',
             'offlineMode' => '0',

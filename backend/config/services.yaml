@@ -45,6 +45,13 @@ services:
         tags:
             - { name: serializer.normalizer, priority: 100}
 
+    App\EventListener\CampaignFeedbackOptionDeleteListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preRemove'
+                entity: 'App\Entity\CampaignFeedbackOption'
+
     campaign.date_filter:
         parent: 'api_platform.doctrine.orm.date_filter'
         arguments: [ { dateProperty: ~ } ]

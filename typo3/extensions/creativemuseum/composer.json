@@ -1,0 +1,34 @@
+{
+    "name": "jwied/creativemuseum",
+    "type": "typo3-cms-extension",
+    "description": "Backend Administration module - Creative Museum",
+    "version": "1.0.1",
+    "keywords": [
+      "TYPO3",
+      "extension"
+    ],
+    "authors": [
+      {
+        "name": "Willi Wehmeier",
+        "role": "Developer"
+      }
+    ],
+    "license": [
+      "GPL-2.0-or-later"
+    ],
+    "require": {
+      "typo3/cms-core": "^10.4 || ^11",
+      "league/oauth2-client": "^2.6",
+      "ext-json": "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "JWIED\\Creativemuseum\\": "Classes"
+      }
+    },
+    "extra": {
+      "typo3/cms": {
+        "extension-key": "creativemuseum"
+      }
+    }
+  }

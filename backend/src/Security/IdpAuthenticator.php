@@ -32,6 +32,7 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Component\Uid\Uuid;
 
 class IdpAuthenticator extends AbstractAuthenticator
 {
@@ -121,6 +122,14 @@ class IdpAuthenticator extends AbstractAuthenticator
                     $this->entityManager->flush();
 
                     return $existingUser;
+                }
+
+                if ($token['sub'] === '' && in_array('api', $token['scopes'])) {
+                    $apiUser = new User();
+                    $apiUser->setUuid(Uuid::v6());
+                    $apiUser->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
+
+                    return $apiUser;
                 }
 
                 $provider = new IdpOauthProvider([

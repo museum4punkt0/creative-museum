@@ -1,0 +1,11 @@
+# cat=API; type=string; label=OAuth2 Token URL
+tokenUrl =
+
+# cat=API; type=string; label=Client Identifier
+clientId =
+
+# cat=API; type=string; label=Client Secret
+clientSecret =
+
+# cat=API; type=string; label=API base URL
+baseUrl =
