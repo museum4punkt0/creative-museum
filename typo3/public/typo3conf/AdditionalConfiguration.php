@@ -38,9 +38,14 @@ $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
     ],
     'SYS' => [
       'trustedHostsPattern' => $_ENV['TYPO3_SYS_TRUSTED_HOSTS_PATTERN'],
-      'devIPmask' => $_ENV['TYPO3_SYS_DEV_IPMASK'],
-      'displayErrors' => $_ENV['TYPO3_SYS_DISPLAY_ERRORS'],
-      'exceptionalErrors' => $_ENV['TYPO3_SYS_EXCEPTIONAL_ERRORS'],
     ],
+    'EXTENSIONS' => [
+      'creativemuseum' => [
+        'baseUrl' => $_ENV['TYPO3_EXTENSIONS_CREATIVEMUSEUM_BASE_URL'],
+        'clientId' => $_ENV['TYPO3_EXTENSIONS_CREATIVEMUSEUM_CLIENT_ID'],
+        'clientSecret' => $_ENV['TYPO3_EXTENSIONS_CREATIVEMUSEUM_CLIENT_SECRET'],
+        'tokenUrl' => $_ENV['TYPO3_EXTENSIONS_CREATIVEMUSEUM_TOKEN_URL'],
+      ],
+    ]
   ]
 );
