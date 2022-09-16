@@ -7,7 +7,7 @@
     >
       <NuxtLink id="pageLogo" :to="localePath('/')">
         <Logo
-          class="text-white/50 hover:text-$highlight h-8 w-auto md:h12 ml-5 my-3 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
+          class="text-white/50 hover:text-$highlight h-8 w-auto ml-5 my-3 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
         />
       </NuxtLink>
       <button
