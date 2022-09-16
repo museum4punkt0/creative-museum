@@ -46,7 +46,7 @@ pipelines:
                         - typo3
                     artifacts:
                         - typo3/vendor/**
-                        - typo3/public/typo3
+                        - typo3/public/typo3/**
                         - typo3/public/index.php
 
             - step:
