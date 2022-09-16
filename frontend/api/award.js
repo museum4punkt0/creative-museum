@@ -1,7 +1,8 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useContext, useStore } from '@nuxtjs/composition-api'
 
 export const awardApi = () => {
   const { $api, $auth } = useContext()
+  const store = useStore()
 
   const fetchAwards = async (campaign) => {
 
@@ -27,7 +28,9 @@ export const awardApi = () => {
       award: `/v1/awards/${awardId}`
     })
 
-    await $auth.fetchUser()
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
+
     return response
   }
 

@@ -2,6 +2,8 @@
   "locale": "Deutsch",
   "next": "Weiter",
   "prev": "Zurück",
+  "yes": "Ja",
+  "no": "Nein",
   "submit": "Abschicken",
   "close": "Schließen",
   "till": "bis",
@@ -17,6 +19,19 @@
     "header": "Login",
     "text": "Melde dich an und verdiene Punkte mit deinen Aktionen.",
     "button": "Jetzt anmelden"
+  },
+  "globalProfileUpdate": {
+    "header": "Profil bearbeiten",
+    "deleteUser": {
+      "header": "Profil löschen",
+      "subheader": "Bestätigen Sie bitte die Profillöschung und folgende Konsequenzen.",
+      "options": {
+        "permanent": "Ich möchte alle meine Beiträge und Kommentare permanent löschen.",
+        "anonymize": "Ich stimme zu, dass meine Beiträge anonym erhalten bleiben."
+      },
+      "abort": "Abbrechen",
+      "confirm": "Profil permanent löschen"
+    }
   },
   "provideUsername": {
     "title": "Username festlegen",
@@ -144,6 +159,10 @@
           "submitButton": "Playlist erstellen",
           "placeholder": "Name der Playlist"
         }
+      },
+      "delete": {
+        "button": "Beitrag löschen",
+        "confirmation": "Beitrag wirklich löschen?"
       }
     },
     "errors": {
@@ -158,18 +177,27 @@
   "points": "Punkte",
   "score": "Punktestand",
   "user": {
+    "showProfile": "Profil anzeigen",
     "editProfile": "Profil bearbeiten",
     "yourCurrentScore": "Dein aktueller Punktestand",
     "violation": {
       "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Benutzername bereits vergeben."
     },
     "profile": {
+      "badges": {
+        "headline": "Badges"
+      },
+      "activities": {
+        "headline": "Aktivitäten",
+        "posts": "Beiträge",
+        "bookmarks": "Merkliste",
+        "playlists": "Playlists",
+        "awards": "Awards",
+        "notifications": "Neueste Mitteilungen"
+      },
       "self": {
         "headline": "Guten Tag {firstName}",
-        "notifications": "Neueste Mitteilungen",
-        "awards": "Awards",
         "badges": {
-          "headline": "Badges",
           "points": {
             "scoring": "Du hast {threshold} Punkte gesammelt.",
             "awards": "Du hast {threshold} Awards verliehen.",
@@ -179,10 +207,7 @@
           }
         },
         "activities": {
-          "headline": "Meine Aktivitäten",
-          "posts": "Beiträge",
-          "bookmarks": "Merkliste",
-          "playlists": "Playlists"
+          "headline": "Meine Aktivitäten"
         },
         "edit": {
           "personalData": "Persönliche Einstellungen",
@@ -191,6 +216,8 @@
           "email": "E-Mail",
           "username": "Benutzername",
           "notifications": "Benachrichtigungen",
+          "personalNotifications": "Persönliche Benachrichtigungen",
+          "cmNotifications": "Creative Museum Benachrichtigungen",
           "save": "Änderungen speichern",
           "removal": "Profil löschen",
           "deleteProfile": "Profil löschen",
@@ -205,11 +232,13 @@
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards",
-    "noMorePosts": "Keine weiteren Beiträge."
+    "noMorePosts": "Keine weiteren Beiträge.",
+    "newPosts": "Neue Beiträge"
   },
   "awards": {
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",
+    "loginToReceiveAwards": "Einloggen um Awards zu verdienen",
     "gift": "Verschenken",
     "given": "Award verliehen",
     "giftAward": "Award verschenken",
@@ -267,20 +296,71 @@
       }
     }
   },
+  "today": "Heute",
   "notifications": {
-    "1662032613": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampange {$campaign}, erhalten!",
-    "1662032722": "Du hast {points} Punkte erhalten, weil du einen Award in der Kampange {campaign} erhalten hast!",
-    "1662032767": "Du hast {points} Punkte für deinen Kommentar in der Kampange {campaign} erhalten!",
-    "1662032840": "Du hast {points} Punkte für dein Feedback in der Kampange {campaign} erhalten!",
-    "1662032913": "Du hast {points} Punkte für deinen Login in der Kampange {campaign} erhalten!",
-    "1662032958": "Du hast {points} Punkte für deinen Post in der Kampange {campaign} erhalten!",
-    "1662033166": "Du hast {points} Punkte für deine Registrierung in der Kampange {campaign} erhalten!",
-    "1662033222": "Du hast {$points} Punkte für deinen Upvote in der Kampange {campaign} erhalten!",
-    "1662033266": "Neuer Post in der Kampange {campaign} von {user}!",
-    "1662033328": "Du hast das Badge {badge} erhalten!",
-    "1662033370": "Neue Kampange {campaign} verfügbar!",
-    "1662033414": "Sie haben den Award {award} von {awardGiver} erhalten!",
-    "1662033487": "Herzlich Willkommen im Creative Museum!",
-    "1662033562": "Danke, wir kümmern uns und prüfen den Post."
+    "1662032613": {
+      "title": "{award}",
+      "text": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampange {campaign}, erhalten!"
+    },
+    "1662032722": {
+      "title": "{award}",
+      "text": "Du hast {points} Punkte erhalten, weil du einen Award in der Kampange {campaign} erhalten hast!"
+    },
+    "1662032767": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Kommentar in der Kampange {campaign} erhalten!"
+    },
+    "1662032840": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für dein Feedback in der Kampange {campaign} erhalten!"
+    },
+    "1662032913": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Login in der Kampange {campaign} erhalten!"
+    },
+    "1662032958": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Beitrag in der Kampange {campaign} erhalten!"
+    },
+    "1662033166": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deine Registrierung in der Kampange {campaign} erhalten!"
+    },
+    "1662033222": {
+      "title": "###TBD###",
+      "text": "Du hast {points} Punkte für deinen Upvote in der Kampange {campaign} erhalten!"
+    },
+    "1662033266": {
+      "title": "###TBD###",
+      "text": "Neuer Beitrag in der Kampange {campaign} von @{author}!"
+    },
+    "1662033328": {
+      "title": "{badge}",
+      "text": "Du hast das Badge {badge} erhalten!"
+    },
+    "1662033370": {
+      "title": "Badisches Landesmuseum",
+      "text": "Neue Kampange {campaign} verfügbar!"
+    },
+    "1662033414": {
+      "title": "{award}",
+      "text": "Sie haben den Award {award} von {awardGiver} erhalten!"
+    },
+    "1662033487": {
+      "title": "Badisches Landesmuseum",
+      "text": "Herzlich Willkommen im Creative Museum!"
+    },
+    "1662033562": {
+      "title": "Badisches Landesmuseum",
+      "text": "Danke, wir kümmern uns und prüfen den Beitrag."
+    },
+    "1662114392": {
+      "title": "Badisches Landesmuseum",
+      "text": "Einer Deiner Beiträge wird auf Anstößigkeit geprüft!"
+    },
+    "1662114293": {
+      "title": "{award}",
+      "text": "Du hast den Award {award} an {awardWinner} vergeben!"
+    }
   }
 }

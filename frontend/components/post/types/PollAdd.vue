@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
-    <div class="page-header p-6">
-      <button class="back-btn" @click.prevent="abortPost" type="button">
+    <div class="page-header px-6">
+      <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.poll.headline') }}
       </button>
     </div>
 
     <div
-      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
       <div class="flex flex-col flex-grow">
         <div class="relative">
@@ -18,7 +18,7 @@
             :placeholder="$t('post.types.poll.pollTitle')"
             :maxlength="100"
           />
-          <CountDown
+          <UtilitiesCountDown
             :max-count="100"
             :text="question"
             class="absolute bottom-1 right-2"
@@ -32,7 +32,7 @@
             :placeholder="$t('post.types.poll.pollDescription')"
             :maxlength="100"
           />
-          <CountDown
+          <UtilitiesCountDown
             :max-count="100"
             :text="description"
             class="absolute bottom-1 right-2"
@@ -50,7 +50,7 @@
                 class="input-text pr-20"
                 :maxlength="100"
               />
-              <CountDown
+              <UtilitiesCountDown
                 :max-count="100"
                 :text="option.value"
                 class="absolute bottom-1 right-2"

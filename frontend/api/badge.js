@@ -1,7 +1,8 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useContext, useStore } from '@nuxtjs/composition-api'
 
 export const badgeApi = () => {
   const { $api, $auth } = useContext()
+  const store = useStore()
 
   const fetchBadges = async (campaign) => {
 
@@ -12,6 +13,9 @@ export const badgeApi = () => {
     } else {
       response = await $api.get('badges?campaign.active=1&order[campaign.start]=asc&order[threshold]=asc')
     }
+
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
   }

@@ -130,7 +130,7 @@ class Post
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read', 'notifications:read'])]
     public $author;
 
     #[ORM\Column(type: 'posttype')]
@@ -138,7 +138,7 @@ class Post
     public PostType $type = PostType::TEXT;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['post:write', 'post:read', 'playlist:read'])]
+    #[Groups(['post:write', 'post:read', 'playlist:read', 'notifications:read'])]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]

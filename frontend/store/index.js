@@ -8,7 +8,10 @@ export const state = () => ({
   currentSortingDirection: 'desc',
   newPostOnCampaign: 0,
   showLogin: false,
-  showAddModal: false
+  showAddModal: false,
+  showProfileUpdate: false,
+  notificationsUpdated: false,
+  splashscreenShown: false
 })
 
 export const mutations = {
@@ -50,6 +53,21 @@ export const mutations = {
   HIDE_LOGIN(state) {
     state.showLogin = false
   },
+  SHOW_PROFILE_UPDATE(state) {
+    state.showProfileUpdate = true
+  },
+  HIDE_PROFILE_UPDATE(state) {
+    state.showProfileUpdate = false
+  },
+  UPDATE_NOTIFICATIONS(state) {
+    state.notificationsUpdated = false
+  },
+  UPDATED_NOTIFICATIONS(state) {
+    state.notificationsUpdated = true
+  },
+  SPLASHSCREEN_SHOWN(state) {
+    state.splashscreenShown = true
+  }
 }
 
 export const actions = {
@@ -93,6 +111,21 @@ export const actions = {
   hideLogin({ commit }) {
     commit('HIDE_LOGIN')
   },
+  showProfileUpdate({ commit }) {
+    commit('SHOW_PROFILE_UPDATE')
+  },
+  hideProfileUpdate({ commit }) {
+    commit('HIDE_PROFILE_UPDATE')
+  },
+  updateNotifications({ commit }) {
+    commit('UPDATE_NOTIFICATIONS')
+  },
+  updatedNotifications({ commit }) {
+    commit('UPDATED_NOTIFICATIONS')
+  },
+  splashscreenShown({ commit }) {
+    commit('SPLASHSCREEN_SHOWN')
+  }
 }
 
 export const getters = {
@@ -111,4 +144,13 @@ export const getters = {
   showLogin(state) {
     return state.showLogin
   },
+  showProfileUpdate(state) {
+    return state.showProfileUpdate
+  },
+  notificationsUpdated(state) {
+    return state.notificationsUpdated
+  },
+  splashscreenShown(state) {
+    return state.splashscreenShown
+  }
 }

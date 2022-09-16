@@ -29,7 +29,7 @@
         {{ $t('filter.controversial') }}
       </button>
 
-      <DropDown
+      <UtilitiesDropDown
         v-if="
           campaign &&
           campaign.feedbackOptions &&
@@ -103,7 +103,10 @@ export default defineComponent({
     }
 
     function toggleRelevanceFilter() {
-      feedbacksDropdown.value.closeDropdown()
+
+      if (feedbacksDropdown.value) {
+        feedbacksDropdown.value.closeDropdown()
+      }
       if (currentSorting.value === 'votestotal') {
         resetFilter()
         return
@@ -115,7 +118,9 @@ export default defineComponent({
     }
 
     function toggleControversialFilter() {
-      feedbacksDropdown.value.closeDropdown()
+      if (feedbacksDropdown.value) {
+        feedbacksDropdown.value.closeDropdown()
+      }
       if (currentSorting.value === 'controversial') {
         resetFilter()
         return
@@ -127,12 +132,16 @@ export default defineComponent({
     }
 
     function resetFilter() {
-      feedbacksDropdown.value.closeDropdown()
+      if (feedbacksDropdown.value) {
+        feedbacksDropdown.value.closeDropdown()
+      }
       context.store.dispatch('setCurrentSortingWithDirection', ['date', 'desc'])
     }
 
     function togglePlaylistFilter() {
-      feedbacksDropdown.value.closeDropdown()
+      if (feedbacksDropdown.value) {
+        feedbacksDropdown.value.closeDropdown()
+      }
       if (currentSorting.value === 'playlist') {
         resetFilter()
         return

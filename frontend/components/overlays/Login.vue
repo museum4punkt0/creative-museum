@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <SlideUp v-if="showLogin" :closable="true" @closeModal="showLogin = false">
-      <div class="page-header p-6">
+  <UtilitiesSlideUp v-if="showLogin" :closable="true" @closeModal="showLogin = false">
+    <div class="flex flex-col flex-1 h-full justify-between">
+      <div class="page-header px-6">
         <a class="back-btn" @click.prevent="showLogin = false">
         {{ $t('globalLogin.header') }}</a>
       </div>
@@ -11,8 +11,8 @@
         </p>
         <button class="btn-highlight w-full" @click.prevent="$auth.login()">{{ $t('globalLogin.button') }}</button>
       </div>
-    </SlideUp>
-  </div>
+    </div>
+  </UtilitiesSlideUp>
 </template>
 <script>
 import { defineComponent, useStore, computed } from '@nuxtjs/composition-api'

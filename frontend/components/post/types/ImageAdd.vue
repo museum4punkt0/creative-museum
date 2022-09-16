@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
-    <div class="p-6 page-header">
+    <div class="page-header px-6">
       <button class="back-btn" @click.prevent="abortPost" type="button">
         {{ $t('post.types.image.headline') }}
       </button>
@@ -69,7 +69,7 @@
           :placeholder="$t('post.placeholder.image.alttext')"
           :maxlength="200"
         />
-        <CountDown
+        <UtilitiesCountDown
           :max-count="200"
           :text="imgAlt"
           class="absolute bottom-1 right-2"
@@ -84,7 +84,7 @@
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
-        <CountDown
+        <UtilitiesCountDown
           :max-count="100"
           :text="postTitle"
           class="absolute bottom-1 right-2"
@@ -98,7 +98,7 @@
           class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
-        <CountDown
+        <UtilitiesCountDown
           :max-count="1000"
           :text="postBody"
           class="absolute bottom-1 right-2"
@@ -108,7 +108,7 @@
         ref="submitButton"
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full  mb-12 md:mb-0"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}

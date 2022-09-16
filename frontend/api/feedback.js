@@ -1,7 +1,8 @@
-import { useContext } from '@nuxtjs/composition-api'
+import { useContext, useStore } from '@nuxtjs/composition-api'
 
 export const feedbackApi = () => {
   const { $api, $auth } = useContext()
+  const store = useStore()
 
   const getOptions = async (campaignId) => {
     return await $api.get(`campaign_feedback_options?campaign=${campaignId}`)
@@ -15,6 +16,7 @@ export const feedbackApi = () => {
     })
 
     $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
   }

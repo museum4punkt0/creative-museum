@@ -1,18 +1,20 @@
 <template>
   <div class="bg-grey h-screen flex flex-col page">
-    <div class="flex-1 overflow-y-auto overflow-x-hidden">
+    <div class="flex-1 overflow-x-hidden page-inner">
       <div class="bg-grey shadow-lg shadow-black/20 sticky z-10 top-0">
         <PageHeader />
       </div>
-      <div class="container p-6 lg:pt-20">
-        <Nuxt @noPosts="console.log('no posts')" />
+      <div class="container px-6 lg:pt-20">
+        <div class="pb-safe">
+          <Nuxt />
+        </div>
       </div>
     </div>
-    <GlobalLogin />
+    <OverlaysWrapper />
   </div>
 </template>
 <script>
-import { defineComponent, computed, useStore } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'LayoutDefault',

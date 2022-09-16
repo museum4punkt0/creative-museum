@@ -3,6 +3,19 @@
   --highlight-contrast: #000000;
 }
 
+body {
+  position: relative;
+
+  &.modal-open {
+    height: 100vh;
+    overflow: hidden;
+    .page-inner {
+      height: 100vh;
+      overflow: hidden;
+    }
+  }
+}
+
 .highlight-text {
   color: var(--highlight);
   transition: all 0.25s ease-in-out;
@@ -144,6 +157,10 @@ h3 {
     inset 3px 3px 8px rgba(0, 0, 0, 0.4);
 }
 
+.box-shadow-small {
+  box-shadow: inset -1px -1px 2px rgba(100, 100, 100, 0.4), inset 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
 .modal {
   @media (min-width: 1024px) {
     @apply bg-grey;
@@ -167,6 +184,9 @@ h3 {
 
 .page-header {
   @apply font-medium text-3xl my-6;
+  button {
+    @apply text-left;
+  }
 }
 
 .add-btn {
@@ -201,7 +221,7 @@ h3 {
 }
 
 .back-btn {
-  @apply relative pl-10;
+  @apply relative pl-10 block;
   &:before {
     @apply content-[''] block absolute w-6 h-[3px] bg-white left-0 top-1/2 transform -translate-y-1/2;
   }
@@ -267,6 +287,7 @@ h3 {
   &__item {
     input[type='radio'] {
       ~ label {
+        cursor: pointer;
         border-radius: 16px;
         margin-left: -3px;
       }
@@ -400,4 +421,12 @@ h3 {
   visibility: visible;
   opacity: 1;
   transition: opacity .15s;
+}
+
+.max-height-without-header {
+  max-height: calc(100vh - 50px);
+}
+
+.pb-safe {
+  padding: env(safe-area-inset-bottom);
 }

@@ -9,7 +9,8 @@
         :post="post"
         class="mb-4"
         :text-color="textColor"
-        @toggle-bookmark-state="$emit('toggle-bookmark-state', post.id)"
+        @toggleBookmarkState="$emit('toggleBookmarkState', post.id)"
+        @postDeleted="$emit('postDeleted')"
       />
       <component :is="componentName" :post="post" class="mb-4" @updatePost="$emit('updatePost', post.id)" />
       <PostFooter
@@ -28,7 +29,7 @@
       <p>{{ post.body }}</p>
     </div>
 
-    <SlideUp
+    <UtilitiesSlideUp
       v-if="showFeedbackForm"
       :closable="true"
       @closeModal="showFeedbackForm = false"
@@ -53,7 +54,7 @@
           </div>
         </template>
       </div>
-    </SlideUp>
+    </UtilitiesSlideUp>
   </div>
 </template>
 <script>
@@ -68,7 +69,10 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['updatePost'],
+  emits: [
+    'updatePost',
+    'postDeleted'
+  ],
   setup(props) {
     const { getOptions, selectOption, getFeedbackResults } = feedbackApi()
 

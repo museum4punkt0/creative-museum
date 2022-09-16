@@ -1,21 +1,30 @@
 import { useContext } from '@nuxtjs/composition-api'
 
 export const notificationApi = () => {
-  const { $api } = useContext()
+  const { $auth, $api } = useContext()
 
-  const getNotifications = async (campaign) => {
-    let response = null
-
+  const fetchNotifications = async (campaign) => {
     if (campaign) {
-      response = await $api.get(`notifications?campaign=${campaign}`)
-    } else {
-      response = await $api.get('notifications')
+      return await $api.get(`notifications?campaign=${campaign}&receiver=${$auth.user.id}`)
     }
 
-    return response
+    return await $api.get(`notifications?receiver=${$auth.user.id}`)
+  }
+
+  const fetchUnviewedNotifications = async () => {
+    return await $api.get(`notifications?viewed=0&receiver=${$auth.user.id}`)
+  }
+
+  const updateNotificationAsViewed = async (notificationId) => {
+    return await $api.patch(`notifications/${notificationId}`, {
+      receiver: `/v1/users/${$auth.user.uuid}`,
+      viewed: true
+    })
   }
 
   return {
-    getNotifications,
+    fetchNotifications,
+    fetchUnviewedNotifications,
+    updateNotificationAsViewed
   }
 }

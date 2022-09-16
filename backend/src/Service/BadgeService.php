@@ -65,5 +65,6 @@ class BadgeService
             ->setBadge($badge)
             ->setUser($user);
         $this->badgedRepository->add($newBadged);
+        $this->em->flush();
     }
 }

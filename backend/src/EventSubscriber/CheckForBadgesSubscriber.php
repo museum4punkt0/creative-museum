@@ -10,28 +10,16 @@ use App\Repository\CampaignMemberRepository;
 use App\Service\BadgeService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Lock\LockFactory;
-use Symfony\Component\Lock\Store\SemaphoreStore;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class CheckForBadgesSubscriber implements EventSubscriberInterface
 {
-
-    private CampaignMemberRepository $campaignMemberRepository;
-
-    private BadgeService $badgeService;
-
-    private MessageBusInterface $bus;
-
     public function __construct(
-        CampaignMemberRepository $campaignMemberRepository,
-        BadgeService $badgeService,
-        MessageBusInterface $bus
-    )
-    {
-        $this->campaignMemberRepository = $campaignMemberRepository;
-        $this->badgeService = $badgeService;
-        $this->bus = $bus;
-    }
+        private readonly CampaignMemberRepository $campaignMemberRepository,
+        private readonly BadgeService $badgeService,
+        private readonly MessageBusInterface $bus,
+        private readonly LockFactory $lockFactory
+    ) {}
 
     /**
      * @return string[]
@@ -45,19 +33,24 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
 
     public function checkForBadges(CheckForBadgesEvent $event)
     {
-        $store = new SemaphoreStore();
-        $factory = new LockFactory($store);
+        $event->stopPropagation();
 
-        $lock = $factory->createLock('check-badges');
+        $lock = $this->lockFactory->createLock(
+            'check-badges-' . $event->getCampaignId() . '-' . $event->getUserId(),
+            300,
+            false
+        );
 
         $i = 0;
-        while (!$lock->acquire() && $i <= 10){
-            usleep(300000);
+        while (!$lock->acquire() && $i <= 5){
+            usleep(100000);
             $i++;
         }
-        if ($i > 10){
+        if ($i > 5){
             return;
         }
+
+        $lock->acquire();
 
         $campaignMember = $this->campaignMemberRepository->findOneBy([
             'user' => $event->getUserId(),

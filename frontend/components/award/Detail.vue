@@ -1,7 +1,7 @@
 <template>
   <div :style="styleAttr" class="flex flex-col flex-1 justify-between h-full">
     <template v-if="mode === 'detail'">
-      <div class="page-header p-6 self-start">
+      <div class="page-header px-6 self-start">
         <a class="back-btn" @click.prevent="$emit('closeAwardDetail')">
           {{ $t('awards.detailHeadline') }}
         </a>
@@ -31,7 +31,7 @@
       </div>
     </template>
     <template v-if="mode === 'giveaway'">
-      <div class="page-header p-6 pb-0">
+      <div class="page-header px-6 pb-0">
         <a class="back-btn" @click.prevent="mode = 'detail'">
           {{ $t('selectProfile') }}
         </a>
@@ -70,7 +70,7 @@
     </template>
     <template v-if="mode === 'giftComplete'">
 
-      <div class="page-header p-6">
+      <div class="page-header px-6">
         <h2>{{ $t('awards.given') }}</h2>
       </div>
       <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">

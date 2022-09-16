@@ -43,8 +43,8 @@ class HandleNotifyAboutNewAwarded implements MessageHandlerInterface
         $winnerNotification = new Notification();
         $winnerNotification
             ->setReceiver($awarded->getWinner())
+            ->setAwardGiver($awarded->getGiver())
             ->setText("1662033414")
-            ->setColor($awarded->getAward()->getCampaign()->getColor())
             ->setSilent(NotificationType::NONE === $awarded->getWinner()->getNotificationSettings())
             ->setAward($awarded->getAward());
 
@@ -53,8 +53,8 @@ class HandleNotifyAboutNewAwarded implements MessageHandlerInterface
         $giverNotification = new Notification();
         $giverNotification
             ->setReceiver($awarded->getGiver())
+            ->setAwardWinner($awarded->getWinner())
             ->setText("1662114293")
-            ->setColor($awarded->getAward()->getCampaign()->getColor())
             ->setSilent(NotificationType::NONE === $awarded->getGiver()->getNotificationSettings())
             ->setAward($awarded->getAward());
         $this->entityManager->persist($giverNotification);

@@ -17,60 +17,77 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['silent' => 'exact', 'viewed' => 'exact', 'campaign' => 'exact', 'receiver' => 'exact'])]
 #[ApiResource(
+    order: ["created" => "DESC"],
     collectionOperations: [
         'get',
     ],
+    normalizationContext: ['groups' => ['notifications:read']],
+    denormalizationContext: ['groups' => ['notification:write']],
     itemOperations: [
         'get',
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.receiver == user and previous_object.receiver == user)"],
         'patch' => ['normalization_context' => ['groups' => ['patch']]],
     ],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['campaign' => 'exact', 'receiver' => 'exact'])]
 #[ORM\HasLifecycleCallbacks]
 class Notification
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['notifications:read'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $receiver;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $text;
 
     #[ORM\ManyToOne(targetEntity: Post::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $post;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $color;
-
     #[ORM\Column(type: 'boolean')]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $silent = false;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['patch'])]
+    #[Groups(['patch', 'notifications:read', 'notification:write'])]
     private $viewed = false;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $campaign;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $scorePoints;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $created;
 
     #[ORM\ManyToOne(targetEntity: Award::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $award;
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
+    #[Groups(['notifications:read', 'notification:write'])]
     private $badge;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['notifications:read'])]
+    private $awardGiver;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['notifications:read'])]
+    private $awardWinner;
 
     public function getId(): ?int
     {
@@ -109,18 +126,6 @@ class Notification
     public function setPost(?Post $post): self
     {
         $this->post = $post;
-
-        return $this;
-    }
-
-    public function getColor(): ?string
-    {
-        return $this->color;
-    }
-
-    public function setColor(?string $color): self
-    {
-        $this->color = $color;
 
         return $this;
     }
@@ -206,6 +211,30 @@ class Notification
     public function setBadge(?Badge $badge): self
     {
         $this->badge = $badge;
+
+        return $this;
+    }
+
+    public function getAwardGiver(): ?User
+    {
+        return $this->awardGiver;
+    }
+
+    public function setAwardGiver(?User $awardGiver): self
+    {
+        $this->awardGiver = $awardGiver;
+
+        return $this;
+    }
+
+    public function getAwardWinner(): ?User
+    {
+        return $this->awardWinner;
+    }
+
+    public function setAwardWinner(?User $awardWinner): self
+    {
+        $this->awardWinner = $awardWinner;
 
         return $this;
     }

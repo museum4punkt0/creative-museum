@@ -1,47 +1,7 @@
 <template>
   <div v-if="$auth.loggedIn" class="lg:grid lg:grid-cols-12 lg:gap-4">
     <div class="lg:col-span-3 lg:pr-10">
-      <div class="page-header p-6 md:hidden">
-        <button type="button" class="back-btn" @click.prevent="backButton">
-          {{
-            $t('user.profile.self.headline', { firstName: $auth.user.firstName })
-          }}
-        </button>
-      </div>
-
-      <img
-        v-if="'profilePicture' in $auth.user"
-        :src="`${backendUrl}/${$auth.user.profilePicture.contentUrl}`"
-        class="rounded-full mb-4 h-21 w-21"
-      />
-
-      <h1 class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</h1>
-      <p class="highlight-text mb-2">@{{ $auth.user.username }}</p>
-      <p>{{ $auth.user.description }}</p>
-
-      <NuxtLink
-        to="/user/update"
-        class="btn-primary btn-outline md:self-start mt-10 mb-12"
-      >
-        {{ $t('user.editProfile') }}</NuxtLink
-      >
-
-      <h2 class="text-2xl">{{ $t('points') }}</h2>
-
-      <div
-        v-for="(membership, key) in $auth.user.memberships"
-        :key="key"
-        class="self-stretch md:self-start mt-3 mb-12"
-        :style="`--highlight: ${membership.campaign.color};`"
-      >
-        <div class="text-$highlight text-sm mb-2">
-          {{ membership.campaign.title }}
-        </div>
-        <div class="box-shadow justify-center items-end flex flex-row rounded-full py-2 px-4">
-          <span class="text-2xl mr-2">{{ membership.score.toLocaleString() }}</span>
-          <span>{{ $t('points') }}</span>
-        </div>
-      </div>
+      <SidebarLeft />
     </div>
     <div class="lg:col-span-6 lg:pr-10">
       <div class="flex flex-row content-between">
@@ -55,21 +15,21 @@
           :class="mode === 'posts' ? 'btn-primary' : 'btn-outline'"
           @click.prevent="showPosts"
         >
-          {{ $t('user.profile.self.activities.posts') }}
+          {{ $t('user.profile.activities.posts') }}
         </button>
         <button
           class="px-2 py-1 mr-3 mb-3 rounded-full self-start text-sm"
           :class="mode === 'bookmarks' ? 'btn-primary' : 'btn-outline'"
           @click.prevent="showBookmarks"
         >
-          {{ $t('user.profile.self.activities.bookmarks') }}
+          {{ $t('user.profile.activities.bookmarks') }}
         </button>
         <button
           class="px-2 py-1 mb-3 rounded-full self-start text-sm"
           :class="mode === 'playlists' ? 'btn-primary' : 'btn-outline'"
           @click.prevent="showPlaylists"
         >
-          {{ $t('user.profile.self.activities.playlists') }}
+          {{ $t('user.profile.activities.playlists') }}
         </button>
       </div>
       <div class="relative pb-10 list">
@@ -85,10 +45,32 @@
             @toggle-bookmark-state="removeBookmark"
           />
         </div>
-        <div v-if="mode === 'playlists'">
-          <div v-for="(item, key) in playlists" :key="key">
-            {{ item.title }} ({{ item.postCount }})
-          </div>
+        <div v-if="mode === 'playlists'" class="grid grid-cols-2 gap-6 mt-4">
+          <a
+            v-for="(playlist, key) in playlists"
+            :key="key"
+            class="btn-primary cursor-pointer"
+            @click.prevent="showPlaylist = playlist.id"
+          >
+            <span class="h-30 flex flex-col align-center justify-center">
+              {{ playlist.title }}
+            </span>
+          </a>
+
+          <UtilitiesModal v-if="showPlaylist > 0 && playlistPosts" @closeModal="showPlaylist = 0">
+            <div class="flex flex-col flex-1 justify-between">
+              <div>
+                <div class="page-header p-6">
+                  <button type="button" class="back-btn" @click.prevent="showPlaylist = 0">
+                    {{ playlistPosts.title }}
+                  </button>
+                </div>
+                <div class="px-4 pb-4">
+                  <PostList v-if="playlistPosts" :posts="playlistPosts.posts" source="playlist" class="playlist-items" />
+                </div>
+              </div>
+            </div>
+          </UtilitiesModal>
         </div>
       </div>
     </div>
@@ -105,63 +87,75 @@ import {
   useStore,
   onMounted,
   useContext,
-  useRouter
+  useRouter,
+  watch
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
+import { playlistApi } from '@/api/playlist'
 
 export default defineComponent({
-  name: 'ProfilePage',
-  setup() {
-    const { fetchUserPosts, fetchUserBookmarks } = postApi()
+    name: "ProfilePage",
+    setup() {
+        const { fetchUserPosts, fetchUserBookmarks } = postApi()
+        const { fetchPlaylist } = playlistApi()
+        const mode = ref("posts")
+        const store = useStore()
+        const router = useRouter()
+        const { $config, $auth } = useContext()
+        const posts = ref(null)
+        const playlists = ref(null)
+        const playlistPosts = ref(null)
+        const bookmarks = ref(null)
 
-    const mode = ref('posts')
-    const store = useStore()
-    const router = useRouter()
+        const showPlaylist = ref(0)
 
-    const { $config, $auth } = useContext()
+        if (!$auth.loggedIn) {
+            router.push('/404')
+        }
+        store.dispatch('hideAddButton')
+        store.dispatch('setCurrentCampaign', null)
 
-    const posts = ref(null)
-    const playlists = ref(null)
-    const bookmarks = ref(null)
+        onMounted(async () => {
+            posts.value = await fetchUserPosts($auth.user.id, 1)
+            playlists.value = $auth.user.playlists
+            bookmarks.value = await fetchUserBookmarks()
+        })
 
-    if (!$auth.loggedIn) {
-      router.push('/404')
-    }
+        watch(showPlaylist, (currentValue) => {
+          if (currentValue > 0) {
+            loadPlaylist()
+          }
+        })
 
-    store.dispatch('hideAddButton')
-    store.dispatch('setCurrentCampaign', null)
+        function showPosts() {
+            mode.value = 'posts'
+        }
+        function showBookmarks() {
+            mode.value = 'bookmarks'
+        }
+        function showPlaylists() {
+            mode.value = 'playlists'
+        }
 
-    onMounted(async () => {
-      posts.value = await fetchUserPosts($auth.user.id, 1)
-      playlists.value = $auth.user.playlists
-      bookmarks.value = await fetchUserBookmarks()
-    })
+        async function loadPlaylist() {
+          playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
+        }
 
-    function showPosts() {
-      mode.value = 'posts'
-    }
-
-    function showBookmarks() {
-      mode.value = 'bookmarks'
-    }
-
-    function showPlaylists() {
-      mode.value = 'playlists'
-    }
-
-    function backButton() {}
-
-    return {
-      backButton,
-      mode,
-      showPosts,
-      showBookmarks,
-      showPlaylists,
-      posts,
-      playlists,
-      bookmarks,
-      backendUrl: $config.backendUrl
-    }
-  },
+        function backButton() { }
+        return {
+            backButton,
+            mode,
+            showPlaylist,
+            showPosts,
+            showBookmarks,
+            showPlaylists,
+            loadPlaylist,
+            posts,
+            playlists,
+            playlistPosts,
+            bookmarks,
+            backendUrl: $config.backendUrl
+        };
+    },
 })
 </script>

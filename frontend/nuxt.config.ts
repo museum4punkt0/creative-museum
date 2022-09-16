@@ -7,6 +7,16 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
+    script: [
+      {
+        type: 'application/javascript',
+        id: process.env.USER_CENTRICS_ID,
+        src: 'https://app.usercentrics.eu/latest/main.js',
+        language: 'automatic',
+        'data-version': 'preview',
+        async: true,
+      },
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {

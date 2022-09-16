@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div v-if="$auth.user && 'achievements' in $auth.user" class="flex flex-row justify-between mb-10">
-      <h2 class="text-2xl">{{ $t('user.profile.self.badges.headline') }}</h2>
+  <div v-if="badges && badges.length">
+    <div class="flex flex-row justify-between mb-10">
+      <h2 class="text-2xl">{{ $t('user.profile.badges.headline') }}</h2>
       <button
         v-if="!campaign && $auth.user.achievements.length > 2 || campaign && badgesAndAchievements.length > 2"
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
@@ -33,6 +33,16 @@
       >
         <div v-if="key < 2 || readMore">
           <BadgeItem :badge="badge" :class="achievementIds.includes(badge.id) ? 'opacity-100' : 'opacity-50 hover:opacity-100'" />
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div
+        v-for="(badge, key) in badges"
+        :key="key"
+      >
+        <div v-if="key < 2 || readMore">
+          <BadgeItem :badge="badge" />
         </div>
       </div>
     </div>

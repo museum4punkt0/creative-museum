@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
-    <div class="page-header p-6">
+    <div class="page-header px-6">
       <button class="back-btn" @click.prevent="abortPost" type="button">
         {{ $t('post.types.text.headline') }}
       </button>
     </div>
     <div
-      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
       <div class="relative">
         <input
@@ -16,7 +16,7 @@
           :placeholder="$t('post.placeholder.title')"
           :maxlength="100"
         />
-        <CountDown
+        <UtilitiesCountDown
           :max-count="100"
           :text="postTitle"
           class="absolute bottom-1 right-2"
@@ -30,7 +30,7 @@
           class="input-text flex-grow pr-21"
           :maxlength="1000"
         ></textarea>
-        <CountDown
+        <UtilitiesCountDown
           :max-count="1000"
           :text="postBody"
           class="absolute bottom-1 right-2"

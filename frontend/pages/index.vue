@@ -14,9 +14,9 @@
         </div>
       </div>
     </div>
-    <Modal v-if="tutorialOpen">
+    <UtilitiesModal v-if="tutorialOpen">
       <Tutorial @closeModal="tutorialOpen = false" />
-    </Modal>
+    </UtilitiesModal>
   </div>
 </template>
 <script>
@@ -25,8 +25,7 @@ import {
   useStore,
   ref,
   useContext,
-  onMounted,
-  watch
+  onMounted
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 

@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div class="page-header p-6">
-      <button class="back-btn" @click.prevent="abortPost" type="button">
+  <div class="flex flex-col flex-1 h-full">
+    <div class="page-header px-6">
+      <button class="back-btn" @click.prevent="abortPost">
         {{ $t('post.types.audio.headline') }}
       </button>
     </div>
     <div
-      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
+      class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
       <div class="box-shadow mb-6">
         <UtilitiesAudioRecorder @audioFile="inputAudioFile" />
@@ -73,7 +73,7 @@
       </client-only>
       <button
         type="submit"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full mb-12 md:mb-0"
         :disabled="disableSubmitButton"
         @click.prevent="submitPost"
       >

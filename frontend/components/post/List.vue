@@ -4,10 +4,9 @@
         v-for="(post) in postsRef"
         :key="post.id"
         :post="post"
-        :campaign-color="post.campaign.color"
-        :campaign-active="post.campaign.active"
         @updatePost="updatePost"
         @toggle-bookmark-state="toggleBookmarkState"
+        @postDeleted="deletePost(post.id)"
       />
       <InfiniteLoading @infinite="infiniteHandler">
         <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 transform -translate-x-1/2 bottom-0" :small="true" /></div>
@@ -127,13 +126,22 @@ export default defineComponent({
       }
     }
 
+    function deletePost(postId) {
+      postsRef.value.forEach(function (item, key) {
+        if (item.id === postId) {
+          postsRef.value.splice(key, 1)
+        }
+      })
+    }
+
     return {
       currentPage,
       postsRef,
       updatePost,
       toggleBookmarkState,
       hideCommentsFromOtherPosts,
-      infiniteHandler
+      infiniteHandler,
+      deletePost
     }
   },
 

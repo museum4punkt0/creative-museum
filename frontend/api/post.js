@@ -24,7 +24,9 @@ export const postApi = () => {
       body,
       campaign: `/v1/campaigns/${campaignId}`,
     })
-    await $auth.fetchUser()
+
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
   }
@@ -52,7 +54,9 @@ export const postApi = () => {
       campaign: `/v1/campaigns/${campaignId}`,
       files: [`/v1/media_objects/` + fileId],
     })
-    await $auth.fetchUser()
+
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return postResponse
   }
@@ -80,7 +84,9 @@ export const postApi = () => {
       campaign: `/v1/campaigns/${campaignId}`,
       files: [`/v1/media_objects/` + fileId],
     })
-    await $auth.fetchUser()
+
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return postResponse
   }
@@ -92,7 +98,9 @@ export const postApi = () => {
       campaign: `/v1/campaigns/${campaignId}`,
       linkedPlaylist: `/v1/playlists/${playlistId}`,
     })
-    await $auth.fetchUser()
+
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
   }
@@ -113,7 +121,8 @@ export const postApi = () => {
       pollOptions,
     })
 
-    await $auth.fetchUser()
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
   }
@@ -164,7 +173,8 @@ export const postApi = () => {
       voter: `/v1/users/${$auth.user.uuid}`,
     })
 
-    await $auth.fetchUser()
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
 
@@ -183,7 +193,6 @@ export const postApi = () => {
   }
 
   const createAudioPost = async (campaignId, title, audio, image) => {
-
 
     const postBody = {
       author: `/v1/users/${$auth.user.uuid}`,
@@ -213,18 +222,28 @@ export const postApi = () => {
 
     const response = await $api.post('posts', postBody)
 
-    await $auth.fetchUser()
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
 
     return response
   }
 
   const submitCommentByPost = async (postId, body, campaignId) => {
-    return await $api.post(`posts/${postId}/comments`, {
+    const response = await $api.post(`posts/${postId}/comments`, {
       author: `/v1/users/${$auth.user.uuid}`,
       body,
       campaign: `/v1/campaigns/${campaignId}`,
       postType: 'text',
     })
+
+    $auth.fetchUser()
+    store.dispatch('updateNotifications')
+
+    return response
+  }
+
+  const deletePostById = async (postId) => {
+    return await $api.delete(`posts/${postId}`)
   }
 
   return {
@@ -245,5 +264,6 @@ export const postApi = () => {
     votePollOption,
     fetchUserPosts,
     fetchUserBookmarks,
+    deletePostById
   }
 }

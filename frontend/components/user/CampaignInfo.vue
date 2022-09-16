@@ -8,8 +8,8 @@
             class="w-21 h-21 object-cover object-center rounded-full"
           />
         </div>
-        <p class="text-2xl">{{ $auth.user.firstName }} {{ $auth.user.lastName }}</p>
-        <p class="highlight-text text-lg mb-3">@{{ fullName }}</p>
+        <p class="text-2xl">{{ $auth.user.fullName }}</p>
+        <p v-if="$auth.user.achievements.length" class="highlight-text text-lg mb-3">{{ $auth.user.achievements[0].badge.title }} @{{ $auth.user.username }}</p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}
         </p>
@@ -17,7 +17,7 @@
           to="/user/profile"
           class="btn-outline mt-10 py-2 w-full"
         >
-          {{ $t('user.editProfile') }}
+          {{ $t('user.showProfile') }}
         </NuxtLink>
       </div>
       <div class="mb-10">
@@ -49,15 +49,6 @@ export default defineComponent({
   },
   setup() {
     const { $auth, $breakpoints, $config } = useContext()
-    const fullName = computed(() => {
-      return $auth.user
-        ? $auth.user.firstName
-          ? $auth.user.firstName
-          : '' + $auth.user.lastName
-          ? ' ' + $auth.user.lastName
-          : ''
-        : ''
-    })
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
     })
@@ -72,7 +63,6 @@ export default defineComponent({
     })
 
     return {
-      fullName,
       profilePicture,
       isLargerThanLg,
       backendUrl: $config.backendUrl

@@ -63,7 +63,7 @@ class Badge
     private PostType $postType;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -76,7 +76,7 @@ class Badge
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read'])]
     private $picture;
 
     public function getId(): ?int
