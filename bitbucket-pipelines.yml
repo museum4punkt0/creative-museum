@@ -4,6 +4,7 @@ definitions:
     caches:
         composer: backend/vendor
         npm-cache: frontend/node_modules
+        typo3: typo3/vendor
 
 options:
     max-time: 10
@@ -25,7 +26,7 @@ pipelines:
                         - frontend/.nuxt/**
                         - frontend/static/sw.js
                 - step:
-                    name: Composer Setup
+                    name: Setup API-Platform Backend
                     image: composer:2.3.7
                     script:
                         - cd backend && composer validate
@@ -35,6 +36,18 @@ pipelines:
                     artifacts:
                         - backend/vendor/**
                         - backend/public/bundles/**
+                - step:
+                    name: Setup TYPO3
+                    image: composer:2.3.7
+                    script:
+                        - cd typo3 && composer validate
+                        - composer install -n --prefer-dist --no-ansi --no-progress
+                    caches:
+                        - typo3
+                    artifacts:
+                        - typo3/vendor/**
+                        - typo3/public/typo3
+                        - typo3/public/index.php
 
             - step:
                 name: Deployment
