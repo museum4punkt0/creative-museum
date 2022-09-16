@@ -3,7 +3,6 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
     var BadgeHandler = {
         badges: [],
         container: null,
-        itemCount: 0,
         uploadFields: []
     };
 
@@ -22,11 +21,14 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
         });
 
         this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
-        this.itemCount = this.badges.length;
 
         this.addRemoveButtons();
         this.addNewButton();
     };
+
+    BadgeHandler.itemCount = function() {
+        return this.badges.length;
+    }
 
     BadgeHandler.addRemoveButtons = function() {
 
@@ -100,7 +102,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
             let itemContainer = this.badges.item(this.badges.length - 1).cloneNode(true);
             let inputFields = itemContainer.querySelectorAll('input');
             inputFields.forEach( (item) => item.value = '' );
-            this.setIterations(itemContainer, this.itemCount++);
+            this.setIterations(itemContainer, this.itemCount() + 1);
 
             function insertAfter(newNode, existingNode) {
                 existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);

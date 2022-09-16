@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JWIED\Creativemuseum\Service;
 
 use InvalidArgumentException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ abstract class CmApiService implements SingletonInterface
     /**
      * @var array
      */
-    protected $configuration;
+    protected array $configuration;
 
     /**
      * @return string
@@ -31,9 +32,7 @@ abstract class CmApiService implements SingletonInterface
     /**
      * @param ExtensionConfiguration $config
      */
-    public function __construct(
-        ExtensionConfiguration $config
-    ) {
+    public function __construct(ExtensionConfiguration $config) {
         try {
             $this->configuration = $config->get('creativemuseum');
         } catch (Exception $e) {
@@ -41,7 +40,7 @@ abstract class CmApiService implements SingletonInterface
         }
     }
 
-    protected function get()
+    protected function get(): ?array
     {
         $endpoint = $this->getEndpoint();
 
@@ -69,7 +68,11 @@ abstract class CmApiService implements SingletonInterface
         return $decodedBody;
     }
 
-    protected function getSingle($id)
+    /**
+     * @param $id
+     * @return array|null
+     */
+    protected function getSingle($id): ?array
     {
         $endpoint = $this->getEndpoint();
 
@@ -102,12 +105,16 @@ abstract class CmApiService implements SingletonInterface
      * @param ?UploadedFile $file
      * @return string|null
      */
-    protected function post(?array $data, ?UploadedFile $file): ?string
+    protected function post(?array $data = null, ?UploadedFile $file = null): ?string
     {
         /** @var RequestFactory $request */
         $request = GeneralUtility::makeInstance(RequestFactory::class);
 
-        $token = $this->getOauthClient()->getAccessToken('client_credentials')->getToken();
+        try {
+            $token = $this->getOauthClient()->getAccessToken('client_credentials')->getToken();
+        } catch (IdentityProviderException $e) {
+            return null;
+        }
 
         $options = [
             'headers' => [
@@ -143,18 +150,26 @@ abstract class CmApiService implements SingletonInterface
         try {
             $decodedBody = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch(\JsonException $e) {
-            $decodedBody = null;
+            return null;
         }
 
         return $decodedBody['@id'];
     }
 
-    protected function delete(int $id)
+    /**
+     * @param int $id
+     * @return bool|null
+     */
+    protected function delete(int $id): ?bool
     {
         /** @var RequestFactory $request */
         $request = GeneralUtility::makeInstance(RequestFactory::class);
 
-        $token = $this->getOauthClient()->getAccessToken('client_credentials')->getToken();
+        try {
+            $token = $this->getOauthClient()->getAccessToken('client_credentials')->getToken();
+        } catch(IdentityProviderException $e) {
+            return null;
+        }
 
         $response = $request->request(
             $this->configuration['baseUrl'] . '/' . $this->getEndpoint() . '/' . $id,
@@ -166,7 +181,12 @@ abstract class CmApiService implements SingletonInterface
         return $code === Response::HTTP_NO_CONTENT;
     }
 
-    protected function patch(array $data)
+    /**
+     * @param array $data
+     * @return bool
+     * @throws IdentityProviderException
+     */
+    protected function patch(array $data): bool
     {
         if (!isset($data['id'])) {
             throw new InvalidArgumentException('You must provide an item id to patch data via api');
@@ -201,7 +221,7 @@ abstract class CmApiService implements SingletonInterface
     /**
      * @return BackendUserAuthentication
      */
-    protected function getBackendUser()
+    protected function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }
@@ -209,7 +229,7 @@ abstract class CmApiService implements SingletonInterface
     /**
      * @return GenericProvider
      */
-    protected function getOauthClient()
+    protected function getOauthClient(): GenericProvider
     {
         return new GenericProvider([
             'clientId' => $this->configuration['clientId'],

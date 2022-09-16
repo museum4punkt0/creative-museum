@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JWIED\Creativemuseum\Domain\Dto;
+namespace JWIED\Creativemuseum\Domain\Model\Dto;
 
 use JWIED\Creativemuseum\Service\CampaignService;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;

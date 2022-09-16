@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Controller;
 
-use JWIED\Creativemuseum\Domain\Dto\CampaignDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
 use JWIED\Creativemuseum\Service\CampaignService;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\InputButton;
@@ -107,6 +108,10 @@ class AdministrationController extends ActionController
         $propertyMapping->allowCreationForSubProperty('badges.*');
         $propertyMapping->allowModificationForSubProperty('badges.*');
 
+        $propertyMapping->forProperty('feedbackOptions.*')->allowProperties('id', 'text');
+        $propertyMapping->allowCreationForSubProperty('feedbackOptions.*');
+        $propertyMapping->allowModificationForSubProperty('feedbackOptions.*');
+
 
         if (! empty($campaignDto['start'])) {
             $propertyMapping->forProperty('start')->setTypeConverterOption(
@@ -140,6 +145,11 @@ class AdministrationController extends ActionController
         $createCampaignLink = $this->getHref('Administration', 'saveCampaign');
         if (null === $campaignDto) {
             $campaignDto = new CampaignDto();
+        }
+        if ($campaignDto->getFeedbackOptions()->count() < 2) {
+            for ($i = $campaignDto->getFeedbackOptions()->count(); $i < 2; $i++) {
+                $campaignDto->addFeedbackOption(new FeedbackOptionDto());
+            }
         }
 
         $this->view->assign('campaignDto', $campaignDto);

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Service;
 
-use JWIED\Creativemuseum\Domain\Dto\BadgeDto;
-use JWIED\Creativemuseum\Domain\Dto\CampaignDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class CampaignService extends CmApiService
 {
@@ -15,35 +18,41 @@ class CampaignService extends CmApiService
 
     private BadgeService $badgeService;
 
-    /**
-     * @param BadgeService $badgeService
-     *
-     * @return void
-     */
-    public function injectBadgeService(BadgeService $badgeService)
-    {
+    private FeedbackOptionService $feedbackOptionService;
+
+    public function __construct(
+        ExtensionConfiguration $config,
+        BadgeService $badgeService,
+        FeedbackOptionService $feedbackOptionService
+    ) {
+        parent::__construct($config);
         $this->badgeService = $badgeService;
+        $this->feedbackOptionService = $feedbackOptionService;
     }
 
-    public function getCampaigns()
+    public function getCampaigns(): ?array
     {
         return $this->get();
     }
 
-    public function getCampaign(int $campaignId)
+    public function getCampaign(int $campaignId): ?array
     {
         return $this->getSingle($campaignId);
     }
 
     public function createCampaign(CampaignDto $campaignDto)
     {
-        $this->post($campaignDto->serialize(true));
+        $this->post(data: $campaignDto->serialize(true));
     }
 
     public function updateCampaign(CampaignDto $campaignDto)
     {
         $campaignArray = $campaignDto->serialize();
         $badgeIds = [];
+
+        if (null !== $campaignDto->getFeedbackOptions() && $campaignDto->getFeedbackOptions()->count() > 0) {
+            $this->processFeedbackOptionsToUpdate($campaignArray, $campaignDto);
+        }
 
         if (null !== $campaignDto->getBadges() && $campaignDto->getBadges()->count()) {
             /** @var BadgeDto $badgeDto */
@@ -54,16 +63,39 @@ class CampaignService extends CmApiService
                     if (null !== $badgeId) {
                         $badgeIds[] = $badgeId;
                     }
-                } else {
-                    if ($this->badgeService->updateBadge($badgeDto)) {
-                        $badgeIds[] = '/' . BadgeService::ENDPOINT . '/' . $badgeDto->getId();
-                    }
+                    continue;
                 }
+                if ($this->badgeService->updateBadge($badgeDto)) {
+                    $badgeIds[] = '/' . BadgeService::ENDPOINT . '/' . $badgeDto->getId();
+                }
+
             }
         }
         $campaignArray['badges'] = $badgeIds;
 
         $this->patch($campaignArray);
+    }
+
+    private function processFeedbackOptionsToUpdate(array &$campaignArray, CampaignDto $campaignDto)
+    {
+        $feedbackOptionIds = [];
+
+        /** @var FeedbackOptionDto $option */
+        foreach ($campaignDto->getFeedbackOptions() as $option) {
+            if ($option->getId() === '') {
+                $option->setCampaign($campaignDto);
+                $optionId = $this->feedbackOptionService->addFeedbackOption($option);
+                if (null !== $optionId) {
+                    $feedbackOptionIds[] = $optionId;
+                }
+                continue;
+            }
+            if ($this->feedbackOptionService->updateFeedbackOption($option)) {
+                $feedbackOptionIds[] = '/' . FeedbackOptionService::ENDPOINT . '/' . $option->getId();
+            }
+        }
+
+        $campaignArray['feedbackOptions'] = $feedbackOptionIds;
     }
 
     public function removeCampaign(CampaignDto $campaignDto)
@@ -76,7 +108,7 @@ class CampaignService extends CmApiService
         return self::ENDPOINT;
     }
 
-    public function convert(array $campaign) {
+    public function convert(array $campaign): CampaignDto {
         $dto = new CampaignDto();
         $dto->setId((int) $campaign['id']);
         $dto->setTitle($campaign['title']);
@@ -86,21 +118,41 @@ class CampaignService extends CmApiService
         $dto->setDescription($campaign['description']);
         $dto->setActive($campaign['active']);
         $dto->setColor($campaign['color'] ?? '');
+        $dto->setClosed($campaign['closed']);
+
+        if (isset($campaign['feedbackOptions']) && count($campaign['feedbackOptions']) > 0) {
+            $this->addFeedbackOptions($dto, $campaign['feedbackOptions']);
+        }
 
         if (isset($campaign['badges']) && count($campaign['badges']) > 0) {
-            foreach ($campaign['badges'] as $badge) {
-                $badgeDto = new BadgeDto();
-                $badgeDto->setId((string) $badge['id']);
-                $badgeDto->setBadgeType($badge['type']);
-                $badgeDto->setThreshold($badge['threshold']);
-                $badgeDto->setTitle($badge['title']);
-                $badgeDto->setDescription($badge['description']);
-                $badgeDto->setCampaign($dto);
-
-                $dto->addBadge($badgeDto);
-            }
+            $this->addBadges($dto, $campaign['badges']);
         }
 
         return $dto;
+    }
+
+    private function addFeedbackOptions(CampaignDto $dto, array $feedbackOptions): void
+    {
+        foreach ($feedbackOptions as $feedbackOption) {
+            $feedbackOptionDto = new FeedbackOptionDto();
+            $feedbackOptionDto->setId((string) $feedbackOption['id']);
+            $feedbackOptionDto->setText($feedbackOption['text']);
+            $dto->addFeedbackOption($feedbackOptionDto);
+        }
+    }
+
+    private function addBadges(CampaignDto $dto, array $badges): void
+    {
+        foreach ($badges as $badge) {
+            $badgeDto = new BadgeDto();
+            $badgeDto->setId((string) $badge['id']);
+            $badgeDto->setBadgeType($badge['type']);
+            $badgeDto->setThreshold($badge['threshold']);
+            $badgeDto->setTitle($badge['title']);
+            $badgeDto->setDescription($badge['description']);
+            $badgeDto->setCampaign($dto);
+
+            $dto->addBadge($badgeDto);
+        }
     }
 }

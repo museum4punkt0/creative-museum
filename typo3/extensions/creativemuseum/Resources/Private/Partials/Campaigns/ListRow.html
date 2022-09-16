@@ -14,24 +14,37 @@
     <td class="col-end">
         <f:format.date format="d.m.Y - H:i">{row.stop}</f:format.date>
     </td>
+    <td class="col-closed">
+        <f:if condition="{row.closed}">
+            <f:then>Beendet</f:then>
+            <f:else>
+                <f:if condition="{row.active}">
+                    <f:then>Aktiv</f:then>
+                    <f:else>Inaktiv</f:else>
+                </f:if>
+            </f:else>
+        </f:if>
+    </td>
     <td class="col-control nowrap">
         <div class="btn-group">
             <f:link.action action="editCampaign" arguments="{campaignDto: row.id}" class="btn btn-default">
                 <core:icon identifier="actions-open" size="small" />
             </f:link.action>
-            <a
-                    class="btn btn-default"
-                    href="{f:uri.action(action: '{f:if(condition: row.active, then: \'hideCampaign\', else: \'unhideCampaign\')}', arguments:{campaignDto: row.id})}"
-            >
-                <f:if condition="{row.active}">
-                    <f:then>
-                        <core:icon identifier="actions-edit-hide" size="small" />
-                    </f:then>
-                    <f:else>
-                        <core:icon identifier="actions-edit-unhide" size="small" />
-                    </f:else>
-                </f:if>
-            </a>
+            <f:if condition="! {row.closed}">
+                <a
+                        class="btn btn-default"
+                        href="{f:uri.action(action: '{f:if(condition: row.active, then: \'hideCampaign\', else: \'unhideCampaign\')}', arguments:{campaignDto: row.id})}"
+                >
+                    <f:if condition="{row.active}">
+                        <f:then>
+                            <core:icon identifier="actions-edit-hide" size="small" />
+                        </f:then>
+                        <f:else>
+                            <core:icon identifier="actions-edit-unhide" size="small" />
+                        </f:else>
+                    </f:if>
+                </a>
+            </f:if>
             <button aria-haspopup="dialog" aria-label="Kampagne löschen"
                 class="btn btn-default t3js-record-delete"
                 data-button-ok-text="Kampagne löschen" data-l10parent=""

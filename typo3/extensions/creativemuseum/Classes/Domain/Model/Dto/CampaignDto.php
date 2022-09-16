@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace JWIED\Creativemuseum\Domain\Dto;
+namespace JWIED\Creativemuseum\Domain\Model\Dto;
 
+use DateTime;
 use Exception;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -14,23 +15,23 @@ class CampaignDto extends AbstractEntity
     /**
      * @var int|null
      */
-    protected $id = null;
+    protected int|null $id = null;
 
     /**
      * @var string
      * @Extbase\Validate("StringLength", options={"minimum": 3, "maximum": 50})
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
-     * @var \DateTime
+     * @var DateTime
      * @Extbase\Validate("NotEmpty")
      * @Extbase\Validate("DateTime")
      */
-    protected $start = null;
+    protected DateTime|null $start = null;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      * @Extbase\Validate("NotEmpty")
      * @Extbase\Validate("DateTime")
      */
@@ -59,9 +60,19 @@ class CampaignDto extends AbstractEntity
     protected $active = false;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Dto\BadgeDto>
+     * @var bool
+     */
+    protected $closed = false;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto>
      */
     protected $badges;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto>
+     */
+    protected $feedbackOptions;
 
     /**
      * Constructor
@@ -69,6 +80,7 @@ class CampaignDto extends AbstractEntity
     public function initializeObject()
     {
         $this->badges = new ObjectStorage();
+        $this->feedbackOptions = new ObjectStorage();
     }
 
     /**
@@ -216,15 +228,36 @@ class CampaignDto extends AbstractEntity
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Dto\BadgeDto>
+     * @return bool
      */
-    public function getBadges(): ?ObjectStorage
+    public function isClosed(): bool
     {
+        return $this->closed;
+    }
+
+    /**
+     * @param bool $closed
+     * @return CampaignDto
+     */
+    public function setClosed(bool $closed): CampaignDto
+    {
+        $this->closed = $closed;
+        return $this;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto>
+     */
+    public function getBadges(): ObjectStorage
+    {
+        if (null === $this->badges) {
+            return new ObjectStorage();
+        }
         return $this->badges;
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Dto\BadgeDto> $badges
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto> $badges
      * @return CampaignDto
      */
     public function setBadges(ObjectStorage $badges): CampaignDto
@@ -244,6 +277,41 @@ class CampaignDto extends AbstractEntity
     }
 
     /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto>
+     */
+    public function getFeedbackOptions(): ObjectStorage
+    {
+        if (null === $this->feedbackOptions) {
+            return new ObjectStorage();
+        }
+        return $this->feedbackOptions;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto> $feedbackOptions
+     * @return CampaignDto
+     */
+    public function setFeedbackOptions(ObjectStorage $feedbackOptions): CampaignDto
+    {
+        $this->feedbackOptions = $feedbackOptions;
+        return $this;
+    }
+
+    /**
+     * @param FeedbackOptionDto $feedbackOptionDto
+     * @return $this
+     */
+    public function addFeedbackOption(FeedbackOptionDto $feedbackOptionDto): CampaignDto
+    {
+        if ($this->feedbackOptions == null) {
+            $this->feedbackOptions = new ObjectStorage();
+        }
+
+        $this->feedbackOptions->attach($feedbackOptionDto);
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function serialize()
@@ -256,7 +324,8 @@ class CampaignDto extends AbstractEntity
             'shortDescription' => $this->getShortDesc(),
             'description' => $this->getDescription(),
             'active' => $this->isActive(),
-            'color' => $this->getColor()
+            'color' => $this->getColor(),
+            'closed' => $this->isClosed()
         ];
 
         return $campaign;

@@ -4,6 +4,7 @@
         <f:form.hidden property="id" />
     </f:if>
 
+    <h2>Stammdaten</h2>
     <div class="form-group">
         <div class="form-section">
             <div class="form-group">
@@ -20,7 +21,7 @@
         </div>
 
         <div class="form-section">
-            <div class="row">
+                <div class="row">
                 <div class="form-group col col-sm-6">
                     <label for="campaign-start">Beginn der Kampagne</label>
                     <div class="form-control-wrap">
@@ -74,6 +75,15 @@
 
         <div class="form-section">
             <div class="form-group">
+                <label for="campaign-active">Aktiviert</label>
+                <div class="form-control-wrap">
+                    <f:form.checkbox value="1" property="active" id="campaign-active"></f:form.checkbox> Kampagne aktiv
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="form-group">
                 <label for="campaign-shortdescription">Kurzbeschreibung</label>
                 <div class="form-control-wrap">
                     <f:form.textarea class="form-control" property="shortDesc" id="campaign-shortdescription"></f:form.textarea>
@@ -94,11 +104,21 @@
             <div class="form-group">
                 <label for="campaign-description">Kampagnen Primärfarbe</label>
                 <div class="form-control-wrap t3js-formengine-field-item">
-                    <f:form.textfield class="form-control t3js-color-picker formengine-colorpickerelement" property="color" id="campaign-color"></f:form.textfield>
+                    <f:form.textfield class="form-control t3js-colorpicker formengine-colorpickerelement" property="color" id="campaign-color"></f:form.textfield>
                 </div>
             </div>
         </div>
 
+        <div class="form-section">
+            <div class="form-group">
+                <label for="campaign-closed">Beendet</label>
+                <div class="form-control-wrap">
+                    <f:form.checkbox value="1" property="closed" id="campaign-closed"></f:form.checkbox> Kampagne beendet
+                </div>
+            </div>
+        </div>
+
+        <f:comment>
         <h2>Badges</h2>
 
         <div class="t3js-badges-container">
@@ -106,6 +126,16 @@
                 <f:render partial="Campaigns/BadgeForm" arguments="{badge: badge, iterator: iterator}" />
             </f:for>
         </div>
+        </f:comment>
 
     </div>
+
+    <h2 class="mt-5">Feedback Optionen</h2>
+    <p>Für jede Kampagne müssen 2 bis 5 Optionen für Post-Feedback konfiguriert werden.</p>
+    <div class="form-group">
+        <div class="t3js-feedback-options-container">
+            <f:render partial="Campaigns/FeedbackOptions" arguments="{feedbackOptions: campaignDto.feedbackOptions}" />
+        </div>
+    </div>
+
 </f:form>

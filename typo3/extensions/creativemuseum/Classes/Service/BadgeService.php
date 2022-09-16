@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Service;
 
-use JWIED\Creativemuseum\Domain\Dto\BadgeDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 
 class BadgeService extends CmApiService
 {
@@ -18,7 +18,7 @@ class BadgeService extends CmApiService
         return $this->post($badgeDto->serialize());
     }
 
-    public function updateBadge(BadgeDto $badgeDto)
+    public function updateBadge(BadgeDto $badgeDto): bool
     {
         return $this->patch($badgeDto->serialize());
     }
