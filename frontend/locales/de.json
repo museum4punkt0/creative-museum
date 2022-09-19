@@ -177,6 +177,7 @@
   "points": "Punkte",
   "score": "Punktestand",
   "user": {
+    "search": "Profil suchen",
     "showProfile": "Profil anzeigen",
     "editProfile": "Profil bearbeiten",
     "yourCurrentScore": "Dein aktueller Punktestand",

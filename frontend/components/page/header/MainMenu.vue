@@ -30,7 +30,7 @@
         @click.prevent="showProfileUpdate"
         >{{ $t('navigation.profile.settings') }}</a
       >
-      <NuxtLink v-if="$auth.loggedIn" to="/" class="block mb-4" @click.native="closeMenu">{{
+      <NuxtLink v-if="$auth.loggedIn" to="/user/search" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.profile.search')
       }}</NuxtLink>
       <NuxtLink v-if="$auth.loggedIn" to="/" class="block" @click.native="closeMenu">{{
