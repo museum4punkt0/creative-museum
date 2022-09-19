@@ -164,7 +164,7 @@ class AdministrationController extends ActionController
     public function saveCampaignAction(CampaignDto $campaignDto)
     {
         $this->campaignService->createCampaign($campaignDto);
-        $this->addFlashMessage('Wuup wuup');
+        $this->addFlashMessage('Kampagne "' . $campaignDto->getTitle() . '" erstellt.');
         $this->forward('index');
     }
 

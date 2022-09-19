@@ -40,6 +40,11 @@ class BadgeDto extends AbstractDomainObject
     protected $campaign = null;
 
     /**
+     * @var MediaObjectDto|null
+     */
+    protected $picture = null;
+
+    /**
      * @return string|null
      */
     public function getId(): ?string
@@ -144,6 +149,24 @@ class BadgeDto extends AbstractDomainObject
     public function setCampaign(CampaignDto $campaign): BadgeDto
     {
         $this->campaign = $campaign;
+        return $this;
+    }
+
+    /**
+     * @return MediaObjectDto|null
+     */
+    public function getPicture(): ?MediaObjectDto
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param MediaObjectDto|null $picture
+     * @return BadgeDto
+     */
+    public function setPicture(?MediaObjectDto $picture): BadgeDto
+    {
+        $this->picture = $picture;
         return $this;
     }
 

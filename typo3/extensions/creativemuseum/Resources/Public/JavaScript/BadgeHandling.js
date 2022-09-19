@@ -54,13 +54,15 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                 't3js-badges-item-remove',
                 't3js-iterable'
             );
+            btn.style.float = 'right';
+            btn.style.marginTop = '-6px';
             btn.dataset.template = 't3js-badge-item-[i]';
             btn.dataset.target = 't3js-badge-item-' + index;
             btn.dataset.iterationTarget = 'target';
             btn.href = 'javascript:;';
-            btn.textContent = 'DELETE';
+            btn.innerHTML = '<span class="fa fa-close"></span>';
 
-            item.prepend(btn);
+            item.querySelector('.panel-title').append(btn);
         })
     };
 
@@ -75,12 +77,18 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
         iterables.forEach((item) => {
             switch (item.dataset.iterationTarget) {
                 case 'value':
-                    item.innerHTML = item.dataset.template.replace('[i]', iteration + 1);
+                    item.innerHTML = item.dataset.template.replace('[i]', iteration);
                     break;
                 case 'name':
                     item.name = item.dataset.template.replace('[i]', iteration);
                 case 'target':
                     item.dataset.target = item.dataset.template.replace('[i]', iteration);
+                    break;
+                case 'href':
+                    item.href = item.dataset.template.replace('[i]', iteration);
+                    break;
+                case 'id':
+                    item.id = item.dataset.template.replace('[i]', iteration);
                     break;
                 case 'class':
                     item.classList.remove(item.dataset.template.replace('[i]', iteration - 1));
@@ -100,6 +108,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
             }
 
             let itemContainer = this.badges.item(this.badges.length - 1).cloneNode(true);
+            itemContainer.querySelector('.collapse').classList.add('show');
             let inputFields = itemContainer.querySelectorAll('input');
             inputFields.forEach( (item) => item.value = '' );
             this.setIterations(itemContainer, this.itemCount() + 1);
