@@ -7,6 +7,7 @@ namespace JWIED\Creativemuseum\Service;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\MediaObjectDto;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -151,6 +152,14 @@ class CampaignService extends CmApiService
             $badgeDto->setTitle($badge['title']);
             $badgeDto->setDescription($badge['description']);
             $badgeDto->setCampaign($dto);
+
+            if (isset($badge['picture'])) {
+                $picture = new MediaObjectDto();
+                $picture->setId($badge['picture']['id']);
+                $picture->setContentUrl($badge['picture']['contentUrl']);
+                $picture->setDescription($badge['picture']['description'] ?? '');
+                $badgeDto->setPicture($picture);
+            }
 
             $dto->addBadge($badgeDto);
         }

@@ -118,15 +118,17 @@
             </div>
         </div>
 
-        <f:comment>
         <h2>Badges</h2>
 
         <div class="t3js-badges-container">
-            <f:for each="{campaignDto.badges}" as="badge" iteration="iterator">
-                <f:render partial="Campaigns/BadgeForm" arguments="{badge: badge, iterator: iterator}" />
-            </f:for>
+
+            <div class="panel panel-default panel-flat">
+                <f:for each="{campaignDto.badges}" as="badge" iteration="iterator">
+                    <f:render partial="Campaigns/BadgeForm" arguments="{badge: badge, iterator: iterator}" />
+                </f:for>
+            </div>
+
         </div>
-        </f:comment>
 
     </div>
 

@@ -325,8 +325,16 @@ class CampaignDto extends AbstractEntity
             'description' => $this->getDescription(),
             'active' => $this->isActive(),
             'color' => $this->getColor(),
-            'closed' => $this->isClosed()
+            'closed' => $this->isClosed(),
         ];
+
+        if ($this->getFeedbackOptions()->count() > 0) {
+            $campaign['feedbackOptions'] = [];
+            /** @var FeedbackOptionDto $option */
+            foreach ($this->getFeedbackOptions() as $option) {
+                $campaign['feedbackOptions'][] = $option->serialize();
+            }
+        }
 
         return $campaign;
     }
