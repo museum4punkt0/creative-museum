@@ -157,7 +157,7 @@ class CampaignService extends CmApiService
                 $picture = new MediaObjectDto();
                 $picture->setId($badge['picture']['id']);
                 $picture->setContentUrl($badge['picture']['contentUrl']);
-                $picture->setDescription($badge['picture']['description']);
+                $picture->setDescription($badge['picture']['description'] ?? '');
                 $badgeDto->setPicture($picture);
             }
 
