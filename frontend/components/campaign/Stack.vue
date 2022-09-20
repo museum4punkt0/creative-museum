@@ -68,7 +68,7 @@ export default {
     return {
       stack: [],
       width: 0,
-      activeCardIndex: 1,
+      activeCardIndex: 0,
       isDragging: false,
       dragStartX: 50,
       dragStartY: 0,
@@ -117,7 +117,7 @@ export default {
       return this.campaigns.map((_, index) => {
         const xOffset =
           document.getElementById('pageLogo').getBoundingClientRect().left +
-          (this.cardWidth / 2 - 100) * (index - 1)
+          (this.cardWidth / 2 - 100) * index
 
         if (this.isMobile) {
           return {
@@ -150,11 +150,7 @@ export default {
                 this.cardWidth * (index - 1)
             : 0,
           yPos: isMobile
-            ? index < this._maxVisibleCampaigns
-              ? index === 0
-                ? 0
-                : index === 1 ? 100 : this.mobileYOffset + 10 * index * -1
-              : yPos - this.yPosOffset + this.mobileYOffset
+            ? index === 1 ? 100 : this.mobileYOffset + 10 * index * -1
             : 50,
           rotate:
             index !== 1
@@ -164,16 +160,9 @@ export default {
           width: isMobile
             ? window.innerWidth - this.paddingHorizontal * 2
             : this.cardWidth,
-          opacity: index === 0 || index === this.stack.length
-            ? 0
-            : 1,
           zIndex:
-            index !== 0
+            index !== this.stack.length
               ? this.campaigns.length + index * -1
-              : this.isDraggingPrevious
-              ? isMobile
-                ? 0
-                : this._maxVisibleCampaigns
               : 0,
           isDragging: this.isDragging,
         }
@@ -283,7 +272,7 @@ export default {
       this.rebuild()
     },
     updateStack() {
-      const activeCard = this.stack[1]
+      const activeCard = this.stack[0]
       const activeCardRestPoint = this.stackRestPoints[this.activeCardIndex]
       const distanceTravelledX = activeCard.xPos - activeCardRestPoint.x
       const minDistanceToTravel =
