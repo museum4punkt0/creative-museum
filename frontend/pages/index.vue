@@ -14,9 +14,6 @@
         </div>
       </div>
     </div>
-    <UtilitiesModal v-if="tutorialOpen">
-      <Tutorial @closeModal="tutorialOpen = false" />
-    </UtilitiesModal>
   </div>
 </template>
 <script>
@@ -36,7 +33,6 @@ export default defineComponent({
   setup() {
 
     const store = useStore()
-    const tutorialOpen = ref(false)
     const { $auth } = useContext()
     const { fetchCampaigns } = campaignApi()
     const campaigns = ref(null)
@@ -47,19 +43,10 @@ export default defineComponent({
 
     $auth.$storage.removeState('campaignScore')
 
-    if ($auth.loggedIn && !$auth.user.tutorial && $auth.user.username) {
-      tutorialOpen.value = true
-    }
-
-    $auth.$storage.watchState('user.username', _ => {
-      tutorialOpen.value = true
-    })
-
     store.dispatch('hideAddButton')
     store.dispatch('setCurrentCampaign', null)
 
     return {
-      tutorialOpen,
       campaigns,
     }
   },

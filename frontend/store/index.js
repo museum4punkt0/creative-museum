@@ -10,6 +10,7 @@ export const state = () => ({
   showLogin: false,
   showAddModal: false,
   showProfileUpdate: false,
+  showTutorial: false,
   notificationsUpdated: false,
   splashscreenShown: false
 })
@@ -58,6 +59,12 @@ export const mutations = {
   },
   HIDE_PROFILE_UPDATE(state) {
     state.showProfileUpdate = false
+  },
+  SHOW_TUTORIAL(state) {
+    state.showTutorial = true
+  },
+  HIDE_TUTORIAL(state) {
+    state.showTutorial = false
   },
   UPDATE_NOTIFICATIONS(state) {
     state.notificationsUpdated = false
@@ -117,6 +124,12 @@ export const actions = {
   hideProfileUpdate({ commit }) {
     commit('HIDE_PROFILE_UPDATE')
   },
+  showTutorial({ commit }) {
+    commit('SHOW_TUTORIAL')
+  },
+  hideTutorial({ commit }) {
+    commit('HIDE_TUTORIAL')
+  },
   updateNotifications({ commit }) {
     commit('UPDATE_NOTIFICATIONS')
   },
@@ -146,6 +159,9 @@ export const getters = {
   },
   showProfileUpdate(state) {
     return state.showProfileUpdate
+  },
+  showTutorial(state) {
+    return state.showTutorial
   },
   notificationsUpdated(state) {
     return state.notificationsUpdated

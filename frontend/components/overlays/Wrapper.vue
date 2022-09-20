@@ -1,6 +1,7 @@
 <template>
   <div>
     <OverlaysLogin v-if="!$auth.loggedIn" />
+    <OverlaysTutorial />
     <OverlaysProfileUpdate v-if="$auth.loggedIn" />
     <OverlaysNotifications v-if="$auth.loggedIn" />
     <transition

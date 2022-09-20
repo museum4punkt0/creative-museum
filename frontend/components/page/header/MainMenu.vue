@@ -41,12 +41,12 @@
       <p class="text-lg font-bold leading-loose mb-4">
         {{ $t('navigation.museum.header') }}
       </p>
-      <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
+      <NuxtLink to="/about" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.museum.about')
       }}</NuxtLink>
-      <NuxtLink to="/" class="block mb-4" @click.native="closeMenu">{{
+      <a class="block mb-4" @click.prevent="showTutorial">{{
         $t('navigation.museum.firstSteps')
-      }}</NuxtLink>
+      }}</a>
       <NuxtLink to="/" class="block" @click.native="closeMenu">{{
         $t('navigation.museum.faq')
       }}</NuxtLink>
@@ -135,6 +135,11 @@ export default defineComponent({
       closeMenu()
     }
 
+    function showTutorial() {
+      store.dispatch('showTutorial')
+      closeMenu()
+    }
+
     function closeMenu() {
       context.emit('closeMenu')
     }
@@ -143,7 +148,8 @@ export default defineComponent({
       login,
       logout,
       closeMenu,
-      showProfileUpdate
+      showProfileUpdate,
+      showTutorial
     }
   },
 })
