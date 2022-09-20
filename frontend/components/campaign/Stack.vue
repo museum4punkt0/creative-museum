@@ -1,6 +1,6 @@
 <template>
-  <div class="campaign__wrapper">
-    <div class="campaign__stack px-5 pt-10 md:pt-5 md:px-0 h-2xl lg:h-4xl">
+  <div class="relative">
+    <div class="relative overflow-hidden px-5 pt-10 md:pt-5 md:px-0 h-2xl lg:h-4xl">
       <div
         v-for="campaign in stack"
         ref="card"
@@ -11,7 +11,6 @@
           top: `${campaign.yPos}px`,
           width: `${campaign.width}px`,
           zIndex: campaign.zIndex,
-          top: `${campaign.yPos}px`,
           width: `${campaign.width}px`,
           cursor: 'grab',
           transition: `transform ${
@@ -21,6 +20,7 @@
             rotate(${campaign.rotate}deg)
             translate(${campaign.xPos}px, 0)
           `,
+          opacity: campaign.opacity
         }"
       >
         <CampaignItem :campaign="campaign" />
@@ -119,46 +119,15 @@ export default {
           document.getElementById('pageLogo').getBoundingClientRect().left +
           (this.cardWidth / 2 - 100) * (index - 1)
 
-        if (!index) {
-          if (this.isMobile) {
-            return {
-              x: this.cardWidth * -1,
-              y: this.$refs.card[0].clientHeight * -1 + 20,
-            }
-          } else {
-            return {
-              x: (this.cardWidth - 100) * -1,
-              y: 0,
-            }
-          }
-        } else if (index === 1) {
-          if (this.isMobile) {
-            return {
-              x:
-                document.getElementById('pageLogo').getBoundingClientRect()
-                  .left + this.paddingHorizontal,
-              y: this.mobileYOffset,
-            }
-          } else {
-            return {
-              x:
-                document.getElementById('pageLogo').getBoundingClientRect()
-                  .left + this.paddingHorizontal,
-              y: 0,
-            }
+        if (this.isMobile) {
+          return {
+            x: 0,
+            y: index === 1 ? 100  : -30 * index + this.mobileYOffset,
           }
         } else {
-          // eslint-disable-next-line no-lonely-if
-          if (this.isMobile) {
-            return {
-              x: 0,
-              y: -15 * index + this.mobileYOffset,
-            }
-          } else {
-            return {
-              x: xOffset,
-              y: 0,
-            }
+          return {
+            x: xOffset,
+            y: 0,
           }
         }
       })
@@ -183,8 +152,8 @@ export default {
           yPos: isMobile
             ? index < this._maxVisibleCampaigns
               ? index === 0
-                ? 10
-                : this.mobileYOffset + 10 * index * -1
+                ? 0
+                : index === 1 ? 100 : this.mobileYOffset + 10 * index * -1
               : yPos - this.yPosOffset + this.mobileYOffset
             : 50,
           rotate:
@@ -195,6 +164,9 @@ export default {
           width: isMobile
             ? window.innerWidth - this.paddingHorizontal * 2
             : this.cardWidth,
+          opacity: index === 0 || index === this.stack.length
+            ? 0
+            : 1,
           zIndex:
             index !== 0
               ? this.campaigns.length + index * -1
@@ -238,7 +210,6 @@ export default {
     })
     document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
-  destroyed() {},
   methods: {
     getContrastColor(color) {
       const bgColor = new TinyColor(color)
@@ -359,11 +330,7 @@ export default {
           ...this.cardDefaults[index],
           xPos,
           yPos,
-          rotate,
-          opacity:
-            index === 0 && !this.isDraggingPrevious
-              ? 1
-              : this.cardDefaults[index].opacity,
+          rotate
         }
       })
     },
@@ -403,13 +370,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.campaign__wrapper {
-  position: relative;
-}
-
-.campaign__stack {
-  position: relative;
-  overflow: hidden;
-}
-</style>
