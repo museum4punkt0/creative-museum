@@ -21,7 +21,6 @@ export default defineComponent({
     })
 
     watch(() => store.getters.showTutorial, function(newVal) {
-      console.log(newVal)
       tutorialOpen.value = newVal
     })
 

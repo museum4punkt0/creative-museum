@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="page-header px-6">
-      <NuxtLink :to="localePath('/')" class="back-btn">{{
+      <a @click.prevent="$emit('closeModal')" class="back-btn">{{
         $t('tutorial.firstSteps')
-      }}</NuxtLink>
+      }}</a>
     </div>
     <div
       class="box-shadow-mobile relative m-6 lg:m-0 p-6 text-center"
