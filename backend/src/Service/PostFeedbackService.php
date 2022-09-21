@@ -75,9 +75,9 @@ class PostFeedbackService
      * @param Post $post
      * @param CampaignFeedbackOption|null $excludedOption
      * The option to be excluded from the calculation @see CampaignFeedbackOptionDeleteListener
-     * @return array
+     * @return array|null
      */
-    public function getLeadingFeedbackWithCount(Post $post, ?CampaignFeedbackOption $excludedOption = null): array
+    public function getLeadingFeedbackWithCount(Post $post, ?CampaignFeedbackOption $excludedOption = null): ?array
     {
         $feedbacks = $this->postFeedbackRepository->findBy(['post' => $post]);
 
@@ -94,11 +94,12 @@ class PostFeedbackService
             ++$calc[$feedback->getId()]['count'];
         }
 
-        uasort($calc, function ($a, $b) {
-            return $b['count'] <=> $a['count'];
-        });
+        if (count($calc) > 1) {
+            uasort($calc, function ($a, $b) {
+                return $b['count'] <=> $a['count'];
+            });
+        }
 
-        reset($calc);
-        return $calc;
+        return reset($calc);
     }
 }
