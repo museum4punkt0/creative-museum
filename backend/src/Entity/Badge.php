@@ -75,7 +75,7 @@ class Badge
     #[Groups(['user:me:read', 'badge:read'])]
     private $campaign;
 
-    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist'], orphanRemoval: true)]
     #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read'])]
     private $picture;
 
