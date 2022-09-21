@@ -10,6 +10,7 @@
 namespace App\Serializer\Normalizer;
 
 use App\Entity\Post;
+use App\Entity\PostFeedback;
 use App\Entity\User;
 use App\Entity\Vote;
 use App\Enum\PostType;
@@ -84,9 +85,11 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
                 $data['my_vote'] = $this->normalizer->normalize($myVote, $format, $context);
             }
 
-            $feedback = $this->feedbackRepository->findBy(['user' => $user, 'post' => $object]);
-            if (count($feedback)) {
+            /** @var PostFeedback $feedback */
+            $feedback = $this->feedbackRepository->findOneBy(['user' => $user, 'post' => $object]);
+            if (null !== $feedback) {
                 $data['rated'] = true;
+                $data['my_feedback'] = $this->normalizer->normalize($feedback->getSelection(), $format, $context);
             }
         }
 

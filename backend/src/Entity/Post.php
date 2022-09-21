@@ -205,6 +205,9 @@ class Post
     #[Groups(['post:read'])]
     private $rated = false;
 
+    #[Groups(['post:read'])]
+    private $myFeedback = null;
+
     #[ORM\Column(type: 'boolean')]
     #[Groups(['post:write', 'post:read'])]
     private $reported = false;
@@ -615,6 +618,24 @@ class Post
     {
         $this->myVote = $myVote;
 
+        return $this;
+    }
+
+    /**
+     * @return CampaignFeedbackOption
+     */
+    public function getMyFeedback(): ?CampaignFeedbackOption
+    {
+        return $this->myFeedback;
+    }
+
+    /**
+     * @param CampaignFeedbackOption $myFeedback
+     * @return Post
+     */
+    public function setMyFeedback(CampaignFeedbackOption $myFeedback): self
+    {
+        $this->myFeedback = $myFeedback;
         return $this;
     }
 

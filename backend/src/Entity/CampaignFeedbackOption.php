@@ -37,7 +37,7 @@ class CampaignFeedbackOption
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read', 'read:feedbacks'])]
+    #[Groups(['campaigns:read', 'read:feedbacks', 'post:read'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'feedbackOptions')]
@@ -46,7 +46,7 @@ class CampaignFeedbackOption
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Length(min: 1, max: 25)]
-    #[Groups(['campaigns:read', 'campaign:write', 'read:feedbacks'])]
+    #[Groups(['campaigns:read', 'campaign:write', 'read:feedbacks', 'post:read'])]
     private $text;
 
     #[ORM\OneToMany(mappedBy: 'selection', targetEntity: PostFeedback::class)]
