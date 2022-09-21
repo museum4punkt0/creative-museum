@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     order: ['created' => 'DESC'],
     collectionOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['post:read']],
+            'normalization_context' => ['groups' => ['post:read','system-post:read']],
         ],
         'post' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.author == user",
@@ -74,7 +74,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     itemOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['post:read']],
+            'normalization_context' => ['groups' => ['post:read','system-post:read']],
         ],
         'add_post_to_playlist' => [
             'method' => 'GET',
@@ -129,7 +129,7 @@ class Post
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read', 'notifications:read'])]
     public $author;
 
@@ -235,6 +235,10 @@ class Post
     #[Groups(['post:read'])]
     private $userChoiced = false;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['post:read'])]
+    private $postMetadata;
+
     public function __construct()
     {
         $this->pollOptions = new ArrayCollection();
@@ -277,12 +281,12 @@ class Post
         return $this;
     }
 
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(User $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 
@@ -695,6 +699,18 @@ class Post
     public function setUserChoiced(bool $userChoiced): self
     {
         $this->userChoiced = $userChoiced;
+
+        return $this;
+    }
+
+    public function getPostMetadata(): ?string
+    {
+        return $this->postMetadata;
+    }
+
+    public function setPostMetadata(?string $postMetadata): self
+    {
+        $this->postMetadata = $postMetadata;
 
         return $this;
     }
