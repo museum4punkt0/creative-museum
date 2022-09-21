@@ -26,7 +26,8 @@
               points: notification.scorePoints ? notification.scorePoints.toLocaleString() : '',
               author: notification.post ? notification.post.author.username : '',
               badge: notification.badge ? notification.badge.title : '',
-              award: notification.award ? notification.award.title : ''
+              award: notification.award ? notification.award.title : '',
+              awardWinner: notificiation.award ? notificiation.award.winner.username : ''
             })
           }}
         </p>
