@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     order: ['created' => 'DESC'],
     collectionOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['post:read','system-post:read']],
+            'normalization_context' => ['groups' => ['post:read']],
         ],
         'post' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.author == user",
@@ -74,7 +74,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     itemOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['post:read','system-post:read']],
+            'normalization_context' => ['groups' => ['post:read'],
         ],
         'add_post_to_playlist' => [
             'method' => 'GET',
