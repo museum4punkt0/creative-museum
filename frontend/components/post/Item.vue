@@ -28,9 +28,9 @@
       <p>
         {{
           $t(`campaign.systemMessages.${post.body}`, {
-            giver: post.awarded.giver ? post.awarded.giver.username : '',
-            winner: post.awarded.winner ? post.awarded.winner.username : '',
-            award: post.awarded.award ? post.awarded.award.title : ''
+            giver: post.postMetaData.giver ? post.postMetaData.giver.giver.username : '',
+            winner: post.postMetaData.winner ? post.postMetaData.winner.winner.username : '',
+            award: post.postMetaData.award ? post.postMetaData.award.title : ''
           })
         }}
       </p>
