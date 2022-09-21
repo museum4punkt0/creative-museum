@@ -234,7 +234,10 @@
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards",
     "noMorePosts": "Keine weiteren Beiträge.",
-    "newPosts": "Neue Beiträge"
+    "newPosts": "Neue Beiträge",
+    "systemMessages": {
+      "1663764951": "@{giver} hat @{winner} den Award {award} verliehen"
+    }
   },
   "awards": {
     "available": "Verfügbare Awards",

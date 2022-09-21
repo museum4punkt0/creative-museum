@@ -18,10 +18,10 @@
 
     <button
       class="btn-outline text-sm"
-      :class="post.type === 'playlist' ? `btn-text-${textColor}` : ''"
+      :class="post.type === 'playlist' ? `btn-text-${textColor}` : post.rated ? 'text-$highlight border-$highlight' : ''"
       @click.prevent="triggerFeedback()"
     >
-      {{ $t('post.feedback') }}
+      {{ post.rated ? post.my_feedback.text : $t('post.feedback') }}
     </button>
   </div>
 </template>

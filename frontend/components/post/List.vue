@@ -63,6 +63,10 @@ export default defineComponent({
               postsRef.value[key].userChoiced = response.userChoiced
               postsRef.value[key].pollOptions = response.pollOptions
             }
+            if (response.rated && response.my_feedback) {
+              postsRef.value[key].rated = response.rated
+              postsRef.value[key].my_feedback = response.my_feedback
+            }
           })
         }
       })

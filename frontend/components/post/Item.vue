@@ -25,7 +25,15 @@
       />
     </div>
     <div v-else class="highlight-text text-center">
-      <p>{{ post.body }}</p>
+      <p>
+        {{
+          $t(`campaign.systemMessages.${post.body}`, {
+            giver: post.awarded.giver ? post.awarded.giver.username : '',
+            winner: post.awarded.winner ? post.awarded.winner.username : '',
+            award: post.awarded.award ? post.awarded.award.title : ''
+          })
+        }}
+      </p>
     </div>
 
     <UtilitiesSlideUp
@@ -72,7 +80,7 @@ export default defineComponent({
     'updatePost',
     'postDeleted'
   ],
-  setup(props) {
+  setup(props, context) {
     const { getOptions, selectOption, getFeedbackResults } = feedbackApi()
 
     const showFeedbackForm = ref(false)
@@ -141,6 +149,7 @@ export default defineComponent({
       await getResults()
 
       voted.value = true
+      context.emit('updatePost', props.post.id)
     }
 
     return {
