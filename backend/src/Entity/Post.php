@@ -74,7 +74,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     itemOperations: [
         'get' => [
-            'normalization_context' => ['groups' => ['post:read'],
+            'normalization_context' => ['groups' => ['post:read']],
         ],
         'add_post_to_playlist' => [
             'method' => 'GET',
