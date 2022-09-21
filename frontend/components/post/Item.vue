@@ -15,7 +15,6 @@
       <component :is="componentName" :post="post" class="mb-4" @updatePost="$emit('updatePost', post.id)" />
       <PostFooter
         :post="post"
-        class="mb-4"
         :text-color="textColor"
         @triggerFeedback="triggerFeedback"
         @voted="$emit('updatePost', post.id)"
