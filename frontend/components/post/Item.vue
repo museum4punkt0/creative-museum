@@ -28,9 +28,9 @@
       <p>
         {{
           $t(`campaign.systemMessages.${post.body}`, {
-            giver: post.postMetaData.giver ? post.postMetaData.giver.giver.username : '',
-            winner: post.postMetaData.winner ? post.postMetaData.winner.winner.username : '',
-            award: post.postMetaData.award ? post.postMetaData.award.title : ''
+            giver:  postMetadata.giver ? postMetadata.giver.username : '',
+            winner: postMetadata.winner ? postMetadata.winner.username : '',
+            award: postMetadata.award ? postMetadata.award.title : ''
           })
         }}
       </p>
@@ -95,6 +95,11 @@ export default defineComponent({
             props.post.type.charAt(0).toUpperCase() +
             props.post.type.slice(1)
         : false
+    })
+
+    const postMetadata = computed(() => {
+      if (!props.post.postMetadata) return
+      return JSON.parse(props.post.postMetadata)
     })
 
     const textColor = getContrastColorClass()
@@ -164,6 +169,7 @@ export default defineComponent({
       feedbackOptions,
       voted,
       total,
+      postMetadata
     }
   },
 })

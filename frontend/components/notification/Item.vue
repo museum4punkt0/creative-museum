@@ -47,7 +47,7 @@ export default defineComponent({
     const { $config } = useContext()
 
     const styleAttr = computed(() => {
-      return `--highlight: ${props.notification.campaign.color};`
+      return props.notification.campaign ? `--highlight: ${props.notification.campaign.color};` : ''
     })
 
     const notificationPicture = computed(() => {

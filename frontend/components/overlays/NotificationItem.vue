@@ -22,7 +22,7 @@
         <p v-if="notification.text" class="text-$highlight text-sm">
           {{
             $t(`notifications.${notification.text}.text`, {
-              campaign: notification.campaign.title,
+              campaign: notification.campaign ? notification.campaign.title : '',
               points: notification.scorePoints ? notification.scorePoints.toLocaleString() : '',
               author: notification.post ? notification.post.author.username : '',
               badge: notification.badge ? notification.badge.title : '',
@@ -51,7 +51,7 @@ export default defineComponent({
     const { $config } = useContext()
 
     const styleAttr = computed(() => {
-      return `--highlight: ${props.notification.campaign.color};`
+      return props.notification.campaign ? `--highlight: ${props.notification.campaign.color};` : ''
     })
 
     const { updateNotificationAsViewed } = notificationApi()
@@ -60,9 +60,9 @@ export default defineComponent({
       const award = props.notification.award
       const badge = props.notification.badge
       if (badge || award) {
-        if (badge.picture) {
+        if (badge && badge.picture) {
           return badge.picture.contentUrl
-        } else if (award.picture) {
+        } else if (award && award.picture) {
           return award.picture.contentUrl
         }
       }
