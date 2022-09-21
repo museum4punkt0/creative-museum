@@ -52,6 +52,13 @@ services:
                 event: 'preRemove'
                 entity: 'App\Entity\CampaignFeedbackOption'
 
+    App\EventListener\BadgeDeleteListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preRemove'
+                entity: 'App\Entity\Badge'
+
     campaign.date_filter:
         parent: 'api_platform.doctrine.orm.date_filter'
         arguments: [ { dateProperty: ~ } ]

@@ -82,7 +82,7 @@ class MediaObject
     public $updatedAt;
 
     /**
-     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
+     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filepath")
      */
     #[Assert\NotNull(groups: ['media_object_create'])]
     #[Assert\File(groups: ['media_object_create'])]
@@ -115,7 +115,7 @@ class MediaObject
         return $this->filepath;
     }
 
-    public function setFilepath(string $filepath): self
+    public function setFilepath(?string $filepath): self
     {
         $this->filepath = $filepath;
 
