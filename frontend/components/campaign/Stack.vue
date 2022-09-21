@@ -93,7 +93,7 @@ export default {
     _maxVisibleCampaigns() {
       return this.campaigns.length > this.maxVisibleCards
         ? this.maxVisibleCards
-        : this.campaigns.length - 1
+        : this.campaigns.length
     },
     elementXPosOffset() {
       return this.$el.getBoundingClientRect().x
@@ -153,7 +153,7 @@ export default {
             ? index === 1 ? 100 : this.mobileYOffset + 10 * index * -1
             : 50,
           rotate:
-            index !== 1
+            index !== 0
               ? Math.floor(Math.random() * (5 - 1 + 1) - 1) *
                 (Math.round(Math.random()) ? 1 : -1)
               : 0,
