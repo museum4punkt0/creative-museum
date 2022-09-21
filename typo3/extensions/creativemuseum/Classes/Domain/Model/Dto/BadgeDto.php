@@ -45,6 +45,11 @@ class BadgeDto extends AbstractDomainObject
     protected $picture = null;
 
     /**
+     * @var string
+     */
+    protected $pictureIRI = '';
+
+    /**
      * @return string|null
      */
     public function getId(): ?string
@@ -171,6 +176,24 @@ class BadgeDto extends AbstractDomainObject
     }
 
     /**
+     * @return string
+     */
+    public function getPictureIRI(): string
+    {
+        return $this->pictureIRI;
+    }
+
+    /**
+     * @param string $pictureIRI
+     * @return BadgeDto
+     */
+    public function setPictureIRI(string $pictureIRI): BadgeDto
+    {
+        $this->pictureIRI = $pictureIRI;
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function serialize()
@@ -184,6 +207,10 @@ class BadgeDto extends AbstractDomainObject
 
         if (null !== $this->getId() && ! empty($this->getId())) {
             $data['id'] = $this->getId();
+        }
+
+        if (! empty($this->pictureIRI)) {
+            $data['picture'] = $this->pictureIRI;
         }
 
         if (null !== $this->getCampaign()) {

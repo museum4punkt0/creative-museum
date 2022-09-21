@@ -117,8 +117,14 @@
             <div class="form-section">
                 <div class="form-group">
                     <label>Badge Grafik</label>
+                    <f:form.hidden property="badges.{iterator.index}.pictureIRI" />
                     <div class="form-control-wrap">
-                        <div class="custom-file-container" data-upload-id="campaign-badge-imageupload-{iterator.index}"></div>
+                        <div
+                            class="custom-file-container"
+                            data-upload-id="campaign-badge-imageupload-{iterator.index}"
+                            data-selected-file="{badge.picture.contentUrl}"
+                            data-badge-id="{iterator.index}"
+                        ></div>
                     </div>
                 </div>
             </div>

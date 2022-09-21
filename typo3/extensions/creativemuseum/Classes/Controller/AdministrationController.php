@@ -13,6 +13,7 @@ use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -43,14 +44,21 @@ class AdministrationController extends ActionController
      */
     protected $iconFactory;
 
+    /**
+     * @var AssetCollector
+     */
+    protected $assetCollector;
+
     public function __construct(
         UriBuilder $uriBuilder,
         CampaignService $campaignService,
-        IconFactory $iconFactory
+        IconFactory $iconFactory,
+        AssetCollector $assetCollector
     ) {
         $this->uriBuilder = $uriBuilder;
         $this->campaignService = $campaignService;
         $this->iconFactory = $iconFactory;
+        $this->assetCollector = $assetCollector;
     }
 
     /**
@@ -92,6 +100,13 @@ class AdministrationController extends ActionController
     {
         $formActions = ['saveCampaignAction', 'updateCampaignAction'];
 
+        if (in_array($this->actionMethodName, ['newCampaignAction', 'editCampaignAction'])) {
+            $this->assetCollector->addInlineJavaScript(
+                'creativeMuseumApiUrls',
+                'window.apiBaseUrl = "' . $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['creativemuseum']['baseUrl'] . '";'
+            );
+        }
+
         if (!in_array($this->actionMethodName, $formActions)) {
             return;
         }
@@ -104,7 +119,7 @@ class AdministrationController extends ActionController
         $campaignDto = $this->request->getArgument('campaignDto');
 
         $propertyMapping->allowProperties('badges');
-        $propertyMapping->forProperty('badges.*')->allowProperties('id', 'title', 'description');
+        $propertyMapping->forProperty('badges.*')->allowProperties('id', 'title', 'description', 'pictureIRI');
         $propertyMapping->allowCreationForSubProperty('badges.*');
         $propertyMapping->allowModificationForSubProperty('badges.*');
 
@@ -175,7 +190,6 @@ class AdministrationController extends ActionController
     public function editCampaignAction(CampaignDto $campaignDto)
     {
         $this->view->assign('campaignDto', $campaignDto);
-
     }
 
     /**

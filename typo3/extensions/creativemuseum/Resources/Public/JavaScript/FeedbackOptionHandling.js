@@ -143,6 +143,11 @@ define(['TYPO3/CMS/Backend/Modal'], function(Modal) {
         btn.classList.add('mt-3');
         btn.href = 'javascript:;';
         btn.textContent = 'Option hinzufügen';
+
+        if (this.options.length === 5) {
+            btn.style.display = 'none';
+        }
+
         this.container.append(btn);
     };
 

@@ -17,7 +17,23 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
 
         uploadContainers.forEach((item) => {
            const uploadId = item.dataset.uploadId;
-           this.uploadFields.push(new FileUploadWithPreview.FileUploadWithPreview(uploadId));
+           let filePath = item.dataset.selectedFile;
+
+           let fileUpload = null;
+
+           if (filePath === undefined) {
+               fileUpload = new FileUploadWithPreview.FileUploadWithPreview(uploadId);
+           } else {
+               fileUpload = new FileUploadWithPreview.FileUploadWithPreview(
+                   uploadId,
+                   {
+                       presetFiles: [window.apiBaseUrl + filePath],
+                   }
+               );
+           }
+
+           console.log(fileUpload);
+           this.uploadFields.push(fileUpload);
         });
 
         this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
@@ -81,6 +97,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                     break;
                 case 'name':
                     item.name = item.dataset.template.replace('[i]', iteration);
+                    break;
                 case 'target':
                     item.dataset.target = item.dataset.template.replace('[i]', iteration);
                     break;
