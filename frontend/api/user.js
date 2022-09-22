@@ -73,7 +73,7 @@ export const userApi = () => {
 
   async function deleteUser(anonymizeOrDelete) {
     if (anonymizeOrDelete === 'delete') {
-      const res = await $api.delete(`users/me`)
+      const res = await $api.delete(`users/${$auth.user.uuid}`)
       return res
     } else {
       const res = await $api.patch(`users/me/anonymize`, {})
