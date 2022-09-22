@@ -31,13 +31,12 @@ define([
             return;
         }
 
-        const uploads = BadgeHandler.uploadFields;
         const form = this;
 
-        const uploadsCount = uploads.length;
+        const uploadsCount = BadgeHandler.uploadFields.length;
         let i = 0;
 
-        uploads.forEach((item) => {
+        BadgeHandler.uploadFields.forEach((item) => {
             const file = item.cachedFileArray[0];
 
             if (file === undefined) {

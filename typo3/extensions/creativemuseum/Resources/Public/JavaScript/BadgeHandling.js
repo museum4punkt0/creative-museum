@@ -55,7 +55,8 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
             let targetItem = document.querySelector('.' + node.dataset.target);
 
             const elementIndex = [].indexOf.call(targetItem.parentElement.children, targetItem);
-            this.uploadFields = this.uploadFields.splice(elementIndex, 1);
+            this.uploadFields.splice(elementIndex, 1);
+
             targetItem.remove();
 
             this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
@@ -144,12 +145,8 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
             insertAfter(itemContainer, this.badges.item(this.badges.length - 1));
             this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
 
-            console.log(this.badges);
-
             const uploadContainer = itemContainer.querySelector('.custom-file-container');
             const uploadId = uploadContainer.dataset.uploadId;
-
-            console.log(uploadId);
 
             const fileUpload = new FileUploadWithPreview.FileUploadWithPreview(uploadId);
             this.uploadFields.push(fileUpload);
