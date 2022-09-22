@@ -120,10 +120,12 @@
                     <f:form.hidden property="badges.{iterator.index}.pictureIRI" />
                     <div class="form-control-wrap">
                         <div
-                            class="custom-file-container"
+                            class="custom-file-container t3js-iterable"
                             data-upload-id="campaign-badge-imageupload-{iterator.index}"
                             data-selected-file="{badge.picture.contentUrl}"
                             data-badge-id="{iterator.index}"
+                            data-template="campaign-badge-imageupload-[id]"
+                            data-iteration-target="badge"
                         ></div>
                     </div>
                 </div>

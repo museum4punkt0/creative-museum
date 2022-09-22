@@ -60,7 +60,7 @@ class Badge
 
     #[ORM\Column(type: 'posttype')]
     #[Groups(['badge:read', 'campaigns:read'])]
-    private PostType $postType;
+    private PostType $postType = PostType::TEXT;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read'])]
@@ -114,7 +114,7 @@ class Badge
     /**
      * @return PostType
      */
-    public function getPostType(): ?PostType
+    public function getPostType(): PostType
     {
         return $this->postType;
     }

@@ -119,7 +119,9 @@ class AdministrationController extends ActionController
         $campaignDto = $this->request->getArgument('campaignDto');
 
         $propertyMapping->allowProperties('badges');
-        $propertyMapping->forProperty('badges.*')->allowProperties('id', 'title', 'description', 'pictureIRI');
+        $propertyMapping
+            ->forProperty('badges.*')
+            ->allowProperties('id', 'title', 'description', 'badgeType', 'pictureIRI', 'threshold');
         $propertyMapping->allowCreationForSubProperty('badges.*');
         $propertyMapping->allowModificationForSubProperty('badges.*');
 

@@ -31,8 +31,6 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                    }
                );
            }
-
-           console.log(fileUpload);
            this.uploadFields.push(fileUpload);
         });
 
@@ -101,6 +99,10 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                 case 'target':
                     item.dataset.target = item.dataset.template.replace('[i]', iteration);
                     break;
+                case 'badge':
+                    item.dataset.uploadId = item.dataset.template.replace('[i]', iteration);
+                    item.dataset.badgeId = iteration;
+                    break;
                 case 'href':
                     item.href = item.dataset.template.replace('[i]', iteration);
                     break;
@@ -125,6 +127,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
             }
 
             let itemContainer = this.badges.item(this.badges.length - 1).cloneNode(true);
+            itemContainer.querySelector('.custom-file-container').innerHTML = '';
             itemContainer.querySelector('.collapse').classList.add('show');
             let inputFields = itemContainer.querySelectorAll('input');
             inputFields.forEach( (item) => item.value = '' );
@@ -136,6 +139,17 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
 
             insertAfter(itemContainer, this.badges.item(this.badges.length - 1));
             this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
+
+            console.log(this.badges);
+
+            const uploadContainer = itemContainer.querySelector('.custom-file-container');
+            const uploadId = uploadContainer.dataset.uploadId;
+
+            console.log(uploadId);
+
+            const fileUpload = new FileUploadWithPreview.FileUploadWithPreview(uploadId);
+            this.uploadFields.push(fileUpload);
+
 
         }.bind(this));
 
