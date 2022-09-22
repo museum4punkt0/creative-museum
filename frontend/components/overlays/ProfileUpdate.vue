@@ -321,7 +321,7 @@
       const store = useStore()
       const user = computed(() => store.state.auth.user)
       const router = useRouter()
-      const { $config } = useContext()
+      const { $config, $auth } = useContext()
       const { updateUser, deleteUser } = userApi()
 
       const description = ref(user.value.description)
