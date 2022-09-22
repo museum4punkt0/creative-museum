@@ -90,6 +90,7 @@ class User implements UserInterface
     private Collection $playlists;
 
     #[ORM\Column(type: 'notficationtype')]
+    #[Groups(['user:me:read', 'write:me'])]
     private NotificationType $notificationSettings = NotificationType::ALL;
 
     #[ORM\Column(type: 'boolean')]

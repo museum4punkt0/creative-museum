@@ -165,8 +165,9 @@
             <div class="toggle__item">
               <input
                 id="persNotifyOn"
+                v-model="notificationsPersonal"
                 type="radio"
-                value="0"
+                :value="true"
                 name="persNotify"
                 checked
                 class="w-0 h-0 overflow-hidden"
@@ -180,8 +181,9 @@
             <div class="toggle__item">
               <input
                 id="persNotifyOff"
+                v-model="notificationsPersonal"
                 type="radio"
-                value="1"
+                :value="false"
                 name="persNotify"
                 class="w-0 h-0 overflow-hidden"
               />
@@ -202,8 +204,9 @@
             <div class="toggle__item">
               <input
                 id="globalNotifyOn"
+                v-model="notificationsPlatform"
                 type="radio"
-                value="0"
+                :value="true"
                 name="globalNotify"
                 class="w-0 h-0 overflow-hidden"
               />
@@ -216,8 +219,9 @@
             <div class="toggle__item">
               <input
                 id="globalNotifyOff"
+                v-model="notificationsPlatform"
                 type="radio"
-                value="1"
+                :value="false"
                 name="globalNotify"
                 checked
                 class="w-0 h-0 overflow-hidden"
@@ -260,7 +264,7 @@
           <div class="form-check flex flex-row mb-4">
             <div class="flex-grow-0">
               <div class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2">
-                <input id="deleteUserModeDelete" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="flexRadioDefault">
+                <input id="deleteUserModeDelete" v-model="deleteUserMode" value="delete" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="deleteUserMode">
               </div>
             </div>
             <label class="form-check-label inline-block -t-1" for="deleteUserModeDelete">
@@ -270,7 +274,7 @@
           <div class="form-check flex flex-row">
             <div class="flex-grow-0">
               <div class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2">
-                <input id="deleteUserModeAnonymize" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="flexRadioDefault" checked>
+                <input id="deleteUserModeAnonymize" v-model="deleteUserMode" value="anonymize" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="deleteUserMode" checked>
               </div>
             </div>
             <label class="form-check-label inline-block -t-1" for="deleteUserModeAnonymize">
@@ -288,7 +292,7 @@
         </button>
         <button
           class="btn-outline w-full md:min-w-xs"
-          @click.prevent="showDeleteUser = showProfileUpdate = false"
+          @click.prevent="remove"
         >
           {{ $t('globalProfileUpdate.deleteUser.confirm')}}
         </button>
@@ -302,6 +306,9 @@
     defineComponent,
     useStore,
     useContext,
+    useRouter,
+    watch,
+    onMounted,
     ref
   } from '@nuxtjs/composition-api'
   import { userApi } from '@/api/user'
@@ -313,7 +320,9 @@
     setup() {
       const store = useStore()
       const user = computed(() => store.state.auth.user)
+      const router = useRouter()
       const { $config } = useContext()
+      const { updateUser, deleteUser } = userApi()
 
       const description = ref(user.value.description)
       const firstName = ref(user.value.firstName)
@@ -323,6 +332,10 @@
       const files = ref([])
       const changed = ref(false)
       const showDeleteUser = ref(false)
+      const deleteUserMode = ref('anonymize')
+      const notificationsPersonal = ref(false)
+      const notificationsPlatform = ref(false)
+      const notificationSettings = ref('')
 
       const showProfileUpdate = computed({
         get() { return store.state.showProfileUpdate },
@@ -331,7 +344,33 @@
         }
       })
 
-      const { updateUser, removeUser } = userApi()
+      onMounted(() => {
+        if (user.value.notificationSettings === 'all') {
+          notificationsPlatform.value = true
+          notificationsPersonal.value = true
+        } else if (user.value.notificationSettings === 'platform') {
+          notificationsPlatform.value = true
+          notificationsPersonal.value = false
+        } else if (user.value.notificationSettings === 'personal') {
+          notificationsPlatform.value = false
+          notificationsPersonal.value = true
+        } else {
+          notificationsPersonal.value = false
+          notificationsPlatform.value = false
+        }
+      })
+
+      watch(() => ([notificationsPlatform.value, notificationsPersonal.value]), function() {
+        if (notificationsPlatform.value === true && notificationsPersonal.value === true) {
+          notificationSettings.value = 'all'
+        } else if (notificationsPlatform.value === false && notificationsPersonal.value === true) {
+          notificationSettings.value = 'personal'
+        } else if (notificationsPlatform.value === true && notificationsPersonal.value === false) {
+          notificationSettings.value = 'platform'
+        } else {
+          notificationSettings.value = ''
+        }
+      })
 
       store.dispatch('hideAddButton')
       store.dispatch('setCurrentCampaign', null)
@@ -369,7 +408,8 @@
           firstName: firstName.value,
           lastName: lastName.value,
           description: description.value,
-          username: username.value
+          username: username.value,
+          notificationSettings: notificationSettings.value
         }
 
         if (changed.value && files.value.length > 0) {
@@ -377,13 +417,14 @@
         }
 
         updateUser(updateData)
-
         showProfileUpdate.value = false
-
       }
 
-      function remove() {
-
+      async function remove() {
+        await deleteUser(deleteUserMode.value)
+        showDeleteUser.value = showProfileUpdate.value = false
+        $auth.logout()
+        router.redirect('/')
       }
 
       return {
@@ -396,6 +437,10 @@
         lastName,
         email,
         username,
+        deleteUserMode,
+        notificationsPersonal,
+        notificationsPlatform,
+        notificationSettings,
         inputFile,
         inputFilter,
         save,
