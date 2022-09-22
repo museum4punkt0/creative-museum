@@ -33,13 +33,11 @@ export default defineComponent({
     },
   },
   setup() {
-
     const context = useContext()
 
     return {
-      backendURL: context.$config.backendURL
+      backendURL: context.$config.backendURL,
     }
-
   },
 })
 </script>

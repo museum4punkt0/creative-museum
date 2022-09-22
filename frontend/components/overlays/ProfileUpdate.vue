@@ -1,13 +1,19 @@
 <template>
-  <UtilitiesModal v-if="showProfileUpdate" @closeModal="showProfileUpdate = false">
+  <UtilitiesModal
+    v-if="showProfileUpdate"
+    @closeModal="showProfileUpdate = false"
+  >
     <div v-show="!showDeleteUser" class="px-6 pb-6">
       <div class="page-header">
         <a class="back-btn" @click.prevent="showProfileUpdate = false">
-        {{ $t('globalProfileUpdate.header') }}</a>
+          {{ $t('globalProfileUpdate.header') }}</a
+        >
       </div>
       <client-only>
         <div class="flex flex-col items-start">
-          <div class="w-32 h-32 overflow-hidden mr-2 mb-2 rounded-full self-start border border-$highlight">
+          <div
+            class="w-32 h-32 overflow-hidden mr-2 mb-2 rounded-full self-start border border-$highlight"
+          >
             <img
               v-if="files.length"
               :src="typeof files[0] === 'string' ? files[0] : files[0].blob"
@@ -89,7 +95,9 @@
 
       <div class="mb-12">
         <h1 class="text-2xl mt-6">{{ user.fullName }}</h1>
-        <p v-if="user.achievements.length" class="highlight-text">{{ user.achievements[0].badge.title }} @{{ user.username }}</p>
+        <p v-if="user.achievements.length" class="highlight-text">
+          {{ user.achievements[0].badge.title }} @{{ user.username }}
+        </p>
         <textarea
           v-model="description"
           type="text"
@@ -100,7 +108,9 @@
       </div>
 
       <div class="mb-12">
-        <h2 class="text-2xl">{{ $t('user.profile.self.edit.personalData') }}</h2>
+        <h2 class="text-2xl">
+          {{ $t('user.profile.self.edit.personalData') }}
+        </h2>
         <div class="mt-4">
           <label
             for="input_firstname"
@@ -128,11 +138,9 @@
           />
         </div>
         <div class="mt-4">
-          <label
-            for="input_email"
-            class="highlight-text pl-2 text-sm mb-3"
-            >{{ $t('user.profile.self.edit.email') }}</label
-          >
+          <label for="input_email" class="highlight-text pl-2 text-sm mb-3">{{
+            $t('user.profile.self.edit.email')
+          }}</label>
           <input
             id="input_email"
             v-model="email"
@@ -156,7 +164,9 @@
       </div>
 
       <div class="mb-12">
-        <h2 class="text-2xl">{{ $t('user.profile.self.edit.notifications') }}</h2>
+        <h2 class="text-2xl">
+          {{ $t('user.profile.self.edit.notifications') }}
+        </h2>
         <p class="highlight-text text-sm mt-4 mb-3">
           {{ $t('user.profile.self.edit.personalNotifications') }}
         </p>
@@ -197,7 +207,7 @@
         </div>
 
         <p class="highlight-text text-sm mt-3 mb-3">
-          {{  $t('user.profile.self.edit.cmNotifications') }}
+          {{ $t('user.profile.self.edit.cmNotifications') }}
         </p>
         <div class="inline-block">
           <div class="toggle flex flex-row overflow-hidden">
@@ -252,7 +262,10 @@
         </button>
       </div>
     </div>
-    <div v-show="showDeleteUser" class="flex flex-col flex-1 h-full justify-between px-6 pb-6">
+    <div
+      v-show="showDeleteUser"
+      class="flex flex-col flex-1 h-full justify-between px-6 pb-6"
+    >
       <div>
         <div class="page-header">
           <a class="back-btn" @click.prevent="showDeleteUser = false">
@@ -260,25 +273,52 @@
           </a>
         </div>
         <div class="box-shadow-mobile p-6 md:p-0 mb-4">
-          <p class="text-xl mb-4">{{ $t('globalProfileUpdate.deleteUser.subheader') }}</p>
+          <p class="text-xl mb-4">
+            {{ $t('globalProfileUpdate.deleteUser.subheader') }}
+          </p>
           <div class="form-check flex flex-row mb-4">
             <div class="flex-grow-0">
-              <div class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2">
-                <input id="deleteUserModeDelete" v-model="deleteUserMode" value="delete" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="deleteUserMode">
+              <div
+                class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2"
+              >
+                <input
+                  id="deleteUserModeDelete"
+                  v-model="deleteUserMode"
+                  value="delete"
+                  class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"
+                  type="radio"
+                  name="deleteUserMode"
+                />
               </div>
             </div>
-            <label class="form-check-label inline-block -t-1" for="deleteUserModeDelete">
-              {{ $t('globalProfileUpdate.deleteUser.options.permanent')}}
+            <label
+              class="form-check-label inline-block -t-1"
+              for="deleteUserModeDelete"
+            >
+              {{ $t('globalProfileUpdate.deleteUser.options.permanent') }}
             </label>
           </div>
           <div class="form-check flex flex-row">
             <div class="flex-grow-0">
-              <div class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2">
-                <input id="deleteUserModeAnonymize" v-model="deleteUserMode" value="anonymize" class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer" type="radio" name="deleteUserMode" checked>
+              <div
+                class="box-shadow-small p-1 rounded-full overflow-hidden inline-block mr-2"
+              >
+                <input
+                  id="deleteUserModeAnonymize"
+                  v-model="deleteUserMode"
+                  value="anonymize"
+                  class="form-check-input appearance-none rounded-full h-4 w-4 border-1 border-grey bg-grey checked:bg-$highlight checked:border-grey focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left cursor-pointer"
+                  type="radio"
+                  name="deleteUserMode"
+                  checked
+                />
               </div>
             </div>
-            <label class="form-check-label inline-block -t-1" for="deleteUserModeAnonymize">
-              {{ $t('globalProfileUpdate.deleteUser.options.anonymize')}}
+            <label
+              class="form-check-label inline-block -t-1"
+              for="deleteUserModeAnonymize"
+            >
+              {{ $t('globalProfileUpdate.deleteUser.options.anonymize') }}
             </label>
           </div>
         </div>
@@ -288,166 +328,175 @@
           class="btn-highlight w-full md:min-w-xs"
           @click.prevent="showDeleteUser = showProfileUpdate = false"
         >
-          {{ $t('globalProfileUpdate.deleteUser.abort')}}
+          {{ $t('globalProfileUpdate.deleteUser.abort') }}
         </button>
-        <button
-          class="btn-outline w-full md:min-w-xs"
-          @click.prevent="remove"
-        >
-          {{ $t('globalProfileUpdate.deleteUser.confirm')}}
+        <button class="btn-outline w-full md:min-w-xs" @click.prevent="remove">
+          {{ $t('globalProfileUpdate.deleteUser.confirm') }}
         </button>
       </div>
     </div>
   </UtilitiesModal>
 </template>
 <script>
-  import {
-    computed,
-    defineComponent,
-    useStore,
-    useContext,
-    useRouter,
-    watch,
-    onMounted,
-    ref
-  } from '@nuxtjs/composition-api'
-  import { userApi } from '@/api/user'
+import {
+  computed,
+  defineComponent,
+  useStore,
+  useContext,
+  useRouter,
+  watch,
+  onMounted,
+  ref,
+} from '@nuxtjs/composition-api'
+import { userApi } from '@/api/user'
 
-  export default defineComponent({
-    components: {
-      FileUpload: () => import('vue-upload-component'),
-    },
-    setup() {
-      const store = useStore()
-      const user = computed(() => store.state.auth.user)
-      const router = useRouter()
-      const { $config, $auth } = useContext()
-      const { updateUser, deleteUser } = userApi()
+export default defineComponent({
+  components: {
+    FileUpload: () => import('vue-upload-component'),
+  },
+  setup() {
+    const store = useStore()
+    const user = computed(() => store.state.auth.user)
+    const router = useRouter()
+    const { $config, $auth } = useContext()
+    const { updateUser, deleteUser } = userApi()
 
-      const description = ref(user.value.description)
-      const firstName = ref(user.value.firstName)
-      const lastName = ref(user.value.lastName)
-      const email = ref(user.value.email)
-      const username = ref(user.value.username)
-      const files = ref([])
-      const changed = ref(false)
-      const showDeleteUser = ref(false)
-      const deleteUserMode = ref('anonymize')
-      const notificationsPersonal = ref(false)
-      const notificationsPlatform = ref(false)
-      const notificationSettings = ref('')
+    const description = ref(user.value.description)
+    const firstName = ref(user.value.firstName)
+    const lastName = ref(user.value.lastName)
+    const email = ref(user.value.email)
+    const username = ref(user.value.username)
+    const files = ref([])
+    const changed = ref(false)
+    const showDeleteUser = ref(false)
+    const deleteUserMode = ref('anonymize')
+    const notificationsPersonal = ref(false)
+    const notificationsPlatform = ref(false)
+    const notificationSettings = ref('')
 
-      const showProfileUpdate = computed({
-        get() { return store.state.showProfileUpdate },
-        set() {
-          store.dispatch('hideProfileUpdate')
-        }
-      })
+    const showProfileUpdate = computed({
+      get() {
+        return store.state.showProfileUpdate
+      },
+      set() {
+        store.dispatch('hideProfileUpdate')
+      },
+    })
 
-      onMounted(() => {
-        if (user.value.notificationSettings === 'all') {
-          notificationsPlatform.value = true
-          notificationsPersonal.value = true
-        } else if (user.value.notificationSettings === 'platform') {
-          notificationsPlatform.value = true
-          notificationsPersonal.value = false
-        } else if (user.value.notificationSettings === 'personal') {
-          notificationsPlatform.value = false
-          notificationsPersonal.value = true
-        } else {
-          notificationsPersonal.value = false
-          notificationsPlatform.value = false
-        }
-      })
+    onMounted(() => {
+      if (user.value.notificationSettings === 'all') {
+        notificationsPlatform.value = true
+        notificationsPersonal.value = true
+      } else if (user.value.notificationSettings === 'platform') {
+        notificationsPlatform.value = true
+        notificationsPersonal.value = false
+      } else if (user.value.notificationSettings === 'personal') {
+        notificationsPlatform.value = false
+        notificationsPersonal.value = true
+      } else {
+        notificationsPersonal.value = false
+        notificationsPlatform.value = false
+      }
+    })
 
-      watch(() => ([notificationsPlatform.value, notificationsPersonal.value]), function() {
-        if (notificationsPlatform.value === true && notificationsPersonal.value === true) {
+    watch(
+      () => [notificationsPlatform.value, notificationsPersonal.value],
+      function () {
+        if (
+          notificationsPlatform.value === true &&
+          notificationsPersonal.value === true
+        ) {
           notificationSettings.value = 'all'
-        } else if (notificationsPlatform.value === false && notificationsPersonal.value === true) {
+        } else if (
+          notificationsPlatform.value === false &&
+          notificationsPersonal.value === true
+        ) {
           notificationSettings.value = 'personal'
-        } else if (notificationsPlatform.value === true && notificationsPersonal.value === false) {
+        } else if (
+          notificationsPlatform.value === true &&
+          notificationsPersonal.value === false
+        ) {
           notificationSettings.value = 'platform'
         } else {
           notificationSettings.value = ''
         }
-      })
-
-      store.dispatch('hideAddButton')
-      store.dispatch('setCurrentCampaign', null)
-
-      if ('profilePicture' in user.value) {
-        files.value = [
-          $config.backendURL + user.value.profilePicture.contentUrl,
-        ]
       }
+    )
 
-      function inputFile(newFile, oldFile, prevent) {
-        if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
-          newFile.blob = ''
-          const URL = window.URL || window.webkitURL
-          if (URL && URL.createObjectURL) {
-            newFile.blob = URL.createObjectURL(newFile.file)
-          }
-        }
-        if (!newFile && oldFile) {
-          files.value = []
-        }
-        changed.value = true
-      }
+    store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
 
-      function inputFilter(newFile, oldFile, prevent) {
-        if (newFile) {
-          if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
-            return prevent()
-          }
+    if ('profilePicture' in user.value) {
+      files.value = [$config.backendURL + user.value.profilePicture.contentUrl]
+    }
+
+    function inputFile(newFile, oldFile, prevent) {
+      if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+        newFile.blob = ''
+        const URL = window.URL || window.webkitURL
+        if (URL && URL.createObjectURL) {
+          newFile.blob = URL.createObjectURL(newFile.file)
         }
       }
+      if (!newFile && oldFile) {
+        files.value = []
+      }
+      changed.value = true
+    }
 
-      function save() {
-        const updateData = {
-          firstName: firstName.value,
-          lastName: lastName.value,
-          description: description.value,
-          username: username.value,
-          notificationSettings: notificationSettings.value
+    function inputFilter(newFile, oldFile, prevent) {
+      if (newFile) {
+        if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
+          return prevent()
         }
+      }
+    }
 
-        if (changed.value && files.value.length > 0) {
-          updateData.picture = files.value[0]
-        }
-
-        updateUser(updateData)
-        showProfileUpdate.value = false
+    function save() {
+      const updateData = {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        description: description.value,
+        username: username.value,
+        notificationSettings: notificationSettings.value,
       }
 
-      async function remove() {
-        await deleteUser(deleteUserMode.value)
-        showDeleteUser.value = showProfileUpdate.value = false
-        $auth.logout()
-        router.redirect('/')
+      if (changed.value && files.value.length > 0) {
+        updateData.picture = files.value[0]
       }
 
-      return {
-        showDeleteUser,
-        showProfileUpdate,
-        files,
-        user,
-        description,
-        firstName,
-        lastName,
-        email,
-        username,
-        deleteUserMode,
-        notificationsPersonal,
-        notificationsPlatform,
-        notificationSettings,
-        inputFile,
-        inputFilter,
-        save,
-        remove,
-        changed,
-        backendURL: $config.backendURL,
-      }
-    },
-  })
-  </script>
+      updateUser(updateData)
+      showProfileUpdate.value = false
+    }
+
+    async function remove() {
+      await deleteUser(deleteUserMode.value)
+      showDeleteUser.value = showProfileUpdate.value = false
+      $auth.logout()
+      router.redirect('/')
+    }
+
+    return {
+      showDeleteUser,
+      showProfileUpdate,
+      files,
+      user,
+      description,
+      firstName,
+      lastName,
+      email,
+      username,
+      deleteUserMode,
+      notificationsPersonal,
+      notificationsPlatform,
+      notificationSettings,
+      inputFile,
+      inputFilter,
+      save,
+      remove,
+      changed,
+      backendURL: $config.backendURL,
+    }
+  },
+})
+</script>

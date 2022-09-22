@@ -2,7 +2,9 @@
   <div
     class="box-shadow px-4 py-2 rounded-full flex flex-row items-end justify-center"
   >
-    <span class="text-2xl mr-2">{{ Math.abs(campaignScore).toLocaleString() }}</span>
+    <span class="text-2xl mr-2">{{
+      Math.abs(campaignScore).toLocaleString()
+    }}</span>
     <span>{{ $t('points') }}</span>
   </div>
 </template>
@@ -17,11 +19,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-
     const { $auth } = useContext()
 
     const campaignScore = computed(() => {
-      if (! $auth.loggedIn || ! $auth.user.hasOwnProperty('memberships')) {
+      if (!$auth.loggedIn || !$auth.user.hasOwnProperty('memberships')) {
         return 0
       }
       for (const id in $auth.user.memberships) {
@@ -35,7 +36,7 @@ export default defineComponent({
     })
 
     return {
-      campaignScore
+      campaignScore,
     }
   },
 })

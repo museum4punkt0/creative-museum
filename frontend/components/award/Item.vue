@@ -1,6 +1,9 @@
 <template>
   <div :style="styleAttr">
-    <div class="flex flex-row items-center mb-2 award-item cursor-pointer" @click.prevent="awardDetailOpen = true">
+    <div
+      class="flex flex-row items-center mb-2 award-item cursor-pointer"
+      @click.prevent="awardDetailOpen = true"
+    >
       <div class="w-20 h-20 overflow-hidden mr-3 flex-shrink-0">
         <img
           v-if="award.picture"
@@ -11,8 +14,14 @@
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ award.title }}</p>
-        <p class="text-$highlight text-sm">{{ award.price.toLocaleString() + ' ' + $t('points') }}</p>
-        <button v-if="award.available && !award.taken" class="btn-outline self-start mt-2 text-xs p-1" type="button">
+        <p class="text-$highlight text-sm">
+          {{ award.price.toLocaleString() + ' ' + $t('points') }}
+        </p>
+        <button
+          v-if="award.available && !award.taken"
+          class="btn-outline self-start mt-2 text-xs p-1"
+          type="button"
+        >
           {{ $t('awards.gift') }}
         </button>
       </div>
@@ -24,21 +33,35 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <UtilitiesModal v-if="awardDetailOpen === true" @closeModal="awardDetailOpen = false">
-        <AwardDetail :award="award" @closeAwardDetail="awardDetailOpen = false; $emit('awardsChange')" />
+      <UtilitiesModal
+        v-if="awardDetailOpen === true"
+        @closeModal="awardDetailOpen = false"
+      >
+        <AwardDetail
+          :award="award"
+          @closeAwardDetail="
+            awardDetailOpen = false
+            $emit('awardsChange')
+          "
+        />
       </UtilitiesModal>
     </transition>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, useContext, ref, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  ref,
+  computed,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
     award: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ['awardsChange'],
   setup(props) {
@@ -52,8 +75,8 @@ export default defineComponent({
     return {
       styleAttr,
       awardDetailOpen,
-      backendURL: context.$config.backendURL
+      backendURL: context.$config.backendURL,
     }
-  }
+  },
 })
 </script>

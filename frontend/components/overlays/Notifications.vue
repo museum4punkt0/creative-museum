@@ -1,5 +1,5 @@
 <template>
-  <div v-if="notifications && notifications.length > 0"  class="mb-12">
+  <div v-if="notifications && notifications.length > 0" class="mb-12">
     <transition
       enter-active-class="duration-300 ease-out opacity-0"
       enter-to-class="opacity-100"
@@ -8,13 +8,22 @@
       leave-to-class="opacity-0"
     >
       <UtilitiesModal>
-        <OverlaysNotificationItem :notification="notifications[0]" @refetchNotifications="getNotifications" />
+        <OverlaysNotificationItem
+          :notification="notifications[0]"
+          @refetchNotifications="getNotifications"
+        />
       </UtilitiesModal>
     </transition>
   </div>
 </template>
 <script>
-import { defineComponent, ref, onMounted, useStore, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  useStore,
+  watch,
+} from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
@@ -29,11 +38,14 @@ export default defineComponent({
     const { fetchUnviewedNotifications } = notificationApi()
     const notifications = ref(null)
 
-    watch(() => store.getters.notificationsUpdated, async function(newVal) {
-      if (newVal === false) {
-        await getNotifications()
+    watch(
+      () => store.getters.notificationsUpdated,
+      async function (newVal) {
+        if (newVal === false) {
+          await getNotifications()
+        }
       }
-    })
+    )
 
     onMounted(async () => {
       await getNotifications()
@@ -46,7 +58,7 @@ export default defineComponent({
 
     return {
       notifications,
-      getNotifications
+      getNotifications,
     }
   },
 })

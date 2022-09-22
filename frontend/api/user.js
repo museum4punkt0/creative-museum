@@ -18,9 +18,7 @@ export const userApi = () => {
   }
 
   async function fetchUser(uuid) {
-    const res = await $api.get(
-      `users/${uuid}`
-    )
+    const res = await $api.get(`users/${uuid}`)
     return res
   }
 

@@ -1,6 +1,9 @@
 <template>
   <div :style="styleAttr">
-    <div class="flex flex-row items-center mb-2 award-item cursor-pointer" @click.prevent="badgeDetailOpen = true">
+    <div
+      class="flex flex-row items-center mb-2 award-item cursor-pointer"
+      @click.prevent="badgeDetailOpen = true"
+    >
       <div class="w-20 h-20 mr-3 overflow-hidden flex-shrink-0">
         <img
           v-if="badge.picture"
@@ -21,21 +24,35 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <UtilitiesModal v-if="badgeDetailOpen === true" @closeModal="badgeDetailOpen = false">
-        <badgeDetail :badge="badge" @closebadgeDetail="badgeDetailOpen = false; $emit('awardsChange')" />
+      <UtilitiesModal
+        v-if="badgeDetailOpen === true"
+        @closeModal="badgeDetailOpen = false"
+      >
+        <badgeDetail
+          :badge="badge"
+          @closebadgeDetail="
+            badgeDetailOpen = false
+            $emit('awardsChange')
+          "
+        />
       </UtilitiesModal>
     </transition>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, useContext, ref, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  ref,
+  computed,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
     badge: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const context = useContext()
@@ -48,8 +65,8 @@ export default defineComponent({
     return {
       styleAttr,
       badgeDetailOpen,
-      backendURL: context.$config.backendURL
+      backendURL: context.$config.backendURL,
     }
-  }
+  },
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center text-white">
-    <LogoFull class="inline-block my-6 w-24"/>
+    <LogoFull class="inline-block my-6 w-24" />
     <div class="mb-3">
       <strong>&copy; {{ $dayjs().year() }} Badisches Landesmuseum</strong>
     </div>

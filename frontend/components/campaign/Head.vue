@@ -96,7 +96,7 @@ export default defineComponent({
       formattedDescription,
       showLongDescription,
       isLargerThanLg,
-      campaignContrastColor
+      campaignContrastColor,
     }
   },
 })

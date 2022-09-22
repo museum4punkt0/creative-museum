@@ -5,13 +5,14 @@ export const badgeApi = () => {
   const store = useStore()
 
   const fetchBadges = async (campaign) => {
-
     let response = null
 
     if (campaign) {
       response = await $api.get(`badges?campaign=${campaign}`)
     } else {
-      response = await $api.get('badges?campaign.active=1&order[campaign.start]=asc&order[threshold]=asc')
+      response = await $api.get(
+        'badges?campaign.active=1&order[campaign.start]=asc&order[threshold]=asc'
+      )
     }
 
     $auth.fetchUser()
@@ -26,6 +27,6 @@ export const badgeApi = () => {
 
   return {
     fetchBadges,
-    fetchBadged
+    fetchBadged,
   }
 }

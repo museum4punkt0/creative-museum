@@ -4,7 +4,13 @@
   </UtilitiesModal>
 </template>
 <script>
-import { defineComponent, ref, useContext, useStore, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useStore,
+  watch,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
@@ -12,17 +18,20 @@ export default defineComponent({
     const store = useStore()
     const { $auth } = useContext()
 
-    if ( $auth.loggedIn && !$auth.user.tutorial && $auth.user.username ) {
+    if ($auth.loggedIn && !$auth.user.tutorial && $auth.user.username) {
       tutorialOpen.value = true
     }
 
-    $auth.$storage.watchState('user.username', _ => {
+    $auth.$storage.watchState('user.username', (_) => {
       tutorialOpen.value = true
     })
 
-    watch(() => store.getters.showTutorial, function(newVal) {
-      tutorialOpen.value = newVal
-    })
+    watch(
+      () => store.getters.showTutorial,
+      function (newVal) {
+        tutorialOpen.value = newVal
+      }
+    )
 
     function closeTutorial() {
       tutorialOpen.value = false
@@ -31,7 +40,7 @@ export default defineComponent({
 
     return {
       tutorialOpen,
-      closeTutorial
+      closeTutorial,
     }
   },
 })

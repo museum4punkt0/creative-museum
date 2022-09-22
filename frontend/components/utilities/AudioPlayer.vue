@@ -1,55 +1,52 @@
 <template>
-  <div>
-    <div class="flex flex-row items-center">
-      <div class="h-6 w-6 text-center">
-        <div v-if="isLoading" class="audio__play-loading">
-          <span
-            v-for="item in 8"
-            :key="item"
-            class="bg-$highlight"
-          />
-        </div>
-
-        <div v-else class="cursor-pointer">
-          <div
-            v-if="!isPlaying"
-            class="transform translate-y-[-3px]"
-            @click.stop="play"
-          >
-            <PlayIcon class="fill-white" />
-          </div>
-
-          <div
-            v-else
-            @click.stop="pause"
-          >
-            <PauseIcon class="fill-white" />
-          </div>
-        </div>
-      </div>
-      <div
-        ref="audioProgressWrap"
-        class="h-px flex-1 mx-3 bg-white/30 relative""
-        @click.stop="handleClickProgressWrap"
-      >
-        <div
-          ref="audioProgress"
-          class="audio__progress"
-        />
-        <span ref="audioProgressPercent" class="h-px bg-white absolute top-0 left-0" />
-        <div
-          ref="audioProgressPoint"
-          class="bg-$highlight w-2 h-2 rounded-full absolute left-0 top-0 transform -translate-x-1/2 -translate-y-1/2"
-          @panstart="handleProgressPanstart"
-          @panend="handleProgressPanend"
-          @panmove="handleProgressPanmove"
+  <div class="flex flex-row items-center">
+    <div class="h-6 w-6 text-center">
+      <div v-if="isLoading" class="audio__play-loading">
+        <span
+          v-for="item in 8"
+          :key="item"
+          class="bg-$highlight"
         />
       </div>
-      <div class="bg-white rounded-xl min-w-20 text-center py-1 whitespace-nowrap text-xs text-black">
-        {{ currentTimeFormatted }} / {{ durationFormatted }}
+
+      <div v-else class="cursor-pointer">
+        <div
+          v-if="!isPlaying"
+          class="transform translate-y-[-3px]"
+          @click.stop="play"
+        >
+          <PlayIcon class="fill-white" />
+        </div>
+
+        <div
+          v-else
+          @click.stop="pause"
+        >
+          <PauseIcon class="fill-white" />
+        </div>
       </div>
     </div>
-
+    <div
+      ref="audioProgressWrap"
+      class="h-px flex-1 mx-3 bg-white/30 relative""
+      @click.stop="handleClickProgressWrap"
+    >
+      <div
+        ref="audioProgress"
+        class="audio__progress"
+      />
+      <span ref="audioProgressPercent" class="h-px bg-white absolute top-0 left-0" />
+      <div
+        ref="audioProgressPoint"
+        class="bg-$highlight w-2 h-2 rounded-full absolute left-0 top-0 transform -translate-x-1/2 -translate-y-1/2"
+        @panstart="handleProgressPanstart"
+        @panend="handleProgressPanend"
+        @panmove="handleProgressPanmove"
+      />
+    </div>
+    <div class="bg-white rounded-xl min-w-20 text-center py-1 whitespace-nowrap text-xs text-black">
+      {{ currentTimeFormatted }} / {{ durationFormatted }}
+    </div>
     <audio
       ref="audio"
       class="audio-player__audio"
@@ -58,7 +55,7 @@
       @ended="onEnded"
       @timeupdate="onTimeUpdate"
       @loadedmetadata="onLoadedmetadata"
-    ></audio>
+    />
   </div>
 </template>
 

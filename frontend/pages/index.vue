@@ -10,7 +10,9 @@
       <div v-else-if="campaigns && campaigns.length === 0">No Campaigns</div>
       <div v-else>
         <div class="container text-center min-h-2xl relative">
-          <UtilitiesLoadingIndicator class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          <UtilitiesLoadingIndicator
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          />
         </div>
       </div>
     </div>
@@ -22,7 +24,7 @@ import {
   useStore,
   ref,
   useContext,
-  onMounted
+  onMounted,
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
@@ -31,7 +33,6 @@ export default defineComponent({
   layout: 'WithoutContainer',
   auth: false,
   setup() {
-
     const store = useStore()
     const { $auth } = useContext()
     const { fetchCampaigns } = campaignApi()

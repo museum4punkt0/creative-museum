@@ -1,20 +1,35 @@
 <template>
-  <div v-if="notifications && notifications.length > 0"  class="mb-12">
+  <div v-if="notifications && notifications.length > 0" class="mb-12">
     <div class="mb-10">
       <p class="text-2xl">
         {{ $t('campaign.latestPosts') }}
       </p>
     </div>
 
-      <div v-for="(notificationGroup, key) in notificationsGrouped" :key="key" class="mb-10">
-        <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
-        <NotificationItem v-for="notification in notificationGroup" :key="notification.id" :notification="notification" />
-      </div>
-
+    <div
+      v-for="(notificationGroup, key) in notificationsGrouped"
+      :key="key"
+      class="mb-10"
+    >
+      <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
+      <NotificationItem
+        v-for="notification in notificationGroup"
+        :key="notification.id"
+        :notification="notification"
+      />
+    </div>
   </div>
 </template>
 <script>
-import { defineComponent, ref, onMounted, useContext, useStore, computed, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  useContext,
+  useStore,
+  computed,
+  watch,
+} from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
@@ -50,11 +65,14 @@ export default defineComponent({
       }
     })
 
-    watch(() => store.getters.notificationsUpdated, async function(newVal) {
-      if (newVal === false) {
-        await getNotifications()
+    watch(
+      () => store.getters.notificationsUpdated,
+      async function (newVal) {
+        if (newVal === false) {
+          await getNotifications()
+        }
       }
-    })
+    )
 
     onMounted(async () => {
       await getNotifications()

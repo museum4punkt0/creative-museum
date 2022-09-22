@@ -26,9 +26,9 @@
           type="button"
           :class="
             isMenuVisible
-              ? '~ rounded-full white' :
-              '~ rounded-none transparent'
-            "
+              ? '~ rounded-full white'
+              : '~ rounded-none transparent'
+          "
           @click.prevent="
             isMenuVisible = !isMenuVisible
             isAddVisible = false
@@ -36,11 +36,7 @@
         >
           <span
             class="pointer-events-none space-y-1 block"
-            :class="
-              isMenuVisible
-                ? '-mt-0.5'
-                : ''
-            "
+            :class="isMenuVisible ? '-mt-0.5' : ''"
           >
             <span
               class="block h-px bg-white transition-all duration-300"
@@ -53,9 +49,7 @@
             <span
               class="block h-px bg-white transform-gpu transition-all duration-500"
               :class="
-                isMenuVisible
-                  ? 'transform-gpu translate-x-10 opacity-0'
-                  : ''
+                isMenuVisible ? 'transform-gpu translate-x-10 opacity-0' : ''
               "
             />
             <span
@@ -117,7 +111,7 @@ import {
   ref,
   useStore,
   computed,
-  watch
+  watch,
 } from '@nuxtjs/composition-api'
 import Logo from '@/assets/images/logo.svg?inline'
 
@@ -156,13 +150,19 @@ export default defineComponent({
       openAddModalType.value = ''
     }
 
-    watch(() => store.getters.showAddModal, function() {
-      isAddVisible.value = true
-    })
+    watch(
+      () => store.getters.showAddModal,
+      function () {
+        isAddVisible.value = true
+      }
+    )
 
-    watch(() => isAddVisible.value, function() {
-      store.dispatch('hideAddModal')
-    })
+    watch(
+      () => isAddVisible.value,
+      function () {
+        store.dispatch('hideAddModal')
+      }
+    )
 
     return {
       isAddButtonVisible: computed(() => store.state.showAddButton),

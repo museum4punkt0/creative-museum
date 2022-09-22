@@ -5,13 +5,14 @@ export const awardApi = () => {
   const store = useStore()
 
   const fetchAwards = async (campaign) => {
-
     let response = null
 
     if (campaign) {
       response = await $api.get(`awards?campaign=${campaign}`)
     } else {
-      response = await $api.get('awards?campaign.active=1&order[campaign.start]=asc&order[price]=asc')
+      response = await $api.get(
+        'awards?campaign.active=1&order[campaign.start]=asc&order[price]=asc'
+      )
     }
 
     return response
@@ -25,7 +26,7 @@ export const awardApi = () => {
     const response = await $api.post(`awardeds`, {
       giver: `/v1/users/${$auth.user.uuid}`,
       winner: `/v1/users/${userId}`,
-      award: `/v1/awards/${awardId}`
+      award: `/v1/awards/${awardId}`,
     })
 
     $auth.fetchUser()

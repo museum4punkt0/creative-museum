@@ -3,7 +3,9 @@
     <div
       v-if="post.type !== 'system'"
       class="box-shadow"
-      :class="[post.type === 'playlist' ? `text-${textColor} highlight-bg` : '']"
+      :class="[
+        post.type === 'playlist' ? `text-${textColor} highlight-bg` : '',
+      ]"
     >
       <PostHead
         :post="post"
@@ -12,7 +14,12 @@
         @toggleBookmarkState="$emit('toggleBookmarkState', post.id)"
         @postDeleted="$emit('postDeleted')"
       />
-      <component :is="componentName" :post="post" class="mb-4" @updatePost="$emit('updatePost', post.id)" />
+      <component
+        :is="componentName"
+        :post="post"
+        class="mb-4"
+        @updatePost="$emit('updatePost', post.id)"
+      />
       <PostFooter
         :post="post"
         :text-color="textColor"
@@ -28,9 +35,9 @@
       <p>
         {{
           $t(`campaign.systemMessages.${post.body}`, {
-            giver:  postMetadata.giver ? postMetadata.giver.username : '',
+            giver: postMetadata.giver ? postMetadata.giver.username : '',
             winner: postMetadata.winner ? postMetadata.winner.username : '',
-            award: postMetadata.award ? postMetadata.award.title : ''
+            award: postMetadata.award ? postMetadata.award.title : '',
           })
         }}
       </p>
@@ -56,7 +63,20 @@
           <div v-if="voted || !post.campaign.active" :key="key" class="mb-6">
             <div class="mb-2">{{ option.text }}</div>
             <div class="box-shadow-inset rounded-xl">
-              <div class="bg-$highlight rounded-xl text-$highlight-contrast text-center" :style="`width: ${Math.round((100 / total ) * option.sum)}%`"><span class="px-3 py-0.5 inline-block" :class="Math.round((100 / total) * option.sum) < 10 ? 'text-white' : ''">{{ Math.round((100 / total) * option.sum) }}%</span></div>
+              <div
+                class="bg-$highlight rounded-xl text-$highlight-contrast text-center"
+                :style="`width: ${Math.round((100 / total) * option.sum)}%`"
+              >
+                <span
+                  class="px-3 py-0.5 inline-block"
+                  :class="
+                    Math.round((100 / total) * option.sum) < 10
+                      ? 'text-white'
+                      : ''
+                  "
+                  >{{ Math.round((100 / total) * option.sum) }}%</span
+                >
+              </div>
             </div>
           </div>
         </template>
@@ -76,10 +96,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: [
-    'updatePost',
-    'postDeleted'
-  ],
+  emits: ['updatePost', 'postDeleted'],
   setup(props, context) {
     const { getOptions, selectOption, getFeedbackResults } = feedbackApi()
 
@@ -111,7 +128,7 @@ export default defineComponent({
       return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
     })
 
-    function  getContrastColorClass() {
+    function getContrastColorClass() {
       return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
     }
 
@@ -169,7 +186,7 @@ export default defineComponent({
       feedbackOptions,
       voted,
       total,
-      postMetadata
+      postMetadata,
     }
   },
 })

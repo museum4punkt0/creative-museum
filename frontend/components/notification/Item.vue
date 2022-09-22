@@ -4,17 +4,17 @@
       class="bg-$highlight w-10 h-10 rounded-full mb-4 mr-3 overflow-hidden flex-shrink-0"
     >
       <img
-          v-if="notificationPicture"
-          :src="`${backendURL}/${notificationPicture}`"
-          class="max-w-18 h-auto"
-        />
+        v-if="notificationPicture"
+        :src="`${backendURL}/${notificationPicture}`"
+        class="max-w-18 h-auto"
+      />
     </div>
     <div class="flex flex-col flex-grow">
       <p class="mb-1">
         {{
           $t(`notifications.${notification.text}.title`, {
             award: notification.award ? notification.award.title : '',
-            badge: notification.badge ? notification.badge.title : ''
+            badge: notification.badge ? notification.badge.title : '',
           })
         }}
       </p>
@@ -22,10 +22,12 @@
         {{
           $t(`notifications.${notification.text}.text`, {
             campaign: notification.campaign ? notification.campaign.title : '',
-            points: notification.scorePoints ? notification.scorePoints.toLocaleString() : '',
+            points: notification.scorePoints
+              ? notification.scorePoints.toLocaleString()
+              : '',
             author: notification.post ? notification.post.author.username : '',
             badge: notification.badge ? notification.badge.title : '',
-            award: notification.award ? notification.award.title : ''
+            award: notification.award ? notification.award.title : '',
           })
         }}
       </p>
@@ -39,15 +41,16 @@ export default defineComponent({
   props: {
     notification: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
-
     const { $config } = useContext()
 
     const styleAttr = computed(() => {
-      return props.notification.campaign ? `--highlight: ${props.notification.campaign.color};` : ''
+      return props.notification.campaign
+        ? `--highlight: ${props.notification.campaign.color};`
+        : ''
     })
 
     const notificationPicture = computed(() => {
@@ -65,7 +68,7 @@ export default defineComponent({
     return {
       styleAttr,
       notificationPicture,
-      backendURL: $config.backendURL
+      backendURL: $config.backendURL,
     }
   },
 })

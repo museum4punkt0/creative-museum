@@ -16,11 +16,10 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, useStore} from '@nuxtjs/composition-api'
+import { defineComponent, computed, useStore } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-
     const store = useStore()
 
     const splashscreenShown = computed(() => {
@@ -34,7 +33,7 @@ export default defineComponent({
     }
 
     return {
-      splashscreenShown
+      splashscreenShown,
     }
   },
 })

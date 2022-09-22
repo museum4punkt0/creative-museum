@@ -15,7 +15,10 @@
         v-for="(item, key) in options"
         :key="key"
         class="btn-outline border-dashed px-2 py-1 mb-3 rounded-full text-sm whitespace-nowrap border border-white self-start"
-        :class="[item.id === selectedValue ? 'active' : '', key > 0 ? 'ml-3 lg:ml-0' : '']"
+        :class="[
+          item.id === selectedValue ? 'active' : '',
+          key > 0 ? 'ml-3 lg:ml-0' : '',
+        ]"
         @click="selectValue(item.id)"
       >
         {{ item.text }}
@@ -66,7 +69,7 @@ export default defineComponent({
       selectedValue,
       toggleDropdown,
       selectValue,
-      closeDropdown
+      closeDropdown,
     }
   },
 })

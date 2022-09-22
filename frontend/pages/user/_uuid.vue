@@ -1,7 +1,7 @@
 <template>
   <div class="lg:grid lg:grid-cols-12 lg:gap-4">
     <div class="lg:col-span-3 lg:pr-10">
-      <SidebarLeft v-if="user" :user="user"/>
+      <SidebarLeft v-if="user" :user="user" />
     </div>
     <div class="lg:col-span-6 lg:pr-10">
       <div class="flex flex-row content-between">
@@ -27,7 +27,11 @@
       </div>
       <div class="relative pb-10 list">
         <div v-if="mode === 'posts'">
-          <PostList v-if="posts && posts.length" :posts="posts" source="userprofile" />
+          <PostList
+            v-if="posts && posts.length"
+            :posts="posts"
+            source="userprofile"
+          />
         </div>
         <div v-if="mode === 'playlists'" class="grid grid-cols-2 gap-6 mt-4">
           <a
@@ -41,16 +45,28 @@
             </span>
           </a>
 
-          <UtilitiesModal v-if="showPlaylist > 0 && playlistPosts" @closeModal="showPlaylist = 0">
+          <UtilitiesModal
+            v-if="showPlaylist > 0 && playlistPosts"
+            @closeModal="showPlaylist = 0"
+          >
             <div class="flex flex-col flex-1 justify-between">
               <div>
                 <div class="page-header p-6">
-                  <button type="button" class="back-btn" @click.prevent="showPlaylist = 0">
+                  <button
+                    type="button"
+                    class="back-btn"
+                    @click.prevent="showPlaylist = 0"
+                  >
                     {{ playlistPosts.title }}
                   </button>
                 </div>
                 <div class="px-4 pb-4">
-                  <PostList v-if="playlistPosts" :posts="playlistPosts.posts" source="playlist" class="playlist-items" />
+                  <PostList
+                    v-if="playlistPosts"
+                    :posts="playlistPosts.posts"
+                    source="playlist"
+                    class="playlist-items"
+                  />
                 </div>
               </div>
             </div>
@@ -73,76 +89,75 @@ import {
   useContext,
   useRoute,
   useRouter,
-  watch
+  watch,
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 import { postApi } from '@/api/post'
 import { playlistApi } from '@/api/playlist'
 
 export default defineComponent({
-    name: "ProfilePage",
-    setup() {
-        const { fetchUser } = userApi()
-        const { fetchUserPosts } = postApi()
-        const { fetchPlaylist } = playlistApi()
-        const user = ref(null)
-        const mode = ref("posts")
-        const store = useStore()
-        const route = useRoute()
-        const router = useRouter()
-        const { $config, $auth } = useContext()
-        const posts = ref(null)
-        const playlists = ref(null)
-        const playlistPosts = ref(null)
+  name: 'ProfilePage',
+  setup() {
+    const { fetchUser } = userApi()
+    const { fetchUserPosts } = postApi()
+    const { fetchPlaylist } = playlistApi()
+    const user = ref(null)
+    const mode = ref('posts')
+    const store = useStore()
+    const route = useRoute()
+    const router = useRouter()
+    const { $config, $auth } = useContext()
+    const posts = ref(null)
+    const playlists = ref(null)
+    const playlistPosts = ref(null)
 
-        const showPlaylist = ref(0)
+    const showPlaylist = ref(0)
 
-        store.dispatch('hideAddButton')
-        store.dispatch('setCurrentCampaign', null)
+    store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
 
-        onMounted(async () => {
+    onMounted(async () => {
+      user.value = await fetchUser(route.value.params.uuid)
 
-            user.value = await fetchUser(route.value.params.uuid)
+      if (user.value && user.value.error) {
+        router.push('/404')
+      }
 
-            if (user.value && user.value.error) {
-              router.push('/404')
-            }
+      posts.value = await fetchUserPosts(user.value.id, 1)
+      playlists.value = user.value.playlists
+    })
 
-            posts.value = await fetchUserPosts(user.value.id, 1)
-            playlists.value = user.value.playlists
-        })
+    watch(showPlaylist, (currentValue) => {
+      if (currentValue > 0) {
+        loadPlaylist()
+      }
+    })
 
-        watch(showPlaylist, (currentValue) => {
-          if (currentValue > 0) {
-            loadPlaylist()
-          }
-        })
+    function showPosts() {
+      mode.value = 'posts'
+    }
+    function showPlaylists() {
+      mode.value = 'playlists'
+    }
 
-        function showPosts() {
-            mode.value = 'posts'
-        }
-        function showPlaylists() {
-            mode.value = 'playlists'
-        }
+    async function loadPlaylist() {
+      playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
+    }
 
-        async function loadPlaylist() {
-          playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
-        }
-
-        function backButton() { }
-        return {
-            user,
-            backButton,
-            mode,
-            showPlaylist,
-            showPosts,
-            showPlaylists,
-            loadPlaylist,
-            posts,
-            playlists,
-            playlistPosts,
-            backendUrl: $config.backendUrl
-        };
-    },
+    function backButton() {}
+    return {
+      user,
+      backButton,
+      mode,
+      showPlaylist,
+      showPosts,
+      showPlaylists,
+      loadPlaylist,
+      posts,
+      playlists,
+      playlistPosts,
+      backendUrl: $config.backendUrl,
+    }
+  },
 })
 </script>

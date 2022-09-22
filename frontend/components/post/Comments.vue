@@ -5,9 +5,11 @@
       :class="post.type !== 'playlist' ? 'highlight-text' : ''"
     >
       <ArrowIcon
-        v-if="post.campaign.active || post.commentCount > 0"
+        v-if="post.campaign.active || post.commentCount > 0"
         class="relative w-3 mr-0.5 inline-block transform-gpu"
-        :class="showComments || showCommentForm ? 'transform-gpu rotate-180' : ''"
+        :class="
+          showComments || showCommentForm ? 'transform-gpu rotate-180' : ''
+        "
       />
       <span
         v-if="post.comments && post.commentCount > 0"
@@ -24,9 +26,12 @@
             : $t('post.hideComments', { count: post.commentCount })
         }}</span
       >
-      <span class="inline-block mt-4" v-else-if="post.campaign.active" @click.prevent="showCommentForm = !showCommentForm">{{
-        $t('post.postComment')
-      }}</span>
+      <span
+        v-else-if="post.campaign.active"
+        class="inline-block mt-4"
+        @click.prevent="showCommentForm = !showCommentForm"
+        >{{ $t('post.postComment') }}</span
+      >
     </div>
 
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
@@ -114,7 +119,7 @@ export default defineComponent({
           props.post.id,
           commentBody.value,
           props.post.campaign.id
-      ).then(function () {
+        ).then(function () {
           commentBody.value = ''
           fetchComments()
           context.emit('commentsLoaded', props.post.id)
@@ -140,7 +145,7 @@ export default defineComponent({
       store,
       fetchComments,
       submitComment,
-      showLoginIfNotLoggedIn
+      showLoginIfNotLoggedIn,
     }
   },
 })

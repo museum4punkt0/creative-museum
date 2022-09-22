@@ -8,7 +8,11 @@
       </div>
       <div class="lg:col-span-6">
         <div class="page-header mt-0">
-          <NuxtLink v-if="campaign" :to="`/campaigns/${campaign.id}`" class="back-btn">
+          <NuxtLink
+            v-if="campaign"
+            :to="`/campaigns/${campaign.id}`"
+            class="back-btn"
+          >
             {{ campaign.title }}
           </NuxtLink>
         </div>
@@ -26,9 +30,17 @@
   </div>
 </template>
 <script>
-
 import { TinyColor, readability } from '@ctrl/tinycolor'
-import { defineComponent, computed, ref, onMounted, useRoute, useRouter, useContext, useStore } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  ref,
+  onMounted,
+  useRoute,
+  useRouter,
+  useContext,
+  useStore,
+} from '@nuxtjs/composition-api'
 
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
@@ -39,7 +51,6 @@ export default defineComponent({
     const router = useRouter()
     const store = useStore()
     const { $breakpoints } = useContext()
-
 
     const post = ref(null)
     const campaign = ref(null)
@@ -59,9 +70,7 @@ export default defineComponent({
 
     async function loadPost() {
       if (route.value.params.id) {
-        await fetchPost(
-          route.value.params.id
-        ).then(async function(response) {
+        await fetchPost(route.value.params.id).then(async function (response) {
           post.value = response
           campaign.value = await fetchCampaign(response.campaign.id)
           if (post.value && post.value.error) {
@@ -80,7 +89,6 @@ export default defineComponent({
             )
           }
         })
-
       }
     }
 
@@ -93,9 +101,8 @@ export default defineComponent({
       campaign,
       isLargerThanLg,
       loadPost,
-      getContrastColor
+      getContrastColor,
     }
-
   },
 })
 </script>

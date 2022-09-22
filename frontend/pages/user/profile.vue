@@ -34,7 +34,11 @@
       </div>
       <div class="relative pb-10 list">
         <div v-if="mode === 'posts'">
-          <PostList v-if="posts && posts.length" :posts="posts" source="userprofile" />
+          <PostList
+            v-if="posts && posts.length"
+            :posts="posts"
+            source="userprofile"
+          />
         </div>
         <div v-if="mode === 'bookmarks'">
           <PostItem
@@ -57,16 +61,28 @@
             </span>
           </a>
 
-          <UtilitiesModal v-if="showPlaylist > 0 && playlistPosts" @closeModal="showPlaylist = 0">
+          <UtilitiesModal
+            v-if="showPlaylist > 0 && playlistPosts"
+            @closeModal="showPlaylist = 0"
+          >
             <div class="flex flex-col flex-1 justify-between">
               <div>
                 <div class="page-header p-6">
-                  <button type="button" class="back-btn" @click.prevent="showPlaylist = 0">
+                  <button
+                    type="button"
+                    class="back-btn"
+                    @click.prevent="showPlaylist = 0"
+                  >
                     {{ playlistPosts.title }}
                   </button>
                 </div>
                 <div class="px-4 pb-4">
-                  <PostList v-if="playlistPosts" :posts="playlistPosts.posts" source="playlist" class="playlist-items" />
+                  <PostList
+                    v-if="playlistPosts"
+                    :posts="playlistPosts.posts"
+                    source="playlist"
+                    class="playlist-items"
+                  />
                 </div>
               </div>
             </div>
@@ -88,74 +104,74 @@ import {
   onMounted,
   useContext,
   useRouter,
-  watch
+  watch,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 import { playlistApi } from '@/api/playlist'
 
 export default defineComponent({
-    name: "ProfilePage",
-    setup() {
-        const { fetchUserPosts, fetchUserBookmarks } = postApi()
-        const { fetchPlaylist } = playlistApi()
-        const mode = ref("posts")
-        const store = useStore()
-        const router = useRouter()
-        const { $config, $auth } = useContext()
-        const posts = ref(null)
-        const playlists = ref(null)
-        const playlistPosts = ref(null)
-        const bookmarks = ref(null)
+  name: 'ProfilePage',
+  setup() {
+    const { fetchUserPosts, fetchUserBookmarks } = postApi()
+    const { fetchPlaylist } = playlistApi()
+    const mode = ref('posts')
+    const store = useStore()
+    const router = useRouter()
+    const { $config, $auth } = useContext()
+    const posts = ref(null)
+    const playlists = ref(null)
+    const playlistPosts = ref(null)
+    const bookmarks = ref(null)
 
-        const showPlaylist = ref(0)
+    const showPlaylist = ref(0)
 
-        if (!$auth.loggedIn) {
-            router.push('/404')
-        }
-        store.dispatch('hideAddButton')
-        store.dispatch('setCurrentCampaign', null)
+    if (!$auth.loggedIn) {
+      router.push('/404')
+    }
+    store.dispatch('hideAddButton')
+    store.dispatch('setCurrentCampaign', null)
 
-        onMounted(async () => {
-            posts.value = await fetchUserPosts($auth.user.id, 1)
-            playlists.value = $auth.user.playlists
-            bookmarks.value = await fetchUserBookmarks()
-        })
+    onMounted(async () => {
+      posts.value = await fetchUserPosts($auth.user.id, 1)
+      playlists.value = $auth.user.playlists
+      bookmarks.value = await fetchUserBookmarks()
+    })
 
-        watch(showPlaylist, (currentValue) => {
-          if (currentValue > 0) {
-            loadPlaylist()
-          }
-        })
+    watch(showPlaylist, (currentValue) => {
+      if (currentValue > 0) {
+        loadPlaylist()
+      }
+    })
 
-        function showPosts() {
-            mode.value = 'posts'
-        }
-        function showBookmarks() {
-            mode.value = 'bookmarks'
-        }
-        function showPlaylists() {
-            mode.value = 'playlists'
-        }
+    function showPosts() {
+      mode.value = 'posts'
+    }
+    function showBookmarks() {
+      mode.value = 'bookmarks'
+    }
+    function showPlaylists() {
+      mode.value = 'playlists'
+    }
 
-        async function loadPlaylist() {
-          playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
-        }
+    async function loadPlaylist() {
+      playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
+    }
 
-        function backButton() { }
-        return {
-            backButton,
-            mode,
-            showPlaylist,
-            showPosts,
-            showBookmarks,
-            showPlaylists,
-            loadPlaylist,
-            posts,
-            playlists,
-            playlistPosts,
-            bookmarks,
-            backendUrl: $config.backendUrl
-        };
-    },
+    function backButton() {}
+    return {
+      backButton,
+      mode,
+      showPlaylist,
+      showPosts,
+      showBookmarks,
+      showPlaylists,
+      loadPlaylist,
+      posts,
+      playlists,
+      playlistPosts,
+      bookmarks,
+      backendUrl: $config.backendUrl,
+    }
+  },
 })
 </script>

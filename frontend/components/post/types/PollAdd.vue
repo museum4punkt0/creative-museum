@@ -153,7 +153,13 @@ export default defineComponent({
     const options = ref(initialOptions)
 
     const disableSubmitButton = computed(() => {
-      return question.value.length === 0 || description.value.length === 0 || options.value[0].value.length === 0 || options.value[1].value.length === 0 || submitting.value
+      return (
+        question.value.length === 0 ||
+        description.value.length === 0 ||
+        options.value[0].value.length === 0 ||
+        options.value[1].value.length === 0 ||
+        submitting.value
+      )
     })
 
     const optionCount = computed(() => options.value.length)

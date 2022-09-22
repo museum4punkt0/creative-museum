@@ -16,15 +16,37 @@
             leave-class="opacity-100"
             leave-to-class="opacity-0"
           >
-            <button v-if="newPostsAvailable" class="btn-outline mx-auto px-6" @click.prevent="showNewPosts">{{ $t('campaign.newPosts') }}</button>
+            <button
+              v-if="newPostsAvailable"
+              class="btn-outline mx-auto px-6"
+              @click.prevent="showNewPosts"
+            >
+              {{ $t('campaign.newPosts') }}
+            </button>
           </transition>
-          <PostList v-if="posts && posts.length" :posts="posts" source="campaign" />
-          <UtilitiesLoadingIndicator v-else-if="!posts" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-          <div v-else><button class="btn-highlight w-full mt-10" @click.prevent="showAddModal">{{ $t('post.new') }}</button></div>
+          <PostList
+            v-if="posts && posts.length"
+            :posts="posts"
+            source="campaign"
+          />
+          <UtilitiesLoadingIndicator
+            v-else-if="!posts"
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          />
+          <div v-else>
+            <button
+              class="btn-highlight w-full mt-10"
+              @click.prevent="showAddModal"
+            >
+              {{ $t('post.new') }}
+            </button>
+          </div>
         </div>
         <div v-else>
           <div class="container text-center min-h-2xl relative">
-            <UtilitiesLoadingIndicator class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            <UtilitiesLoadingIndicator
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            />
           </div>
         </div>
       </div>
@@ -41,7 +63,6 @@
 </template>
 
 <script>
-
 import {
   defineComponent,
   useRoute,
@@ -71,9 +92,12 @@ export default defineComponent({
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
-    const sortingKey = computed(() => (
-      store.state.currentSorting + store.state.currentSortingDirection + store.state.filterId
-    ))
+    const sortingKey = computed(
+      () =>
+        store.state.currentSorting +
+        store.state.currentSortingDirection +
+        store.state.filterId
+    )
 
     watch(newPost, (newValue) => {
       if (newValue === route.value.params.id) {
@@ -82,7 +106,7 @@ export default defineComponent({
       }
     })
 
-    watch (sortingKey, () => {
+    watch(sortingKey, () => {
       loadCampaign()
     })
 
@@ -146,7 +170,6 @@ export default defineComponent({
       setInterval(() => {
         refetchPosts()
       }, 2500)
-
     })
 
     return {
@@ -157,7 +180,7 @@ export default defineComponent({
       newPostsAvailable,
       showAddModal,
       refetchPosts,
-      showNewPosts
+      showNewPosts,
     }
   },
 })

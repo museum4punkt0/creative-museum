@@ -4,20 +4,34 @@
       <LibraryIcon
         v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
         class="mr-2 w-auto cursor-pointer"
-        :class="myVote === 'up' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
+        :class="
+          myVote === 'up' && post.type != 'playlist'
+            ? 'highlight-text'
+            : 'fill-white'
+        "
         @click.prevent="post.campaign.active && doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
         v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
         class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer"
-        :class="myVote === 'down' && post.type != 'playlist' ? 'highlight-text' : 'fill-white'"
+        :class="
+          myVote === 'down' && post.type != 'playlist'
+            ? 'highlight-text'
+            : 'fill-white'
+        "
         @click.prevent="post.campaign.active && doVotePost('down')"
       />
     </span>
     <button
       class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
-      :class="post.type === 'playlist' ? `btn-text-${textColor}` : post.rated ? 'text-$highlight border-$highlight' : ''"
+      :class="
+        post.type === 'playlist'
+          ? `btn-text-${textColor}`
+          : post.rated
+          ? 'text-$highlight border-$highlight'
+          : ''
+      "
       @click.prevent="triggerFeedback()"
     >
       {{ post.rated ? post.my_feedback.text : $t('post.feedback') }}
@@ -30,7 +44,7 @@ import {
   ref,
   onMounted,
   useContext,
-  useStore
+  useStore,
 } from '@nuxtjs/composition-api'
 import LibraryIcon from '@/assets/icons/library.svg?inline'
 import { postApi } from '@/api/post'
@@ -89,7 +103,7 @@ export default defineComponent({
       myVote,
       votesTotal,
       doVotePost,
-      triggerFeedback
+      triggerFeedback,
     }
   },
 })

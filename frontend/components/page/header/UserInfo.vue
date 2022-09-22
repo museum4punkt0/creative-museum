@@ -1,7 +1,11 @@
 <template>
   <div>
     <client-only>
-      <NuxtLink  v-if="user" to="/user/profile" class="flex flex-row md:space-x-4 items-center">
+      <NuxtLink
+        v-if="user"
+        to="/user/profile"
+        class="flex flex-row md:space-x-4 items-center"
+      >
         <div class="relative">
           <img
             :src="profilePicture"
@@ -51,7 +55,11 @@
                   placeholder="Username*"
                   @keyup="violations = null"
                 />
-                <div v-for="(violation, key) in violations" :key="key" class="px-6 py-2 text-red-500">
+                <div
+                  v-for="(violation, key) in violations"
+                  :key="key"
+                  class="px-6 py-2 text-red-500"
+                >
                   {{ $t(`user.violation.${violation.code}`) }}
                 </div>
               </div>
@@ -79,7 +87,7 @@ import {
   useContext,
   computed,
   defineComponent,
-  ref
+  ref,
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 
@@ -99,10 +107,10 @@ export default defineComponent({
     }
 
     const campaignScore = computed(() => {
-      if (! context.$auth.loggedIn || ! store.state.currentCampaign) {
+      if (!context.$auth.loggedIn || !store.state.currentCampaign) {
         return null
       }
-      if (! context.$auth.user.hasOwnProperty('memberships')) {
+      if (!context.$auth.user.hasOwnProperty('memberships')) {
         return null
       }
       for (const id in context.$auth.user.memberships) {
@@ -117,9 +125,7 @@ export default defineComponent({
 
     const profilePicture = computed(() => {
       if (context.$auth.user && 'profilePicture' in context.$auth.user) {
-        return (
-          `${context.$config.backendURL}/${context.$auth.user.profilePicture.contentUrl}`
-        )
+        return `${context.$config.backendURL}/${context.$auth.user.profilePicture.contentUrl}`
       }
       return '/images/placeholder_profile.png'
     })
@@ -130,7 +136,7 @@ export default defineComponent({
       username,
       violations,
       profilePicture,
-      submitUsername
+      submitUsername,
     }
   },
 })

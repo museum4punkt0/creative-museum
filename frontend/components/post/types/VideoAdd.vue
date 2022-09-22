@@ -113,7 +113,12 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, useContext, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
@@ -122,7 +127,6 @@ export default defineComponent({
   },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-
     const { store } = useContext()
     const postTitle = ref('')
     const postBody = ref('')
@@ -140,7 +144,7 @@ export default defineComponent({
       context.emit('abortPost')
     }
 
-    function inputFile( newFile: any, oldFile: any ) {
+    function inputFile(newFile: any, oldFile: any) {
       if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
         newFile.blob = ''
         const URL = window.URL || window.webkitURL
@@ -153,7 +157,7 @@ export default defineComponent({
       }
     }
 
-    function inputFilter( newFile: any ) {
+    function inputFilter(newFile: any) {
       console.log('inputFilter')
       if (newFile) {
         if (!/\.(avi|mpeg|mp4|ogv|m4v)$/i.test(newFile.name)) {
@@ -163,7 +167,6 @@ export default defineComponent({
     }
 
     function submitPost() {
-
       const videoArray = videos.value
 
       submitting.value = true

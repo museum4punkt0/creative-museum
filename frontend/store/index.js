@@ -12,7 +12,7 @@ export const state = () => ({
   showProfileUpdate: false,
   showTutorial: false,
   notificationsUpdated: false,
-  splashscreenShown: false
+  splashscreenShown: false,
 })
 
 export const mutations = {
@@ -74,7 +74,7 @@ export const mutations = {
   },
   SPLASHSCREEN_SHOWN(state) {
     state.splashscreenShown = true
-  }
+  },
 }
 
 export const actions = {
@@ -138,7 +138,7 @@ export const actions = {
   },
   splashscreenShown({ commit }) {
     commit('SPLASHSCREEN_SHOWN')
-  }
+  },
 }
 
 export const getters = {
@@ -168,5 +168,5 @@ export const getters = {
   },
   splashscreenShown(state) {
     return state.splashscreenShown
-  }
+  },
 }

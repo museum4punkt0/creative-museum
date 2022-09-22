@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"></div>
+    <div
+      class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"
+    ></div>
     <div
       class="fixed top-14 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"
     >
       <div
-        class="
-          modal bg-grey text-white fixed flex flex-col flex-1 top-14 lg:top-1/2 right-0
-          lg:auto left-0 lg:left-1/2 min-w-full lg:min-w-2xl min-h-full lg:min-h-xl bottom-0 lg:bottom-auto rounded-xl
-          lg:transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2
-        "
+        class="modal bg-grey text-white fixed flex flex-col flex-1 top-14 lg:top-1/2 right-0 lg:auto left-0 lg:left-1/2 min-w-full lg:min-w-2xl min-h-full lg:min-h-xl bottom-0 lg:bottom-auto rounded-xl lg:transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2"
       >
         <button
           v-if="closable"
@@ -17,7 +15,9 @@
           type="button"
           @click.prevent="$emit('closeModal')"
         ></button>
-        <div class="overflow-y-scroll pb-safe max-height-without-header lg:h-full flex flex-col flex-1">
+        <div
+          class="overflow-y-scroll pb-safe max-height-without-header lg:h-full flex flex-col flex-1"
+        >
           <slot />
         </div>
       </div>
@@ -28,7 +28,7 @@
 import {
   defineComponent,
   onMounted,
-  onUnmounted
+  onUnmounted,
 } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {

@@ -3,7 +3,10 @@
     <div class="flex flex-row justify-between mb-10">
       <h2 class="text-2xl">{{ $t('user.profile.badges.headline') }}</h2>
       <button
-        v-if="!campaign && $auth.user.achievements.length > 2 || campaign && badgesAndAchievements.length > 2"
+        v-if="
+          (!campaign && $auth.user.achievements.length > 2) ||
+          (campaign && badgesAndAchievements.length > 2)
+        "
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
         @click.prevent="toggleShowMore"
       >
@@ -17,30 +20,28 @@
     </div>
 
     <div v-if="$auth.loggedIn && !campaign">
-      <div
-        v-for="(achievement, key) in $auth.user.achievements"
-        :key="key"
-      >
+      <div v-for="(achievement, key) in $auth.user.achievements" :key="key">
         <div v-if="key < 2 || readMore">
           <BadgeItem :badge="achievement.badge" />
         </div>
       </div>
     </div>
     <div v-else-if="$auth.loggedIn">
-      <div
-        v-for="(badge, key) in badgesAndAchievements"
-        :key="key"
-      >
+      <div v-for="(badge, key) in badgesAndAchievements" :key="key">
         <div v-if="key < 2 || readMore">
-          <BadgeItem :badge="badge" :class="achievementIds.includes(badge.id) ? 'opacity-100' : 'opacity-50 hover:opacity-100'" />
+          <BadgeItem
+            :badge="badge"
+            :class="
+              achievementIds.includes(badge.id)
+                ? 'opacity-100'
+                : 'opacity-50 hover:opacity-100'
+            "
+          />
         </div>
       </div>
     </div>
     <div v-else>
-      <div
-        v-for="(badge, key) in badges"
-        :key="key"
-      >
+      <div v-for="(badge, key) in badges" :key="key">
         <div v-if="key < 2 || readMore">
           <BadgeItem :badge="badge" />
         </div>
@@ -53,7 +54,7 @@ import {
   defineComponent,
   ref,
   useContext,
-  onMounted
+  onMounted,
 } from '@nuxtjs/composition-api'
 import ArrowIcon from '@/assets/icons/arrow.svg?inline'
 import { badgeApi } from '@/api/badge'
@@ -81,7 +82,6 @@ export default defineComponent({
       readMore.value = !readMore.value
     }
     onMounted(async () => {
-
       if ($auth.user && props.campaign) {
         $auth.user.achievements.forEach((item) => {
           if (item.badge.campaign.id === props.campaign.id) {
@@ -90,16 +90,17 @@ export default defineComponent({
         })
       }
 
-      badges.value = await fetchBadges(props.campaign ? props.campaign.id : null)
+      badges.value = await fetchBadges(
+        props.campaign ? props.campaign.id : null
+      )
 
-      badges.value.forEach(function(item) {
+      badges.value.forEach(function (item) {
         if (achievementIds.value.includes(item.id)) {
           badgesAndAchievements.value = [item, ...badgesAndAchievements.value]
         } else {
           badgesAndAchievements.value = [...badgesAndAchievements.value, item]
         }
       })
-
     })
 
     return {
@@ -107,7 +108,7 @@ export default defineComponent({
       badges,
       badgesAndAchievements,
       achievementIds,
-      toggleShowMore
+      toggleShowMore,
     }
   },
 })

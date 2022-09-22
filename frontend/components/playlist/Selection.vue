@@ -4,9 +4,7 @@
       <div v-if="headline" class="page-header px-6">
         <a class="back-btn" @click="backLink">{{ $t('playlist.addTo') }}</a>
       </div>
-      <div
-        class="p-6 grid grid-cols-2 gap-6 mx-h-lg"
-      >
+      <div class="p-6 grid grid-cols-2 gap-6 mx-h-lg">
         <template v-if="'playlists' in $auth.user">
           <button
             v-for="(item, key) in $auth.user.playlists"
@@ -23,9 +21,7 @@
           <span
             class="h-30 flex flex-col align-center items-center justify-center"
           >
-            <span
-              class="block text-center my-4 add-btn-inline"
-            ></span>
+            <span class="block text-center my-4 add-btn-inline"></span>
             {{ $t('playlist.new') }}
           </span>
         </button>
@@ -47,7 +43,11 @@
         </div>
       </div>
       <div class="p-6 mt-auto">
-        <button class="btn-primary w-full" @click="createPlaylistWithPost" type="button">
+        <button
+          class="btn-primary w-full"
+          type="button"
+          @click="createPlaylistWithPost"
+        >
           {{ $t('post.actions.playlist.createNew.submitButton') }}
         </button>
       </div>
@@ -56,10 +56,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {

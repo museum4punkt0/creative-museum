@@ -1,45 +1,52 @@
 <template>
-    <div class="relative pb-10">
-      <PostItem
-        v-for="(post) in postsRef"
-        :key="post.id"
-        :post="post"
-        @updatePost="updatePost"
-        @toggle-bookmark-state="toggleBookmarkState"
-        @postDeleted="deletePost(post.id)"
-      />
-      <InfiniteLoading @infinite="infiniteHandler">
-        <div slot="spinner"><UtilitiesLoadingIndicator class="absolute left-1/2 transform -translate-x-1/2 bottom-0" :small="true" /></div>
-        <div slot="no-more" class="mt-4 text-sm text-white/50">{{ $t('campaign.noMorePosts') }}</div>
-        <div slot="no-results"></div>
-      </InfiniteLoading>
-    </div>
+  <div class="relative pb-10">
+    <PostItem
+      v-for="post in postsRef"
+      :key="post.id"
+      :post="post"
+      @updatePost="updatePost"
+      @toggle-bookmark-state="toggleBookmarkState"
+      @postDeleted="deletePost(post.id)"
+    />
+    <InfiniteLoading @infinite="infiniteHandler">
+      <div slot="spinner">
+        <UtilitiesLoadingIndicator
+          class="absolute left-1/2 transform -translate-x-1/2 bottom-0"
+          :small="true"
+        />
+      </div>
+      <div slot="no-more" class="mt-4 text-sm text-white/50">
+        {{ $t('campaign.noMorePosts') }}
+      </div>
+      <div slot="no-results"></div>
+    </InfiniteLoading>
+  </div>
 </template>
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteLoading from 'vue-infinite-loading'
 import {
   defineComponent,
   useStore,
   ref,
   toRef,
   useContext,
-  useRoute
+  useRoute,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
 export default defineComponent({
   components: {
-    InfiniteLoading
+    InfiniteLoading,
   },
   props: {
     posts: {
       type: Array,
-      required: true
+      required: true,
     },
     source: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   setup(props) {
     const store = useStore()
@@ -58,7 +65,11 @@ export default defineComponent({
             postsRef.value[key].commentCount = response.commentCount
             postsRef.value[key].upvotes = response.upvotes
             postsRef.value[key].downvotes = response.downvotes
-            if (response.userChoiced && response.pollOptions && response.choicesTotal) {
+            if (
+              response.userChoiced &&
+              response.pollOptions &&
+              response.choicesTotal
+            ) {
               postsRef.value[key].choicesTotal = response.choicesTotal
               postsRef.value[key].userChoiced = response.userChoiced
               postsRef.value[key].pollOptions = response.pollOptions
@@ -94,20 +105,20 @@ export default defineComponent({
     async function infiniteHandler($state) {
       if (postsRef.value.length >= $config.postsPerPage) {
         currentPage.value += 1
-        await getPosts().then(( response ) => {
+        await getPosts().then((response) => {
           if (response.length) {
-            postsRef.value.push(...response);
-            $state.loaded();
+            postsRef.value.push(...response)
+            $state.loaded()
           } else {
-            $state.complete();
+            $state.complete()
           }
         })
       } else {
-        $state.complete();
+        $state.complete()
       }
     }
 
-    function getPosts(){
+    function getPosts() {
       if (props.source === 'campaign') {
         return fetchPostsByCampaign(
           route.value.params.id,
@@ -117,16 +128,10 @@ export default defineComponent({
         )
       }
       if (props.source === 'userprofile') {
-        return fetchUserPosts(
-          $auth.user.id,
-          currentPage.value
-        )
+        return fetchUserPosts($auth.user.id, currentPage.value)
       }
       if (props.source === 'playlist') {
-        fetchPlaylist(
-          props.playlist,
-          currentPage.value
-        )
+        fetchPlaylist(props.playlist, currentPage.value)
       }
     }
 
@@ -145,10 +150,8 @@ export default defineComponent({
       toggleBookmarkState,
       hideCommentsFromOtherPosts,
       infiniteHandler,
-      deletePost
+      deletePost,
     }
   },
-
-
 })
 </script>

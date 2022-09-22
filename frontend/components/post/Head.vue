@@ -1,6 +1,13 @@
 <template>
   <div v-if="post.author" class="flex flex-row justify-between">
-    <NuxtLink :to="$auth.loggedIn && post.author.uuid === $auth.user.uuid ? localePath('/user/profile') : localePath(`/user/${post.author.uuid}`)" class="flex flex-row">
+    <NuxtLink
+      :to="
+        $auth.loggedIn && post.author.uuid === $auth.user.uuid
+          ? localePath('/user/profile')
+          : localePath(`/user/${post.author.uuid}`)
+      "
+      class="flex flex-row"
+    >
       <UserProfileImage :user="post.author" class="mr-4" />
       <div class="flex flex-col">
         <span class="text-lg">{{ post.author.username }}</span>
@@ -62,19 +69,20 @@
                 {{ $t('post.actions.addToPlaylist') }}
               </button>
             </li>
-            <li v-if="( $auth.loggedIn && $auth.user ) && ($auth.user.uuid === post.author.uuid)" class="my-6">
-              <button
-                class="block"
-                @click="showDeleteDialog"
-              >
+            <li
+              v-if="
+                $auth.loggedIn &&
+                $auth.user &&
+                $auth.user.uuid === post.author.uuid
+              "
+              class="my-6"
+            >
+              <button class="block" @click="showDeleteDialog">
                 {{ $t('post.actions.delete.button') }}
               </button>
             </li>
             <li class="my-6">
-              <button
-                class="block"
-                @click.prevent="shareLinkToSM"
-              >
+              <button class="block" @click.prevent="shareLinkToSM">
                 {{ $t('post.actions.shareLink.button') }}
               </button>
             </li>
@@ -84,7 +92,9 @@
                 v-clipboard:success="linkCopiedSuccess"
                 class="block"
               >
-                <span v-if="linkCopied">{{ $t('post.actions.copyLink.success') }}</span>
+                <span v-if="linkCopied">{{
+                  $t('post.actions.copyLink.success')
+                }}</span>
                 <span v-else>{{ $t('post.actions.copyLink.button') }}</span>
               </button>
               <input v-model="shareLink" type="hidden" />
@@ -108,16 +118,26 @@
             class="flex flex-col flex-1 h-full justify-between"
           >
             <div>
-              <p class="m-6 text-lg">{{ $t('post.actions.delete.confirmation') }}</p>
+              <p class="m-6 text-lg">
+                {{ $t('post.actions.delete.confirmation') }}
+              </p>
             </div>
             <div class="mx-6 mb-6">
               <button
                 class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
                 @click.prevent="deletePost"
               >
-              {{ $t('post.actions.delete.button')}}
+                {{ $t('post.actions.delete.button') }}
               </button>
-              <button class="btn-outline w-full" @click.prevent="additionalPageContent = ''; additionalPage = false">{{ $t('close') }}</button>
+              <button
+                class="btn-outline w-full"
+                @click.prevent="
+                  additionalPageContent = ''
+                  additionalPage = false
+                "
+              >
+                {{ $t('close') }}
+              </button>
             </div>
           </div>
         </div>
@@ -126,13 +146,12 @@
   </div>
 </template>
 <script>
-
 import {
   defineComponent,
   ref,
   computed,
   useContext,
-  useStore
+  useStore,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
@@ -147,12 +166,14 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: [
-    'toggleBookmarkState',
-    'postDeleted'
-  ],
+  emits: ['toggleBookmarkState', 'postDeleted'],
   setup(props, context) {
-    const { toggleBookmark, addToPlaylist, createPlaylistWithPost, deletePostById } = postApi()
+    const {
+      toggleBookmark,
+      addToPlaylist,
+      createPlaylistWithPost,
+      deletePostById,
+    } = postApi()
 
     const store = useStore()
     const { $config, $auth } = useContext()
@@ -216,7 +237,7 @@ export default defineComponent({
 
     function shareLinkToSM() {
       navigator.share({
-        url: shareLink.value
+        url: shareLink.value,
       })
     }
 
@@ -239,7 +260,7 @@ export default defineComponent({
       onShowAdditionalOptions,
       deletePost,
       linkCopiedSuccess,
-      shareLinkToSM
+      shareLinkToSM,
     }
   },
 })

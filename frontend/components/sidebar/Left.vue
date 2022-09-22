@@ -3,14 +3,21 @@
     <div class="page-header md:hidden">
       <button type="button" class="back-btn" @click.prevent="backButton">
         {{
-          $auth.loggedIn ? $t('user.profile.self.headline', { firstName: $auth.user.firstName }) : userData ? userData.firstname + ' ' + userData.lastname : ''
+          $auth.loggedIn
+            ? $t('user.profile.self.headline', {
+                firstName: $auth.user.firstName,
+              })
+            : userData
+            ? userData.firstname + ' ' + userData.lastname
+            : ''
         }}
       </button>
     </div>
 
     <template v-if="$auth.loggedIn || userData">
-
-      <div class="rounded-full mb-4 h-21 w-21 bg-$highlight p-px overflow-hidden">
+      <div
+        class="rounded-full mb-4 h-21 w-21 bg-$highlight p-px overflow-hidden"
+      >
         <img
           v-if="'profilePicture' in userData"
           :src="`${backendURL}/${userData.profilePicture.contentUrl}`"
@@ -22,7 +29,9 @@
         <h1 class="text-2xl">
           {{ userData.fullName }}
         </h1>
-        <p v-if="userData.achievements.length" class="highlight-text mb-3">{{ userData.achievements[0].badge.title }} @{{ userData.username }}</p>
+        <p v-if="userData.achievements.length" class="highlight-text mb-3">
+          {{ userData.achievements[0].badge.title }} @{{ userData.username }}
+        </p>
         <p>{{ userData.description }}</p>
       </div>
 
@@ -35,7 +44,7 @@
       >
 
       <div v-if="userData.memberships.length">
-        <h2  class="font-bold mb-3 mt-12">{{ $t('score') }}</h2>
+        <h2 class="font-bold mb-3 mt-12">{{ $t('score') }}</h2>
         <div
           v-for="(membership, key) in userData.memberships"
           :key="key"
@@ -64,14 +73,19 @@
   </div>
 </template>
 <script>
-import { defineComponent, useContext, computed, useStore } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  computed,
+  useStore,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
     user: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   setup(props) {
     const { $auth, $config, $breakpoints } = useContext()
@@ -104,9 +118,8 @@ export default defineComponent({
       isLargerThanLg,
       backendURL: $config.backendURL,
       showProfileUpdate,
-      backButton
+      backButton,
     }
-
   },
 })
 </script>

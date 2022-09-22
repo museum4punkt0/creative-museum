@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="page-header px-6">
-      <button class="back-btn" @click.prevent="abortPost" type="button">
+      <button class="back-btn" type="button" @click.prevent="abortPost">
         {{ $t('post.types.text.headline') }}
       </button>
     </div>
@@ -52,7 +52,7 @@ import {
   defineComponent,
   ref,
   useContext,
-  computed
+  computed,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 
@@ -72,7 +72,6 @@ export default defineComponent({
     const { createTextPost } = postApi()
 
     function submitPost() {
-
       submitting.value = true
 
       createTextPost(

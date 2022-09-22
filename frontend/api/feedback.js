@@ -9,7 +9,7 @@ export const feedbackApi = () => {
   }
 
   const selectOption = async (postId, optionId) => {
-    const response =  await $api.post(`post_feedbacks`, {
+    const response = await $api.post(`post_feedbacks`, {
       user: `v1/users/${$auth.user.uuid}`,
       post: `v1/posts/${postId}`,
       selection: `v1/campaign_feedback_options/${optionId}`,

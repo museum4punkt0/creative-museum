@@ -21,7 +21,12 @@
       </client-only>
     </div>
     <div class="mb-10 lg:mb-0">
-      <NuxtLink v-if="$auth.loggedIn" to="/user/profile" class="block text-lg font-bold leading-loose mb-4" @click.native="closeMenu">
+      <NuxtLink
+        v-if="$auth.loggedIn"
+        to="/user/profile"
+        class="block text-lg font-bold leading-loose mb-4"
+        @click.native="closeMenu"
+      >
         {{ $t('navigation.profile.header') }}
       </NuxtLink>
       <a
@@ -30,12 +35,20 @@
         @click.prevent="showProfileUpdate"
         >{{ $t('navigation.profile.settings') }}</a
       >
-      <NuxtLink v-if="$auth.loggedIn" to="/user/search" class="block mb-4" @click.native="closeMenu">{{
-        $t('navigation.profile.search')
-      }}</NuxtLink>
-      <NuxtLink v-if="$auth.loggedIn" to="/" class="block" @click.native="closeMenu">{{
-        $t('navigation.profile.invite')
-      }}</NuxtLink>
+      <NuxtLink
+        v-if="$auth.loggedIn"
+        to="/user/search"
+        class="block mb-4"
+        @click.native="closeMenu"
+        >{{ $t('navigation.profile.search') }}</NuxtLink
+      >
+      <NuxtLink
+        v-if="$auth.loggedIn"
+        to="/"
+        class="block"
+        @click.native="closeMenu"
+        >{{ $t('navigation.profile.invite') }}</NuxtLink
+      >
     </div>
     <div class="mb-10 lg:0">
       <p class="text-lg font-bold leading-loose mb-4">
@@ -149,7 +162,7 @@ export default defineComponent({
       logout,
       closeMenu,
       showProfileUpdate,
-      showTutorial
+      showTutorial,
     }
   },
 })

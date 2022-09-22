@@ -25,7 +25,13 @@
       <footer v-if="campaign.partners.length > 0" class="mt-auto">
         {{ $t('campaign.partner') }}
         <div class="flex flex-row flex-wrap">
-          <a v-for="(partner, key) in campaign.partners" :key="key" :href="partner.url" target="_blank"  class="mt-6">
+          <a
+            v-for="(partner, key) in campaign.partners"
+            :key="key"
+            :href="partner.url"
+            target="_blank"
+            class="mt-6"
+          >
             <img
               v-if="partner.logo"
               :src="`${backendURL}/${partner.logo.contentUrl}`"
@@ -65,7 +71,7 @@ export default defineComponent({
     return {
       textColor,
       getContrastColorClass,
-      backendURL: context.$config.backendURL
+      backendURL: context.$config.backendURL,
     }
   },
 })

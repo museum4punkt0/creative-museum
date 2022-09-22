@@ -137,6 +137,6 @@ export default {
     baseURL: process.env.BASE_URL,
     idpURL: process.env.IAM_URL,
     backendURL: process.env.BACKEND_URL,
-    postsPerPage: 30
+    postsPerPage: 30,
   },
 }

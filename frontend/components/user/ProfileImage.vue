@@ -21,8 +21,8 @@ export default defineComponent({
     const { $config } = useContext()
 
     return {
-      backendURL: $config.backendURL
+      backendURL: $config.backendURL,
     }
-  }
+  },
 })
 </script>

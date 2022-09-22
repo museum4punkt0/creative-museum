@@ -1,13 +1,19 @@
 <template>
   <div>
     <h1 class="page-header mt-0 mb-1">{{ $t('user.search') }}</h1>
-    <input v-model="searchField" class="input-text my-6" autocomplete="off" name="attr1" />
+    <input
+      v-model="searchField"
+      class="input-text my-6"
+      autocomplete="off"
+      name="attr1"
+    />
     <template v-if="userList">
       <ul v-for="user in userList" :key="user.uuid">
-        <li
-          v-if="user.uuid !== $auth.user.uuid"
-        >
-          <NuxtLink class="flex flex-row items-center my-2 award-item" :to="`/user/${user.uuid}`">
+        <li v-if="user.uuid !== $auth.user.uuid">
+          <NuxtLink
+            class="flex flex-row items-center my-2 award-item"
+            :to="`/user/${user.uuid}`"
+          >
             <UserProfileImage :user="user" class="w-12 h-12 mr-4" />
             <div class="flex flex-col">
               <p>{{ user.fullName }}</p>
@@ -25,7 +31,6 @@ import { userApi } from '@/api/user'
 
 export default defineComponent({
   setup() {
-
     const { searchUser } = userApi()
     const userList = ref(null)
     const debouncedSearchField = ref('')
@@ -49,15 +54,13 @@ export default defineComponent({
             userList.value = null
           }
         }, 500)
-      }
+      },
     })
 
     return {
       userList,
-      searchField
+      searchField,
     }
-
-
   },
 })
 </script>

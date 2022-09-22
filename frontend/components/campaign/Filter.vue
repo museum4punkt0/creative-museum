@@ -6,9 +6,9 @@
     >
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 py-1 px-2"
-        @click.prevent="resetFilter"
         :class="currentSorting === 'date' ? 'active' : ''"
         type="button"
+        @click.prevent="resetFilter"
       >
         {{ $t('filter.newest') }}
       </button>
@@ -35,10 +35,10 @@
           campaign.feedbackOptions &&
           campaign.feedbackOptions.length > 0
         "
+        ref="feedbacksDropdown"
         :options="campaign.feedbackOptions"
         label="Feedback"
         class="ml-3 lg:ml-0"
-        ref="feedbacksDropdown"
         @dropdownState="setHeight"
         @dropdownChange="setFeedbackFilter"
       />
@@ -57,8 +57,9 @@
         v-if="reversable"
         class="text-xs text-$highlight flex flex-row items-center justify-end"
         @click.prevent="changeSortDirection"
-        >
-          <div><ReverseSortingIcon class="h-4 w-auto inline-block mr-2" /></div><span>{{ $t('filter.order.reverse') }}</span>
+      >
+        <div><ReverseSortingIcon class="h-4 w-auto inline-block mr-2" /></div>
+        <span>{{ $t('filter.order.reverse') }}</span>
       </a>
     </div>
   </div>
@@ -88,14 +89,22 @@ export default defineComponent({
     const currentSorting = computed(() => context.store.state.currentSorting)
 
     const reversable = computed(() => {
-      const reversableProps = ['date', 'playlist', 'votestotal', 'controversial']
+      const reversableProps = [
+        'date',
+        'playlist',
+        'votestotal',
+        'controversial',
+      ]
       return reversableProps.includes(context.store.state.currentSorting)
     })
 
     const dropdownHeight = ref(false)
 
     function setFeedbackFilter(id) {
-      if (currentSorting.value === 'feedback' && context.store.state.filterId === id) {
+      if (
+        currentSorting.value === 'feedback' &&
+        context.store.state.filterId === id
+      ) {
         resetFilter()
         return
       }
@@ -103,7 +112,6 @@ export default defineComponent({
     }
 
     function toggleRelevanceFilter() {
-
       if (feedbacksDropdown.value) {
         feedbacksDropdown.value.closeDropdown()
       }
@@ -127,7 +135,7 @@ export default defineComponent({
       }
       context.store.dispatch('setCurrentSortingWithDirection', [
         'controversial',
-        'desc'
+        'desc',
       ])
     }
 

@@ -10,7 +10,11 @@
             ? 'bg-grey'
             : 'cursor-pointer'
         "
-        @click="permissionStatus === 'denied' || audioIsPlaying === false ? recordAudio() : false"
+        @click="
+          permissionStatus === 'denied' || audioIsPlaying === false
+            ? recordAudio()
+            : false
+        "
       >
         <MicrophoneIcon class="h-6 w-auto" />
       </div>
@@ -23,15 +27,35 @@
         <MicrophoneIcon class="h-6 w-auto" />
       </div>
     </div>
-    <div v-show="audioFile && !recordAudioState" ref="audio" class="flex flex-row items-center w-full">
-      <UtilitiesAudioPlayer :audio-list="[audioFile]" class="flex-grow flex-1" />
+    <div
+      v-show="audioFile && !recordAudioState"
+      ref="audio"
+      class="flex flex-row items-center w-full"
+    >
+      <UtilitiesAudioPlayer
+        :audio-list="[audioFile]"
+        class="flex-grow flex-1"
+      />
     </div>
-    <div v-show="!audioFile" class="flex flex-row flex-1 flex-grow items-center">
+    <div
+      v-show="!audioFile"
+      class="flex flex-row flex-1 flex-grow items-center"
+    >
       <div ref="progress" class="h-px flex-1 mx-3 bg-white/30 relative">
-        <span ref="progressPercent" class="h-px bg-white absolute top-0 left-0" />
-        <span ref="progressDot" class="bg-$highlight w-2 h-2 rounded-full absolute left-0 top-0 transform -translate-x-1/2 -translate-y-1/2" />
+        <span
+          ref="progressPercent"
+          class="h-px bg-white absolute top-0 left-0"
+        />
+        <span
+          ref="progressDot"
+          class="bg-$highlight w-2 h-2 rounded-full absolute left-0 top-0 transform -translate-x-1/2 -translate-y-1/2"
+        />
       </div>
-      <span ref="audioTimer" class="block py-1 self-end min-w-20 ml-2 text-center bg-white rounded-xl text-xs text-black whitespace-nowrap">0:00 / 1:00</span>
+      <span
+        ref="audioTimer"
+        class="block py-1 self-end min-w-20 ml-2 text-center bg-white rounded-xl text-xs text-black whitespace-nowrap"
+        >0:00 / 1:00</span
+      >
     </div>
     <div v-show="audioFile && !recordAudioState">
       <button
@@ -51,7 +75,7 @@ import MicrophoneIcon from '@/assets/icons/microphone.svg?inline'
 export default {
   name: 'AudioRecorder',
   components: {
-    MicrophoneIcon
+    MicrophoneIcon,
   },
   props: {
     timer: {
@@ -72,8 +96,8 @@ export default {
     },
     maxDuration: {
       type: Number,
-      default: 60000
-    }
+      default: 60000,
+    },
   },
   data() {
     return {
@@ -86,32 +110,30 @@ export default {
       uploadedAudioFile: null,
       recordAudioState: false,
       initialTime: Date.now(),
-    };
+    }
   },
   watch: {
     uploadedAudioFile(value) {
-      this.$emit('audioFile', value);
+      this.$emit('audioFile', value)
     },
   },
   mounted() {
-    this.checkPermission();
+    this.checkPermission()
   },
   methods: {
     async checkPermission() {
-      const status = await navigator.permissions.query(
-        { name: 'microphone' },
-      );
-      this.permissionStatus = status.state;
+      const status = await navigator.permissions.query({ name: 'microphone' })
+      this.permissionStatus = status.state
     },
     clearAudio() {
-      const TIMER = this.$refs.audioTimer;
-      this.initialTime = Date.now();
-      TIMER.innerText = '';
+      const TIMER = this.$refs.audioTimer
+      this.initialTime = Date.now()
+      TIMER.innerText = ''
     },
     checkAudioTime() {
-      const TIMER = this.$refs.audioTimer;
-      const timeDifference = Date.now() - this.initialTime;
-      const formatted = this.convertAudioTime(timeDifference);
+      const TIMER = this.$refs.audioTimer
+      const timeDifference = Date.now() - this.initialTime
+      const formatted = this.convertAudioTime(timeDifference)
 
       const progressPercent = this.$refs.progressPercent
       const progressDot = this.$refs.progressDot
@@ -119,66 +141,67 @@ export default {
       progressPercent.style.width = timeDifference / 1000 + '%'
       progressDot.style.left = timeDifference / 1000 + '%'
 
-      TIMER.innerHTML = `${formatted} / 1:00`;
+      TIMER.innerHTML = `${formatted} / 1:00`
       if (timeDifference > this.maxDuration) {
         this.stopRecordAudio()
       }
     },
     convertAudioTime(miliseconds) {
-      const totalSeconds = Math.floor(miliseconds / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds - minutes * 60;
-      const sec = seconds < 10 ? `0${seconds}` : seconds;
-      return `${minutes}:${sec}`;
+      const totalSeconds = Math.floor(miliseconds / 1000)
+      const minutes = Math.floor(totalSeconds / 60)
+      const seconds = totalSeconds - minutes * 60
+      const sec = seconds < 10 ? `0${seconds}` : seconds
+      return `${minutes}:${sec}`
     },
     recordAudio() {
-      this.clearAudio();
+      this.clearAudio()
       try {
-        const device = navigator.mediaDevices.getUserMedia({ audio: true });
-        const items = [];
-        device.then((stream) => {
-          this.recorder = new MediaRecorder(stream);
-          this.recorder.ondataavailable = (e) => {
-            items.push(e.data);
-            if (this.recorder.state === 'inactive') {
-              const blob = new Blob(items, { type: this.audioType });
-              this.audioFile = URL.createObjectURL(blob);
-              this.uploadedAudioFile = blob;
+        const device = navigator.mediaDevices.getUserMedia({ audio: true })
+        const items = []
+        device
+          .then((stream) => {
+            this.recorder = new MediaRecorder(stream)
+            this.recorder.ondataavailable = (e) => {
+              items.push(e.data)
+              if (this.recorder.state === 'inactive') {
+                const blob = new Blob(items, { type: this.audioType })
+                this.audioFile = URL.createObjectURL(blob)
+                this.uploadedAudioFile = blob
+              }
             }
-          };
-          this.recordAudioState = true;
-          this.audioInterval = setInterval(this.checkAudioTime, 500);
-          this.recorder.start();
-        }).catch((err) => {
-          // eslint-disable-next-line no-alert
-          alert(err);
-          // eslint-disable-next-line no-console
-          console.log(err);
-        });
+            this.recordAudioState = true
+            this.audioInterval = setInterval(this.checkAudioTime, 500)
+            this.recorder.start()
+          })
+          .catch((err) => {
+            // eslint-disable-next-line no-alert
+            alert(err)
+            // eslint-disable-next-line no-console
+            console.log(err)
+          })
       } catch (err) {
         // eslint-disable-next-line no-alert
-        alert(`Audio error:  ${err}`);
+        alert(`Audio error:  ${err}`)
         // eslint-disable-next-line no-console
-        console.error('Audio error: ', err);
+        console.error('Audio error: ', err)
       }
     },
     stopRecordAudio() {
-      clearInterval(this.audioInterval);
-      this.recorder.stop();
-      this.recordAudioState = false;
+      clearInterval(this.audioInterval)
+      this.recorder.stop()
+      this.recordAudioState = false
     },
     deleteAudioFile() {
       if (this.recordAudioState === false) {
-        this.audioFile = null;
-        this.uploadedAudioFile = null;
+        this.audioFile = null
+        this.uploadedAudioFile = null
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-
 .ar-icon {
   width: 40px;
   height: 40px;

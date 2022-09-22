@@ -1,6 +1,8 @@
 <template>
   <div class="relative">
-    <div class="relative overflow-hidden px-5 pt-10 md:pt-5 md:px-0 h-2xl lg:h-4xl">
+    <div
+      class="relative overflow-hidden px-5 pt-10 md:pt-5 md:px-0 h-2xl lg:h-4xl"
+    >
       <div
         v-for="campaign in stack"
         ref="card"
@@ -20,7 +22,7 @@
             rotate(${campaign.rotate}deg)
             translate(${campaign.xPos}px, 0)
           `,
-          opacity: campaign.opacity
+          opacity: campaign.opacity,
         }"
       >
         <CampaignItem :campaign="campaign" />
@@ -77,7 +79,7 @@ export default {
       cardWidth: 650,
       mobileYOffset: 70,
       initialized: false,
-      touchElement: ''
+      touchElement: '',
     }
   },
   computed: {
@@ -122,7 +124,7 @@ export default {
         if (this.isMobile) {
           return {
             x: 0,
-            y: index === 1 ? 100  : -30 * index + this.mobileYOffset,
+            y: index === 1 ? 100 : -30 * index + this.mobileYOffset,
           }
         } else {
           return {
@@ -150,7 +152,9 @@ export default {
                 this.cardWidth * (index - 1)
             : 0,
           yPos: isMobile
-            ? index === 1 ? 100 : this.mobileYOffset + 10 * index * -1
+            ? index === 1
+              ? 100
+              : this.mobileYOffset + 10 * index * -1
             : 50,
           rotate:
             index !== 0
@@ -319,7 +323,7 @@ export default {
           ...this.cardDefaults[index],
           xPos,
           yPos,
-          rotate
+          rotate,
         }
       })
     },
@@ -338,14 +342,16 @@ export default {
       document.addEventListener(this.dragEvent, this.onDrag)
     },
     onTouchEnd(e) {
-      if (!this.isMobile && (Math.abs(this.getDragXPos(e) - this.dragStartX) < 10)) {
+      if (
+        !this.isMobile &&
+        Math.abs(this.getDragXPos(e) - this.dragStartX) < 10
+      ) {
         this.$router.push(this.touchElement)
       }
 
       this.isDragging = false
       this.dragStartX = 0
       this.dragStartY = 0
-
 
       document.removeEventListener(this.dragEvent, this.onDrag)
       this.updateStack()

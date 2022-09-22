@@ -44,6 +44,6 @@ export default defineConfig({
   },
   plugins: [
     require('tailwindcss-container-bleed'),
-    require('windicss/plugin/scroll-snap')
+    require('windicss/plugin/scroll-snap'),
   ],
 })

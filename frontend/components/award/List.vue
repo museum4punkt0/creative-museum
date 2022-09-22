@@ -1,5 +1,11 @@
 <template>
-  <div v-if="(availableAwards.length || unavailableAwards.length) && (!campaign || campaign.active)" class="mb-12">
+  <div
+    v-if="
+      (availableAwards.length || unavailableAwards.length) &&
+      (!campaign || campaign.active)
+    "
+    class="mb-12"
+  >
     <div class="flex flex-row justify-between mb-10">
       <span class="text-2xl">{{ $t('campaign.awards') }}</span>
     </div>
@@ -16,7 +22,11 @@
     </div>
     <div v-if="unavailableAwards.length" class="mb-6">
       <div class="text-$highlight text-sm mb-2">
-        {{ $auth.loggedIn ? $t('awards.unavailable') : $t('awards.loginToReceiveAwards')}}
+        {{
+          $auth.loggedIn
+            ? $t('awards.unavailable')
+            : $t('awards.loginToReceiveAwards')
+        }}
       </div>
       <AwardItem
         v-for="(award, key) in unavailableAwards"
@@ -47,19 +57,24 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, useContext, computed, onMounted, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  computed,
+  onMounted,
+  ref,
+} from '@nuxtjs/composition-api'
 import { awardApi } from '@/api/award'
 
 export default defineComponent({
   props: {
     campaign: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   setup(props) {
-
-    const { fetchAwards, fetchAwarded} = awardApi()
+    const { fetchAwards, fetchAwarded } = awardApi()
     const { $auth } = useContext()
 
     const availableAwards = ref(<any>[])
@@ -71,30 +86,29 @@ export default defineComponent({
       await fetchAllAwards()
     })
 
-     async function fetchAllAwards() {
-
+    async function fetchAllAwards() {
       availableAwards.value = []
       unavailableAwards.value = []
       giftedAwards.value = []
       receivedAwards.value = []
 
-      await fetchAwards(
-        props.campaign ? props.campaign.id : null
-      ).then(function(response) {
-        if ($auth.loggedIn) {
-          response.forEach((item:any) => {
-            if (item.available && !item.taken) {
-              availableAwards.value.push(item)
-            } else if ( item.taken ) {
-              giftedAwards.value.push(item)
-            } else {
-              unavailableAwards.value.push(item)
-            }
-          })
-        } else {
-          unavailableAwards.value = response
+      await fetchAwards(props.campaign ? props.campaign.id : null).then(
+        function (response) {
+          if ($auth.loggedIn) {
+            response.forEach((item: any) => {
+              if (item.available && !item.taken) {
+                availableAwards.value.push(item)
+              } else if (item.taken) {
+                giftedAwards.value.push(item)
+              } else {
+                unavailableAwards.value.push(item)
+              }
+            })
+          } else {
+            unavailableAwards.value = response
+          }
         }
-      })
+      )
       if ($auth.loggedIn) {
         receivedAwards.value = await fetchAwarded()
       }
@@ -105,9 +119,8 @@ export default defineComponent({
       unavailableAwards,
       giftedAwards,
       receivedAwards,
-      fetchAllAwards
+      fetchAllAwards,
     }
-
-  }
+  },
 })
 </script>

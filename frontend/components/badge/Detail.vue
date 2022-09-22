@@ -6,7 +6,7 @@
       </a>
     </div>
     <div class="flex-1">
-      <div class="box-shadow relative m-6 ">
+      <div class="box-shadow relative m-6">
         <img
           v-if="badge.picture"
           :src="`${backendURL}/${badge.picture.contentUrl}`"
@@ -25,7 +25,12 @@
       >
         {{ $t('badges.giftbadge') }}
       </button>
-      <button class="btn-outline w-full" @click.prevent="$emit('closebadgeDetail')">{{ $t('close') }}</button>
+      <button
+        class="btn-outline w-full"
+        @click.prevent="$emit('closebadgeDetail')"
+      >
+        {{ $t('close') }}
+      </button>
     </div>
   </div>
 </template>
@@ -37,12 +42,11 @@ export default defineComponent({
   props: {
     badge: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   emits: ['closebadgeDetail'],
   setup(props) {
-
     const context = useContext()
 
     const bgColor = new TinyColor(props.badge.campaign.color)
@@ -57,9 +61,8 @@ export default defineComponent({
     })
     return {
       backendURL: context.$config.backendURL,
-      styleAttr
+      styleAttr,
     }
-
   },
 })
 </script>

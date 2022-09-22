@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="$auth.loggedIn">
-      <div class="mb-10" >
+      <div class="mb-10">
         <div class="highlight-bg w-21 h-21 rounded-full mb-4">
           <img
             :src="profilePicture"
@@ -9,14 +9,18 @@
           />
         </div>
         <p class="text-2xl">{{ $auth.user.fullName }}</p>
-        <p v-if="$auth.user.achievements.length" class="highlight-text text-lg mb-3">{{ $auth.user.achievements[0].badge.title }} @{{ $auth.user.username }}</p>
+        <p
+          v-if="$auth.user.achievements.length"
+          class="highlight-text text-lg mb-3"
+        >
+          {{ $auth.user.achievements[0].badge.title }} @{{
+            $auth.user.username
+          }}
+        </p>
         <p v-if="$auth.user.description">
           {{ $auth.user.description }}
         </p>
-        <NuxtLink
-          to="/user/profile"
-          class="btn-outline mt-10 py-2 w-full"
-        >
+        <NuxtLink to="/user/profile" class="btn-outline mt-10 py-2 w-full">
           {{ $t('user.showProfile') }}
         </NuxtLink>
       </div>
@@ -55,9 +59,7 @@ export default defineComponent({
 
     const profilePicture = computed(() => {
       if ($auth.loggedIn && 'profilePicture' in $auth.user) {
-        return (
-          `${$config.backendURL}/${$auth.user.profilePicture.contentUrl}`
-        )
+        return `${$config.backendURL}/${$auth.user.profilePicture.contentUrl}`
       }
       return '/images/placeholder_profile.png'
     })
@@ -65,7 +67,7 @@ export default defineComponent({
     return {
       profilePicture,
       isLargerThanLg,
-      backendURL: $config.backendURL
+      backendURL: $config.backendURL,
     }
   },
 })

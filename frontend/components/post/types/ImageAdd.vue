@@ -1,13 +1,11 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="page-header px-6">
-      <button class="back-btn" @click.prevent="abortPost" type="button">
+      <button class="back-btn" type="button" @click.prevent="abortPost">
         {{ $t('post.types.image.headline') }}
       </button>
     </div>
-    <div
-      class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6"
-    >
+    <div class="flex flex-col flex-1 h-full justify-between pr-6 pb-6 pl-6">
       <client-only>
         <img
           v-if="files.length"
@@ -108,7 +106,7 @@
         ref="submitButton"
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full  mb-12 md:mb-0"
+        class="btn-highlight disabled:opacity-30 mt-6 w-full mb-12 md:mb-0"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -121,7 +119,7 @@ import {
   defineComponent,
   ref,
   useContext,
-  computed
+  computed,
 } from '@nuxtjs/composition-api'
 import { postApi } from '~/api/post'
 
@@ -142,7 +140,11 @@ export default defineComponent({
     const { createImagePost } = postApi()
 
     const disableSubmitButton = computed(() => {
-      return files.value.length === 0 || postBody.value.length === 0 || submitting.value
+      return (
+        files.value.length === 0 ||
+        postBody.value.length === 0 ||
+        submitting.value
+      )
     })
 
     function abortPost() {
@@ -171,7 +173,7 @@ export default defineComponent({
       })
     }
 
-    function inputFile( newFile: any, oldFile: any ) {
+    function inputFile(newFile: any, oldFile: any) {
       if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
         newFile.blob = ''
         const URL = window.URL || window.webkitURL
@@ -184,7 +186,7 @@ export default defineComponent({
       }
     }
 
-    function inputFilter( newFile: any ) {
+    function inputFilter(newFile: any) {
       console.log('inputFilter')
       if (newFile) {
         if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
@@ -204,7 +206,7 @@ export default defineComponent({
       postBody,
       imgAlt,
       disableSubmitButton,
-      submitting
+      submitting,
     }
   },
 })

@@ -31,13 +31,7 @@ export const postApi = () => {
     return response
   }
 
-  const createImagePost = async (
-    campaignId,
-    title,
-    body,
-    image,
-    altText
-  ) => {
+  const createImagePost = async (campaignId, title, body, image, altText) => {
     const form = new FormData()
     form.append('file', image.file)
     form.append('description', altText)
@@ -46,7 +40,7 @@ export const postApi = () => {
     const response = await $api.post('media_objects', form)
     const fileId = response.id
 
-    const postResponse =  await $api.post('posts', {
+    const postResponse = await $api.post('posts', {
       type: 'image',
       author: `/v1/users/${$auth.user.uuid}`,
       title,
@@ -61,13 +55,7 @@ export const postApi = () => {
     return postResponse
   }
 
-  const createVideoPost = async (
-    campaignId,
-    title,
-    body,
-    video,
-    altText
-  ) => {
+  const createVideoPost = async (campaignId, title, body, video, altText) => {
     const form = new FormData()
     form.append('file', video.file)
     form.append('description', altText)
@@ -76,7 +64,7 @@ export const postApi = () => {
     const response = await $api.post('media_objects', form)
     const fileId = response.id
 
-    const postResponse =  await $api.post('posts', {
+    const postResponse = await $api.post('posts', {
       type: 'video',
       author: `/v1/users/${$auth.user.uuid}`,
       title,
@@ -135,7 +123,6 @@ export const postApi = () => {
   }
 
   const fetchPostsByCampaign = async (campaignId, sorting, direction, page) => {
-
     let orderParams = ''
     const directionKey = direction === 'asc' ? 'asc' : 'desc'
 
@@ -155,7 +142,9 @@ export const postApi = () => {
       orderParams = `&order[commentCount]=${directionKey}`
     }
 
-    return await $api.get(`posts?campaign=${campaignId}${orderParams}&page=${page}`)
+    return await $api.get(
+      `posts?campaign=${campaignId}${orderParams}&page=${page}`
+    )
   }
 
   const fetchPostsByPost = async (postId) => {
@@ -177,7 +166,6 @@ export const postApi = () => {
     store.dispatch('updateNotifications')
 
     return response
-
   }
 
   const addToPlaylist = async (playlistId, postId) => {
@@ -193,13 +181,12 @@ export const postApi = () => {
   }
 
   const createAudioPost = async (campaignId, title, audio, image) => {
-
     const postBody = {
       author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
       type: 'audio',
       title,
-      files: []
+      files: [],
     }
 
     if (audio) {
@@ -264,6 +251,6 @@ export const postApi = () => {
     votePollOption,
     fetchUserPosts,
     fetchUserBookmarks,
-    deletePostById
+    deletePostById,
   }
 }
