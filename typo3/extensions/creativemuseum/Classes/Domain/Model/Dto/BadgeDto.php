@@ -20,19 +20,19 @@ class BadgeDto extends AbstractDomainObject
     protected $threshold = 0;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $badgeType;
+    protected ?string $badgeType = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @var CampaignDto|null
@@ -86,9 +86,9 @@ class BadgeDto extends AbstractDomainObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBadgeType(): string
+    public function getBadgeType(): ?string
     {
         return $this->badgeType;
     }
@@ -104,9 +104,9 @@ class BadgeDto extends AbstractDomainObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -122,9 +122,9 @@ class BadgeDto extends AbstractDomainObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

@@ -53,7 +53,11 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
             }
 
             let targetItem = document.querySelector('.' + node.dataset.target);
+
+            const elementIndex = [].indexOf.call(targetItem.parentElement.children, targetItem);
+            this.uploadFields = this.uploadFields.splice(elementIndex, 1);
             targetItem.remove();
+
             this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
         }.bind(this));
 

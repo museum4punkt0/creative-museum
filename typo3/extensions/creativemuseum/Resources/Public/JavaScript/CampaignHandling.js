@@ -13,6 +13,7 @@ define([
     Severity,
     ColorPicker,
     BadgeHandler,
+    FeedbackOptionHandling
 ) {
 
     const colorPickerElement = document.querySelector('.t3js-colorpicker');
@@ -22,6 +23,13 @@ define([
     $('#campaign-form').on('submit', function(ev) {
 
         ev.preventDefault();
+
+        const feedbackOptionsValid = FeedbackOptionHandling.validate();
+
+        if (! feedbackOptionsValid) {
+            Notification.error('Fehler', 'Die Feedback Optionen sind nicht gültig.');
+            return;
+        }
 
         const uploads = BadgeHandler.uploadFields;
         const form = this;
