@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col flex-1 h-full justify-between" :style="styleAttr">
+  <div v-if="notification" class="flex flex-col flex-1 h-full justify-between" :style="styleAttr">
     <div class="box-shadow mx-6 my-auto">
       <div
         class="bg-$highlight w-32 h-32 rounded-full mb-4 overflow-hidden flex-shrink-0 mx-auto"
@@ -27,7 +27,7 @@
               author: notification.post ? notification.post.author.username : '',
               badge: notification.badge ? notification.badge.title : '',
               award: notification.award ? notification.award.title : '',
-              awardWinner: notificiation.award ? notificiation.award.winner.username : ''
+              awardWinner: notification.award ? notification.award.winner.username : ''
             })
           }}
         </p>
