@@ -5,6 +5,7 @@ define([
     'TYPO3/CMS/Backend/Severity',
     'TYPO3/CMS/Backend/ColorPicker',
     'TYPO3/CMS/Creativemuseum/BadgeHandling',
+    'TYPO3/CMS/Creativemuseum/FeedbackOptionHandling'
 ], function(
     $,
     Modal,
