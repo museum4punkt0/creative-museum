@@ -7,6 +7,11 @@
         </div>
       </div>
       <div class="lg:col-span-6">
+        <div class="page-header mt-0">
+          <NuxtLink v-if="campaign" :to="`/campaigns/${campaign.id}`" class="back-btn">
+            {{ campaign.title }}
+          </NuxtLink>
+        </div>
         <PostItem v-if="post" :post="post"></PostItem>
       </div>
       <div class="lg:col-span-3 pl-5">
@@ -22,7 +27,8 @@
 </template>
 <script>
 
-import { defineComponent, useRoute, useRouter, useContext } from '@nuxtjs/composition-api'
+import { TinyColor, readability } from '@ctrl/tinycolor'
+import { defineComponent, computed, ref, onMounted, useRoute, useRouter, useContext, useStore } from '@nuxtjs/composition-api'
 
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
@@ -31,6 +37,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const store = useStore()
     const { $breakpoints } = useContext()
 
 
@@ -44,18 +51,36 @@ export default defineComponent({
       return $breakpoints.lLg
     })
 
+    function getContrastColor(color) {
+      const bgColor = new TinyColor(color)
+      const fgColor = new TinyColor('#FFFFFF')
+      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+    }
+
     async function loadPost() {
       if (route.value.params.id) {
-        post.value = await fetchPost(
+        await fetchPost(
           route.value.params.id
-        )
-        campaign.value = await fetchCampaign(post.campaign.id)
+        ).then(async function(response) {
+          post.value = response
+          campaign.value = await fetchCampaign(response.campaign.id)
+          if (post.value && post.value.error) {
+            router.push('/404')
+          } else {
+            store.dispatch('setCurrentCampaign', response.campaign.id)
 
-        if (campaign.value && campaign.value.error) {
-          router.push('/404')
-        } else {
-          store.dispatch('setCurrentCampaign', route.value.params.id)
-        }
+            document.documentElement.style.setProperty(
+              '--highlight',
+              response.campaign.color
+            )
+
+            document.documentElement.style.setProperty(
+              '--highlight-contrast',
+              getContrastColor(response.campaign.color)
+            )
+          }
+        })
+
       }
     }
 
@@ -67,7 +92,8 @@ export default defineComponent({
       post,
       campaign,
       isLargerThanLg,
-      loadPost
+      loadPost,
+      getContrastColor
     }
 
   },

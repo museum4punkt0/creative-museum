@@ -54,7 +54,7 @@ export default defineComponent({
     })
 
     const profilePicture = computed(() => {
-      if ('profilePicture' in $auth.user) {
+      if ($auth.loggedIn && 'profilePicture' in $auth.user) {
         return (
           `${$config.backendUrl}/${$auth.user.profilePicture.contentUrl}`
         )
