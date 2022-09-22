@@ -1,7 +1,7 @@
 <template>
   <div>
     <video v-if="post.files.length" class="w-full h-auto rounded-lg max-h-xl" controls>
-      <source :src="`${backendUrl}/${post.files[0].contentUrl}`" />
+      <source :src="`${backendURL}/${post.files[0].contentUrl}`" />
       <p v-if="post.files[0].description">{{ post.files[0].description }}</p>
     </video>
 
@@ -28,7 +28,7 @@ export default defineComponent({
     const context = useContext()
 
     return {
-      backendUrl: context.$config.backendUrl,
+      backendURL: context.$config.backendURL,
     }
   },
 })

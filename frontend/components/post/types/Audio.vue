@@ -30,7 +30,7 @@ export default defineComponent({
           return item.type === 'audio'
         })
         .map(function (item: any) {
-          return $config.backendUrl + item.contentUrl
+          return $config.backendURL + item.contentUrl
         })
     })
 
@@ -40,7 +40,7 @@ export default defineComponent({
           return item.type === 'image'
         })
         .map(function (item: any) {
-          return $config.backendUrl + item.contentUrl
+          return $config.backendURL + item.contentUrl
         })
     })
 

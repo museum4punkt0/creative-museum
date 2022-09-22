@@ -70,6 +70,25 @@
                 {{ $t('post.actions.delete.button') }}
               </button>
             </li>
+            <li class="my-6">
+              <button
+                class="block"
+                @click.prevent="shareLinkToSM"
+              >
+                {{ $t('post.actions.shareLink.button') }}
+              </button>
+            </li>
+            <li class="my-6">
+              <button
+                v-clipboard="shareLink"
+                v-clipboard:success="linkCopiedSuccess"
+                class="block"
+              >
+                <span v-if="linkCopied">{{ $t('post.actions.copyLink.success') }}</span>
+                <span v-else>{{ $t('post.actions.copyLink.button') }}</span>
+              </button>
+              <input v-model="shareLink" type="hidden" />
+            </li>
           </ul>
         </div>
         <div v-if="additionalPage" class="flex flex-col flex-1 items-stretch">
@@ -107,6 +126,7 @@
   </div>
 </template>
 <script>
+
 import {
   defineComponent,
   ref,
@@ -135,16 +155,20 @@ export default defineComponent({
     const { toggleBookmark, addToPlaylist, createPlaylistWithPost, deletePostById } = postApi()
 
     const store = useStore()
+    const { $config, $auth } = useContext()
 
     const showAdditionalOptions = ref(false)
     const additionalPage = ref(false)
     const additionalPageContent = ref('')
+    const linkCopied = ref(false)
 
     const modalType = computed(() => {
       return additionalPage.value ? 'Modal' : 'SlideUp'
     })
 
-    const { $auth } = useContext()
+    const shareLink = computed(() => {
+      return `${$config.baseURL}/posts/${props.post.id}`
+    })
 
     async function addOrRemoveBookmark(postId) {
       await toggleBookmark(postId)
@@ -190,18 +214,32 @@ export default defineComponent({
       additionalPage.value = false
     }
 
+    function shareLinkToSM() {
+      navigator.share({
+        url: shareLink.value
+      })
+    }
+
+    function linkCopiedSuccess() {
+      linkCopied.value = true
+    }
+
     return {
       showAdditionalOptions,
       additionalPage,
       additionalPageContent,
       modalType,
+      shareLink,
+      linkCopied,
       showDeleteDialog,
       addOrRemoveBookmark,
       openPlaylistSelectionModal,
       addPostToPlaylist,
       addPostToNewPlaylist,
       onShowAdditionalOptions,
-      deletePost
+      deletePost,
+      linkCopiedSuccess,
+      shareLinkToSM
     }
   },
 })

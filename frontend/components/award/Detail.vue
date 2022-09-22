@@ -10,7 +10,7 @@
         <div class="box-shadow relative m-6 ">
           <img
             v-if="award.picture"
-            :src="`${backendUrl}/${award.picture.contentUrl}`"
+            :src="`${backendURL}/${award.picture.contentUrl}`"
             :alt="award.title"
             class="h-40 w-auto mx-auto"
           />
@@ -199,7 +199,7 @@ export default defineComponent({
     })
 
     return {
-      backendUrl: context.$config.backendUrl,
+      backendURL: context.$config.backendURL,
       styleAttr,
       mode,
       searchField,

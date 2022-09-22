@@ -9,7 +9,7 @@
       <div class="box-shadow relative m-6 ">
         <img
           v-if="badge.picture"
-          :src="`${backendUrl}/${badge.picture.contentUrl}`"
+          :src="`${backendURL}/${badge.picture.contentUrl}`"
           :alt="badge.title"
           class="h-40 w-auto mx-auto"
         />
@@ -56,7 +56,7 @@ export default defineComponent({
       return `--highlight: ${props.badge.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
     })
     return {
-      backendUrl: context.$config.backendUrl,
+      backendURL: context.$config.backendURL,
       styleAttr
     }
 

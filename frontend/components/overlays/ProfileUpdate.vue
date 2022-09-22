@@ -338,7 +338,7 @@
 
       if ('profilePicture' in user.value) {
         files.value = [
-          $config.backendUrl + user.value.profilePicture.contentUrl,
+          $config.backendURL + user.value.profilePicture.contentUrl,
         ]
       }
 
@@ -401,7 +401,7 @@
         save,
         remove,
         changed,
-        backendUrl: $config.backendUrl,
+        backendURL: $config.backendURL,
       }
     },
   })

@@ -2,8 +2,8 @@
   <div>
     <img
       v-if="post.files.length"
-      :src="`${backendUrl}/${post.files[0].contentUrl}`"
-      :data-url="`${backendUrl}/${post.files[0].contentUrl}`"
+      :src="`${backendURL}/${post.files[0].contentUrl}`"
+      :data-url="`${backendURL}/${post.files[0].contentUrl}`"
       class="rounded mx-auto max-h-xl"
       :alt="
         post.files[0].description
@@ -37,7 +37,7 @@ export default defineComponent({
     const context = useContext()
 
     return {
-      backendUrl: context.$config.backendUrl
+      backendURL: context.$config.backendURL
     }
 
   },

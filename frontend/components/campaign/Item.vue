@@ -28,8 +28,8 @@
           <a v-for="(partner, key) in campaign.partners" :key="key" :href="partner.url" target="_blank"  class="mt-6">
             <img
               v-if="partner.logo"
-              :src="`${backendUrl}/${partner.logo.contentUrl}`"
-              :data-url="`${backendUrl}/${partner.logo.contentUrl}`"
+              :src="`${backendURL}/${partner.logo.contentUrl}`"
+              :data-url="`${backendURL}/${partner.logo.contentUrl}`"
               :alt="partner.title"
               class="max-w-40"
             />
@@ -65,7 +65,7 @@ export default defineComponent({
     return {
       textColor,
       getContrastColorClass,
-      backendUrl: context.$config.backendUrl
+      backendURL: context.$config.backendURL
     }
   },
 })

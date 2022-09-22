@@ -6,7 +6,7 @@
       >
         <img
             v-if="notificationPicture"
-            :src="`${backendUrl}/${notificationPicture}`"
+            :src="`${backendURL}/${notificationPicture}`"
             class="max-w-32 h-auto"
           />
       </div>
@@ -77,7 +77,7 @@ export default defineComponent({
     return {
       styleAttr,
       notificationPicture,
-      backendUrl: $config.backendUrl,
+      backendURL: $config.backendURL,
       markNotificationAsViewed
     }
   },

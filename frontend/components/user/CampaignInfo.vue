@@ -56,7 +56,7 @@ export default defineComponent({
     const profilePicture = computed(() => {
       if ($auth.loggedIn && 'profilePicture' in $auth.user) {
         return (
-          `${$config.backendUrl}/${$auth.user.profilePicture.contentUrl}`
+          `${$config.backendURL}/${$auth.user.profilePicture.contentUrl}`
         )
       }
       return '/images/placeholder_profile.png'
@@ -65,7 +65,7 @@ export default defineComponent({
     return {
       profilePicture,
       isLargerThanLg,
-      backendUrl: $config.backendUrl
+      backendURL: $config.backendURL
     }
   },
 })

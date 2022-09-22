@@ -163,6 +163,13 @@
       "delete": {
         "button": "Beitrag löschen",
         "confirmation": "Beitrag wirklich löschen?"
+      },
+      "shareLink": {
+        "button": "Beitrag teilen"
+      },
+      "copyLink": {
+        "button": "Link kopieren",
+        "success": "Link kopiert"
       }
     },
     "errors": {

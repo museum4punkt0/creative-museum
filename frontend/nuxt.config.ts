@@ -36,6 +36,7 @@ export default {
   plugins: [
     '~/plugins/api',
     { src: '~/plugins/tooltip', mode: 'client' },
+    { src: '~/plugins/clipboard', mode: 'client' },
   ],
   buildModules: [
     '@nuxt/typescript-build',
@@ -135,7 +136,7 @@ export default {
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
     idpURL: process.env.IAM_URL,
-    backendUrl: process.env.BACKEND_URL,
+    backendURL: process.env.BACKEND_URL,
     postsPerPage: 30
   },
 }

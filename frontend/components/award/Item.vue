@@ -4,7 +4,7 @@
       <div class="w-20 h-20 overflow-hidden mr-3 flex-shrink-0">
         <img
           v-if="award.picture"
-          :src="`${backendUrl}/${award.picture.contentUrl}`"
+          :src="`${backendURL}/${award.picture.contentUrl}`"
           :alt="award.title"
           class="max-w-18 h-auto"
         />
@@ -52,7 +52,7 @@ export default defineComponent({
     return {
       styleAttr,
       awardDetailOpen,
-      backendUrl: context.$config.backendUrl
+      backendURL: context.$config.backendURL
     }
   }
 })

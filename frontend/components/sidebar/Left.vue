@@ -13,7 +13,7 @@
       <div class="rounded-full mb-4 h-21 w-21 bg-$highlight p-px overflow-hidden">
         <img
           v-if="'profilePicture' in userData"
-          :src="`${backendUrl}/${userData.profilePicture.contentUrl}`"
+          :src="`${backendURL}/${userData.profilePicture.contentUrl}`"
           class="rounded-full mb-4 cover w-full h-full"
         />
       </div>
@@ -102,7 +102,7 @@ export default defineComponent({
     return {
       userData,
       isLargerThanLg,
-      backendUrl: $config.backendUrl,
+      backendURL: $config.backendURL,
       showProfileUpdate,
       backButton
     }

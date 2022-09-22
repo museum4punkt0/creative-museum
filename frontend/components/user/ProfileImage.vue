@@ -2,7 +2,7 @@
   <div class="highlight-bg rounded-full w-8 h-8">
     <img
       v-if="'profilePicture' in user"
-      :src="backendUrl + user.profilePicture.contentUrl"
+      :src="backendURL + user.profilePicture.contentUrl"
       class="w-full h-full rounded-full"
     />
   </div>
@@ -21,7 +21,7 @@ export default defineComponent({
     const { $config } = useContext()
 
     return {
-      backendUrl: $config.backendUrl
+      backendURL: $config.backendURL
     }
   }
 })

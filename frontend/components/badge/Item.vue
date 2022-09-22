@@ -4,7 +4,7 @@
       <div class="w-20 h-20 mr-3 overflow-hidden flex-shrink-0">
         <img
           v-if="badge.picture"
-          :src="`${backendUrl}/${badge.picture.contentUrl}`"
+          :src="`${backendURL}/${badge.picture.contentUrl}`"
           :alt="badge.title"
           class="max-w-18 h-auto"
         />
@@ -48,7 +48,7 @@ export default defineComponent({
     return {
       styleAttr,
       badgeDetailOpen,
-      backendUrl: context.$config.backendUrl
+      backendURL: context.$config.backendURL
     }
   }
 })

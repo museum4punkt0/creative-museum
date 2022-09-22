@@ -118,7 +118,7 @@ export default defineComponent({
     const profilePicture = computed(() => {
       if (context.$auth.user && 'profilePicture' in context.$auth.user) {
         return (
-          `${context.$config.backendUrl}/${context.$auth.user.profilePicture.contentUrl}`
+          `${context.$config.backendURL}/${context.$auth.user.profilePicture.contentUrl}`
         )
       }
       return '/images/placeholder_profile.png'

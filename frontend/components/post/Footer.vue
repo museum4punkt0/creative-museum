@@ -15,7 +15,6 @@
         @click.prevent="post.campaign.active && doVotePost('down')"
       />
     </span>
-
     <button
       class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
       :class="post.type === 'playlist' ? `btn-text-${textColor}` : post.rated ? 'text-$highlight border-$highlight' : ''"
