@@ -54,9 +54,9 @@ export default defineComponent({
       const award = props.notification.award
       const badge = props.notification.badge
       if (badge || award) {
-        if (badge.picture) {
+        if (badge && badge.picture) {
           return badge.picture.contentUrl
-        } else if (award.picture) {
+        } else if (award && award.picture) {
           return award.picture.contentUrl
         }
       }
