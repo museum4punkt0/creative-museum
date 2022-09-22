@@ -336,6 +336,14 @@ class CampaignDto extends AbstractEntity
             }
         }
 
+        if ($this->getBadges()->count() > 0) {
+            $campaign['badges'] = [];
+            /** @var BadgeDto $badge */
+            foreach ($this->getBadges() as $badge) {
+                $campaign['badges'][] = $badge->serialize();
+            }
+        }
+
         return $campaign;
     }
 }

@@ -151,6 +151,21 @@ define(['TYPO3/CMS/Backend/Modal'], function(Modal) {
         this.container.append(btn);
     };
 
+    FeedbackOptionHandler.validate = function() {
+      if (this.options.length > 5 || this.options.length < 2) {
+        return false;
+      }
+
+      let valid = true;
+      this.options.forEach((item, index) => {
+        if (item.querySelector('input[type="text"]').value.length === 0) {
+          valid = false;
+        }
+      });
+
+      return valid;
+    };
+
     FeedbackOptionHandler.init();
 
     return FeedbackOptionHandler;

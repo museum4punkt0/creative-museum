@@ -13,6 +13,7 @@ define([
     Severity,
     ColorPicker,
     BadgeHandler,
+    FeedbackOptionHandling
 ) {
 
     const colorPickerElement = document.querySelector('.t3js-colorpicker');
@@ -23,13 +24,19 @@ define([
 
         ev.preventDefault();
 
-        const uploads = BadgeHandler.uploadFields;
+        const feedbackOptionsValid = FeedbackOptionHandling.validate();
+
+        if (! feedbackOptionsValid) {
+            Notification.error('Fehler', 'Die Feedback Optionen sind nicht gültig.', 5);
+            return;
+        }
+
         const form = this;
 
-        const uploadsCount = uploads.length;
+        const uploadsCount = BadgeHandler.uploadFields.length;
         let i = 0;
 
-        uploads.forEach((item) => {
+        BadgeHandler.uploadFields.forEach((item) => {
             const file = item.cachedFileArray[0];
 
             if (file === undefined) {

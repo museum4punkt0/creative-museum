@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Controller;
 
+use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
 use JWIED\Creativemuseum\Service\CampaignService;
@@ -169,6 +170,10 @@ class AdministrationController extends ActionController
             }
         }
 
+        if ($campaignDto->getBadges()->count() === 0) {
+            $campaignDto->addBadge(new BadgeDto());
+        }
+
         $this->view->assign('campaignDto', $campaignDto);
         $this->view->assign('formUri', $createCampaignLink);
     }
@@ -191,6 +196,15 @@ class AdministrationController extends ActionController
      */
     public function editCampaignAction(CampaignDto $campaignDto)
     {
+        if ($campaignDto->getBadges()->count() === 0) {
+            $campaignDto->addBadge(new BadgeDto());
+        }
+        if ($campaignDto->getFeedbackOptions()->count() < 2) {
+            for ($i = $campaignDto->getFeedbackOptions()->count(); $i < 2; $i++) {
+                $campaignDto->addFeedbackOption(new FeedbackOptionDto());
+            }
+        }
+
         $this->view->assign('campaignDto', $campaignDto);
     }
 
