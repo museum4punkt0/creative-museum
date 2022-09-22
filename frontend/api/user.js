@@ -76,7 +76,7 @@ export const userApi = () => {
       const res = await $api.delete(`users/me`)
       return res
     } else {
-      const res = await $api.patch(`users/me/anonymize`)
+      const res = await $api.patch(`users/me/anonymize`, {})
       return res
     }
   }
