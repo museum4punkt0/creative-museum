@@ -27,7 +27,7 @@ define([
         const feedbackOptionsValid = FeedbackOptionHandling.validate();
 
         if (! feedbackOptionsValid) {
-            Notification.error('Fehler', 'Die Feedback Optionen sind nicht gültig.');
+            Notification.error('Fehler', 'Die Feedback Optionen sind nicht gültig.', 5);
             return;
         }
 

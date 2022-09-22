@@ -51,23 +51,23 @@ class Badge
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
     private $threshold;
 
     #[ORM\Column(type: 'badgetype')]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
     private BadgeType $type;
 
     #[ORM\Column(type: 'posttype')]
-    #[Groups(['badge:read', 'campaigns:read'])]
+    #[Groups(['badge:read', 'campaigns:read', 'campaign:write'])]
     private PostType $postType = PostType::TEXT;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
@@ -76,7 +76,7 @@ class Badge
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist'], orphanRemoval: true)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
     private $picture;
 
     public function getId(): ?int
