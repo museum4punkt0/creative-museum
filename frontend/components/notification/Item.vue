@@ -21,7 +21,7 @@
       <p class="text-$highlight text-sm">
         {{
           $t(`notifications.${notification.text}.text`, {
-            campaign: notification.campaign.title,
+            campaign: notification.campaign ? notification.campaign.title : '',
             points: notification.scorePoints ? notification.scorePoints.toLocaleString() : '',
             author: notification.post ? notification.post.author.username : '',
             badge: notification.badge ? notification.badge.title : '',
