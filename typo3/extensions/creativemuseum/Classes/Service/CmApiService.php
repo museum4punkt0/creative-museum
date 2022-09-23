@@ -118,7 +118,7 @@ abstract class CmApiService implements SingletonInterface
 
         $options = [
             'headers' => [
-                'Accept' => 'application/ld+json',
+                'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $token
             ]
         ];
@@ -153,7 +153,7 @@ abstract class CmApiService implements SingletonInterface
             return null;
         }
 
-        return $decodedBody['@id'];
+        return (string) $decodedBody['id'];
     }
 
     /**

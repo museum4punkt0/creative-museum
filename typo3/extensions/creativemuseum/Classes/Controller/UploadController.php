@@ -35,6 +35,6 @@ class UploadController extends ActionController
 
         $identifier = $this->fileUploadService->sendFile(reset($files));
 
-        return new JsonResponse(['file' => $identifier], 200);
+        return new JsonResponse(['file' => '/' . FileUploadService::ENDPOINT . '/' . $identifier], 200);
     }
 }

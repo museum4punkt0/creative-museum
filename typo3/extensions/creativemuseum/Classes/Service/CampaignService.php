@@ -65,7 +65,7 @@ class CampaignService extends CmApiService
                     $badgeDto->setCampaign($campaignDto);
                     $badgeId = $this->badgeService->addBadge($badgeDto);
                     if (null !== $badgeId) {
-                        $badgeIds[] = $badgeId;
+                        $badgeIds[] = '/' . BadgeService::ENDPOINT . '/' . $badgeId;
                     }
                     continue;
                 }
@@ -84,7 +84,7 @@ class CampaignService extends CmApiService
                     $awardDto->setCampaign($campaignDto);
                     $awardId = $this->awardService->addAward($awardDto);
                     if (null !== $awardId) {
-                        $awardIds[] = $awardId;
+                        $awardIds[] = '/' . AwardService::ENDPOINT . '/' . $awardId;
                     }
                     continue;
                 }
@@ -109,7 +109,7 @@ class CampaignService extends CmApiService
                 $option->setCampaign($campaignDto);
                 $optionId = $this->feedbackOptionService->addFeedbackOption($option);
                 if (null !== $optionId) {
-                    $feedbackOptionIds[] = $optionId;
+                    $feedbackOptionIds[] = '/' . FeedbackOptionService::ENDPOINT . '/' . $optionId;
                 }
                 continue;
             }
