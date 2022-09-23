@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\AnonymizeUserController;
 use App\Controller\MeController;
 use App\Enum\NotificationType;
 use App\Repository\UserRepository;
@@ -40,6 +41,12 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
         'get' => [
             'normalization_context' => ['groups' => ['users:read']],
+        ],
+        'anonymize' => [
+            'method' => 'PATCH',
+            'path' => '/users/me/anonymize',
+            'controller' => AnonymizeUserController::class,
+//            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or (previous_object == user)"
         ],
     ],
     itemOperations: [
@@ -149,6 +156,10 @@ class User implements UserInterface
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['user:me:read', 'write:me', 'users:read'])]
     private $fullName;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['user:me:read', 'write:me', 'users:read'])]
+    private $deleted = 0;
 
     public function __construct()
     {
@@ -484,7 +495,19 @@ class User implements UserInterface
     #[ORM\PreUpdate]
     public function setFullName(): self
     {
-        $this->fullName = $this->getFirstName().' '.$this->getLastName();
+        $this->fullName = $this->getFirstName() . ' ' . $this->getLastName();
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
