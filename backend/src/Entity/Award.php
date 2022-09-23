@@ -70,7 +70,7 @@ class Award
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'awards')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['awards:read', 'awarded:read', 'campaign:write'])]
+    #[Groups(['awards:read', 'awarded:read'])]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
