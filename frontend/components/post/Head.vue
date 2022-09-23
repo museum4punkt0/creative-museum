@@ -64,6 +64,14 @@
             <li class="my-6">
               <button
                 class="block btn-right"
+                @click="openAwardAssignModal"
+              >
+                {{ $t('post.actions.assignAward') }}
+              </button>
+            </li>
+            <li class="my-6">
+              <button
+                class="block btn-right"
                 @click="openPlaylistSelectionModal"
               >
                 {{ $t('post.actions.addToPlaylist') }}
@@ -111,6 +119,16 @@
               @closeModal="additionalPage = false"
               @createPlaylist="addPostToNewPlaylist"
               @selectPlaylist="addPostToPlaylist"
+            />
+          </div>
+          <div
+            v-if="additionalPageContent === 'awardAssign'"
+            class="flex flex-col flex-1 items-stretch"
+          >
+            <AwardAssign
+              :post="post"
+              class="flex flex-col flex-1 items-stretch"
+              @closeModal="additionalPage = false"
             />
           </div>
           <div
@@ -215,6 +233,11 @@ export default defineComponent({
       })
     }
 
+    function openAwardAssignModal() {
+      additionalPageContent.value = 'awardAssign'
+      additionalPage.value = true
+    }
+
     function onShowAdditionalOptions() {
       if (!$auth.loggedIn) {
         store.dispatch('showLogin')
@@ -257,6 +280,7 @@ export default defineComponent({
       openPlaylistSelectionModal,
       addPostToPlaylist,
       addPostToNewPlaylist,
+      openAwardAssignModal,
       onShowAdditionalOptions,
       deletePost,
       linkCopiedSuccess,

@@ -153,6 +153,7 @@
       "addBookmark": "Hinzufügen zur Merkliste",
       "removeBookmark": "Von Merkliste entfernen",
       "addToPlaylist": "Zu Playlist hinzufügen",
+      "assignAward": "Award verleihen",
       "playlist": {
         "createNew": {
           "cta": "Neue Playlist erstellen",
