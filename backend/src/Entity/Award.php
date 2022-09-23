@@ -57,24 +57,24 @@ class Award
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read', 'campaigns:read', 'awarded:read', 'notifications:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read', 'notifications:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read', 'campaigns:read', 'awarded:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read'])]
     private $description;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['awards:read', 'campaigns:read', 'awarded:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read'])]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'awards')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['awards:read', 'awarded:read'])]
+    #[Groups(['awards:read', 'awarded:read', 'campaign:write'])]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['awards:read', 'campaigns:read', 'awarded:read', 'notifications:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read', 'notifications:read'])]
     private $picture;
 
     #[Groups(['campaigns:read', 'awards:read'])]

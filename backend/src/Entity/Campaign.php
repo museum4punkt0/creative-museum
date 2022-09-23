@@ -92,8 +92,8 @@ class Campaign
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $description;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, orphanRemoval: true)]
-    #[Groups(['campaigns:read'])]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, cascade: ["persist"], orphanRemoval: true)]
+    #[Groups(['campaigns:read', 'campaign:write'])]
     private $awards;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, cascade: ["persist"], orphanRemoval: true)]
