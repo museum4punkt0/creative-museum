@@ -45,7 +45,7 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
         if (null !== $memberships[0] ?? null) {
             /** @var CampaignMember $membership */
             $membership = $memberships[0];
-            $data['available'] = $membership->getScore() > $object->getPrice();
+            $data['available'] = $membership->getScore() >= $object->getPrice();
         }
 
         $awarded = $this->awardedRepository->findOneBy([

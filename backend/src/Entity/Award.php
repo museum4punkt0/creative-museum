@@ -14,6 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\GetAvailableAwardsController;
 use App\Repository\AwardRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,6 +23,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     collectionOperations: [
         'get',
+        'getAvailable' => [
+            'method' => 'GET',
+            'path' => '/campaigns/{campaign}/awards/available',
+            'requirements' => ['campaign' => "\d+"],
+            'controller' => GetAvailableAwardsController::class,
+        ],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
     itemOperations: [
