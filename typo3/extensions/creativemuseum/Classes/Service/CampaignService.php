@@ -4,30 +4,32 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Service;
 
+use JWIED\Creativemuseum\Domain\Model\Dto\AwardDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\MediaObjectDto;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class CampaignService extends CmApiService
 {
     const ENDPOINT = 'v1/campaigns';
 
-    const BADGES_ENDPOINT = 'v1/badges';
-
     private BadgeService $badgeService;
+
+    private AwardService $awardService;
 
     private FeedbackOptionService $feedbackOptionService;
 
     public function __construct(
         ExtensionConfiguration $config,
         BadgeService $badgeService,
+        AwardService $awardService,
         FeedbackOptionService $feedbackOptionService
     ) {
         parent::__construct($config);
         $this->badgeService = $badgeService;
+        $this->awardService = $awardService;
         $this->feedbackOptionService = $feedbackOptionService;
     }
 
@@ -50,6 +52,7 @@ class CampaignService extends CmApiService
     {
         $campaignArray = $campaignDto->serialize();
         $badgeIds = [];
+        $awardIds = [];
 
         if (null !== $campaignDto->getFeedbackOptions() && $campaignDto->getFeedbackOptions()->count() > 0) {
             $this->processFeedbackOptionsToUpdate($campaignArray, $campaignDto);
@@ -73,6 +76,25 @@ class CampaignService extends CmApiService
             }
         }
         $campaignArray['badges'] = $badgeIds;
+
+        if (null !== $campaignDto->getAwards() && $campaignDto->getAwards()->count()) {
+            /** @var AwardDto $awardDto */
+            foreach ($campaignDto->getAwards() as $awardDto) {
+                if ($awardDto->getId() === '') {
+                    $awardDto->setCampaign($campaignDto);
+                    $awardId = $this->awardService->addAward($awardDto);
+                    if (null !== $awardId) {
+                        $awardIds[] = $awardId;
+                    }
+                    continue;
+                }
+                if ($this->awardService->updateAward($awardDto)) {
+                    $awardIds[] = '/' . AwardService::ENDPOINT . '/' . $awardDto->getId();
+                }
+
+            }
+        }
+        $campaignArray['awards'] = $awardIds;
 
         $this->patch($campaignArray);
     }
@@ -129,6 +151,10 @@ class CampaignService extends CmApiService
             $this->addBadges($dto, $campaign['badges']);
         }
 
+        if (isset($campaign['awards']) && count($campaign['awards']) > 0) {
+            $this->addAwards($dto, $campaign['awards']);
+        }
+
         return $dto;
     }
 
@@ -162,6 +188,28 @@ class CampaignService extends CmApiService
             }
 
             $dto->addBadge($badgeDto);
+        }
+    }
+
+    private function addAwards(CampaignDto $dto, array $awards): void
+    {
+        foreach ($awards as $award) {
+            $awardDto = new AwardDto();
+            $awardDto->setId((string) $award['id']);
+            $awardDto->setTitle($award['title']);
+            $awardDto->setDescription($award['description']);
+            $awardDto->setPrice((int) $award['price']);
+            $awardDto->setCampaign($dto);
+
+            if (isset($award['picture'])) {
+                $picture = new MediaObjectDto();
+                $picture->setId($award['picture']['id']);
+                $picture->setContentUrl($award['picture']['contentUrl']);
+                $picture->setDescription($award['picture']['description'] ?? '');
+                $awardDto->setPicture($picture);
+            }
+
+            $dto->addAward($awardDto);
         }
     }
 }

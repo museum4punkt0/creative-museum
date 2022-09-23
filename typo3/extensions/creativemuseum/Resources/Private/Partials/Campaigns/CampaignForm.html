@@ -133,6 +133,21 @@
 
         </div>
 
+        <h2>Awards</h2>
+
+        <div class="t3js-awards-container">
+
+            <div class="panel panel-default panel-flat">
+                <f:for each="{campaignDto.awards}" as="award" iteration="iterator">
+                    <f:render
+                            partial="Campaigns/AwardForm"
+                            arguments="{award: award, iterator: iterator}"
+                    />
+                </f:for>
+            </div>
+
+        </div>
+
     </div>
 
     <h2 class="mt-5">Feedback Optionen</h2>

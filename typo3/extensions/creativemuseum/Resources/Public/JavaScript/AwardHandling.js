@@ -1,13 +1,13 @@
 define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
 
-    var BadgeHandler = {
-        badges: [],
+    var AwardHandler = {
+        awards: [],
         container: null,
         uploadFields: []
     };
 
-    BadgeHandler.init = function() {
-        this.container = document.querySelector('.t3js-badges-container');
+    AwardHandler.init = function() {
+        this.container = document.querySelector('.t3js-awards-container');
 
         if (this.container === null) {
             return;
@@ -34,21 +34,21 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
            this.uploadFields.push(fileUpload);
         });
 
-        this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
+        this.awards = document.querySelectorAll('.t3js-awards-container .t3js-item-container');
 
         this.addRemoveButtons();
         this.addNewButton();
     };
 
-    BadgeHandler.itemCount = function() {
-        return this.badges.length;
+    AwardHandler.itemCount = function() {
+        return this.awards.length;
     }
 
-    BadgeHandler.addRemoveButtons = function() {
+    AwardHandler.addRemoveButtons = function() {
 
         this.container.addEventListener('click', function(ev) {
             let node = ev.target;
-            if (! node.classList.contains('t3js-badges-item-remove')) {
+            if (! node.classList.contains('t3js-awards-item-remove')) {
                 return;
             }
 
@@ -59,24 +59,24 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
 
             targetItem.remove();
 
-            this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
+            this.awards = document.querySelectorAll('.t3js-awards-container .t3js-item-container');
         }.bind(this));
 
-        this.badges.forEach((item, index) => {
+        this.awards.forEach((item, index) => {
 
-            item.classList.add('t3js-badge-item-' + index);
+            item.classList.add('t3js-award-item-' + index);
             let btn = document.createElement('a');
             btn.classList.add(
                 'btn',
                 'btn-default',
                 'btn-sm',
-                't3js-badges-item-remove',
+                't3js-awards-item-remove',
                 't3js-iterable'
             );
             btn.style.float = 'right';
             btn.style.marginTop = '-6px';
-            btn.dataset.template = 't3js-badge-item-[i]';
-            btn.dataset.target = 't3js-badge-item-' + index;
+            btn.dataset.template = 't3js-award-item-[i]';
+            btn.dataset.target = 't3js-award-item-' + index;
             btn.dataset.iterationTarget = 'target';
             btn.href = 'javascript:;';
             btn.innerHTML = '<span class="fa fa-close"></span>';
@@ -85,7 +85,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
         })
     };
 
-    BadgeHandler.setIterations = function (item, iteration) {
+    AwardHandler.setIterations = function (item, iteration) {
         let iterables = item.querySelectorAll('.t3js-iterable');
 
         if (item.classList.contains('t3js-iterable')) {
@@ -104,9 +104,9 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                 case 'target':
                     item.dataset.target = item.dataset.template.replace('[i]', iteration);
                     break;
-                case 'badge':
+                case 'award':
                     item.dataset.uploadId = item.dataset.template.replace('[i]', iteration);
-                    item.dataset.badgeId = iteration;
+                    item.dataset.awardId = iteration;
                     break;
                 case 'href':
                     item.href = item.dataset.template.replace('[i]', iteration);
@@ -122,16 +122,16 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
         });
     };
 
-    BadgeHandler.addNewButton = function () {
+    AwardHandler.addNewButton = function () {
 
         this.container.addEventListener('click', function(ev) {
 
             let node = ev.target;
-            if (! node.classList.contains('t3js-badges-item-new')) {
+            if (! node.classList.contains('t3js-awards-item-new')) {
                 return;
             }
 
-            let itemContainer = this.badges.item(this.badges.length - 1).cloneNode(true);
+            let itemContainer = this.awards.item(this.awards.length - 1).cloneNode(true);
             itemContainer.querySelector('.custom-file-container').innerHTML = '';
             itemContainer.querySelector('.collapse').classList.add('show');
             let inputFields = itemContainer.querySelectorAll('input');
@@ -142,8 +142,8 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                 existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
             }
 
-            insertAfter(itemContainer, this.badges.item(this.badges.length - 1));
-            this.badges = document.querySelectorAll('.t3js-badges-container .t3js-item-container');
+            insertAfter(itemContainer, this.awards.item(this.awards.length - 1));
+            this.awards = document.querySelectorAll('.t3js-awards-container .t3js-item-container');
 
             const uploadContainer = itemContainer.querySelector('.custom-file-container');
             const uploadId = uploadContainer.dataset.uploadId;
@@ -158,13 +158,13 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
         btn.classList.add('btn');
         btn.classList.add('btn-default');
         btn.classList.add('btn-sm');
-        btn.classList.add('t3js-badges-item-new');
+        btn.classList.add('t3js-awards-item-new');
         btn.href = 'javascript:;';
-        btn.textContent = 'Badge hinzufügen';
+        btn.textContent = 'Award hinzufügen';
         this.container.append(btn);
     };
 
-    BadgeHandler.init();
+    AwardHandler.init();
 
-    return BadgeHandler;
+    return AwardHandler;
 });

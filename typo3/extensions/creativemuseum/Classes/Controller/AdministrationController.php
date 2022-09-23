@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Controller;
 
+use JWIED\Creativemuseum\Domain\Model\Dto\AwardDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
@@ -126,6 +127,13 @@ class AdministrationController extends ActionController
         $propertyMapping->allowCreationForSubProperty('badges.*');
         $propertyMapping->allowModificationForSubProperty('badges.*');
 
+        $propertyMapping->allowProperties('awards');
+        $propertyMapping
+            ->forProperty('awards.*')
+            ->allowProperties('id', 'title', 'description', 'pictureIRI', 'price');
+        $propertyMapping->allowCreationForSubProperty('awards.*');
+        $propertyMapping->allowModificationForSubProperty('awards.*');
+
         $propertyMapping->forProperty('feedbackOptions.*')->allowProperties('id', 'text');
         $propertyMapping->allowCreationForSubProperty('feedbackOptions.*');
         $propertyMapping->allowModificationForSubProperty('feedbackOptions.*');
@@ -173,6 +181,9 @@ class AdministrationController extends ActionController
         if ($campaignDto->getBadges()->count() === 0) {
             $campaignDto->addBadge(new BadgeDto());
         }
+        if ($campaignDto->getAwards()->count() === 0) {
+            $campaignDto->addAward(new AwardDto());
+        }
 
         $this->view->assign('campaignDto', $campaignDto);
         $this->view->assign('formUri', $createCampaignLink);
@@ -198,6 +209,9 @@ class AdministrationController extends ActionController
     {
         if ($campaignDto->getBadges()->count() === 0) {
             $campaignDto->addBadge(new BadgeDto());
+        }
+        if ($campaignDto->getAwards()->count() === 0) {
+            $campaignDto->addAward(new AwardDto());
         }
         if ($campaignDto->getFeedbackOptions()->count() < 2) {
             for ($i = $campaignDto->getFeedbackOptions()->count(); $i < 2; $i++) {

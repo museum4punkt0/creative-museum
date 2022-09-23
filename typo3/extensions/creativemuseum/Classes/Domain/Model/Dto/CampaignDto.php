@@ -70,6 +70,11 @@ class CampaignDto extends AbstractEntity
     protected $badges;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\AwardDto>
+     */
+    protected $awards;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto>
      */
     protected $feedbackOptions;
@@ -277,6 +282,37 @@ class CampaignDto extends AbstractEntity
     }
 
     /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\AwardDto>
+     */
+    public function getAwards(): ObjectStorage
+    {
+        if (null === $this->awards) {
+            return new ObjectStorage();
+        }
+        return $this->awards;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\AwardDto> $awards
+     * @return CampaignDto
+     */
+    public function setAwards(ObjectStorage $awards): CampaignDto
+    {
+        $this->awards = $awards;
+        return $this;
+    }
+
+    public function addAward(AwardDto $awardDto): CampaignDto
+    {
+        if ($this->awards == null) {
+            $this->awards = new ObjectStorage();
+        }
+
+        $this->awards->attach($awardDto);
+        return $this;
+    }
+
+    /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto>
      */
     public function getFeedbackOptions(): ObjectStorage
@@ -341,6 +377,14 @@ class CampaignDto extends AbstractEntity
             /** @var BadgeDto $badge */
             foreach ($this->getBadges() as $badge) {
                 $campaign['badges'][] = $badge->serialize();
+            }
+        }
+
+        if ($this->getAwards()->count() > 0) {
+            $campaign['awards'] = [];
+            /** @var AwardDto $award */
+            foreach ($this->getAwards() as $award) {
+                $campaign['awards'][] = $award->serialize();
             }
         }
 

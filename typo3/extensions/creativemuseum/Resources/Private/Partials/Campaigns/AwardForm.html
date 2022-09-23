@@ -1,0 +1,112 @@
+
+
+<div
+    class="t3js-item-container t3js-iterable t3js-award-item-{iterator.index} accordion"
+    data-template="t3js-award-item-[i]"
+    data-iteration-target="class"
+>
+
+    <div class="panel-heading pt-3" role="tab">
+        <h3 class="panel-title">
+            <a
+                role="button"
+                data-bs-toggle="collapse"
+                data-bs-parent="#accordion"
+                href="#collapse-award-{iterator.index}"
+                aria-expanded="true"
+                class="collapsed t3js-iterable"
+                data-template="#collapse-award-[i]"
+                data-iteration-target="href"
+            >
+                <span class="caret"></span>
+                <strong class="t3js-iterable" data-template="Award #[i]" data-iteration-target="value">Award #{iterator.cycle} - {award.title}</strong>
+            </a>
+        </h3>
+    </div>
+    <div id="collapse-award-{iterator.index}" class="panel-collapse collapse t3js-iterable" data-template="collapse-award-[i]" data-iteration-target="id" role="tabpanel">
+        <div class="form-section  mb-3">
+            <div class="form-section">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <f:form.hidden
+                                property="awards.{iterator.index}.id"
+                                class="t3js-iterable"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][awards][[i]][id]', iteration-target: 'name'}"
+                        />
+                        <label
+                                for="campaign-award-{iterator.index}-title"
+                                class="campaign-award-title t3js-iterable"
+                                data-template="campaign-award-[i]-title"
+                                data-iteration-target="for"
+                        >
+                            Titel
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                    class="form-control t3js-iterable"
+                                    property="awards.{iterator.index}.title"
+                                    id="campaign-award-{iterator.index}-title"
+                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][awards][[i]][title]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label
+                                for="campaign-award-{iterator.index}-description"
+                                class="campaign-award-description t3js-iterable"
+                                data-template="campaign-award-[i]-description"
+                                data-iteration-target="for">
+                            Beschreibung
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                    class="form-control t3js-iterable"
+                                    property="awards.{iterator.index}.description"
+                                    id="campaign-award-{iterator.index}-description"
+                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][awards][[i]][description]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label
+                                for="campaign-award-{iterator.index}-price"
+                                class="campaign-award-description t3js-iterable"
+                                data-template="campaign-award-[i]-price"
+                                data-iteration-target="for">
+                            Preis in Punkten
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                    type="number"
+                                    class="form-control t3js-iterable"
+                                    property="awards.{iterator.index}.price"
+                                    id="campaign-award-{iterator.index}-price"
+                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][awards][[i]][price]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Award Grafik</label>
+                    <f:form.hidden property="awards.{iterator.index}.pictureIRI" />
+                    <div class="form-control-wrap">
+                        <div
+                            class="custom-file-container t3js-iterable"
+                            data-upload-id="campaign-award-imageupload-{iterator.index}"
+                            data-selected-file="{award.picture.contentUrl}"
+                            data-award-id="{iterator.index}"
+                            data-template="campaign-award-imageupload-[i]"
+                            data-iteration-target="award"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
