@@ -15,7 +15,7 @@
           @click.prevent="$emit('closeModal')"
         ></button>
         <div
-          class="overflow-y-scroll max-height-without-header lg:h-full flex flex-col flex-1"
+          class="overflow-y-scroll max-height-without-header lg:h-full flex flex-col flex-1 scrollbar-hide"
         >
           <slot />
         </div>
