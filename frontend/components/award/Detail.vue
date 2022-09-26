@@ -8,12 +8,7 @@
       </div>
       <div class="flex-1">
         <div class="box-shadow relative m-6">
-          <img
-            v-if="award.picture"
-            :src="`${backendURL}/${award.picture.contentUrl}`"
-            :alt="award.title"
-            class="h-40 w-auto mx-auto"
-          />
+          <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-40 w-auto mx-auto" />
           <h1 class="text-2xl">{{ award.title }}</h1>
           <p>{{ award.description }}</p>
           <div class="text-$highlight">

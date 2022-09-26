@@ -5,12 +5,7 @@
       @click.prevent="awardDetailOpen = true"
     >
       <div class="w-20 h-20 overflow-hidden mr-3 flex-shrink-0">
-        <img
-          v-if="award.picture"
-          :src="`${backendURL}/${award.picture.contentUrl}`"
-          :alt="award.title"
-          class="max-w-18 h-auto"
-        />
+        <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-18 w-auto" />
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ award.title }}</p>

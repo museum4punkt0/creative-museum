@@ -5,12 +5,7 @@
       @click.prevent="badgeDetailOpen = true"
     >
       <div class="w-20 h-20 mr-3 overflow-hidden flex-shrink-0">
-        <img
-          v-if="badge.picture"
-          :src="`${backendURL}/${badge.picture.contentUrl}`"
-          :alt="badge.title"
-          class="max-w-18 h-auto"
-        />
+        <BadgeIcon v-if="badge.picture" :image="badge.picture" :title="badge.title" class="h-18 w-auto" />
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ badge.title }}</p>
@@ -42,7 +37,6 @@
 <script lang="ts">
 import {
   defineComponent,
-  useContext,
   ref,
   computed,
 } from '@nuxtjs/composition-api'
@@ -55,7 +49,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const context = useContext()
     const badgeDetailOpen = ref(false)
 
     const styleAttr = computed(() => {
@@ -65,7 +58,6 @@ export default defineComponent({
     return {
       styleAttr,
       badgeDetailOpen,
-      backendURL: context.$config.backendURL,
     }
   },
 })

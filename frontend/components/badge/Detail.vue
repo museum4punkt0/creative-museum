@@ -7,12 +7,7 @@
     </div>
     <div class="flex-1">
       <div class="box-shadow relative m-6">
-        <img
-          v-if="badge.picture"
-          :src="`${backendURL}/${badge.picture.contentUrl}`"
-          :alt="badge.title"
-          class="h-40 w-auto mx-auto"
-        />
+        <BadgeIcon v-if="badge.picture" :image="badge.picture" :title="badge.title" class="h-40 w-auto mx-auto" />
         <h1 class="text-2xl">{{ badge.title }}</h1>
         <p>{{ badge.description }}</p>
       </div>
