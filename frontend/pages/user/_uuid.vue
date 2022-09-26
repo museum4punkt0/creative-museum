@@ -119,7 +119,7 @@ export default defineComponent({
     onMounted(async () => {
       user.value = await fetchUser(route.value.params.uuid)
 
-      if (user.value && user.value.error) {
+      if ((user.value && user.value.error) || user.value && user.deleted) {
         router.push('/404')
       }
 
