@@ -9,7 +9,6 @@
         width="1"
         height="1">
         <use
-          xlink:href="#maskBadge"
           transform="translate(0.0602678) scale(0.00446429 0.00337838)" />
       </pattern>
     </defs>
