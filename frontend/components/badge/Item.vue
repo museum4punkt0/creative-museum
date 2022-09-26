@@ -4,8 +4,8 @@
       class="flex flex-row items-center mb-2 award-item cursor-pointer"
       @click.prevent="badgeDetailOpen = true"
     >
-      <div class="w-20 h-20 mr-3 overflow-hidden flex-shrink-0">
-        <BadgeIcon v-if="badge.picture" :image="badge.picture" :title="badge.title" class="h-18 w-auto" />
+      <div class="w-20 h-24 mr-3 overflow-hidden flex-shrink-0">
+        <BadgeIcon v-if="badge.picture" :image="badge.picture" :title="badge.title" class="h-23 w-auto" />
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ badge.title }}</p>

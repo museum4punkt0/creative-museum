@@ -4,8 +4,8 @@
       class="flex flex-row items-center mb-2 award-item cursor-pointer"
       @click.prevent="awardDetailOpen = true"
     >
-      <div class="w-20 h-20 overflow-hidden mr-3 flex-shrink-0">
-        <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-18 w-auto" />
+      <div class="w-20 h-24 overflow-hidden mr-3 flex-shrink-0">
+        <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-22 w-auto" />
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ award.title }}</p>
