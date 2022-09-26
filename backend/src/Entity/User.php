@@ -158,7 +158,7 @@ class User implements UserInterface
     private $fullName;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['user:me:read', 'write:me', 'users:read'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read', 'post:read', 'notifications:read'])]
     private $deleted = 0;
 
     public function __construct()

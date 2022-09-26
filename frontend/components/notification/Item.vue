@@ -25,7 +25,11 @@
             points: notification.scorePoints
               ? notification.scorePoints.toLocaleString()
               : '',
-            author: notification.post ? notification.post.author.username : '',
+            author: notification.post
+              ? !notification.post.author.deleted
+                ? notification.post.author.username
+                : $t('anonymous')
+              : '',
             badge: notification.badge ? notification.badge.title : '',
             award: notification.award ? notification.award.title : '',
           })

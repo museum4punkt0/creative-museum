@@ -62,7 +62,7 @@
               <UserProfileImage :user="user" class="w-12 h-12 mr-4" />
               <div class="flex flex-col">
                 <p>{{ user.fullName }}</p>
-                <p class="text-$highlight text-sm">@{{ user.username }}</p>
+                <p class="text-$highlight text-sm">@{{ user.deleted ? $t('anonymous') : user.username }}</p>
               </div>
             </li>
           </ul>
@@ -192,7 +192,7 @@ export default defineComponent({
 
     const selectedUsername = computed(() => {
       for (const index in userList.value) {
-        if (userList.value[index].uuid === selectedUser.value) {
+        if (userList.value[index].uuid === selectedUser.value && !selectedUser.deleted) {
           return userList.value[index].username
         }
       }

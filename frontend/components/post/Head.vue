@@ -10,7 +10,7 @@
     >
       <UserProfileImage :user="post.author" class="mr-4" />
       <div class="flex flex-col">
-        <span class="text-lg">{{ post.author.username }}</span>
+        <span class="text-lg">{{ post.author.deleted ? $t('anonymous') : post.author.username }}</span>
         <span
           :class="post.type !== 'playlist' ? 'highlight-text' : ''"
           class="text-sm mt-1"

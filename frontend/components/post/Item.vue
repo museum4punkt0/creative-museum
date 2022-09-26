@@ -35,8 +35,8 @@
       <p>
         {{
           $t(`campaign.systemMessages.${post.body}`, {
-            giver: postMetadata.giver ? postMetadata.giver.username : '',
-            winner: postMetadata.winner ? postMetadata.winner.username : '',
+            giver: postMetadata.giver ? postMetadata.giver.deleted ? $t('anonymous') : postMetadata.giver.username : '',
+            winner: postMetadata.winner ? postMetadata.winner.deleted ? $t('anonymous') : postMetadata.winner.username : '',
             award: postMetadata.award ? postMetadata.award.title : '',
           })
         }}
