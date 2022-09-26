@@ -53,7 +53,7 @@ export default defineComponent({
 
     async function getNotifications() {
       notifications.value = await fetchUnviewedNotifications()
-      store.dispatch('updatedNotifications')
+      store.dispatch('updatedNotifications', notifications.value.length)
     }
 
     return {

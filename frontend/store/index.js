@@ -12,6 +12,7 @@ export const state = () => ({
   showProfileUpdate: false,
   showTutorial: false,
   notificationsUpdated: false,
+  notificationsCount: 0,
   splashscreenShown: false,
   awardsChange: false,
 })
@@ -70,8 +71,9 @@ export const mutations = {
   UPDATE_NOTIFICATIONS(state) {
     state.notificationsUpdated = false
   },
-  UPDATED_NOTIFICATIONS(state) {
+  UPDATED_NOTIFICATIONS(state, length) {
     state.notificationsUpdated = true
+    state.notificationCount = length
   },
   SPLASHSCREEN_SHOWN(state) {
     state.splashscreenShown = true
@@ -140,8 +142,8 @@ export const actions = {
   updateNotifications({ commit }) {
     commit('UPDATE_NOTIFICATIONS')
   },
-  updatedNotifications({ commit }) {
-    commit('UPDATED_NOTIFICATIONS')
+  updatedNotifications({ commit }, length) {
+    commit('UPDATED_NOTIFICATIONS', length)
   },
   splashscreenShown({ commit }) {
     commit('SPLASHSCREEN_SHOWN')
@@ -184,5 +186,8 @@ export const getters = {
   },
   awardsChange(state) {
     return state.awardsChange
+  },
+  notificationsCount(state) {
+    return state.notificationsCount
   }
 }

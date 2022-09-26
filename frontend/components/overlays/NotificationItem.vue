@@ -5,14 +5,13 @@
     :style="styleAttr"
   >
     <div class="box-shadow mx-6 my-auto">
+
+      <AwardIcon v-if="notification.award" :image="notification.award.picture" :title="notification.award.title" class="mx-auto h-40 w-auto" />
+      <BadgeIcon v-else-if="notification.badge" :image="notification.badge.picture" :title="notification.badge.title" class="mx-auto h-40 w-auto" />
       <div
+        v-else
         class="bg-$highlight w-32 h-32 rounded-full mb-4 overflow-hidden flex-shrink-0 mx-auto"
       >
-        <img
-          v-if="notificationPicture"
-          :src="`${backendURL}/${notificationPicture}`"
-          class="max-w-32 h-auto"
-        />
       </div>
       <div class="flex flex-col flex-grow">
         <p v-if="notification.text" class="mb-1">

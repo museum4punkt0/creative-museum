@@ -12,6 +12,7 @@
             class="w-6 h-6 object-cover object-center rounded-full"
           />
           <span
+            v-if="showNotificationBubble"
             class="highlight-bg absolute h-2 w-2 top-0 right-0 rounded-full"
           />
           <span
@@ -88,6 +89,7 @@ import {
   computed,
   defineComponent,
   ref,
+  watch
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 
@@ -97,6 +99,7 @@ export default defineComponent({
     const store = useStore()
     const username = ref('')
     const violations = ref(null)
+    const showNotificationBubble = ref(false)
     const { supplyUsername } = userApi()
 
     function submitUsername() {
@@ -130,12 +133,24 @@ export default defineComponent({
       return '/images/placeholder_profile.png'
     })
 
+    watch(
+      () => store.getters.notificationsCount,
+      function (newVal) {
+        if (newVal > 0) {
+          showNotificationBubble.value = true
+        } else {
+          showNotificationBubble.value = false
+        }
+      }
+    )
+
     return {
       user: computed(() => store.state.auth.user),
       campaignScore,
       username,
       violations,
       profilePicture,
+      showNotificationBubble,
       submitUsername,
     }
   },
