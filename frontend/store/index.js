@@ -13,6 +13,7 @@ export const state = () => ({
   showTutorial: false,
   notificationsUpdated: false,
   splashscreenShown: false,
+  awardsChange: false,
 })
 
 export const mutations = {
@@ -75,6 +76,12 @@ export const mutations = {
   SPLASHSCREEN_SHOWN(state) {
     state.splashscreenShown = true
   },
+  AWARDS_CHANGE(state) {
+    state.awardsChange = true
+  },
+  AWARDS_CHANGED(state) {
+    state.awardsChange = false
+  }
 }
 
 export const actions = {
@@ -139,6 +146,12 @@ export const actions = {
   splashscreenShown({ commit }) {
     commit('SPLASHSCREEN_SHOWN')
   },
+  awardsChange({ commit }) {
+    commit('AWARDS_CHANGE')
+  },
+  awardsChanged({ commit }) {
+    commit('AWARDS_CHANGED')
+  }
 }
 
 export const getters = {
@@ -169,4 +182,7 @@ export const getters = {
   splashscreenShown(state) {
     return state.splashscreenShown
   },
+  awardsChange(state) {
+    return state.awardsChange
+  }
 }

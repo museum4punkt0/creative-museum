@@ -248,6 +248,7 @@
     }
   },
   "awards": {
+    "select": "Award auswählen",
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",
     "loginToReceiveAwards": "Einloggen um Awards zu verdienen",
@@ -260,10 +261,11 @@
     "pointsLeft": "Restpunktestand {score} Punkte",
     "confirmSelection": "Auswahl bestätigen",
     "detailHeadline": "Award",
+    "noAvailable": "Aktuell hast Du keine Awards die du verleihen könntest.",
     "violations": {
       "1661952434": "Du kannst Dir nicht selber einen Award verleihen ;)",
       "1661952502": "Du musst Teilnehmer der Kampagne sein um einem anderen Teilnehmer diesen Award zu verleihen.",
-      "1661952537": "Du hast leider nicht genug Punkte. Verdiene mehr indem Du dich an der Kampagne beteiligst.",
+      "1661952537": "Du hast leider nicht genug Punkte. Verdiene mehr indem Du Dich an der Kampagne beteiligst.",
       "1661952565": "Du hast diesen Award bereits verliehen."
     }
   },
@@ -316,7 +318,7 @@
     },
     "1662032722": {
       "title": "{award}",
-      "text": "Du hast {points} Punkte erhalten, weil du einen Award in der Kampange {campaign} erhalten hast!"
+      "text": "Du hast {points} Punkte erhalten, weil Du einen Award in der Kampange {campaign} erhalten hast!"
     },
     "1662032767": {
       "title": "###TBD###",
@@ -324,23 +326,23 @@
     },
     "1662032840": {
       "title": "###TBD###",
-      "text": "Du hast {points} Punkte für dein Feedback in der Kampange {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Dein Feedback in der Kampange {campaign} erhalten!"
     },
     "1662032913": {
       "title": "###TBD###",
-      "text": "Du hast {points} Punkte für deinen Login in der Kampange {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Deinen Login in der Kampange {campaign} erhalten!"
     },
     "1662032958": {
       "title": "###TBD###",
-      "text": "Du hast {points} Punkte für deinen Beitrag in der Kampange {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Deinen Beitrag in der Kampange {campaign} erhalten!"
     },
     "1662033166": {
       "title": "###TBD###",
-      "text": "Du hast {points} Punkte für deine Registrierung in der Kampange {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Deine Registrierung in der Kampange {campaign} erhalten!"
     },
     "1662033222": {
       "title": "###TBD###",
-      "text": "Du hast {points} Punkte für deinen Upvote in der Kampange {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Deinen Upvote in der Kampange {campaign} erhalten!"
     },
     "1662033266": {
       "title": "###TBD###",
@@ -356,7 +358,7 @@
     },
     "1662033414": {
       "title": "{award}",
-      "text": "Sie haben den Award {award} von {awardGiver} erhalten!"
+      "text": "Du hast den Award {award} von {awardGiver} erhalten!"
     },
     "1662033487": {
       "title": "Badisches Landesmuseum",

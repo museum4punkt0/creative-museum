@@ -60,7 +60,8 @@
 import {
   defineComponent,
   useContext,
-  computed,
+  useStore,
+  watch,
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
@@ -74,6 +75,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = useStore()
     const { fetchAwards, fetchAwarded } = awardApi()
     const { $auth } = useContext()
 
@@ -85,6 +87,13 @@ export default defineComponent({
     onMounted(async () => {
       await fetchAllAwards()
     })
+
+    watch(
+      () => store.getters.awardsChange,
+      function () {
+        fetchAllAwards()
+      }
+    )
 
     async function fetchAllAwards() {
       availableAwards.value = []
@@ -107,6 +116,7 @@ export default defineComponent({
           } else {
             unavailableAwards.value = response
           }
+          store.dispatch('awardsChanged')
         }
       )
       if ($auth.loggedIn) {

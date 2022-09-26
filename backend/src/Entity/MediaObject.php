@@ -75,7 +75,7 @@ class MediaObject
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'awards:read', 'awarded:read', 'badge:read', 'playlist:read'])]
-    private string $description;
+    public string $description;
 
     #[ORM\Column(type: 'datetime_immutable')]
     #[Groups(['media_object:read'])]

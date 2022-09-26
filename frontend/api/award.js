@@ -19,7 +19,7 @@ export const awardApi = () => {
   }
 
   const fetchAvailableAwards = async (campaign) => {
-    const response = await $api.get(`awards?campaign=${campaign}&available=true`)
+    const response = await $api.get(`campaigns/${campaign}/awards/available`)
     return response
   }
 

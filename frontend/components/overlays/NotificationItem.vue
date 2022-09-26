@@ -38,7 +38,7 @@
               badge: notification.badge ? notification.badge.title : '',
               award: notification.award ? notification.award.title : '',
               awardWinner: notification.award
-                ? notification.award.winner.username
+                ? notification.awardWinner.username
                 : '',
             })
           }}

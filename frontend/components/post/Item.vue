@@ -31,7 +31,7 @@
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
-    <div v-else class="highlight-text text-center">
+    <div v-else class="highlight-text text-center text-sm">
       <p>
         {{
           $t(`campaign.systemMessages.${post.body}`, {
