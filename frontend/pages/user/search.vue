@@ -1,12 +1,14 @@
 <template>
   <div>
     <h1 class="page-header mt-0 mb-1">{{ $t('user.search') }}</h1>
-    <input
-      v-model="searchField"
-      class="input-text my-6"
-      autocomplete="off"
-      name="attr1"
-    />
+    <div class="relative">
+      <input
+        v-model="searchField"
+        class="input-text my-6 pr-40"
+        autocomplete="off"
+      />
+      <SearchIcon class="absolute right-4 top-3 w-7 h-7" />
+    </div>
     <template v-if="userList">
       <ul v-for="user in userList" :key="user.uuid">
         <li v-if="user.uuid !== $auth.user.uuid">
@@ -27,9 +29,13 @@
 </template>
 <script>
 import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import SearchIcon from '@/assets/icons/search.svg?inline'
 import { userApi } from '@/api/user'
 
 export default defineComponent({
+  components: {
+    SearchIcon
+  },
   setup() {
     const { searchUser } = userApi()
     const userList = ref(null)
