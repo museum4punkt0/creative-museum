@@ -11,9 +11,8 @@
       </div>
       <div
         v-for="(award, key) in availableAwards" :key="key"
-        class="flex flex-row items-center mb-2 award-item cursor-pointer"
       >
-        <div>
+        <div class="flex flex-row items-center mb-2 award-item cursor-pointer">
           <div class="w-20 h-20 overflow-hidden mr-3 flex-shrink-0">
             <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-18 w-auto" />
           </div>
@@ -81,7 +80,7 @@ export default defineComponent({
 
     function closeAwardDetail() {
       awardDetailOpen.value = false
-      store.dispath('awardsChange')
+      store.dispatch('awardsChange')
     }
 
     return {
