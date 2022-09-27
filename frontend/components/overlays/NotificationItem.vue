@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="notification"
-    class="flex flex-col flex-1 h-full justify-between"
+    class="flex flex-col flex-1 justify-between"
     :style="styleAttr"
   >
     <div class="box-shadow mx-6 my-auto">
@@ -48,7 +48,7 @@
         </p>
       </div>
     </div>
-    <button class="btn-outline m-6" @click.prevent="markNotificationAsViewed">
+    <button class="btn-outline m-6 mb-safe" @click.prevent="markNotificationAsViewed">
       {{ $t('close') }}
     </button>
   </div>
