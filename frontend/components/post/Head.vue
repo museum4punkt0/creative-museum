@@ -1,32 +1,34 @@
 <template>
-  <div v-if="post.author" class="flex flex-row justify-between">
-    <NuxtLink
-      :to="
-        $auth.loggedIn && post.author.uuid === $auth.user.uuid
-          ? localePath('/user/profile')
-          : localePath(`/user/${post.author.uuid}`)
-      "
-      class="flex flex-row"
-    >
-      <UserProfileImage :user="post.author" class="mr-4" />
-      <div class="flex flex-col">
-        <span class="text-lg">{{ post.author.deleted ? $t('anonymous') : post.author.username }}</span>
-        <span
-          :class="post.type !== 'playlist' ? 'highlight-text' : ''"
-          class="text-sm mt-1"
-          >{{
-            $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
-              ? $dayjs(post.created).format('DD.MM.YYYY')
-              : $dayjs(post.created).fromNow()
-          }}</span
-        >
+  <div>
+    <div v-if="post.author" class="flex flex-row justify-between">
+      <NuxtLink
+        :to="
+          $auth.loggedIn && post.author.uuid === $auth.user.uuid
+            ? localePath('/user/profile')
+            : localePath(`/user/${post.author.uuid}`)
+        "
+        class="flex flex-row"
+      >
+        <UserProfileImage :user="post.author" class="mr-4" />
+        <div class="flex flex-col">
+          <span class="text-lg">{{ post.author.deleted ? $t('anonymous') : post.author.username }}</span>
+          <span
+            :class="post.type !== 'playlist' ? 'highlight-text' : ''"
+            class="text-sm mt-1"
+            >{{
+              $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
+                ? $dayjs(post.created).format('DD.MM.YYYY')
+                : $dayjs(post.created).fromNow()
+            }}</span
+          >
+        </div>
+      </NuxtLink>
+      <div @click.prevent="onShowAdditionalOptions">
+        <UtilitiesThreeDots
+          class="cursor-pointer"
+          :text-color="post.type === 'playlist' ? textColor : 'white'"
+        />
       </div>
-    </NuxtLink>
-    <div @click.prevent="onShowAdditionalOptions">
-      <UtilitiesThreeDots
-        class="cursor-pointer"
-        :text-color="post.type === 'playlist' ? textColor : 'white'"
-      />
     </div>
     <transition
       enter-active-class="duration-300 ease-out -bottom-full lg:opacity-0 lg:bottom-auto"
