@@ -42,10 +42,10 @@
       <div class="relative px-6 flex-auto">
         <input
           v-model="searchField"
-          class="input-text my-6"
+          class="input-text my-6 pr-10"
           autocomplete="off"
-          name="attr1"
         />
+        <SearchIcon class="absolute right-9 top-9 w-7 h-7" />
         <template v-if="userList">
           <ul v-for="user in userList" :key="user.uuid">
             <li
@@ -83,7 +83,8 @@
       <div class="page-header px-6">
         <h2>{{ $t('awards.given') }}</h2>
       </div>
-      <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
+      <div class="box-shadow relative m-6">
+        <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-40 w-auto mx-auto" />
         <p>
           {{
             $t('awards.givenConfirmText', {
@@ -118,10 +119,14 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
+import SearchIcon from '@/assets/icons/search.svg?inline'
 import { userApi } from '@/api/user'
 import { awardApi } from '~/api/award'
 
 export default defineComponent({
+  components: {
+    SearchIcon
+  },
   props: {
     award: {
       type: Object,
