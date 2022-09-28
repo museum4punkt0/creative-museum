@@ -9,15 +9,15 @@
     </button>
     <div
       v-show="showOptions"
-      class="px-6 lg:pl-0 w-screen lg:w-auto lg:ml-2 flex flex-row lg:flex-col absolute lg:static left-0 lg:left-auto top-8 lg:top-auto"
+      class="-ml-6 pr-6 lg:pl-0 w-screen lg:w-auto lg:ml-2 flex flex-row lg:flex-col absolute lg:static left-0 lg:left-auto top-8 lg:top-auto overflow-x-scroll scrollbar-hide"
     >
       <button
         v-for="(item, key) in options"
         :key="key"
-        class="btn-outline border-dashed px-2 py-1 mb-3 rounded-full text-sm whitespace-nowrap border border-white self-start"
+        class="btn-outline border-dashed px-2 py-1 mb-3 ml-3 lg:ml-0 rounded-full text-sm whitespace-nowrap border border-white self-start"
         :class="[
           item.id === selectedValue ? 'active' : '',
-          key > 0 ? 'ml-3 lg:ml-0' : '',
+          key > 0 ? 'ml-3' : 'ml-6',
         ]"
         @click="selectValue(item.id)"
       >

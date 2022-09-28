@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="relative">
     <div
-      class="snap snap-mandatory snap-x scrollbar-hide relative -mx-6 lg:mx-0 px-6 lg:px-0 flex flew-row flex-nowrap lg:flex-col overflow-x-auto"
-      :class="dropdownHeight ? 'h-20 lg:h-auto' : 'h-auto'"
+      class="snap snap-mandatory snap-x scrollbar-hide -mx-6 lg:mx-0 px-6 lg:px-0 flex flew-row flex-nowrap lg:flex-col overflow-x-auto"
+      :class="[dropdownHeight ? 'h-20 lg:h-auto' : 'h-auto', dropdownHeight ? 'overflow-x-hidden' : '']"
     >
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 py-1 px-2"
@@ -85,6 +85,7 @@ export default defineComponent({
   setup() {
     const context = useContext()
     const feedbacksDropdown = ref(null)
+    const drodownOpen = ref(false)
 
     const currentSorting = computed(() => context.store.state.currentSorting)
 
@@ -173,6 +174,7 @@ export default defineComponent({
 
     return {
       dropdownHeight,
+      drodownOpen,
       setHeight,
       reversable,
       changeSortDirection,
