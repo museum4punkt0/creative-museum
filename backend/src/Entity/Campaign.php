@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use     ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use App\Controller\GetCampaignLeaderBoardController;
@@ -92,15 +92,15 @@ class Campaign
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $description;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, cascade: ["persist"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, cascade: ["persist","remove"], orphanRemoval: true)]
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $awards;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, cascade: ["persist"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, cascade: ["persist","remove"], orphanRemoval: true)]
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $badges;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class,cascade: ["remove"], orphanRemoval: true)]
     #[Groups(['campaigns:read'])]
     private $partners;
 
@@ -124,6 +124,9 @@ class Campaign
     #[ORM\Column(type: 'boolean')]
     #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $closed = false;
+
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Post::class, cascade: ['remove'])]
+    private $posts;
 
     public function __construct()
     {
@@ -406,6 +409,36 @@ class Campaign
     public function setClosed(bool $closed): self
     {
         $this->closed = $closed;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setCampaign($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getCampaign() === $this) {
+                $post->setCampaign(null);
+            }
+        }
 
         return $this;
     }

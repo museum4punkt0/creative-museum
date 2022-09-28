@@ -100,6 +100,6 @@ class PostFeedbackService
             });
         }
 
-        return reset($calc);
+        return reset($calc) ?: null;
     }
 }

@@ -15,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+
 
 #[ORM\Entity(repositoryClass: PollOptionRepository::class)]
 #[ApiResource(
@@ -48,6 +50,9 @@ class PollOption
 
     #[Groups(['post:read'])]
     private $myChoice = false;
+
+    #[ORM\OneToMany(mappedBy: 'pollOption',targetEntity: PollOptionChoice::class, cascade: ['remove'])]
+    private $choices;
 
     public function getId(): ?int
     {
@@ -99,6 +104,36 @@ class PollOption
     public function setMyChoice(bool $myChoice): self
     {
         $this->myChoice = $myChoice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PollOptionChoice>
+     */
+    public function getChoices(): Collection
+    {
+        return $this->choices;
+    }
+
+    public function addChoice(PollOptionChoice $pollOptionChoice): self
+    {
+        if (!$this->choices->contains($pollOptionChoice)) {
+            $this->choices[] = $pollOptionChoice;
+            $pollOptionChoice->setPollOption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChoice(PollOptionChoice $pollOptionChoice): self
+    {
+        if ($this->choices->removeElement($pollOptionChoice)) {
+            // set the owning side to null (unless already changed)
+            if ($pollOptionChoice->getPollOption() === $this) {
+                $pollOptionChoice->setPollOption(null);
+            }
+        }
 
         return $this;
     }

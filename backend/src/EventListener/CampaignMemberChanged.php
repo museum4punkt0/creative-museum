@@ -9,15 +9,10 @@
 
 namespace App\EventListener;
 
-use App\Entity\Badge;
 use App\Entity\CampaignMember;
-use App\Enum\BadgeType;
 use App\Event\CheckForBadgesEvent;
-use App\Message\NotifyNewBadgeReceived;
-use App\Service\BadgeService;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class CampaignMemberChanged
 {
@@ -33,7 +28,6 @@ class CampaignMemberChanged
         if (!array_key_exists('score', $event->getEntityChangeSet()) && !array_key_exists('rewardPoints', $event->getEntityChangeSet())) {
             return;
         }
-
 
         $checkForBadgesEvent = new CheckForBadgesEvent($campaignMember->getUser()->getId(),$campaignMember->getCampaign()->getId());
         $this->eventDispatcher->dispatch($checkForBadgesEvent, CheckForBadgesEvent::NAME);

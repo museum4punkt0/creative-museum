@@ -6,6 +6,7 @@ namespace App\EventListener;
 
 use App\Entity\CampaignFeedbackOption;
 use App\Entity\Post;
+use App\Entity\PostFeedback;
 use App\Repository\PostRepository;
 use App\Service\PostFeedbackService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,12 @@ class CampaignFeedbackOptionDeleteListener
 
     public function preRemove(CampaignFeedbackOption $campaignFeedbackOption, LifecycleEventArgs $event): void
     {
+        $feedbacks = $campaignFeedbackOption->getVotes();
+        foreach ($feedbacks as $feedback) {
+            $this->entityManager->remove($feedback);
+        }
+        $this->entityManager->flush();
+
         $posts = $this->postRepository->findBy(['leadingFeedbackOption' => $campaignFeedbackOption]);
 
         foreach ($posts as $post) {
