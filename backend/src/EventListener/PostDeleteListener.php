@@ -20,7 +20,15 @@ class PostDeleteListener
             $this->entityManager->persist($parent);
             $this->entityManager->flush();
         } else {
+            $pollOptions = $post->getPollOptions();
+            foreach ($pollOptions as $pollOption) {
+                $this->entityManager->remove($pollOption);
+            }
+            $this->entityManager->flush();
+
             $posts = $post->getComments();
+            $post->setLeadingFeedbackOption(null);
+            $this->entityManager->persist($post);
             foreach ($posts as $post) {
                 $this->entityManager->remove($post);
             }

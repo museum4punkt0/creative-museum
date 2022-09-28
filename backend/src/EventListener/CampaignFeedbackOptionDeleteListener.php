@@ -6,7 +6,6 @@ namespace App\EventListener;
 
 use App\Entity\CampaignFeedbackOption;
 use App\Entity\Post;
-use App\Entity\PostFeedback;
 use App\Repository\PostRepository;
 use App\Service\PostFeedbackService;
 use Doctrine\ORM\EntityManagerInterface;
