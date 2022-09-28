@@ -11,6 +11,7 @@ namespace App\Service;
 
 use App\Entity\PollOption;
 use App\Entity\PollOptionChoice;
+use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 
@@ -20,7 +21,8 @@ class PollOptionChoiceService
 
     public function __construct(
         EntityManagerInterface $em
-    ) {
+    )
+    {
         $this->em = $em;
     }
 
@@ -32,28 +34,6 @@ class PollOptionChoiceService
             ->andWhere(
                 $qb->expr()->in('option.id', 'choice.pollOption'),
                 $qb->expr()->eq('choice.user', $userId)
-            )
-            ->leftJoin(
-                PollOption::class,
-                'option',
-                Expr\Join::WITH,
-                $qb->expr()->andX(
-                    $qb->expr()->eq('option.post', $postId)
-                )
-            )
-            ->getQuery()
-            ->execute();
-
-        return $choiced;
-    }
-
-    public function getAllChoicesByPost(int $postId): array
-    {
-        $qb = $this->em->createQueryBuilder();
-        $choiced = $qb->select('choice')
-            ->from(PollOptionChoice::class, 'choice')
-            ->andWhere(
-                $qb->expr()->in('option.id', 'choice.pollOption'),
             )
             ->leftJoin(
                 PollOption::class,

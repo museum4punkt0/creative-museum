@@ -45,12 +45,27 @@ services:
         tags:
             - { name: serializer.normalizer, priority: 100}
 
+    App\EventListener\PostDeleteListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preRemove'
+                entity: 'App\Entity\Post'
+                priority: 90
+    App\EventListener\CampaignDeleteListener:
+        tags:
+             -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preRemove'
+                entity: 'App\Entity\Campaign'
+                priority: 100
     App\EventListener\CampaignFeedbackOptionDeleteListener:
         tags:
             -
                 name: 'doctrine.orm.entity_listener'
                 event: 'preRemove'
                 entity: 'App\Entity\CampaignFeedbackOption'
+                priority: 110
 
     App\EventListener\BadgeDeleteListener:
         tags:
@@ -58,6 +73,13 @@ services:
                 name: 'doctrine.orm.entity_listener'
                 event: 'preRemove'
                 entity: 'App\Entity\Badge'
+    App\EventListener\AwardDeleteListener:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'preRemove'
+                entity: 'App\Entity\Award'
+
 
     campaign.date_filter:
         parent: 'api_platform.doctrine.orm.date_filter'

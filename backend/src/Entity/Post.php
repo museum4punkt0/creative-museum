@@ -162,13 +162,13 @@ class Post
     #[Assert\Valid]
     private $pollOptions;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments', )]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['post:comment:write', 'post:delete'])]
     #[Ignore]
     private $parent;
 
-    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Post::class, cascade: ['persist'])]
     #[ApiSubresource]
     #[ORM\OrderBy(['created' => 'ASC'])]
     private $comments;
@@ -238,6 +238,9 @@ class Post
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['post:read'])]
     private $postMetadata;
+
+    #[ORM\OneToMany(mappedBy: 'post',targetEntity: Vote::class, cascade: ['remove'])]
+    private $votes;
 
     public function __construct()
     {
@@ -711,6 +714,36 @@ class Post
     public function setPostMetadata(?string $postMetadata): self
     {
         $this->postMetadata = $postMetadata;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vote>
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
+    public function addVote(Vote $vote): self
+    {
+        if (!$this->votes->contains($vote)) {
+            $this->votes[] = $vote;
+            $vote->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVote(Vote $vote): self
+    {
+        if ($this->votes->removeElement($vote)) {
+            // set the owning side to null (unless already changed)
+            if ($vote->getPost() === $this) {
+                $vote->setPost(null);
+            }
+        }
 
         return $this;
     }
