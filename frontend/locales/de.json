@@ -1,5 +1,6 @@
 {
-  "anonymous": "Anonymous",
+  "anonymous": "Anonymer Benutzer",
+  "deleted": "Benutzer gelöscht",
   "locale": "Deutsch",
   "next": "Weiter",
   "prev": "Zurück",

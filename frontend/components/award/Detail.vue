@@ -57,7 +57,7 @@
               <UserProfileImage :user="user" class="w-12 h-12 mr-4" />
               <div class="flex flex-col">
                 <p>{{ user.fullName }}</p>
-                <p class="text-$highlight text-sm">@{{ user.deleted ? $t('anonymous') : user.username }}</p>
+                <p class="text-$highlight text-sm">{{ $userName(user) }}</p>
               </div>
             </li>
           </ul>

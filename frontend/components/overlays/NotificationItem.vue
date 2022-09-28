@@ -32,16 +32,12 @@
                 ? notification.scorePoints.toLocaleString()
                 : '',
               author: notification.post
-                ? !notification.post.author.deleted
-                  ? notification.post.author.username
-                  : $t('anonymous')
+                ? $userName(notification.post.author)
                 : '',
               badge: notification.badge ? notification.badge.title : '',
               award: notification.award ? notification.award.title : '',
               awardWinner: notification.award
-                ? !notification.awardWinner.deleted
-                  ? notification.awardWinner.username
-                  : $t('anonymous')
+                ? $userName(notification.awardWinner)
                 : '',
             })
           }}

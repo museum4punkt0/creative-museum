@@ -35,6 +35,7 @@ export default {
   ],
   plugins: [
     '~/plugins/api',
+    '~/plugins/user',
     { src: '~/plugins/tooltip', mode: 'client' },
     { src: '~/plugins/clipboard', mode: 'client' },
   ],

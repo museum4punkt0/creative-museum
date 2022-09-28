@@ -1,6 +1,6 @@
 <template>
   <div v-if="comment" class="text-xs mt-4">
-    <strong class="block">{{ comment.author.deleted ? $t('anonymous') : comment.author.username }}</strong>
+    <strong class="block">{{ $userName(comment.author) }}</strong>
     <p>{{ comment.body }}</p>
     <span
       class="block"
