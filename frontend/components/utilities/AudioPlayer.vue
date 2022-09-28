@@ -112,7 +112,7 @@ export default {
       isLoading: false,
       timer: null,
       noticeMessage: '',
-      duration: '',
+      duration: 0,
       currentPlayIndex: 0,
       currentTime: '',
       at: null,
@@ -152,6 +152,8 @@ export default {
       if (this.$refs.audio.duration === Infinity) {
         this.$refs.audio.currentTime = 1e101
         this.$refs.audio.addEventListener('timeupdate', this.getDuration)
+      } else {
+        this.duration = this.$refs.audio.duration
       }
       this.$emit('loadedmetadata', event)
     },
