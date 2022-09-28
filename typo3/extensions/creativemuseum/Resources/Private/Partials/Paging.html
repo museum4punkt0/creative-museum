@@ -1,0 +1,58 @@
+<nav>
+    <ul class="paging paging-block pagination">
+        <f:if condition="{paging.previousPageNumber} && {paging.previousPageNumber} >= {paging.firstPageNumber}">
+            <f:then>
+                <li class="waves-effect page-item">
+                    <a
+                        class="page-link"
+                        href="{f:uri.action(action:actionName, arguments:{filter: {page: 1, searchString: searchString}})}"
+                        title="{f:translate(key:'paging.first')}"
+                    >
+                        &laquo;
+                    </a>
+                </li>
+                <li class="waves-effect page-item">
+                    <a
+                        class="page-link"
+                        href="{f:uri.action(action:actionName, arguments:{filter: {page: paging.previousPageNumber, searchString: searchString}})}"
+                        title="{f:translate(key:'paging.previous')}"
+                    >
+                        &lsaquo;
+                    </a>
+                </li>
+            </f:then>
+            <f:else>
+                <li class="disabled page-item"><a class="page-link" href="#">&laquo;</a></li>
+                <li class="disabled page-item"><a class="page-link" href="#">&lsaquo;</a></li>
+            </f:else>
+        </f:if>
+        <f:for each="{pages}" as="page">
+            <li class="page-item {f:if(condition: '{page} == {paginator.currentPageNumber}', then:'active', else:'waves-effect')}">
+                <a class="page-link" href="{f:uri.action(action:actionName, arguments:{filter: {page: page, searchString: searchString}})}">{page}</a>
+            </li>
+        </f:for>
+
+        <f:if condition="{paging.nextPageNumber} && {paging.nextPageNumber} <= {paging.lastPageNumber}">
+            <f:then>
+                <li class="waves-effect page-item">
+                    <a
+                        class="page-link"
+                        href="{f:uri.action(action:actionName, arguments:{filter: {page: paging.nextPageNumber, searchString: searchString}})}"
+                        title="{f:translate(key:'paging.next')}"
+                    >
+                        &rsaquo;
+                    </a>
+                </li>
+                <li class="waves-effect page-item">
+                    <a class="page-link" href="{f:uri.action(action:actionName, arguments:{filter: {page: paging.lastPageNumber, searchString: searchString}})}" title="{f:translate(key:'paging.last')}">
+                        &raquo;
+                    </a>
+                </li>
+            </f:then>
+            <f:else>
+                <li class="disabled page-item"><a class="page-link" href="#">&rsaquo;</a></li>
+                <li class="disabled page-item"><a class="page-link" href="#">&raquo;</a></li>
+            </f:else>
+        </f:if>
+    </ul>
+</nav>

@@ -8,7 +8,11 @@ use JWIED\Creativemuseum\Domain\Model\Dto\AwardDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\UserDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\UserListFilterDto;
+use JWIED\Creativemuseum\Pagination\ApiRecordPaginator;
 use JWIED\Creativemuseum\Service\CampaignService;
+use JWIED\Creativemuseum\Service\UserService;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\InputButton;
 use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
@@ -17,11 +21,13 @@ use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AdministrationController extends ActionController
@@ -42,6 +48,11 @@ class AdministrationController extends ActionController
     protected $campaignService;
 
     /**
+     * @var UserService
+     */
+    protected $userService;
+
+    /**
      * @var IconFactory
      */
     protected $iconFactory;
@@ -54,11 +65,13 @@ class AdministrationController extends ActionController
     public function __construct(
         UriBuilder $uriBuilder,
         CampaignService $campaignService,
+        UserService $userService,
         IconFactory $iconFactory,
         AssetCollector $assetCollector
     ) {
         $this->uriBuilder = $uriBuilder;
         $this->campaignService = $campaignService;
+        $this->userService = $userService;
         $this->iconFactory = $iconFactory;
         $this->assetCollector = $assetCollector;
     }
@@ -94,12 +107,27 @@ class AdministrationController extends ActionController
                 );
                 $pageRenderer->addCssFile('EXT:creativemuseum/Resources/Public/Css/file-upload-with-preview.css');
             }
+            if ($this->actionMethodName === 'userDetailAction') {
+                $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/UserHandling');
+            }
 
         }
     }
 
     public function initializeAction()
     {
+        $userActions = ['userOverviewAction', 'userDetailAction', 'toggleUserActiveAction', 'deleteUserAction'];
+
+        if (in_array($this->actionMethodName, $userActions)) {
+            $propertyMapping = $this->arguments['filter']->getPropertyMappingConfiguration();
+            $propertyMapping->allowProperties('page', 'searchString');
+            $propertyMapping->setTypeConverterOption(
+                PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                true
+            );
+        }
+
         $formActions = ['saveCampaignAction', 'updateCampaignAction'];
 
         if (in_array($this->actionMethodName, ['newCampaignAction', 'editCampaignAction'])) {
@@ -272,9 +300,80 @@ class AdministrationController extends ActionController
         $this->forward('index');
     }
 
-    public function userOverviewAction()
+    /**
+     * @param UserListFilterDto|null $filter
+     * @return void
+     */
+    public function userOverviewAction(UserListFilterDto $filter = null)
     {
+        if (null === $filter) {
+            $filter = new UserListFilterDto();
+        }
 
+        $users = $this->userService->getUsers($filter);
+
+        $paginator = new ApiRecordPaginator(
+            $users['hydra:member'],
+            $filter->getPage(),
+            UserService::RECORDS_PER_PAGE,
+            $users['hydra:totalItems']
+        );
+
+        $pagination = new SimplePagination($paginator);
+
+        $this->view->assignMultiple(
+            [
+                'items' => $users,
+                'paginator' => $paginator,
+                'paging' => $pagination,
+                'pages' => range(1, $pagination->getLastPageNumber()),
+                'actionName' => substr($this->actionMethodName, 0, -6),
+                'filter' => $filter
+            ]
+        );
+    }
+
+    public function userDetailAction(UserDto $user, UserListFilterDto $filter = null)
+    {
+        if (null === $filter) {
+            $filter = new UserListFilterDto();
+        }
+
+        $this->view->assignMultiple([
+            'user' => $user,
+            'filter' => $filter
+        ]);
+    }
+
+    public function toggleUserActiveAction(UserDto $user, UserListFilterDto $filter = null)
+    {
+        if (null === $filter) {
+            $filter = new UserListFilterDto();
+        }
+
+        $this->userService->updateUser($user->getUuid(), ['active' => !$user->isActive()]);
+
+        $newStateActive = $user->isActive() ? 'deaktiviert' : 'aktiviert';
+
+        $this->addFlashMessage('User erfolgreich ' . $newStateActive);
+
+        $this->redirect('userDetail', null, null, [
+            'user' => $user->getUuid(),
+            'filter' => ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()]
+        ]);
+    }
+
+    public function deleteUserAction(UserDto $user, UserListFilterDto $filter = null)
+    {
+        if (null === $filter) {
+            $filter = new UserListFilterDto();
+        }
+
+        $this->addFlashMessage('Benutzer erfolgreich gelöscht');
+
+        $this->redirect('userOverview', null, null, [
+            'filter' => ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()]
+        ]);
     }
 
     /**
@@ -301,7 +400,11 @@ class AdministrationController extends ActionController
                     )
                 );
                 if ($this->request->getControllerName() === $controller) {
-                    $isActive = $this->request->getControllerActionName() === $action ? true : false;
+                    $tmpAction = $this->request->getControllerActionName();
+                    if ($tmpAction === 'userDetail') {
+                        $tmpAction = 'userOverview';
+                    }
+                    $isActive = $action === $tmpAction ? true : false;
                 } else {
                     $isActive = false;
                 }
@@ -325,8 +428,11 @@ class AdministrationController extends ActionController
         if ($action === 'newCampaign') {
             $this->addNewCampaignSaveButton($view);
         }
-        IF ($action === 'editCampaign') {
+        if ($action === 'editCampaign') {
             $this->addEditCampaignSaveButton($view);
+        }
+        if ($action === 'userDetail') {
+            $this->addUserDetailButtons($view);
         }
     }
 
@@ -381,6 +487,66 @@ class AdministrationController extends ActionController
         $buttonBar->addButton($saveButton);
 
         $this->addCancelButton($buttonBar);
+    }
+
+    private function addUserDetailButtons(BackendTemplateView $view)
+    {
+        $arguments = $this->request->getArgument('filter');
+        $uuid = $this->request->getArgument('user');
+
+        $uriArgs  = '&tx_creativemuseum_system_creativemuseumcmadm[filter][page]=' . $arguments['page'];
+        $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[filter][searchString]=' . $arguments['searchString'];
+
+        $buttonBar = $view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
+
+        $backButton = $buttonBar->makeButton(LinkButton::class);
+        $backButton
+            ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL))
+            ->setTitle('zurück')
+            ->setHref(
+                $this->getHref(
+                    'Administration',
+                    'userOverview'
+                ) . $uriArgs
+            )
+            ->setShowLabelText(true);
+
+        $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[user]=' . $uuid;
+
+        $enableDisableButton = $buttonBar->makeButton(LinkButton::class);
+        $enableDisableButton
+            ->setIcon($this->iconFactory->getIcon('actions-eye', Icon::SIZE_SMALL))
+            ->setTitle('De-/Aktivieren')
+            ->setHref(
+                $this->getHref(
+                    'Administration',
+                    'toggleUserActive'
+                ) . $uriArgs
+            )
+            ->setShowLabelText(true);
+
+        $deleteButton = $buttonBar->makeButton(LinkButton::class);
+        $deleteButton
+            ->setIcon($this->iconFactory->getIcon('actions-delete', Icon::SIZE_SMALL))
+            ->setTitle('Löschen')
+            ->setHref(
+                $this->getHref(
+                    'Administration',
+                    'deleteUser'
+                ) . $uriArgs
+            )
+            ->setDataAttributes([
+                'delete-user-button' => '',
+                'title' => 'Benutzer löschen?',
+                'message' => 'Soll der Benutzer wirklich gelöscht werden?',
+                'button-close-text' => 'Abbrechen',
+                'button-ok-text' => 'Ja, Benutzer löschen'
+            ])
+            ->setShowLabelText(true);
+
+        $buttonBar->addButton($backButton);
+        $buttonBar->addButton($enableDisableButton);
+        $buttonBar->addButton($deleteButton);
     }
 
     /**

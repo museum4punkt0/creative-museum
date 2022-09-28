@@ -1,0 +1,70 @@
+<h1>{user.firstName} {user.lastName}</h1>
+
+<div class="form-group">
+    <div class="form-section">
+        <div class="form-group mb-3">
+            <label>Status</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{f:if(condition: user.active, then: 'aktiv', else: 'deaktiviert')}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>UUID</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{user.uuid}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Benutzername</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{user.username}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Letzter Login</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{user.lastLogin -> f:format.date(format: 'd.m.Y - H:i:s')}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Vorname</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{user.firstName}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Nachname</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{user.lastName}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>E-Mail Adresse</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{user.email}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Beschreibung</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <textarea class="form-control" readonly>{user.description}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

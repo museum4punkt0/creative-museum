@@ -1,7 +1,5 @@
 <?php
 
-use JWIED\Creativemuseum\Controller\AdministrationController;
-
 if (TYPO3_MODE === 'BE') {
 
     $actions = [
@@ -10,10 +8,13 @@ if (TYPO3_MODE === 'BE') {
         'saveCampaign',
         'editCampaign',
         'updateCampaign',
-        'userOverview',
         'hideCampaign',
         'unhideCampaign',
-        'deleteCampaign'
+        'deleteCampaign',
+        'userOverview',
+        'userDetail',
+        'toggleUserActive',
+        'deleteUser'
     ];
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
@@ -22,7 +23,7 @@ if (TYPO3_MODE === 'BE') {
         'cm_adm',
         '',
         [
-            AdministrationController::class => implode(',', $actions),
+            \JWIED\Creativemuseum\Controller\AdministrationController::class => implode(',', $actions),
         ],
         [
             'access' => 'user,group',
@@ -33,5 +34,9 @@ if (TYPO3_MODE === 'BE') {
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \JWIED\Creativemuseum\Property\TypeConverter\CampaignDtoConverter::class
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+        \JWIED\Creativemuseum\Property\TypeConverter\UserDtoConverter::class
     );
 }

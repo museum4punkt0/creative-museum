@@ -35,7 +35,8 @@ class CampaignService extends CmApiService
 
     public function getCampaigns(): ?array
     {
-        return $this->get();
+        $campaignCollectionResponse = $this->get();
+        return $campaignCollectionResponse['hydra:member'];
     }
 
     public function getCampaign(int $campaignId): ?array

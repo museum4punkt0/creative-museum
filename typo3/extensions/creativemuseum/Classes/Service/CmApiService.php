@@ -40,7 +40,7 @@ abstract class CmApiService implements SingletonInterface
         }
     }
 
-    protected function get(): ?array
+    protected function get(?string $queryString = null): ?array
     {
         $endpoint = $this->getEndpoint();
 
@@ -48,11 +48,11 @@ abstract class CmApiService implements SingletonInterface
         $request = GeneralUtility::makeInstance(RequestFactory::class);
 
         $response = $request->request(
-            $this->configuration['baseUrl'] . '/' . $endpoint,
+            $this->configuration['baseUrl'] . '/' . $endpoint . ($queryString ?? ''),
             Request::METHOD_GET,
             [
                 'headers' => [
-                    'Accept' => 'application/json'
+                    'Accept' => 'application/ld+json'
                 ]
             ]
         );
@@ -171,9 +171,17 @@ abstract class CmApiService implements SingletonInterface
             return null;
         }
 
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token
+            ]
+        ];
+
         $response = $request->request(
             $this->configuration['baseUrl'] . '/' . $this->getEndpoint() . '/' . $id,
-            Request::METHOD_DELETE
+            Request::METHOD_DELETE,
+            $options
         );
 
         $code = $response->getStatusCode();

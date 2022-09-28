@@ -66,7 +66,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     properties: [
         'username' => 'partial',
         'fullName' => 'partial',
-        'email' => 'partial'
+        'email' => 'partial',
+        'deleted' => 'exact'
     ]
 )]
 #[ApiFilter(FilterLogic::class)]
@@ -105,6 +106,7 @@ class User implements UserInterface
     private bool $tutorial = false;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(['users:me:read', 'users:read', 'write:me'])]
     private bool $active = true;
 
     #[ORM\Column(type: 'integer')]
@@ -150,7 +152,7 @@ class User implements UserInterface
     private $description;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['write:me', 'user:me:read'])]
+    #[Groups(['write:me', 'user:me:read', 'users:read'])]
     private $lastLogin;
 
     #[ORM\Column(type: 'string', length: 255)]
