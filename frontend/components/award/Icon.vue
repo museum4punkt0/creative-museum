@@ -17,7 +17,7 @@
         />
       </pattern>
     </defs>
-    <image class="w-full h-auto" :href="`${backendURL}/${image.contentUrl}`" mask="url(#maskAward)" />
+    <image preserveAspectRatio="xMidyMid" x="0" y="0" with="100%" height="100%" class="w-full h-auto" :href="`${backendURL}/${image.contentUrl}`" mask="url(#maskAward)" />
   </svg>
 </template>
 <script>
