@@ -12,7 +12,7 @@
           transform="translate(0.0602678) scale(0.00446429 0.00337838)" />
       </pattern>
     </defs>
-  <image preserveAspectRatio="xMidyMax" x="0" y="0" with="100%" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink" :href="`${backendURL}/${image.contentUrl}`" mask="url(#maskBadge)" />
+  <image class="w-full" preserveAspectRatio="xMidYMax slice" x="0" y="0" with="100%" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink" :href="`${backendURL}/${image.contentUrl}`" mask="url(#maskBadge)" />
   </svg>
 </template>
 <script>
