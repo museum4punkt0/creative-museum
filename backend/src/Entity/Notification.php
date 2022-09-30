@@ -82,6 +82,7 @@ class Notification
     private $badge;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(['notifications:read'])]
     private $awardGiver;
 

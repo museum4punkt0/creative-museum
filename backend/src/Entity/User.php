@@ -16,6 +16,7 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\AnonymizeUserController;
 use App\Controller\MeController;
+use App\Controller\UserDeleteController;
 use App\Enum\NotificationType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -46,7 +47,6 @@ use Symfony\Component\Validator\Constraints as Assert;
             'method' => 'PATCH',
             'path' => '/users/me/anonymize',
             'controller' => AnonymizeUserController::class,
-//            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or (previous_object == user)"
         ],
     ],
     itemOperations: [
@@ -58,7 +58,9 @@ use Symfony\Component\Validator\Constraints as Assert;
             'denormalization_context' => ['groups' => ['write:me']],
             'normalization_context' => ['groups' => ['user:me:read']],
         ],
-        'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)"],
+        'delete' => [
+            'security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object == user and previous_object == user)",
+        ],
     ],
 )]
 #[ApiFilter(
@@ -90,10 +92,10 @@ class User implements UserInterface
     #[ApiProperty(identifier: true)]
     private string $uuid;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $posts;
 
-    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class,cascade: ['remove'] ,orphanRemoval: true)]
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $playlists;
 
@@ -113,15 +115,15 @@ class User implements UserInterface
     #[Groups(['user:me:read'])]
     private int $score = 0;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class,cascade: ['remove'], orphanRemoval: true)]
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $memberships;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, cascade: ['remove'], orphanRemoval: true)]
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $achievements;
 
-    #[ORM\ManyToMany(targetEntity: Post::class)]
+    #[ORM\ManyToMany(targetEntity: Post::class,cascade: ['remove'])]
     #[ORM\JoinTable(name: 'user_bookmark')]
     #[ApiSubresource(maxDepth: 1)]
     private Collection $bookmarks;

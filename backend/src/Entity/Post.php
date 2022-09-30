@@ -157,7 +157,7 @@ class Post
     #[Groups(['post:write', 'post:read', 'post:comment:write', 'vote:write', 'vote:read', 'playlist:read'])]
     private $votestotal = 0;
 
-    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PollOption::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['post:write', 'post:read', 'playlist:read'])]
     #[Assert\Valid]
     private $pollOptions;
@@ -241,6 +241,9 @@ class Post
 
     #[ORM\OneToMany(mappedBy: 'post',targetEntity: Vote::class, cascade: ['remove'])]
     private $votes;
+
+    #[ORM\OneToMany(mappedBy: 'post',targetEntity: PostFeedback::class, cascade: ['remove'])]
+    private $feedbacks;
 
     public function __construct()
     {
@@ -742,6 +745,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($vote->getPost() === $this) {
                 $vote->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostFeedback>
+     */
+    public function getFeedbacks(): Collection
+    {
+        return $this->feedbacks;
+    }
+
+    public function addFeedback(PostFeedback $feedback): self
+    {
+        if (!$this->feedbacks->contains($feedback)) {
+            $this->feedbacks[] = $feedback;
+            $feedback->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeedback(PostFeedback $feedback): self
+    {
+        if ($this->feedbacks->removeElement($feedback)) {
+            // set the owning side to null (unless already changed)
+            if ($feedback->getPost() === $this) {
+                $feedback->setPost(null);
             }
         }
 
