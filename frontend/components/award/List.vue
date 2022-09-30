@@ -92,7 +92,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script>
 import {
   defineComponent,
   useContext,
@@ -119,10 +119,10 @@ export default defineComponent({
     const { fetchAwards, fetchAwarded } = awardApi()
     const { $auth } = useContext()
 
-    const availableAwards = ref(<any>[])
-    const unavailableAwards = ref(<any>[])
-    const giftedAwards = ref(<any>[])
-    const receivedAwards = ref(<any>[])
+    const availableAwards = ref([])
+    const unavailableAwards = ref([])
+    const giftedAwards = ref([])
+    const receivedAwards = ref([])
     const showMoreGifted = ref(false)
     const showMoreReceived = ref(false)
 
@@ -146,15 +146,13 @@ export default defineComponent({
       await fetchAwards(props.campaign ? props.campaign.id : null).then(
         function (response) {
           if ($auth.loggedIn) {
-            response.forEach((item: any) => {
+            response.forEach((item) => {
               if (item.available && !item.taken) {
                 availableAwards.value.push(item)
               } else if (item.taken) {
                 giftedAwards.value.push(item)
-              } else {
-                if (unavailableAwards.length === 0) {
-                  unavailableAwards.value.push(item)
-                }
+              } else if (unavailableAwards.length === 0) {
+                unavailableAwards.value.push(item)
               }
             })
           } else {

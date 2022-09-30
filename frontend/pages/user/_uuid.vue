@@ -1,9 +1,12 @@
 <template>
   <div class="lg:grid lg:grid-cols-12 lg:gap-4">
-    <div class="lg:col-span-3 lg:pr-10">
+    <div class="lg:col-span-3 lg:pr-10 mb-6 lg:mb-0 lg:order-1">
       <SidebarLeft v-if="user" :user="user" />
     </div>
-    <div class="lg:col-span-6 lg:pr-10">
+    <div class="lg:col-span-3 lg:pr-10 mb-6 lg:mb-0 lg:order-3">
+      <SidebarRight />
+    </div>
+    <div class="lg:col-span-6 lg:pr-10 lg:order-2">
       <div class="flex flex-row content-between">
         <h2 class="text-2xl">
           {{ $t('user.profile.activities.headline') }}
@@ -73,9 +76,6 @@
           </UtilitiesModal>
         </div>
       </div>
-    </div>
-    <div class="lg:col-span-3 lg:pr-10">
-      <SidebarRight />
     </div>
   </div>
 </template>
