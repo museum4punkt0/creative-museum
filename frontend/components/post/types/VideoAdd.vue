@@ -17,7 +17,7 @@
         <file-upload
           ref="upload"
           v-model="videos"
-          accept="video/mp4, video/avi, video/mpeg, video/ogv, video/m4v"
+          accept="video/*"
           class="block"
           @input-file="inputFile"
           @input-filter="inputFilter"
