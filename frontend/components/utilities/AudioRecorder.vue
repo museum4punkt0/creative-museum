@@ -54,7 +54,7 @@
       <span
         ref="audioTimer"
         class="block py-1 self-end min-w-20 ml-2 text-center bg-white rounded-xl text-xs text-black whitespace-nowrap"
-        >0:00 / 1:00</span
+        >0:00 / {{ convertAudioTime(maxDuration) }}</span
       >
     </div>
     <div v-show="audioFile && !recordAudioState">
@@ -82,21 +82,9 @@ export default {
       type: Boolean,
       default: true,
     },
-    timerColor: {
-      type: String,
-      default: '#000',
-    },
-    timerFontSize: {
-      type: Number,
-      default: 1,
-    },
-    timerBackground: {
-      type: String,
-      default: '#ccc',
-    },
     maxDuration: {
       type: Number,
-      default: 60000,
+      default: 3600000,
     },
   },
   data() {
@@ -126,22 +114,23 @@ export default {
       this.permissionStatus = status.state
     },
     clearAudio() {
-      const TIMER = this.$refs.audioTimer
+      const timer = this.$refs.audioTimer
       this.initialTime = Date.now()
-      TIMER.innerText = ''
+      timer.innerText = ''
     },
     checkAudioTime() {
-      const TIMER = this.$refs.audioTimer
+      const timer = this.$refs.audioTimer
       const timeDifference = Date.now() - this.initialTime
+      const timeDifferencePercentage = (((this.maxDuration - (new Date(this.initialTime + this.maxDuration) - Date.now())) / 1000) / 60 * 100 / 100).toFixed(2)
       const formatted = this.convertAudioTime(timeDifference)
 
       const progressPercent = this.$refs.progressPercent
       const progressDot = this.$refs.progressDot
 
-      progressPercent.style.width = timeDifference / 1000 + '%'
-      progressDot.style.left = timeDifference / 1000 + '%'
+      progressPercent.style.width = timeDifferencePercentage + '%'
+      progressDot.style.left = timeDifferencePercentage + '%'
 
-      TIMER.innerHTML = `${formatted} / 1:00`
+      timer.innerHTML = `${formatted} / ${this.convertAudioTime(this.maxDuration)}`
       if (timeDifference > this.maxDuration) {
         this.stopRecordAudio()
       }
