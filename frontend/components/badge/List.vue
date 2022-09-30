@@ -8,27 +8,27 @@
           (campaign && badgesAndAchievements.length > 2)
         "
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
-        @click.prevent="toggleShowMore"
+        @click.prevent="showMoreBadges = !showMoreBadges"
       >
         <ArrowIcon
           class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
-          :class="readMore ? 'transform-gpu rotate-180' : ''"
+          :class="showMoreBadges ? 'transform-gpu rotate-180' : ''"
         />
-        <span v-if="!readMore">{{ $t('showAll') }}</span>
+        <span v-if="!showMoreBadges">{{ $t('showAll') }}</span>
         <span v-else>{{ $t('hide') }}</span>
       </button>
     </div>
 
     <div v-if="$auth.loggedIn && !campaign">
       <div v-for="(achievement, key) in $auth.user.achievements" :key="key">
-        <div v-if="key < 2 || readMore">
+        <div v-if="key < 2 || showMoreBadges">
           <BadgeItem :badge="achievement.badge" />
         </div>
       </div>
     </div>
     <div v-else-if="$auth.loggedIn">
       <div v-for="(badge, key) in badgesAndAchievements" :key="key">
-        <div v-if="key < 2 || readMore">
+        <div v-if="key < 2 || showMoreBadges">
           <BadgeItem
             :badge="badge"
             :class="
@@ -42,7 +42,7 @@
     </div>
     <div v-else>
       <div v-for="(badge, key) in badges" :key="key">
-        <div v-if="key < 2 || readMore">
+        <div v-if="key < 2 || showMoreBadges">
           <BadgeItem :badge="badge" />
         </div>
       </div>
@@ -73,14 +73,11 @@ export default defineComponent({
     const { $auth } = useContext()
     const { fetchBadges } = badgeApi()
 
-    const readMore = ref(false)
+    const showMoreBadges = ref(false)
     const achievementIds = ref([])
     const badges = ref(null)
     const badgesAndAchievements = ref([])
 
-    function toggleShowMore() {
-      readMore.value = !readMore.value
-    }
     onMounted(async () => {
       if ($auth.user && props.campaign) {
         $auth.user.achievements.forEach((item) => {
@@ -104,11 +101,10 @@ export default defineComponent({
     })
 
     return {
-      readMore,
+      showMoreBadges,
       badges,
       badgesAndAchievements,
       achievementIds,
-      toggleShowMore,
     }
   },
 })
