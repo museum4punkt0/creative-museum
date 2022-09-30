@@ -70,6 +70,7 @@ import {
   ref,
   useContext,
   computed,
+  onCreated
 } from '@nuxtjs/composition-api'
 import ReverseSortingIcon from '@/assets/icons/reverseSorting.svg?inline'
 export default defineComponent({
@@ -100,6 +101,8 @@ export default defineComponent({
     })
 
     const dropdownHeight = ref(false)
+
+    resetFilter()
 
     function setFeedbackFilter(id) {
       if (
