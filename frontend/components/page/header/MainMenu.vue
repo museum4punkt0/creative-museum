@@ -66,14 +66,14 @@
     </div>
     <div class="mb-10 lg:mb-0">
       <div class="flex flex-row items-center mb-4">
-        <div class="toggle flex flex-row overflow-hidden">
+        <div class="toggle flex flex-row overflow-hidden relative">
           <div
             class="toggle__item"
             @click="$router.push(switchLocalePath('de'))"
           >
             <input
               id="de"
-              class="w-0 h-0 overflow-hidden"
+              class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               type="radio"
               value="de"
               name="language"
@@ -91,7 +91,7 @@
           >
             <input
               id="en"
-              class="w-0 h-0 overflow-hidden"
+              class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               type="radio"
               value="en"
               name="language"
