@@ -42,6 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             'path' => '/campaigns/result/{campaignId}',
             'requirements' => ['id' => "\d+"],
             'controller' => GetCampaignLeaderBoardController::class,
+            'normalization_context' => ['groups' => 'campaign:result:get'],
         ],
     ],
     itemOperations: [

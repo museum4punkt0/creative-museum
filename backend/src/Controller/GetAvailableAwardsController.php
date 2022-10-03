@@ -16,9 +16,7 @@ class GetAvailableAwardsController extends AbstractController
         private readonly AwardService $awardService,
         private readonly CampaignRepository $campaignRepository,
         private readonly Security $security
-    )
-    {
-    }
+    ){}
 
     public function __invoke(int $campaign)
     {

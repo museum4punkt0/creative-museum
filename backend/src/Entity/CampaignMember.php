@@ -41,15 +41,16 @@ class CampaignMember
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read', 'users:read'])]
+    #[Groups(['user:me:read', 'users:read','campaign:result:get'])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['campaign:result:get'])]
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['user:me:read', 'users:read'])]
+    #[Groups(['user:me:read', 'users:read','campaign:result:get'])]
     private $rewardPoints = 0;
 
     public function getId(): ?int
