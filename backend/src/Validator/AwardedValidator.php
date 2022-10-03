@@ -67,7 +67,7 @@ final class AwardedValidator extends ConstraintValidator
 
         if ($value->getWinner()->getDeleted() == 1){
             $this->context
-                ->buildViolation($constraint->canNotAwardSelf)
+                ->buildViolation($constraint->canNotAwardDeleted)
                 ->setCode(self::VIOLATION_CODE_USER_DELETED)
                 ->addViolation();
         }
