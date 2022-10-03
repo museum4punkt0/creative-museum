@@ -119,6 +119,7 @@ class User implements UserInterface
     private Collection $memberships;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Badged::class, cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $achievements;
 
