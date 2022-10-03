@@ -32,6 +32,8 @@ final class AwardedValidator extends ConstraintValidator
 
     const VIOLATION_CODE_ALREADY_AWARDED = 1661952565;
 
+    const VIOLATION_CODE_USER_DELETED = 1664887726;
+
     public function __construct(
         private readonly CampaignMemberRepository $campaignMemberRepository,
         private readonly AwardedRepository $awardedRepository,
@@ -61,6 +63,13 @@ final class AwardedValidator extends ConstraintValidator
                 ->setCode(self::VIOLATION_CODE_SELF)
                 ->addViolation();
             return;
+        }
+
+        if ($value->getWinner()->getDeleted() == 1){
+            $this->context
+                ->buildViolation($constraint->canNotAwardSelf)
+                ->setCode(self::VIOLATION_CODE_USER_DELETED)
+                ->addViolation();
         }
 
         if (! $this->isCampaignMember($campaign, $value->getGiver())) {
