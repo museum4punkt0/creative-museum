@@ -137,7 +137,7 @@ class User implements UserInterface
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read', 'notifications:read'])]
+    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read', 'notifications:read', 'campaign:result:get'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -162,7 +162,7 @@ class User implements UserInterface
     private $fullName;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['user:me:read', 'write:me', 'users:read', 'post:read', 'notifications:read'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read', 'post:read', 'notifications:read','campaign:result:get'])]
     private $deleted = 0;
 
     public function __construct()
