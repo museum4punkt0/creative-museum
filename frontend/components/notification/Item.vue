@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-row mt-2" :style="styleAttr">
 
-    <AwardIcon v-if="notification.award" :image="notification.award.picture" :title="notification.award.title" class="w-10 mr-3" />
-    <BadgeIcon v-else-if="notification.badge" :image="notification.badge.picture" :title="notification.badge.title" class="w-10 mr-3" />
+    <AwardIcon v-if="notification.award && notification.award.picture" :image="notification.award.picture" :title="notification.award.title" class="w-10 mr-3" />
+    <BadgeIcon v-else-if="notification.badge && notification.badge.picture" :image="notification.badge.picture" :title="notification.badge.title" class="w-10 mr-3" />
     <div
       v-else
       class="bg-$highlight w-10 h-10 rounded-full mb-4 mr-3 overflow-hidden flex-shrink-0"

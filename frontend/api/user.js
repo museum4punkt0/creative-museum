@@ -31,7 +31,7 @@ export const userApi = () => {
 
   async function searchUser(searchString) {
     return await $api.get(
-      `users?or[fullName]=${searchString}&or[email]=${searchString}&or[username]=${searchString}`
+      `users?or[fullName]=${searchString}&or[email]=${searchString}&or[username]=${searchString}&and[deleted]=0`
     )
   }
 
