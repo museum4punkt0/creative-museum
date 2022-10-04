@@ -87,7 +87,7 @@ class User implements UserInterface
     private array $roles = [];
 
     #[ORM\Column(type: 'uuid', nullable: true)]
-    #[Groups(['user:me:read', 'post:read', 'users:read', 'playlist:read'])]
+    #[Groups(['user:me:read', 'post:read', 'users:read', 'playlist:read', 'campaign:result:get'])]
     #[ApiProperty(identifier: true)]
     private string $uuid;
 

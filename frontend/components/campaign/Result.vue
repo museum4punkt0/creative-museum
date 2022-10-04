@@ -1,42 +1,55 @@
 <template>
   <div class="mt-10" :style="styleAttr">
-    <div
-      class="box-shadow"
-    >
+    <div class="box-shadow">
       <div class="flex flex-row justify-start mb-4">
         <div class="rounded-full w-8 h-8 bg-$highlight mr-4" />
         <div class="flex flex-col">
           <span class="text-lg">{{ $t('system') }}</span>
-          <span
-            class="text-sm text-$highlight mt-1"
-            >{{
-              $dayjs.duration($dayjs().diff($dayjs(campaignClosed))).days() > 2
-                ? $dayjs(campaignClosed).format('DD.MM.YYYY')
-                : $dayjs(campaignClosed).fromNow()
-            }}</span
-          >
+          <span class="text-sm text-$highlight mt-1">{{
+            $dayjs.duration($dayjs().diff($dayjs(campaignClosed))).days() > 2
+              ? $dayjs(campaignClosed).format('DD.MM.YYYY')
+              : $dayjs(campaignClosed).fromNow()
+          }}</span>
         </div>
       </div>
       <div>
         <p class="mb-4">
           {{
             $t('campaign.closed.result.description', {
-              campaign: campaignTitle
+              campaign: campaignTitle,
             })
           }}
         </p>
         <ul>
-          <li v-for="(campaignResultItem, key) in campaignResult" :key="key" class="mb-4">
-            <div class="mb-2">{{ key + 1 }}. {{ $userName(campaignResultItem.user) }}</div>
+          <li
+            v-for="(campaignResultItem, key) in campaignResult"
+            :key="key"
+            class="mb-4"
+          >
+            <NuxtLink
+              :to="
+                $auth.loggedIn && campaignResultItem.user.uuid === $auth.user.uuid
+                  ? localePath('/user/profile')
+                  : localePath(`/user/${campaignResultItem.user.uuid}`)
+              "
+              class="mb-2"
+              >{{ key + 1 }}. {{ $userName(campaignResultItem.user) }}</NuxtLink
+            >
             <div class="box-shadow-inset rounded-xl">
               <div
                 class="bg-$highlight rounded-xl text-$highlight-contrast text-center"
-                :style="`width: ${Math.round((100 / campaignResult[0].rewardPoints) * campaignResultItem.rewardPoints)}%`"
+                :style="`width: ${Math.round(
+                  (100 / campaignResult[0].rewardPoints) *
+                    campaignResultItem.rewardPoints
+                )}%`"
               >
                 <span
                   class="px-3 py-0.5 inline-block whitespace-nowrap"
                   :class="
-                    Math.round((100 / campaignResult[0].rewardPoints) * campaignResultItem.rewardPoints) < 30
+                    Math.round(
+                      (100 / campaignResult[0].rewardPoints) *
+                        campaignResultItem.rewardPoints
+                    ) < 30
                       ? 'text-white'
                       : ''
                   "
@@ -51,27 +64,27 @@
   </div>
 </template>
 <script>
-  import { defineComponent, computed } from '@nuxtjs/composition-api'
-  import { TinyColor, readability } from '@ctrl/tinycolor'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { TinyColor, readability } from '@ctrl/tinycolor'
 
 export default defineComponent({
   props: {
     campaignTitle: {
       type: String,
-      required: true
+      required: true,
     },
     campaignResult: {
       type: Array,
-      required: true
+      required: true,
     },
     campaignColor: {
       type: String,
-      required: true
+      required: true,
     },
     campaignClosed: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   setup(props) {
     const bgColor = new TinyColor(props.campaignColor)
@@ -86,7 +99,7 @@ export default defineComponent({
     })
 
     return {
-      styleAttr
+      styleAttr,
     }
   },
 })

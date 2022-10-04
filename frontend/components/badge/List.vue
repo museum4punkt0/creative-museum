@@ -4,7 +4,7 @@
       <h2 class="text-2xl">{{ $t('user.profile.badges.headline') }}</h2>
       <button
         v-if="
-          (!campaign && $auth.user.achievements.length > 2) ||
+          ($auth.loggedIn && (!campaign && $auth.user.achievements.length > 2)) ||
           (campaign && badgesAndAchievements.length > 2)
         "
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
