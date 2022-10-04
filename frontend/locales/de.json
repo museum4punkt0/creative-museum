@@ -246,7 +246,7 @@
     "noMorePosts": "Keine weiteren Beiträge.",
     "newPosts": "Neue Beiträge",
     "systemMessages": {
-      "1663764951": "@{giver} hat @{winner} den Award {award} verliehen"
+      "1663764951": "{giver} hat {winner} den Award {award} verliehen"
     }
   },
   "awards": {
@@ -259,7 +259,7 @@
     "giftAward": "Award verschenken",
     "gifted": "Verliehene Awards",
     "received": "Erhaltene Awards",
-    "givenConfirmText": "Du hast den Award \"{title}\" für {price} Punkte an @{username} verschenkt!",
+    "givenConfirmText": "Du hast den Award \"{title}\" für {price} Punkte an {username} verschenkt!",
     "pointsLeft": "Restpunktestand {score} Punkte",
     "confirmSelection": "Auswahl bestätigen",
     "detailHeadline": "Award",
@@ -348,7 +348,7 @@
     },
     "1662033266": {
       "title": "Breaking News",
-      "text": "Neuer Beitrag in der Kampagne {campaign} von @{author}!"
+      "text": "Neuer Beitrag in der Kampagne {campaign} von {author}!"
     },
     "1662033328": {
       "title": "{badge}",
