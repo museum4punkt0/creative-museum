@@ -16,7 +16,6 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\AnonymizeUserController;
 use App\Controller\MeController;
-use App\Controller\UserDeleteController;
 use App\Enum\NotificationType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
