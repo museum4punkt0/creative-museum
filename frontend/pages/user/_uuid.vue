@@ -3,7 +3,7 @@
     <div class="lg:col-span-3 lg:pr-10 mb-6 lg:mb-0 lg:order-1">
       <SidebarLeft v-if="user" :user="user" />
     </div>
-    <div class="lg:col-span-3 lg:pr-10 mb-6 lg:mb-0 lg:order-3">
+    <div class="lg:col-span-3 mb-6 lg:mb-0 lg:order-3">
       <SidebarRight />
     </div>
     <div class="lg:col-span-6 lg:pr-10 lg:order-2">

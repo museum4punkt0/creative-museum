@@ -7,7 +7,7 @@
           (!campaign && $auth.user.achievements.length > 2) ||
           (campaign && badgesAndAchievements.length > 2)
         "
-        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
+        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
         @click.prevent="showMoreBadges = !showMoreBadges"
       >
         <ArrowIcon

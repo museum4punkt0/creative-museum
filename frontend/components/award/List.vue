@@ -35,8 +35,6 @@
       />
     </div>
     <div v-if="giftedAwards.length" class="mb-6">
-      <div class="text-$highlight text-sm mb-2">
-      </div>
       <div class="flex flex-row justify-between">
         <h3 class="text-$highlight text-sm mb-2">{{ $t('awards.gifted') }}</h3>
         <button
@@ -44,7 +42,7 @@
             (!campaign && giftedAwards.length > 3) ||
             (campaign && giftedAwards.length > 3)
           "
-          class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer"
+          class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
           @click.prevent="showMoreGifted = !showMoreGifted"
         >
           <ArrowIcon

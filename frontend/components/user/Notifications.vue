@@ -1,22 +1,49 @@
 <template>
   <div v-if="notifications && notifications.length > 0" class="mb-12">
-    <div class="mb-10">
-      <p class="text-2xl">
-        {{ $t('campaign.latestPosts') }}
-      </p>
+    <div class="flex flex-row justify-between mb-10">
+      <h2 class="text-2xl">{{ $t('campaign.latestPosts') }}</h2>
+      <button
+        v-if="
+          (notifications.length > 3)
+        "
+        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
+        @click.prevent="showAllNotifications = !showAllNotifications"
+      >
+        <ArrowIcon
+          class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
+          :class="showAllNotifications ? 'transform-gpu rotate-180' : ''"
+        />
+        <span v-if="!showAllNotifications">{{ $t('showAll') }}</span>
+        <span v-else>{{ $t('hide') }}</span>
+      </button>
     </div>
-
-    <div
-      v-for="(notificationGroup, key) in notificationsGrouped"
-      :key="key"
-      class="mb-10"
-    >
-      <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
-      <NotificationItem
-        v-for="notification in notificationGroup"
-        :key="notification.id"
-        :notification="notification"
-      />
+    <div v-if="!showAllNotifications">
+      <div
+        v-for="(notificationGroup, key) in notificationsGrouped"
+        :key="key"
+        class="mb-10"
+      >
+        <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
+        <NotificationItem
+          v-for="notification in notificationGroup"
+          :key="notification.id"
+          :notification="notification"
+        />
+      </div>
+    </div>
+    <div v-else>
+      <div
+        v-for="(notificationGroup, key) in notificationsGroupedAll"
+        :key="key"
+        class="mb-10"
+      >
+        <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
+        <NotificationItem
+          v-for="notification in notificationGroup"
+          :key="notification.id"
+          :notification="notification"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -30,9 +57,13 @@ import {
   computed,
   watch,
 } from '@nuxtjs/composition-api'
+import ArrowIcon from '@/assets/icons/arrow.svg?inline'
 import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
+  components: {
+    ArrowIcon
+  },
   props: {
     campaign: {
       type: Object,
@@ -44,6 +75,7 @@ export default defineComponent({
     const { fetchNotifications } = notificationApi()
     const notifications = ref(null)
     const { $dayjs } = useContext()
+    const showAllNotifications = ref(false)
 
     const today = computed(() => {
       return $dayjs().format('DD.MM.YYYY')
@@ -52,19 +84,36 @@ export default defineComponent({
     const notificationsGrouped = computed(() => {
       if (notifications.value) {
         const group = {}
-        notifications.value.forEach((item) => {
+        notifications.value.forEach((item, key) => {
           const day = $dayjs(item.created).format('DD.MM.YYYY')
-          if (group[day]) {
-            group[day].push(item)
-          } else {
-            group[day] = []
-            group[day].push(item)
+          if (key < 3) {
+            if (group[day]) {
+              group[day].push(item)
+            } else {
+              group[day] = []
+              group[day].push(item)
+            }
           }
         })
         return group
       }
     })
 
+    const notificationsGroupedAll = computed(() => {
+      if (notifications.value) {
+        const group = {}
+        notifications.value.forEach((item, key) => {
+          const day = $dayjs(item.created).format('DD.MM.YYYY')
+            if (group[day]) {
+              group[day].push(item)
+            } else {
+              group[day] = []
+              group[day].push(item)
+            }
+        })
+        return group
+      }
+    })
     watch(
       () => store.getters.notificationsUpdated,
       async function (newVal) {
@@ -89,6 +138,8 @@ export default defineComponent({
       today,
       notifications,
       notificationsGrouped,
+      notificationsGroupedAll,
+      showAllNotifications,
       getNotifications,
     }
   },

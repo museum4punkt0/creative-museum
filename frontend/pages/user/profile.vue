@@ -3,7 +3,7 @@
     <div class="lg:col-span-3 lg:pr-10 lg:order-1 mb-6 lg:mb-0">
       <SidebarLeft />
     </div>
-    <div class="lg:col-span-3 lg:pr-10 lg:order-3 mb-6 lg:mb-0">
+    <div class="lg:col-span-3 lg:order-3 mb-6 lg:mb-0">
       <SidebarRight />
     </div>
     <div class="lg:col-span-6 lg:pr-10 lg:order-2">
