@@ -12,7 +12,7 @@
         <video
           v-if="videos.length"
           :src="videos[0].blob"
-          class="max-h-1/3 lg:max-h-48 w-auto rounded self-center"
+          class="max-h-1/3 lg:max-h-48 w-auto mb-4 rounded self-center"
         />
         <file-upload
           ref="upload"
@@ -158,7 +158,6 @@ export default defineComponent({
     }
 
     function inputFilter(newFile: any) {
-      console.log('inputFilter')
       if (newFile) {
         if (!/\.(avi|mpeg|mp4|ogv|m4v)$/i.test(newFile.name)) {
           console.log('Your choice is not a video')

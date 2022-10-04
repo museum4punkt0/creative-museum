@@ -10,7 +10,7 @@
         <img
           v-if="files.length"
           :src="files[0].blob"
-          class="max-h-1/3 lg:max-h-48 w-auto rounded self-center"
+          class="max-h-1/3 lg:max-h-48 mb-4 w-auto rounded self-center"
         />
 
         <file-upload
@@ -187,7 +187,6 @@ export default defineComponent({
     }
 
     function inputFilter(newFile: any) {
-      console.log('inputFilter')
       if (newFile) {
         if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
           console.log('Your choice is not a picture')
