@@ -12,8 +12,13 @@ export const campaignApi = () => {
     return await $api.get('campaigns')
   }
 
+  const fetchCampaignResult = async (campaignId) => {
+    return await $api.get(`campaigns/result/${campaignId}`)
+  }
+
   return {
     fetchCampaign,
     fetchCampaigns,
+    fetchCampaignResult
   }
 }
