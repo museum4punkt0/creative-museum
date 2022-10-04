@@ -25,6 +25,8 @@ class Awarded extends Constraint
 
     public $alreadyAwarded = 'Giver has already presented the award';
 
+    public $canNotAwardDeleted = 'Can not award deleted user';
+
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
