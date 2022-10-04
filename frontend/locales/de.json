@@ -19,14 +19,14 @@
   "confirmSelection": "Auswahl bestätigen",
   "globalLogin": {
     "header": "Login",
-    "text": "Melde dich an und verdiene Punkte mit deinen Aktionen.",
+    "text": "Du bist gerade nicht eingeloggt. Melde dich an und verdiene Punkte mit deinen Aktionen.",
     "button": "Jetzt anmelden"
   },
   "globalProfileUpdate": {
     "header": "Profil bearbeiten",
     "deleteUser": {
       "header": "Profil löschen",
-      "subheader": "Bestätigen Sie bitte die Profillöschung und folgende Konsequenzen.",
+      "subheader": "Bitte bestätige die Profillöschung und folgende Konsequenzen.",
       "options": {
         "permanent": "Ich möchte alle meine Beiträge und Kommentare permanent löschen.",
         "anonymize": "Ich stimme zu, dass meine Beiträge anonym erhalten bleiben."
@@ -45,23 +45,23 @@
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
       "title": "Willkommen im Creative Museum!",
-      "text": "Schön, dass du ein Teil vom Creative Museum bist. Wir stellen Dir in den Folgenden Schritten die wichtigsten Funktionen vor."
+      "text": "Schön, dass du ein Teil vom Creative Museum bist. Wir stellen Dir in den folgenden Schritten die wichtigsten Funktionen vor."
     },
     "step2": {
       "title": "Punkte",
-      "text": "Bei allen Aktionen, die du hier im Creative Museum machst, sammelst du Punkte. Punkte können später für Awards und andere Überraschungen eingelöst werden. Also los geht’s: Fang an zu sammeln!"
+      "text": "Mit allen Aktionen, die du hier im Creative Museum machst, sammelst du Punkte. Punkte können später für Awards eingelöst werden, die du an andere User verschenken kannst. Also los geht’s: Fang an zu sammeln!"
     },
     "step3": {
       "title": "Beiträge erstellen",
-      "text": "Es gibt verschiedene Weisen, wie du dich am Creative Museum beteiligen kannst. Eine der wichtigsten davon sind Beiträge, die Du selbst erstellen und teilen kannst. Wähle aus Bild-, Text-, Video- und Audiobeiträgen aus oder erstelle sogar eine eigene Umfrage oder eine Playlist!"
+      "text": "Es gibt verschiedene Weisen, wie du dich am Creative Museum beteiligen kannst. Eine der wichtigsten davon sind Beiträge, die Du selbst erstellen und teilen kannst. Wähle aus Bild-, Text-, Video- und Audiobeiträgen aus oder erstelle eine eigene Umfrage oder eine Playlist!"
     },
     "step4": {
       "title": "Awards",
-      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten indem du Punkte sammelst und diese dann an andere Teilnehmer*innen verleihen."
+      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten und diese dann an andere Teilnehmer*innen verleihen, indem du deine erspielten Punkte einlöst."
     },
     "step5": {
       "title": "Badges",
-      "text": "Badges werden dir verliehen, indem du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und kommentiere drei Posts!"
+      "text": "Badges werden dir verliehen, indem du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und vergib dein Votings bei drei Posts!"
     }
   },
   "navigation": {
@@ -88,11 +88,11 @@
     "types": {
       "text": {
         "button": "Text",
-        "headline": "Text hochladen"
+        "headline": "Text erstellen"
       },
       "image": {
         "button": "Bild",
-        "headline": "Bild hochladen",
+        "headline": "Bild erstellen",
         "uploader": {
           "add": "Bild hinzufügen",
           "replace": "Bild ersetzen"
@@ -100,7 +100,7 @@
       },
       "poll": {
         "button": "Umfrage",
-        "headline": "Umfrage hochladen",
+        "headline": "Umfrage erstellen",
         "pollTitle": "Titel der Umfrage",
         "pollDescription": "Erläuterung der Fragestellung",
         "option": {
@@ -122,11 +122,11 @@
       },
       "audio": {
         "button": "Audio",
-        "headline": "Audio hochladen"
+        "headline": "Audio erstellen"
       },
       "video": {
         "button": "Video",
-        "headline": "Video hochladen",
+        "headline": "Video erstellen",
         "uploader": {
           "add": "Video hinzufügen",
           "replace": "Video ersetzen"
@@ -134,7 +134,7 @@
       },
       "playlist": {
         "button": "Playlist",
-        "headline": "Playlist hochladen"
+        "headline": "Playlist hinzufügen"
       }
     },
     "new": "Neuer Beitrag",
@@ -176,7 +176,7 @@
       }
     },
     "errors": {
-      "1657590177": "Der Beschreibungstext ist zu lang."
+      "1657590177": "Ups! Der Beschreibungstext ist zu lang."
     }
   },
   "playlist": {
@@ -192,7 +192,7 @@
     "editProfile": "Profil bearbeiten",
     "yourCurrentScore": "Dein aktueller Punktestand",
     "violation": {
-      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Benutzername bereits vergeben."
+      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Ups! Dieser Benutzername ist leider bereits vergeben."
     },
     "profile": {
       "badges": {
@@ -233,7 +233,7 @@
           "removal": "Profil löschen",
           "deleteProfile": "Profil löschen",
           "placeholder": {
-            "description": "Profil Beschreibung und Status des Useres. Es kann natürlich länger werden."
+            "description": "Hier kann Deine Profil Beschreibung stehen."
           }
         }
       }
@@ -263,22 +263,22 @@
     "pointsLeft": "Restpunktestand {score} Punkte",
     "confirmSelection": "Auswahl bestätigen",
     "detailHeadline": "Award",
-    "noAvailable": "Aktuell hast Du keine Awards die du verleihen könntest.",
+    "noAvailable": "Tut uns leid! Aktuell hast Du keine Awards, die du verleihen könntest.",
     "violations": {
-      "1661952434": "Du kannst Dir nicht selber einen Award verleihen ;)",
-      "1661952502": "Du musst Teilnehmer der Kampagne sein um einem anderen Teilnehmer diesen Award zu verleihen.",
-      "1661952537": "Du hast leider nicht genug Punkte. Verdiene mehr indem Du Dich an der Kampagne beteiligst.",
-      "1661952565": "Du hast diesen Award bereits verliehen."
+      "1661952434": "Halt! Du kannst Dir nicht selber einen Award verleihen ;)",
+      "1661952502": "Du musst Teilnehmer*in der Kampagne sein, um diesen Award zu verleihen.",
+      "1661952537": "Oje! Du hast leider nicht genug Punkte. Verdiene mehr, indem Du Dich an der Kampagne beteiligst.",
+      "1661952565": "Das geht leider nicht! Du hast diesen Award bereits verliehen."
     }
   },
   "badges": {
     "detailHeadline": "Badges"
   },
   "filter": {
-    "newest": "Neueste",
+    "newest": "Neu",
     "relevant": "Relevant",
     "controversial": "Kontrovers",
-    "playlist": "Playlist",
+    "playlist": "Playlists",
     "order": {
       "reverse": "Sortierung umkehren"
     }
@@ -316,39 +316,39 @@
   "notifications": {
     "1662032613": {
       "title": "{award}",
-      "text": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampange {campaign}, erhalten!"
+      "text": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampagne {campaign}, erhalten!"
     },
     "1662032722": {
       "title": "{award}",
-      "text": "Du hast {points} Punkte erhalten, weil Du einen Award in der Kampange {campaign} erhalten hast!"
+      "text": "Du hast {points} Punkte erhalten, weil Du einen Award in der Kampagne {campaign} erhalten hast!"
     },
     "1662032767": {
-      "title": "###TBD###",
-      "text": "Du hast {points} Punkte für deinen Kommentar in der Kampange {campaign} erhalten!"
+      "title": "Kommentar Score",
+      "text": "Du hast {points} Punkte für deinen Kommentar in der Kampagne {campaign} erhalten!"
     },
     "1662032840": {
-      "title": "###TBD###",
-      "text": "Du hast {points} Punkte für Dein Feedback in der Kampange {campaign} erhalten!"
+      "title": "Feedback Score",
+      "text": "Du hast {points} Punkte für Dein Feedback in der Kampagne {campaign} erhalten!"
     },
     "1662032913": {
-      "title": "###TBD###",
-      "text": "Du hast {points} Punkte für Deinen Login in der Kampange {campaign} erhalten!"
+      "title": "Login Strike",
+      "text": "Du hast {points} Punkte für Deinen Login in der Kampagne {campaign} erhalten!"
     },
     "1662032958": {
-      "title": "###TBD###",
-      "text": "Du hast {points} Punkte für Deinen Beitrag in der Kampange {campaign} erhalten!"
+      "title": "Beitrag Score",
+      "text": "Du hast {points} Punkte für Deinen Beitrag in der Kampagne {campaign} erhalten!"
     },
     "1662033166": {
-      "title": "###TBD###",
-      "text": "Du hast {points} Punkte für Deine Registrierung in der Kampange {campaign} erhalten!"
+      "title": "Registrierung Strike",
+      "text": "Du hast {points} Punkte für Deine Registrierung in der Kampagne {campaign} erhalten!"
     },
     "1662033222": {
-      "title": "###TBD###",
-      "text": "Du hast {points} Punkte für Deinen Upvote in der Kampange {campaign} erhalten!"
+      "title": "Voting Score",
+      "text": "Du hast {points} Punkte für Dein Voting in der Kampagne {campaign} erhalten!"
     },
     "1662033266": {
-      "title": "###TBD###",
-      "text": "Neuer Beitrag in der Kampange {campaign} von @{author}!"
+      "title": "Breaking News",
+      "text": "Neuer Beitrag in der Kampagne {campaign} von @{author}!"
     },
     "1662033328": {
       "title": "{badge}",
@@ -356,7 +356,7 @@
     },
     "1662033370": {
       "title": "Badisches Landesmuseum",
-      "text": "Neue Kampange {campaign} verfügbar!"
+      "text": "Neue Kampagne {campaign} verfügbar!"
     },
     "1662033414": {
       "title": "{award}",

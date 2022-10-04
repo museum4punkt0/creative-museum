@@ -45,7 +45,7 @@ class Badged
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('user:me:read')]
+    #[Groups('user:me:read', 'users:read')]
     private $badge;
 
     public function getId(): ?int
