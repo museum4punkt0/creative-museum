@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="
-      (availableAwards.length || unavailableAwards.length || receivedAwards.length) &&
+      (availableAwards.length || unavailableAwards.length || receivedAwards.length || giftedAwards.length) &&
       (!campaign || campaign.active)
     "
     class="mb-12"
