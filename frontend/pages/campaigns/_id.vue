@@ -24,6 +24,7 @@
               {{ $t('campaign.newPosts') }}
             </button>
           </transition>
+          <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" />
           <PostList
             v-if="posts && posts.length"
             :posts="posts"
@@ -89,6 +90,7 @@ export default defineComponent({
     const newPosts = ref(null)
     const newPostsAvailable = ref(false)
     const campaign = ref(null)
+    const campaignResult = ref(null)
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
@@ -110,7 +112,7 @@ export default defineComponent({
       loadCampaign()
     })
 
-    const { fetchCampaign } = campaignApi()
+    const { fetchCampaign, fetchCampaignResult } = campaignApi()
     const { fetchPostsByCampaign } = postApi()
 
     const isLargerThanLg = computed(() => {
@@ -135,6 +137,7 @@ export default defineComponent({
             store.dispatch('showAddButton')
           } else {
             store.dispatch('hideAddButton')
+            campaignResult.value = await fetchCampaignResult(route.value.params.id)
           }
         }
       }
@@ -175,6 +178,7 @@ export default defineComponent({
     return {
       campaign,
       posts,
+      campaignResult,
       newPost,
       isLargerThanLg,
       newPostsAvailable,

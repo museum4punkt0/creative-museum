@@ -1,4 +1,5 @@
 {
+  "system": "Badisches Landesmuseum",
   "anonymous": "Anonymer Benutzer",
   "deleted": "Benutzer gelöscht",
   "locale": "Deutsch",
@@ -245,6 +246,11 @@
     "awards": "Awards",
     "noMorePosts": "Keine weiteren Beiträge.",
     "newPosts": "Neue Beiträge",
+    "closed": {
+      "result": {
+        "description": "Die Mitspieller*innen, die die höchste Aktivität in der Kampagne {campaign} gezeigt haben und die folgende Anzahl der Awards verliehen haben:"
+      }
+    },
     "systemMessages": {
       "1663764951": "{giver} hat {winner} den Award {award} verliehen"
     }
