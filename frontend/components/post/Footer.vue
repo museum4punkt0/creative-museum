@@ -9,7 +9,7 @@
             ? 'highlight-text'
             : 'fill-white'
         "
-        @click.prevent="post.campaign.active && doVotePost('up')"
+        @click.prevent="(post.campaign.active || !post.campaign.closed) && doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
@@ -20,7 +20,7 @@
             ? 'highlight-text'
             : 'fill-white'
         "
-        @click.prevent="post.campaign.active && doVotePost('down')"
+        @click.prevent="(post.campaign.active || !post.campaign.closed) && doVotePost('down')"
       />
     </span>
     <button

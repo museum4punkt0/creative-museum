@@ -53,14 +53,14 @@
 
         <template v-for="(option, key) in feedbackOptions">
           <button
-            v-if="!voted && post.campaign.active"
+            v-if="!voted && (post.campaign.active|| !post.campaign.closed)"
             :key="key"
             class="btn-primary btn-outline w-full mt-4"
             @click.prevent="voteOption(option.id)"
           >
             {{ option.text }}
           </button>
-          <div v-if="voted || !post.campaign.active" :key="key" class="mb-6">
+          <div v-if="voted || !post.campaign.active || post.campaign.closed" :key="key" class="mb-6">
             <div class="mb-2">{{ option.text }}</div>
             <div class="box-shadow-inset rounded-xl">
               <div
@@ -155,7 +155,7 @@ export default defineComponent({
     async function triggerFeedback() {
       feedbackOptions.value = await getOptions(props.post.campaign.id)
 
-      if (props.post.rated || voted.value || !props.post.campaign.active) {
+      if (props.post.rated || voted.value || !props.post.campaign.active || props.post.campaign.closed) {
         await getResults()
         voted.value = true
       }

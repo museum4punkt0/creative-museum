@@ -5,7 +5,7 @@
       :class="post.type !== 'playlist' ? 'highlight-text' : ''"
     >
       <ArrowIcon
-        v-if="post.campaign.active || post.commentCount > 0"
+        v-if="post.campaign.active || !post.campaign.closed || post.commentCount > 0"
         class="relative w-3 mr-0.5 inline-block transform-gpu"
         :class="
           showComments || showCommentForm ? 'transform-gpu rotate-180' : ''
@@ -27,7 +27,7 @@
         }}</span
       >
       <span
-        v-else-if="post.campaign.active"
+        v-else-if="post.campaign.active || !post.campaign.closed"
         class="inline-block mt-4"
         @click.prevent="showCommentForm = !showCommentForm"
         >{{ $t('post.postComment') }}</span
@@ -41,7 +41,7 @@
         </div>
       </div>
       <form
-        v-if="post.campaign.active && showCommentForm"
+        v-if="(post.campaign.active || !post.campaign.closed) && showCommentForm"
         class="sticky lg:static bottom-0 left-0 right-0 pt-4 pb-4 px-4 lg:(px-0 pb-0) -mb-10 -mr-10 -ml-10 lg:(mb-0 mr-0 ml-0)"
         @submit.prevent="submitComment"
       >

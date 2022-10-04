@@ -4,7 +4,7 @@
     <p class="break-words">{{ post.body }}</p>
 
     <div
-      v-if="!post.userChoiced && post.campaign.active"
+      v-if="!post.userChoiced && (post.campaign.active || !post.campaign.closed)"
       class="poll-options mt-4 grid lg:grid-cols-2 gap-4"
     >
       <div v-for="(option, key) of post.pollOptions" :key="key">

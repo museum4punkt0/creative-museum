@@ -32,6 +32,9 @@
           })
         }}
       </p>
+      <p v-if="$dayjs.duration($dayjs().diff($dayjs(notification.created))).days() < 1">
+        <span class="text-sm mt-1 text-$highlight">{{ $dayjs(notification.created).fromNow() }}</span>
+      </p>
     </div>
   </div>
 </template>

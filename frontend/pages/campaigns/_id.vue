@@ -131,7 +131,7 @@ export default defineComponent({
           router.push('/404')
         } else {
           store.dispatch('setCurrentCampaign', route.value.params.id)
-          if (campaign.value.active) {
+          if (campaign.value.active && !campaign.value.closed) {
             store.dispatch('showAddButton')
           } else {
             store.dispatch('hideAddButton')
