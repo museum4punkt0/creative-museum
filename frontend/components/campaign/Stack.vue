@@ -25,7 +25,7 @@
           opacity: campaign.opacity,
         }"
       >
-        <CampaignItem :campaign="campaign" />
+        <CampaignStackItem :campaign="campaign" />
       </div>
     </div>
   </div>

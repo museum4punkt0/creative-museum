@@ -19,7 +19,7 @@
           {{ campaign.title }}
         </h1>
       </header>
-      <div v-if="campaign.shortDescription">
+      <div v-if="campaign.shortDescription" class="break-word">
         {{ campaign.shortDescription }}
       </div>
       <footer v-if="campaign.partners.length > 0" class="mt-auto">
