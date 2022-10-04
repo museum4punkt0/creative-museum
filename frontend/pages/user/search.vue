@@ -11,7 +11,7 @@
     </div>
     <template v-if="userList">
       <ul v-for="user in userList" :key="user.uuid">
-        <li v-if="user.uuid !== $auth.user.uuid">
+        <li v-if="user.uuid !== $auth.user.uuid && !user.deleted">
           <NuxtLink
             class="flex flex-row items-center my-2 award-item"
             :to="`/user/${user.uuid}`"

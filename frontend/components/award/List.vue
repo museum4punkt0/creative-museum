@@ -149,7 +149,7 @@ export default defineComponent({
                 availableAwards.value.push(item)
               } else if (item.taken) {
                 giftedAwards.value.push(item)
-              } else if (unavailableAwards.length === 0) {
+              } else if (unavailableAwards.value.length === 0) {
                 unavailableAwards.value.push(item)
               }
             })
