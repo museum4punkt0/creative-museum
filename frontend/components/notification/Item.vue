@@ -33,7 +33,7 @@
         }}
       </p>
       <p v-if="$dayjs.duration($dayjs().diff($dayjs(notification.created))).days() < 1">
-        <span class="text-sm mt-1 text-$highlight">{{ $dayjs(notification.created).fromNow() }}</span>
+        <span class="text-sm mt-1 text-$highlight">{{ $dayjs(notification.created).locale($i18n.locale).fromNow() }}</span>
       </p>
     </div>
   </div>

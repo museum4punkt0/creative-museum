@@ -1,5 +1,6 @@
 {
-  "locale": "German",
+  "locale": "English",
+  "dateFormat": "YYYY-MM-DD",
   "next": "Next",
   "prev": "Back",
   "submit": "Submit",

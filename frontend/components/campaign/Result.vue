@@ -7,8 +7,8 @@
           <span class="text-lg">{{ $t('system') }}</span>
           <span class="text-sm text-$highlight mt-1">{{
             $dayjs.duration($dayjs().diff($dayjs(campaignClosed))).days() > 2
-              ? $dayjs(campaignClosed).format('DD.MM.YYYY')
-              : $dayjs(campaignClosed).fromNow()
+              ? $dayjs(campaignClosed).format($t('dateFormat'))
+              : $dayjs(campaignClosed).locale($i18n.locale).fromNow()
           }}</span>
         </div>
       </div>

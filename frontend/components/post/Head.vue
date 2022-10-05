@@ -17,8 +17,8 @@
             class="text-sm mt-1"
             >{{
               $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
-                ? $dayjs(post.created).format('DD.MM.YYYY')
-                : $dayjs(post.created).fromNow()
+                ? $dayjs(post.created).format( $t('dateFormat') )
+                : $dayjs(post.created).locale($i18n.locale).fromNow()
             }}</span
           >
         </div>

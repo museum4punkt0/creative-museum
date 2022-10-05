@@ -9,9 +9,9 @@
         <div class="text-right">
           <span class="border border-current rounded-full py-1 px-2">
             {{ $t('duration') }}:
-            {{ $dayjs(campaign.start).format('DD.MM.YYYY') }}
+            {{ $dayjs(campaign.start).format( $t('dateFormat')) }}
             <template v-if="campaign.stop && campaign.stop !== campaign.start">
-              – {{ $dayjs(campaign.stop).format('DD.MM.YYYY') }}
+              – {{ $dayjs(campaign.stop).format( $t('dateFormat')) }}
             </template>
           </span>
         </div>

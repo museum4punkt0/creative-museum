@@ -7,8 +7,8 @@
       :class="postType !== 'playlist' ? 'highlight-text' : ''"
       >{{
         $dayjs.duration($dayjs().diff($dayjs(comment.created))).days() > 2
-          ? $dayjs(comment.created).format('DD.MM.YYYY')
-          : $dayjs(comment.created).fromNow()
+          ? $dayjs(comment.created).format( $t('dateFormat') )
+          : $dayjs(comment.created).locale($i18n.locale).fromNow()
       }}</span
     >
   </div>

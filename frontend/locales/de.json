@@ -1,5 +1,6 @@
 {
   "system": "Badisches Landesmuseum",
+  "dateFormat": "DD.MM.YYYY",
   "anonymous": "Anonymer Benutzer",
   "deleted": "Benutzer gelöscht",
   "locale": "Deutsch",

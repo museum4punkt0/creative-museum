@@ -10,7 +10,7 @@
       <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
       <div class="text-lg">
         <span class="capitalize">{{ $t('till') }}</span>
-        {{ $dayjs(campaign.stop).format('DD.MM.YYYY') }}
+        {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
       </div>
     </div>
     <div v-show="!showLongDescription">
