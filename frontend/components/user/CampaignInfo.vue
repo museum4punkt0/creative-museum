@@ -2,10 +2,13 @@
   <div>
     <div v-if="$auth.loggedIn">
       <div class="mb-10">
-        <div class="highlight-bg w-21 h-21 rounded-full mb-4">
+        <div
+          class="rounded-full mb-4 h-21 w-21 bg-$highlight p-px overflow-hidden"
+        >
           <img
+            v-if="profilePicture"
             :src="profilePicture"
-            class="w-21 h-21 object-cover object-center rounded-full"
+            class="rounded-full mb-4 cover w-full h-full"
           />
         </div>
         <p class="text-2xl">{{ $auth.user.fullName }}</p>
