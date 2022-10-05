@@ -32,7 +32,7 @@
                   ? localePath('/user/profile')
                   : localePath(`/user/${campaignResultItem.user.uuid}`)
               "
-              class="mb-2"
+              class="block mb-2"
               >{{ key + 1 }}. {{ $userName(campaignResultItem.user) }}</NuxtLink
             >
             <div class="box-shadow-inset rounded-xl">

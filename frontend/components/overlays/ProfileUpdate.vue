@@ -171,7 +171,7 @@
           {{ $t('user.profile.self.edit.personalNotifications') }}
         </p>
         <div class="inline-block">
-          <div class="toggle flex flex row overflow-hidden">
+          <div class="toggle flex flex row overflow-hidden relative">
             <div class="toggle__item">
               <input
                 id="persNotifyOn"
@@ -180,7 +180,7 @@
                 :value="true"
                 name="persNotify"
                 checked
-                class="w-0 h-0 overflow-hidden"
+                class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               />
               <label
                 for="persNotifyOn"
@@ -195,7 +195,7 @@
                 type="radio"
                 :value="false"
                 name="persNotify"
-                class="w-0 h-0 overflow-hidden"
+                class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               />
               <label
                 for="persNotifyOff"
@@ -210,7 +210,7 @@
           {{ $t('user.profile.self.edit.cmNotifications') }}
         </p>
         <div class="inline-block">
-          <div class="toggle flex flex-row overflow-hidden">
+          <div class="toggle flex flex-row overflow-hidden relative">
             <div class="toggle__item">
               <input
                 id="globalNotifyOn"
@@ -218,7 +218,7 @@
                 type="radio"
                 :value="true"
                 name="globalNotify"
-                class="w-0 h-0 overflow-hidden"
+                class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               />
               <label
                 for="globalNotifyOn"
@@ -234,7 +234,7 @@
                 :value="false"
                 name="globalNotify"
                 checked
-                class="w-0 h-0 overflow-hidden"
+                class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               />
               <label
                 for="globalNotifyOff"
