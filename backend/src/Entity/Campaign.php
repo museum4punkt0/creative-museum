@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     normalizationContext: ['groups' => ['campaigns:read']],
     denormalizationContext: ['groups' => ['campaign:write']],
-    order: ['start' => 'DESC'],
+    order: ['id' => 'DESC'],
     collectionOperations: [
         'get',
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],

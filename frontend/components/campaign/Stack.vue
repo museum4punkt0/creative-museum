@@ -212,6 +212,9 @@ export default {
     init() {
       this.stack = this.campaigns
 
+      // Move first element to end of stack
+      this.stack.push(this.stack.shift())
+
       document.documentElement.style.setProperty(
         '--highlight',
         this.stack[0].color
