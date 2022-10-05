@@ -55,10 +55,10 @@
     <div class="mt-2">
       <a
         v-if="reversable"
-        class="text-xs text-$highlight flex flex-row items-center justify-end"
+        class="text-xs text-$highlight flex flex-row items-center justify-end cursor-pointer"
         @click.prevent="changeSortDirection"
       >
-        <div><ReverseSortingIcon class="h-4 w-auto inline-block mr-2" /></div>
+        <ReverseSortingIcon class="h-4 w-auto inline-block mr-2 transform-gpu duration-200" :class="currentSortingDirection === 'asc' ? 'rotate-180' : ''" />
         <span>{{ $t('filter.order.reverse') }}</span>
       </a>
     </div>
@@ -69,8 +69,7 @@ import {
   defineComponent,
   ref,
   useContext,
-  computed,
-  onCreated
+  computed
 } from '@nuxtjs/composition-api'
 import ReverseSortingIcon from '@/assets/icons/reverseSorting.svg?inline'
 export default defineComponent({
@@ -89,6 +88,7 @@ export default defineComponent({
     const drodownOpen = ref(false)
 
     const currentSorting = computed(() => context.store.state.currentSorting)
+    const currentSortingDirection = computed(() => context.store.state.currentSortingDirection)
 
     const reversable = computed(() => {
       const reversableProps = [
@@ -186,6 +186,7 @@ export default defineComponent({
       toggleControversialFilter,
       resetFilter,
       currentSorting,
+      currentSortingDirection,
       feedbacksDropdown,
       setFeedbackFilter,
     }
