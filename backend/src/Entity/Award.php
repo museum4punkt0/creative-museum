@@ -90,6 +90,10 @@ class Award
     #[Groups(['campaigns:read', 'awards:read'])]
     private bool $available = false;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read', 'notifications:read'])]
+    private $link;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -175,6 +179,18 @@ class Award
     public function setAvailable(bool $available): self
     {
         $this->available = $available;
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(string $link): self
+    {
+        $this->link = $link;
+
         return $this;
     }
 }

@@ -79,6 +79,13 @@ class Badge
     #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
     private $picture;
 
+    #[ORM\Column(type: 'text')]
+    private $shortDescription;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
+    private $link;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,6 +177,30 @@ class Badge
     public function setPicture(?MediaObject $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    public function setShortDescription(string $shortDescription): self
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(string $link): self
+    {
+        $this->link = $link;
 
         return $this;
     }
