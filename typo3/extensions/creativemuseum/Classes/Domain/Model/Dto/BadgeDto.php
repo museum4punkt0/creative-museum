@@ -50,6 +50,16 @@ class BadgeDto extends AbstractDomainObject
     protected $pictureIRI = '';
 
     /**
+     * @var string
+     */
+    protected string $shortDescription = '';
+
+    /**
+     * @var string
+     */
+    protected string $link = '';
+
+    /**
      * @return string|null
      */
     public function getId(): ?string
@@ -190,6 +200,42 @@ class BadgeDto extends AbstractDomainObject
     public function setPictureIRI(string $pictureIRI): BadgeDto
     {
         $this->pictureIRI = $pictureIRI;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShortDescription(): ?string
+    {
+        return $this->shortDescription;
+    }
+
+    /**
+     * @param string $shortDescription
+     * @return BadgeDto
+     */
+    public function setShortDescription(string $shortDescription): BadgeDto
+    {
+        $this->shortDescription = $shortDescription;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     * @return BadgeDto
+     */
+    public function setLink(string $link): BadgeDto
+    {
+        $this->link = $link;
         return $this;
     }
 
