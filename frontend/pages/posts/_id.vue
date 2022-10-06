@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="lg:col-span-6">
-        <div class="page-header mt-0">
+        <div class="page-header lg:mt-0">
           <NuxtLink
             v-if="campaign"
             :to="`/campaigns/${campaign.id}`"
