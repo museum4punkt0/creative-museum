@@ -30,7 +30,7 @@
             :key="key"
             :href="partner.url"
             target="_blank"
-            class="mt-6 flex flex-col flex-grow-1 justify-items-center"
+            class="mt-3 flex flex-col flex-grow-1 justify-items-center"
           >
             <img
               v-if="partner.logo"
