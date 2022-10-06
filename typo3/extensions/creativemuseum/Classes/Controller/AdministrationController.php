@@ -151,14 +151,14 @@ class AdministrationController extends ActionController
         $propertyMapping->allowProperties('badges');
         $propertyMapping
             ->forProperty('badges.*')
-            ->allowProperties('id', 'title', 'description', 'badgeType', 'pictureIRI', 'threshold');
+            ->allowProperties('id', 'title', 'description', 'badgeType', 'pictureIRI', 'threshold','shortDescription','link');
         $propertyMapping->allowCreationForSubProperty('badges.*');
         $propertyMapping->allowModificationForSubProperty('badges.*');
 
         $propertyMapping->allowProperties('awards');
         $propertyMapping
             ->forProperty('awards.*')
-            ->allowProperties('id', 'title', 'description', 'pictureIRI', 'price');
+            ->allowProperties('id', 'title', 'description', 'pictureIRI', 'price','link');
         $propertyMapping->allowCreationForSubProperty('awards.*');
         $propertyMapping->allowModificationForSubProperty('awards.*');
 

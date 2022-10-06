@@ -84,7 +84,7 @@ class Badge
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
     private $link;
 
     public function getId(): ?int

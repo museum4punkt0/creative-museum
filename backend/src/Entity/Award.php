@@ -91,7 +91,7 @@ class Award
     private bool $available = false;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read', 'notifications:read'])]
+    #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read'])]
     private $link;
 
     public function getId(): ?int
