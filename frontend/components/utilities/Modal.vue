@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="fixed top-0 left-0 right-0 bottom-0 z-50">
     <div
-      class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"
+      class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none"
     ></div>
     <div
       class="fixed top-14 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"

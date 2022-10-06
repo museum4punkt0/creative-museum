@@ -9,7 +9,7 @@
       </div>
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ badge.title }}</p>
-        <p class="text-$highlight text-sm">{{ badge.description }}</p>
+        <p class="text-$highlight text-sm">{{ badge.shortDescription }}</p>
       </div>
     </div>
     <transition

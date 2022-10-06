@@ -7,9 +7,13 @@
     </div>
     <div class="flex-1">
       <div class="box-shadow relative m-6">
-        <BadgeIcon v-if="badge.picture" :image="badge.picture" :title="badge.title" class="h-40 w-auto mx-auto" />
+        <BadgeIcon v-if="badge.picture && !showLongDesc" :image="badge.picture" :title="badge.title" class="h-40 w-auto mx-auto" />
         <h1 class="text-2xl">{{ badge.title }}</h1>
-        <p>{{ badge.description }}</p>
+        <div v-if="formattedShortDescription !== formattedDescription">
+          <p v-html="formattedShortDescription" />
+          <button @click.prevent="showLongDesc = true">{{ $t('readMore') }}</button>
+        </div>
+        <p v-else v-html="formattedDescription" />
       </div>
     </div>
     <div class="mx-6 mb-6">
@@ -30,7 +34,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, computed, ref } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
 
 export default defineComponent({
@@ -44,6 +48,24 @@ export default defineComponent({
   setup(props) {
     const context = useContext()
 
+    const showLongDesc = ref(false)
+
+    const formattedShortDescription = computed(() => {
+      return props.badge.description
+        ? props.badge.description
+            .split(' ')
+            .splice(0, 50)
+            .join(' ')
+            .replace(/(?:\r\n|\r|\n)/g, '<br />')
+        : ''
+    })
+
+    const formattedDescription = computed(() => {
+      return props.badge.description
+        ? props.badge.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
+        : ''
+    })
+
     const bgColor = new TinyColor(props.badge.campaign.color)
     const fgColor = new TinyColor('#FFFFFF')
 
@@ -55,6 +77,9 @@ export default defineComponent({
       return `--highlight: ${props.badge.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
     })
     return {
+      formattedShortDescription,
+      formattedDescription,
+      showLongDesc,
       backendURL: context.$config.backendURL,
       styleAttr,
     }
