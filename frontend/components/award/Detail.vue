@@ -8,12 +8,7 @@
       </div>
       <div class="flex-1">
         <div class="box-shadow relative m-6">
-          <AwardIcon v-if="award.picture" :image="award.picture" :title="award.title" class="h-40 w-auto mx-auto" />
-          <h1 class="text-2xl">{{ award.title }}</h1>
-          <p>{{ award.description }}</p>
-          <div class="text-$highlight">
-            {{ award.price.toLocaleString() + ' ' + $t('points') }}
-          </div>
+          <AwardBadgeDetailText type="Award" :title="award.title" :text="award.description" :image="award.picture" :link="award.link" :price="award.price" />
         </div>
       </div>
       <div class="mx-6 mb-6">

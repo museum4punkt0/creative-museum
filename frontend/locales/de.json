@@ -12,7 +12,7 @@
   "close": "Schließen",
   "till": "bis",
   "readLess": "weniger lesen",
-  "readMore": "mehr lesen",
+  "readMore": "Mehr lesen...",
   "showAll": "Alle anzeigen",
   "hide": "Ausblenden",
   "noUsername": "Kein Benutzername",
@@ -280,7 +280,8 @@
     }
   },
   "badges": {
-    "detailHeadline": "Badges"
+    "detailHeadline": "Badges",
+    "linkToCatalog": "Objekt in Katalog anzeigen"
   },
   "filter": {
     "newest": "Neu",
