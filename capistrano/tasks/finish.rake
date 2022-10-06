@@ -8,7 +8,7 @@ namespace :deploy do
             execute "bash -c \"cd #{release_path}/typo3 && vendor/bin/typo3cms install:fixfolderstructure\""
             execute "bash -c \"cd #{release_path}/typo3 && vendor/bin/typo3 extension:setup\""
             execute "bash -c \"cd #{release_path}/typo3 && vendor/bin/typo3 cache:flush\""
-            execute "bash -c \"/var/www/.npm-global/bin/pm2 startOrRestart blm_cm\""
+            execute "bash -c \"/var/www/.npm-global/bin/pm2 startOrRestart /var/www/creative-museum-staging/ecosystem.config.js\""
             execute "bash -c \"curl https://testbackend.creativemuseum.landesmuseum.de/flush.php && rm #{release_path}/backend/public/flush.php\""
         end
     end
