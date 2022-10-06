@@ -37,7 +37,7 @@
               :src="`${backendURL}/${partner.logo.contentUrl}`"
               :data-url="`${backendURL}/${partner.logo.contentUrl}`"
               :alt="partner.title"
-              class="h-full w-full max-w-none w-auto max-h-25"
+              class="h-full w-full max-w-none w-auto max-h-25 max-w-48"
             />
             <p v-else>
               {{ partner.title }}
