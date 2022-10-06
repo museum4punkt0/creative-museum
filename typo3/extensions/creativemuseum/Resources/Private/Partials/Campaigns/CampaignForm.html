@@ -1,5 +1,5 @@
-
-<f:form action="{action}" controller="Administration" method="POST" id="campaign-form" name="campaign-create" object="{campaignDto}" objectName="campaignDto">
+<f:form action="{action}" controller="Administration" method="POST" id="campaign-form" name="campaign-create"
+    object="{campaignDto}" objectName="campaignDto">
     <f:if condition="{action} == 'updateCampaign'">
         <f:form.hidden property="id" />
     </f:if>
@@ -11,17 +11,14 @@
                 <label for="campaign-title">Titel der Kampagne</label>
                 <div class="form-control-wrap">
                     <div class="input-group">
-                        <f:form.textfield
-                                property="title"
-                                class="form-control"
-                                id="campaign-title" />
+                        <f:form.textfield property="title" class="form-control" id="campaign-title" />
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="form-section">
-                <div class="row">
+            <div class="row">
                 <div class="form-group col col-sm-6">
                     <label for="campaign-start">Beginn der Kampagne</label>
                     <div class="form-control-wrap">
@@ -29,12 +26,10 @@
                             <div class="form-wizards-element">
                                 <div class="input-group">
                                     <div class="form-control-clearable">
-                                        <f:form.textfield
-                                                property="start"
-                                                class="form-control t3js-datetimepicker t3js-clearable"
-                                                id="campaign-start"
-                                                data="{date-type: 'datetime', date-offset: '0'}"
-                                                value="{f:format.date(date: campaignDto.start, format: 'H:i d-m-Y')}" />
+                                        <f:form.textfield property="start"
+                                            class="form-control t3js-datetimepicker t3js-clearable" id="campaign-start"
+                                            data="{date-type: 'datetime', date-offset: '0'}"
+                                            value="{f:format.date(date: campaignDto.start, format: 'H:i d-m-Y')}" />
                                     </div>
                                     <span class="input-group-btn">
                                         <label class="btn btn-default" for="campaign-start">
@@ -53,12 +48,10 @@
                             <div class="form-wizards-element">
                                 <div class="input-group">
                                     <div class="form-control-clearable">
-                                        <f:form.textfield
-                                                property="stop"
-                                                class="form-control t3js-datetimepicker t3js-clearable"
-                                                id="campaign-stop"
-                                                data="{date-type: 'datetime', date-offset: '0'}"
-                                                value="{f:format.date(date: campaignDto.stop, format: 'H:i d-m-Y')}" />
+                                        <f:form.textfield property="stop"
+                                            class="form-control t3js-datetimepicker t3js-clearable" id="campaign-stop"
+                                            data="{date-type: 'datetime', date-offset: '0'}"
+                                            value="{f:format.date(date: campaignDto.stop, format: 'H:i d-m-Y')}" />
                                     </div>
                                     <span class="input-group-btn">
                                         <label class="btn btn-default" for="campaign-stop">
@@ -86,7 +79,8 @@
             <div class="form-group">
                 <label for="campaign-shortdescription">Kurzbeschreibung</label>
                 <div class="form-control-wrap">
-                    <f:form.textarea class="form-control" property="shortDesc" id="campaign-shortdescription"></f:form.textarea>
+                    <f:form.textarea class="form-control" property="shortDesc" id="campaign-shortdescription">
+                    </f:form.textarea>
                 </div>
             </div>
         </div>
@@ -95,7 +89,8 @@
             <div class="form-group">
                 <label for="campaign-description">Beschreibung</label>
                 <div class="form-control-wrap">
-                    <f:form.textarea class="form-control" property="description" id="campaign-description"></f:form.textarea>
+                    <f:form.textarea class="form-control" property="description" id="campaign-description">
+                    </f:form.textarea>
                 </div>
             </div>
         </div>
@@ -104,7 +99,8 @@
             <div class="form-group">
                 <label for="campaign-description">Kampagnen Primärfarbe</label>
                 <div class="form-control-wrap t3js-formengine-field-item">
-                    <f:form.textfield class="form-control t3js-colorpicker formengine-colorpickerelement" property="color" id="campaign-color"></f:form.textfield>
+                    <f:form.textfield class="form-control t3js-colorpicker formengine-colorpickerelement"
+                        property="color" id="campaign-color"></f:form.textfield>
                 </div>
             </div>
         </div>
@@ -113,7 +109,8 @@
             <div class="form-group">
                 <label for="campaign-closed">Beendet</label>
                 <div class="form-control-wrap">
-                    <f:form.checkbox value="1" property="closed" id="campaign-closed"></f:form.checkbox> Kampagne beendet
+                    <f:form.checkbox value="1" property="closed" id="campaign-closed"></f:form.checkbox> Kampagne
+                    beendet
                 </div>
             </div>
         </div>
@@ -124,10 +121,7 @@
 
             <div class="panel panel-default panel-flat">
                 <f:for each="{campaignDto.badges}" as="badge" iteration="iterator">
-                    <f:render
-                        partial="Campaigns/BadgeForm"
-                        arguments="{badge: badge, iterator: iterator}"
-                    />
+                    <f:render partial="Campaigns/BadgeForm" arguments="{badge: badge, iterator: iterator}" />
                 </f:for>
             </div>
 
@@ -139,10 +133,7 @@
 
             <div class="panel panel-default panel-flat">
                 <f:for each="{campaignDto.awards}" as="award" iteration="iterator">
-                    <f:render
-                            partial="Campaigns/AwardForm"
-                            arguments="{award: award, iterator: iterator}"
-                    />
+                    <f:render partial="Campaigns/AwardForm" arguments="{award: award, iterator: iterator}" />
                 </f:for>
             </div>
 

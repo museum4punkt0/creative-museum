@@ -1,89 +1,63 @@
-
-
-<div
-    class="t3js-item-container t3js-iterable t3js-badge-item-{iterator.index} accordion"
-    data-template="t3js-badge-item-[i]"
-    data-iteration-target="class"
->
+<div class="t3js-item-container t3js-iterable t3js-badge-item-{iterator.index} accordion"
+    data-template="t3js-badge-item-[i]" data-iteration-target="class">
 
     <div class="panel-heading pt-3" role="tab">
         <h3 class="panel-title">
-            <a
-                role="button"
-                data-bs-toggle="collapse"
-                data-bs-parent="#accordion"
-                href="#collapse-{iterator.index}"
-                aria-expanded="true"
-                class="collapsed t3js-iterable"
-                data-template="#collapse-[i]"
-                data-iteration-target="href"
-            >
+            <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse-{iterator.index}"
+                aria-expanded="true" class="collapsed t3js-iterable" data-template="#collapse-[i]"
+                data-iteration-target="href">
                 <span class="caret"></span>
-                <strong class="t3js-iterable" data-template="Badge #[i]" data-iteration-target="value">Badge #{iterator.cycle} - {badge.title}</strong>
+                <strong class="t3js-iterable" data-template="Badge #[i]" data-iteration-target="value">Badge
+                    #{iterator.cycle} - {badge.title}</strong>
             </a>
         </h3>
     </div>
-    <div id="collapse-{iterator.index}" class="panel-collapse collapse t3js-iterable" data-template="collapse-[i]" data-iteration-target="id" role="tabpanel">
+    <div id="collapse-{iterator.index}" class="panel-collapse collapse t3js-iterable" data-template="collapse-[i]"
+        data-iteration-target="id" role="tabpanel">
         <div class="form-section  mb-3">
             <div class="form-section">
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <f:form.hidden
-                                property="badges.{iterator.index}.id"
-                                class="t3js-iterable"
-                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][id]', iteration-target: 'name'}"
-                        />
-                        <label
-                                for="campaign-badge-{iterator.index}-title"
-                                class="campaign-badge-title t3js-iterable"
-                                data-template="campaign-badge-[i]-title"
-                                data-iteration-target="for"
-                        >
+                        <f:form.hidden property="badges.{iterator.index}.id" class="t3js-iterable"
+                            data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][id]', iteration-target: 'name'}" />
+                        <label for="campaign-badge-{iterator.index}-title" class="campaign-badge-title t3js-iterable"
+                            data-template="campaign-badge-[i]-title" data-iteration-target="for">
                             Titel
                         </label>
                         <div class="form-control-wrap">
-                            <f:form.textfield
-                                    class="form-control t3js-iterable"
-                                    property="badges.{iterator.index}.title"
-                                    id="campaign-badge-{iterator.index}-title"
-                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][title]', iteration-target: 'name'}"
-                            ></f:form.textfield>
+                            <f:form.textfield class="form-control t3js-iterable"
+                                property="badges.{iterator.index}.title" id="campaign-badge-{iterator.index}-title"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][title]', iteration-target: 'name'}">
+                            </f:form.textfield>
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label
-                                for="campaign-badge-{iterator.index}-description"
-                                class="campaign-badge-description t3js-iterable"
-                                data-template="campaign-badge-[i]-description"
-                                data-iteration-target="for">
+                        <label for="campaign-badge-{iterator.index}-description"
+                            class="campaign-badge-description t3js-iterable"
+                            data-template="campaign-badge-[i]-description" data-iteration-target="for">
                             Beschreibung
                         </label>
                         <div class="form-control-wrap">
-                            <f:form.textfield
-                                    class="form-control t3js-iterable"
-                                    property="badges.{iterator.index}.description"
-                                    id="campaign-badge-{iterator.index}-description"
-                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][description]', iteration-target: 'name'}"
-                            ></f:form.textfield>
+                            <f:form.textfield class="form-control t3js-iterable"
+                                property="badges.{iterator.index}.description"
+                                id="campaign-badge-{iterator.index}-description"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][description]', iteration-target: 'name'}">
+                            </f:form.textfield>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <label
-                                for="campaign-badge-{iterator.index}-badgetype"
-                                class="campaign-badge-description t3js-iterable"
-                                data-template="campaign-badge-[i]-badgeType"
-                                data-iteration-target="for">
+                        <label for="campaign-badge-{iterator.index}-badgetype"
+                            class="campaign-badge-description t3js-iterable"
+                            data-template="campaign-badge-[i]-badgeType" data-iteration-target="for">
                             Berechnungsgrundlage zum Erreichen
                         </label>
                         <div class="form-control-wrap">
-                            <f:form.select
-                                    class="form-control t3js-iterable"
-                                    property="badges.{iterator.index}.badgeType"
-                                    id="campaign-badge-{iterator.index}-badgeType"
-                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][badgeType]', iteration-target: 'name'}"
-                            >
+                            <f:form.select class="form-control t3js-iterable"
+                                property="badges.{iterator.index}.badgeType"
+                                id="campaign-badge-{iterator.index}-badgeType"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][badgeType]', iteration-target: 'name'}">
                                 <f:form.select.option value="scoring" selected="{badge.badgeType} == 'scoring'">
                                     erhaltene Punkte
                                 </f:form.select.option>
@@ -94,21 +68,17 @@
                         </div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label
-                                for="campaign-badge-{iterator.index}-threshold"
-                                class="campaign-badge-description t3js-iterable"
-                                data-template="campaign-badge-[i]-threshold"
-                                data-iteration-target="for">
+                        <label for="campaign-badge-{iterator.index}-threshold"
+                            class="campaign-badge-description t3js-iterable"
+                            data-template="campaign-badge-[i]-threshold" data-iteration-target="for">
                             Zu erreichender Wert (Punkte/Anzahl Awards)
                         </label>
                         <div class="form-control-wrap">
-                            <f:form.textfield
-                                    type="number"
-                                    class="form-control t3js-iterable"
-                                    property="badges.{iterator.index}.threshold"
-                                    id="campaign-badge-{iterator.index}-threshold"
-                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][threshold]', iteration-target: 'name'}"
-                            ></f:form.textfield>
+                            <f:form.textfield type="number" class="form-control t3js-iterable"
+                                property="badges.{iterator.index}.threshold"
+                                id="campaign-badge-{iterator.index}-threshold"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][threshold]', iteration-target: 'name'}">
+                            </f:form.textfield>
                         </div>
                     </div>
                 </div>
@@ -119,14 +89,10 @@
                     <label>Badge Grafik</label>
                     <f:form.hidden property="badges.{iterator.index}.pictureIRI" />
                     <div class="form-control-wrap">
-                        <div
-                            class="custom-file-container t3js-iterable"
+                        <div class="custom-file-container t3js-iterable"
                             data-upload-id="campaign-badge-imageupload-{iterator.index}"
-                            data-selected-file="{badge.picture.contentUrl}"
-                            data-badge-id="{iterator.index}"
-                            data-template="campaign-badge-imageupload-[i]"
-                            data-iteration-target="badge"
-                        ></div>
+                            data-selected-file="{badge.picture.contentUrl}" data-badge-id="{iterator.index}"
+                            data-template="campaign-badge-imageupload-[i]" data-iteration-target="badge"></div>
                     </div>
                 </div>
             </div>
