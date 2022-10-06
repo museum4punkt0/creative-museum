@@ -130,6 +130,7 @@ return [
         'sitename' => 'Creative Museum - TYPO3 Administration',
         'systemMaintainers' => [
             1,
+            2,
         ],
         'trustedHostsPattern' => '.*',
     ],

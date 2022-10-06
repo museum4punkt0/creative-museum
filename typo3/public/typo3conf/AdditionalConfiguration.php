@@ -19,6 +19,7 @@ $GLOBALS['TYPO3_CONF_VARS'] = array_replace_recursive(
   [
     'BE' => [
       'debug' => $_ENV['TYPO3_BE_DEBUG'],
+      'installToolPassword' => $_ENV['TYPO3_BE_INSTALL_TOOL_PW']
     ],
     'DB' => [
       'Connections' => [

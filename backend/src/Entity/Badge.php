@@ -80,6 +80,7 @@ class Badge
     private $picture;
 
     #[ORM\Column(type: 'text')]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]

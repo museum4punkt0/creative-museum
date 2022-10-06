@@ -7,13 +7,7 @@
     </div>
     <div class="flex-1">
       <div class="box-shadow relative m-6">
-        <BadgeIcon v-if="badge.picture && !showLongDesc" :image="badge.picture" :title="badge.title" class="h-40 w-auto mx-auto" />
-        <h1 class="text-2xl">{{ badge.title }}</h1>
-        <div v-if="formattedShortDescription !== formattedDescription">
-          <p v-html="formattedShortDescription" />
-          <button @click.prevent="showLongDesc = true">{{ $t('readMore') }}</button>
-        </div>
-        <p v-else v-html="formattedDescription" />
+        <AwardBadgeDetailText type="Badge" :title="badge.title" :text="badge.description" :image="badge.picture" :link="badge.link" />
       </div>
     </div>
     <div class="mx-6 mb-6">
@@ -54,7 +48,7 @@ export default defineComponent({
       return props.badge.description
         ? props.badge.description
             .split(' ')
-            .splice(0, 50)
+            .splice(0, 20)
             .join(' ')
             .replace(/(?:\r\n|\r|\n)/g, '<br />')
         : ''

@@ -21,6 +21,11 @@
         }}</NuxtLink>
       </li>
       <li>
+        <a href="#" onClick="UC_UI.showSecondLayer();" class="block mb-2">{{
+          $t('pages.privacySettings.title')
+        }}</a>
+      </li>
+      <li>
         <a
           :href="$t('pages.external.stateMuseum.url')"
           target="_blank"

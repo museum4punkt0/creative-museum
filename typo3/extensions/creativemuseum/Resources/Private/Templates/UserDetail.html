@@ -6,7 +6,8 @@
             <label>Status</label>
             <div class="form-control-wrap">
                 <div class="input-group">
-                    <input class="form-control" readonly value="{f:if(condition: user.active, then: 'aktiv', else: 'deaktiviert')}" />
+                    <input class="form-control" readonly
+                        value="{f:if(condition: user.active, then: 'aktiv', else: 'deaktiviert')}" />
                 </div>
             </div>
         </div>
@@ -30,7 +31,8 @@
             <label>Letzter Login</label>
             <div class="form-control-wrap">
                 <div class="input-group">
-                    <input class="form-control" readonly value="{user.lastLogin -> f:format.date(format: 'd.m.Y - H:i:s')}" />
+                    <input class="form-control" readonly
+                        value="{user.lastLogin -> f:format.date(format: 'd.m.Y - H:i:s')}" />
                 </div>
             </div>
         </div>

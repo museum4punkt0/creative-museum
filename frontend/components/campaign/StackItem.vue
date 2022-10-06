@@ -23,21 +23,21 @@
         {{ campaign.shortDescription }}
       </div>
       <footer v-if="campaign.partners.length > 0" class="mt-auto">
-        {{ $t('campaign.partner') }}
-        <div class="flex flex-row flex-wrap">
+        <h3 class="font-semibold">{{ $t('campaign.partner') }}</h3>
+        <div class="flex flex-row flex-wrap gap-4">
           <a
             v-for="(partner, key) in campaign.partners"
             :key="key"
             :href="partner.url"
             target="_blank"
-            class="mt-6"
+            class="mt-6 flex flex-col flex-grow-1 justify-items-center"
           >
             <img
               v-if="partner.logo"
               :src="`${backendURL}/${partner.logo.contentUrl}`"
               :data-url="`${backendURL}/${partner.logo.contentUrl}`"
               :alt="partner.title"
-              class="max-w-40"
+              class="h-full w-full max-w-none w-auto max-h-25"
             />
             <p v-else>
               {{ partner.title }}
