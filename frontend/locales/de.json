@@ -103,8 +103,8 @@
       "poll": {
         "button": "Umfrage",
         "headline": "Umfrage erstellen",
-        "pollTitle": "Titel der Umfrage",
-        "pollDescription": "Erläuterung der Fragestellung",
+        "pollTitle": "Frage hinzufügen",
+        "pollDescription": "Beschreibung der Umfrage",
         "option": {
           "0": "Option A",
           "1": "Option B",
