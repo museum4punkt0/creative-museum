@@ -299,6 +299,9 @@
     "privacy": {
       "title": "Datenschutz"
     },
+    "privacySettings": {
+      "title": "Datenschutz-Einstellungen"
+    },
     "accessibility": {
       "title": "Erklärung zur Barrierefreiheit"
     },
