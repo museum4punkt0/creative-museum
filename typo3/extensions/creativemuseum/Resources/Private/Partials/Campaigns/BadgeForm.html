@@ -82,6 +82,44 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <label
+                                for="campaign-badge-{iterator.index}-shortDescription"
+                                class="campaign-badge-description t3js-iterable"
+                                data-template="campaign-badge-[i]-shortDescription"
+                                data-iteration-target="for">
+                            Kurz Beschreibung
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                    type="text"
+                                    class="form-control t3js-iterable"
+                                    property="badges.{iterator.index}.shortDescription"
+                                    id="campaign-badge-{iterator.index}-shortDescription"
+                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][shortDescription]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label
+                                for="campaign-badge-{iterator.index}-link"
+                                class="campaign-badge-description t3js-iterable"
+                                data-template="campaign-badge-[i]-link"
+                                data-iteration-target="for">
+                            Link
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                    type="url"
+                                    class="form-control t3js-iterable"
+                                    property="badges.{iterator.index}.link"
+                                    id="campaign-badge-{iterator.index}-link"
+                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][badges][[i]][link]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="form-section">

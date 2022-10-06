@@ -60,6 +60,24 @@
                             </f:form.textfield>
                         </div>
                     </div>
+                    <div class="form-group col-sm-6">
+                        <label
+                                for="campaign-award-{iterator.index}-link"
+                                class="campaign-award-description t3js-iterable"
+                                data-template="campaign-award-[i]-link"
+                                data-iteration-target="for">
+                            Link
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                    type="url"
+                                    class="form-control t3js-iterable"
+                                    property="awards.{iterator.index}.link"
+                                    id="campaign-award-{iterator.index}-link"
+                                    data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][awards][[i]][link]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
                 </div>
             </div>
 

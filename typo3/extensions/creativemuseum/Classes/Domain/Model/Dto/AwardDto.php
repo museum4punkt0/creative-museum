@@ -45,6 +45,11 @@ class AwardDto extends AbstractDomainObject
     protected $pictureIRI = '';
 
     /**
+     * @var string
+     */
+    protected string $link = '';
+
+    /**
      * @return string|null
      */
     public function getId(): ?string
@@ -167,6 +172,24 @@ class AwardDto extends AbstractDomainObject
     public function setPictureIRI(string $pictureIRI): AwardDto
     {
         $this->pictureIRI = $pictureIRI;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     * @return AwardDto
+     */
+    public function setLink(string $link): AwardDto
+    {
+        $this->link = $link;
         return $this;
     }
 
