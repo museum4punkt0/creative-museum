@@ -178,6 +178,8 @@ class CampaignService extends CmApiService
             $badgeDto->setThreshold($badge['threshold']);
             $badgeDto->setTitle($badge['title']);
             $badgeDto->setDescription($badge['description']);
+            $badgeDto->setShortDescription($badge['shortDescription']);
+            $badgeDto->setLink($badge['link']);
             $badgeDto->setCampaign($dto);
 
             if (isset($badge['picture'])) {
@@ -200,6 +202,7 @@ class CampaignService extends CmApiService
             $awardDto->setTitle($award['title']);
             $awardDto->setDescription($award['description']);
             $awardDto->setPrice((int) $award['price']);
+            $awardDto->setLink($award['link']);
             $awardDto->setCampaign($dto);
 
             if (isset($award['picture'])) {

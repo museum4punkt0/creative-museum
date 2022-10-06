@@ -201,7 +201,8 @@ class AwardDto extends AbstractDomainObject
         $data = [
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
-            'price' => $this->getPrice()
+            'price' => $this->getPrice(),
+            'link' => $this->getLink()
         ];
 
         if (null !== $this->getId() && ! empty($this->getId())) {

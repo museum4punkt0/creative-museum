@@ -248,7 +248,9 @@ class BadgeDto extends AbstractDomainObject
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
             'type' => $this->getBadgeType(),
-            'threshold' => $this->getThreshold()
+            'threshold' => $this->getThreshold(),
+            'shortDescription' => $this->getShortDescription(),
+            'link' => $this->getLink()
         ];
 
         if (null !== $this->getId() && ! empty($this->getId())) {
