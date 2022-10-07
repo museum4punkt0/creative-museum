@@ -19,15 +19,15 @@ class AwardService
         $this->entityManager = $entityManager;
     }
 
-    public function getUnawarded(Campaign $campaign, User $user)
+    public function getAvailableByCampaign(Campaign $campaign, User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
-        $unawardedArr = $qb->select('award')
+        return $qb->select('award')
             ->from(Award::class, 'award')
             ->andWhere(
                 $qb->expr()->eq('award.campaign', $campaign->getId()),
                 $qb->expr()->isNull('awarded.id'),
-                $qb->expr()->gte('membership.score','award.price')
+                $qb->expr()->gte('membership.score', 'award.price')
             )
             ->join(
                 CampaignMember::class,
@@ -38,7 +38,7 @@ class AwardService
                     $qb->expr()->eq('membership.campaign', $campaign->getId())
                 )
             )
-            ->leftJoin(
+            ->leftjoin(
                 Awarded::class,
                 'awarded',
                 Expr\Join::WITH,
@@ -49,7 +49,39 @@ class AwardService
             )
             ->getQuery()
             ->execute();
+    }
 
-        return $unawardedArr;
+    public function getUnavailableByCampaign(Campaign $campaign, User $user)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        return $qb->select('award')
+            ->from(Award::class, 'award')
+            ->andWhere(
+                $qb->expr()->eq('award.campaign', $campaign->getId()),
+                $qb->expr()->orX(
+                    $qb->expr()->lt('membership.score', 'award.price'),
+                    $qb->expr()->isNotNull('awarded.id')
+                )
+            )
+            ->join(
+                CampaignMember::class,
+                'membership',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('membership.user', $user->getId()),
+                    $qb->expr()->eq('membership.campaign', $campaign->getId())
+                )
+            )
+            ->leftjoin(
+                Awarded::class,
+                'awarded',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('awarded.award', 'award.id'),
+                    $qb->expr()->eq('awarded.giver', $user->getId())
+                )
+            )
+            ->getQuery()
+            ->execute();
     }
 }

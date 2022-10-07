@@ -6,10 +6,11 @@ use App\Entity\Campaign;
 use App\Entity\User;
 use App\Repository\CampaignRepository;
 use App\Service\AwardService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class GetAvailableAwardsController extends AbstractController
+
+class GetUnavailableAwardsController extends AbstractController
 {
     public function __construct
     (
@@ -28,8 +29,8 @@ class GetAvailableAwardsController extends AbstractController
             return null;
         }
 
-        $avalaibaleAwards = $this->awardService->getAvailableByCampaign($campaign,$user);
+        $unavalaibaleAwards = $this->awardService->getUnavailableByCampaign($campaign,$user);
 
-        return $avalaibaleAwards;
+        return $unavalaibaleAwards;
     }
 }
