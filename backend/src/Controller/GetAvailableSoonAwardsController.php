@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-class GetUnavailableAwardsController extends AbstractController
+class GetAvailableSoonAwardsController extends AbstractController
 {
     public function __construct
     (
@@ -29,8 +29,6 @@ class GetUnavailableAwardsController extends AbstractController
             return null;
         }
 
-        $unavalaibaleAwards = $this->awardService->getUnavailableByCampaign($campaign,$user);
-
-        return $unavalaibaleAwards;
+        return $this->awardService->getAvailableSoonByCampaign($campaign,$user);
     }
 }

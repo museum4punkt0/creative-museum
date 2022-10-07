@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\GetAvailableAwardsController;
-use App\Controller\GetUnavailableAwardsController;
+use App\Controller\GetAvailableSoonAwardsController;
 use App\Repository\AwardRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -30,11 +30,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'requirements' => ['campaign' => "\d+"],
             'controller' => GetAvailableAwardsController::class,
         ],
-        'getUnavailable' => [
+        'getAvailableSoon' => [
             'method' => 'GET',
-            'path' => '/campaigns/{campaign}/awards/unavailable',
+            'path' => '/campaigns/{campaign}/awards/availablesoon',
             'requirements' => ['campaign' => "\d+"],
-            'controller' => GetUnavailableAwardsController::class,
+            'controller' => GetAvailableSoonAwardsController::class,
         ],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],

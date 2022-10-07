@@ -51,7 +51,7 @@ class AwardService
             ->execute();
     }
 
-    public function getUnavailableByCampaign(Campaign $campaign, User $user)
+    public function getAvailableSoonByCampaign(Campaign $campaign, User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
         return $qb->select('award')
