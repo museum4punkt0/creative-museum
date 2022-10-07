@@ -58,10 +58,8 @@ class AwardService
             ->from(Award::class, 'award')
             ->andWhere(
                 $qb->expr()->eq('award.campaign', $campaign->getId()),
-                $qb->expr()->orX(
-                    $qb->expr()->lt('membership.score', 'award.price'),
-                    $qb->expr()->isNotNull('awarded.id')
-                )
+                $qb->expr()->lt('membership.score', 'award.price'),
+                $qb->expr()->isNull('awarded.id')
             )
             ->join(
                 CampaignMember::class,
