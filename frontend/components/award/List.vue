@@ -17,6 +17,7 @@
         v-for="(award, key) in availableAwards"
         :key="key"
         :award="award"
+        :available="true"
         @awardsChange="fetchAllAwards"
       />
     </div>
@@ -36,7 +37,7 @@
     </div>
     <div v-if="giftedAwards.length" class="mb-6">
       <div class="flex flex-row justify-between">
-        <h3 class="text-$highlight text-sm mb-2">{{ $t('awards.gifted') }}</h3>
+        <div class="text-$highlight text-sm mb-2">{{ $t('awards.gifted') }}</div>
         <button
           v-if="
             (!campaign && giftedAwards.length > 3) ||
@@ -63,7 +64,7 @@
     </div>
     <div v-if="receivedAwards.length" class="mb-6">
       <div class="flex flex-row justify-between">
-        <h3 class="text-$highlight text-sm mb-2">{{ $t('awards.received') }}</h3>
+        <div class="text-$highlight text-sm mb-2">{{ $t('awards.received') }}</div>
         <button
           v-if="
             (!campaign && receivedAwards.length > 3) ||
@@ -114,7 +115,7 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    const { fetchAwards, fetchAwarded } = awardApi()
+    const { fetchAwards, fetchAwarded, fetchAvailableAwards, fetchAvailableSoonAwards } = awardApi()
     const { $auth } = useContext()
 
     const availableAwards = ref([])
@@ -145,12 +146,8 @@ export default defineComponent({
         function (response) {
           if ($auth.loggedIn) {
             response.forEach((item) => {
-              if (item.available && !item.taken) {
-                availableAwards.value.push(item)
-              } else if (item.taken) {
+             if (item.taken) {
                 giftedAwards.value.push(item)
-              } else if (unavailableAwards.value.length === 0) {
-                unavailableAwards.value.push(item)
               }
             })
           } else {
@@ -161,6 +158,10 @@ export default defineComponent({
       )
       if ($auth.loggedIn) {
         receivedAwards.value = await fetchAwarded()
+        if (props.campaign) {
+          unavailableAwards.value = await fetchAvailableSoonAwards(props.campaign.id)
+          availableAwards.value = await fetchAvailableAwards(props.campaign.id)
+        }
       }
     }
 

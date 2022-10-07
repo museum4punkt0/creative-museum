@@ -13,7 +13,7 @@
       </div>
       <div class="mx-6 mb-6">
         <button
-          v-if="award.available && !award.taken"
+          v-if="available && !award.taken"
           class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
           @click.prevent="mode = 'giveaway'"
         >
@@ -127,6 +127,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    available: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['closeAwardDetail'],
   setup(props, ctx) {

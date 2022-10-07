@@ -13,7 +13,7 @@
           {{ award.price.toLocaleString() + ' ' + $t('points') }}
         </p>
         <button
-          v-if="award.available && !award.taken"
+          v-if="available"
           class="btn-outline self-start mt-2 text-xs p-1"
           type="button"
         >
@@ -34,6 +34,7 @@
       >
         <AwardDetail
           :award="award"
+          :available="available"
           @closeAwardDetail="
             awardDetailOpen = false
             $emit('awardsChange')
@@ -57,6 +58,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    available: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['awardsChange'],
   setup(props) {

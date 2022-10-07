@@ -23,6 +23,11 @@ export const awardApi = () => {
     return response
   }
 
+  const fetchAvailableSoonAwards = async (campaign) => {
+    const response = await $api.get(`campaigns/${campaign}/awards/availablesoon`)
+    return response
+  }
+
   const fetchAwarded = async () => {
     return await $api.get(`awardeds?winner=${$auth.user.id}`)
   }
@@ -43,6 +48,7 @@ export const awardApi = () => {
   return {
     fetchAwards,
     fetchAvailableAwards,
+    fetchAvailableSoonAwards,
     fetchAwarded,
     awardUser,
   }

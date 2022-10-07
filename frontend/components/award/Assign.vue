@@ -22,7 +22,7 @@
               {{ award.price.toLocaleString() + ' ' + $t('points') }}
             </p>
             <button
-              v-if="award.available && !award.taken"
+              v-if="!award.taken"
               class="btn-outline self-start mt-2 text-xs p-1"
               @click.prevent="awardDetailOpen = true"
             >
@@ -33,6 +33,7 @@
         <AwardDetail
           v-if="awardDetailOpen === true"
           :award="award"
+          :available="true"
           class="absolute left-0 top-0 bottom-0 right-0 z-20 bg-grey"
           @closeAwardDetail="closeAwardDetail"
         />
