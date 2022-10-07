@@ -16,7 +16,7 @@ export const badgeApi = () => {
     }
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }

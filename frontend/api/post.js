@@ -26,7 +26,8 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
+    store.dispatch('awardsChange')
 
     return response
   }
@@ -50,7 +51,7 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return postResponse
   }
@@ -74,7 +75,7 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return postResponse
   }
@@ -88,7 +89,7 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }
@@ -110,7 +111,7 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }
@@ -163,7 +164,7 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }
@@ -210,7 +211,7 @@ export const postApi = () => {
     const response = await $api.post('posts', postBody)
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }
@@ -224,7 +225,7 @@ export const postApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }

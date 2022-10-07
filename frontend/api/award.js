@@ -40,7 +40,7 @@ export const awardApi = () => {
     })
 
     $auth.fetchUser()
-    store.dispatch('updateNotifications')
+    store.dispatch('updateUser')
 
     return response
   }

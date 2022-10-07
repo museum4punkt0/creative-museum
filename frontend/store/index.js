@@ -139,8 +139,9 @@ export const actions = {
   hideTutorial({ commit }) {
     commit('HIDE_TUTORIAL')
   },
-  updateNotifications({ commit }) {
+  updateUser({ commit }) {
     commit('UPDATE_NOTIFICATIONS')
+    commit('AWARDS_CHANGE')
   },
   updatedNotifications({ commit }, length) {
     commit('UPDATED_NOTIFICATIONS', length)
