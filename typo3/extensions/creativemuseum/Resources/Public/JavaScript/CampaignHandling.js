@@ -22,6 +22,24 @@ define([
 
     ColorPicker.initialize(colorPickerElement);
 
+    let maxCharacterFields = document.querySelectorAll('[data-max-characters]');
+
+    for (let field of maxCharacterFields) {
+        const fieldsMax = field.dataset.maxCharacters;
+        const charCountDiv = document.createElement('div');
+        charCountDiv.classList.add('js-character-counter', 'mt-2', 'small');
+        charCountDiv.innerHTML = (fieldsMax - field.value.length) + ' Zeichen verbleibend.';
+
+        field.addEventListener('keyup', (event) => {
+            if (event.target.value.length > fieldsMax) {
+                event.target.value = event.target.value.substring(0, fieldsMax);
+            }
+            charCountDiv.innerHTML = (fieldsMax - event.target.value.length) + ' Zeichen verbleibend.';
+        });
+
+        field.parentNode.insertBefore(charCountDiv, field.nextSibling);
+    }
+
     $('#campaign-form').on('submit', function(ev) {
 
         ev.preventDefault();

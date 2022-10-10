@@ -79,7 +79,12 @@
             <div class="form-group">
                 <label for="campaign-shortdescription">Kurzbeschreibung</label>
                 <div class="form-control-wrap">
-                    <f:form.textarea class="form-control" property="shortDesc" id="campaign-shortdescription">
+                    <f:form.textarea
+                        class="form-control"
+                        property="shortDesc"
+                        id="campaign-shortdescription"
+                        data="{max-characters: 300}"
+                    >
                     </f:form.textarea>
                 </div>
             </div>
@@ -89,7 +94,11 @@
             <div class="form-group">
                 <label for="campaign-description">Beschreibung</label>
                 <div class="form-control-wrap">
-                    <f:form.textarea class="form-control" property="description" id="campaign-description">
+                    <f:form.textarea
+                        class="form-control"
+                        property="description"
+                        id="campaign-description"
+                    >
                     </f:form.textarea>
                 </div>
             </div>
