@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace JWIED\Creativemuseum\Domain\Model\Dto;
 
 use JWIED\Creativemuseum\Service\CampaignService;
-use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-class AwardDto extends AbstractDomainObject
+class AwardDto extends AbstractEntity
 {
     /**
      * @var string|null

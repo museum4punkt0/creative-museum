@@ -14,7 +14,10 @@ if (TYPO3_MODE === 'BE') {
         'userOverview',
         'userDetail',
         'toggleUserActive',
-        'deleteUser'
+        'deleteUser',
+        'postOverview',
+        'postDetail',
+        'deletePost',
     ];
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
@@ -38,5 +41,9 @@ if (TYPO3_MODE === 'BE') {
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
         \JWIED\Creativemuseum\Property\TypeConverter\UserDtoConverter::class
+    );
+
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+        \JWIED\Creativemuseum\Property\TypeConverter\PostDtoConverter::class
     );
 }

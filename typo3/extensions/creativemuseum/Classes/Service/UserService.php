@@ -37,6 +37,11 @@ class UserService extends CmApiService
         return $this->patch(['id' => $uuid] + $data);
     }
 
+    public function deleteUser(string $uuid)
+    {
+        return $this->delete($uuid);
+    }
+
     public function convert(array $userArray): UserDto
     {
         $user = new UserDto();

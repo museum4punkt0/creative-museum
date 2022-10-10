@@ -9,6 +9,9 @@
          <trans-unit id="menu.administration.user_overview" xml:space="preserve">
             <source>Benutzerübersicht</source>
          </trans-unit>
+         <trans-unit id="menu.administration.post_overview" xml:space="preserve">
+            <source>Beitragsübersicht</source>
+         </trans-unit>
       </body>
    </file>
 </xliff>

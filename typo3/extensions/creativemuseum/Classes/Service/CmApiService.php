@@ -157,10 +157,10 @@ abstract class CmApiService implements SingletonInterface
     }
 
     /**
-     * @param int $id
+     * @param int|string $id
      * @return bool|null
      */
-    protected function delete(int $id): ?bool
+    protected function delete(int|string $id): ?bool
     {
         /** @var RequestFactory $request */
         $request = GeneralUtility::makeInstance(RequestFactory::class);

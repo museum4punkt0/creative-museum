@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Domain\Model\Dto;
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
-class UserDto extends AbstractDomainObject
+class UserDto extends AbstractEntity
 {
     protected string $uuid;
 

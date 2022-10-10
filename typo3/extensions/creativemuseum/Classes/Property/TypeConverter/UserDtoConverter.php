@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace JWIED\Creativemuseum\Property\TypeConverter;
+
 use JWIED\Creativemuseum\Domain\Model\Dto\UserDto;
 use JWIED\Creativemuseum\Service\UserService;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
@@ -22,7 +23,7 @@ class UserDtoConverter extends AbstractApiObjectConverter implements TypeConvert
 
     public function getSupportedSourceTypes(): array
     {
-        return ['string'];
+        return ['integer', 'string'];
     }
 
     public function getSupportedTargetType(): string

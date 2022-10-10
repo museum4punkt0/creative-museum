@@ -8,10 +8,13 @@ use JWIED\Creativemuseum\Domain\Model\Dto\AwardDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\PostDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\PostListFilterDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\UserDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\UserListFilterDto;
 use JWIED\Creativemuseum\Pagination\ApiRecordPaginator;
 use JWIED\Creativemuseum\Service\CampaignService;
+use JWIED\Creativemuseum\Service\PostService;
 use JWIED\Creativemuseum\Service\UserService;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\InputButton;
@@ -48,6 +51,11 @@ class AdministrationController extends ActionController
     protected $campaignService;
 
     /**
+     * @var PostService
+     */
+    protected $postService;
+
+    /**
      * @var UserService
      */
     protected $userService;
@@ -65,15 +73,18 @@ class AdministrationController extends ActionController
     public function __construct(
         UriBuilder $uriBuilder,
         CampaignService $campaignService,
+        PostService $postService,
         UserService $userService,
         IconFactory $iconFactory,
         AssetCollector $assetCollector
     ) {
         $this->uriBuilder = $uriBuilder;
         $this->campaignService = $campaignService;
+        $this->postService = $postService;
         $this->userService = $userService;
         $this->iconFactory = $iconFactory;
         $this->assetCollector = $assetCollector;
+
     }
 
     /**
@@ -119,6 +130,18 @@ class AdministrationController extends ActionController
         $userActions = ['userOverviewAction', 'userDetailAction', 'toggleUserActiveAction', 'deleteUserAction'];
 
         if (in_array($this->actionMethodName, $userActions)) {
+            $propertyMapping = $this->arguments['filter']->getPropertyMappingConfiguration();
+            $propertyMapping->allowProperties('page', 'searchString');
+            $propertyMapping->setTypeConverterOption(
+                PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                true
+            );
+        }
+
+        $postActions = ['postOverviewAction', 'postDetailAction', 'deletePostAction'];
+
+        if (in_array($this->actionMethodName, $postActions)) {
             $propertyMapping = $this->arguments['filter']->getPropertyMappingConfiguration();
             $propertyMapping->allowProperties('page', 'searchString');
             $propertyMapping->setTypeConverterOption(
@@ -333,6 +356,11 @@ class AdministrationController extends ActionController
         );
     }
 
+    /**
+     * @param UserDto $user
+     * @param UserListFilterDto|null $filter
+     * @return void
+     */
     public function userDetailAction(UserDto $user, UserListFilterDto $filter = null)
     {
         if (null === $filter) {
@@ -345,6 +373,11 @@ class AdministrationController extends ActionController
         ]);
     }
 
+    /**
+     * @param UserDto $user
+     * @param UserListFilterDto|null $filter
+     * @return void
+     */
     public function toggleUserActiveAction(UserDto $user, UserListFilterDto $filter = null)
     {
         if (null === $filter) {
@@ -363,6 +396,11 @@ class AdministrationController extends ActionController
         ]);
     }
 
+    /**
+     * @param UserDto $user
+     * @param UserListFilterDto|null $filter
+     * @return void
+     */
     public function deleteUserAction(UserDto $user, UserListFilterDto $filter = null)
     {
         if (null === $filter) {
@@ -371,7 +409,74 @@ class AdministrationController extends ActionController
 
         $this->addFlashMessage('Benutzer erfolgreich gelöscht');
 
+        $this->userService->deleteUser($user->getUuid());
+
         $this->redirect('userOverview', null, null, [
+            'filter' => ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()]
+        ]);
+    }
+
+    /**
+     * @param PostListFilterDto|null $filter
+     * @return void
+     */
+    public function postOverviewAction(PostListFilterDto $filter = null)
+    {
+        if (null === $filter) {
+            $filter = new PostListFilterDto();
+        }
+
+        $posts = $this->postService->getPosts($filter);
+
+        $paginator = new ApiRecordPaginator(
+            $posts['hydra:member'],
+            $filter->getPage(),
+            PostService::RECORDS_PER_PAGE,
+            $posts['hydra:totalItems']
+        );
+
+        $pagination = new SimplePagination($paginator);
+
+        $this->view->assignMultiple(
+            [
+                'items' => $posts,
+                'paginator' => $paginator,
+                'paging' => $pagination,
+                'pages' => range(1, $pagination->getLastPageNumber()),
+                'actionName' => substr($this->actionMethodName, 0, -6),
+                'filter' => $filter
+            ]
+        );
+    }
+
+    /**
+     * @param PostDto $post
+     * @return void
+     */
+    public function postDetailAction(PostDto $post, PostListFilterDto $filter)
+    {
+        $this->view->assignMultiple([
+            'post' => $post,
+            'filter' => $filter
+        ]);
+    }
+
+    /**
+     * @param PostDto $post
+     * @param PostListFilterDto|null $filter
+     * @return void
+     */
+    public function deletePostAction(PostDto $post, PostListFilterDto $filter = null)
+    {
+        if (null === $filter) {
+            $filter = new PostListFilterDto();
+        }
+
+        $this->addFlashMessage('Post erfolgreich gelöscht');
+
+        $this->postService->deletePost($post->getId());
+
+        $this->redirect('PostOverview', null, null, [
             'filter' => ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()]
         ]);
     }
@@ -386,7 +491,7 @@ class AdministrationController extends ActionController
         $menu = $menuRegistry->makeMenu();
         $menu->setIdentifier('creativeMuseumModuleMenu');
 
-        $menuItems = ['Administration' => ['index', 'userOverview']];
+        $menuItems = ['Administration' => ['index', 'userOverview', 'postOverview']];
 
         foreach ($menuItems as $controller => $actions) {
             $underscoredControllerName = GeneralUtility::camelCaseToLowerCaseUnderscored($controller);
