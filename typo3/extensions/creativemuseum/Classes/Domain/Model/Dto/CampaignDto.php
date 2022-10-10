@@ -62,6 +62,11 @@ class CampaignDto extends AbstractEntity
     /**
      * @var bool
      */
+    protected $published = false;
+
+    /**
+     * @var bool
+     */
     protected $closed = false;
 
     /**
@@ -217,6 +222,24 @@ class CampaignDto extends AbstractEntity
     /**
      * @return bool
      */
+    public function isPublished(): bool
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param bool $published
+     * @return CampaignDto
+     */
+    public function setPublished(bool $published): CampaignDto
+    {
+        $this->published = $published;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
     public function isActive(): bool
     {
         return $this->active;
@@ -360,6 +383,7 @@ class CampaignDto extends AbstractEntity
             'shortDescription' => $this->getShortDesc(),
             'description' => $this->getDescription(),
             'active' => $this->isActive(),
+            'published' => $this->isPublished(),
             'color' => $this->getColor(),
             'closed' => $this->isClosed(),
         ];

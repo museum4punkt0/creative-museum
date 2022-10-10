@@ -141,6 +141,7 @@ class CampaignService extends CmApiService
         $dto->setShortDesc($campaign['shortDescription']);
         $dto->setDescription($campaign['description']);
         $dto->setActive($campaign['active']);
+        $dto->setPublished($campaign['published']);
         $dto->setColor($campaign['color'] ?? '');
         $dto->setClosed($campaign['closed']);
 

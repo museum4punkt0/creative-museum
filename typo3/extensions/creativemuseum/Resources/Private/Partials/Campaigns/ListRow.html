@@ -14,7 +14,10 @@
     <td class="col-end">
         <f:format.date format="d.m.Y - H:i">{row.stop}</f:format.date>
     </td>
-    <td class="col-closed">
+    <td class="col-published text-center">
+        {f:if(condition: row.published, then: 'Ja', else: 'Nein')}
+    </td>
+    <td class="col-closed text-center">
         <f:if condition="{row.closed}">
             <f:then>Beendet</f:then>
             <f:else>

@@ -9,7 +9,7 @@ export const campaignApi = () => {
   }
 
   const fetchCampaigns = async () => {
-    return await $api.get('campaigns')
+    return await $api.get('campaigns?published=1')
   }
 
   const fetchCampaignResult = async (campaignId) => {

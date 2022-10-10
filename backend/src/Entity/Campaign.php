@@ -14,6 +14,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\GetCampaignLeaderBoardController;
 use App\Repository\CampaignRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,12 +29,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
 #[ORM\Index(fields: ['active', 'notified', 'start', 'stop'], name: 'campaign_collection_index')]
 #[ApiResource(
-    attributes: [
-        'filters' => ['campaign.date_filter'],
-    ],
-    normalizationContext: ['groups' => ['campaigns:read']],
-    denormalizationContext: ['groups' => ['campaign:write']],
-    order: ['id' => 'DESC'],
     collectionOperations: [
         'get',
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
@@ -50,8 +45,24 @@ use Symfony\Component\Validator\Constraints as Assert;
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
+    attributes: [
+        'filters' => ['campaign.date_filter'],
+    ],
+    denormalizationContext: ['groups' => ['campaign:write']],
+    normalizationContext: ['groups' => ['campaigns:read']],
+    order: ['id' => 'DESC'],
 )]
-#[ApiFilter(DateFilter::class, strategy: DateFilter::PARAMETER_BEFORE, properties: ['start'])]
+#[ApiFilter(
+    DateFilter::class,
+    strategy: DateFilter::PARAMETER_BEFORE,
+    properties: ['start'])
+]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'published' => 'exact',
+    ]
+)]
 #[ORM\HasLifecycleCallbacks]
 class Campaign
 {
@@ -128,6 +139,10 @@ class Campaign
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Post::class, cascade: ['remove'])]
     private $posts;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
+    private $published = false;
 
     public function __construct()
     {
@@ -440,6 +455,18 @@ class Campaign
                 $post->setCampaign(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
 
         return $this;
     }
