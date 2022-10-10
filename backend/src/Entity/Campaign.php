@@ -140,7 +140,7 @@ class Campaign
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Post::class, cascade: ['remove'])]
     private $posts;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', options: ['default' => 0])]
     #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $published = false;
 

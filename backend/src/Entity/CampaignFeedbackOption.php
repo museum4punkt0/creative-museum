@@ -45,7 +45,7 @@ class CampaignFeedbackOption
     private $campaign;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\Length(min: 1, max: 25)]
+    #[Assert\Length(min: 1, max: 50)]
     #[Groups(['campaigns:read', 'campaign:write', 'read:feedbacks', 'post:read'])]
     private $text;
 
