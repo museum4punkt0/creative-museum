@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     itemOperations: [
         'get',
+        'patch' => ['security' => "is_granted('ROLE_ADMIN')"],
         'delete' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN')"],
     ],
 )]
@@ -31,23 +32,23 @@ class Partner
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['campaigns:read', 'campaign:read'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotNull]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'partners')]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['campaigns:read'])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $logo;
 
     public function getId(): ?int

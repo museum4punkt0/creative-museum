@@ -9,6 +9,7 @@ use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\MediaObjectDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\PartnerDto;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class CampaignService extends CmApiService
@@ -19,17 +20,21 @@ class CampaignService extends CmApiService
 
     private AwardService $awardService;
 
+    private PartnerService $partnerService;
+
     private FeedbackOptionService $feedbackOptionService;
 
     public function __construct(
         ExtensionConfiguration $config,
         BadgeService $badgeService,
         AwardService $awardService,
+        PartnerService $partnerService,
         FeedbackOptionService $feedbackOptionService
     ) {
         parent::__construct($config);
         $this->badgeService = $badgeService;
         $this->awardService = $awardService;
+        $this->partnerService = $partnerService;
         $this->feedbackOptionService = $feedbackOptionService;
     }
 
@@ -54,6 +59,7 @@ class CampaignService extends CmApiService
         $campaignArray = $campaignDto->serialize();
         $badgeIds = [];
         $awardIds = [];
+        $partnerIds = [];
 
         if (null !== $campaignDto->getFeedbackOptions() && $campaignDto->getFeedbackOptions()->count() > 0) {
             $this->processFeedbackOptionsToUpdate($campaignArray, $campaignDto);
@@ -96,6 +102,25 @@ class CampaignService extends CmApiService
             }
         }
         $campaignArray['awards'] = $awardIds;
+
+        if (null !== $campaignDto->getPartners() && $campaignDto->getPartners()->count()) {
+            /** @var PartnerDto $partnerDto */
+            foreach ($campaignDto->getPartners() as $partnerDto) {
+                if ($partnerDto->getId() === '') {
+                    $partnerDto->setCampaign($campaignDto);
+                    $partnerId = $this->partnerService->addPartner($partnerDto);
+                    if (null !== $partnerId) {
+                        $partnerIds[] = '/' . PartnerService::ENDPOINT . '/' . $partnerId;
+                    }
+                    continue;
+                }
+                if ($this->partnerService->updatePartner($partnerDto)) {
+                    $partnerIds[] = '/' . PartnerService::ENDPOINT . '/' . $partnerDto->getId();
+                }
+
+            }
+        }
+        $campaignArray['partners'] = $partnerIds;
 
         $this->patch($campaignArray);
     }
@@ -157,6 +182,10 @@ class CampaignService extends CmApiService
             $this->addAwards($dto, $campaign['awards']);
         }
 
+        if (isset($campaign['partners']) && count($campaign['partners']) > 0) {
+            $this->addPartners($dto, $campaign['partners']);
+        }
+
         return $dto;
     }
 
@@ -216,5 +245,26 @@ class CampaignService extends CmApiService
 
             $dto->addAward($awardDto);
         }
+    }
+
+    private function addPartners(CampaignDto $dto, array $partners): void
+    {
+        foreach ($partners as $partner) {
+            $partnerDto = new PartnerDto();
+            $partnerDto->setId((string) $partner['id']);
+            $partnerDto->setTitle($partner['title']);
+            $partnerDto->setLink($partner['url'] ?? '');
+            $partnerDto->setCampaign($dto);
+
+            if (isset($partner['logo'])) {
+                $picture = new MediaObjectDto();
+                $picture->setId($partner['logo']['id']);
+                $picture->setContentUrl($partner['logo']['contentUrl']);
+                $picture->setDescription($partner['logo']['description'] ?? '');
+                $partnerDto->setPicture($picture);
+            }
+            $dto->addPartner($partnerDto);
+        }
+
     }
 }

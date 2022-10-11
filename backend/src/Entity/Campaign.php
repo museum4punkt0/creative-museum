@@ -112,8 +112,8 @@ class Campaign
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $badges;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class,cascade: ["remove"], orphanRemoval: true)]
-    #[Groups(['campaigns:read'])]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class,cascade: ["persist","remove"], orphanRemoval: true)]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $partners;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

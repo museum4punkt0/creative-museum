@@ -1,0 +1,70 @@
+<div class="t3js-item-container t3js-iterable t3js-partner-item-{iterator.index} accordion"
+    data-template="t3js-partner-item-[i]" data-iteration-target="class">
+
+    <div class="panel-heading pt-3" role="tab">
+        <h3 class="panel-title">
+            <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
+                href="#collapse-partner-{iterator.index}" aria-expanded="true" class="collapsed t3js-iterable"
+                data-template="#collapse-partner-[i]" data-iteration-target="href">
+                <span class="caret"></span>
+                <strong class="t3js-iterable" data-template="Partner #[i]" data-iteration-target="value">Partner
+                    #{iterator.cycle} - {partner.title}</strong>
+            </a>
+        </h3>
+    </div>
+    <div id="collapse-partner-{iterator.index}" class="panel-collapse collapse t3js-iterable"
+        data-template="collapse-partner-[i]" data-iteration-target="id" role="tabpanel">
+        <div class="form-section  mb-3">
+            <div class="form-section">
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <f:form.hidden property="partners.{iterator.index}.id" class="t3js-iterable"
+                            data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][partners][[i]][id]', iteration-target: 'name'}" />
+                        <label for="campaign-partner-{iterator.index}-title" class="campaign-partner-title t3js-iterable"
+                            data-template="campaign-partner-[i]-title" data-iteration-target="for">
+                            Titel
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield class="form-control t3js-iterable"
+                                property="partners.{iterator.index}.title" id="campaign-partner-{iterator.index}-title"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][partners][[i]][title]', iteration-target: 'name'}">
+                            </f:form.textfield>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label
+                            for="campaign-partner-{iterator.index}-link"
+                            class="campaign-partner-description t3js-iterable"
+                            data-template="campaign-partner-[i]-link"
+                            data-iteration-target="for">
+                            Link
+                        </label>
+                        <div class="form-control-wrap">
+                            <f:form.textfield
+                                type="url"
+                                class="form-control t3js-iterable"
+                                property="partners.{iterator.index}.link"
+                                id="campaign-partner-{iterator.index}-link"
+                                data="{template: 'tx_creativemuseum_system_creativemuseumcmadm[campaignDto][partners][[i]][link]', iteration-target: 'name'}"
+                            ></f:form.textfield>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label>Partner Grafik</label>
+                    <f:form.hidden property="partners.{iterator.index}.pictureIRI" />
+                    <div class="form-control-wrap">
+                        <div class="custom-file-container t3js-iterable"
+                            data-upload-id="campaign-partner-imageupload-{iterator.index}"
+                            data-selected-file="{partner.picture.contentUrl}" data-partner-id="{iterator.index}"
+                            data-template="campaign-partner-imageupload-[i]" data-iteration-target="partner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

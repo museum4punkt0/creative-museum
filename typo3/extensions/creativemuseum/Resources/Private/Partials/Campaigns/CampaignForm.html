@@ -158,6 +158,18 @@
 
         </div>
 
+        <h2>Partner</h2>
+
+        <div class="t3js-partners-container">
+
+            <div class="panel panel-default panel-flat">
+                <f:for each="{campaignDto.partners}" as="partner" iteration="iterator">
+                    <f:render partial="Campaigns/PartnerForm" arguments="{partner: partner, iterator: iterator}" />
+                </f:for>
+            </div>
+
+        </div>
+
     </div>
 
     <h2 class="mt-5">Feedback Optionen</h2>

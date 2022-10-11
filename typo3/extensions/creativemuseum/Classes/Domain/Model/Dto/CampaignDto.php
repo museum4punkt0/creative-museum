@@ -80,6 +80,11 @@ class CampaignDto extends AbstractEntity
     protected $awards;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\PartnerDto>
+     */
+    protected $partners;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto>
      */
     protected $feedbackOptions;
@@ -336,6 +341,37 @@ class CampaignDto extends AbstractEntity
     }
 
     /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\PartnerDto>
+     */
+    public function getPartners(): ObjectStorage
+    {
+        if (null === $this->partners) {
+            return new ObjectStorage();
+        }
+        return $this->partners;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\PartnerDto> $partners
+     * @return CampaignDto
+     */
+    public function setPartners(ObjectStorage $partners): CampaignDto
+    {
+        $this->partners = $partners;
+        return $this;
+    }
+
+    public function addPartner(PartnerDto $partnerDto): CampaignDto
+    {
+        if ($this->partners == null) {
+            $this->partners = new ObjectStorage();
+        }
+
+        $this->partners->attach($partnerDto);
+        return $this;
+    }
+
+    /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto>
      */
     public function getFeedbackOptions(): ObjectStorage
@@ -409,6 +445,14 @@ class CampaignDto extends AbstractEntity
             /** @var AwardDto $award */
             foreach ($this->getAwards() as $award) {
                 $campaign['awards'][] = $award->serialize();
+            }
+        }
+
+        if ($this->getPartners()->count() > 0) {
+            $campaign['partners'] = [];
+            /** @var PartnerDto $partner */
+            foreach ($this->getPartners() as $partner) {
+                $campaign['partners'][] = $partner->serialize();
             }
         }
 

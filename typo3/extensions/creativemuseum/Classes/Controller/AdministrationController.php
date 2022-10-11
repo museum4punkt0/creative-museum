@@ -8,6 +8,7 @@ use JWIED\Creativemuseum\Domain\Model\Dto\AwardDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\PartnerDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PostDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PostListFilterDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\UserDto;
@@ -236,6 +237,10 @@ class AdministrationController extends ActionController
             $campaignDto->addAward(new AwardDto());
         }
 
+        if ($campaignDto->getPartners()->count() === 0) {
+            $campaignDto->addPartner(new PartnerDto());
+        }
+
         $this->view->assign('campaignDto', $campaignDto);
         $this->view->assign('formUri', $createCampaignLink);
     }
@@ -264,6 +269,10 @@ class AdministrationController extends ActionController
         if ($campaignDto->getAwards()->count() === 0) {
             $campaignDto->addAward(new AwardDto());
         }
+        if ($campaignDto->getPartners()->count() === 0) {
+            $campaignDto->addPartner(new PartnerDto());
+        }
+
         if ($campaignDto->getFeedbackOptions()->count() < 2) {
             for ($i = $campaignDto->getFeedbackOptions()->count(); $i < 2; $i++) {
                 $campaignDto->addFeedbackOption(new FeedbackOptionDto());
