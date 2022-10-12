@@ -28,6 +28,7 @@
           v-model="postBody"
           type="text"
           class="input-text flex-grow pr-21"
+          :placeholder="$t('post.placeholder.body')"
           :maxlength="1000"
         ></textarea>
         <UtilitiesCountDown

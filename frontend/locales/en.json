@@ -111,6 +111,7 @@
     "new": "New post",
     "placeholder": {
       "title": "Add title (optional)",
+      "body": "Add text",
       "image": {
         "alttext": "Description for persons with visual impairment (optional)"
       }

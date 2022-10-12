@@ -142,6 +142,7 @@
     "new": "Neuer Beitrag",
     "placeholder": {
       "title": "Titel hinzufügen (optional)",
+      "body": "Text hinzufügen",
       "image": {
         "alttext": "Beschreibung für Personen mit Sehbehinderung (optional)"
       }
