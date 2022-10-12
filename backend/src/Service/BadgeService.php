@@ -24,9 +24,10 @@ class BadgeService
     private EntityManagerInterface $em;
 
     public function __construct(
-        BadgedRepository $badgedRepository,
+        BadgedRepository       $badgedRepository,
         EntityManagerInterface $em
-    ) {
+    )
+    {
         $this->badgedRepository = $badgedRepository;
         $this->em = $em;
     }
@@ -66,5 +67,19 @@ class BadgeService
             ->setUser($user);
         $this->badgedRepository->add($newBadged);
         $this->em->flush();
+    }
+
+    public function getLastBadge(int $userId): ?Badge
+    {
+        $badges = $this->badgedRepository->findBy([
+            'user' => $userId
+        ]);
+        $lastBadged = end($badges);
+
+        if ($lastBadged){
+            return $lastBadged->getBadge();
+        }else{
+            return null;
+        }
     }
 }

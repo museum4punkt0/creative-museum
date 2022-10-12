@@ -11,23 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AnonymizeUserController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-
-    private Security $security;
-
-    private TokenStorageInterface $tokenStorage;
-
     public function __construct
     (
-        EntityManagerInterface $entityManager,
-        Security               $security,
-        TokenStorageInterface $tokenStorage
-    )
-    {
-        $this->entityManager = $entityManager;
-        $this->security = $security;
-        $this->tokenStorage = $tokenStorage;
-    }
+        private readonly EntityManagerInterface $entityManager,
+        private readonly Security               $security,
+        private readonly TokenStorageInterface $tokenStorage
+    ){}
 
     public function __invoke(Request $request)
     {

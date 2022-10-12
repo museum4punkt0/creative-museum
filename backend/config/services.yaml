@@ -44,6 +44,16 @@ services:
     App\Serializer\Normalizer\PostNormalizer:
         tags:
             - { name: serializer.normalizer, priority: 100}
+    App\Serializer\Normalizer\AwardNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 120 }
+    App\Serializer\Normalizer\MediaObjectNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 130 }
+    App\Serializer\Normalizer\UserNormalizer:
+        tags:
+            - { name: serializer.normalizer, priority: 140 }
+
 
     App\EventListener\PostDeleteListener:
         tags:

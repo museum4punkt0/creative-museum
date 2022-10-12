@@ -165,6 +165,9 @@ class User implements UserInterface
     #[Groups(['user:me:read', 'write:me', 'users:read', 'post:read', 'notifications:read','campaign:result:get'])]
     private $deleted = 0;
 
+    #[Groups(['write:me', 'user:me:read', 'users:read', 'post:read'])]
+    private $lastBadge;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -512,6 +515,18 @@ class User implements UserInterface
     public function setDeleted(bool $deleted): self
     {
         $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    public function getLastBadge(): ?Badge
+    {
+        return $this->lastBadge;
+    }
+
+    public function setLastBadge(?Badge $lastBadge): self
+    {
+        $this->lastBadge = $lastBadge;
 
         return $this;
     }

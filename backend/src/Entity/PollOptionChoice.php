@@ -39,7 +39,7 @@ class PollOptionChoice
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: PollOption::class)]
+    #[ORM\ManyToOne(targetEntity: PollOption::class, inversedBy: 'choices')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['write:pollOptionChoice', 'post:read'])]
     private $pollOption;

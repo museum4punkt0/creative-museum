@@ -173,7 +173,7 @@ class Post
     #[ORM\OrderBy(['created' => 'ASC'])]
     private $comments;
 
-    #[ORM\ManyToOne(targetEntity: Campaign::class)]
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $campaign;

@@ -7,7 +7,7 @@
             ? $t('user.profile.self.headline', {
                 firstName: $auth.user.firstName,
               })
-            : userData
+            : userData && !userData.deleted
             ? userData.firstname + ' ' + userData.lastname
             : ''
         }}
@@ -27,7 +27,7 @@
 
       <div class="mb-10">
         <h1 class="text-2xl">
-          {{ userData.fullName }}
+          {{ !userData.deleted ? userData.fullName : $userName(userData) }}
         </h1>
         <p v-if="userData.achievements.length" class="highlight-text mb-3">
           {{ userData.achievements[0].badge.title }} @{{ userData.username }}

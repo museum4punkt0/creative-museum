@@ -5,12 +5,10 @@ export default (context, inject) => {
   inject('userName', (user) => {
     if (user) {
       if (user.deleted) {
-        return i18n.t('anonymous')
-      } else {
-        return `@${user.username}`
+        return user.lastBadge ? user.lastBadge.title : i18n.t('anonymous')
       }
-    } else {
-      return i18n.t('deleted')
+      return `@${user.username}`
     }
+    return i18n.t('deleted')
   })
 }

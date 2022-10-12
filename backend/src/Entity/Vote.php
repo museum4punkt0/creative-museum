@@ -57,7 +57,7 @@ class Vote
     #[ORM\JoinColumn(nullable: false)]
     public $voter;
 
-    #[ORM\ManyToOne(targetEntity: Post::class)]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'votes')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['vote:read'])]
     private $post;

@@ -63,7 +63,7 @@ class Badge
     private PostType $postType = PostType::TEXT;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
+    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write','post:read'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]

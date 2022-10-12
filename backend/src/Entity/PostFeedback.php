@@ -52,7 +52,7 @@ class PostFeedback
     #[ORM\JoinColumn(nullable: false)]
     public $user;
 
-    #[ORM\ManyToOne(targetEntity: Post::class)]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'feedbacks')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['read:feedbacks'])]
     public $post;
