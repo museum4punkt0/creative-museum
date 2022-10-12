@@ -36,6 +36,9 @@
                 : '',
               badge: notification.badge ? notification.badge.title : '',
               award: notification.award ? notification.award.title : '',
+              awardGiver: notification.award
+                ? $userName(notification.awardGiver)
+                : '',
               awardWinner: notification.award
                 ? $userName(notification.awardWinner)
                 : '',
