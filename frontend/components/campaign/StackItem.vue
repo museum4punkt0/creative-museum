@@ -20,7 +20,7 @@
         </h1>
       </header>
       <div v-if="campaign.shortDescription" class="break-word overflow-y-scroll scrollbar-hide">
-        {{ campaign.shortDescription }}
+        <span v-html="campaignShortDescription"></span>
       </div>
       <footer v-if="campaign.partners.length > 0" class="mt-auto">
         <h3 class="font-semibold">{{ $t('campaign.partner') }}</h3>
@@ -68,10 +68,13 @@ export default defineComponent({
       return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
     }
 
+    const campaignShortDescription = props.campaign.shortDescription.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
     return {
       textColor,
       getContrastColorClass,
       backendURL: context.$config.backendURL,
+      campaignShortDescription
     }
   },
 })
