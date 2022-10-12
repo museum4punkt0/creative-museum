@@ -29,7 +29,8 @@
               : '',
             badge: notification.badge ? notification.badge.title : '',
             award: notification.award ? notification.award.title : '',
-            awardGiver: $userName(notification.awardGiver)
+            awardGiver: notification.award ? $userName(notification.awardGiver): '',
+            awardWinner: notification.award ? $userName(notification.awardWinner) : '',
           })
         }}
       </p>
