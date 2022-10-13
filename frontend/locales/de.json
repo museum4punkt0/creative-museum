@@ -258,6 +258,8 @@
     }
   },
   "awards": {
+    "from": "von",
+    "to": "an",
     "select": "Award auswählen",
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",

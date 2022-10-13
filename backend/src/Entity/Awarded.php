@@ -38,8 +38,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
     SearchFilter::class,
     properties: [
         'winner' => 'exact',
+        'giver' => 'exact',
+        'award' => 'exact',
+        'award.campaign' => 'exact'
     ]
 )]
+#[ORM\HasLifecycleCallbacks]
 class Awarded
 {
     #[ORM\Id]
@@ -49,16 +53,22 @@ class Awarded
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['awarded:read'])]
     public $giver;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['awarded:read'])]
     private $winner;
 
     #[ORM\ManyToOne(targetEntity: Award::class)]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['awarded:read'])]
     private $award;
+
+    #[ORM\Column(type: 'datetime')]
+    #[Groups(['awarded:read'])]
+    private $created;
 
     public function getId(): ?int
     {
@@ -97,6 +107,19 @@ class Awarded
     public function setAward(?Award $award): self
     {
         $this->award = $award;
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreated(): self
+    {
+        $this->created = new \DateTimeImmutable();
 
         return $this;
     }

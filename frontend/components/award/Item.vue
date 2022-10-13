@@ -10,7 +10,18 @@
       <div class="flex flex-col flex-grow">
         <p class="mb-1">{{ award.title }}</p>
         <p class="text-$highlight text-sm">
-          {{ award.price.toLocaleString() + ' ' + $t('points') }}
+
+          <span v-if="created">
+          {{
+            $dayjs.duration($dayjs().diff($dayjs(created))).days() > 2
+              ? $dayjs(created).format( $t('dateFormat') )
+              : $dayjs(created).locale($i18n.locale).fromNow()
+          }}
+            {{
+              $auth.user.username === giver ? ` ${$t('awards.to')} ${winner}` : ` ${$t('awards.from')} ${giver}`
+            }}
+          </span>
+          <span v-else>{{ award.price.toLocaleString() + ' ' + $t('points') }}</span>
         </p>
         <button
           v-if="available"
@@ -61,6 +72,18 @@ export default defineComponent({
     available: {
       type: Boolean,
       default: false
+    },
+    giver: {
+      type: String,
+      default: null
+    },
+    winner: {
+      type: String,
+      default: null
+    },
+    created: {
+      type: Date,
+      default: null
     }
   },
   emits: ['awardsChange'],

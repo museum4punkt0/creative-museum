@@ -28,8 +28,22 @@ export const awardApi = () => {
     return response
   }
 
-  const fetchAwarded = async () => {
-    return await $api.get(`awardeds?winner=${$auth.user.id}`)
+  const fetchAwarded = async (campaign) => {
+    let campaignFilterString = ''
+    if(campaign){
+      campaignFilterString = `&award.campaign=${campaign}`
+    }
+
+    return await $api.get(`awardeds?winner=${$auth.user.id}${campaignFilterString}`)
+  }
+
+  const fetchGiftedAwards = async (campaign) => {
+    let campaignFilterString = ''
+    if(campaign){
+      campaignFilterString = `&award.campaign=${campaign}`
+    }
+
+    return await $api.get(`awardeds?giver=${$auth.user.id}${campaignFilterString}`)
   }
 
   const awardUser = async (awardId, userId) => {
@@ -51,5 +65,6 @@ export const awardApi = () => {
     fetchAvailableSoonAwards,
     fetchAwarded,
     awardUser,
+    fetchGiftedAwards
   }
 }
