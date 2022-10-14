@@ -49,7 +49,7 @@
             :key="'bookmark_' + key"
             :post="post"
             @updatePost="updatePost"
-            @toggle-bookmark-state="removeBookmark"
+            @toggleBookmarkState="removeBookmark"
           />
         </div>
         <div v-if="mode === 'playlists'" class="grid grid-cols-2 gap-6 mt-4">
