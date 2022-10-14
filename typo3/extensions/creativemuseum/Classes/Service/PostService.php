@@ -32,7 +32,7 @@ class PostService extends CmApiService
 
     public function getPosts(PostListFilterDto $filter): ?array
     {
-        $qsTmpl = '?page=%d';
+        $qsTmpl = '?page=%d&exists[author]=true';
 
         $queryString = sprintf(
             $qsTmpl,

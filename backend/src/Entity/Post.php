@@ -12,6 +12,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\AddPostToPlaylistController;
@@ -110,6 +111,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     OrderFilter::class,
     properties: ['created', 'votestotal', 'votesSpread', 'leadingFeedbackCount', 'commentCount'],
     arguments: ['orderParameterName' => 'order']
+)]
+#[ApiFilter(
+    ExistsFilter::class,
+    properties: ['author']
 )]
 #[ORM\HasLifecycleCallbacks]
 class Post
