@@ -5,7 +5,7 @@
       :key="post.id"
       :post="post"
       @updatePost="updatePost"
-      @toggle-bookmark-state="toggleBookmarkState"
+      @toggleBookmarkState="toggleBookmarkState"
       @postDeleted="deletePost(post.id)"
     />
     <InfiniteLoading @infinite="infiniteHandler">
