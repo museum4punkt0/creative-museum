@@ -466,7 +466,8 @@ class AdministrationController extends ActionController
     {
         $this->view->assignMultiple([
             'post' => $post,
-            'filter' => $filter
+            'filter' => $filter,
+            'backendBaseUrl' => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['creativemuseum']['baseUrl']
         ]);
     }
 
@@ -485,7 +486,7 @@ class AdministrationController extends ActionController
 
         $this->postService->deletePost($post->getId());
 
-        $this->redirect('PostOverview', null, null, [
+        $this->redirect('postOverview', null, null, [
             'filter' => ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()]
         ]);
     }
@@ -518,6 +519,9 @@ class AdministrationController extends ActionController
                     if ($tmpAction === 'userDetail') {
                         $tmpAction = 'userOverview';
                     }
+                    if ($tmpAction === 'postDetail') {
+                        $tmpAction = 'postOverview';
+                    }
                     $isActive = $action === $tmpAction ? true : false;
                 } else {
                     $isActive = false;
@@ -547,6 +551,9 @@ class AdministrationController extends ActionController
         }
         if ($action === 'userDetail') {
             $this->addUserDetailButtons($view);
+        }
+        if ($action === 'postDetail') {
+            $this->addPostDetailButtons($view);
         }
     }
 
@@ -660,6 +667,55 @@ class AdministrationController extends ActionController
 
         $buttonBar->addButton($backButton);
         $buttonBar->addButton($enableDisableButton);
+        $buttonBar->addButton($deleteButton);
+    }
+
+    private function addPostDetailButtons(BackendTemplateView $view)
+    {
+        $arguments = $this->request->getArgument('filter');
+        $id = $this->request->getArgument('post');
+
+        $uriArgs  = '&tx_creativemuseum_system_creativemuseumcmadm[filter][page]=' . $arguments['page'];
+        $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[filter][searchString]=' . $arguments['searchString'];
+
+        $buttonBar = $view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
+
+        /** @var LinkButton $backButton */
+        $backButton = $buttonBar->makeButton(LinkButton::class);
+        $backButton
+            ->setIcon($this->iconFactory->getIcon('actions-close', Icon::SIZE_SMALL))
+            ->setTitle('zurück')
+            ->setHref(
+                $this->getHref(
+                    'Administration',
+                    'postOverview'
+                ) . $uriArgs
+            )
+            ->setShowLabelText(true);
+
+        $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[post]=' . $id;
+
+        $deleteButton = $buttonBar->makeButton(LinkButton::class);
+        $deleteButton
+            ->setIcon($this->iconFactory->getIcon('actions-delete', Icon::SIZE_SMALL))
+            ->setTitle('Löschen')
+            ->setClasses('t3js-record-delete')
+            ->setHref(
+                $this->getHref(
+                    'Administration',
+                    'deletePost'
+                ) . $uriArgs
+            )
+            ->setDataAttributes([
+                'delete-user-button' => '',
+                'title' => 'Beitrag löschen?',
+                'message' => 'Soll der Beitrag wirklich gelöscht werden?',
+                'button-close-text' => 'Abbrechen',
+                'button-ok-text' => 'Ja, Beitrag löschen'
+            ])
+            ->setShowLabelText(true);
+
+        $buttonBar->addButton($backButton);
         $buttonBar->addButton($deleteButton);
     }
 

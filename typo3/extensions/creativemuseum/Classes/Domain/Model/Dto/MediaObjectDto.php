@@ -21,6 +21,8 @@ class MediaObjectDto extends AbstractEntity
      */
     protected $description = '';
 
+    protected ?string $mediaType;
+
     /**
      * @return int|null
      */
@@ -72,6 +74,24 @@ class MediaObjectDto extends AbstractEntity
     public function setDescription(string $description): MediaObjectDto
     {
         $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMediaType(): ?string
+    {
+        return $this->mediaType;
+    }
+
+    /**
+     * @param string|null $mediaType
+     * @return MediaObjectDto
+     */
+    public function setMediaType(?string $mediaType): MediaObjectDto
+    {
+        $this->mediaType = $mediaType;
         return $this;
     }
 }

@@ -51,7 +51,15 @@
             <td>
                 {post.created -> f:format.date(format: 'd.m.Y H:i')}
             </td>
-            <td>{post.title}</td>
+            <td>
+                <a href="{f:uri.action(action:'postDetail', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString}})}">
+                    <f:switch expression="{post.type}">
+                        <f:case value="poll">{post.question}</f:case>
+                        <f:case value="playlist">{post.linkedPlaylist.title}</f:case>
+                        <f:defaultCase>{post.title}</f:defaultCase>
+                    </f:switch>
+                </a>
+            </td>
             <td>
                 <a target="_blank" href="{f:uri.action(action:'userDetail', arguments:{user: post.author.uuid, filter: {page: paging.lastPageNumber, searchString: filter.searchString}})}">
                     {post.author.username}

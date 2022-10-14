@@ -69,7 +69,7 @@ abstract class CmApiService implements SingletonInterface
     }
 
     /**
-     * @param $id
+     * @param string|int $id
      * @return array|null
      */
     protected function getSingle($id): ?array

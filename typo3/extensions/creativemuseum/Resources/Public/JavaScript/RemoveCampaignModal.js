@@ -22,7 +22,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal'], function($, Modal) {
                 Modal.dismiss();
             } else if (e.target.getAttribute('name') === 'delete') {
                 Modal.dismiss();
-                window.location.href = $anchorElement.data('link');
+                window.location.href = $anchorElement.data('link') ? $anchorElement.data('link') : $anchorElement.attr('href');
             }
         });
     });

@@ -1,1 +1,236 @@
-<f:debug>{_all}</f:debug>
+<h1>{post.title}</h1>
+
+<div class="form-group">
+    <div class="form-section">
+        <div class="form-group mb-3">
+            <label>
+                <f:switch expression="{post.type}">
+                    <f:case value="Umfrage">Frage</f:case>
+                    <f:defaultCase>Titel</f:defaultCase>
+                </f:switch>
+            </label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control"
+                       readonly
+                       value="{post.title}"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Gepostet am</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{post.created -> f:format.date(format: 'd.m.Y - H:i:s')}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Post-Typ</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{post.type}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Author</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly value="{post.author}" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label>Kampagne</label>
+            <div class="form-control-wrap">
+                <div class="input-group">
+                    <input class="form-control" readonly
+                           value="{post.campaignTitle}" />
+                </div>
+            </div>
+        </div>
+        <f:if condition="{post.type} !== 'Playlist' && {post.type} !== 'Audio'">
+            <div class="form-group mb-3">
+                <label>Nachricht</label>
+                <div class="form-control-wrap">
+                    <div class="input-group">
+                        <textarea rows="5" class="form-control" readonly>{post.body}</textarea>
+                    </div>
+                </div>
+            </div>
+        </f:if>
+    </div>
+</div>
+
+<f:if condition="{post.type} === 'Bild'">
+    <h2>Bild</h2>
+    <div class="form-group">
+        <div class="form-section">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="p-1 pb-2">
+                        <img style="max-width: 100%" src="{backendBaseUrl}{post.pictureObject.contentUrl}" />
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="p-1">
+                        <strong>Bildbeschreibung:</strong> {post.pictureObject.description}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:if>
+
+<f:if condition="{post.type} === 'Audio'">
+    <h2>Audio-Aufnahme</h2>
+    <div class="form-group">
+        <div class="form-section">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="p-1 pb-2">
+                        <audio style="max-width:100%" controls>
+                            <source src="{backendBaseUrl}{post.audioVideoObject.contentUrl}" />
+                        </audio>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-1">
+                        <f:if condition="{post.pictureObject}">
+                            <f:then>
+                                <img style="max-width: 100%" src="{backendBaseUrl}{post.pictureObject.contentUrl}" />
+                            </f:then>
+                            <f:else>
+                                Kein Bild vorhanden
+                            </f:else>
+                        </f:if>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:if>
+
+<f:if condition="{post.type} === 'Video'">
+    <h2>Video</h2>
+    <div class="form-group">
+        <div class="form-section">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="p-1 pb-2">
+                        <video width="100%" controls>
+                            <source src="{backendBaseUrl}{post.audioVideoObject.contentUrl}" />
+                        </video>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="p-1">
+                        <strong>Video-Beschreibung:</strong> {post.audioVideoObject.description}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</f:if>
+
+<h2>Reaktionen</h2>
+<div class="form-group">
+    <div class="form-section">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group mb-3">
+                    <label>Upvotes</label>
+                    <div class="form-control-wrap">
+                        <div class="input-group">
+                            <input class="form-control" readonly value="{post.upvotes}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group mb-3">
+                    <label>Upvotes</label>
+                    <div class="form-control-wrap">
+                        <div class="input-group">
+                            <input class="form-control" readonly value="{post.downvotes}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group mb-3">
+                    <label>Votes gesamt</label>
+                    <div class="form-control-wrap">
+                        <div class="input-group">
+                            <input class="form-control" readonly value="{post.upvotes + post.downvotes}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<f:if condition="{post.type} === 'Umfrage'">
+    <h2>Umfrage Optionen</h2>
+    <div class="form-group">
+        <div class="form-section">
+            <f:for each="{post.pollOptions}" as="option" iteration="iterator">
+                <div class="form-group mb-3">
+                    <label>
+                        Option #{iterator.cycle}
+                        ({option.votes} {f:if(condition: '{option.votes} == 1', then: 'Stimme', else: 'Stimmen')})
+                    </label>
+                    <div class="form-control-wrap">
+                        <div class="input-group">
+                            <input class="form-control" readonly value="{option.title}" />
+                        </div>
+                    </div>
+                </div>
+            </f:for>
+        </div>
+    </div>
+</f:if>
+
+<f:if condition="{post.type} === 'Playlist'">
+    <h2>Playlist Inhalte</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Zeitstempel</th>
+            <th>Titel</th>
+            <th>Author</th>
+            <th>Kampagne</th>
+            <th>Inhalt</th>
+            <th>Upvotes</th>
+            <th>Downvotes</th>
+            <th>Kommentare</th>
+            <th>Post-Typ</th>
+        </tr>
+        </thead>
+        <tbody>
+            <f:for as="playlistPost" each="{post.playlistPosts}">
+                <tr>
+                    <td>{playlistPost.id}</td>
+                    <td>{playlistPost.created -> f:format.date(format: 'd.m.Y H:i')}</td>
+                    <td>{playlistPost.title}</td>
+                    <td>{playlistPost.author}</td>
+                    <td>{playlistPost.campaignTitle}</td>
+                    <td>
+                        <span title="{playlistPost.body}" style="width : 30vw; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;">
+                            {playlistPost.body}
+                        </span>
+                    </td>
+                    <td>{playlistPost.upvotes}</td>
+                    <td>{playlistPost.downvotes}</td>
+                    <td>{playlistPost.commentCount}</td>
+                    <td>{playlistPost.type}</td>
+                </tr>
+            </f:for>
+        </tbody>
+    </table>
+</f:if>
