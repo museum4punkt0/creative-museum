@@ -75,14 +75,14 @@
         <div
           v-show="isMenuVisible"
           key="0"
-          class="absolute top-12 md:top-14 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
+          class="absolute top-10 md:top-12 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50 max-h-full overflow-y-scroll scrollbar-hide"
         >
           <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />
         </div>
         <div
           v-show="isAddVisible"
           key="1"
-          class="absolute top-12 md:top-14 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50"
+          class="absolute top-10 md:top-12 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50 max-h-full overflow-y-scroll scrollbar-hide"
         >
           <PostAdd @openAddModal="openAddModal" />
         </div>
