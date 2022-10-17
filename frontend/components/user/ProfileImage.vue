@@ -1,9 +1,9 @@
 <template>
-  <div class="highlight-bg rounded-full w-8 h-8">
+  <div class="highlight-bg rounded-full w-9 h-9">
     <img
       v-if="'profilePicture' in user"
       :src="backendURL + user.profilePicture.contentUrl"
-      class="w-full h-full rounded-full"
+      class="w-9 h-9 object-cover object-center rounded-full"
     />
   </div>
 </template>

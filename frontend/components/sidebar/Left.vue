@@ -21,7 +21,7 @@
         <img
           v-if="'profilePicture' in userData"
           :src="`${backendURL}/${userData.profilePicture.contentUrl}`"
-          class="rounded-full mb-4 cover w-full h-full"
+          class="rounded-full mb-4 object-cover object-center w-20.5 h-20.5"
         />
       </div>
 
