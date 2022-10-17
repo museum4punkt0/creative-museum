@@ -24,13 +24,13 @@
       </div>
       <footer v-if="campaign.partners.length > 0" class="mt-auto">
         <h3 class="font-semibold">{{ $t('campaign.partner') }}</h3>
-        <div class="flex flex-row flex-wrap gap-4">
+        <div class="grid grid-cols-4 gap-4 mt-3">
           <a
             v-for="(partner, key) in campaign.partners"
             :key="key"
             :href="partner.url"
             target="_blank"
-            class="mt-3 flex flex-col flex-grow-1 justify-items-center"
+            class="flex flex-col flex-grow-1 justify-items-center my-auto"
           >
             <img
               v-if="partner.logo"
