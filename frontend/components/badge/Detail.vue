@@ -12,13 +12,6 @@
     </div>
     <div class="mx-6 mb-6">
       <button
-        v-if="badge.available && !badge.taken"
-        class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
-        @click.prevent="mode = 'giveaway'"
-      >
-        {{ $t('badges.giftbadge') }}
-      </button>
-      <button
         class="btn-outline w-full"
         @click.prevent="$emit('closebadgeDetail')"
       >

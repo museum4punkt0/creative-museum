@@ -28,22 +28,22 @@ export const awardApi = () => {
     return response
   }
 
-  const fetchAwarded = async (campaign) => {
+  const fetchAwarded = async (campaign, user) => {
     let campaignFilterString = ''
     if(campaign){
       campaignFilterString = `&award.campaign=${campaign}`
     }
 
-    return await $api.get(`awardeds?winner=${$auth.user.id}${campaignFilterString}`)
+    return await $api.get(`awardeds?winner=${user ? user.id : $auth.user.id}${campaignFilterString}`)
   }
 
-  const fetchGiftedAwards = async (campaign) => {
+  const fetchGiftedAwards = async (campaign, user) => {
     let campaignFilterString = ''
     if(campaign){
       campaignFilterString = `&award.campaign=${campaign}`
     }
 
-    return await $api.get(`awardeds?giver=${$auth.user.id}${campaignFilterString}`)
+    return await $api.get(`awardeds?giver=${user ? user.id : $auth.user.id}${campaignFilterString}`)
   }
 
   const awardUser = async (awardId, userId) => {

@@ -21,7 +21,7 @@
         @awardsChange="fetchAllAwards"
       />
     </div>
-    <div v-if="unavailableAwards.length" class="mb-6">
+    <div v-if="unavailableAwards.length && !user" class="mb-6">
       <div class="text-$highlight text-sm mb-2">
         {{
           $auth.loggedIn
@@ -118,6 +118,10 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    user: {
+      type: Object,
+      default: () => {}
+    }
   },
   setup(props) {
     const store = useStore()
@@ -148,7 +152,7 @@ export default defineComponent({
       giftedAwards.value = []
       receivedAwards.value = []
 
-      if(!$auth.loggedIn){
+      if (!$auth.loggedIn || !props.user) {
         await fetchAwards(props.campaign ? props.campaign.id : null).then(
           function (response) {
             unavailableAwards.value = response
@@ -156,8 +160,8 @@ export default defineComponent({
           }
         )
       } else {
-        receivedAwards.value = await fetchAwarded(props.campaign ? props.campaign.id : null)
-        giftedAwards.value = await fetchGiftedAwards(props.campaign ? props.campaign.id : null)
+        receivedAwards.value = await fetchAwarded(props.campaign ? props.campaign.id : null, props.user)
+        giftedAwards.value = await fetchGiftedAwards(props.campaign ? props.campaign.id : null, props.user)
         if (props.campaign) {
           unavailableAwards.value = await fetchAvailableSoonAwards(props.campaign.id)
           availableAwards.value = await fetchAvailableAwards(props.campaign.id)

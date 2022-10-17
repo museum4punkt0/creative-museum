@@ -21,8 +21,8 @@ export const badgeApi = () => {
     return response
   }
 
-  const fetchBadged = async () => {
-    return await $api.get(`badgeds?user=${$auth.user.id}`)
+  const fetchBadged = async (user) => {
+    return await $api.get(`badgeds?user=${user ? user.id : $auth.user.id}`)
   }
 
   return {

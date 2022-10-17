@@ -4,7 +4,7 @@
       <SidebarLeft v-if="user" :user="user" />
     </div>
     <div class="lg:col-span-3 mb-6 lg:mb-0 lg:order-3">
-      <SidebarRight />
+      <SidebarRight v-if="user" :user="user" />
     </div>
     <div class="lg:col-span-6 lg:pr-10 lg:order-2">
       <div class="flex flex-row content-between">

@@ -4,8 +4,9 @@
       <h2 class="text-2xl">{{ $t('user.profile.badges.headline') }}</h2>
       <button
         v-if="
-          ($auth.loggedIn && (!campaign && $auth.user.achievements.length > 2)) ||
-          (campaign && badgesAndAchievements.length > 2)
+          ($auth.loggedIn && !user  && (!campaign && $auth.user.achievements.length > 2)) ||
+          (campaign && badgesAndAchievements.length > 2) ||
+          (user && user.achievements.length > 2)
         "
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
         @click.prevent="showMoreBadges = !showMoreBadges"
@@ -18,8 +19,14 @@
         <span v-else>{{ $t('hide') }}</span>
       </button>
     </div>
-
-    <div v-if="$auth.loggedIn && !campaign">
+    <div v-if="user">
+        <div v-for="(achievement, key) in badges" :key="key">
+          <div v-if="key < 2 || showMoreBadges">
+            <BadgeItem :badge="achievement" />
+          </div>
+        </div>
+      </div>
+    <div v-else-if="($auth.loggedIn && !campaign) || user">
       <div v-for="(achievement, key) in $auth.user.achievements" :key="key">
         <div v-if="key < 2 || showMoreBadges">
           <BadgeItem :badge="achievement.badge" />
@@ -68,10 +75,14 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    user: {
+      type: Object,
+      default: () => {}
+    }
   },
   setup(props) {
     const { $auth } = useContext()
-    const { fetchBadges } = badgeApi()
+    const { fetchBadges, fetchBadged } = badgeApi()
 
     const showMoreBadges = ref(false)
     const achievementIds = ref([])
@@ -87,9 +98,13 @@ export default defineComponent({
         })
       }
 
-      badges.value = await fetchBadges(
-        props.campaign ? props.campaign.id : null
-      )
+      if (props.user) {
+        badges.value = await fetchBadged(props.user)
+      } else {
+        badges.value = await fetchBadges(
+          props.campaign ? props.campaign.id : null
+        )
+      }
 
       badges.value.forEach(function (item) {
         if (achievementIds.value.includes(item.id)) {

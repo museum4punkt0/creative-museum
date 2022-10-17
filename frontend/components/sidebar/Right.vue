@@ -1,8 +1,8 @@
 <template>
   <div>
-    <UserNotifications v-if="$auth.loggedIn" :campaign="campaign" />
-    <AwardList :campaign="campaign" />
-    <BadgeList :campaign="campaign" />
+    <UserNotifications v-if="$auth.loggedIn && !user" :campaign="campaign" />
+    <AwardList :campaign="campaign" :user="user" />
+    <BadgeList :campaign="campaign" :user="user" />
   </div>
 </template>
 <script>
@@ -14,6 +14,10 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    user: {
+      type: Object,
+      default: () => {}
+    }
   },
 })
 </script>

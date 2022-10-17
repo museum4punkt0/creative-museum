@@ -9,7 +9,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\BadgedRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -32,6 +34,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
     message: 'This user already received this badge.',
     errorPath: 'badge',
 )]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'user' => 'exact',
+    ]
+)]
 class Badged
 {
     #[ORM\Id]
@@ -45,7 +53,7 @@ class Badged
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['user:me:read','users:read'])]
+    #[Groups(['user:me:read', 'users:read'])]
     private $badge;
 
     public function getId(): ?int
