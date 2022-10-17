@@ -77,11 +77,15 @@
         </div>
       </div>
     </div>
+    <div v-if="!isLargerThanLg" class="xl:hidden">
+      <PageFooter />
+    </div>
   </div>
 </template>
 
 <script>
 import {
+  computed,
   defineComponent,
   ref,
   useStore,
@@ -106,12 +110,16 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    const { $config, $auth } = useContext()
+    const { $config, $breakpoints } = useContext()
     const posts = ref(null)
     const playlists = ref(null)
     const playlistPosts = ref(null)
 
     const showPlaylist = ref(0)
+
+    const isLargerThanLg = computed(() => {
+      return $breakpoints.lLg
+    })
 
     store.dispatch('hideAddButton')
     store.dispatch('setCurrentCampaign', null)
@@ -156,6 +164,7 @@ export default defineComponent({
       posts,
       playlists,
       playlistPosts,
+      isLargerThanLg,
       backendUrl: $config.backendUrl,
     }
   },

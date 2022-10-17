@@ -93,11 +93,15 @@
         </div>
       </div>
     </div>
+    <div v-if="!isLargerThanLg" class="xl:hidden">
+      <PageFooter />
+    </div>
   </div>
 </template>
 
 <script>
 import {
+  computed,
   defineComponent,
   ref,
   useStore,
@@ -117,13 +121,17 @@ export default defineComponent({
     const mode = ref('posts')
     const store = useStore()
     const router = useRouter()
-    const { $config, $auth } = useContext()
+    const { $config, $auth, $breakpoints } = useContext()
     const posts = ref(null)
     const playlists = ref(null)
     const playlistPosts = ref(null)
     const bookmarks = ref(null)
 
     const showPlaylist = ref(0)
+
+    const isLargerThanLg = computed(() => {
+      return $breakpoints.lLg
+    })
 
     if (!$auth.loggedIn) {
       router.push('/404')
@@ -170,6 +178,7 @@ export default defineComponent({
       playlists,
       playlistPosts,
       bookmarks,
+      isLargerThanLg,
       backendUrl: $config.backendUrl,
     }
   },
