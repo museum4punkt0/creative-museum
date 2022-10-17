@@ -22,7 +22,7 @@
     <div v-if="user">
         <div v-for="(achievement, key) in badges" :key="key">
           <div v-if="key < 2 || showMoreBadges">
-            <BadgeItem :badge="achievement" />
+            <BadgeItem :badge="achievement.badge" />
           </div>
         </div>
       </div>

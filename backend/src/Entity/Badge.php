@@ -16,6 +16,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Enum\BadgeType;
 use App\Enum\PostType;
 use App\Repository\BadgeRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -63,28 +64,28 @@ class Badge
     private PostType $postType = PostType::TEXT;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write','post:read'])]
+    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write','post:read','badged:read'])]
     private $title;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write','badged:read'])]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['user:me:read', 'badge:read'])]
+    #[Groups(['user:me:read', 'badge:read','badged:read'])]
     private $campaign;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist','remove'], orphanRemoval: true)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write','badged:read'])]
     private $picture;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write','badged:read'])]
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write','badged:read'])]
     private $link;
 
     public function getId(): ?int

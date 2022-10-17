@@ -17,6 +17,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Controller\GetAvailableAwardsController;
 use App\Controller\GetAvailableSoonAwardsController;
 use App\Repository\AwardRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -74,7 +75,7 @@ class Award
     #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read', 'notifications:read'])]
     private $title;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     #[Groups(['awards:read', 'campaigns:read', 'campaign:write', 'awarded:read'])]
     private $description;
 
