@@ -1,6 +1,6 @@
 <template>
   <div class="text-center text-white">
-    <LogoFull class="inline-block my-6 w-24" />
+    <LogoFull class="inline-block my-6 w-24 text-white hover:text-$highlight transform-gpu transition-all duration-300 ease-in-out cursor-pointer" />
     <div class="mb-3">
       <strong>&copy; {{ $dayjs().year() }} Badisches Landesmuseum</strong>
     </div>
