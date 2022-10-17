@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: BadgedRepository::class)]
 #[ApiResource(
     collectionOperations: [
-        'get',
+        'get' => ['normalization_context' => ['groups' => ['badged:read']],],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
@@ -41,11 +41,12 @@ class Badged
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'achievements')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['badged:read'])]
     private $user;
 
     #[ORM\ManyToOne(targetEntity: Badge::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['user:me:read','users:read'])]
+    #[Groups(['user:me:read','users:read','badged:read'])]
     private $badge;
 
     public function getId(): ?int
