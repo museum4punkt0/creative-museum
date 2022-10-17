@@ -17,7 +17,7 @@
           ref="upload"
           v-model="files"
           accept="image/png,image/gif,image/jpeg"
-          class="block"
+          :class="files.length ? '!hidden': 'block'"
           @input-file="inputFile"
           @input-filter="inputFilter"
         >
@@ -104,10 +104,15 @@
         />
       </div>
       <button
+        v-if="files.length"
+        class="btn-outline mt-4"
+        @click.prevent="triggerInput"
+      >{{ $t('post.types.image.uploader.replace') }}</button>
+      <button
         ref="submitButton"
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full mb-12 md:mb-0"
+        class="btn-highlight disabled:opacity-30 mt-4 w-full mb-12 md:mb-0"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -138,6 +143,7 @@ export default defineComponent({
     const postBody = ref('')
     const imgAlt = ref('')
     const submitting = ref(false)
+    const upload = ref({});
     const { createImagePost } = postApi()
 
     const disableSubmitButton = computed(() => {
@@ -195,11 +201,21 @@ export default defineComponent({
       }
     }
 
+    function triggerInput() {
+      if (process.client) {
+        const fileInput = window.document.getElementById('file')
+        if (fileInput !== null) {
+          fileInput.click()
+        }
+      }
+    }
+
     return {
       abortPost,
       submitPost,
       inputFile,
       inputFilter,
+      upload,
       edit,
       files,
       postTitle,
@@ -207,6 +223,7 @@ export default defineComponent({
       imgAlt,
       disableSubmitButton,
       submitting,
+      triggerInput
     }
   },
 })
