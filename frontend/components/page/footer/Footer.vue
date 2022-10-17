@@ -1,6 +1,8 @@
 <template>
   <div class="text-center text-white">
-    <LogoFull class="inline-block my-6 w-24 text-white hover:text-$highlight transform-gpu transition-all duration-300 ease-in-out cursor-pointer" />
+    <a href="https://www.landesmuseum.de/museum" target="_blank">
+      <LogoFull class="inline-block my-6 w-24 text-white hover:text-$highlight transform-gpu transition-all duration-300 ease-in-out cursor-pointer" />
+    </a>
     <div class="mb-3">
       <strong>&copy; {{ $dayjs().year() }} Badisches Landesmuseum</strong>
     </div>
@@ -11,14 +13,14 @@
         }}</NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/accessibility" class="block mb-2">{{
+        <a href="https://www.landesmuseum.de/erklaerung-zur-barrierefreiheit" target="_blank" class="block mb-2">{{
           $t('pages.accessibility.title')
-        }}</NuxtLink>
+        }}</a>
       </li>
       <li>
-        <NuxtLink to="/legal/privacy" class="block mb-2">{{
+        <a href="https://www.landesmuseum.de/datenschutz" target="_blank" class="block mb-2">{{
           $t('pages.privacy.title')
-        }}</NuxtLink>
+        }}</a>
       </li>
       <li>
         <a href="#" onClick="UC_UI.showSecondLayer();" class="block mb-2">{{
