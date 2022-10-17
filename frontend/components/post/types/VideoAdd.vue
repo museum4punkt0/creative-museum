@@ -18,7 +18,7 @@
           ref="upload"
           v-model="videos"
           accept="video/*"
-          class="block"
+          :class="videos.length ? '!hidden': 'block'"
           @input-file="inputFile"
           @input-filter="inputFilter"
         >
@@ -103,9 +103,14 @@
         />
       </div>
       <button
+        v-if="videos.length"
+        class="btn-outline mt-4"
+        @click.prevent="triggerInput"
+      >{{ $t('post.types.video.uploader.replace') }}</button>
+      <button
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full"
+        class="btn-highlight disabled:opacity-30 mt-4 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -188,6 +193,15 @@ export default defineComponent({
       })
     }
 
+    function triggerInput() {
+      if (process.client) {
+        const fileInput = window.document.getElementById('file')
+        if (fileInput !== null) {
+          fileInput.click()
+        }
+      }
+    }
+
     return {
       postTitle,
       postBody,
@@ -199,6 +213,7 @@ export default defineComponent({
       inputFilter,
       abortPost,
       submitPost,
+      triggerInput
     }
   },
 })
