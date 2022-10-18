@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Message\NotifyUsersAboutNewCampaign;
 use App\Repository\CampaignRepository;
+use App\Service\MailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -20,15 +21,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class CampaignNotificationSubscriber implements EventSubscriberInterface
 {
-    private MessageBusInterface $bus;
 
-    private CampaignRepository $campaignRepository;
-
-    public function __construct(MessageBusInterface $bus, CampaignRepository $campaignRepository)
-    {
-        $this->bus = $bus;
-        $this->campaignRepository = $campaignRepository;
-    }
+    public function __construct
+    (
+        private readonly MessageBusInterface $bus,
+        private readonly CampaignRepository $campaignRepository,
+    ){}
 
     public static function getSubscribedEvents(): array
     {

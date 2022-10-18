@@ -19,6 +19,8 @@ parameters:
     videoPostBodyLength: 2000
     postQuestionLength: 100
 
+    fromMail: 'creativemuseum@landesmuseum.net'
+
 
 services:
     # default configuration for services in *this* file
@@ -130,3 +132,6 @@ services:
             - '%commentCreatedScorePoints%'
             - '%upvoteScorePoints%'
             - '%feedBackScorePoints%'
+    App\Service\MailService:
+        arguments:
+            - '%fromMail%'

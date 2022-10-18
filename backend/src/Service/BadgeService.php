@@ -59,7 +59,7 @@ class BadgeService
         return $unbadgedArr;
     }
 
-    public function createBadged(Badge $badge, User $user): void
+    public function createBadged(Badge $badge, User $user): Badged
     {
         $newBadged = new Badged();
         $newBadged
@@ -67,6 +67,8 @@ class BadgeService
             ->setUser($user);
         $this->badgedRepository->add($newBadged);
         $this->em->flush();
+
+        return $newBadged;
     }
 
     public function getLastBadge(int $userId): ?Badge

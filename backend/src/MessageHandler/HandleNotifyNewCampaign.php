@@ -11,30 +11,23 @@ namespace App\MessageHandler;
 
 use App\Entity\Campaign;
 use App\Entity\Notification;
+use App\Enum\MailType;
 use App\Enum\NotificationType;
 use App\Message\NotifyUsersAboutNewCampaign;
 use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class HandleNotifyNewCampaign implements MessageHandlerInterface
 {
-    private UserRepository $userRepository;
-
-    private CampaignRepository $campaignRepository;
-
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        UserRepository $userRepository,
-        CampaignRepository $campaignRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->userRepository = $userRepository;
-        $this->campaignRepository = $campaignRepository;
-        $this->entityManager = $entityManager;
-    }
+        private readonly UserRepository $userRepository,
+        private readonly CampaignRepository $campaignRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly MailService $mailService
+    ){}
 
     /**
      * @return void
@@ -62,6 +55,8 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
                 ->setCampaign($campaign)
                 ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
             $this->entityManager->persist($notification);
+
+            $this->mailService->sendMail(MailType::NEW_CAMPAIGN->value,$user, ['campaign' => $campaign]);
         }
         $campaign->setNotified(true);
         $this->entityManager->persist($campaign);

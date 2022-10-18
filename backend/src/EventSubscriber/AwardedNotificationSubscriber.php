@@ -11,7 +11,9 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Awarded;
+use App\Enum\MailType;
 use App\Message\NotifyAboutNewAwarded;
+use App\Service\MailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -20,12 +22,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class AwardedNotificationSubscriber implements EventSubscriberInterface
 {
-    private MessageBusInterface $bus;
 
-    public function __construct(MessageBusInterface $bus)
-    {
-        $this->bus = $bus;
-    }
+    public function __construct
+    (
+        private readonly MessageBusInterface $bus,
+        private readonly MailService $mailService
+    ){}
 
     /**
      * @return array[]
@@ -48,5 +50,7 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
 
         $notification = new NotifyAboutNewAwarded($awarded->getId());
         $this->bus->dispatch($notification);
+
+        $this->mailService->sendMail(MailType::AWARD_RECEIVED->value,$awarded->getWinner(),['awarded' => $awarded]);
     }
 }
