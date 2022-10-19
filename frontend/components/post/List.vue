@@ -48,7 +48,8 @@ export default defineComponent({
       default: '',
     },
   },
-  setup(props) {
+  emits: ['updatePost'],
+  setup(props, context) {
     const store = useStore()
     const route = useRoute()
     const { $config, $auth } = useContext()
@@ -84,6 +85,7 @@ export default defineComponent({
     }
 
     function toggleBookmarkState(postId) {
+      context.emit('updatePost')
       postsRef.value.forEach((item, key) => {
         if (item.id !== postId) {
           return

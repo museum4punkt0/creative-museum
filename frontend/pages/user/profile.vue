@@ -44,12 +44,11 @@
           />
         </div>
         <div v-if="mode === 'bookmarks'">
-          <PostItem
-            v-for="(post, key) in bookmarks"
-            :key="'bookmark_' + key"
-            :post="post"
-            @updatePost="updatePost"
-            @toggleBookmarkState="removeBookmark"
+          <PostList
+            v-if="bookmarks && bookmarks.length"
+            :posts="bookmarks"
+            source="userprofile"
+            @updatePost="refetchBookmarks"
           />
         </div>
         <div v-if="mode === 'playlists'" class="grid grid-cols-2 gap-6 mt-4">
@@ -151,6 +150,10 @@ export default defineComponent({
       }
     })
 
+    async function refetchBookmarks() {
+      bookmarks.value = await fetchUserBookmarks()
+    }
+
     function showPosts() {
       mode.value = 'posts'
     }
@@ -174,6 +177,7 @@ export default defineComponent({
       showBookmarks,
       showPlaylists,
       loadPlaylist,
+      refetchBookmarks,
       posts,
       playlists,
       playlistPosts,
