@@ -7,7 +7,7 @@
     >
       <NuxtLink id="pageLogo" :to="localePath('/')">
         <Logo
-          class="text-white/50 hover:text-$highlight h-9 my-1 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
+          class="text-white/50 hover:text-$highlight h-9 my-2 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
         />
       </NuxtLink>
       <button
@@ -75,14 +75,14 @@
         <div
           v-show="isMenuVisible"
           key="0"
-          class="absolute top-10 md:top-12 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50 max-h-full overflow-y-scroll scrollbar-hide"
+          class="absolute top-12 md:top-13 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm h-[calc(100vh-48px)] md:h-auto bg-grey shadow-lg shadow-black/20 z-50 md:max-h-full overflow-y-scroll scrollbar-hide"
         >
           <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />
         </div>
         <div
           v-show="isAddVisible"
           key="1"
-          class="absolute top-10 md:top-12 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm bg-grey shadow-lg shadow-black/20 z-50 max-h-full overflow-y-scroll scrollbar-hide"
+          class="absolute top-12 md:top-13 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm h-[calc(100vh-48px)] md:h-auto bg-grey shadow-lg shadow-black/20 z-50 md:max-h-full overflow-y-scroll scrollbar-hide"
         >
           <PostAdd @openAddModal="openAddModal" />
         </div>
