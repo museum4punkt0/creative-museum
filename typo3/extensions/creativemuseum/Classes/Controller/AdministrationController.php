@@ -704,7 +704,7 @@ class AdministrationController extends ActionController
         $uriArgs  = '&tx_creativemuseum_system_creativemuseumcmadm[filter][page]=' . $arguments['page'];
         $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[filter][searchString]=' . $arguments['searchString'];
 
-        if (isset($arguments['reported'])) {
+        if (isset($arguments['reported']) && (int) $arguments['reported'] === 1) {
             $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[filter][reported]=1';
         }
 
