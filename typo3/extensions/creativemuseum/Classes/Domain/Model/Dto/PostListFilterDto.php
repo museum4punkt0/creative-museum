@@ -17,13 +17,19 @@ class PostListFilterDto extends AbstractEntity
     protected string $searchString = '';
 
     /**
+     * @var bool
+     */
+    protected bool $reported = false;
+
+    /**
      * @param int $page
      * @param string $searchString
      */
-    public function __construct(int $page = 1, string $searchString = '')
+    public function __construct(int $page = 1, string $searchString = '', bool $reported = false)
     {
         $this->page = $page;
         $this->searchString = $searchString;
+        $this->reported = $reported;
     }
 
     /**
@@ -59,6 +65,24 @@ class PostListFilterDto extends AbstractEntity
     public function setSearchString(string $searchString): PostListFilterDto
     {
         $this->searchString = $searchString;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReported(): bool
+    {
+        return $this->reported;
+    }
+
+    /**
+     * @param bool $reported
+     * @return PostListFilterDto
+     */
+    public function setReported(bool $reported): PostListFilterDto
+    {
+        $this->reported = $reported;
         return $this;
     }
 }

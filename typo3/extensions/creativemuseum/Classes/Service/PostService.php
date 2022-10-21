@@ -7,7 +7,6 @@ use JWIED\Creativemuseum\Domain\Model\Dto\MediaObjectDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PollOptionDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PostDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PostListFilterDto;
-use JWIED\Creativemuseum\Property\TypeConverter\PostDtoConverter;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class PostService extends CmApiService
@@ -39,7 +38,23 @@ class PostService extends CmApiService
             $filter->getPage()
         );
 
+        if ($filter->isReported()) {
+            $queryString .= '&reported=1';
+        }
+
         return $this->get($queryString);
+    }
+
+    public function getComments(PostDto $post, int $page): ?array
+    {
+        if ($post->getCommentCount() === 0) {
+            return null;
+        }
+
+        $endpoint = "v1/posts/{$post->getId()}/comments";
+        $queryString = "?page={$page}";
+
+        return $this->getCustom($endpoint, $queryString);
     }
 
     public function getPost(string $id): ?array

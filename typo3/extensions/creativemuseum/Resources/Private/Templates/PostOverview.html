@@ -1,7 +1,9 @@
 <h1>Beitragsübersicht</h1>
-<div class="row mb-3">
-    <div class="col-6" id="db_list-searchbox-toolbar" style="">
-        <f:form action="postOverview" object="{filter}" objectName="filter">
+
+<f:form action="postOverview" object="{filter}" objectName="filter">
+    <div class="row row-cols-lg-auto g-3 align-items-center mb-3">
+        <f:comment>
+        <div class="col-12" id="db_list-searchbox-toolbar">
             <div class="input-group">
                 <button class="btn btn-default" name="search" type="submit">
                     <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-search"
@@ -19,9 +21,21 @@
                 <f:form.textfield id="search_field" property="searchString" class="form-control" placeholder="ID" />
                 <f:form.hidden property="page" value="1"/>
             </div>
-        </f:form>
+        </div>
+        </f:comment>
+        <div class="col-12">
+            <div class="form-check">
+                <f:form.checkbox class="form-check-input" id="reportedCheckbox" property="reported" value="1" />
+                <label class="form-check-label" for="reportedCheckbox">
+                    Gemeldete Beiträge
+                </label>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Filter anwenden</button>
+        </div>
     </div>
-</div>
+</f:form>
 
 <table class="table table-striped table-hover">
     <thead>
@@ -44,7 +58,7 @@
     <f:for as="post" each="{paginator.paginatedItems}">
         <tr>
             <td>
-                <a href="{f:uri.action(action:'postDetail', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString}})}">
+                <a href="{f:uri.action(action:'postDetail', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString, reported: filter.reported}})}">
                     {post.id}
                 </a>
             </td>
@@ -52,7 +66,7 @@
                 {post.created -> f:format.date(format: 'd.m.Y H:i')}
             </td>
             <td>
-                <a href="{f:uri.action(action:'postDetail', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString}})}">
+                <a href="{f:uri.action(action:'postDetail', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString, reported: filter.reported}})}">
                     <f:switch expression="{post.type}">
                         <f:case value="poll">{post.question}</f:case>
                         <f:case value="playlist">{post.linkedPlaylist.title}</f:case>
@@ -61,7 +75,7 @@
                 </a>
             </td>
             <td>
-                <a target="_blank" href="{f:uri.action(action:'userDetail', arguments:{user: post.author.uuid, filter: {page: paging.lastPageNumber, searchString: filter.searchString}})}">
+                <a target="_blank" href="{f:uri.action(action:'userDetail', arguments:{user: post.author.uuid, filter: {page: paging.lastPageNumber, searchString: filter.searchString, reported: filter.reported}})}">
                     {post.author.username}
                 </a>
             </td>
@@ -94,7 +108,7 @@
                         class="btn btn-default t3js-record-delete"
                         data-button-ok-text="Post löschen" data-l10parent=""
                         data-message="Bist du dir sicher, dass du den Post löschen möchtest?"
-                        data-link="{f:uri.action(action: 'deletePost', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString}})}" title="Post löschen"
+                        data-link="{f:uri.action(action: 'deletePost', arguments:{post: post.id, filter: {page: paging.lastPageNumber, searchString: filter.searchString, reported: filter.reported}})}" title="Post löschen"
                         type="button">
                     <core:icon identifier="actions-edit-delete" size="small" />
                 </button>
@@ -110,7 +124,8 @@
         pages: pages,
         paginator: paginator,
         actionName: actionName,
-        searchString: filter.searchString
+        searchString: filter.searchString,
+        reported: filter.reported
     }"
     partial="Paging.html"
 />

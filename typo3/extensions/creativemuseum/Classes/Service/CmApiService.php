@@ -68,6 +68,32 @@ abstract class CmApiService implements SingletonInterface
         return $decodedBody;
     }
 
+    protected function getCustom(string $endpoint, ?string $queryString = null): ?array
+    {
+        /** @var RequestFactory $request */
+        $request = GeneralUtility::makeInstance(RequestFactory::class);
+
+        $response = $request->request(
+            $this->configuration['baseUrl'] . '/' . $endpoint . ($queryString ?? ''),
+            Request::METHOD_GET,
+            [
+                'headers' => [
+                    'Accept' => 'application/ld+json'
+                ]
+            ]
+        );
+
+        $body = $response->getBody()->getContents();
+
+        try {
+            $decodedBody = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+        } catch(\JsonException $e) {
+            $decodedBody = null;
+        }
+
+        return $decodedBody;
+    }
+
     /**
      * @param string|int $id
      * @return array|null

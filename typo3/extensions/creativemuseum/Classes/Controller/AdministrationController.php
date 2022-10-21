@@ -32,6 +32,7 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AdministrationController extends ActionController
@@ -144,7 +145,7 @@ class AdministrationController extends ActionController
 
         if (in_array($this->actionMethodName, $postActions)) {
             $propertyMapping = $this->arguments['filter']->getPropertyMappingConfiguration();
-            $propertyMapping->allowProperties('page', 'searchString');
+            $propertyMapping->allowProperties('page', 'searchString', 'reported');
             $propertyMapping->setTypeConverterOption(
                 PersistentObjectConverter::class,
                 PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
@@ -336,7 +337,7 @@ class AdministrationController extends ActionController
      * @param UserListFilterDto|null $filter
      * @return void
      */
-    public function userOverviewAction(UserListFilterDto $filter = null)
+    public function userOverviewAction(?UserListFilterDto $filter = null)
     {
         if (null === $filter) {
             $filter = new UserListFilterDto();
@@ -370,7 +371,7 @@ class AdministrationController extends ActionController
      * @param UserListFilterDto|null $filter
      * @return void
      */
-    public function userDetailAction(UserDto $user, UserListFilterDto $filter = null)
+    public function userDetailAction(UserDto $user, ?UserListFilterDto $filter = null): void
     {
         if (null === $filter) {
             $filter = new UserListFilterDto();
@@ -387,7 +388,7 @@ class AdministrationController extends ActionController
      * @param UserListFilterDto|null $filter
      * @return void
      */
-    public function toggleUserActiveAction(UserDto $user, UserListFilterDto $filter = null)
+    public function toggleUserActiveAction(UserDto $user, ?UserListFilterDto $filter = null): void
     {
         if (null === $filter) {
             $filter = new UserListFilterDto();
@@ -410,7 +411,7 @@ class AdministrationController extends ActionController
      * @param UserListFilterDto|null $filter
      * @return void
      */
-    public function deleteUserAction(UserDto $user, UserListFilterDto $filter = null)
+    public function deleteUserAction(UserDto $user, UserListFilterDto $filter = null): void
     {
         if (null === $filter) {
             $filter = new UserListFilterDto();
@@ -429,7 +430,7 @@ class AdministrationController extends ActionController
      * @param PostListFilterDto|null $filter
      * @return void
      */
-    public function postOverviewAction(PostListFilterDto $filter = null)
+    public function postOverviewAction(PostListFilterDto $filter = null): void
     {
         if (null === $filter) {
             $filter = new PostListFilterDto();
@@ -460,13 +461,32 @@ class AdministrationController extends ActionController
 
     /**
      * @param PostDto $post
+     * @param PostListFilterDto $filter
+     * @param int|null $page
      * @return void
      */
-    public function postDetailAction(PostDto $post, PostListFilterDto $filter)
+    public function postDetailAction(PostDto $post, PostListFilterDto $filter, ?int $page = 1): void
     {
+        $comments = $this->postService->getComments($post, $page) ?? ['hydra:member' => [], 'hydra:totalItems' => 0];
+
+        $paginator = new ApiRecordPaginator(
+            $comments['hydra:member'],
+            $page,
+            PostService::RECORDS_PER_PAGE,
+            $comments['hydra:totalItems']
+        );
+
+        $pagination = new SimplePagination($paginator);
+
         $this->view->assignMultiple([
             'post' => $post,
             'filter' => $filter,
+            'comments' => $comments,
+            'paginator' => $paginator,
+            'paging' => $pagination,
+            'pages' => range(1, $pagination->getLastPageNumber()),
+            'actionName' => substr($this->actionMethodName, 0, -6),
+            'page' => $page,
             'backendBaseUrl' => $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['creativemuseum']['baseUrl']
         ]);
     }
@@ -476,7 +496,7 @@ class AdministrationController extends ActionController
      * @param PostListFilterDto|null $filter
      * @return void
      */
-    public function deletePostAction(PostDto $post, PostListFilterDto $filter = null)
+    public function deletePostAction(PostDto $post, PostListFilterDto $filter = null): void
     {
         if (null === $filter) {
             $filter = new PostListFilterDto();
@@ -486,8 +506,14 @@ class AdministrationController extends ActionController
 
         $this->postService->deletePost($post->getId());
 
+        $filters = ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()];
+
+        if ($filter->isReported()) {
+            $filters['reported'] = 1;
+        }
+
         $this->redirect('postOverview', null, null, [
-            'filter' => ['page' => $filter->getPage(), 'searchString' => $filter->getSearchString()]
+            'filter' => $filters
         ]);
     }
 
@@ -495,7 +521,7 @@ class AdministrationController extends ActionController
      * @param BackendTemplateView $view
      * @return void
      */
-    private function generateMenu(BackendTemplateView $view)
+    private function generateMenu(BackendTemplateView $view): void
     {
         $menuRegistry = $view->getModuleTemplate()->getDocHeaderComponent()->getMenuRegistry();
         $menu = $menuRegistry->makeMenu();
@@ -539,7 +565,7 @@ class AdministrationController extends ActionController
      * @param BackendTemplateView $view
      * @return void
      */
-    private function registerDocheaderButtons(BackendTemplateView $view)
+    private function registerDocheaderButtons(BackendTemplateView $view): void
     {
         $action = $this->request->getControllerActionName();
 
@@ -562,7 +588,7 @@ class AdministrationController extends ActionController
      * @param string $action
      * @return string
      */
-    private function getHref($controller, $action)
+    private function getHref($controller, $action): string
     {
         $this->uriBuilder->setRequest($this->request);
         return $this->uriBuilder->reset()->uriFor($action, [], $controller);
@@ -572,7 +598,7 @@ class AdministrationController extends ActionController
      * @param BackendTemplateView $view
      * @return void
      */
-    private function addNewCampaignSaveButton(BackendTemplateView $view)
+    private function addNewCampaignSaveButton(BackendTemplateView $view): void
     {
         $buttonBar = $view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
 
@@ -678,6 +704,10 @@ class AdministrationController extends ActionController
         $uriArgs  = '&tx_creativemuseum_system_creativemuseumcmadm[filter][page]=' . $arguments['page'];
         $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[filter][searchString]=' . $arguments['searchString'];
 
+        if (isset($arguments['reported'])) {
+            $uriArgs .= '&tx_creativemuseum_system_creativemuseumcmadm[filter][reported]=1';
+        }
+
         $buttonBar = $view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
 
         /** @var LinkButton $backButton */
@@ -723,7 +753,7 @@ class AdministrationController extends ActionController
      * @param ButtonBar $buttonBar
      * @return void
      */
-    private function addCancelButton(ButtonBar $buttonBar)
+    private function addCancelButton(ButtonBar $buttonBar): void
     {
         /** @var LinkButton $backButton */
         $backButton = $buttonBar->makeButton(LinkButton::class);

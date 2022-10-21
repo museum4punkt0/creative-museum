@@ -234,3 +234,57 @@
         </tbody>
     </table>
 </f:if>
+<f:if condition="{paginator.paginatedItems -> f:count()} > 0">
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Zeitstempel</th>
+            <th>Author</th>
+            <th>Inhalt</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <f:for as="comment" each="{paginator.paginatedItems}">
+            <tr>
+                <td>{comment.id}</td>
+                <td>{comment.created -> f:format.date(format: 'd.m.Y H:i')}</td>
+                <td>{comment.author.username}</td>
+                <td>
+                <span title="{comment.body}" style="width : 30vw; overflow:hidden; display:inline-block; text-overflow: ellipsis; white-space: nowrap;">
+                    {comment.body}
+                </span>
+                </td>
+                <td>
+                    <button aria-haspopup="dialog" aria-label="Kommentar löschen"
+                            class="btn btn-default t3js-record-delete"
+                            data-button-ok-text="Post löschen" data-l10parent=""
+                            data-message="Bist du dir sicher, dass du den Kommentar löschen möchtest?"
+                            data-link="{f:uri.action(action: 'deletePost', arguments:{post: comment.id, filter: {page: page, searchString: filter.searchString, reported: filter.reported}})}"
+                            title="Kommentar löschen"
+                            type="button">
+                        <core:icon identifier="actions-edit-delete" size="small" />
+                    </button>
+                </td>
+            </tr>
+        </f:for>
+        </tbody>
+    </table>
+
+    <f:if condition="{pages -> f:count()} > 1">
+        <f:render
+                arguments="{
+        paging: paging,
+        pages: pages,
+        paginator: paginator,
+        actionName: actionName,
+        post: post.id,
+        currentPage: page,
+        postListFilter: filter
+    }"
+                partial="CommentsPaging.html"
+        />
+    </f:if>
+</f:if>

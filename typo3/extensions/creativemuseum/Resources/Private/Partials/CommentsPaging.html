@@ -4,14 +4,14 @@
             <f:then>
                 <li class="waves-effect page-item">
                     <a class="page-link"
-                        href="{f:uri.action(action:actionName, arguments:{filter: {page: 1, searchString: searchString, reported: reported}})}"
+                        href="{f:uri.action(action:actionName, arguments:{post: post, page: 1, filter: {page: postListFilter.page, searchString: postListFilter.searchString, reported: postListFilter.reported}})}"
                         title="{f:translate(key:'paging.first')}">
                         &laquo;
                     </a>
                 </li>
                 <li class="waves-effect page-item">
                     <a class="page-link"
-                        href="{f:uri.action(action:actionName, arguments:{filter: {page: paging.previousPageNumber, searchString: searchString, reported: reported}})}"
+                        href="{f:uri.action(action:actionName, arguments:{post: post, page: paging.previousPageNumber, filter: {page: postListFilter.page, searchString: postListFilter.searchString, reported: postListFilter.reported}})}"
                         title="{f:translate(key:'paging.previous')}">
                         &lsaquo;
                     </a>
@@ -26,7 +26,7 @@
             <li
                 class="page-item {f:if(condition: '{page} == {paginator.currentPageNumber}', then:'active', else:'waves-effect')}">
                 <a class="page-link"
-                    href="{f:uri.action(action:actionName, arguments:{filter: {page: page, searchString: searchString, reported: reported}})}">{page}</a>
+                    href="{f:uri.action(action:actionName, arguments:{post: post, page: page, filter: {page: postListFilter.page, searchString: postListFilter.searchString, reported: postListFilter.reported}})}">{page}</a>
             </li>
         </f:for>
 
@@ -34,14 +34,14 @@
             <f:then>
                 <li class="waves-effect page-item">
                     <a class="page-link"
-                        href="{f:uri.action(action:actionName, arguments:{filter: {page: paging.nextPageNumber, searchString: searchString, reported: reported}})}"
+                        href="{f:uri.action(action:actionName, arguments:{post: post, page: paging.nextPageNumber, filter: {page: postListFilter.page, searchString: postListFilter.searchString, reported: postListFilter.reported}})}"
                         title="{f:translate(key:'paging.next')}">
                         &rsaquo;
                     </a>
                 </li>
                 <li class="waves-effect page-item">
                     <a class="page-link"
-                        href="{f:uri.action(action:actionName, arguments:{filter: {page: paging.lastPageNumber, searchString: searchString, reported: reported}})}"
+                        href="{f:uri.action(action:actionName, arguments:{post: post, page: paging.lastPageNumber, filter: {page: postListFilter.page, searchString: postListFilter.searchString, reported: postListFilter.reported}})}"
                         title="{f:translate(key:'paging.last')}">
                         &raquo;
                     </a>
