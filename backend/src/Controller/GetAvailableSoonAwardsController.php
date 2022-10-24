@@ -29,6 +29,8 @@ class GetAvailableSoonAwardsController extends AbstractController
             return null;
         }
 
+        $test = $this->awardService->getAvailableSoonByCampaign($campaign,$user);
+
         return $this->awardService->getAvailableSoonByCampaign($campaign,$user);
     }
 }
