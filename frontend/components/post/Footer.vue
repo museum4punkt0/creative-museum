@@ -9,7 +9,7 @@
             ? 'highlight-text'
             : 'fill-white'
         "
-        @click.prevent="(post.campaign.active || !post.campaign.closed) && doVotePost('up')"
+        @click.prevent="doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
@@ -20,7 +20,7 @@
             ? 'highlight-text'
             : 'fill-white'
         "
-        @click.prevent="(post.campaign.active || !post.campaign.closed) && doVotePost('down')"
+        @click.prevent="doVotePost('down')"
       />
     </span>
     <button
@@ -83,7 +83,9 @@ export default defineComponent({
     async function doVotePost(direction) {
       if (!$auth.loggedIn) {
         store.dispatch('showLogin')
-      } else {
+      } else if ($auth.loggedIn && props.post.campaign.closed) {
+        store.dispatch('showCampaignClosed')
+      } else  {
         const voteResponse = await votePost(props.post.id, direction)
         myVote.value = voteResponse.vote.direction
         votesTotal.value = voteResponse.votestotal

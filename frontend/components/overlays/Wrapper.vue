@@ -13,6 +13,7 @@
     >
       <OverlaysSplashscreen v-if="!splashscreenShown" />
     </transition>
+    <OverlaysCampaignClosed v-if="$auth.loggedIn" />
   </div>
 </template>
 <script>

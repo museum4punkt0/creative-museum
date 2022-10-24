@@ -8,6 +8,7 @@ export const state = () => ({
   currentSortingDirection: 'desc',
   newPostOnCampaign: 0,
   showLogin: false,
+  showCampaignClosed: false,
   showAddModal: false,
   showProfileUpdate: false,
   showTutorial: false,
@@ -55,6 +56,12 @@ export const mutations = {
   },
   HIDE_LOGIN(state) {
     state.showLogin = false
+  },
+  SHOW_CAMPAIGN_CLOSED(state) {
+    state.showCampaignClosed = true
+  },
+  HIDE_CAMPAIGN_CLOSED(state) {
+    state.showCampaignClosed = false
   },
   SHOW_PROFILE_UPDATE(state) {
     state.showProfileUpdate = true
@@ -127,6 +134,12 @@ export const actions = {
   hideLogin({ commit }) {
     commit('HIDE_LOGIN')
   },
+  showCampaignClosed({ commit}) {
+    commit('SHOW_CAMPAIGN_CLOSED')
+  },
+  hideCampaignClosed({ commit}) {
+    commit('HIDE_CAMPAIGN_CLOSED')
+  },
   showProfileUpdate({ commit }) {
     commit('SHOW_PROFILE_UPDATE')
   },
@@ -172,6 +185,9 @@ export const getters = {
   },
   showLogin(state) {
     return state.showLogin
+  },
+  showCampaignClosed(state) {
+    return state.showCampaignClosed
   },
   showProfileUpdate(state) {
     return state.showProfileUpdate

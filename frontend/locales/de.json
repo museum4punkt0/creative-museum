@@ -24,6 +24,10 @@
     "text": "Du bist gerade nicht eingeloggt. Melde dich an und verdiene Punkte mit deinen Aktionen.",
     "button": "Jetzt anmelden"
   },
+  "globalCampaignClosed": {
+    "header": "Diese Kampagne ist beendet",
+    "text": "Die Kampagne ist beendet. Es sind keine Interaktionen mehr möglich."
+  },
   "globalProfileUpdate": {
     "header": "Profil bearbeiten",
     "deleteUser": {

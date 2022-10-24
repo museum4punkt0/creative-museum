@@ -134,7 +134,7 @@ class Campaign
     private $feedbackOptions;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
+    #[Groups(['campaigns:read', 'campaign:read', 'campaign:write', 'post:read'])]
     private $closed = false;
 
     #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Post::class, cascade: ['remove'])]
