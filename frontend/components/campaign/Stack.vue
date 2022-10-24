@@ -217,12 +217,12 @@ export default {
 
       document.documentElement.style.setProperty(
         '--highlight',
-        this.stack[0].color
+        this.stack[this.stack.length-1].color
       )
 
       document.documentElement.style.setProperty(
         '--highlight-contrast',
-        this.getContrastColor(this.stack[0].color)
+        this.getContrastColor(this.stack[this.stack.length-1].color)
       )
 
       this.stack.unshift(this.stack.pop())

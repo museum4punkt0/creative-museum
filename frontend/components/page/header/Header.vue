@@ -5,9 +5,10 @@
       ref="globalHeader"
       class="relative container flex flex-row justify-between z-20 items-center"
     >
-      <NuxtLink id="pageLogo" :to="localePath('/')">
+      <NuxtLink id="pageLogo" :to="localePath('/')" class="text-white/50 hover:text-$highlight focus:text-$highlight focus:outline-none">
         <Logo
-          class="text-white/50 hover:text-$highlight h-9 my-2 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
+          class="h-9 my-2 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
+          alt="Creative Museum Logo"
         />
       </NuxtLink>
       <button
@@ -22,7 +23,7 @@
       <div class="flex flex-row mr-5 space-x-4 items-center">
         <PageHeaderUserInfo />
         <button
-          class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out"
+          class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out focus:outline-none group"
           type="button"
           :class="
             isMenuVisible
@@ -39,7 +40,7 @@
             :class="isMenuVisible ? '-mt-0.5' : ''"
           >
             <span
-              class="block h-px bg-white transition-all duration-300"
+              class="block h-px bg-white transition-all duration-300 group-focus:bg-$highlight"
               :class="
                 isMenuVisible
                   ? 'transform-gpu rotate-45 origin-center translate-y-1.5 scale-x-75'
@@ -47,13 +48,13 @@
               "
             />
             <span
-              class="block h-px bg-white transform-gpu transition-all duration-500"
+              class="block h-px bg-white transform-gpu transition-all duration-500 group-focus:bg-$highlight"
               :class="
                 isMenuVisible ? 'transform-gpu translate-x-10 opacity-0' : ''
               "
             />
             <span
-              class="block h-px bg-white tranform-gpu transition-all duration-300"
+              class="block h-px bg-white tranform-gpu transition-all duration-300 group-focus:bg-$highlight"
               :class="
                 isMenuVisible
                   ? 'transform-gpu -rotate-45 origin-center -translate-y-1 scale-x-75'
