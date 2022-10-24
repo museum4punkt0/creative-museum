@@ -79,6 +79,7 @@ class AwardService
                     $qb->expr()->eq('awarded.giver', $user->getId())
                 )
             )
+            ->setMaxResults(1)
             ->getQuery()
             ->execute();
     }

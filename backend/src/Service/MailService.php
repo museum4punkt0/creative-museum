@@ -3,45 +3,102 @@
 namespace App\Service;
 
 use App\Entity\User;
+use App\Enum\MailType;
 use App\Enum\NotificationType;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
+use Psr\Log\LoggerInterface;
 
 class MailService
 {
     public function __construct
     (
         private readonly string $fromMail,
-        private readonly MailerInterface $mailer
-    ){}
-
-    public function sendMail(string $identifier, User $receiver, array $parameters = [])
+        private readonly MailerInterface $mailer,
+        private readonly LoggerInterface $logger,
+        private readonly UserRepository $userRepository
+    )
     {
-        if ($receiver->getDeleted()){
+    }
+
+    public function sendMail(string $identifier, User $receiver = null, array $parameters = [])
+    {
+        if (!is_null($receiver) && $receiver->getDeleted()) {
             return;
         }
 
+        if (is_null($receiver)) {
+            $receivers = $this->userRepository->findBy([
+                'active' => 1,
+                'deleted' => 0
+            ]);
+
+            foreach ($receivers as $receiver) {
+                $email = $this->prepareMail($identifier, $receiver, $parameters);
+
+                if ($receiver->getNotificationSettings() !== NotificationType::NONE) {
+                    $this->send($email);
+                }
+            }
+        } else {
+            $email = $this->prepareMail($identifier, $receiver, $parameters);
+
+            if ($receiver->getNotificationSettings() !== NotificationType::NONE) {
+                $this->send($email);
+            }
+        }
+    }
+
+    protected function getSubject(string $mailIdentifier, array $parameters = []): string
+    {
+        $translations = json_decode(file_get_contents(__DIR__ . '/../../../frontend/locales/de.json'), true);
+        $subject = $translations['mailings']['subjects'][$mailIdentifier];
+
+        switch ($mailIdentifier) {
+            case MailType::AWARD_RECEIVED->value:
+                $subject = sprintf($subject, $parameters['awarded']->getAward()->getTitle());
+                break;
+            case MailType::BADGE_RECEIVED->value:
+                $subject = sprintf($subject, $parameters['badged']->getBadge()->getTitle());
+                break;
+            case MailType::NEW_CAMPAIGN->value:
+            case MailType::CAMPAIGN_CLOSED->value:
+                $subject = sprintf($subject, $parameters['campaign']->getTitle());
+                break;
+            default:
+                $subject = '';
+                break;
+        }
+
+        return $subject;
+    }
+
+    protected function prepareMail(string $identifier, User $receiver, array $parameters = []): TemplatedEmail
+    {
         $parameters['receiver'] = $receiver;
-        //@todo Woher nehmen wir das Subject
-        $parameters['subject'] = '???';
+        $parameters['domain'] = $_SERVER['HTTP_ORIGIN'];
+
+        $subject = $this->getSubject($identifier,$parameters);
 
         $email = (new TemplatedEmail())
             ->from($this->fromMail)
-            ->to(new Address($receiver->getEmail(),'Creative Museum'))
-            ->subject($parameters['subject'])
+            ->to(new Address($receiver->getEmail(), 'Creative Museum'))
+            ->subject($subject)
             ->htmlTemplate("emails/{$identifier}.html.twig")
             ->context($parameters);
 
-        //@todo system mails beachten
+        return $email;
+    }
 
+    protected function send(TemplatedEmail $email,)
+    {
         try {
-            if ($receiver->getNotificationSettings() !== NotificationType::NONE){
-                $this->mailer->send($email);
-            }
-        } catch (TransportExceptionInterface $e){
-            //@todo evt loggen ?
+            $this->mailer->send($email);
+        } catch (TransportExceptionInterface $e) {
+            $this->logger->error($e->getMessage());
         }
     }
 }

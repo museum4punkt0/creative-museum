@@ -17,5 +17,7 @@ enum NotificationType: string
 
     case PLATFORM = 'platform';
 
+    case EDITOR = "editor";
+
     case ALL = 'all';
 }

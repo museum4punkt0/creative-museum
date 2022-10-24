@@ -331,6 +331,16 @@
       }
     }
   },
+  "mailings": {
+    "subjects": {
+      "award_received": "Award %s erhalten",
+      "badge_received": "Badge %s erhalten",
+      "new_campaign": "Kampagne %s startet",
+      "campaign_closed": "Kampagne %s beendet",
+      "post_commented": "Neuer Kommentar",
+      "system": "Du hast eine Nachricht vom Creative Museum erhalten"
+    }
+  },
   "today": "Heute",
   "notifications": {
     "1662032613": {

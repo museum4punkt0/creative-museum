@@ -1,4 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p></p>
+    <p>Hallo {{ receiver.firstName }},</p>
+    <p>die Kampagne {{ campaign.title }} wurde gerade beendet und die Resultate sind da! Schau dir auf der Bestenliste an, wer die meisten Awards verschenkt hat: <a href="{{ domain }}/campaigns/{{ campaign.id }}">hier</a></p>
+    <p>
+        Bis gleich im Creative Museum!<br />
+        <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>
+    </p>
 {% endblock %}

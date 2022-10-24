@@ -90,6 +90,10 @@ class Notification
     #[Groups(['notifications:read'])]
     private $awardWinner;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['notifications:read', 'notification:write'])]
+    private ?bool $editorNotification = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -236,6 +240,18 @@ class Notification
     public function setAwardWinner(?User $awardWinner): self
     {
         $this->awardWinner = $awardWinner;
+
+        return $this;
+    }
+
+    public function isEditorNotification(): ?bool
+    {
+        return $this->editorNotification;
+    }
+
+    public function setEditorNotification(?bool $editorNotification): self
+    {
+        $this->editorNotification = $editorNotification;
 
         return $this;
     }

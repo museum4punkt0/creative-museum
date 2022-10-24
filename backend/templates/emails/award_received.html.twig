@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p>{{ awarded.winner.username }}</p>
+    <p>Hallo {{ receiver.fullName}},</p>
+    <p>Herzlichen Glückwunsch!</p>
+    <p>
+        {{ awarded.giver.username }} hat dir den Award {{ awarded.award.title }} aus der Kampagne {{ awarded.award.campaign.title }} geschenkt.
+        Schau dir deinen neuen Award hier an: <a href="{{ domain }}/user/{{ awarded.winner.uuid }}">hier</a>.
+    </p>
+
+    <p>
+        Bis gleich im Creative Museum!<br />
+       <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>
+    </p>
 {% endblock %}
 

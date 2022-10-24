@@ -11,8 +11,10 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Post;
+use App\Enum\MailType;
 use App\Enum\PointsReceivedType;
 use App\Event\CampaignPointsReceivedEvent;
+use App\Service\MailService;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -22,13 +24,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class PostCreatedSubscriber implements EventSubscriberInterface
 {
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-    }
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly MailService $mailService
+    ) {}
 
     /**
      * @return array[]
@@ -56,6 +55,9 @@ class PostCreatedSubscriber implements EventSubscriberInterface
                 $post->getAuthor()->getId(),
                 PointsReceivedType::COMMENT_CREATED->value
             );
+            if ($post->getAuthor() !== $post->getParent()->getAuthor()){
+                $this->mailService->sendMail(MailType::POST_COMMENTED->value,$post->getParent()->getAuthor(),['comment' => $post]);
+            }
         } else {
             $postPointsEvent = new CampaignPointsReceivedEvent(
                 $post->getCampaign()->getId(),

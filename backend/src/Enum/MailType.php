@@ -12,5 +12,7 @@ enum MailType: string
 
     case CAMPAIGN_CLOSED = 'campaign_closed';
 
+    case POST_COMMENTED = 'post_commented';
+
     case SYSTEM = 'system';
 }
