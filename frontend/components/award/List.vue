@@ -30,9 +30,7 @@
         }}
       </div>
       <AwardItem
-        v-for="(award, key) in unavailableAwards"
-        :key="key"
-        :award="award"
+        :award="unavailableAwards[0]"
       />
     </div>
     <div v-if="giftedAwards.length" class="mb-6">
@@ -152,7 +150,7 @@ export default defineComponent({
       giftedAwards.value = []
       receivedAwards.value = []
 
-      if (!$auth.loggedIn || !props.user) {
+      if (!$auth.loggedIn && !props.user) {
         await fetchAwards(props.campaign ? props.campaign.id : null).then(
           function (response) {
             unavailableAwards.value = response
