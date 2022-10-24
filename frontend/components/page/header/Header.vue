@@ -13,7 +13,7 @@
       </NuxtLink>
       <button
         v-show="isAddButtonVisible"
-        class="add-btn absolute left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6"
+        class="add-btn absolute left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6 text-white focus:outline-none focus-visible:border-$highlight focus-visible:text-$highlight"
         :class="isAddVisible ? 'visible' : ''"
         @click.prevent="
           isAddVisible = !isAddVisible
@@ -40,7 +40,7 @@
             :class="isMenuVisible ? '-mt-0.5' : ''"
           >
             <span
-              class="block h-px bg-white transition-all duration-300 group-focus:bg-$highlight"
+              class="block h-px bg-white transition-all duration-300 group-focus-visible:bg-$highlight"
               :class="
                 isMenuVisible
                   ? 'transform-gpu rotate-45 origin-center translate-y-1.5 scale-x-75'
@@ -48,13 +48,13 @@
               "
             />
             <span
-              class="block h-px bg-white transform-gpu transition-all duration-500 group-focus:bg-$highlight"
+              class="block h-px bg-white transform-gpu transition-all duration-500 group-focus-visible:bg-$highlight"
               :class="
                 isMenuVisible ? 'transform-gpu translate-x-10 opacity-0' : ''
               "
             />
             <span
-              class="block h-px bg-white tranform-gpu transition-all duration-300 group-focus:bg-$highlight"
+              class="block h-px bg-white tranform-gpu transition-all duration-300 group-focus-visible:bg-$highlight"
               :class="
                 isMenuVisible
                   ? 'transform-gpu -rotate-45 origin-center -translate-y-1 scale-x-75'

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div
-      class="cursor-pointer text-sm"
+    <button
+      class="cursor-pointer text-sm focus:outline-none"
       :class="post.type !== 'playlist' ? 'highlight-text' : ''"
     >
       <ArrowIcon
@@ -32,7 +32,7 @@
         @click.prevent="showCommentForm = !showCommentForm"
         >{{ $t('post.postComment') }}</span
       >
-    </div>
+    </button>
 
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
       <div v-if="comments && showComments">

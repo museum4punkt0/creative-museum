@@ -12,14 +12,19 @@
         <p class="text-$highlight text-sm">
 
           <span v-if="created">
-          {{
-            $dayjs.duration($dayjs().diff($dayjs(created))).days() > 2
-              ? $dayjs(created).format( $t('dateFormat') )
-              : $dayjs(created).locale($i18n.locale).fromNow()
-          }}
             {{
-              $auth.user.username === giver ? ` ${$t('awards.to')} ${winner}` : ` ${$t('awards.from')} ${giver}`
+              $dayjs.duration($dayjs().diff($dayjs(created))).days() > 2
+                ? $dayjs(created).format( $t('dateFormat') )
+                : $dayjs(created).locale($i18n.locale).fromNow()
             }}
+            <template v-if="$auth.loggedIn">
+              {{
+                $auth.user.username === giver ? ` ${$t('awards.to')} ${winner}` : ` ${$t('awards.from')} ${giver}`
+              }}
+            </template>
+            <template v-else>
+              {{ $t('awards.to') }} {{ winner }}
+            </template>
           </span>
           <span v-else>{{ award.price.toLocaleString() + ' ' + $t('points') }}</span>
         </p>

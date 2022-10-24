@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="localePath('/campaigns/' + campaign.id)"
-    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none"
+    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none focus:outline-none focus-visible:(shadow-lg shadow-black/75)"
     :style="`background-color: ${campaign.color}`"
   >
     <article class="flex flex-col h-full" :class="`text-${textColor}`">

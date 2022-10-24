@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-4 h-5">
+  <div class="relative w-5 h-5">
     <span
       class="absolute left-1/2 top-0 block h-0.75 w-0.75 rounded-full"
       :class="`bg-${textColor}`"

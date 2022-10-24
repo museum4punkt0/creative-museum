@@ -3,22 +3,22 @@
     <span class="flex flex-row items-center text-sm">
       <LibraryIcon
         v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
-        class="mr-2 w-auto cursor-pointer"
+        class="mr-2 w-auto cursor-pointer focus:outline-none"
         :class="
           myVote === 'up' && post.type != 'playlist'
-            ? 'highlight-text'
-            : 'fill-white'
+            ? 'text-$highlight focus-visible:text-white'
+            : 'fill-white focus-visible:text-$highlight'
         "
         @click.prevent="doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
         v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
-        class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer"
+        class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer focus:outline-none"
         :class="
           myVote === 'down' && post.type != 'playlist'
-            ? 'highlight-text'
-            : 'fill-white'
+            ? 'text-$highlight focus-visible:text-white'
+            : 'fill-white focus-visible:text-$highlight'
         "
         @click.prevent="doVotePost('down')"
       />
@@ -29,7 +29,7 @@
         post.type === 'playlist'
           ? `btn-text-${textColor}`
           : post.rated
-          ? 'text-$highlight border-$highlight'
+          ? 'text-$highlight border-$highlight focus-visible:(!text-white !border-white)'
           : ''
       "
       @click.prevent="triggerFeedback()"

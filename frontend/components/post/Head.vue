@@ -7,13 +7,13 @@
             ? localePath('/user/profile')
             : localePath(`/user/${post.author.uuid}`)
         "
-        class="flex flex-row"
+        class="flex flex-row focus:outline-none group"
       >
-        <UserProfileImage :user="post.author" class="mr-4" />
+        <UserProfileImage :user="post.author" class="mr-4" :class="post.type !== 'playlist' ? 'group-focus-visible:(ring-$highlight ring-2)' :`group-focus-visible:(ring-${textColor} ring-2)`" />
         <div class="flex flex-col">
-          <span class="text-lg">{{ $userName(post.author) }}</span>
+          <span class="text-lg" :class="post.type !== 'playlist' ? 'group-focus-visible:(text-$highlight)' : `group-focus-visible:(text-${textColor})`">{{ $userName(post.author) }}</span>
           <span
-            :class="post.type !== 'playlist' ? 'highlight-text' : ''"
+            :class="post.type !== 'playlist' ? 'text-$highlight' : ''"
             class="text-sm mt-1"
             >{{
               $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
@@ -23,12 +23,12 @@
           >
         </div>
       </NuxtLink>
-      <div @click.prevent="onShowAdditionalOptions">
+      <button class="focus:none" @click.prevent="onShowAdditionalOptions">
         <UtilitiesThreeDots
           class="cursor-pointer"
           :text-color="post.type === 'playlist' ? textColor : 'white'"
         />
-      </div>
+      </button>
     </div>
     <transition
       enter-active-class="duration-300 ease-out -bottom-full lg:opacity-0 lg:bottom-auto"

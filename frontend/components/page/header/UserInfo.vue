@@ -4,7 +4,7 @@
       <NuxtLink
         v-if="user"
         to="/user/profile"
-        class="flex flex-row md:space-x-4 items-center"
+        class="flex flex-row md:space-x-4 items-center focus:outline-none focus-visible:text-$highlight"
       >
         <div class="relative">
           <img
