@@ -12,6 +12,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\CreateCampaignNotificationController;
+use App\Controller\CreateEditorNotificationController;
 use App\Repository\NotificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -22,6 +24,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
     order: ["created" => "DESC"],
     collectionOperations: [
         'get',
+        'post_editor' => [
+            'method' => 'POST',
+            'security' => "is_granted('ROLE_ADMIN')",
+            'path' => '/notifications/editor',
+            'controller' => CreateEditorNotificationController::class
+        ]
     ],
     normalizationContext: ['groups' => ['notifications:read']],
     denormalizationContext: ['groups' => ['notification:write']],
