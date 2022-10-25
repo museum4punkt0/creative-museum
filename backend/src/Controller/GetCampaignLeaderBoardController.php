@@ -28,7 +28,7 @@ class GetCampaignLeaderBoardController extends AbstractController
         $campaign = $this->campaignRepository->find($campaignId);
         $campaignLeaders = [];
 
-        if ($campaign instanceof Campaign && !$campaign->getActive() && $campaign->getClosed()){
+        if ($campaign instanceof Campaign && $campaign->getClosed()){
             $campaignLeaders = $this->campaignMemberRepository->getCampaignLeaders($campaignId);
         }
 
