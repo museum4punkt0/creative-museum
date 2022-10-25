@@ -18,6 +18,13 @@ if (TYPO3_MODE === 'BE') {
         'postOverview',
         'postDetail',
         'deletePost',
+        'notificationIndex',
+        'notificationGlobalCreate',
+        'notificationGlobalSend',
+        'notificationCampaignCreate',
+        'notificationCampaignSend',
+        'notificationUserCreate',
+        'notificationUserSend'
     ];
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(

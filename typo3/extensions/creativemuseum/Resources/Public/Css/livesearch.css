@@ -1,0 +1,12 @@
+.cm-usersearch-dropdown {
+    background-color: rgba(230,230,230,.95);
+}
+
+.cm-usersearch-dropdown .autocomplete-suggestion {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.cm-usersearch-dropdown .autocomplete-suggestion:hover {
+    background-color: rgba(0, 0, 0, .05);
+}

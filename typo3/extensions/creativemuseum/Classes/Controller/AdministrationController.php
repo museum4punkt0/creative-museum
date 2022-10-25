@@ -15,6 +15,7 @@ use JWIED\Creativemuseum\Domain\Model\Dto\UserDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\UserListFilterDto;
 use JWIED\Creativemuseum\Pagination\ApiRecordPaginator;
 use JWIED\Creativemuseum\Service\CampaignService;
+use JWIED\Creativemuseum\Service\NotificationService;
 use JWIED\Creativemuseum\Service\PostService;
 use JWIED\Creativemuseum\Service\UserService;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
@@ -32,7 +33,6 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AdministrationController extends ActionController
@@ -63,6 +63,11 @@ class AdministrationController extends ActionController
     protected $userService;
 
     /**
+     * @var NotificationService
+     */
+    protected $notificationService;
+
+    /**
      * @var IconFactory
      */
     protected $iconFactory;
@@ -77,6 +82,7 @@ class AdministrationController extends ActionController
         CampaignService $campaignService,
         PostService $postService,
         UserService $userService,
+        NotificationService $notificationService,
         IconFactory $iconFactory,
         AssetCollector $assetCollector
     ) {
@@ -84,6 +90,7 @@ class AdministrationController extends ActionController
         $this->campaignService = $campaignService;
         $this->postService = $postService;
         $this->userService = $userService;
+        $this->notificationService = $notificationService;
         $this->iconFactory = $iconFactory;
         $this->assetCollector = $assetCollector;
 
@@ -110,6 +117,11 @@ class AdministrationController extends ActionController
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/DocumentSaveActions');
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/DateTimePicker');
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/RemoveCampaignModal');
+
+            if ($this->actionMethodName === 'notificationUserCreateAction') {
+                $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/UserSearchAutocomplete');
+                $pageRenderer->addCssFile('EXT:creativemuseum/Resources/Public/Css/livesearch.css');
+            }
 
             if (in_array($this->actionMethodName, ['newCampaignAction', 'editCampaignAction'])) {
                 $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/CampaignHandling');
@@ -213,6 +225,48 @@ class AdministrationController extends ActionController
     {
         $campaigns = $this->campaignService->getCampaigns();
         $this->view->assign('campaigns', $campaigns);
+    }
+
+    public function notificationIndexAction()
+    {
+
+    }
+
+    public function notificationGlobalCreateAction()
+    {
+
+    }
+
+    public function notificationGlobalSendAction(string $message)
+    {
+        $success = $this->notificationService->sendGlobalNotification($message);
+        $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
+        $this->redirect('notificationIndex');
+    }
+
+    public function notificationCampaignCreateAction()
+    {
+        $campaigns = $this->campaignService->getCampaigns();
+        $this->view->assign('campaigns', $campaigns);
+    }
+
+    public function notificationCampaignSendAction(int $campaign, string $message)
+    {
+        $success = $this->notificationService->sendCampaignNotification($campaign, $message);
+        $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
+        $this->redirect('notificationIndex');
+    }
+
+    public function notificationUserCreateAction()
+    {
+
+    }
+
+    public function notificationUserSendAction(string $user, string $message)
+    {
+        $success = $this->notificationService->sendUserNotification($user, $message);
+        $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
+        $this->redirect('notificationIndex');
     }
 
     /**
@@ -527,7 +581,7 @@ class AdministrationController extends ActionController
         $menu = $menuRegistry->makeMenu();
         $menu->setIdentifier('creativeMuseumModuleMenu');
 
-        $menuItems = ['Administration' => ['index', 'userOverview', 'postOverview']];
+        $menuItems = ['Administration' => ['index', 'userOverview', 'postOverview', 'notificationIndex']];
 
         foreach ($menuItems as $controller => $actions) {
             $underscoredControllerName = GeneralUtility::camelCaseToLowerCaseUnderscored($controller);

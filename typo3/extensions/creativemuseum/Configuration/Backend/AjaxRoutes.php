@@ -18,4 +18,9 @@ return [
         'referrer' => 'required',
         'target' => Controller\UploadController::class . '::uploadAction'
     ],
+    'cm_ajax_usersearch' => [
+        'path' => '/cm_ajax_usersearch',
+        'referrer' => 'required',
+        'target' => Controller\AjaxUserSearchController::class . '::searchAction'
+    ]
 ];

@@ -1,0 +1,75 @@
+<h1>Benachrichtigungszentrale</h1>
+
+<div class="card-container">
+    <div class="card card-size-fixed-small">
+        <div class="card-header">
+            <div class="card-icon">
+                <core:icon identifier="actions-globe" size="large" />
+            </div>
+            <div class="card-header-body">
+                <h3 class="card-title">Global</h3>
+                <span class="card-subtitle">
+                    Systemweite Benachrichtigung
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                Verschickt eine Benachrichtigung an alle Creative Museum Nutzer.
+            </div>
+        </div>
+        <div class="card-footer">
+            <f:link.action action="notificationGlobalCreate" class="btn btn-primary">
+                Benachrichtigung senden
+            </f:link.action>
+        </div>
+    </div>
+
+    <div class="card card-size-fixed-small">
+        <div class="card-header">
+            <div class="card-icon">
+                <core:icon identifier="actions-image" size="large" />
+            </div>
+            <div class="card-header-body">
+                <h3 class="card-title">Kampagne</h3>
+                <span class="card-subtitle">
+                    Kampagnen Benachrichtigung
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                Verschickt eine Benachrichtigung an alle aktiven Nutzer einer bestimmten Kampagne.
+            </div>
+        </div>
+        <div class="card-footer">
+            <f:link.action action="notificationCampaignCreate" class="btn btn-primary">
+                Kampagnennutzer benachrichtigen
+            </f:link.action>
+        </div>
+    </div>
+
+    <div class="card card-size-fixed-small">
+        <div class="card-header">
+            <div class="card-icon">
+                <core:icon identifier="actions-user" size="large" />
+            </div>
+            <div class="card-header-body">
+                <h3 class="card-title">User</h3>
+                <span class="card-subtitle">
+                    User Benachrichtigung
+                </span>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                Verschickt eine Benachrichtigung an einen einzelnen Nutzer des Creative Museum.
+            </div>
+        </div>
+        <div class="card-footer">
+            <f:link.action action="notificationUserCreate" class="btn btn-primary">
+                Nutzer benachrichtigen
+            </f:link.action>
+        </div>
+    </div>
+</div>
