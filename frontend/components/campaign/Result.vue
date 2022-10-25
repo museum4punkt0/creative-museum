@@ -53,7 +53,7 @@
                       ? 'text-white'
                       : ''
                   "
-                  >{{ campaignResultItem.rewardPoints }} Awards</span
+                  >{{ campaignResultItem.rewardPoints }} {{ campaignResultItem.rewardPoints === 1 ? 'Award' : 'Awards' }}</span
                 >
               </div>
             </div>
