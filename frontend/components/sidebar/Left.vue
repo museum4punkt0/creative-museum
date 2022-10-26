@@ -8,7 +8,7 @@
                 firstName: $auth.user.firstName,
               })
             : userData && !userData.deleted
-            ? userData.firstname + ' ' + userData.lastname
+            ? $t('user.profile.headline')
             : ''
         }}
       </button>

@@ -213,6 +213,7 @@
         "awards": "Awards",
         "notifications": "Neueste Mitteilungen"
       },
+      "headline": "Profil",
       "self": {
         "headline": "Guten Tag {firstName}",
         "badges": {
