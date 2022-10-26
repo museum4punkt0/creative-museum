@@ -20,7 +20,7 @@
         </a>
       </client-only>
     </div>
-    <div class="mb-10 lg:mb-0">
+    <nav class="mb-10 lg:mb-0" role="navigation">
       <NuxtLink
         v-if="$auth.loggedIn"
         to="/user/profile"
@@ -49,7 +49,7 @@
         @click.native="closeMenu"
         >{{ $t('navigation.profile.invite') }}</NuxtLink
       >
-    </div>
+    </nav>
     <div class="mb-10 lg:0">
       <p class="text-lg font-bold leading-loose mb-4">
         {{ $t('navigation.museum.header') }}

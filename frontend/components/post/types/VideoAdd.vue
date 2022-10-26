@@ -18,6 +18,7 @@
           ref="upload"
           v-model="videos"
           accept="video/*"
+          aria-required="true"
           :class="videos.length ? '!hidden': 'block'"
           @input-file="inputFile"
           @input-filter="inputFilter"
@@ -79,6 +80,7 @@
           v-model="postBody"
           type="text"
           class="input-text flex-grow pr-21"
+          aria-required="true"
           :placeholder="$t('post.placeholder.body')"
           :maxlength="1000"
         ></textarea>

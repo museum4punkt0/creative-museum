@@ -17,6 +17,7 @@
           ref="upload"
           v-model="files"
           accept="image/png,image/gif,image/jpeg"
+          aria-required="true"
           :class="files.length ? '!hidden': 'block'"
           @input-file="inputFile"
           @input-filter="inputFilter"
@@ -94,6 +95,7 @@
           v-model="postBody"
           type="text"
           class="input-text flex-grow pr-21"
+          aria-required="true"
           :placeholder="$t('post.placeholder.body')"
           :maxlength="1000"
         ></textarea>

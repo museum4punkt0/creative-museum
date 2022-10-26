@@ -2,7 +2,12 @@
   <div>
     <button
       class="cursor-pointer text-sm focus:outline-none"
-      :class="post.type !== 'playlist' ? 'highlight-text' : ''"
+      :class="post.type !== 'playlist' ? 'text-$highlight focus-visible:text-white' : ''"
+      @click.prevent="
+        !showComments
+          ? fetchComments()
+          : (showComments = showCommentForm = false)
+      "
     >
       <ArrowIcon
         v-if="post.campaign.active || !post.campaign.closed || post.commentCount > 0"
@@ -14,11 +19,6 @@
       <span
         v-if="post.comments && post.commentCount > 0"
         class="inline-block mt-4"
-        @click.prevent="
-          !showComments
-            ? fetchComments()
-            : (showComments = showCommentForm = false)
-        "
       >
         {{
           !showComments
@@ -56,7 +56,7 @@
             @click.prevent="showLoginIfNotLoggedIn"
           ></textarea>
           <button
-            class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 z-100"
+            class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 z-100 focus:outline-none focus-visible:text-white"
             @click.prevent="submitComment"
           >
             <ArrowIcon />

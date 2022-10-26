@@ -4,7 +4,7 @@
     class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none focus:outline-none focus-visible:(shadow-lg shadow-black/75)"
     :style="`background-color: ${campaign.color}`"
   >
-    <article class="flex flex-col h-full" :class="`text-${textColor}`">
+    <article class="flex flex-col h-full" :class="`text-${textColor}`" role="article">
       <header>
         <div class="text-right">
           <span class="border border-current rounded-full py-1 px-2">
