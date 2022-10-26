@@ -74,6 +74,7 @@ import {
   useStore,
   watch,
   onMounted,
+  onUnmounted,
 } from '@nuxtjs/composition-api'
 
 import { campaignApi } from '@/api/campaign'
@@ -91,6 +92,8 @@ export default defineComponent({
     const newPostsAvailable = ref(false)
     const campaign = ref(null)
     const campaignResult = ref(null)
+
+    let refetchInterval = null
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
@@ -144,15 +147,17 @@ export default defineComponent({
     }
 
     async function refetchPosts() {
-      newPosts.value = await fetchPostsByCampaign(
-        route.value.params.id,
-        store.state.currentSorting,
-        store.state.currentSortingDirection,
-        1
-      )
+      if (route.value.params.id) {
+        newPosts.value = await fetchPostsByCampaign(
+          route.value.params.id,
+          store.state.currentSorting,
+          store.state.currentSortingDirection,
+          1
+        )
 
-      if (newPosts.value[0].id !== posts.value[0].id) {
-        newPostsAvailable.value = true
+        if (newPosts.value[0].id !== posts.value[0].id) {
+          newPostsAvailable.value = true
+        }
       }
     }
 
@@ -170,9 +175,13 @@ export default defineComponent({
     onMounted(async () => {
       await loadCampaign()
 
-      setInterval(() => {
+      refetchInterval = setInterval(() => {
         refetchPosts()
       }, 2500)
+    })
+
+    onUnmounted(function() {
+      clearInterval(refetchInterval)
     })
 
     return {
