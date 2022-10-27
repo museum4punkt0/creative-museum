@@ -64,7 +64,6 @@ class CampaignMemberRepository extends ServiceEntityRepository
                 $qb->expr()->eq('members.campaign', $campaignId)
             )
             ->orderBy('members.rewardPoints', 'DESC')
-            ->setMaxResults(5)
             ->getQuery()
             ->execute();
     }
