@@ -4,7 +4,7 @@ export const badgeApi = () => {
   const { $api, $auth } = useContext()
   const store = useStore()
 
-  const fetchBadges = async (campaign) => {
+  async function fetchBadges(campaign) {
     let response = null
 
     if (campaign) {
@@ -21,7 +21,7 @@ export const badgeApi = () => {
     return response
   }
 
-  const fetchBadged = async (user) => {
+  async function fetchBadged(user) {
     return await $api.get(`badgeds?user=${user ? user.id : $auth.user.id}`)
   }
 

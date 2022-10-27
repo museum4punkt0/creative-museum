@@ -4,19 +4,19 @@ export const postApi = () => {
   const { $api, $auth } = useContext()
   const store = useStore()
 
-  const fetchPost = async (postId) => {
+  async function fetchPost(postId) {
     return await $api.get(`posts/${postId}`)
   }
 
-  const fetchUserPosts = async (userId, page) => {
+  async function fetchUserPosts(userId, page) {
     return await $api.get(`posts?author=${userId}&page=${page}`)
   }
 
-  const fetchUserBookmarks = async () => {
+  async function fetchUserBookmarks() {
     return await $api.get(`users/${$auth.user.uuid}/bookmarks`)
   }
 
-  const createTextPost = async (campaignId, title, body) => {
+  async function createTextPost(campaignId, title, body) {
     const response = await $api.post('posts', {
       type: 'text',
       author: `/v1/users/${$auth.user.uuid}`,
@@ -32,7 +32,7 @@ export const postApi = () => {
     return response
   }
 
-  const createImagePost = async (campaignId, title, body, image, altText) => {
+  async function createImagePost(campaignId, title, body, image, altText) {
     const form = new FormData()
     form.append('file', image.file)
     form.append('description', altText)
@@ -56,7 +56,7 @@ export const postApi = () => {
     return postResponse
   }
 
-  const createVideoPost = async (campaignId, title, body, video, altText) => {
+  async function createVideoPost(campaignId, title, body, video, altText) {
     const form = new FormData()
     form.append('file', video.file)
     form.append('description', altText)
@@ -80,7 +80,7 @@ export const postApi = () => {
     return postResponse
   }
 
-  const createPlaylistPost = async (campaignId, playlistId) => {
+  async function createPlaylistPost(campaignId, playlistId) {
     const response = await $api.post('posts', {
       type: 'playlist',
       author: `/v1/users/${$auth.user.uuid}`,
@@ -94,7 +94,7 @@ export const postApi = () => {
     return response
   }
 
-  const createPollPost = async (campaignId, contents) => {
+  async function createPollPost(campaignId, contents) {
     const pollOptions = []
 
     for (const option of contents.options) {
@@ -116,14 +116,14 @@ export const postApi = () => {
     return response
   }
 
-  const votePollOption = async (pollOptionId) => {
+  async function votePollOption(pollOptionId) {
     return await $api.post('poll_option_choices', {
       pollOption: `/v1/poll_options/${pollOptionId}`,
       user: `/v1/users/${$auth.user.uuid}`,
     })
   }
 
-  const fetchPostsByCampaign = async (campaignId, sorting, direction, page) => {
+  async function fetchPostsByCampaign(campaignId, sorting, direction, page) {
     let orderParams = ''
     const directionKey = direction === 'asc' ? 'asc' : 'desc'
 
@@ -148,15 +148,15 @@ export const postApi = () => {
     )
   }
 
-  const fetchPostsByPost = async (postId) => {
+  async function fetchPostsByPost(postId) {
     return await $api.get(`posts/${postId}/comments?order[created]=asc`)
   }
 
-  const toggleBookmark = async (postId) => {
+  async function toggleBookmark(postId) {
     return await $api.get(`posts/${postId}/bookmark`)
   }
 
-  const votePost = async (postId, direction) => {
+  async function votePost(postId, direction) {
     const response = await $api.post(`votes`, {
       post: `/v1/posts/${postId}`,
       direction,
@@ -169,11 +169,11 @@ export const postApi = () => {
     return response
   }
 
-  const addToPlaylist = async (playlistId, postId) => {
+  async function addToPlaylist(playlistId, postId) {
     return await $api.get(`playlists/${playlistId}/add-post/${postId}`)
   }
 
-  const createPlaylistWithPost = async (postId, title) => {
+  async function createPlaylistWithPost(postId, title) {
     return await $api.post(`playlists`, {
       creator: `/v1/users/${$auth.user.uuid}`,
       title,
@@ -181,7 +181,7 @@ export const postApi = () => {
     })
   }
 
-  const createAudioPost = async (campaignId, title, audio, image) => {
+  async function createAudioPost(campaignId, title, audio, image) {
     const postBody = {
       author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
@@ -216,7 +216,7 @@ export const postApi = () => {
     return response
   }
 
-  const submitCommentByPost = async (postId, body, campaignId) => {
+  async function submitCommentByPost(postId, body, campaignId) {
     const response = await $api.post(`posts/${postId}/comments`, {
       author: `/v1/users/${$auth.user.uuid}`,
       body,
@@ -230,8 +230,15 @@ export const postApi = () => {
     return response
   }
 
-  const deletePostById = async (postId) => {
+  async function deletePostById(postId) {
     return await $api.delete(`posts/${postId}`)
+  }
+
+  async function reportPostById(postId) {
+    const res = await $api.patch(`posts/${postId}`, {
+      reported: true
+    })
+    return res
   }
 
   return {
@@ -253,5 +260,6 @@ export const postApi = () => {
     fetchUserPosts,
     fetchUserBookmarks,
     deletePostById,
+    reportPostById
   }
 }

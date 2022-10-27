@@ -172,7 +172,13 @@
       },
       "delete": {
         "button": "Beitrag löschen",
-        "confirmation": "Beitrag wirklich löschen?"
+        "headline": "Beitrag wirklich löschen?",
+        "confirmation": "Bestätige bitte die Beitragslöschung."
+      },
+      "report": {
+        "button": "Beitrag melden",
+        "headline": "Beitrag wirklich melden?",
+        "confirmation": "Bestätige bitte, dass der Beitrag gegen die Richtlinien des Creative Museum verstößt und du diesen an die Redaktion melden möchtest."
       },
       "shareLink": {
         "button": "Beitrag teilen"

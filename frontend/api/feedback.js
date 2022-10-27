@@ -4,11 +4,11 @@ export const feedbackApi = () => {
   const { $api, $auth } = useContext()
   const store = useStore()
 
-  const getOptions = async (campaignId) => {
+  async function getOptions(campaignId) {
     return await $api.get(`campaign_feedback_options?campaign=${campaignId}`)
   }
 
-  const selectOption = async (postId, optionId) => {
+  async function selectOption(postId, optionId) {
     const response = await $api.post(`post_feedbacks`, {
       user: `v1/users/${$auth.user.uuid}`,
       post: `v1/posts/${postId}`,
@@ -21,7 +21,7 @@ export const feedbackApi = () => {
     return response
   }
 
-  const getFeedbackResults = async (postId) => {
+  async function getFeedbackResults(postId) {
     return await $api.get(`posts/${postId}/feedback_results`)
   }
 

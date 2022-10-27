@@ -3,7 +3,7 @@ import { useContext } from '@nuxtjs/composition-api'
 export const notificationApi = () => {
   const { $auth, $api } = useContext()
 
-  const fetchNotifications = async (campaign) => {
+  async function fetchNotifications(campaign) {
     if (campaign) {
       return await $api.get(
         `notifications?campaign=${campaign}&receiver=${$auth.user.id}`
@@ -13,11 +13,11 @@ export const notificationApi = () => {
     return await $api.get(`notifications?receiver=${$auth.user.id}`)
   }
 
-  const fetchUnviewedNotifications = async () => {
+  async function fetchUnviewedNotifications() {
     return await $api.get(`notifications?viewed=0&receiver=${$auth.user.id}`)
   }
 
-  const updateNotificationAsViewed = async (notificationId) => {
+  async function updateNotificationAsViewed(notificationId) {
     return await $api.patch(`notifications/${notificationId}`, {
       receiver: `/v1/users/${$auth.user.uuid}`,
       viewed: true,

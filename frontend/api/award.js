@@ -4,7 +4,7 @@ export const awardApi = () => {
   const { $api, $auth } = useContext()
   const store = useStore()
 
-  const fetchAwards = async (campaign) => {
+  async function fetchAwards(campaign) {
     let response = null
 
     if (campaign) {
@@ -18,17 +18,17 @@ export const awardApi = () => {
     return response
   }
 
-  const fetchAvailableAwards = async (campaign) => {
+  async function fetchAvailableAwards(campaign) {
     const response = await $api.get(`campaigns/${campaign}/awards/available`)
     return response
   }
 
-  const fetchAvailableSoonAwards = async (campaign) => {
+  async function fetchAvailableSoonAwards(campaign) {
     const response = await $api.get(`campaigns/${campaign}/awards/availablesoon`)
     return response
   }
 
-  const fetchAwarded = async (campaign, user) => {
+  async function fetchAwarded(campaign, user) {
     let campaignFilterString = ''
     if(campaign){
       campaignFilterString = `&award.campaign=${campaign}`
@@ -37,7 +37,7 @@ export const awardApi = () => {
     return await $api.get(`awardeds?winner=${user ? user.id : $auth.user.id}${campaignFilterString}`)
   }
 
-  const fetchGiftedAwards = async (campaign, user) => {
+  async function fetchGiftedAwards(campaign, user) {
     let campaignFilterString = ''
     if(campaign){
       campaignFilterString = `&award.campaign=${campaign}`
@@ -46,7 +46,7 @@ export const awardApi = () => {
     return await $api.get(`awardeds?giver=${user ? user.id : $auth.user.id}${campaignFilterString}`)
   }
 
-  const awardUser = async (awardId, userId) => {
+  async function awardUser(awardId, userId) {
     const response = await $api.post(`awardeds`, {
       giver: `/v1/users/${$auth.user.uuid}`,
       winner: `/v1/users/${userId}`,

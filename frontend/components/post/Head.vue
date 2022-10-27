@@ -50,7 +50,7 @@
             <li class="my-6">
               <button
                 v-if="!post.bookmarked"
-                @click="addOrRemoveBookmark(post.id)"
+                @click.prevent="addOrRemoveBookmark(post.id)"
               >
                 {{ $t('post.actions.addBookmark') }}
               </button>
@@ -58,7 +58,7 @@
             <li class="my-6">
               <button
                 v-if="post.bookmarked"
-                @click="addOrRemoveBookmark(post.id)"
+                @click.prevent="addOrRemoveBookmark(post.id)"
               >
                 {{ $t('post.actions.removeBookmark') }}
               </button>
@@ -66,7 +66,7 @@
             <li class="my-6">
               <button
                 class="block btn-right"
-                @click="openAwardAssignModal"
+                @click.prevent="openAdditionalPage('awardAssign')"
               >
                 {{ $t('post.actions.assignAward') }}
               </button>
@@ -74,9 +74,21 @@
             <li class="my-6">
               <button
                 class="block btn-right"
-                @click="openPlaylistSelectionModal"
+                @click.prevent="openAdditionalPage('playlistSelection')"
               >
                 {{ $t('post.actions.addToPlaylist') }}
+              </button>
+            </li>
+            <li
+              v-if="
+                $auth.loggedIn
+              "
+            >
+              <button
+                class="block btn-right"
+                @click.prevent="openAdditionalPage('reportDialog')"
+              >
+                {{ $t('post.actions.report.button') }}
               </button>
             </li>
             <li
@@ -87,7 +99,7 @@
               "
               class="my-6"
             >
-              <button class="block" @click="showDeleteDialog">
+              <button class="block btn-right" @click.prevent="openAdditionalPage('deleteDialog')">
                 {{ $t('post.actions.delete.button') }}
               </button>
             </li>
@@ -138,9 +150,12 @@
             class="flex flex-col flex-1 h-full justify-between"
           >
             <div>
-              <p class="m-6 text-lg">
+              <div class="page-header px-6">
+                <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.delete.headline') }}</a>
+              </div>
+              <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
                 {{ $t('post.actions.delete.confirmation') }}
-              </p>
+              </div>
             </div>
             <div class="mx-6 mb-6">
               <button
@@ -148,6 +163,36 @@
                 @click.prevent="deletePost"
               >
                 {{ $t('post.actions.delete.button') }}
+              </button>
+              <button
+                class="btn-outline w-full"
+                @click.prevent="
+                  additionalPageContent = ''
+                  additionalPage = false
+                "
+              >
+                {{ $t('close') }}
+              </button>
+            </div>
+          </div>
+          <div
+            v-if="additionalPageContent === 'reportDialog'"
+            class="flex flex-col flex-1 h-full justify-between"
+          >
+            <div>
+              <div class="page-header px-6">
+                <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.report.headline') }}</a>
+              </div>
+              <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
+                {{ $t('post.actions.report.confirmation') }}
+              </div>
+            </div>
+            <div class="mx-6 mb-6">
+              <button
+                class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
+                @click.prevent="reportPost"
+              >
+                {{ $t('post.actions.report.button') }}
               </button>
               <button
                 class="btn-outline w-full"
@@ -193,6 +238,7 @@ export default defineComponent({
       addToPlaylist,
       createPlaylistWithPost,
       deletePostById,
+      reportPostById,
     } = postApi()
 
     const store = useStore()
@@ -216,11 +262,6 @@ export default defineComponent({
       context.emit('toggleBookmarkState', postId)
     }
 
-    function openPlaylistSelectionModal() {
-      additionalPageContent.value = 'playlistSelection'
-      additionalPage.value = true
-    }
-
     function addPostToPlaylist(playlistId) {
       addToPlaylist(playlistId, props.post.id)
       additionalPage.value = false
@@ -235,8 +276,8 @@ export default defineComponent({
       })
     }
 
-    function openAwardAssignModal() {
-      additionalPageContent.value = 'awardAssign'
+    function openAdditionalPage(pageContent) {
+      additionalPageContent.value = pageContent
       additionalPage.value = true
     }
 
@@ -248,14 +289,15 @@ export default defineComponent({
       }
     }
 
-    function showDeleteDialog() {
-      additionalPageContent.value = 'deleteDialog'
-      additionalPage.value = true
-    }
-
     async function deletePost() {
       await deletePostById(props.post.id)
       context.emit('postDeleted')
+      additionalPageContent.value = ''
+      additionalPage.value = false
+    }
+
+    async function reportPost() {
+      await reportPostById(props.post.id)
       additionalPageContent.value = ''
       additionalPage.value = false
     }
@@ -296,14 +338,13 @@ export default defineComponent({
       modalType,
       shareLink,
       linkCopied,
-      showDeleteDialog,
+      openAdditionalPage,
       addOrRemoveBookmark,
-      openPlaylistSelectionModal,
       addPostToPlaylist,
       addPostToNewPlaylist,
-      openAwardAssignModal,
       onShowAdditionalOptions,
       deletePost,
+      reportPost,
       linkCopiedSuccess,
       shareLinkToSM,
       isMobile,

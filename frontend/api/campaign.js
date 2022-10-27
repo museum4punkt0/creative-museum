@@ -3,16 +3,16 @@ import { useContext } from '@nuxtjs/composition-api'
 export const campaignApi = () => {
   const { $api } = useContext()
 
-  const fetchCampaign = async (campaignId) => {
+  async function fetchCampaign(campaignId) {
     const res = await $api.get(`campaigns/${campaignId}`)
     return res
   }
 
-  const fetchCampaigns = async () => {
+  async function fetchCampaigns() {
     return await $api.get('campaigns?published=1')
   }
 
-  const fetchCampaignResult = async (campaignId) => {
+  async function fetchCampaignResult(campaignId) {
     return await $api.get(`campaigns/result/${campaignId}`)
   }
 
