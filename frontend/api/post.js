@@ -235,8 +235,12 @@ export const postApi = () => {
   }
 
   async function reportPostById(postId) {
-    const res = await $api.patch(`posts/${postId}/report`, {})
-    return res
+    const response = await $api.patch(`posts/${postId}/report`, {})
+
+    $auth.fetchUser()
+    store.dispatch('updateUser')
+
+    return response
   }
 
   return {

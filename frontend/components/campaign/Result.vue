@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-10" :style="styleAttr">
+  <div v-if="campaignResult" class="mt-10" :style="styleAttr">
     <div class="box-shadow">
       <div class="flex flex-row justify-start mb-4">
         <div class="rounded-full w-8 h-8 bg-$highlight mr-4" />
@@ -20,51 +20,36 @@
             })
           }}
         </p>
-        <ul>
-          <li
-            v-for="(campaignResultItem, key) in campaignResult"
-            :key="key"
-            class="mb-4"
-          >
-            <NuxtLink
-              :to="
-                $auth.loggedIn && campaignResultItem.user.uuid === $auth.user.uuid
-                  ? localePath('/user/profile')
-                  : localePath(`/user/${campaignResultItem.user.uuid}`)
-              "
-              class="block mb-2"
-              >{{ key + 1 }}. {{ $userName(campaignResultItem.user) }}</NuxtLink
+        <div v-if="!showAllResults">
+          <ul>
+            <li
+              v-for="(campaignResultItem, key) in campaignResulTop5"
+              :key="key"
+              class="mb-4"
             >
-            <div class="box-shadow-inset rounded-xl">
-              <div
-                class="bg-$highlight rounded-xl text-$highlight-contrast text-center"
-                :style="`width: ${Math.round(
-                  (100 / campaignResult[0].rewardPoints) *
-                    campaignResultItem.rewardPoints
-                )}%`"
-              >
-                <span
-                  class="px-3 py-0.5 inline-block whitespace-nowrap"
-                  :class="
-                    Math.round(
-                      (100 / campaignResult[0].rewardPoints) *
-                        campaignResultItem.rewardPoints
-                    ) < 30
-                      ? 'text-white'
-                      : ''
-                  "
-                  >{{ campaignResultItem.rewardPoints }} {{ campaignResultItem.rewardPoints === 1 ? 'Award' : 'Awards' }}</span
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
+              <CampaignResultItem :parent-key="key" :campaign-result-item="campaignResultItem" :reward-points="campaignResult[0].rewardPoints" />
+            </li>
+          </ul>
+          <button v-if="campaignResult.length > 5" @click.prevent="showAllResults = true">{{ $t('showMore') }}</button>
+        </div>
+        <div v-else>
+          <ul>
+            <li
+              v-for="(campaignResultItem, key) in campaignResul"
+              :key="key"
+              class="mb-4"
+            >
+              <CampaignResultItem :parent-key="key" :campaign-result-item="campaignResultItem" :reward-points="campaignResult[0].rewardPoints" />
+            </li>
+          </ul>
+          <button @click.prevent="showAllResults = false">{{ $t('showLess') }}</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
 
 export default defineComponent({
@@ -90,8 +75,14 @@ export default defineComponent({
     const bgColor = new TinyColor(props.campaignColor)
     const fgColor = new TinyColor('#FFFFFF')
 
+    const showAllResults = ref(false)
+
     const campaignContrastColor = computed(() => {
       return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+    })
+
+    const campaignResulTop5 = computed(() => {
+      return props.campaignResult.slice(0,4)
     })
 
     const styleAttr = computed(() => {
@@ -99,6 +90,8 @@ export default defineComponent({
     })
 
     return {
+      campaignResulTop5,
+      showAllResults,
       styleAttr,
     }
   },
