@@ -45,10 +45,11 @@ class PostReportedSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $method = $request->getMethod();
         $endpoint =$request->getPathInfo();
-        $test = !str_contains('report',$endpoint);
+
         if (!$post instanceof Post || Request::METHOD_PATCH !== $method || !str_contains($endpoint,'report')) {
             return;
         }
+
         $user = $this->security->getUser();
         $post->setReported(true);
 
