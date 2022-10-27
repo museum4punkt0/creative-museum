@@ -35,7 +35,7 @@ class PostReportedSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::VIEW => ['handlePostReportedNotification', EventPriorities::POST_WRITE],
+            KernelEvents::VIEW => ['handlePostReportedNotification', EventPriorities::PRE_WRITE],
         ];
     }
 
@@ -44,12 +44,13 @@ class PostReportedSubscriber implements EventSubscriberInterface
         $post = $event->getControllerResult();
         $request = $event->getRequest();
         $method = $request->getMethod();
-
-        if (!$post instanceof Post || Request::METHOD_PATCH !== $method || !$post->getReported()) {
+        $endpoint =$request->getPathInfo();
+        $test = !str_contains('report',$endpoint);
+        if (!$post instanceof Post || Request::METHOD_PATCH !== $method || !str_contains($endpoint,'report')) {
             return;
         }
-
         $user = $this->security->getUser();
+        $post->setReported(true);
 
         if (!$user instanceof User) {
             return null;

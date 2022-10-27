@@ -90,6 +90,12 @@ use Symfony\Component\Validator\Constraints as Assert;
             'controller' => SetBookmarkController::class,
             'normalization_context' => ['groups' => 'post:bookmarks:write'],
         ],
+        'report' => [
+            'method' => 'PATCH',
+            'path' => '/posts/{id}/report',
+            'requirements' => ['id' => "\d+"],
+            'normalization_context' => ['groups' => 'post:reported:patch'],
+        ],
         'patch' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)"],
         'delete' => [
             'security_post_denormalize' => "is_granted('ROLE_ADMIN') or (object.author == user and previous_object.author == user)",
@@ -214,7 +220,7 @@ class Post
     private $myFeedback = null;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['post:write', 'post:read'])]
+    #[Groups(['post:write', 'post:read', 'post:reported:patch'])]
     private $reported = false;
 
     #[ORM\ManyToOne(targetEntity: Playlist::class)]
