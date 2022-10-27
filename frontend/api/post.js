@@ -235,9 +235,7 @@ export const postApi = () => {
   }
 
   async function reportPostById(postId) {
-    const res = await $api.patch(`posts/${postId}`, {
-      reported: true
-    })
+    const res = await $api.patch(`posts/${postId}/report`, {})
     return res
   }
 
