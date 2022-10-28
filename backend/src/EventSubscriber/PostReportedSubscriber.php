@@ -12,7 +12,11 @@ namespace App\EventSubscriber;
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Enum\MailType;
 use App\Message\NotifyUserAboutReportingSuccess;
+use App\Repository\PostRepository;
+use App\Service\MailService;
+use Container4xPoWxK\getMailServiceService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
@@ -22,14 +26,14 @@ use Symfony\Component\Security\Core\Security;
 
 class PostReportedSubscriber implements EventSubscriberInterface
 {
-    private MessageBusInterface $bus;
-
-    private Security $security;
-
-    public function __construct(MessageBusInterface $bus, Security $security)
+    public function __construct
+    (
+        private readonly string $editorMail,
+        private readonly MessageBusInterface $bus,
+        private readonly Security $security,
+        private readonly MailService $mailService,
+    )
     {
-        $this->bus = $bus;
-        $this->security = $security;
     }
 
     public static function getSubscribedEvents(): array
@@ -44,9 +48,9 @@ class PostReportedSubscriber implements EventSubscriberInterface
         $post = $event->getControllerResult();
         $request = $event->getRequest();
         $method = $request->getMethod();
-        $endpoint =$request->getPathInfo();
+        $endpoint = $request->getPathInfo();
 
-        if (!$post instanceof Post || Request::METHOD_PATCH !== $method || !str_contains($endpoint,'report')) {
+        if (!$post instanceof Post || Request::METHOD_PATCH !== $method || !str_contains($endpoint, 'report')) {
             return;
         }
 
@@ -56,6 +60,11 @@ class PostReportedSubscriber implements EventSubscriberInterface
         if (!$user instanceof User) {
             return null;
         }
+
+
+        $this->mailService->sendMail(MailType::POST_REPORTED_AUTHOR->value, $post->getAuthor(), ['post' => $post]);
+        $this->mailService->sendMail(MailType::POST_REPORTED->value, $this->editorMail, ['post' => $post]);
+
 
         $notification = new NotifyUserAboutReportingSuccess($user->getId(), $post->getId());
         $this->bus->dispatch($notification);

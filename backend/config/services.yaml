@@ -20,6 +20,7 @@ parameters:
     postQuestionLength: 100
 
     fromMail: 'creativemuseum@landesmuseum.net'
+    editorMail: 'creativemuseum@landesmuseum.net'
 
 
 services:
@@ -135,3 +136,6 @@ services:
     App\Service\MailService:
         arguments:
             - '%fromMail%'
+    App\EventSubscriber\PostReportedSubscriber:
+        arguments:
+            - '%editorMail%'

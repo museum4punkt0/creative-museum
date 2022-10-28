@@ -457,6 +457,12 @@ class User implements UserInterface
         return $this;
     }
 
+    public static function createWithEmail(string $email)
+    {
+        $user = new User();
+        return $user->setEmail($email);
+    }
+
     public function getProfilePicture(): ?MediaObject
     {
         return $this->profilePicture;
