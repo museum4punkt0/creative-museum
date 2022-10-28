@@ -1,5 +1,5 @@
 <template>
-  <div v-if="badges && badges.length">
+  <div v-if="$auth.loggedIn && badges && badges.length">
     <div class="flex flex-row justify-between mb-10">
       <h2 class="text-2xl">{{ $t('user.profile.badges.headline') }}</h2>
       <button
