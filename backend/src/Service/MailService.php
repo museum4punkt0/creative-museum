@@ -24,10 +24,14 @@ class MailService
     {
     }
 
-    public function sendMail(string $identifier, User $receiver = null, array $parameters = [])
+    public function sendMail(string $identifier,string|User $receiver = null, array $parameters = [])
     {
-        if (!is_null($receiver) && $receiver->getDeleted()) {
+        if ($receiver instanceof User && $receiver?->getDeleted()) {
             return;
+        }
+
+        if (is_string($receiver)) {
+            $receiver = User::createWithEmail($receiver);
         }
 
         if (is_null($receiver)) {
@@ -68,9 +72,6 @@ class MailService
             case MailType::CAMPAIGN_CLOSED->value:
                 $subject = sprintf($subject, $parameters['campaign']->getTitle());
                 break;
-            default:
-                $subject = '';
-                break;
         }
 
         return $subject;
@@ -81,11 +82,11 @@ class MailService
         $parameters['receiver'] = $receiver;
         $parameters['domain'] = $_SERVER['HTTP_ORIGIN'];
 
-        $subject = $this->getSubject($identifier,$parameters);
+        $subject = $this->getSubject($identifier, $parameters);
 
         $email = (new TemplatedEmail())
-            ->from($this->fromMail)
-            ->to(new Address($receiver->getEmail(), 'Creative Museum'))
+            ->from(new Address($this->fromMail, 'Creative Museum'))
+            ->to(new Address($receiver->getEmail()))
             ->subject($subject)
             ->htmlTemplate("emails/{$identifier}.html.twig")
             ->context($parameters);

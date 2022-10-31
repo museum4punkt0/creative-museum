@@ -345,6 +345,8 @@
       "new_campaign": "Kampagne %s startet",
       "campaign_closed": "Kampagne %s beendet",
       "post_commented": "Neuer Kommentar",
+      "post_reported": "Neuer gemeldeter Beitrag",
+      "post_reported_author": "Dein Beitrag wurde gemeldet",
       "system": "Du hast eine Nachricht vom Creative Museum erhalten"
     }
   },

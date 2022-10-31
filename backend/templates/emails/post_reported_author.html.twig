@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <p>Hallo {{ receiver.firstName }},<p>
+    <p>dein Beitrag in der Kampange {{ post.campaign.title }} wurde gemeldet!</p>
+    <p>Wir werden das prüfen und den Beitrag gegebenenfalls entfernen.</p>
+    <p>Du kannst dir den Beitrag <a href="{{ domain }}/posts/{{ post.id }}">hier</a> ansehen.</p>
+    <p>
+        Bis gleich im Creative Museum!<br />
+        <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>
+    </p>
+{% endblock %}
