@@ -4,13 +4,12 @@
   </div>
 </template>
 <script>
-import { defineComponent, useStore } from '@nuxtjs/composition-api'
+import {defineComponent, useContext, useStore} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
-    store.dispatch('hideAddButton')
-    store.dispatch('setCurrentCampaign', null)
+    const { $auth } = useContext()
+    $auth.login()
   },
 })
 </script>

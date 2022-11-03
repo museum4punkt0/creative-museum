@@ -119,7 +119,7 @@ export default {
         responseType: 'token',
         grantType: 'authorization_code',
         accessType: undefined,
-        redirectUri: `${process.env.BASE_URL}/login`,
+        redirectUri: `${process.env.BASE_URL}/verify`,
         logoutRedirectUri: '/',
         clientId: 'bdlm_cm',
         scope: ['default'],
