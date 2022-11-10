@@ -90,7 +90,7 @@ class MediaObject
 
     #[ORM\Column(type: 'filetype')]
     #[Assert\NotNull(groups: ['media_object_create'])]
-    #[Groups(['media_object:read', 'post:read'])]
+    #[Groups(['media_object:read', 'post:read', 'playlist:read'])]
     private FileType $type = FileType::IMAGE;
 
     public function getId(): ?int
