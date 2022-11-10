@@ -30,19 +30,19 @@
               <CampaignResultItem :parent-key="key" :campaign-result-item="campaignResultItem" :reward-points="campaignResult[0].rewardPoints" />
             </li>
           </ul>
-          <button v-if="campaignResult.length > 5" class="mt-6 text-$highlight" @click.prevent="showAllResults = true">{{ $t('showMore') }}</button>
+          <button v-if="campaignResult.length > 5" class="mt-6 text-$highlight" @click.prevent="showAllResults = true">{{ $t('readLess') }}</button>
         </div>
         <div v-else>
           <ul>
             <li
-              v-for="(campaignResultItem, key) in campaignResul"
+              v-for="(campaignResultItem, key) in campaignResult"
               :key="key"
               class="mb-4"
             >
               <CampaignResultItem :parent-key="key" :campaign-result-item="campaignResultItem" :reward-points="campaignResult[0].rewardPoints" />
             </li>
           </ul>
-          <button class="mt-6 text-$highlight" @click.prevent="showAllResults = false">{{ $t('showLess') }}</button>
+          <button class="mt-6 text-$highlight" @click.prevent="showAllResults = false">{{ $t('readMore') }}</button>
         </div>
       </div>
     </div>
