@@ -1,16 +1,12 @@
 <template>
   <div>
-
+    LoggedIn!
   </div>
 </template>
 <script>
-import {defineComponent, useRouter} from '@nuxtjs/composition-api'
+import {defineComponent} from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  middleware: 'auth',
-  setup() {
-    const router = useRouter();
-    router.push('/')
-  },
+  middleware: ['auth']
 })
 </script>

@@ -151,6 +151,12 @@ export default {
         acrValues: '',
       },
     },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/',
+      callback: '/verify'
+    },
   },
   router: {
     middleware: ['user'],

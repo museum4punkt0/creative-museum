@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import {defineComponent, useContext, useStore} from '@nuxtjs/composition-api'
+import {defineComponent, useContext} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
