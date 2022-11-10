@@ -19,8 +19,8 @@ parameters:
     videoPostBodyLength: 2000
     postQuestionLength: 100
 
-    fromMail: 'creativemuseum@landesmuseum.net'
-    editorMail: 'creativemuseum@landesmuseum.net'
+    fromMail: 'noreply@creativemuseum.landesmuseum.net'
+    editorMail: 'noreply@creativemuseum.landesmuseum.net'
 
 
 services:
