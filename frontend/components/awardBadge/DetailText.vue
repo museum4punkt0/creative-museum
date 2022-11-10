@@ -6,6 +6,9 @@
       <p v-html="showLongDesc ? formattedDescription : formattedShortDescription" />
       <button class="text-$highlight text-sm mt-2" @click.prevent="showLongDesc = ! showLongDesc">{{ showLongDesc ? $t('readLess') : $t('readMore') }}</button>
     </div>
+    <div v-else>
+      <p v-html="formattedDescription" />
+    </div>
     <div v-if="type === 'Award'" class="text-$highlight">
       {{ price.toLocaleString() + ' ' + $t('points') }}
     </div>
