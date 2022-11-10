@@ -24,16 +24,17 @@
             <button
               v-if="!award.taken"
               class="btn-outline self-start mt-2 text-xs p-1"
-              @click.prevent="awardDetailOpen = true"
+              @click.prevent="awardDetailOpen = award.id"
             >
               {{ $t('awards.gift') }}
             </button>
           </div>
         </div>
         <AwardDetail
-          v-if="awardDetailOpen === true"
+          v-if="awardDetailOpen === award.id"
           :award="award"
           :available="true"
+          :preselected-user="post.author.uuid"
           class="absolute left-0 top-0 bottom-0 right-0 z-20 bg-grey"
           @closeAwardDetail="closeAwardDetail"
         />
@@ -51,6 +52,7 @@ import {
     onMounted,
     useStore,
     ref,
+    watch
   } from '@nuxtjs/composition-api'
 import { awardApi } from '@/api/award'
 
@@ -69,18 +71,25 @@ export default defineComponent({
     const store = useStore()
     const { fetchAvailableAwards } = awardApi()
     const availableAwards = ref(null)
-    const awardDetailOpen = ref(false)
+    const awardDetailOpen = ref(null)
 
     onMounted(async () => {
       await getAvailableAwards()
     })
+
+    watch(
+      () => store.getters.awardsChange,
+      function () {
+        getAvailableAwards()
+      }
+    )
 
     async function getAvailableAwards() {
       availableAwards.value = await fetchAvailableAwards(props.post.campaign.id)
     }
 
     function closeAwardDetail() {
-      awardDetailOpen.value = false
+      awardDetailOpen.value = null
       store.dispatch('awardsChange')
     }
 

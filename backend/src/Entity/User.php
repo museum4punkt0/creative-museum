@@ -79,7 +79,7 @@ class User implements UserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read', 'users:read'])]
+    #[Groups(['user:me:read', 'users:read', 'post:read'])]
     #[ApiProperty(identifier: false)]
     private int $id;
 

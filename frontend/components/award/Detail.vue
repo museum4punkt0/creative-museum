@@ -15,7 +15,7 @@
         <button
           v-if="available && !award.taken"
           class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
-          @click.prevent="mode = 'giveaway'"
+          @click.prevent="preselectedUser !== '' ? giveAwayToPreselectedUser() :  mode = 'giveaway'"
         >
           {{ $t('awards.giftAward') }}
         </button>
@@ -112,6 +112,7 @@ import {
   useContext,
   ref,
   computed,
+  useStore
 } from '@nuxtjs/composition-api'
 import { TinyColor, readability } from '@ctrl/tinycolor'
 import SearchIcon from '@/assets/icons/search.svg?inline'
@@ -127,6 +128,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    preselectedUser: {
+      type: String,
+      default: ''
+    },
     available: {
       type: Boolean,
       default: false
@@ -138,6 +143,7 @@ export default defineComponent({
     const { awardUser } = awardApi()
 
     const context = useContext()
+    const store = useStore()
     const mode = ref('detail')
     const userList = ref(null)
     const selectedUser = ref(null)
@@ -174,6 +180,10 @@ export default defineComponent({
       userList.value = await searchUser(debouncedSearchField.value)
     }
 
+    function giveAwayToPreselectedUser() {
+      giveAway()
+    }
+
     function select(userId) {
       if (selectedUser.value === userId) {
         selectedUser.value = null
@@ -199,13 +209,14 @@ export default defineComponent({
     })
 
     async function giveAway() {
-      await awardUser(props.award.id, selectedUser.value).then(function (
+      await awardUser(props.award.id, props.preselectedUser !== '' ? props.preselectedUser : selectedUser.value).then(function (
         response
       ) {
         if ('error' in response) {
           violations.value = response.error.response.data.violations
         } else {
           mode.value = 'giftComplete'
+          store.dispatch('awardsChanged')
         }
       })
     }
@@ -237,6 +248,7 @@ export default defineComponent({
       userList,
       select,
       selectedUser,
+      giveAwayToPreselectedUser,
       giveAway,
       resetView,
       selectedUsername,

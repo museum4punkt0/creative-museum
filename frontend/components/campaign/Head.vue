@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-show="!showLongDescription">
-      <p class="mb-6 break-all" v-html="formattedShortDescription" />
+      <p class="mb-6" v-html="formattedShortDescription" />
       <a
         v-if="formattedShortDescription !== formattedDescription"
         class="highlight-text"
@@ -24,7 +24,7 @@
       >
     </div>
     <div v-show="showLongDescription">
-      <p class="mb-6 break-all" v-html="formattedDescription" />
+      <p class="mb-6" v-html="formattedDescription" />
       <a
         class="highlight-text"
         href="#"

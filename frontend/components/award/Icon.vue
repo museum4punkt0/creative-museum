@@ -1,5 +1,5 @@
 <template>
-  <svg :alt="title" width="160" height="185" viewBox="0 0 160 185" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg v-if="image" :alt="title" width="160" height="185" viewBox="0 0 160 185" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g>
       <path d="M81.6787 146.691L90.315 183.085C90.8538 185.24 92.4699 185.513 93.8209 183.914L104.877 170.653C105.642 169.807 106.637 169.204 107.74 168.916C108.843 168.629 110.006 168.671 111.085 169.036L131.847 176.313C133.737 177.142 135.088 176.048 134.276 173.885L123.219 141.959" fill="#fff"/>
       <path d="M81.6787 146.691L90.315 183.085C90.8538 185.24 92.4699 185.513 93.8209 183.914L104.877 170.653C105.642 169.807 106.637 169.204 107.74 168.916C108.843 168.629 110.006 168.671 111.085 169.036L131.847 176.313C133.737 177.142 135.088 176.048 134.276 173.885L123.219 141.959" stroke="#fff" stroke-miterlimit="10" stroke-linecap="round"/>
@@ -27,7 +27,7 @@ export default defineComponent({
   props: {
     image: {
       type: Object,
-      required: true
+      default: () => {}
     },
     title: {
       type: String,
