@@ -30,7 +30,7 @@
               <CampaignResultItem :parent-key="key" :campaign-result-item="campaignResultItem" :reward-points="campaignResult[0].rewardPoints" />
             </li>
           </ul>
-          <button v-if="campaignResult.length > 5" class="mt-6 text-$highlight" @click.prevent="showAllResults = true">{{ $t('readLess') }}</button>
+          <button v-if="campaignResult.length > 5" class="mt-6 text-$highlight" @click.prevent="showAllResults = true">{{ $t('readMore') }}</button>
         </div>
         <div v-else>
           <ul>
@@ -42,7 +42,7 @@
               <CampaignResultItem :parent-key="key" :campaign-result-item="campaignResultItem" :reward-points="campaignResult[0].rewardPoints" />
             </li>
           </ul>
-          <button class="mt-6 text-$highlight" @click.prevent="showAllResults = false">{{ $t('readMore') }}</button>
+          <button class="mt-6 text-$highlight" @click.prevent="showAllResults = false">{{ $t('readLess') }}</button>
         </div>
       </div>
     </div>
