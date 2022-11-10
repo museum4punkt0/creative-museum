@@ -55,12 +55,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(
     DateFilter::class,
     strategy: DateFilter::PARAMETER_BEFORE,
-    properties: ['start'])
+    properties: ['start']),
 ]
 #[ApiFilter(
     SearchFilter::class,
     properties: [
         'published' => 'exact',
+        'active' => 'exact',
     ]
 )]
 #[ORM\HasLifecycleCallbacks]
