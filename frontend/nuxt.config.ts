@@ -79,6 +79,28 @@ export default {
   axios: {
     baseURL: `${process.env.BACKEND_URL}/v1/`,
   },
+  workbox: {
+    cachingExtensions: '~plugins/workbox-range-request.js',
+    runtimeCaching: [
+      {
+        urlPattern: `${process.env.BASE_URL}/login`,
+        handler: 'networkOnly'
+      },
+      {
+        urlPattern: `${process.env.BASE_URL}/verify`,
+        handler: 'networkOnly'
+      },
+      {
+        urlPattern: `${process.env.BACKEND_URL}/fileadmin/.*`,
+        handler: 'StaleWhileRevalidate',
+        method: 'GET',
+        strategyOptions: {
+          cacheName: 'assets-cache',
+          maxAgeRecords: 24 * 60 * 60
+        }
+      }
+    ]
+  },
   pwa: {
     meta: {
       charset: 'utf-8',
