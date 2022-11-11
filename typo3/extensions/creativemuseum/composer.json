@@ -18,6 +18,7 @@
     ],
     "require": {
       "typo3/cms-core": "^10.4 || ^11",
+      "typo3/cms-rte-ckeditor": "^10.4 || ^11",
       "league/oauth2-client": "^2.6",
       "ext-json": "*"
     },

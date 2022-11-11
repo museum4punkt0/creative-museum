@@ -15,6 +15,9 @@
          <trans-unit id="menu.administration.notification_index" xml:space="preserve">
              <source>Benachrichtigungen</source>
           </trans-unit>
+          <trans-unit id="menu.administration.cms_content" xml:space="preserve">
+               <source>CMS Inhalte</source>
+            </trans-unit>
       </body>
    </file>
 </xliff>

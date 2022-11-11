@@ -7,6 +7,7 @@ namespace JWIED\Creativemuseum\Controller;
 use JWIED\Creativemuseum\Domain\Model\Dto\AwardDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\BadgeDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\CampaignDto;
+use JWIED\Creativemuseum\Domain\Model\Dto\CmsContentDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\FeedbackOptionDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PartnerDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\PostDto;
@@ -15,6 +16,7 @@ use JWIED\Creativemuseum\Domain\Model\Dto\UserDto;
 use JWIED\Creativemuseum\Domain\Model\Dto\UserListFilterDto;
 use JWIED\Creativemuseum\Pagination\ApiRecordPaginator;
 use JWIED\Creativemuseum\Service\CampaignService;
+use JWIED\Creativemuseum\Service\CmsContentService;
 use JWIED\Creativemuseum\Service\NotificationService;
 use JWIED\Creativemuseum\Service\PostService;
 use JWIED\Creativemuseum\Service\UserService;
@@ -33,6 +35,7 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Property\TypeConverter\DateTimeConverter;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class AdministrationController extends ActionController
@@ -68,6 +71,11 @@ class AdministrationController extends ActionController
     protected $notificationService;
 
     /**
+     * @var CmsContentService
+     */
+    protected $cmsContentService;
+
+    /**
      * @var IconFactory
      */
     protected $iconFactory;
@@ -77,12 +85,14 @@ class AdministrationController extends ActionController
      */
     protected $assetCollector;
 
+
     public function __construct(
         UriBuilder $uriBuilder,
         CampaignService $campaignService,
         PostService $postService,
         UserService $userService,
         NotificationService $notificationService,
+        CmsContentService $cmsContentService,
         IconFactory $iconFactory,
         AssetCollector $assetCollector
     ) {
@@ -91,6 +101,7 @@ class AdministrationController extends ActionController
         $this->postService = $postService;
         $this->userService = $userService;
         $this->notificationService = $notificationService;
+        $this->cmsContentService = $cmsContentService;
         $this->iconFactory = $iconFactory;
         $this->assetCollector = $assetCollector;
 
@@ -117,6 +128,10 @@ class AdministrationController extends ActionController
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/DocumentSaveActions');
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Backend/DateTimePicker');
             $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/RemoveCampaignModal');
+
+            if ($this->actionMethodName === 'cmsContentAction') {
+                $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/CmsContentHandling');
+            }
 
             if ($this->actionMethodName === 'notificationUserCreateAction') {
                 $pageRenderer->loadRequireJsModule('TYPO3/CMS/Creativemuseum/UserSearchAutocomplete');
@@ -203,7 +218,6 @@ class AdministrationController extends ActionController
         $propertyMapping->allowCreationForSubProperty('feedbackOptions.*');
         $propertyMapping->allowModificationForSubProperty('feedbackOptions.*');
 
-
         if (! empty($campaignDto['start'])) {
             $propertyMapping->forProperty('start')->setTypeConverterOption(
                 DateTimeConverter::class,
@@ -267,6 +281,26 @@ class AdministrationController extends ActionController
         $success = $this->notificationService->sendUserNotification($user, $message);
         $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
         $this->redirect('notificationIndex');
+    }
+
+    public function cmsContentAction()
+    {
+        $about = $this->cmsContentService->getContentForIdentifier('about');
+        $faq = $this->cmsContentService->getContentForIdentifier('faq');
+        $simpleLanguage = $this->cmsContentService->getContentForIdentifier('simpleLanguage');
+        $signLanguage = $this->cmsContentService->getContentForIdentifier('signLanguage');
+        $imprint = $this->cmsContentService->getContentForIdentifier('imprint');
+
+        $cmsContentDto = new CmsContentDto($about, $simpleLanguage, $signLanguage, $faq, $imprint);
+
+        $this->view->assign('cmsContentDto', $cmsContentDto);
+    }
+
+    public function cmsContentUpdateAction(CmsContentDto $cmsContentDto)
+    {
+        $this->cmsContentService->updateContent($cmsContentDto);
+        $this->addFlashMessage('Inhalte erfolgreich aktualisiert');
+        $this->redirect('cmsContent');
     }
 
     /**
@@ -581,7 +615,7 @@ class AdministrationController extends ActionController
         $menu = $menuRegistry->makeMenu();
         $menu->setIdentifier('creativeMuseumModuleMenu');
 
-        $menuItems = ['Administration' => ['index', 'userOverview', 'postOverview', 'notificationIndex']];
+        $menuItems = ['Administration' => ['index', 'userOverview', 'postOverview', 'notificationIndex', 'cmsContent']];
 
         foreach ($menuItems as $controller => $actions) {
             $underscoredControllerName = GeneralUtility::camelCaseToLowerCaseUnderscored($controller);
@@ -634,6 +668,9 @@ class AdministrationController extends ActionController
         }
         if ($action === 'postDetail') {
             $this->addPostDetailButtons($view);
+        }
+        if ($action === 'cmsContent') {
+            $this->addCmsContentButtons($view);
         }
     }
 
@@ -801,6 +838,23 @@ class AdministrationController extends ActionController
 
         $buttonBar->addButton($backButton);
         $buttonBar->addButton($deleteButton);
+    }
+
+    private function addCmsContentButtons(BackendTemplateView $view)
+    {
+        $buttonBar = $view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
+
+        /** @var InputButton $saveButton */
+        $saveButton = $buttonBar->makeButton(InputButton::class);
+        $saveButton
+            ->setIcon($this->iconFactory->getIcon('actions-document-save', Icon::SIZE_SMALL))
+            ->setValue('Inhalte speichern')
+            ->setTitle('Inhalte speichern')
+            ->setName('cms-content-update')
+            ->setForm('cms-content-form')
+            ->setShowLabelText(true);
+
+        $buttonBar->addButton($saveButton);
     }
 
     /**

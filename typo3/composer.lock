@@ -1392,11 +1392,13 @@
             "dist": {
                 "type": "path",
                 "url": "extensions/creativemuseum",
-                "reference": "468074613137781c9c9ea81d2d1a1420d20eda96"
+                "reference": "2c89b33c3b038d2fa4cb6beb49ce5b2f4ef886e1"
             },
             "require": {
+                "ext-json": "*",
                 "league/oauth2-client": "^2.6",
-                "typo3/cms-core": "^10.4 || ^11"
+                "typo3/cms-core": "^10.4 || ^11",
+                "typo3/cms-rte-ckeditor": "^10.4 || ^11"
             },
             "type": "typo3-cms-extension",
             "extra": {

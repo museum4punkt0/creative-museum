@@ -60,7 +60,7 @@
       <a class="block mb-4" @click.prevent="showTutorial">{{
         $t('navigation.museum.firstSteps')
       }}</a>
-      <NuxtLink to="/" class="block" @click.native="closeMenu">{{
+      <NuxtLink to="/faq" class="block" @click.native="closeMenu">{{
         $t('navigation.museum.faq')
       }}</NuxtLink>
     </div>
@@ -108,11 +108,11 @@
       </div>
       <div class="flex flex-row items-center mb-4">
         <SimpleLanguageIcon class="w-6 h-6 mr-4" />
-        <span>{{ $t('navigation.language.easyLanguage') }}</span>
+        <NuxtLink to="/simpleLanguage">{{ $t('navigation.language.easyLanguage') }}</NuxtLink>
       </div>
       <div class="flex flex-row items-center mb-4">
         <SignLanguageIcon class="w-6 h-6 mr-4" />
-        <span>{{ $t('navigation.language.signLanguage') }}</span>
+        <NuxtLink to="/signLanguage">{{ $t('navigation.language.signLanguage') }}</NuxtLink>
       </div>
     </div>
   </div>

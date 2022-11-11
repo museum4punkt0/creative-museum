@@ -24,7 +24,9 @@ if (TYPO3_MODE === 'BE') {
         'notificationCampaignCreate',
         'notificationCampaignSend',
         'notificationUserCreate',
-        'notificationUserSend'
+        'notificationUserSend',
+        'cmsContent',
+        'cmsContentUpdate'
     ];
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(

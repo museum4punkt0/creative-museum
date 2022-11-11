@@ -1,0 +1,92 @@
+<h1>CMS Inhalte bearbeiten</h1>
+
+<f:form action="cmsContentUpdate" controller="Administration" method="POST" id="cms-content-form" name="cms-content-update"
+        object="{cmsContentDto}" objectName="cmsContentDto">
+
+    <div class="mb-5">
+        <label>About</label>
+
+        <div class="formengine-field-item t3js-formengine-field-item">
+            <div class="form-control-wrap">
+                <div class="form-wizards-wrap">
+                    <div class="form-wizards-element">
+                        <f:form.textarea
+                                id="about-html-rte"
+                                property="aboutHtml"
+                                style="display:none"
+                        ></f:form.textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <label>FAQ</label>
+        <div class="formengine-field-item t3js-formengine-field-item">
+            <div class="form-control-wrap">
+                <div class="form-wizards-wrap">
+                    <div class="form-wizards-element">
+                        <f:form.textarea
+                                id="faq-html-rte"
+                                property="faqHtml"
+                                style="display:none"
+                        ></f:form.textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <label>Simple language</label>
+        <div class="formengine-field-item t3js-formengine-field-item">
+            <div class="form-control-wrap">
+                <div class="form-wizards-wrap">
+                    <div class="form-wizards-element">
+                        <f:form.textarea
+                                id="simplelanguage-html-rte"
+                                property="simpleLanguageHtml"
+                                style="display:none"
+                        ></f:form.textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <label>Sign language</label>
+        <div class="formengine-field-item t3js-formengine-field-item">
+            <div class="form-control-wrap">
+                <div class="form-wizards-wrap">
+                    <div class="form-wizards-element">
+                        <f:form.textarea
+                                id="signlanguage-html-rte"
+                                property="signLanguageHtml"
+                                style="display:none"
+                        ></f:form.textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <label>Imprint</label>
+        <div class="formengine-field-item t3js-formengine-field-item">
+            <div class="form-control-wrap">
+                <div class="form-wizards-wrap">
+                    <div class="form-wizards-element">
+                        <f:form.textarea
+                                id="imprint-html-rte"
+                                property="imprintHtml"
+                                style="display:none"
+                        ></f:form.textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</f:form>

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div class="my-3" v-html="imprint" />
+    <div class="my-3" v-html="faq" />
   </div>
 </template>
+
 <script>
 import { defineComponent, useStore, ref } from '@nuxtjs/composition-api'
 import { cmsApi } from "~/api/cms";
@@ -10,22 +11,23 @@ import { cmsApi } from "~/api/cms";
 export default defineComponent({
   setup() {
     const store = useStore()
-    const { fetchImprint } = cmsApi()
+    const { fetchFaq } = cmsApi()
 
-    const imprint = ref('');
+    const faq = ref(null)
 
-    async function getImprintPage() {
-      const aboutData = await fetchImprint()
-      imprint.value = JSON.parse(aboutData.content)
+    async function getFaqPage() {
+      const faqData = await fetchFaq()
+      faq.value = JSON.parse(faqData.content)
     }
 
-    getImprintPage()
+    getFaqPage()
 
     store.dispatch('hideAddButton')
     store.dispatch('setCurrentCampaign', null)
 
+
     return {
-      imprint
+      faq
     }
   },
 })

@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <div class="my-3" v-html="imprint" />
+<div>
+    <div class="my-3" v-html="signLanguage" />
   </div>
 </template>
+
 <script>
 import { defineComponent, useStore, ref } from '@nuxtjs/composition-api'
 import { cmsApi } from "~/api/cms";
@@ -10,22 +11,23 @@ import { cmsApi } from "~/api/cms";
 export default defineComponent({
   setup() {
     const store = useStore()
-    const { fetchImprint } = cmsApi()
+    const { fetchSignLanguage } = cmsApi()
 
-    const imprint = ref('');
+    const signLanguage = ref(null)
 
-    async function getImprintPage() {
-      const aboutData = await fetchImprint()
-      imprint.value = JSON.parse(aboutData.content)
+    async function getSignLanguagePage() {
+      const aboutData = await fetchSignLanguage()
+      signLanguage.value = JSON.parse(aboutData.content)
     }
 
-    getImprintPage()
+    getSignLanguagePage()
 
     store.dispatch('hideAddButton')
     store.dispatch('setCurrentCampaign', null)
 
+
     return {
-      imprint
+      signLanguage
     }
   },
 })
