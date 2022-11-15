@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import { MediaRecorder, register } from 'extendable-media-recorder';
+import { connect } from 'extendable-media-recorder-wav-encoder';
 import MicrophoneIcon from '@/assets/icons/microphone.svg?inline'
 export default {
   name: 'AudioRecorder',

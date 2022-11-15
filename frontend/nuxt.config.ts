@@ -49,9 +49,19 @@ export default {
   build: {
     babel: {
       "plugins": [
-        "@babel/plugin-proposal-optional-chaining",
         "@babel/plugin-proposal-nullish-coalescing-operator",
+        "@babel/plugin-proposal-optional-chaining",
       ]
+    },
+    extend (config:any, { isDev, isClient }:any) {
+      if (isDev && isClient) {
+        config.module.rules.push(
+        {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          exclude: /(node_modules)/
+        })
+      }
     }
   },
   modules: [
