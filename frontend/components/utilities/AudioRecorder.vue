@@ -148,8 +148,9 @@ export default {
         const device = navigator.mediaDevices.getUserMedia({ audio: true })
         const items = []
         device
-          .then((stream) => {
-            this.recorder = new MediaRecorder(stream)
+          .then(async (stream) => {
+            await register(await connect())
+            this.recorder = new MediaRecorder(stream, { mimeType: this.audioType })
             this.recorder.ondataavailable = (e) => {
               items.push(e.data)
               if (this.recorder.state === 'inactive') {
