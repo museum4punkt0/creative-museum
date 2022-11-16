@@ -71,7 +71,8 @@
 </template>
 
 <script>
-import MicrophoneIcon from '@/assets/icons/microphone.svg?inline'
+import MicrophoneIcon from '@/assets/icons/microphone.svg?inline';
+
 export default {
   name: 'AudioRecorder',
   components: {
@@ -93,11 +94,12 @@ export default {
       recorder: null,
       audioIsPlaying: false,
       audioFile: null,
-      audioType: 'audio/x-wav',
+      audioType: 'audio/wav',
       audioFileName: 'audio.wav',
       uploadedAudioFile: null,
       recordAudioState: false,
       initialTime: Date.now(),
+      Recorder: null
     }
   },
   watch: {
@@ -107,8 +109,17 @@ export default {
   },
   mounted() {
     this.checkPermission()
+    this.registerConverter()
   },
   methods: {
+    async registerConverter() {
+      if (process.client) {
+        const { MediaRecorder, register } = await import('extendable-media-recorder');
+        this.Recorder = MediaRecorder;
+        const { connect } = await import('extendable-media-recorder-wav-encoder');
+        await register(await connect())
+      }
+    },
     async checkPermission() {
       const status = await navigator.permissions.query({ name: 'microphone' })
       this.permissionStatus = status.state
@@ -149,7 +160,7 @@ export default {
         const items = []
         device
           .then((stream) => {
-            this.recorder = new MediaRecorder(stream)
+            this.recorder = new this.Recorder(stream, { mimeType: this.audioType })
             this.recorder.ondataavailable = (e) => {
               items.push(e.data)
               if (this.recorder.state === 'inactive') {

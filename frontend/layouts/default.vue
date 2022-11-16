@@ -18,5 +18,17 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'LayoutDefault',
+  setup() {
+    if (process.client) {
+      console.log('client process!!')
+
+      window.addEventListener('sw-installed', () => {
+        console.log('sw-installed from layout setup')
+      })
+      window.addEventListener('sw-updated', () => {
+        console.log('sw-updated from layout setup')
+      })
+    }
+  }
 })
 </script>

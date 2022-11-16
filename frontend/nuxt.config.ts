@@ -35,6 +35,7 @@ export default {
   plugins: [
     '~/plugins/api',
     '~/plugins/user',
+    { src: '~/plugins/updater', mode: 'client' },
     { src: '~/plugins/tooltip', mode: 'client' },
     { src: '~/plugins/clipboard', mode: 'client' },
   ],
@@ -45,6 +46,11 @@ export default {
     'nuxt-windicss',
     '@nuxt/postcss8',
   ],
+  build: {
+    transpile: [
+      'rxjs-interop'
+    ]
+  },
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
