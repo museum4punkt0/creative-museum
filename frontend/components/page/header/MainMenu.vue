@@ -4,6 +4,7 @@
       <client-only>
         <a
           v-if="!$auth.loggedIn"
+          href="#"
           class="flex flex-row items-center font-bold leading-loose cursor-pointer"
           @click.prevent="login"
         >
@@ -12,6 +13,7 @@
         </a>
         <a
           v-else
+          href="#"
           class="flex flex-row items-center font-bold leading-loose cursor-pointer"
           @click.prevent="logout"
         >
@@ -31,6 +33,7 @@
       </NuxtLink>
       <a
         v-if="$auth.loggedIn"
+        href="#"
         class="block mb-4 cursor-pointer"
         @click.prevent="showProfileUpdate"
         >{{ $t('navigation.profile.settings') }}</a
@@ -57,7 +60,7 @@
       <NuxtLink to="/about" class="block mb-4" @click.native="closeMenu">{{
         $t('navigation.museum.about')
       }}</NuxtLink>
-      <a class="block mb-4" @click.prevent="showTutorial">{{
+      <a href="#" class="block mb-4" @click.prevent="showTutorial">{{
         $t('navigation.museum.firstSteps')
       }}</a>
       <NuxtLink to="/faq" class="block" @click.native="closeMenu">{{
