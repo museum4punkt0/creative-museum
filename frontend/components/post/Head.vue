@@ -42,6 +42,7 @@
         v-if="showAdditionalOptions"
         class="flex flex-col h-full"
         :closable="modalType === 'SlideUp' ? true : false"
+        tabindex="0"
         @closeModal="showAdditionalOptions = false"
       >
         <div v-if="!additionalPage" class="flex flex-col p-6 mr-12">
