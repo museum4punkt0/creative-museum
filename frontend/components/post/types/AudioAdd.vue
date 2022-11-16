@@ -8,19 +8,19 @@
     <div
       class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
-      <div class="box-shadow mb-6">
-        <UtilitiesAudioRecorder @audioFile="inputAudioFile" />
-      </div>
-      <div class="relative">
-        <input
-          v-model="postTitle"
-          type="text"
-          class="input-text pr-20 mb-4"
-          :placeholder="$t('post.placeholder.title')"
-          :maxlength="100"
-        />
-      </div>
       <client-only>
+        <div class="box-shadow mb-6">
+          <UtilitiesAudioRecorder @audioFile="inputAudioFile" />
+        </div>
+        <div class="relative">
+          <input
+            v-model="postTitle"
+            type="text"
+            class="input-text pr-20 mb-4"
+            :placeholder="$t('post.placeholder.title')"
+            :maxlength="100"
+          />
+        </div>
         <img
           v-if="images.length"
           :src="images[0].blob"

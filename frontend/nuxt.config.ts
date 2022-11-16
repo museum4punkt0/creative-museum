@@ -35,7 +35,7 @@ export default {
   plugins: [
     '~/plugins/api',
     '~/plugins/user',
-    '~/plugins/updater',
+    { src: '~/plugins/updater', mode: 'client' },
     { src: '~/plugins/tooltip', mode: 'client' },
     { src: '~/plugins/clipboard', mode: 'client' },
   ],
@@ -47,12 +47,9 @@ export default {
     '@nuxt/postcss8',
   ],
   build: {
-    babel: {
-      "plugins": [
-        "@babel/plugin-proposal-nullish-coalescing-operator",
-        "@babel/plugin-proposal-optional-chaining",
-      ]
-    },
+    transpile: [
+      'rxjs-interop'
+    ],
     extend (config:any, { isDev, isClient }:any) {
       if (isDev && isClient) {
         config.module.rules.push(
