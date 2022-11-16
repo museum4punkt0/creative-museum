@@ -49,22 +49,7 @@ export default {
   build: {
     transpile: [
       'rxjs-interop'
-    ],
-    extend (config:any, { isDev, isClient }:any) {
-      if (isDev && isClient) {
-        config.module.rules.push(
-        {
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        },{
-          test: /\.js$/,
-          loader: 'babel-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
+    ]
   },
   modules: [
     '@nuxtjs/axios',
