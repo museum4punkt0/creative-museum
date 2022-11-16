@@ -19,6 +19,10 @@
   "duration": "Dauer",
   "selectProfile": "Profil auswählen",
   "confirmSelection": "Auswahl bestätigen",
+  "menu": {
+    "open": "Menu öffnen",
+    "close": "Menu schließen"
+  },
   "globalLogin": {
     "header": "Login",
     "text": "Du bist gerade nicht eingeloggt. Melde dich an und verdiene Punkte mit deinen Aktionen.",

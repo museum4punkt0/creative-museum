@@ -24,6 +24,7 @@
         <PageHeaderUserInfo />
         <button
           class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out focus:outline-none group"
+          :aria-label="isMenuVisible ? $t('menu.close') : $t('menu.open')"
           type="button"
           :class="
             isMenuVisible
