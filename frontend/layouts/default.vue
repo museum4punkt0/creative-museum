@@ -20,8 +20,6 @@ export default defineComponent({
   name: 'LayoutDefault',
   setup() {
     if (process.client) {
-      console.log('client process!!')
-
       window.addEventListener('sw-installed', () => {
         console.log('sw-installed from layout setup')
       })

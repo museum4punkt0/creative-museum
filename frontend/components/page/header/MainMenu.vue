@@ -111,11 +111,11 @@
       </div>
       <div class="flex flex-row items-center mb-4">
         <SimpleLanguageIcon class="w-6 h-6 mr-4" />
-        <NuxtLink to="/simpleLanguage">{{ $t('navigation.language.easyLanguage') }}</NuxtLink>
+        <NuxtLink to="/simpleLanguage" @click.native="closeMenu">{{ $t('navigation.language.easyLanguage') }}</NuxtLink>
       </div>
       <div class="flex flex-row items-center mb-4">
         <SignLanguageIcon class="w-6 h-6 mr-4" />
-        <NuxtLink to="/signLanguage">{{ $t('navigation.language.signLanguage') }}</NuxtLink>
+        <NuxtLink to="/signLanguage" @click.native="closeMenu">{{ $t('navigation.language.signLanguage') }}</NuxtLink>
       </div>
     </div>
   </div>

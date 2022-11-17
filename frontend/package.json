@@ -17,7 +17,7 @@
     "@any-touch/pan": "^2.2.0",
     "@ctrl/tinycolor": "^3.4.1",
     "@liripeng/vue-audio-player": "^1.5.0",
-    "@nuxtjs/auth-next": "5.0.0-1648802546.c9880dc",
+    "@nuxtjs/auth-next": "^5.0.0-1667386184.dfbbb54",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/dayjs": "^1.4.1",
