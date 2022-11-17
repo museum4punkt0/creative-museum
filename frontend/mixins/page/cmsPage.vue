@@ -19,5 +19,8 @@ div /deep/ .content {
       @apply text-$highlight;
     }
   }
+  ul li {
+    @apply mb-6;
+  }
 }
 </style>
