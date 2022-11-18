@@ -153,8 +153,8 @@ class IdpAuthenticator extends AbstractAuthenticator
 
                 $user = new User();
                 $user->setUuid($token['sub']);
-                $user->setFirstName($response['firstName']);
-                $user->setLastName($response['lastName']);
+                $user->setFirstName($response['firstName'] ?? '');
+                $user->setLastName($response['lastName'] ?? '');
                 $user->setEmail($response['email']);
                 $user->setActive(true);
                 $user->setLastLogin(new \DateTimeImmutable());
