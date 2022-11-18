@@ -225,7 +225,7 @@
       },
       "headline": "Profil",
       "self": {
-        "headline": "Guten Tag {firstName}",
+        "headline": "Guten Tag {username}",
         "badges": {
           "points": {
             "scoring": "Du hast {threshold} Punkte gesammelt.",

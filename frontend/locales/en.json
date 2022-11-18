@@ -151,7 +151,7 @@
     "yourCurrentScore": "Your current score",
     "profile": {
       "self": {
-        "headline": "Hello {firstName}",
+        "headline": "Hello {username}",
         "points": "Score",
         "score": "Points",
         "notifications": "Latest notifications",
