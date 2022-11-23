@@ -1,8 +1,8 @@
 {
-  "system": "Badisches Landesmuseum",
+  "system": "Creative Museum",
   "dateFormat": "DD.MM.YYYY",
-  "anonymous": "Anonymer Benutzer",
-  "deleted": "Benutzer gelöscht",
+  "anonymous": "Anonymer User",
+  "deleted": "User gelöscht",
   "locale": "Deutsch",
   "next": "Weiter",
   "prev": "Zurück",
@@ -11,21 +11,17 @@
   "submit": "Abschicken",
   "close": "Schließen",
   "till": "bis",
-  "readLess": "weniger lesen",
+  "readLess": "Weniger lesen",
   "readMore": "Mehr lesen...",
   "showAll": "Alle anzeigen",
   "hide": "Ausblenden",
-  "noUsername": "Kein Benutzername",
+  "noUsername": "Kein Username",
   "duration": "Dauer",
   "selectProfile": "Profil auswählen",
   "confirmSelection": "Auswahl bestätigen",
-  "menu": {
-    "open": "Menu öffnen",
-    "close": "Menu schließen"
-  },
   "globalLogin": {
     "header": "Login",
-    "text": "Du bist gerade nicht eingeloggt. Melde dich an und verdiene Punkte mit deinen Aktionen.",
+    "text": "Du bist gerade nicht eingeloggt. Melde Dich an und verdiene Punkte mit Deinen Aktionen.",
     "button": "Jetzt anmelden"
   },
   "globalCampaignClosed": {
@@ -36,7 +32,7 @@
     "header": "Profil bearbeiten",
     "deleteUser": {
       "header": "Profil löschen",
-      "subheader": "Bitte bestätige die Profillöschung und folgende Konsequenzen.",
+      "subheader": "Schade, dass Du uns verlässt! Bitte bestätige die Profillöschung. Um die Diskussionen im Creative Museum gut zu dokumentieren, würden wir Deine Beiträge gerne weiterhin anonym anzeigen. Bitte wähle aus, wie Du mit Deinen Inhalten verfahren möchtest:",
       "options": {
         "permanent": "Ich möchte alle meine Beiträge und Kommentare permanent löschen.",
         "anonymize": "Ich stimme zu, dass meine Beiträge anonym erhalten bleiben."
@@ -55,23 +51,23 @@
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
       "title": "Willkommen im Creative Museum!",
-      "text": "Schön, dass du ein Teil vom Creative Museum bist. Wir stellen Dir in den folgenden Schritten die wichtigsten Funktionen vor."
+      "text": "Das Creative Museum ist eine Partizipationsplattform für Debatte und Austausch. Wir stellen Dir in den folgenden Schritten die wichtigsten Funktionen vor."
     },
     "step2": {
       "title": "Punkte",
-      "text": "Mit allen Aktionen, die du hier im Creative Museum machst, sammelst du Punkte. Punkte können später für Awards eingelöst werden, die du an andere User verschenken kannst. Also los geht’s: Fang an zu sammeln!"
+      "text": "Mit allen Aktionen, die du hier im Creative Museum machst, sammelst du Punkte. Deine Punkte kannst Du später für Awards einlösen, die Du an andere User verschenkst. Also los geht’s: Fang an zu sammeln!"
     },
     "step3": {
       "title": "Beiträge erstellen",
-      "text": "Es gibt verschiedene Weisen, wie du dich am Creative Museum beteiligen kannst. Eine der wichtigsten davon sind Beiträge, die Du selbst erstellen und teilen kannst. Wähle aus Bild-, Text-, Video- und Audiobeiträgen aus oder erstelle eine eigene Umfrage oder eine Playlist!"
+      "text": "Im Creative Museum kannst Du Deine eigenen Inhalte teilen und mit anderen interagieren. Poste einen Bild-, Text-, Video- oder Audiobeitrag, eine eigene Umfrage oder erstelle eine Playlist aus mehreren Beiträgen!"
     },
     "step4": {
       "title": "Awards",
-      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten und diese dann an andere Teilnehmer*innen verleihen, indem du deine erspielten Punkte einlöst."
+      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten und diese dann an andere Teilnehmer*innen verleihen, indem Du Deine erspielten Punkte einlöst."
     },
     "step5": {
       "title": "Badges",
-      "text": "Badges werden dir verliehen, indem du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und vergib dein Votings bei drei Posts!"
+      "text": "Badges werden Dir verliehen, indem Du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und vergib Dein Votings bei drei Posts!"
     }
   },
   "navigation": {
@@ -152,10 +148,10 @@
       "title": "Titel hinzufügen (optional)",
       "body": "Text hinzufügen",
       "image": {
-        "alttext": "Beschreibung für Personen mit Sehbehinderung (optional)"
+        "alttext": "Bild-Beschreibung (optional)"
       }
     },
-    "share": "teilen",
+    "share": "Teilen",
     "feedback": "Feedback",
     "postComment": "Kommentar...",
     "showComments": "Alle {count} Kommentare anzeigen",
@@ -177,12 +173,12 @@
       "delete": {
         "button": "Beitrag löschen",
         "headline": "Beitrag wirklich löschen?",
-        "confirmation": "Bestätige bitte die Beitragslöschung."
+        "confirmation": "Bitte bestätige, dass Du diesen Beitrag wirklich löschen möchtest."
       },
       "report": {
         "button": "Beitrag melden",
         "headline": "Beitrag wirklich melden?",
-        "confirmation": "Bestätige bitte, dass der Beitrag gegen die Richtlinien des Creative Museum verstößt und du diesen an die Redaktion melden möchtest."
+        "confirmation": "Bitte bestätige, dass dieser Beitrag gegen die Nutzungsbedingungen des Creative Museum verstößt und Du ihn an die Redaktion melden möchtest."
       },
       "shareLink": {
         "button": "Beitrag teilen"
@@ -209,7 +205,7 @@
     "editProfile": "Profil bearbeiten",
     "yourCurrentScore": "Dein aktueller Punktestand",
     "violation": {
-      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Ups! Dieser Benutzername ist leider bereits vergeben."
+      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Ups! Dieser Username ist leider bereits vergeben."
     },
     "profile": {
       "badges": {
@@ -225,7 +221,7 @@
       },
       "headline": "Profil",
       "self": {
-        "headline": "Guten Tag {username}",
+        "headline": "Hallo {firstName}",
         "badges": {
           "points": {
             "scoring": "Du hast {threshold} Punkte gesammelt.",
@@ -243,15 +239,15 @@
           "firstName": "Vorname",
           "lastName": "Nachname",
           "email": "E-Mail",
-          "username": "Benutzername",
+          "username": "Username",
           "notifications": "Benachrichtigungen",
-          "personalNotifications": "Persönliche Benachrichtigungen",
-          "cmNotifications": "Creative Museum Benachrichtigungen",
+          "personalNotifications": "Persönliche Benachrichtigungen (Erhaltene Kommentare, Awards und Badges, gemeldete Beiträge)",
+          "cmNotifications": "Creative Museum Benachrichtigungen (Neue Kampagne verfügbar, Kampagne beendet)",
           "save": "Änderungen speichern",
           "removal": "Profil löschen",
           "deleteProfile": "Profil löschen",
           "placeholder": {
-            "description": "Hier kann Deine Profil Beschreibung stehen."
+            "description": "Hier kann Deine Profilbeschreibung stehen."
           }
         }
       }
@@ -261,15 +257,15 @@
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards",
-    "noMorePosts": "Keine weiteren Beiträge.",
+    "noMorePosts": "Keine weiteren Beiträge",
     "newPosts": "Neue Beiträge",
     "closed": {
       "result": {
-        "description": "Die Mitspieller*innen, die die höchste Aktivität in der Kampagne {campaign} gezeigt haben und die folgende Anzahl der Awards verliehen haben:"
+        "description": "Die Kampagne \"{campaign}\" ist beendet. Die Nutzer*innen, die die meisten Awards verliehen haben, sind:"
       }
     },
     "systemMessages": {
-      "1663764951": "{giver} hat {winner} den Award {award} verliehen"
+      "1663764951": "Applaus!!! {giver} hat {winner} den Award, \"{award}\", verliehen"
     }
   },
   "awards": {
@@ -278,28 +274,28 @@
     "select": "Award auswählen",
     "available": "Verfügbare Awards",
     "unavailable": "Demnächst verfügbar",
-    "loginToReceiveAwards": "Einloggen um Awards zu verdienen",
+    "loginToReceiveAwards": "Einloggen, um Awards freizuschalten",
     "gift": "Verschenken",
     "given": "Award verliehen",
     "giftAward": "Award verschenken",
     "gifted": "Verliehene Awards",
     "received": "Erhaltene Awards",
     "givenConfirmText": "Du hast den Award \"{title}\" für {price} Punkte an {username} verschenkt!",
-    "pointsLeft": "Restpunktestand {score} Punkte",
+    "pointsLeft": "Restpunktestand: {score} Punkte",
     "confirmSelection": "Auswahl bestätigen",
     "detailHeadline": "Award",
-    "noAvailable": "Tut uns leid! Aktuell hast Du keine Awards, die du verleihen könntest.",
+    "noAvailable": "Tut uns leid! Aktuell hast Du keine Awards, die Du verleihen könntest.",
     "violations": {
       "1661952434": "Halt! Du kannst Dir nicht selber einen Award verleihen ;)",
-      "1661952502": "Du musst Teilnehmer*in der Kampagne sein, um diesen Award zu verleihen.",
+      "1661952502": "Aufgepasst! Du musst Teilnehmer*in der Kampagne sein, um diesen Award zu verleihen.",
       "1661952537": "Oje! Du hast leider nicht genug Punkte. Verdiene mehr, indem Du Dich an der Kampagne beteiligst.",
       "1661952565": "Das geht leider nicht! Du hast diesen Award bereits verliehen.",
-      "1664887726": "Du kannst gelöschten Usern keine Awards verleihen."
+      "1664887726": "Ups! Du kannst gelöschten Usern keine Awards verleihen."
     }
   },
   "badges": {
     "detailHeadline": "Badges",
-    "linkToCatalog": "Objekt in Katalog anzeigen"
+    "linkToCatalog": "Objekt im Digitalen Katalog anzeigen"
   },
   "filter": {
     "newest": "Neu",
@@ -357,64 +353,64 @@
   "today": "Heute",
   "notifications": {
     "1662032613": {
-      "title": "{award}",
-      "text": "Du hast {points} Punkte für die Vergabe eines Awards, in der Kampagne {campaign}, erhalten!"
+      "title": "Award Strike",
+      "text": "Du hast {points} Punkte für das Verschenken eines Awards in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032722": {
-      "title": "{award}",
-      "text": "Du hast {points} Punkte erhalten, weil Du einen Award in der Kampagne {campaign} erhalten hast!"
+      "title": "Award Strike",
+      "text": "Du hast {points} Punkte erhalten, weil dir ein Award in der Kampagne \"{campaign}\" verliehen wurde!"
     },
     "1662032767": {
       "title": "Kommentar Score",
-      "text": "Du hast {points} Punkte für deinen Kommentar in der Kampagne {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Deinen Kommentar in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032840": {
       "title": "Feedback Score",
-      "text": "Du hast {points} Punkte für Dein Feedback in der Kampagne {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Dein Feedback in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032913": {
       "title": "Login Strike",
-      "text": "Du hast {points} Punkte für Deinen Login in der Kampagne {campaign} erhalten!"
+      "text": "Du hast {points} Punkte in der Kampagne \"{campaign}\" für Deinen Login im Creative Museum erhalten!"
     },
     "1662032958": {
       "title": "Beitrag Score",
-      "text": "Du hast {points} Punkte für Deinen Beitrag in der Kampagne {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Deinen Beitrag in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662033166": {
       "title": "Registrierung Strike",
-      "text": "Du hast {points} Punkte für Deine Registrierung in der Kampagne {campaign} erhalten!"
+      "text": "Du hast {points} Punkte in der Kampagne \"{campaign}\" für Deine Registrierung im Creative Museum erhalten!"
     },
     "1662033222": {
       "title": "Voting Score",
-      "text": "Du hast {points} Punkte für Dein Voting in der Kampagne {campaign} erhalten!"
+      "text": "Du hast {points} Punkte für Dein Voting in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662033266": {
       "title": "Breaking News",
-      "text": "Neuer Beitrag in der Kampagne {campaign} von {author}!"
+      "text": "Neuer Beitrag in der Kampagne \"{campaign}\" von {author}!"
     },
     "1662033328": {
       "title": "{badge}",
       "text": "Du hast das Badge {badge} erhalten!"
     },
     "1662033370": {
-      "title": "Badisches Landesmuseum",
-      "text": "Neue Kampagne {campaign} verfügbar!"
+      "title": "Neue Kampagne",
+      "text": "Die Kampagne \"{campaign}\" ist ab sofort verfügbar!"
     },
     "1662033414": {
       "title": "{award}",
       "text": "Du hast den Award {award} von {awardGiver} erhalten!"
     },
     "1662033487": {
-      "title": "Badisches Landesmuseum",
+      "title": "Willkommen",
       "text": "Herzlich Willkommen im Creative Museum!"
     },
     "1662033562": {
-      "title": "Badisches Landesmuseum",
-      "text": "Danke, wir kümmern uns und prüfen den Beitrag."
+      "title": "Beitrag gemeldet",
+      "text": "Danke für deine Meldung! Wir prüfen den Beitrag auf Unangemessenheit."
     },
     "1662114392": {
-      "title": "Badisches Landesmuseum",
-      "text": "Einer Deiner Beiträge wird auf Anstößigkeit geprüft!"
+      "title": "Beitrag gemeldet",
+      "text": "Einer Deiner Beiträge wurde als unangemessen gemeldet und wird überprüft!"
     },
     "1662114293": {
       "title": "{award}",

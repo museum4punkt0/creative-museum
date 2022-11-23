@@ -1,40 +1,69 @@
 {
+  "system": "Creative Museum",
+  "dateFormat": "DD.MM.YYYY",
+  "anonymous": "Anonymous User",
+  "deleted": "User deleted",
   "locale": "English",
-  "dateFormat": "YYYY-MM-DD",
   "next": "Next",
   "prev": "Back",
+  "yes": "Yes",
+  "no": "No",
   "submit": "Submit",
   "close": "Close",
   "till": "until",
-  "readLess": "Read less",
-  "readMore": "Read more",
-  "showAll": "Show all",
+  "readLess": "Read Less",
+  "readMore": "Read More...",
+  "showAll": "Show All",
   "hide": "Hide",
-  "noUsername": "No username",
+  "noUsername": "No Username",
   "duration": "Duration",
+  "selectProfile": "Select Profile",
+  "confirmSelection": "Confirm Selection",
+  "globalLogin": {
+    "header": "Login",
+    "text": "You are not logged in right now. Log in and earn points with your actions.",
+    "button": "Log in now"
+  },
+  "globalCampaignClosed": {
+    "header": "This campaign has ended",
+    "text": "This campaign has ended. Interactions are no longer possible."
+  },
+  "globalProfileUpdate": {
+    "header": "Edit Profile",
+    "deleteUser": {
+      "header": "Delete Profile",
+      "subheader": "Sorry that you are leaving! Please confirm the deletion of your profile below. In order to keep a good record of the discussions in the Creative Museum, we would like to continue to display your contributions anonymously. Please choose how you would like to handle your content:",
+      "options": {
+        "permanent": "I want to permanently delete all my posts and comments.",
+        "anonymize": "I agree that my contributions will remain as anonymous."
+      },
+      "abort": "Abort",
+      "confirm": "Permanently Delete Profile"
+    }
+  },
   "provideUsername": {
-    "title": "Provide Username",
+    "title": "Define Username",
     "notice": "Illegal characters in username.",
     "alreadyTaken": "Oops! Sorry, this username is already taken."
   },
   "tutorial": {
-    "firstSteps": "First steps",
+    "firstSteps": "First Steps",
     "skipTutorial": "Straight to Creative Museum",
     "step1": {
       "title": "Welcome to Creative Museum!",
-      "text": "Glad you're a part of Creative Museum. We'll introduce you to the main features in the following steps."
+      "text": "The Creative Museum is a participatory platform for debate and exchange. In the following steps, we will introduce you to the most important functions."
     },
     "step2": {
       "title": "Points",
-      "text": "All your actions in Creative Museum will earn you points. Points can be redeemed later for awards and other surprises. So here we go: Start collecting!"
+      "text": "With all your actions in the Creative Museum, you collect points. You can later spend your points on awards to give away to other users. So here we go: Start collecting!"
     },
     "step3": {
       "title": "Create Posts",
-      "text": "There are several ways you can participate in the Creative Museum. One of the most important of them is posts that you can create and share yourself. Choose from image, text, video, and audio posts, or even create your own poll or playlist!"
+      "text": "In the Creative Museum, you can share your own content and interact with others. Post a picture, text, video or audio contribution, your own survey or create a playlist from several contributions!"
     },
     "step4": {
       "title": "Awards",
-      "text": "You can unlock different awards in each campaign by collecting points and then awarding them to other participants."
+      "text": "You can unlock different awards in each campaign by collecting points and then awarding them to other participants"
     },
     "step5": {
       "title": "Badges",
@@ -45,8 +74,8 @@
     "profile": {
       "header": "Profile",
       "settings": "Settings",
-      "search": "Search profiles",
-      "invite": "Invite friends"
+      "search": "Search Profiles",
+      "invite": "Invite Friends"
     },
     "museum": {
       "header": "Creative Museum",
@@ -60,24 +89,26 @@
     }
   },
   "post": {
+    "upvotes": "Upvote(s)",
+    "downvotes": "Downvote(s)",
     "types": {
       "text": {
         "button": "Text",
-        "headline": "Upload text"
+        "headline": "Upload Text"
       },
       "image": {
         "button": "Image",
-        "headline": "Upload image",
+        "headline": "Upload Image",
         "uploader": {
-          "add": "Add image",
-          "replace": "Replace image"
+          "add": "Add Image",
+          "replace": "Replace Image"
         }
       },
       "poll": {
         "button": "Poll",
-        "headline": "Upload poll",
-        "pollTitle": "Poll title",
-        "pollDescription": "Explanation of poll question",
+        "headline": "Upload Poll",
+        "pollTitle": "Add Poll Question",
+        "pollDescription": "Explanation of Poll Question",
         "option": {
           "0": "Option A",
           "1": "Option B",
@@ -92,113 +123,188 @@
           "3": "D",
           "4": "E"
         },
-        "addOption": "Add option",
+        "addOption": "Add Option",
         "removeOption": "Delete"
       },
       "audio": {
         "button": "Audio",
-        "headline": "Upload audio"
+        "headline": "Upload Audio"
       },
       "video": {
         "button": "Video",
-        "headline": "Upload video"
+        "headline": "Upload Video",
+        "uploader": {
+          "add": "Add Video",
+          "replace": "Replace Video"
+        }
       },
       "playlist": {
         "button": "Playlist",
-        "headline": "Upload playlist"
+        "headline": "Add Playlist"
       }
     },
-    "new": "New post",
+    "new": "New Post",
     "placeholder": {
-      "title": "Add title (optional)",
-      "body": "Add text",
+      "title": "Add Title (optional)",
+      "body": "Add Text",
       "image": {
-        "alttext": "Description for persons with visual impairment (optional)"
+        "alttext": "Visual description (optional)"
       }
     },
     "share": "Share",
     "feedback": "Feedback",
     "postComment": "Comment...",
-    "showComments": "Show all {count} comments",
-    "hideComments": "Hide all {count} comments",
-    "commentPlaceholder": "Post your comment...",
-    "moreActions": "Further actions",
+    "showComments": "Show All {count} Comments",
+    "hideComments": "Hide All {count} Comments",
+    "commentPlaceholder": "Post Your Comment...",
+    "moreActions": "More Actions",
     "actions": {
-      "addBookmark": "Add to watchlist",
-      "removeBookmark": "Remove from watchlist",
-      "addToPlaylist": "Add to playlist",
+      "addBookmark": "Add to Watchlist",
+      "removeBookmark": "Remove from Watchlist",
+      "addToPlaylist": "Add to Playlist",
+      "assignAward": "Give Award",
       "playlist": {
         "createNew": {
-          "cta": "Create new playlist",
-          "submitButton": "Create playlist",
-          "placeholder": "Playlist name"
+          "cta": "Create New Playlist",
+          "submitButton": "Create Playlist",
+          "placeholder": "Playlist Name"
         }
+      },
+      "delete": {
+        "button": "Delete Post",
+        "headline": "Really Delete Post?",
+        "confirmation": "Please confirm that you really want to delete this post."
+      },
+      "report": {
+        "button": "Report Post",
+        "headline": "Really Report Post?",
+        "confirmation": "Please confirm that this post violates the Creative Museum Terms of Use and that you wish to report it to the editors."
+      },
+      "shareLink": {
+        "button": "Share Post"
+      },
+      "copyLink": {
+        "button": "Copy Link",
+        "success": "Link copied"
       }
     },
     "errors": {
-      "1657590177": "The description text is too long."
+      "1657590177": "Oops! The description is too long."
     }
   },
   "playlist": {
-    "addTo": "Add to playlist",
-    "createNew": "Create new playlist",
-    "new": "New playlist"
+    "addTo": "Add to Playlist",
+    "createNew": "Create New Playlist",
+    "new": "New Playlist"
   },
+  "points": "Points",
+  "score": "Score",
   "user": {
-    "points": "Points",
-    "editProfile": "Edit profile",
-    "score": "Score",
-    "yourCurrentScore": "Your current score",
+    "search": "Search Profile",
+    "showProfile": "Show Profile",
+    "editProfile": "Edit Profile",
+    "yourCurrentScore": "Your Current Score",
+    "violation": {
+      "23bd9dbf-6b9b-41cd-a99e-4844bcf3077f": "Oops! Sorry, this username is already taken."
+    },
     "profile": {
-      "self": {
-        "headline": "Hello {username}",
-        "points": "Score",
-        "score": "Points",
-        "notifications": "Latest notifications",
+      "badges": {
+        "headline": "Badges"
+      },
+      "activities": {
+        "headline": "Activities",
+        "posts": "Posts",
+        "bookmarks": "Watchlist",
+        "playlists": "Playlists",
         "awards": "Awards",
+        "notifications": "Latest Notifications"
+      },
+      "headline": "Profile",
+      "self": {
+        "headline": "Hello {firstName}",
         "badges": {
-          "headline": "Badges",
           "points": {
-            "scoring": "You have collected {threshold} points.",
-            "awards": "You have awarded {threshold} Awards",
-            "reward_points": "You have awarded {threshold} Awards verliehen.",
+            "scoring": "You have collected {threshold} Points.",
+            "awards": "You have given {threshold} Awards.",
+            "reward_points": "You have given {threshold} Awards.",
             "postcount": "You have created {threshold} Posts.",
-            "likes": "You have voted on {threshold} posts."
+            "likes": "You have voted {threshold} Posts."
           }
         },
         "activities": {
-          "headline": "My activities",
-          "posts": "Posts",
-          "bookmarks": "Watchlist",
-          "playlists": "Playlists"
+          "headline": "My Activities"
         },
         "edit": {
-          "personalData": "Personal Settings",
-          "firstName": "First name",
-          "lastName": "Last name",
+          "personalData": "Personal Data",
+          "firstName": "First Name",
+          "lastName": "Last Name",
           "email": "E-Mail",
           "username": "Username",
-          "notifications": "Notifications",
-          "save": "Save changes",
-          "removal": "Delete profile",
-          "deleteProfile": "Delete profile",
+          "notifications": "E-Mail Notifications",
+          "personalNotifications": "Personal Notifications (Comments, awards and badges received, reported posts)",
+          "cmNotifications": "Creative Museum Notifications (New campaign available, campaign ended)",
+          "save": "Save Changes",
+          "removal": "Delete Profile",
+          "deleteProfile": "Delete Profile",
           "placeholder": {
-            "description": "Profile description and status of the user."
+            "description": "Your profile description can be here."
           }
         }
       }
     }
   },
   "campaign": {
-    "partner": "Campaign partners",
-    "latestPosts": "Latest notifications",
-    "awards": "Awards"
+    "partner": "Campaign Partners",
+    "latestPosts": "Latest Notifications",
+    "awards": "Awards",
+    "noMorePosts": "No Further Posts",
+    "newPosts": "New Posts",
+    "closed": {
+      "result": {
+        "description": "This campaign \"{campaign}\" has ended. The users who have given the most awards are:"
+      }
+    }
+  },
+  "systemMessages": {
+    "1663764951": "Applause!!! {giver} has given {winner} the award ´{award}´"
+  },
+  "awards": {
+    "from": "from",
+    "to": "to",
+    "select": "Select Award",
+    "available": "Available Awards",
+    "unavailable": "Available Soon",
+    "loginToReceiveAwards": "Log in to unlock awards",
+    "gift": "Give Award",
+    "given": "Award given",
+    "giftAward": "Give Award",
+    "gifted": "Awards Given",
+    "received": "Awards Received",
+    "givenConfirmText": "You gave the award \"{title}\" for {price} points to {username}!",
+    "pointsLeft": "Remaining Score: {score} Points",
+    "confirmSelection": "Confirm Selection",
+    "detailHeadline": "Award",
+    "noAvailable": "We are sorry! Currently you don't have any awards that you can give away.",
+    "violations": {
+      "1661952434": "Stop! You can not give yourself an award ;)",
+      "1661952502": "Attention! You must be a participant in the campaign to receive this award.",
+      "1661952537": "Oh no! You don't have enough points. Earn more by joining the campaign.",
+      "1661952565": "Unfortunately, you can't! You have already given this award.",
+      "1664887726": "Oops! You can't give awards to deleted users."
+    }
+  },
+  "badges": {
+    "detailHeadline": "Badges",
+    "linkToCatalog": "Show Object in Digital Catalog"
   },
   "filter": {
-    "newest": "Newest",
+    "newest": "New",
     "relevant": "Relevant",
-    "controversial": "Controversial",
-    "playlist": "Playlists"
+    "controversial": "Kontroversial",
+    "playlist": "Playlists",
+    "order": {
+      "reverse": "Reverse Sorting Order"
+    }
   },
   "pages": {
     "imprint": {
@@ -207,13 +313,16 @@
     "privacy": {
       "title": "Privacy"
     },
+    "privacySettings": {
+      "title": "Privacy Settings"
+    },
     "accessibility": {
       "title": "Accessibility Statement"
     },
     "external": {
       "stateMuseum": {
         "title": "Badisches Landesmuseum",
-        "url": "https://www.landesmuseum.de/museum"
+        "url": "https://www.landesmuseum.de/en/museum"
       },
       "instagram": {
         "title": "Instagram",
@@ -227,6 +336,85 @@
         "title": "Facebook",
         "url": "https://www.facebook.com/"
       }
+    }
+  },
+  "mailings": {
+    "subjects": {
+      "award_received": "Award %s Received",
+      "badge_received": "Badge %s Received",
+      "new_campaign": "Campaign %s Started",
+      "campaign_closed": "Campaign %s Ended",
+      "post_commented": "New Comment",
+      "post_reported": "New Post Reported",
+      "post_reported_author": "Your post has been reported",
+      "system": "You have received a message from the Creative Museum"
+    }
+  },
+  "today": "Today",
+  "notifications": {
+    "1662032613": {
+      "title": "Award Strike",
+      "text": "You have earned {points} points for giving away an award in the ´{campaign}´ campaign!"
+    },
+    "1662032722": {
+      "title": "Award Strike",
+      "text": "You have earned {points} points because you have been awarded an award in the ´{campaign}´ campaign!"
+    },
+    "1662032767": {
+      "title": "Comment Score",
+      "text": "You have received {points} points for your comment in the ´{campaign}´ campaign!"
+    },
+    "1662032840": {
+      "title": "Feedback Score",
+      "text": "You have received {points} points for your feedback in the ´{campaign}´ campaign!"
+    },
+    "1662032913": {
+      "title": "Login Strike",
+      "text": "You have received {points} points for your login in the campaign ´{campaign}´!"
+    },
+    "1662032958": {
+      "title": "Post Score",
+      "text": "You have earned {points} points for your post in the ´{campaign}´ campaign!"
+    },
+    "1662033166": {
+      "title": "Registration Strike",
+      "text": "You have received {points} points in the campaign ´{campaign}´ for your registration in the Creative Museum!"
+    },
+    "1662033222": {
+      "title": "Voting Score",
+      "text": "You have received {points} points for your voting in the campaign ´{campaign}´!"
+    },
+    "1662033266": {
+      "title": "Breaking News",
+      "text": "New post in the campaign ´{campaign}´ by {author}!"
+    },
+    "1662033328": {
+      "title": "{badge}",
+      "text": "You have received the badge {badge}!"
+    },
+    "1662033370": {
+      "title": "New Campaign",
+      "text": "The campaign ´{campaign}´ is available now!"
+    },
+    "1662033414": {
+      "title": "{award}",
+      "text": "You have received the {award} award from {awardGiver}!"
+    },
+    "1662033487": {
+      "title": "Welcome",
+      "text": "Welcome to the Creative Museum!"
+    },
+    "1662033562": {
+      "title": "Post reported",
+      "text": "Thank you for your message! We will check the post for inappropriateness."
+    },
+    "1662114392": {
+      "title": "Post reported",
+      "text": "One of your posts has been reported as inappropriate and is being reviewed!"
+    },
+    "1662114293": {
+      "title": "{award}",
+      "text": "You have given the {award} award to {awardWinner}!"
     }
   }
 }
