@@ -160,12 +160,12 @@ export default defineComponent({
       } else {
         receivedAwards.value = await fetchAwarded(props.campaign ? props.campaign.id : null, props.user)
         giftedAwards.value = await fetchGiftedAwards(props.campaign ? props.campaign.id : null, props.user)
-        /* List unavailble and available Awards on the profile page
-          if ($auth.loggedIn && !props.user && !props.campaign) {
-            unavailableAwards.value = await fetchAvailableSoonAwards()
-            availableAwards.value = await fetchAvailableAwards()
-          }
-        */
+        /* List unavailble and available Awards on the profile page */
+        if ($auth.loggedIn && !props.user && !props.campaign) {
+          unavailableAwards.value = await fetchAvailableSoonAwards(0)
+          availableAwards.value = await fetchAvailableAwards(0)
+        }
+
         if (props.campaign) {
           unavailableAwards.value = await fetchAvailableSoonAwards(props.campaign.id)
           availableAwards.value = await fetchAvailableAwards(props.campaign.id)

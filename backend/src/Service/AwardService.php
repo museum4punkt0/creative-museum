@@ -51,6 +51,36 @@ class AwardService
             ->execute();
     }
 
+    public function getAllAvailable(User $user)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        return $qb->select('award')
+            ->from(Award::class, 'award')
+            ->andWhere(
+                $qb->expr()->isNull('awarded.id'),
+                $qb->expr()->gte('membership.score', 'award.price')
+            )
+            ->join(
+                CampaignMember::class,
+                'membership',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('membership.user', $user->getId()),
+                )
+            )
+            ->leftjoin(
+                Awarded::class,
+                'awarded',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('awarded.award', 'award.id'),
+                    $qb->expr()->eq('awarded.giver', $user->getId())
+                )
+            )
+            ->getQuery()
+            ->execute();
+    }
+
     public function getAvailableSoonByCampaign(Campaign $campaign, User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
@@ -68,6 +98,37 @@ class AwardService
                 $qb->expr()->andX(
                     $qb->expr()->eq('membership.user', $user->getId()),
                     $qb->expr()->eq('membership.campaign', $campaign->getId())
+                )
+            )
+            ->leftjoin(
+                Awarded::class,
+                'awarded',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('awarded.award', 'award.id'),
+                    $qb->expr()->eq('awarded.giver', $user->getId())
+                )
+            )
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function getAllAvailableSoon(User $user)
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+        return $qb->select('award')
+            ->from(Award::class, 'award')
+            ->andWhere(
+                $qb->expr()->lt('membership.score', 'award.price'),
+                $qb->expr()->isNull('awarded.id')
+            )
+            ->join(
+                CampaignMember::class,
+                'membership',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('membership.user', $user->getId()),
                 )
             )
             ->leftjoin(

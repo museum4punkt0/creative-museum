@@ -19,12 +19,12 @@ export const awardApi = () => {
   }
 
   async function fetchAvailableAwards(campaign) {
-    const response = await $api.get(`campaigns/${campaign}/awards/available`)
+    const response = await $api.get(`campaigns/awards/available/${campaign}`)
     return response
   }
 
   async function fetchAvailableSoonAwards(campaign) {
-    const response = await $api.get(`campaigns/${campaign}/awards/availablesoon`)
+    const response = await $api.get(`campaigns/awards/availablesoon/${campaign}`)
     return response
   }
 

@@ -16,20 +16,24 @@ class GetAvailableAwardsController extends AbstractController
         private readonly AwardService $awardService,
         private readonly CampaignRepository $campaignRepository,
         private readonly Security $security
-    ){}
-
-    public function __invoke(int $campaign)
+    )
     {
-        $campaign = $this->campaignRepository->find($campaign);
+    }
 
+    public function __invoke(int $campaign = 0)
+    {
         $user = $this->security->getUser();
 
-        if (!$user instanceof User || !$campaign instanceof Campaign) {
+        if (!$user instanceof User) {
             return null;
         }
 
-        $avalaibaleAwards = $this->awardService->getAvailableByCampaign($campaign,$user);
+        if ($campaign === 0) {
+            return $this->awardService->getAllAvailable($user);
+        }
 
-        return $avalaibaleAwards;
+        $campaign = $this->campaignRepository->find($campaign);
+        return $this->awardService->getAvailableByCampaign($campaign, $user);
+
     }
 }

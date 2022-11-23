@@ -27,13 +27,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'get',
         'getAvailable' => [
             'method' => 'GET',
-            'path' => '/campaigns/{campaign}/awards/available',
+            'path' => 'campaigns/awards/available/{campaign}',
             'requirements' => ['campaign' => "\d+"],
             'controller' => GetAvailableAwardsController::class,
         ],
         'getAvailableSoon' => [
             'method' => 'GET',
-            'path' => '/campaigns/{campaign}/awards/availablesoon',
+            'path' => '/campaigns/awards/availablesoon/{campaign}',
             'requirements' => ['campaign' => "\d+"],
             'controller' => GetAvailableSoonAwardsController::class,
         ],

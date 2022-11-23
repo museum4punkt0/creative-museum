@@ -17,20 +17,24 @@ class GetAvailableSoonAwardsController extends AbstractController
         private readonly AwardService $awardService,
         private readonly CampaignRepository $campaignRepository,
         private readonly Security $security
-    ){}
-
-    public function __invoke(int $campaign)
+    )
     {
-        $campaign = $this->campaignRepository->find($campaign);
+    }
 
+    public function __invoke(int $campaign = 0)
+    {
         $user = $this->security->getUser();
 
-        if (!$user instanceof User || !$campaign instanceof Campaign) {
+        if (!$user instanceof User) {
             return null;
         }
 
-        $test = $this->awardService->getAvailableSoonByCampaign($campaign,$user);
+        if ($campaign === 0) {
+            return $this->awardService->getAllAvailableSoon($user);
+        }
 
-        return $this->awardService->getAvailableSoonByCampaign($campaign,$user);
+        $campaign = $this->campaignRepository->find($campaign);
+
+        return $this->awardService->getAvailableSoonByCampaign($campaign, $user);
     }
 }
