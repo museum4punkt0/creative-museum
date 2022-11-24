@@ -58,7 +58,10 @@ class AwardService
             ->from(Award::class, 'award')
             ->andWhere(
                 $qb->expr()->isNull('awarded.id'),
-                $qb->expr()->gte('membership.score', 'award.price')
+                $qb->expr()->gte('membership.score', 'award.price'),
+                $qb->expr()->eq('campaign.active', 1),
+                $qb->expr()->eq('campaign.closed', 0),
+                $qb->expr()->eq('campaign.published', 1)
             )
             ->join(
                 CampaignMember::class,
@@ -75,6 +78,14 @@ class AwardService
                 $qb->expr()->andX(
                     $qb->expr()->eq('awarded.award', 'award.id'),
                     $qb->expr()->eq('awarded.giver', $user->getId())
+                )
+            )
+            ->leftJoin(
+                Campaign::class,
+                'campaign',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('campaign.id', 'award.campaign'),
                 )
             )
             ->getQuery()
@@ -121,6 +132,9 @@ class AwardService
             ->from(Award::class, 'award')
             ->andWhere(
                 $qb->expr()->lt('membership.score', 'award.price'),
+                $qb->expr()->eq('campaign.active', 1),
+                $qb->expr()->eq('campaign.closed', 0),
+                $qb->expr()->eq('campaign.published', 1),
                 $qb->expr()->isNull('awarded.id')
             )
             ->join(
@@ -138,6 +152,14 @@ class AwardService
                 $qb->expr()->andX(
                     $qb->expr()->eq('awarded.award', 'award.id'),
                     $qb->expr()->eq('awarded.giver', $user->getId())
+                )
+            )
+            ->leftJoin(
+                Campaign::class,
+                'campaign',
+                Expr\Join::WITH,
+                $qb->expr()->andX(
+                    $qb->expr()->eq('campaign.id', 'award.campaign'),
                 )
             )
             ->setMaxResults(1)
