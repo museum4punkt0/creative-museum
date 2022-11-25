@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <p>Hallo {{ comment.parent.author.firstName }},</p>
-    <p>{{ comment.author.username }} hat deinen Beitrag in der Kampagne {{ comment.campaign.title }} kommentiert. Schau dir den Kommentar hier an: <a href="{{ domain }}/posts/{{ comment.parent.id }}" >hier</a>.</p>
+    <p>{{ comment.author.username }} hat deinen Beitrag in der Kampagne {{ comment.campaign.title }} kommentiert. Schau dir den Kommentar hier an: <a href="{{ domain }}posts/{{ comment.parent.id }}" >hier</a>.</p>
     <p>
         Bis gleich im Creative Museum! <br />
         <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>

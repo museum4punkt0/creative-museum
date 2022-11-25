@@ -49,7 +49,8 @@ class HandleCampaignActivationCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $campaigns = $this->campaignRepository->findBy([
-            'closed' => false
+            'closed' => false,
+            'published' => true
         ]);
 
         foreach ($campaigns as $campaign) {

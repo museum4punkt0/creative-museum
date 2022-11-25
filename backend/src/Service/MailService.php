@@ -11,6 +11,8 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class MailService
 {
@@ -19,7 +21,8 @@ class MailService
         private readonly string $fromMail,
         private readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
+        private readonly RouterInterface $router
     )
     {
     }
@@ -79,8 +82,9 @@ class MailService
 
     protected function prepareMail(string $identifier, User $receiver, array $parameters = []): TemplatedEmail
     {
+        $parameters['domain'] = $this->router->generate('start', [], UrlGeneratorInterface::ABSOLUTE_URL);
         $parameters['receiver'] = $receiver;
-        $parameters['domain'] = $_SERVER['HTTP_ORIGIN'];
+
 
         $subject = $this->getSubject($identifier, $parameters);
 

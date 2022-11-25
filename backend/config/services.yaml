@@ -22,7 +22,6 @@ parameters:
     fromMail: 'noreply@creativemuseum.landesmuseum.net'
     editorMail: 'noreply@creativemuseum.landesmuseum.net'
 
-
 services:
     # default configuration for services in *this* file
     _defaults:
