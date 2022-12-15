@@ -61,7 +61,7 @@ class HandleCampaignActivationCommand extends Command
                 $campaign->setActive(true);
                 $campaign->setClosed(false);
                 $this->mailService->sendMail(MailType::NEW_CAMPAIGN->value,null,['campaign' => $campaign]);
-            } elseif (!$campaign->getClosed()) {
+            } elseif (Carbon::now()->greaterThan($endDate) && !$campaign->getClosed()) {
                 $campaign->setClosed(true);
                 $this->mailService->sendMail(MailType::CAMPAIGN_CLOSED->value,null,['campaign' => $campaign]);
             }

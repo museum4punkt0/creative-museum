@@ -116,6 +116,13 @@ services:
                 name: 'doctrine.orm.entity_listener'
                 event: 'preUpdate'
                 entity: 'App\Entity\CampaignMember'
+
+    App\EventListener\CampaignActiveListener:
+        tags:
+            - # these are the options required to define the entity listener
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\Campaign'
     App\Validator\PostBodyLengthValidator:
         arguments:
             1: '%textPostBodyLength%'
