@@ -16,7 +16,7 @@ class CampaignActiveListener
 
     public function preUpdate(Campaign $campaign, LifecycleEventArgs $event)
     {
-        if (!array_key_exists('active', $event->getEntityChangeSet())) {
+        if (!array_key_exists('active', $event->getEntityChangeSet()) || $event->getEntityChangeSet()['active'] == false) {
             return;
         }
 
