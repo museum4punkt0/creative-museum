@@ -68,7 +68,7 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
         foreach ($unbadged as $badge) {
             if (
                 (BadgeType::SCORING === $badge->getType() && $campaignMember->getScore() >= $badge->getThreshold()) ||
-                (BadgeType::REWARD_POINTS === $badge->getType() && $campaignMember->getRewardPoints() >= $badge->getThreshold())
+                (BadgeType::AWARDS === $badge->getType() && $campaignMember->getRewardPoints() >= $badge->getThreshold())
             ) {
                 $badged = $this->badgeService->createBadged($badge, $campaignMember->getUser());
                 $this->bus->dispatch(new NotifyNewBadgeReceived($campaignMember->getUser()->getId(), $badge->getId()));
