@@ -37,7 +37,7 @@ export default {
     '~/plugins/user',
     { src: '~/plugins/updater', mode: 'client' },
     { src: '~/plugins/tooltip', mode: 'client' },
-    { src: '~/plugins/clipboard', mode: 'client' },
+    { src: '~/plugins/clipboard', mode: 'client' }
   ],
   buildModules: [
     '@nuxt/typescript-build',

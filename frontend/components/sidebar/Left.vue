@@ -45,9 +45,10 @@
 
       <div v-if="userData.memberships.length">
         <h2 class="font-bold mb-3 mt-12">{{ $t('score') }}</h2>
-        <div
+        <NuxtLink
           v-for="(membership, key) in userData.memberships"
           :key="key"
+          :to="localePath('/campaigns/' + membership.campaign.id)"
           class="self-stretch md:self-start mt-4"
           :style="`--highlight: ${membership.campaign.color};`"
         >
@@ -62,7 +63,7 @@
             }}</span>
             <span>{{ $t('points') }}</span>
           </div>
-        </div>
+        </NuxtLink>
       </div>
     </template>
     <div v-if="isLargerThanLg">

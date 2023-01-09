@@ -96,7 +96,7 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <UtilitiesModal v-if="openAddModalType !== ''">
+        <UtilitiesModal v-if="openAddModalType !== ''" @closeModal="abortPost">
           <component
             :is="addComponentName"
             @abortPost="abortPost"

@@ -1,5 +1,5 @@
 <template>
-  <div role="dialog" tabindex="0" @keydown.esc="$emit('closeModal')">
+  <div role="dialog" tabindex="0" @keydown.esc="$emit('closeModal')" @click.stop="$emit('closeModal')" >
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"
     ></div>
