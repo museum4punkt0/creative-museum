@@ -19,6 +19,9 @@
   "duration": "Duration",
   "selectProfile": "Select Profile",
   "confirmSelection": "Confirm Selection",
+  "menu": {
+    "open": "Menu open"
+  },
   "globalLogin": {
     "header": "Login",
     "text": "You are not logged in right now. Log in and earn points with your actions.",

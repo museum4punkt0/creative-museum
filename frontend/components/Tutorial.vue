@@ -37,7 +37,7 @@
       </div>
       <div v-show="step === 3">
         <div class="h-30">
-          <TutorialCreate class="text-white/50 h-20 mx-auto my-6" />
+          <img src="/images/tutorialCreate.svg" class="text-white/50 h-20 mx-auto my-6" />
         </div>
         <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step3.title') }}</h2>
@@ -47,7 +47,7 @@
       </div>
       <div v-show="step === 4">
         <div class="h-30">
-          <TutorialAward class="mx-auto my-6 max-h-30" />
+          <img src="/images/tutorialAward.svg" class="mx-auto my-6 max-h-30" />
         </div>
         <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step4.title') }}</h2>
@@ -57,7 +57,7 @@
       </div>
       <div v-show="step === 5">
         <div class="h-30">
-          <TutorialBadge class="mx-auto my-6 max-h-30" />
+          <img src="/images/tutorialBadge.svg" class="mx-auto my-6 max-h-30" />
         </div>
         <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step5.title') }}</h2>
@@ -92,16 +92,10 @@
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 import Logo from '@/assets/images/logo.svg?inline'
-import TutorialCreate from '@/assets/images/tutorialCreate.svg?inline'
-import TutorialAward from '@/assets/images/tutorialAward.svg?inline'
-import TutorialBadge from '@/assets/images/tutorialBadge.svg?inline'
 
 export default defineComponent({
   components: {
-    Logo,
-    TutorialCreate,
-    TutorialAward,
-    TutorialBadge
+    Logo
   },
   emits: ['closeModal'],
   setup(_, context) {
