@@ -21,7 +21,7 @@
           <span
             class="h-30 flex flex-col align-center items-center justify-center"
           >
-            <span class="block text-center my-4 add-btn-inline text-white"></span>
+            <span class="block text-center my-4 add-btn-inline"></span>
             {{ $t('playlist.new') }}
           </span>
         </button>
