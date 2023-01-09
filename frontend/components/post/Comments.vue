@@ -56,7 +56,7 @@
             @click.prevent="showLoginIfNotLoggedIn"
           ></textarea>
           <button
-            class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 z-100 focus:outline-none focus-visible:text-white"
+            class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 focus:outline-none focus-visible:text-white"
             @click.prevent="submitComment"
           >
             <ArrowIcon />
