@@ -6,7 +6,7 @@
     <div class="lg:col-span-3 lg:order-3 mb-6 lg:mb-0">
       <SidebarRight />
     </div>
-    <div class="lg:col-span-6 lg:pr-10 lg:order-2">
+    <div id="top" class="lg:col-span-6 lg:pr-10 lg:order-2">
       <div class="flex flex-row content-between">
         <h2 class="text-2xl">
           {{ $t('user.profile.self.activities.headline') }}
@@ -108,12 +108,14 @@ import {
   useContext,
   useRouter,
   watch,
+  onActivated,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 import { playlistApi } from '@/api/playlist'
 
 export default defineComponent({
   name: 'ProfilePage',
+  layout: 'BreakScrollDefault',
   setup() {
     const { fetchUserPosts, fetchUserBookmarks } = postApi()
     const { fetchPlaylist } = playlistApi()
