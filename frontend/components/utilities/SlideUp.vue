@@ -1,10 +1,11 @@
 <template>
-  <div role="dialog" tabindex="0" @keydown.esc="$emit('closeModal')" @click.stop="$emit('closeModal')" >
+  <div role="dialog" tabindex="0" @keydown.esc="$emit('closeModal')">
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"
     ></div>
     <div
       class="fixed top-0 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40 lg:z-100"
+      @click.self="$emit('closeModal')"
     >
       <div
         class="slideup bg-grey text-white fixed flex flex-col flex-1 right-2 lg:right-auto left-2 lg:left-1/2 pb-4 lg:pb-0 lg:min-w-2xl lg:min-h-xl bottom-0 lg:bottom-auto lg:top-1/2 rounded-xl transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2"

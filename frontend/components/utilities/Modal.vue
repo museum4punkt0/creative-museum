@@ -1,10 +1,11 @@
 <template>
-  <div role="dialog" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keydown.esc="$emit('closeModal')" @click.stop="$emit('closeModal')">
+  <div role="dialog" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keydown.esc="$emit('closeModal')">
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none"
     ></div>
     <div
       class="fixed top-13 right-0 bottom-0 left-0 backdrop-filter lg:backdrop-blur-lg z-40"
+      @click.self="$emit('closeModal')"
     >
       <div
         class="modal bg-grey text-white fixed flex flex-col flex-1 top-13 lg:top-1/2 right-0 lg:auto left-0 lg:left-1/2 min-w-full lg:min-w-2xl lg:min-h-xl bottom-0 lg:bottom-auto rounded-xl lg:transform-gpu lg:-translate-x-1/2 lg:-translate-y-1/2"

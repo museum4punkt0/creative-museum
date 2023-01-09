@@ -125,7 +125,6 @@ export default defineComponent({
     const playlists = ref(null)
     const playlistPosts = ref(null)
     const bookmarks = ref(null)
-
     const showPlaylist = ref(0)
 
     const isLargerThanLg = computed(() => {
