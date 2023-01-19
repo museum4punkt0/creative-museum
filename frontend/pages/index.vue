@@ -5,6 +5,7 @@
         v-if="campaigns && campaigns.length > 0"
         class="px-container-padding"
       >
+        <h1 class="sr-only">{{ $t('campaigns.headline') }}</h1>
         <CampaignStack :campaigns="campaigns" />
       </div>
       <div v-else-if="campaigns && campaigns.length === 0">No Campaigns</div>

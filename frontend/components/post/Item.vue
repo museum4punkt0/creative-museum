@@ -46,6 +46,7 @@
     <UtilitiesSlideUp
       v-if="showFeedbackForm"
       :closable="true"
+      :aria-label="$('modal.feedback')"
       @closeModal="showFeedbackForm = false"
     >
       <div class="p-6">

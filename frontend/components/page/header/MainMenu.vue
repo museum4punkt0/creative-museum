@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:grid lg:grid-cols-4 p-6 container text-white">
+  <nav class="lg:grid lg:grid-cols-4 p-6 container text-white">
     <div class="mb-10 lg:mb-0">
       <client-only>
         <a
@@ -22,50 +22,69 @@
         </a>
       </client-only>
     </div>
-    <nav class="mb-10 lg:mb-0" role="navigation">
-      <NuxtLink
-        v-if="$auth.loggedIn"
-        to="/user/profile"
-        class="block text-lg font-bold leading-loose mb-4"
-        @click.native="closeMenu"
-      >
-        {{ $t('navigation.profile.header') }}
-      </NuxtLink>
-      <a
-        v-if="$auth.loggedIn"
-        href="#"
-        class="block mb-4 cursor-pointer"
-        @click.prevent="showProfileUpdate"
-        >{{ $t('navigation.profile.settings') }}</a
-      >
-      <NuxtLink
-        v-if="$auth.loggedIn"
-        to="/user/search"
-        class="block mb-4"
-        @click.native="closeMenu"
-        >{{ $t('navigation.profile.search') }}</NuxtLink
-      >
-      <NuxtLink
-        v-if="$auth.loggedIn"
-        to="/"
-        class="block"
-        @click.native="closeMenu"
-        >{{ $t('navigation.profile.invite') }}</NuxtLink
-      >
-    </nav>
+    <div class="mb-10 lg:mb-0">
+      <ul>
+        <li>
+          <NuxtLink
+            v-if="$auth.loggedIn"
+            to="/user/profile"
+            class="block text-lg font-bold leading-loose mb-4"
+            @click.native="closeMenu"
+          >
+            {{ $t('navigation.profile.header') }}
+          </NuxtLink>
+        </li>
+        <li>
+          <a
+            v-if="$auth.loggedIn"
+            href="#"
+            class="block mb-4 cursor-pointer"
+            @click.prevent="showProfileUpdate"
+            >{{ $t('navigation.profile.settings') }}</a
+          >
+        </li>
+        <li>
+          <NuxtLink
+            v-if="$auth.loggedIn"
+            to="/user/search"
+            class="block mb-4"
+            @click.native="closeMenu"
+            >{{ $t('navigation.profile.search') }}</NuxtLink
+          >
+        </li>
+        <li>
+          <NuxtLink
+            v-if="$auth.loggedIn"
+            to="/"
+            class="block"
+            @click.native="closeMenu"
+            >{{ $t('navigation.profile.invite') }}</NuxtLink
+          >
+        </li>
+      </ul>
+    </div>
     <div class="mb-10 lg:0">
       <p class="text-lg font-bold leading-loose mb-4">
         {{ $t('navigation.museum.header') }}
       </p>
-      <NuxtLink to="/about" class="block mb-4" @click.native="closeMenu">{{
-        $t('navigation.museum.about')
-      }}</NuxtLink>
-      <a href="#" class="block mb-4" @click.prevent="showTutorial">{{
-        $t('navigation.museum.firstSteps')
-      }}</a>
-      <NuxtLink to="/faq" class="block" @click.native="closeMenu">{{
-        $t('navigation.museum.faq')
-      }}</NuxtLink>
+      <ul>
+        <li>
+          <NuxtLink to="/about" class="block mb-4" @click.native="closeMenu">
+            {{ $t('navigation.museum.about') }}
+          </NuxtLink>
+        </li>
+        <li>
+          <a href="#" class="block mb-4" @click.prevent="showTutorial">
+            {{ $t('navigation.museum.firstSteps') }}
+          </a>
+        </li>
+        <li>
+          <NuxtLink to="/faq" class="block" @click.native="closeMenu">
+            {{ $t('navigation.museum.faq') }}
+          </NuxtLink>
+        </li>
+      </ul>
+
     </div>
     <div class="mb-10 lg:mb-0">
       <div class="flex flex-row items-center mb-4">
@@ -118,7 +137,7 @@
         <NuxtLink to="/signLanguage" @click.native="closeMenu">{{ $t('navigation.language.signLanguage') }}</NuxtLink>
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 <script>
 import { defineComponent, useContext, useStore } from '@nuxtjs/composition-api'

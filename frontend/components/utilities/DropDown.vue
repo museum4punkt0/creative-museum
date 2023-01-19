@@ -3,6 +3,7 @@
     <button
       class="btn-outline btn-dropdown px-2 pr-6 py-1 mb-3 rounded-full self-start text-sm border border-white"
       :class="showOptions ? 'active' : ''"
+      :aria-expanded="showOptions ? 'true' : 'false'"
       @click.prevent="toggleDropdown"
     >
       {{ label }}
@@ -15,6 +16,7 @@
         v-for="(item, key) in options"
         :key="key"
         class="btn-outline border-dashed px-2 py-1 mb-3 ml-3 lg:ml-0 rounded-full text-sm whitespace-nowrap border border-white self-start"
+        :aria-current="item.id === selectedValue ? 'true' : 'false'"
         :class="[
           item.id === selectedValue ? 'active' : '',
           key > 0 ? 'ml-3' : 'ml-6',

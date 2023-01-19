@@ -15,9 +15,9 @@
             </template>
           </span>
         </div>
-        <h1 v-if="campaign.title" class="my-4 text-xl lg:text-xxl">
+        <h2 v-if="campaign.title" class="my-4 text-xl lg:text-xxl">
           {{ campaign.title }}
-        </h1>
+        </h2>
       </header>
       <div v-if="campaign.shortDescription" class="break-word overflow-y-scroll scrollbar-hide">
         <span v-html="campaignShortDescription"></span>

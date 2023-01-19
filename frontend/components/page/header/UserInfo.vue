@@ -41,7 +41,7 @@
         leave-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <UtilitiesModal v-if="user && !user.username">
+        <UtilitiesModal v-if="user && !user.username" :aria-label=" $t('modal.setUsername') ">
           <div class="flex flex-col flex-1 justify-between">
             <div>
               <h1 class="page-header px-6">

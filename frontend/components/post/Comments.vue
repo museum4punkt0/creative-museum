@@ -57,6 +57,7 @@
           ></textarea>
           <button
             class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 focus:outline-none focus-visible:text-white"
+            :aria-label="$t('post.postCommentSend')"
             @click.prevent="submitComment"
           >
             <ArrowIcon />

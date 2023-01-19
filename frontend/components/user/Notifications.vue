@@ -23,12 +23,14 @@
         :key="key"
         class="mb-10"
       >
-        <p class="text-lg">{{ today === key ? $t('today') : key }}</p>
-        <NotificationItem
-          v-for="notification in notificationGroup"
-          :key="notification.id"
-          :notification="notification"
-        />
+        <h3 class="text-lg">{{ today === key ? $t('today') : key }}</h3>
+        <ul>
+          <li v-for="notification in notificationGroup" :key="notification.id">
+            <NotificationItem
+              :notification="notification"
+            />
+          </li>
+        </ul>
       </div>
     </div>
     <div v-else>

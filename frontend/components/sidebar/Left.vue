@@ -26,9 +26,9 @@
       </div>
 
       <div class="mb-10">
-        <h1 class="text-2xl">
+        <h2 class="text-2xl">
           {{ !userData.deleted ? `@${userData.username}` : $userName(userData) }}
-        </h1>
+        </h2>
         <p v-if="userData.achievements.length" class="highlight-text mb-3">
           {{ userData.achievements[0].badge.title }} @{{ userData.username }}
         </p>
@@ -45,25 +45,27 @@
 
       <div v-if="userData.memberships.length">
         <h2 class="font-bold mb-3 mt-12">{{ $t('score') }}</h2>
-        <NuxtLink
-          v-for="(membership, key) in userData.memberships"
-          :key="key"
-          :to="localePath('/campaigns/' + membership.campaign.id)"
-          class="self-stretch md:self-start mt-4"
-          :style="`--highlight: ${membership.campaign.color};`"
-        >
-          <div class="text-$highlight text-sm mb-2">
-            {{ membership.campaign.title }}
-          </div>
-          <div
-            class="box-shadow justify-center items-end flex flex-row rounded-full py-2 px-4"
-          >
-            <span class="text-2xl mr-2">{{
-              membership.score.toLocaleString()
-            }}</span>
-            <span>{{ $t('points') }}</span>
-          </div>
-        </NuxtLink>
+        <ul>
+          <li v-for="(membership, key) in userData.memberships" :key="key">
+            <NuxtLink
+              :to="localePath('/campaigns/' + membership.campaign.id)"
+              class="self-stretch md:self-start mt-4"
+              :style="`--highlight: ${membership.campaign.color};`"
+            >
+              <h3 class="text-$highlight text-sm mb-2">
+                {{ membership.campaign.title }}
+              </h3>
+              <div
+                class="box-shadow justify-center items-end flex flex-row rounded-full py-2 px-4"
+              >
+                <span class="text-2xl mr-2">{{
+                  membership.score.toLocaleString()
+                }}</span>
+                <span>{{ $t('points') }}</span>
+              </div>
+            </NuxtLink>
+          </li>
+        </ul>
       </div>
     </template>
     <div v-if="isLargerThanLg">

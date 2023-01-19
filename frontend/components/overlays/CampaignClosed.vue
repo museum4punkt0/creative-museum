@@ -2,6 +2,7 @@
   <UtilitiesSlideUp
     v-if="showCampaignClosed"
     :closable="true"
+    :aria-label=" $t('modal.campaignClosed')"
     @closeModal="showCampaignClosed = false"
   >
     <div class="flex flex-col flex-1 h-full justify-between">

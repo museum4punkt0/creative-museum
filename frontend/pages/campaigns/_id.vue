@@ -9,6 +9,7 @@
       <div class="lg:col-span-6">
         <div v-if="campaign">
           <CampaignHead v-if="campaign" :campaign="campaign" />
+          <h2 class="sr-only">{{ $t('campaign.posts') }}</h2>
           <transition
             enter-active-class="duration-300 ease-out opacity-0"
             enter-to-class="opacity-100"

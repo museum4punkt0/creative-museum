@@ -46,6 +46,7 @@
     >
       <UtilitiesModal
         v-if="awardDetailOpen === true"
+        :aria-label="$t('modal.awardDetail') + ' ' + award.title"
         @closeModal="awardDetailOpen = false"
       >
         <AwardDetail

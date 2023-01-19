@@ -6,9 +6,9 @@
       </a>
     </div>
     <div v-if="availableAwards && availableAwards.length" class="p-6">
-      <div class="text-$highlight text-sm mb-2">
+      <h2 class="text-$highlight text-sm mb-2">
         {{ $t('awards.available') }}
-      </div>
+      </h2>
       <div
         v-for="(award, key) in availableAwards" :key="key"
       >

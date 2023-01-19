@@ -4,9 +4,11 @@
       class="snap snap-mandatory snap-x scrollbar-hide -mx-6 lg:mx-0 px-6 lg:px-0 flex flew-row flex-nowrap lg:flex-col overflow-x-auto"
       :class="[dropdownHeight ? 'h-20 lg:h-auto' : 'h-auto', dropdownHeight ? 'overflow-x-hidden' : '']"
     >
+      <h2 class="sr-only">{{ $t('campaign.filter') }}</h2>
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 py-1 px-2"
         :class="currentSorting === 'date' ? 'active' : ''"
+        :aria-current="currentSorting === 'date' ? 'true' : 'false'"
         type="button"
         @click.prevent="resetFilter"
       >
@@ -15,6 +17,7 @@
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
         :class="currentSorting === 'votestotal' ? 'active' : ''"
+        :aria-current="currentSorting === 'votestotal' ? 'true' : 'false'"
         type="button"
         @click.prevent="toggleRelevanceFilter"
       >
@@ -23,6 +26,7 @@
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
         :class="currentSorting === 'controversial' ? 'active' : ''"
+        aria-haspopup="true"
         type="button"
         @click.prevent="toggleControversialFilter"
       >
@@ -46,6 +50,7 @@
       <button
         class="btn-outline border-border-1 border-white text-sm self-start rounded-full mb-3 ml-3 lg:ml-0 py-1 px-2"
         :class="currentSorting === 'playlist' ? 'active' : ''"
+        :aria-current="currentSorting === 'playlist' ? 'true' : 'false'"
         type="button"
         @click.prevent="togglePlaylistFilter"
       >
@@ -53,14 +58,14 @@
       </button>
     </div>
     <div class="mt-2">
-      <a
+      <button
         v-if="reversable"
         class="text-xs text-$highlight flex flex-row items-center justify-end cursor-pointer"
         @click.prevent="changeSortDirection"
       >
         <ReverseSortingIcon class="h-4 w-auto inline-block mr-2 transform-gpu duration-200" :class="currentSortingDirection === 'asc' ? 'rotate-180' : ''" />
         <span>{{ $t('filter.order.reverse') }}</span>
-      </a>
+      </button>
     </div>
   </div>
 </template>

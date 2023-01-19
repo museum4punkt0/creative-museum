@@ -1,7 +1,8 @@
 <template>
   <div class="text-center text-white">
+    <h2 class="sr-only">{{ $t('footer.title') }}</h2>
     <a href="https://www.landesmuseum.de/museum" target="_blank" class="hover:(text-$highlight outline-none) focus:outline-none focus-visible:text-$highlight transform-gpu transition-all duration-300 ease-in-out">
-      <LogoFull class="inline-block my-6 w-24" />
+      <LogoFull class="inline-block my-6 w-24" alt="Badisches Landesmuseum Logo" />
     </a>
     <div class="mb-3">
       <strong>&copy; {{ $dayjs().year() }} Badisches Landesmuseum</strong>

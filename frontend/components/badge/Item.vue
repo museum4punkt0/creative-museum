@@ -21,6 +21,7 @@
     >
       <UtilitiesModal
         v-if="badgeDetailOpen === true"
+        :aria-label="$t('modal.badgeDetail') + ' ' + badge.title"
         @closeModal="badgeDetailOpen = false"
       >
         <badgeDetail

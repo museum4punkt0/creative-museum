@@ -7,35 +7,42 @@
     class="mb-12"
   >
     <div class="flex flex-row justify-between mb-10">
-      <span class="text-2xl">{{ $t('campaign.awards') }}</span>
+      <h2 class="text-2xl">{{ $t('campaign.awards') }}</h2>
     </div>
     <div v-if="availableAwards.length" class="mb-6">
-      <div class="text-$highlight text-sm mb-2">
+      <h2 class="text-$highlight text-sm mb-2">
         {{ $t('awards.available') }}
-      </div>
-      <AwardItem
-        v-for="(award, key) in availableAwards"
-        :key="key"
-        :award="award"
-        :available="true"
-        @awardsChange="fetchAllAwards"
-      />
+      </h2>
+      <ul>
+        <li v-for="(award, key) in availableAwards" :key="key">
+          <AwardItem
+            :key="key"
+            :award="award"
+            :available="true"
+            @awardsChange="fetchAllAwards"
+          />
+        </li>
+      </ul>
     </div>
     <div v-if="unavailableAwards.length && !user" class="mb-6">
-      <div class="text-$highlight text-sm mb-2">
+      <h2 class="text-$highlight text-sm mb-2">
         {{
           $auth.loggedIn
             ? $t('awards.unavailable')
             : $t('awards.loginToReceiveAwards')
         }}
-      </div>
-      <AwardItem
-        :award="unavailableAwards[0]"
-      />
+      </h2>
+      <ul>
+        <li>
+          <AwardItem
+            :award="unavailableAwards[0]"
+          />
+        </li>
+      </ul>
     </div>
     <div v-if="giftedAwards.length" class="mb-6">
       <div class="flex flex-row justify-between">
-        <div class="text-$highlight text-sm mb-2">{{ $t('awards.gifted') }}</div>
+        <h3 class="text-$highlight text-sm mb-2">{{ $t('awards.gifted') }}</h3>
         <button
           v-if="
             (!campaign && giftedAwards.length > 3) ||
@@ -52,20 +59,22 @@
           <span v-else>{{ $t('hide') }}</span>
         </button>
       </div>
-      <div v-for="(award, key) in giftedAwards" :key="key">
-        <div v-if="key < 3 || showMoreGifted">
-          <AwardItem
-            :award="award.award"
-            :giver="award.giver.username"
-            :winner="award.winner.username"
-            :created="new Date(award.created)"
-          />
-        </div>
-      </div>
+      <ul v-if="giftedAwards">
+        <li v-for="(award, key) in giftedAwards" :key="key">
+          <div v-if="key < 3 || showMoreGifted">
+            <AwardItem
+              :award="award.award"
+              :giver="award.giver.username"
+              :winner="award.winner.username"
+              :created="new Date(award.created)"
+            />
+          </div>
+        </li>
+    </ul>
     </div>
     <div v-if="receivedAwards.length" class="mb-6">
       <div class="flex flex-row justify-between">
-        <div class="text-$highlight text-sm mb-2">{{ $t('awards.received') }}</div>
+        <h3 class="text-$highlight text-sm mb-2">{{ $t('awards.received') }}</h3>
         <button
           v-if="
             (!campaign && receivedAwards.length > 3) ||
@@ -82,16 +91,18 @@
           <span v-else>{{ $t('hide') }}</span>
         </button>
       </div>
-      <div v-for="(award, key) in receivedAwards" :key="key">
-        <div v-if="key < 3 || showMoreReceived">
-          <AwardItem
-            :award="award.award"
-            :giver="award.giver.username"
-            :winner="award.winner.username"
-            :created="new Date(award.created)"
-          />
-        </div>
-      </div>
+      <ul v-if="receivedAwards">
+        <li v-for="(award, key) in receivedAwards" :key="key">
+          <div v-if="key < 3 || showMoreReceived">
+            <AwardItem
+              :award="award.award"
+              :giver="award.giver.username"
+              :winner="award.winner.username"
+              :created="new Date(award.created)"
+            />
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>

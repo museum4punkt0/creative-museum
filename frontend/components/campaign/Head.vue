@@ -15,21 +15,21 @@
     </div>
     <div v-show="!showLongDescription">
       <p class="mb-6" v-html="formattedShortDescription" />
-      <a
+      <button
         v-if="formattedShortDescription !== formattedDescription"
         class="highlight-text"
         href="#"
         @click.prevent="showLongDescription = true"
-        >{{ $t('readMore') }}</a
+        >{{ $t('readMore') }}</button
       >
     </div>
     <div v-show="showLongDescription">
       <p class="mb-6" v-html="formattedDescription" />
-      <a
+      <button
         class="highlight-text"
         href="#"
         @click.prevent="showLongDescription = false"
-        >{{ $t('readLess') }}</a
+        >{{ $t('readLess') }}</button
       >
     </div>
     <div v-if="!isLargerThanLg" class="xl:hidden">

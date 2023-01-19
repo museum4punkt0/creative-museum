@@ -26,6 +26,7 @@
       <button class="focus:none" @click.prevent="onShowAdditionalOptions">
         <UtilitiesThreeDots
           class="cursor-pointer"
+          :aria-label="$t('post.actions.button')"
           :text-color="post.type === 'playlist' ? textColor : 'white'"
         />
       </button>

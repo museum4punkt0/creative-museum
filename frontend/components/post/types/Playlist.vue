@@ -6,7 +6,7 @@
     >
       {{ post.linkedPlaylist.title }}
     </button>
-    <UtilitiesModal v-if="showPlaylist" @closeModal="showPlaylist = false">
+    <UtilitiesModal v-if="showPlaylist" :aria-label="$t('modal.showPlaylist') + ' ' + playlist.title"  @closeModal="showPlaylist = false">
       <div class="flex flex-col flex-1 justify-between">
         <div>
           <div class="page-header px-6">

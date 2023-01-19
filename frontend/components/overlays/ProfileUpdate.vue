@@ -1,9 +1,10 @@
 <template>
   <UtilitiesModal
     v-if="showProfileUpdate"
+    :aria-label="$t('modal.profileUpdate')"
     @closeModal="showProfileUpdate = false"
   >
-    <div v-show="!showDeleteUser" class="px-6 pb-6">
+    <form v-show="!showDeleteUser" class="px-6 pb-6">
       <div class="page-header">
         <a class="back-btn" @click.prevent="showProfileUpdate = false">
           {{ $t('globalProfileUpdate.header') }}</a
@@ -107,10 +108,10 @@
         ></textarea>
       </div>
 
-      <div class="mb-12">
-        <h2 class="text-2xl">
+      <fieldset class="mb-12">
+        <legend class="text-2xl">
           {{ $t('user.profile.self.edit.personalData') }}
-        </h2>
+        </legend>
         <div class="mt-4">
           <label
             for="input_firstname"
@@ -161,12 +162,12 @@
             class="input-text"
           />
         </div>
-      </div>
+      </fieldset>
 
-      <div class="mb-12">
-        <h2 class="text-2xl">
+      <fieldset class="mb-12">
+        <legend class="text-2xl">
           {{ $t('user.profile.self.edit.notifications') }}
-        </h2>
+        </legend>
         <p class="highlight-text text-sm mt-4 mb-3">
           {{ $t('user.profile.self.edit.personalNotifications') }}
         </p>
@@ -178,6 +179,7 @@
                 v-model="notificationsPersonal"
                 type="radio"
                 :value="true"
+                :aria-label="$t('profile.personalNotifications.on')"
                 name="persNotify"
                 checked
                 class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
@@ -194,6 +196,7 @@
                 v-model="notificationsPersonal"
                 type="radio"
                 :value="false"
+                :aria-label="$t('profile.personalNotifications.off')"
                 name="persNotify"
                 class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               />
@@ -217,6 +220,7 @@
                 v-model="notificationsPlatform"
                 type="radio"
                 :value="true"
+                :aria-label="$t('profile.globalNotifications.on')"
                 name="globalNotify"
                 class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
               />
@@ -232,6 +236,7 @@
                 v-model="notificationsPlatform"
                 type="radio"
                 :value="false"
+                :aria-label="$t('profile.globalNotifications.off')"
                 name="globalNotify"
                 checked
                 class="w-0 h-0 overflow-hidden absolute -top-10 -left-10"
@@ -244,7 +249,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </fieldset>
       <button
         class="btn-highlight mb-12 w-full md:w-auto md:min-w-xs"
         @click.prevent="save"
@@ -252,26 +257,26 @@
         {{ $t('user.profile.self.edit.save') }}
       </button>
 
-      <div class="mb-12 md:mb-0">
-        <h2 class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</h2>
+      <fieldset class="mb-12 md:mb-0">
+        <legend class="text-2xl">{{ $t('user.profile.self.edit.removal') }}</legend>
         <button
           class="btn-outline w-full md:w-auto md:min-w-xs"
           @click.prevent="showDeleteUser = true"
         >
           {{ $t('user.profile.self.edit.deleteProfile') }}
         </button>
-      </div>
-    </div>
+      </fieldset>
+    </form>
     <div
       v-show="showDeleteUser"
       class="flex flex-col flex-1 h-full justify-between px-6 pb-6"
     >
       <div>
-        <div class="page-header">
+        <h1 class="page-header">
           <a class="back-btn" @click.prevent="showDeleteUser = false">
             {{ $t('globalProfileUpdate.deleteUser.header') }}
           </a>
-        </div>
+        </h1>
         <div class="box-shadow-mobile p-6 md:p-0 mb-4">
           <p class="text-xl mb-4">
             {{ $t('globalProfileUpdate.deleteUser.subheader') }}

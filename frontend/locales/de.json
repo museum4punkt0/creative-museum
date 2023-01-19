@@ -73,6 +73,17 @@
       "text": "Badges werden Dir verliehen, indem Du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und vergib Dein Votings bei drei Posts!"
     }
   },
+  "profile": {
+    "uploadimage": "Profilbild hinzufügen",
+    "personalNotifications": {
+      "off": "Persönliche Benachrichtigungen deaktivieren",
+      "on": "Persönliche Benachrichtigungen deaktivieren"
+    },
+    "globalNotifications": {
+      "off": "Globale Benachrichtigungen deaktivieren",
+      "on": "Globale Benachrichtigungen deaktivieren"
+    }
+  },
   "navigation": {
     "profile": {
       "header": "Profil",
@@ -157,11 +168,13 @@
     "share": "Teilen",
     "feedback": "Feedback",
     "postComment": "Kommentar...",
+    "postCommentSend": "Kommentar Senden",
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",
     "commentPlaceholder": "Deinen Kommentar schreiben...",
     "moreActions": "Weitere Aktionen",
     "actions": {
+      "button": "Weitere Aktionen",
       "addBookmark": "Hinzufügen zur Merkliste",
       "removeBookmark": "Von Merkliste entfernen",
       "addToPlaylist": "Zu Playlist hinzufügen",
@@ -256,12 +269,17 @@
       }
     }
   },
+  "campaigns": {
+    "headline": "Aktuelle Kampagnen – Creative Museum"
+  },
   "campaign": {
+    "posts": "Beiträge",
     "partner": "Kampagnenpartner",
     "latestPosts": "Neueste Mitteilungen",
     "awards": "Awards",
     "noMorePosts": "Keine weiteren Beiträge",
     "newPosts": "Neue Beiträge",
+    "filter": "Beiträge filtern und sortieren",
     "closed": {
       "result": {
         "description": "Die Kampagne \"{campaign}\" ist beendet. Die Nutzer*innen, die die meisten Awards verliehen haben, sind:"
@@ -419,5 +437,22 @@
       "title": "{award}",
       "text": "Du hast den Award {award} an {awardWinner} vergeben!"
     }
+  },
+  "modal": {
+    "close": "Schließen",
+    "awardDetail": "Award Details",
+    "badgeDetail": "Badge Details",
+    "notificationDetail": "Mitteilungs Details",
+    "profileUpdate": "Profil bearbeiten",
+    "tutorial": "Tutorial",
+    "newPost": "Neuer Beitrag",
+    "setUsername": "Benuternamen festlegen",
+    "showPlaylist": "Playlist",
+    "campaignClosed": "Kampagne beendet",
+    "login": "Einloggen um teilzunehmen",
+    "feedback": "Feedback abgeben"
+  },
+  "footer": {
+    "title": "Seitenbetreiber und Service-Navigation"
   }
 }

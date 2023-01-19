@@ -7,7 +7,7 @@
       leave-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <UtilitiesModal>
+      <UtilitiesModal :aria-label=" $t('modal.notificationDetail')">
         <OverlaysNotificationItem
           :notification="notifications[0]"
           @refetchNotifications="getNotifications"

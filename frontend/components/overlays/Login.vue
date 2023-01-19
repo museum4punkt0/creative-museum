@@ -2,6 +2,7 @@
   <UtilitiesSlideUp
     v-if="showLogin"
     :closable="true"
+    :aria-label="$t('modal.login')"
     @closeModal="showLogin = false"
   >
     <div class="flex flex-col flex-1 h-full justify-between">

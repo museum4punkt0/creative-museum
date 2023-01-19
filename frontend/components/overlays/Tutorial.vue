@@ -1,5 +1,5 @@
 <template>
-  <UtilitiesModal v-if="tutorialOpen">
+  <UtilitiesModal v-if="tutorialOpen" :aria-label="$t('modal.tutorial')">
     <Tutorial @closeModal="closeTutorial" />
   </UtilitiesModal>
 </template>
