@@ -40,6 +40,7 @@ import {
   useRouter,
   useContext,
   useStore,
+  useMeta
 } from '@nuxtjs/composition-api'
 
 import { campaignApi } from '@/api/campaign'
@@ -49,8 +50,9 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const { title } = useMeta()
     const store = useStore()
-    const { $breakpoints } = useContext()
+    const { $breakpoints, i18n } = useContext()
 
     const post = ref(null)
     const campaign = ref(null)
@@ -76,6 +78,8 @@ export default defineComponent({
           if (post.value && post.value.error) {
             router.push('/404')
           } else {
+
+            title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
             store.dispatch('setCurrentCampaign', response.campaign.id)
 
             document.documentElement.style.setProperty(
@@ -104,5 +108,6 @@ export default defineComponent({
       getContrastColor,
     }
   },
+  head: {}
 })
 </script>

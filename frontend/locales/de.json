@@ -1,5 +1,6 @@
 {
   "system": "Creative Museum",
+  "pageTitle": "Creative Museum - Badisches Landesmuseum",
   "dateFormat": "DD.MM.YYYY",
   "anonymous": "Anonymer User",
   "deleted": "User gelöscht",
@@ -168,10 +169,12 @@
     "share": "Teilen",
     "feedback": "Feedback",
     "postComment": "Kommentar...",
+    "postComments": "Kommentare",
     "postCommentSend": "Kommentar Senden",
     "showComments": "Alle {count} Kommentare anzeigen",
     "hideComments": "Alle {count} Kommentare ausblenden",
     "commentPlaceholder": "Deinen Kommentar schreiben...",
+    "details": "Post Details",
     "moreActions": "Weitere Aktionen",
     "actions": {
       "button": "Weitere Aktionen",
@@ -328,8 +331,14 @@
     }
   },
   "pages": {
+    "index": {
+      "title": "Startseite"
+    },
     "imprint": {
       "title": "Impressum"
+    },
+    "profile": {
+      "title": "Dein Profil"
     },
     "privacy": {
       "title": "Datenschutz"
@@ -339,6 +348,26 @@
     },
     "accessibility": {
       "title": "Erklärung zur Barrierefreiheit"
+    },
+    "about": {
+      "title": "Über das Creative Museum"
+    },
+    "faq": {
+      "title": "FAQ"
+    },
+    "login": {
+      "title": "Login"
+    },
+    "user": {
+      "search": {
+        "title": "Suche nach Nutzer*innen"
+      }
+    },
+    "signLanguage" : {
+      "title": "Deutsche Gebärdensprache"
+    },
+    "simpleLanguage" : {
+      "title": "Einfache Sprache"
     },
     "external": {
       "stateMuseum": {

@@ -76,8 +76,8 @@ import {
   watch,
   onMounted,
   onUnmounted,
+  useMeta,
 } from '@nuxtjs/composition-api'
-
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 
@@ -86,13 +86,14 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { $breakpoints } = useContext()
+    const { $breakpoints, i18n } = useContext()
     const store = useStore()
     const posts = ref(null)
     const newPosts = ref(null)
     const newPostsAvailable = ref(false)
     const campaign = ref(null)
     const campaignResult = ref(null)
+    const { title } = useMeta()
 
     let refetchInterval = null
 
@@ -100,102 +101,104 @@ export default defineComponent({
 
     const sortingKey = computed(
       () =>
-        store.state.currentSorting +
-        store.state.currentSortingDirection +
-        store.state.filterId
-    )
+      store.state.currentSorting +
+      store.state.currentSortingDirection +
+      store.state.filterId
+      )
 
-    watch(newPost, (newValue) => {
-      if (newValue === route.value.params.id) {
+      watch(newPost, (newValue) => {
+        if (newValue === route.value.params.id) {
+          loadCampaign()
+          store.dispatch('resetNewPostOnCampaign')
+        }
+      })
+
+      watch(sortingKey, () => {
         loadCampaign()
-        store.dispatch('resetNewPostOnCampaign')
-      }
-    })
+      })
 
-    watch(sortingKey, () => {
-      loadCampaign()
-    })
+      const { fetchCampaign, fetchCampaignResult } = campaignApi()
+      const { fetchPostsByCampaign } = postApi()
 
-    const { fetchCampaign, fetchCampaignResult } = campaignApi()
-    const { fetchPostsByCampaign } = postApi()
+      const isLargerThanLg = computed(() => {
+        return $breakpoints.lLg
+      })
 
-    const isLargerThanLg = computed(() => {
-      return $breakpoints.lLg
-    })
-
-    async function loadCampaign() {
-      if (route.value.params.id) {
+      async function loadCampaign() {
+        if (route.value.params.id) {
         campaign.value = await fetchCampaign(route.value.params.id)
         posts.value = await fetchPostsByCampaign(
           route.value.params.id,
           store.state.currentSorting,
           store.state.currentSortingDirection,
           1
-        )
+          )
 
-        if (campaign.value && campaign.value.error) {
-          router.push('/404')
-        } else {
-          store.dispatch('setCurrentCampaign', route.value.params.id)
-          if (campaign.value.active && !campaign.value.closed) {
-            store.dispatch('showAddButton')
+          if (campaign.value && campaign.value.error) {
+            router.push('/404')
           } else {
-            store.dispatch('hideAddButton')
-            campaignResult.value = await fetchCampaignResult(route.value.params.id)
+            store.dispatch('setCurrentCampaign', route.value.params.id)
+            if (campaign.value.active && !campaign.value.closed) {
+              store.dispatch('showAddButton')
+            } else {
+              store.dispatch('hideAddButton')
+              campaignResult.value = await fetchCampaignResult(route.value.params.id)
+            }
+            title.value = campaign.value.title + ' | ' + i18n.t('pageTitle')
           }
         }
       }
-    }
 
-    async function refetchPosts() {
-      if (route.value.params.id) {
-        newPosts.value = await fetchPostsByCampaign(
-          route.value.params.id,
-          store.state.currentSorting,
-          store.state.currentSortingDirection,
-          1
-        )
+      async function refetchPosts() {
+        if (route.value.params.id) {
+          newPosts.value = await fetchPostsByCampaign(
+            route.value.params.id,
+            store.state.currentSorting,
+            store.state.currentSortingDirection,
+            1
+            )
 
-        if (newPosts.value[0].id !== posts.value[0].id) {
-          newPostsAvailable.value = true
+            if (newPosts.value[0].id !== posts.value[0].id) {
+              newPostsAvailable.value = true
+            }
+          }
         }
-      }
-    }
 
-    function showNewPosts() {
-      if (newPosts && newPosts.value.length) {
-        posts.value = newPosts.value
-        newPostsAvailable.value = false
-      }
-    }
+        function showNewPosts() {
+          if (newPosts && newPosts.value.length) {
+            posts.value = newPosts.value
+            newPostsAvailable.value = false
+          }
+        }
 
-    function showAddModal() {
-      store.dispatch('showAddModal')
-    }
+        function showAddModal() {
+          store.dispatch('showAddModal')
+        }
 
-    onMounted(async () => {
-      await loadCampaign()
+        onMounted(async () => {
+          await loadCampaign()
 
-      refetchInterval = setInterval(() => {
-        refetchPosts()
-      }, 2500)
+          refetchInterval = setInterval(() => {
+            refetchPosts()
+          }, 2500)
+        })
+
+        onUnmounted(function() {
+          clearInterval(refetchInterval)
+        })
+
+        return {
+          campaign,
+          posts,
+          campaignResult,
+          newPost,
+          isLargerThanLg,
+          newPostsAvailable,
+          showAddModal,
+          refetchPosts,
+          showNewPosts
+        }
+      },
+      head: {}
     })
-
-    onUnmounted(function() {
-      clearInterval(refetchInterval)
-    })
-
-    return {
-      campaign,
-      posts,
-      campaignResult,
-      newPost,
-      isLargerThanLg,
-      newPostsAvailable,
-      showAddModal,
-      refetchPosts,
-      showNewPosts,
-    }
-  },
-})
-</script>
+  </script>

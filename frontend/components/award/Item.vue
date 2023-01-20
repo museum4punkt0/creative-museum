@@ -1,7 +1,7 @@
 <template>
   <div :style="styleAttr">
-    <div
-      class="flex flex-row items-center mb-2 award-item cursor-pointer"
+    <button
+      class="flex flex-row items-center mb-2 award-item cursor-pointer text-left block w-full"
       @click.prevent="awardDetailOpen = true"
     >
       <div class="w-20 h-24 overflow-hidden mr-3 flex-shrink-0">
@@ -36,7 +36,7 @@
           {{ $t('awards.gift') }}
         </button>
       </div>
-    </div>
+    </button>
     <transition
       enter-active-class="duration-300 ease-out opacity-0"
       enter-to-class="opacity-100"

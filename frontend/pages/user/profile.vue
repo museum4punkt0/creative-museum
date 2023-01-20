@@ -108,7 +108,7 @@ import {
   useContext,
   useRouter,
   watch,
-  onActivated,
+  useMeta,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 import { playlistApi } from '@/api/playlist'
@@ -122,7 +122,7 @@ export default defineComponent({
     const mode = ref('posts')
     const store = useStore()
     const router = useRouter()
-    const { $config, $auth, $breakpoints } = useContext()
+    const { $config, $auth, $breakpoints, i18n } = useContext()
     const posts = ref(null)
     const playlists = ref(null)
     const playlistPosts = ref(null)
@@ -131,6 +131,10 @@ export default defineComponent({
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
+    })
+
+    useMeta({
+      title: i18n.t('pages.profile.title') + ' | ' + i18n.t('pageTitle')
     })
 
     if (!$auth.loggedIn) {
@@ -187,5 +191,6 @@ export default defineComponent({
       backendUrl: $config.backendUrl,
     }
   },
+  head: {}
 })
 </script>

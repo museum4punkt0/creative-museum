@@ -94,6 +94,7 @@ import {
   useRoute,
   useRouter,
   watch,
+  useMeta
 } from '@nuxtjs/composition-api'
 import { userApi } from '@/api/user'
 import { postApi } from '@/api/post'
@@ -105,12 +106,13 @@ export default defineComponent({
     const { fetchUser } = userApi()
     const { fetchUserPosts } = postApi()
     const { fetchPlaylist } = playlistApi()
+    const { title } = useMeta()
     const user = ref(null)
     const mode = ref('posts')
     const store = useStore()
     const route = useRoute()
     const router = useRouter()
-    const { $config, $breakpoints } = useContext()
+    const { $config, $breakpoints, i18n } = useContext()
     const posts = ref(null)
     const playlists = ref(null)
     const playlistPosts = ref(null)
@@ -130,6 +132,8 @@ export default defineComponent({
       if ((user.value && user.value.error) || user.value && user.deleted) {
         router.push('/404')
       }
+
+      title.value = `User @${user.value.username} | ${i18n.t('pageTitle')}`
 
       posts.value = await fetchUserPosts(user.value.id, 1)
       playlists.value = user.value.playlists
@@ -168,5 +172,6 @@ export default defineComponent({
       backendUrl: $config.backendUrl,
     }
   },
+  head: {}
 })
 </script>

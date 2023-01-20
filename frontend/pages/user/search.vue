@@ -5,6 +5,7 @@
       <input
         v-model="searchField"
         class="input-text my-6 pr-40"
+        :aria-label="$t('user.search')"
         autocomplete="off"
       />
       <SearchIcon class="absolute right-4 top-3 w-7 h-7" />
@@ -28,7 +29,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed, useMeta, useContext } from '@nuxtjs/composition-api'
 import SearchIcon from '@/assets/icons/search.svg?inline'
 import { userApi } from '@/api/user'
 
@@ -38,6 +39,7 @@ export default defineComponent({
   },
   setup() {
     const { searchUser } = userApi()
+    const { i18n } = useContext()
     const userList = ref(null)
     const debouncedSearchField = ref('')
     let timeout = null
@@ -45,6 +47,10 @@ export default defineComponent({
     async function searchProfiles() {
       userList.value = await searchUser(debouncedSearchField.value)
     }
+
+    useMeta({
+      title: i18n.t('pages.user.search.title') + ' | ' + i18n.t('pageTitle'),
+    })
 
     const searchField = computed({
       get() {
@@ -68,5 +74,6 @@ export default defineComponent({
       searchField,
     }
   },
+  head: {}
 })
 </script>

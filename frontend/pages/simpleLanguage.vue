@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { defineComponent, useStore, ref, onMounted, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, ref, onMounted, useContext, computed, useMeta } from '@nuxtjs/composition-api'
 import cmsPage from '~/mixins/page/cmsPage'
 import { cmsApi } from '~/api/cms'
 
@@ -23,13 +23,17 @@ export default defineComponent({
     const store = useStore()
     const { fetchSimpleLanguage } = cmsApi()
 
-    const { $breakpoints } = useContext()
+    const { $breakpoints, i18n } = useContext()
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
     })
 
     const simpleLanguage = ref(null)
+
+    useMeta({
+      title: i18n.t('pages.simpleLanguage.title') + ' | ' + i18n.t('pageTitle')
+    })
 
     async function getSimpleLanguagePage() {
       const simpleLanguageData = await fetchSimpleLanguage()
@@ -49,5 +53,6 @@ export default defineComponent({
       isLargerThanLg
     }
   },
+  head: {}
 })
 </script>

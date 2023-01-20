@@ -31,22 +31,20 @@
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
-    <div v-else class="highlight-text text-center text-sm">
-      <p>
-        {{
-          $t(`campaign.systemMessages.${post.body}`, {
-            giver: postMetadata.giver ? $userName(postMetadata.giver) : '',
-            winner: postMetadata.winner ? $userName(postMetadata.winner) : '',
-            award: postMetadata.award ? postMetadata.award.title : '',
-          })
-        }}
-      </p>
-    </div>
+    <h2 v-else class="highlight-text text-center text-sm">
+      {{
+        $t(`campaign.systemMessages.${post.body}`, {
+          giver: postMetadata.giver ? $userName(postMetadata.giver) : '',
+          winner: postMetadata.winner ? $userName(postMetadata.winner) : '',
+          award: postMetadata.award ? postMetadata.award.title : '',
+        })
+      }}
+    </h2>
 
     <UtilitiesSlideUp
       v-if="showFeedbackForm"
       :closable="true"
-      :aria-label="$('modal.feedback')"
+      :aria-label="$t('modal.feedback')"
       @closeModal="showFeedbackForm = false"
     >
       <div class="p-6">

@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, useStore, ref, onMounted, useContext, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useStore, ref, onMounted, useContext, computed, useMeta } from '@nuxtjs/composition-api'
 import cmsPage from '~/mixins/page/cmsPage'
 import { cmsApi } from '~/api/cms'
 
@@ -22,7 +22,11 @@ export default defineComponent({
     const store = useStore()
     const { fetchImprint } = cmsApi()
 
-    const { $breakpoints } = useContext()
+    const { $breakpoints, i18n } = useContext()
+
+    useMeta({
+      title: i18n.t('pages.imprint.title') + ' | ' + i18n.t('pageTitle')
+    })
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
@@ -34,7 +38,6 @@ export default defineComponent({
       const aboutData = await fetchImprint()
       imprint.value = JSON.parse(aboutData.content)
     }
-
 
     onMounted(() => {
       getImprintPage()
@@ -48,5 +51,6 @@ export default defineComponent({
       isLargerThanLg
     }
   },
+  head: {}
 })
 </script>

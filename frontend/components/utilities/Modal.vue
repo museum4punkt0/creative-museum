@@ -1,5 +1,5 @@
 <template>
-  <div role="dialog" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keydown.esc="$emit('closeModal')">
+  <div role="dialog" aria-hidden="false" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keyup.esc="$emit('closeModal')">
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none"
     ></div>
@@ -12,6 +12,7 @@
       >
         <button
           v-if="closable"
+          autofocus
           :aria-label="$t('modal.close')"
           class="close-btn block h-4 w-4 absolute right-5 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
           type="button"
@@ -30,7 +31,7 @@
 import {
   defineComponent,
   onMounted,
-  onUnmounted,
+  onUnmounted
 } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
@@ -41,6 +42,7 @@ export default defineComponent({
   },
   emits: ['closeModal'],
   setup() {
+
     onMounted(() => {
       if (process.client) {
         const body = document.querySelector('body')

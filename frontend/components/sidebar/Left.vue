@@ -35,12 +35,12 @@
         <p>{{ userData.description }}</p>
       </div>
 
-      <a
+      <button
         v-if="$auth.loggedIn && !user"
-        class="btn-primary btn-outline md:self-start cursor-pointer"
+        class="btn-primary btn-outline md:self-start cursor-pointer w-full"
         @click="showProfileUpdate"
       >
-        {{ $t('user.editProfile') }}</a
+        {{ $t('user.editProfile') }}</button
       >
 
       <div v-if="userData.memberships.length">

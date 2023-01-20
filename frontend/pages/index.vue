@@ -26,6 +26,7 @@ import {
   ref,
   useContext,
   onMounted,
+  useMeta
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
 
@@ -35,12 +36,16 @@ export default defineComponent({
   auth: false,
   setup() {
     const store = useStore()
-    const { $auth } = useContext()
+    const { $auth, i18n } = useContext()
     const { fetchCampaigns } = campaignApi()
     const campaigns = ref(null)
 
     onMounted(async () => {
       campaigns.value = await fetchCampaigns()
+    })
+
+    useMeta({
+      title: i18n.t('pages.index.title') + ' | ' + i18n.t('pageTitle')
     })
 
     $auth.$storage.removeState('campaignScore')
@@ -52,5 +57,6 @@ export default defineComponent({
       campaigns,
     }
   },
+  head: {}
 })
 </script>

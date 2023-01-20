@@ -36,9 +36,12 @@
 
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
       <div v-if="comments && showComments">
-        <div v-for="(comment, key) in comments" :key="key">
-          <PostCommentItem :comment="comment" :post-type="post.type" />
-        </div>
+        <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
+        <ul>
+          <li v-for="(comment, key) in comments" :key="key">
+            <PostCommentItem :comment="comment" :post-type="post.type" />
+          </li>
+        </ul>
       </div>
       <form
         v-if="(post.campaign.active || !post.campaign.closed) && showCommentForm"
@@ -66,9 +69,12 @@
       </form>
     </div>
     <div v-else-if="post.comments && !showComments">
-      <div v-for="(comment, key) in post.comments" :key="key">
-        <PostCommentItem :comment="comment" :post-type="post.type" />
-      </div>
+      <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
+      <ul>
+        <li v-for="(comment, key) in post.comments" :key="key">
+          <PostCommentItem :comment="comment" :post-type="post.type" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div :style="styleAttr">
-    <div
-      class="flex flex-row items-center mb-2 award-item cursor-pointer"
+    <button
+      class="flex flex-row items-center mb-2 award-item cursor-pointer text-left"
       @click.prevent="badgeDetailOpen = true"
     >
       <div class="w-20 h-24 mr-3 overflow-hidden flex-shrink-0">
@@ -11,7 +11,7 @@
         <p class="mb-1">{{ badge.title }}</p>
         <p class="text-$highlight text-sm">{{ badge.shortDescription }}</p>
       </div>
-    </div>
+    </button>
     <transition
       enter-active-class="duration-300 ease-out opacity-0"
       enter-to-class="opacity-100"

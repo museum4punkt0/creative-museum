@@ -3,6 +3,7 @@
     v-if="notification"
     class="flex flex-col flex-1 justify-between"
     :style="styleAttr"
+    @keyup.esc.stop="markNotificationAsViewed"
   >
     <div class="box-shadow mx-6 my-auto">
 
@@ -47,13 +48,13 @@
         </p>
       </div>
     </div>
-    <button class="btn-outline m-6 mb-safe" @click.prevent="markNotificationAsViewed">
+    <button id="notificationCloseButton" class="btn-outline m-6 mb-safe" @click.prevent="markNotificationAsViewed">
       {{ $t('close') }}
     </button>
   </div>
 </template>
 <script>
-import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext, onMounted } from '@nuxtjs/composition-api'
 import { notificationApi } from '@/api/notification'
 
 export default defineComponent({
@@ -83,6 +84,13 @@ export default defineComponent({
         } else if (award && award.picture) {
           return award.picture.contentUrl
         }
+      }
+    })
+
+    onMounted(() => {
+      if (process.client) {
+        console.log(document.querySelector('#notificationCloseButton'))
+        document.querySelector('#notificationCloseButton').focus()
       }
     })
 

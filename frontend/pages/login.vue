@@ -4,12 +4,18 @@
   </div>
 </template>
 <script>
-import {defineComponent, useContext} from '@nuxtjs/composition-api'
+import {defineComponent, useContext, useMeta} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup() {
-    const { $auth } = useContext()
+    const { $auth, i18n } = useContext()
     $auth.login()
+
+    useMeta({
+      title: i18n.t('pages.login.title') + ' | ' + i18n.t('pageTitle')
+    })
+
   },
+  head: {}
 })
 </script>

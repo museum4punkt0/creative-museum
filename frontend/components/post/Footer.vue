@@ -10,6 +10,7 @@
             : 'fill-white focus-visible:text-$highlight'
         "
         @click.prevent="doVotePost('up')"
+        @keyup.enter.prevent="doVotePost('up')"
       />
       {{ votesTotal }}
       <LibraryIcon
@@ -21,6 +22,7 @@
             : 'fill-white focus-visible:text-$highlight'
         "
         @click.prevent="doVotePost('down')"
+        @keyup.enter.prevent="doVotePost('down')"
       />
     </span>
     <button
