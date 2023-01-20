@@ -8,8 +8,8 @@
       class="poll-options mt-4 grid lg:grid-cols-2 gap-4"
     >
       <div v-for="(option, key) of post.pollOptions" :key="key">
-        <div
-          class="flex flex-row items-center cursor-pointer"
+        <button
+          class="flex flex-row items-center cursor-pointer w-full"
           @click.prevent="vote(option.id)"
         >
           <span
@@ -20,7 +20,7 @@
           <span :id="'poll-option-' + option.id" class="poll-option">
             {{ option.title }}
           </span>
-        </div>
+        </button>
       </div>
     </div>
     <div v-else>
