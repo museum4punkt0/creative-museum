@@ -13,6 +13,7 @@ export default defineComponent({
     useMeta({
       title: i18n.t('pages.login.title') + ' | ' + i18n.t('pageTitle')
     })
-  }
+  },
+  head: {}
 })
 </script>
