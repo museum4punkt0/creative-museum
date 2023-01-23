@@ -35,7 +35,7 @@
     </button>
 
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
-      <div v-if="comments && showComments">
+      <div v-if="comments && showComments" aria-expanded="true">
         <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
         <ul>
           <li v-for="(comment, key) in comments" :key="key">
