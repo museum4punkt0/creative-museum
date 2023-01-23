@@ -97,7 +97,7 @@ export default defineComponent({
   },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
     const postTitle = ref('')
     const fileToSubmit: any | null = ref(null)
     const images = ref([])
@@ -156,6 +156,8 @@ export default defineComponent({
         submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        store.dispatch('currentAlert', i18n.t('alert.postSubmitted'))
+
       })
     }
 

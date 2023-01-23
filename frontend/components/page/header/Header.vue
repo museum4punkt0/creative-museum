@@ -1,9 +1,9 @@
 <template>
   <div>
     <div
-      id="globalHeader"
-      ref="globalHeader"
-      class="relative container flex flex-row justify-between z-20 items-center"
+    id="globalHeader"
+    ref="globalHeader"
+    class="relative container flex flex-row justify-between z-20 items-center"
     >
       <NuxtLink id="pageLogo" :to="localePath('/')" class="text-white/50 hover:text-$highlight focus:text-$highlight focus:outline-none">
         <Logo
@@ -112,6 +112,7 @@
         </UtilitiesModal>
       </transition>
     </div>
+    <div class="sr-only" role="alert">{{ alertText }}</div>
   </div>
 </template>
 <script>
@@ -119,6 +120,7 @@ import {
   defineComponent,
   ref,
   useStore,
+  useContext,
   computed,
   watch,
 } from '@nuxtjs/composition-api'
@@ -131,10 +133,12 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const { i18n } = useContext()
 
     const isAddVisible = ref(false)
     const isMenuVisible = ref(false)
     const openAddModalType = ref('')
+    const alertText = ref('')
 
     const addComponentName = computed(() => {
       return openAddModalType.value !== ''
@@ -179,6 +183,7 @@ export default defineComponent({
       isMenuVisible,
       openAddModalType,
       addComponentName,
+      alertText: computed(() => store.state.currentAlert),
       openAddModal,
       closeAddModal,
       abortPost,

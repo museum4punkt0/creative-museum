@@ -142,7 +142,7 @@ export default defineComponent({
   emits: ['abortPost'],
   setup(_, context) {
     const { createPollPost } = postApi()
-    const { store } = useContext()
+    const { store, i18n } = useContext()
 
     const initialOptions = [{ value: '' }, { value: '' }]
     const question = ref('')
@@ -192,6 +192,7 @@ export default defineComponent({
         options.value = initialOptions
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        store.dispatch('currentAlert', i18n.t('alert.postSubmitted'))
         submitting.value = false
       })
     }

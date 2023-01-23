@@ -264,7 +264,8 @@ h3 {
     @apply outline-none;
   }
   &:focus-visible {
-    color: var(--highlight);
+    color: var(--highlight-contrast);
+    background-color: var(--highlight);
     border-color: var(--highlight);
   }
   &.active:focus-visible {

@@ -135,7 +135,7 @@ export default defineComponent({
   },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
     const postTitle = ref('')
     const postBody = ref('')
     const videoAlt = ref('')
@@ -192,6 +192,7 @@ export default defineComponent({
         submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        store.dispatch('alertNewPostSubmitted', i18n.t('alert.postSubmitted'))
       })
     }
 

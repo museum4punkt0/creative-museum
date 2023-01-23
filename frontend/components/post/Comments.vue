@@ -109,7 +109,7 @@ export default defineComponent({
     const showComments = ref(false)
     const showCommentForm = ref(false)
     const commentBody = ref('')
-    const { $auth } = useContext()
+    const { $auth, i18n } = useContext()
     const store = useStore()
 
     const { fetchPostsByPost, submitCommentByPost } = postApi()
@@ -130,6 +130,7 @@ export default defineComponent({
           commentBody.value = ''
           fetchComments()
           context.emit('commentsLoaded', props.post.id)
+          store.dispatch('currentAlert', i18n.t('alert.commentSubmitted'))
         })
         $auth.fetchUser()
       } else {

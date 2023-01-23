@@ -403,6 +403,10 @@
     }
   },
   "today": "Heute",
+  "alert": {
+    "postSubmitted": "Beitrag veröffentlicht",
+    "commentSubmitted": "Kommentar veröffentlicht"
+  },
   "notifications": {
     "showAll": "Alle Mitteilungen anzeigen",
     "1662032613": {

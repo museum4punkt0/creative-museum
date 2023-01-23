@@ -89,7 +89,6 @@ export default defineComponent({
 
     onMounted(() => {
       if (process.client) {
-        console.log(document.querySelector('#notificationCloseButton'))
         document.querySelector('#notificationCloseButton').focus()
       }
     })
