@@ -24,8 +24,11 @@
       <div class="flex flex-row mr-5 space-x-4 items-center">
         <PageHeaderUserInfo />
         <button
+          id="menuButton"
           class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out focus:outline-none group"
           :aria-label="isMenuVisible ? $t('menu.close') : $t('menu.open')"
+          aria-haspopup="true"
+          aria-controls="menu"
           type="button"
           :class="
             isMenuVisible
@@ -78,6 +81,9 @@
         <div
           v-show="isMenuVisible"
           key="0"
+          aria-labelledby="menuButton"
+          :aria-expanded="isMenuVisible ? 'true' : 'false'"
+          role="menu"
           class="absolute top-12 md:top-13 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm h-[calc(100vh-48px)] md:h-auto bg-grey shadow-lg shadow-black/20 z-50 md:max-h-full overflow-y-scroll scrollbar-hide"
         >
           <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />

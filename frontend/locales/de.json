@@ -21,7 +21,8 @@
   "selectProfile": "Profil auswählen",
   "confirmSelection": "Auswahl bestätigen",
   "menu": {
-    "open": "Menu geöffnet"
+    "open": "Menü öffnen",
+    "close": "Menü schließen"
   },
   "globalLogin": {
     "header": "Login",

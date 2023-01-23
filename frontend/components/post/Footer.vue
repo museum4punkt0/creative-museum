@@ -3,11 +3,11 @@
     <span class="flex flex-row items-center text-sm">
       <LibraryIcon
         v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
-        class="mr-2 w-auto cursor-pointer focus:outline-none"
+        class="mr-2 w-auto cursor-pointer transform-gpu rounded-md focus:outline-none"
         :class="
           myVote === 'up' && post.type != 'playlist'
             ? 'text-$highlight focus-visible:text-white'
-            : 'fill-white focus-visible:text-$highlight'
+            : 'fill-white focus-visible:text-$highlight focus-visible:bg-black'
         "
         @click.prevent="doVotePost('up')"
         @keyup.enter.prevent="doVotePost('up')"
@@ -15,18 +15,18 @@
       {{ votesTotal }}
       <LibraryIcon
         v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
-        class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer focus:outline-none"
+        class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer rounded-md focus:outline-none"
         :class="
           myVote === 'down' && post.type != 'playlist'
             ? 'text-$highlight focus-visible:text-white'
-            : 'fill-white focus-visible:text-$highlight'
+            : 'fill-white focus-visible:text-$highlight focus-visible:bg-black'
         "
         @click.prevent="doVotePost('down')"
         @keyup.enter.prevent="doVotePost('down')"
       />
     </span>
     <button
-      class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
+      class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis r whitespace-nowrap"
       :class="
         post.type === 'playlist'
           ? `btn-text-${textColor}`
