@@ -74,6 +74,12 @@ export default defineComponent({
         : ''
     })
 
+    const formattedDescription = computed(() => {
+      return props.campaign.description
+        ? props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
+        : ''
+    })
+
     const isLargerThanLg = computed(() => {
       return context.$breakpoints.lLg
     })
@@ -87,6 +93,7 @@ export default defineComponent({
 
     return {
       formattedShortDescription,
+      formattedDescription,
       showLongDescription,
       isLargerThanLg,
       campaignContrastColor,
