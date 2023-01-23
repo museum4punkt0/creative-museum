@@ -94,15 +94,3 @@ export default defineComponent({
   },
 })
 </script>
-<style>
-.campaign-description {
-   ul {
-    li {
-      @apply list-disc ml-6;
-    }
-  }
-  p + p, p + ul, ul + p, ul + ul {
-    @apply mt-6;
-  }
-}
-</style>

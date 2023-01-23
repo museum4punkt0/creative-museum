@@ -19,8 +19,8 @@
           {{ campaign.title }}
         </h2>
       </header>
-      <div v-if="campaign.shortDescription" class="break-word overflow-y-scroll scrollbar-hide">
-        <span v-html="campaignShortDescription"></span>
+      <div v-if="campaign.shortDescription" class="break-word overflow-y-scroll scrollbar-hide campaign-description">
+        <div v-html="campaignShortDescription" />
       </div>
       <footer v-if="campaign.partners.length > 0" class="mt-auto">
         <h3 class="font-semibold">{{ $t('campaign.partner') }}</h3>
@@ -68,7 +68,9 @@ export default defineComponent({
       return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
     }
 
-    const campaignShortDescription = props.campaign.shortDescription.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    const campaignShortDescriptionParagraphs = props.campaign.shortDescription.split(/(?:\r\n|\r|\n)/g);
+
+    const campaignShortDescription = '<p>' + campaignShortDescriptionParagraphs.join('</p><p>') + '</p>'
 
     return {
       textColor,
