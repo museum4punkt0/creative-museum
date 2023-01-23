@@ -24,7 +24,7 @@
       >
     </div>
     <div v-show="showLongDescription">
-      <p class="mb-6" v-html="formattedDescription" />
+      <div class="mb-6 campaign-description" v-html="campaign.description" />
       <button
         class="highlight-text"
         :aria-label="$t('readLessLong')"
@@ -74,12 +74,6 @@ export default defineComponent({
         : ''
     })
 
-    const formattedDescription = computed(() => {
-      return props.campaign.description
-        ? props.campaign.description.replace(/(?:\r\n|\r|\n)/g, '<br />')
-        : ''
-    })
-
     const isLargerThanLg = computed(() => {
       return context.$breakpoints.lLg
     })
@@ -93,7 +87,6 @@ export default defineComponent({
 
     return {
       formattedShortDescription,
-      formattedDescription,
       showLongDescription,
       isLargerThanLg,
       campaignContrastColor,
@@ -101,3 +94,15 @@ export default defineComponent({
   },
 })
 </script>
+<style>
+.campaign-description {
+   ul {
+    li {
+      @apply list-disc ml-6;
+    }
+  }
+  p + p, p + ul, ul + p, ul + ul {
+    @apply mt-6;
+  }
+}
+</style>
