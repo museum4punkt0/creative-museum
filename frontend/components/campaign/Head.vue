@@ -8,10 +8,10 @@
     </style>
     <div class="mb-6">
       <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
-      <div class="text-lg">
+      <p class="text-lg">
         <span class="capitalize">{{ $t('till') }}</span>
         {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
-      </div>
+      </p>
     </div>
     <div v-show="!showLongDescription">
       <p class="mb-6" v-html="formattedShortDescription" />
