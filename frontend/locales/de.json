@@ -107,6 +107,7 @@
   "post": {
     "upvotes": "Upvote(s)",
     "downvotes": "Downvote(s)",
+    "voting": "Voting des Beitrags: ",
     "types": {
       "text": {
         "button": "Text",
