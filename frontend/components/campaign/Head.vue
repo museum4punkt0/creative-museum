@@ -18,7 +18,7 @@
       <button
         v-if="formattedShortDescription !== formattedDescription"
         class="highlight-text"
-        href="#"
+        :aria-label="$t('readMoreLong')"
         @click.prevent="showLongDescription = true"
         >{{ $t('readMore') }}</button
       >
@@ -27,7 +27,7 @@
       <p class="mb-6" v-html="formattedDescription" />
       <button
         class="highlight-text"
-        href="#"
+        :aria-label="$t('readLessLong')"
         @click.prevent="showLongDescription = false"
         >{{ $t('readLess') }}</button
       >

@@ -8,9 +8,7 @@
       :alt="
         post.files[0].description
           ? post.files[0].description
-          : post.title
-          ? post.title
-          : post.body
+          : ''
       "
     />
     <div class="my-3">
