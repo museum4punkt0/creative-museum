@@ -10,7 +10,6 @@ export default {
     script: [
       {
         id: 'usercentrics-cmp',
-        type: 'application/javascript',
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
         'data-settings-id': process.env.USER_CENTRICS_ID,
         async: true,

@@ -8,7 +8,7 @@
       <NuxtLink id="pageLogo" :to="localePath('/')" class="text-white/50 hover:text-$highlight focus:text-$highlight focus:outline-none">
         <Logo
           class="h-9 my-2 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
-          alt="Creative Museum Logo"
+          aria-label="Creative Museum Logo"
         />
       </NuxtLink>
       <button
@@ -77,9 +77,11 @@
         leave-active-class="duration-200 ease-in"
         leave-class="opacity-100"
         leave-to-class="opacity-0"
+        tag="div"
       >
         <div
           v-show="isMenuVisible"
+          id="menu"
           key="0"
           aria-labelledby="menuButton"
           :aria-expanded="isMenuVisible ? 'true' : 'false'"
