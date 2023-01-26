@@ -141,10 +141,13 @@ h3 {
    li {
      @apply list-disc ml-6;
    }
- }
- p + p, p + ul, ul + p, ul + ul {
-   @apply mt-6;
- }
+  }
+  p + p, p + ul, ul + p, ul + ul {
+    @apply mt-6;
+  }
+  &-short {
+    @apply after:content-[''] after:block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[50px] after:bg-gradient-to-t after:from-grey after:to-transparent;
+  }
 }
 
 .box-shadow {
