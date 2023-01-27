@@ -68,9 +68,6 @@ class MailService
             case MailType::AWARD_RECEIVED->value:
                 $subject = sprintf($subject, $parameters['awarded']->getAward()->getTitle());
                 break;
-            case MailType::BADGE_RECEIVED->value:
-                $subject = sprintf($subject, $parameters['badged']->getBadge()->getTitle());
-                break;
         }
 
         return $subject;

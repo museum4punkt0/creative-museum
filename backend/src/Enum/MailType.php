@@ -6,8 +6,6 @@ enum MailType: string
 {
     case AWARD_RECEIVED = 'award_received';
 
-    case BADGE_RECEIVED = 'badge_received';
-
     case POST_COMMENTED = 'post_commented';
 
     CASE POST_REPORTED_AUTHOR = 'post_reported_author';

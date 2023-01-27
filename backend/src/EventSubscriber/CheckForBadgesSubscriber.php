@@ -70,9 +70,8 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
                 (BadgeType::SCORING === $badge->getType() && $campaignMember->getScore() >= $badge->getThreshold()) ||
                 (BadgeType::AWARDS === $badge->getType() && $campaignMember->getRewardPoints() >= $badge->getThreshold())
             ) {
-                $badged = $this->badgeService->createBadged($badge, $campaignMember->getUser());
+                $this->badgeService->createBadged($badge, $campaignMember->getUser());
                 $this->bus->dispatch(new NotifyNewBadgeReceived($campaignMember->getUser()->getId(), $badge->getId()));
-                $this->mailService->sendMail(MailType::BADGE_RECEIVED->value,$badged->getUser(),['badged' => $badged]);
             }
         }
 
