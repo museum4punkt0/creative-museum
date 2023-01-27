@@ -71,10 +71,6 @@ class MailService
             case MailType::BADGE_RECEIVED->value:
                 $subject = sprintf($subject, $parameters['badged']->getBadge()->getTitle());
                 break;
-            case MailType::NEW_CAMPAIGN->value:
-            case MailType::CAMPAIGN_CLOSED->value:
-                $subject = sprintf($subject, $parameters['campaign']->getTitle());
-                break;
         }
 
         return $subject;

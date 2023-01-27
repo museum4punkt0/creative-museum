@@ -55,8 +55,6 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
                 ->setCampaign($campaign)
                 ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
             $this->entityManager->persist($notification);
-
-            $this->mailService->sendMail(MailType::NEW_CAMPAIGN->value,$user, ['campaign' => $campaign]);
         }
         $campaign->setNotified(true);
         $this->entityManager->persist($campaign);
