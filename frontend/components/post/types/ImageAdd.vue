@@ -29,7 +29,7 @@
               $t(
                 'post.types.image.uploader.' +
                   (files.length ? 'replace' : 'add')
-              )
+              ) + ' *'
             }}
             <svg
               class="w-6 h-6 ml-2"
