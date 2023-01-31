@@ -14,7 +14,7 @@
       </p>
     </div>
     <div v-show="!showLongDescription">
-      <div class="mb-6 max-h-[5em] overflow-hidden relative campaign-description campaign-description-short" v-html="campaign.description" />
+      <div class="mb-6" :class="formattedShortDescription !== formattedDescription ? 'max-h-[5em] overflow-hidden relative campaign-description campaign-description-short' : ''" v-html="campaign.description" />
       <button
         v-if="formattedShortDescription !== formattedDescription"
         class="highlight-text"
