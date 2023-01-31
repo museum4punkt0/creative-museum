@@ -70,9 +70,9 @@ export default defineComponent({
       return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
     }
 
-    async function loadPost() {
+    function loadPost() {
       if (route.value.params.id) {
-        await fetchPost(route.value.params.id).then(async function (response) {
+        fetchPost(route.value.params.id).then(async function (response) {
           post.value = response
           campaign.value = await fetchCampaign(response.campaign.id)
           if (post.value && post.value.error) {
@@ -122,8 +122,6 @@ export default defineComponent({
                 }
               )
             }
-
-            console.log(meta)
 
             store.dispatch('setCurrentCampaign', response.campaign.id)
 
