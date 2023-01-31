@@ -1,6 +1,5 @@
 <template>
-  <NuxtLink
-    :to="localePath('/campaigns/' + campaign.id)"
+  <div
     class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none focus:outline-none focus-visible:(shadow-lg shadow-black/75)"
     :style="`background-color: ${campaign.color}`"
   >
@@ -46,7 +45,7 @@
         </div>
       </footer>
     </article>
-  </NuxtLink>
+  </div>
 </template>
 <script>
 import { TinyColor, readability } from '@ctrl/tinycolor'
@@ -60,12 +59,17 @@ export default defineComponent({
   },
   setup(props) {
     const textColor = getContrastColorClass()
-    const context = useContext()
+    const { $config } = useContext()
 
     function getContrastColorClass() {
       const bgColor = new TinyColor(props.campaign.color)
       const fgColor = new TinyColor('#FFFFFF')
-      return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
+      const altfgColor = new TinyColor('#222329')
+
+      const test1 = readability(bgColor, fgColor)
+      const test2 = readability(bgColor, altfgColor)
+
+      return (test1 + 5 > test2) ? 'contrast' : 'white'
     }
 
     const campaignShortDescriptionParagraphs = props.campaign.shortDescription.split(/(?:\r\n|\r|\n)/g);
@@ -74,9 +78,9 @@ export default defineComponent({
 
     return {
       textColor,
+      backendURL: $config.backendURL,
+      campaignShortDescription,
       getContrastColorClass,
-      backendURL: context.$config.backendURL,
-      campaignShortDescription
     }
   },
 })

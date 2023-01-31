@@ -132,11 +132,11 @@ class Post
     private $id;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]

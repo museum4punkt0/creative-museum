@@ -86,9 +86,13 @@ export default defineComponent({
 
     const bgColor = new TinyColor(props.campaign.color)
     const fgColor = new TinyColor('#FFFFFF')
+    const altfgColor = new TinyColor('#222329')
+
+    const test1 = readability(bgColor, fgColor)
+    const test2 = readability(bgColor, altfgColor)
 
     const campaignContrastColor = computed(() => {
-      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+      return (test1 + 5 > test2) ? '#222329' : '#FFFFFF'
     })
 
     return {
