@@ -30,7 +30,7 @@
               $t(
                 'post.types.video.uploader.' +
                   (videos.length ? 'replace' : 'add')
-              )
+              )  + ' *'
             }}
             <svg
               class="w-6 h-6 ml-2"
@@ -81,7 +81,7 @@
           type="text"
           class="input-text flex-grow pr-21"
           aria-required="true"
-          :placeholder="$t('post.placeholder.body')"
+          :placeholder="$t('post.placeholder.body') + ' *'"
           :maxlength="1000"
         ></textarea>
         <UtilitiesCountDown

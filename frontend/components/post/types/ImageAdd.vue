@@ -96,7 +96,7 @@
           type="text"
           class="input-text flex-grow pr-21"
           aria-required="true"
-          :placeholder="$t('post.placeholder.body')"
+          :placeholder="$t('post.placeholder.body') + ' *'"
           :maxlength="1000"
         ></textarea>
         <UtilitiesCountDown
