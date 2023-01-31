@@ -10,29 +10,39 @@
     </div>
     <div class="flex flex-col flex-grow">
       <p class="mb-1">
-        {{
-          $t(`notifications.${notification.text}.title`, {
-            award: notification.award ? notification.award.title : '',
-            badge: notification.badge ? notification.badge.title : '',
-          })
-        }}
+        <template v-if="notification.editorNotification">
+            {{ notification.title }}
+        </template>
+        <template v-else>
+          {{
+            $t(`notifications.${notification.text}.title`, {
+              award: notification.award ? notification.award.title : '',
+              badge: notification.badge ? notification.badge.title : '',
+            })
+          }}
+        </template>
       </p>
       <p class="text-$highlight text-sm">
-        {{
-          $t(`notifications.${notification.text}.text`, {
-            campaign: notification.campaign ? notification.campaign.title : '',
-            points: notification.scorePoints
-              ? notification.scorePoints.toLocaleString()
-              : '',
-            author: notification.post
-              ? $userName(notification.post.author)
-              : '',
-            badge: notification.badge ? notification.badge.title : '',
-            award: notification.award ? notification.award.title : '',
-            awardGiver: notification.award ? $userName(notification.awardGiver): '',
-            awardWinner: notification.award ? $userName(notification.awardWinner) : '',
-          })
-        }}
+        <template v-if="notification.editorNotification">
+            {{ notification.text }}
+        </template>
+        <template v-else>
+          {{
+            $t(`notifications.${notification.text}.text`, {
+              campaign: notification.campaign ? notification.campaign.title : '',
+              points: notification.scorePoints
+                ? notification.scorePoints.toLocaleString()
+                : '',
+              author: notification.post
+                ? $userName(notification.post.author)
+                : '',
+              badge: notification.badge ? notification.badge.title : '',
+              award: notification.award ? notification.award.title : '',
+              awardGiver: notification.award ? $userName(notification.awardGiver): '',
+              awardWinner: notification.award ? $userName(notification.awardWinner) : '',
+            })
+          }}
+        </template>
       </p>
       <p v-if="$dayjs.duration($dayjs().diff($dayjs(notification.created))).days() < 1">
         <span class="text-sm mt-1 text-$highlight">{{ $dayjs(notification.created).locale($i18n.locale).fromNow() }}</span>

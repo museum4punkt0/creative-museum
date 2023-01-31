@@ -16,35 +16,45 @@
       </div>
       <div class="flex flex-col flex-grow">
         <p v-if="notification.text" class="mb-1">
-          {{
-            $t(`notifications.${notification.text}.title`, {
-              award: notification.award ? notification.award.title : '',
-              badge: notification.badge ? notification.badge.title : '',
-            })
-          }}
+          <template v-if="notification.editorNotification">
+            {{ notification.text }}
+          </template>
+          <template v-else>
+            {{
+              $t(`notifications.${notification.text}.title`, {
+                award: notification.award ? notification.award.title : '',
+                badge: notification.badge ? notification.badge.title : '',
+              })
+            }}
+          </template>
         </p>
         <p v-if="notification.text" class="text-$highlight text-sm">
-          {{
-            $t(`notifications.${notification.text}.text`, {
-              campaign: notification.campaign
-                ? notification.campaign.title
-                : '',
-              points: notification.scorePoints
-                ? notification.scorePoints.toLocaleString()
-                : '',
-              author: notification.post
-                ? $userName(notification.post.author)
-                : '',
-              badge: notification.badge ? notification.badge.title : '',
-              award: notification.award ? notification.award.title : '',
-              awardGiver: notification.award
-                ? $userName(notification.awardGiver)
-                : '',
-              awardWinner: notification.award
-                ? $userName(notification.awardWinner)
-                : '',
-            })
-          }}
+          <template v-if="notification.editorNotification">
+            {{ notification.text }}
+          </template>
+          <template v-else>
+            {{
+              $t(`notifications.${notification.text}.text`, {
+                campaign: notification.campaign
+                  ? notification.campaign.title
+                  : '',
+                points: notification.scorePoints
+                  ? notification.scorePoints.toLocaleString()
+                  : '',
+                author: notification.post
+                  ? $userName(notification.post.author)
+                  : '',
+                badge: notification.badge ? notification.badge.title : '',
+                award: notification.award ? notification.award.title : '',
+                awardGiver: notification.award
+                  ? $userName(notification.awardGiver)
+                  : '',
+                awardWinner: notification.award
+                  ? $userName(notification.awardWinner)
+                  : '',
+              })
+            }}
+          </template>
         </p>
       </div>
     </div>
