@@ -41,6 +41,7 @@ class Playlist
 
     #[ORM\ManyToMany(targetEntity: Post::class)]
     #[Groups(['playlist:read'])]
+    #[ORM\OrderBy(['id' => 'DESC'])]
     private $posts;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'playlists')]
