@@ -35,10 +35,10 @@ class NotificationService extends CmApiService
             return false;
         }
 
-        return $this->sendNotification(['text' => $message, 'user' => "/v1/users/{$userUuid}"]);
+        return $this->sendNotification(['text' => $message, 'receiver' => "/v1/users/{$userUuid}"]);
     }
 
-    public function sendNotification(array $data)
+    public function sendNotification(array $data): bool
     {
         /** @var RequestFactory $request */
         $request = GeneralUtility::makeInstance(RequestFactory::class);

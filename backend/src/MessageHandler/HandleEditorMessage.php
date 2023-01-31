@@ -17,6 +17,7 @@ use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class HandleEditorMessage implements MessageHandlerInterface
 {
@@ -42,6 +43,8 @@ class HandleEditorMessage implements MessageHandlerInterface
 
     public function __invoke(EditorMessageReceived $editorMessageReceived)
     {
+
+
         if ($editorMessageReceived->getUserUuid() !== null) {
             $this->handleUserNotification($editorMessageReceived);
             return;
@@ -106,7 +109,7 @@ class HandleEditorMessage implements MessageHandlerInterface
 
     private function handleGlobalNotification(EditorMessageReceived $message): void
     {
-        $users = $this->userRepository->findBy(['deleted' => false, 'hidden' => false]);
+        $users = $this->userRepository->findBy(['deleted' => false, 'active' => true]);
 
         $i = 0;
         foreach ($users as $user) {
