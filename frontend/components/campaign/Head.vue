@@ -92,7 +92,7 @@ export default defineComponent({
     const test2 = readability(bgColor, altfgColor)
 
     const campaignContrastColor = computed(() => {
-      return (test1 + 6 < test2) ? '#222329' : '#FFFFFF'
+      return (test1  < test2) ? '#222329' : '#FFFFFF'
     })
 
     return {

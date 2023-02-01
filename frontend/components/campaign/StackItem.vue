@@ -69,7 +69,7 @@ export default defineComponent({
       const test1 = readability(bgColor, fgColor)
       const test2 = readability(bgColor, altfgColor)
 
-      return (test1 + 6 < test2) ? 'contrast' : 'white'
+      return (test1 < test2) ? 'contrast' : 'white'
     }
 
     const campaignShortDescriptionParagraphs = props.campaign.shortDescription.split(/(?:\r\n|\r|\n)/g);

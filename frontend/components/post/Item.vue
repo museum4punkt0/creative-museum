@@ -128,11 +128,11 @@ export default defineComponent({
     const test2 = readability(bgColor, altfgColor)
 
     const campaignContrastColor = computed(() => {
-      return (test1 + 6 < test2) ? '#FFFFFF' : '#222329'
+      return (test1  < test2) ? '#FFFFFF' : '#222329'
     })
 
     function getContrastColorClass() {
-      return (test1 + 6 < test2) ? 'white' : 'contrast'
+      return (test1  < test2) ? 'white' : 'contrast'
     }
 
     const styleAttr = computed(() => {

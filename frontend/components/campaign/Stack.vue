@@ -213,7 +213,7 @@ export default {
       const test1 = readability(bgColor, fgColor)
       const test2 = readability(bgColor, altfgColor)
 
-      return (test1 + 6 < test2) ? 'contrast' : 'white'
+      return (test1  < test2) ? '#222329' : '#FFFFFF'
     },
     init() {
       this.stack = this.campaigns
