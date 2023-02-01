@@ -13,7 +13,7 @@
         <button
           v-if="closable"
           :aria-label="$t('modal.close')"
-          class="close-btn block h-4 w-4 absolute right-4 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
+          class="close-btn block h-4 w-4 absolute z-50 right-4 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
           @click.prevent="$emit('closeModal')"
         ></button>
         <div
