@@ -57,7 +57,7 @@
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-vue": "^9.1.0",
     "nodemon": "^2.0.16",
-    "nuxt-windicss": "^2",
+    "nuxt-windicss": "^2.5.5",
     "prettier": "^2.5.1",
     "sass": "^1.52.1",
     "sass-loader": "^10.2.1",
