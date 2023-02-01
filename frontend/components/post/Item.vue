@@ -127,13 +127,13 @@ export default defineComponent({
     const test1 = readability(bgColor, fgColor)
     const test2 = readability(bgColor, altfgColor)
 
-    const campaignContrastColor = computed(() => {
-      return (test1 < test2) ? '#FFFFFF' : '#222329'
-    })
-
     function getContrastColorClass() {
-      return (test1 < test2) ? 'white' : 'contrast'
+      return (test1 < test2) ? 'contrast' : 'white'
     }
+
+    const campaignContrastColor = computed(() => {
+      return (test1 < test2) ? '#222329' : '#FFFFFF'
+    })
 
     const styleAttr = computed(() => {
       return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
@@ -181,6 +181,7 @@ export default defineComponent({
       getContrastColorClass,
       triggerFeedback,
       voteOption,
+      campaignContrastColor,
       componentName,
       textColor,
       styleAttr,
@@ -190,7 +191,6 @@ export default defineComponent({
       voted,
       total,
       postMetadata,
-      campaignContrastColor
     }
   },
 })

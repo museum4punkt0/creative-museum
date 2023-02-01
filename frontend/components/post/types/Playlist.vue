@@ -1,7 +1,7 @@
 <template>
   <div v-if="post.linkedPlaylist">
     <button
-      class="text-2xl py-2 block"
+      class="text-2xl py-2 block text-contrast"
       @click.prevent="!post.disableLink && onShowPlaylist()"
     >
       {{ post.linkedPlaylist.title }}

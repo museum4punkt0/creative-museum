@@ -368,19 +368,19 @@ h3 {
 }
 
 .tooltip .tooltip-inner {
-  background: black;
+  @apply bg-contrast;
   color: white;
   border-radius: 16px;
   padding: 5px 10px 4px;
 }
 
 .tooltip .tooltip-arrow {
+  @apply border-contrast;
   width: 0;
   height: 0;
   border-style: solid;
   position: absolute;
   margin: 5px;
-  border-color: black;
   z-index: 1;
 }
 

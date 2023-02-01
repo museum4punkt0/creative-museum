@@ -2,7 +2,7 @@
   <div>
     <button
       class="cursor-pointer text-sm focus:outline-none"
-      :class="post.type !== 'playlist' ? 'text-$highlight focus-visible:text-white' : ''"
+      :class="post.type !== 'playlist' ? 'text-$highlight focus-visible:text-white' : 'text-contrast focus-visible:(text-contrast underline)'"
       @click.prevent="
         !showComments
           ? fetchComments()
