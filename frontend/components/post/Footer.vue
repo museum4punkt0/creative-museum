@@ -31,10 +31,10 @@
       </button>
     </span>
     <button
-      class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis r whitespace-nowrap"
+      class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
       :class="
         post.type === 'playlist'
-          ? 'text-black border-black hover:(bg-black text-white border-white)'
+          ? 'text-black border-black hover:(bg-black text-white border-white) focus-visible:(bg-black text-white border-white)'
           : post.rated
           ? 'text-$highlight border-$highlight focus-visible:(!text-white !border-white)'
           : ''
