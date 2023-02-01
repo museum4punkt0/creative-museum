@@ -29,10 +29,7 @@
           </template>
         </p>
         <p v-if="notification.text" class="text-$highlight text-sm">
-          <template v-if="notification.editorNotification">
-            {{ notification.text }}
-          </template>
-          <template v-else>
+          <template v-if="!notification.editorNotification">
             {{
               $t(`notifications.${notification.text}.text`, {
                 campaign: notification.campaign
