@@ -25,6 +25,7 @@
           opacity: campaign.opacity,
         }"
         @click="gotoStackItem(campaign.id, localePath('/campaigns/' + campaign.id))"
+        @keydown.enter="gotoStackItem(campaign.id, localePath('/campaigns/' + campaign.id))"
       >
         <CampaignStackItem :campaign="campaign" />
       </div>

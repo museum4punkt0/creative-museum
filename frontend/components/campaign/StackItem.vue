@@ -1,5 +1,7 @@
 <template>
   <div
+    role="button"
+    tabindex="0"
     class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none focus:outline-none focus-visible:(shadow-lg shadow-black/75)"
     :style="`background-color: ${campaign.color}`"
   >
