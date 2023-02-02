@@ -9,7 +9,7 @@
     >
       <div v-for="(option, key) of post.pollOptions" :key="key">
         <button
-          class="flex flex-row items-center cursor-pointer w-full"
+          class="flex flex-row items-center cursor-pointer w-full text-left"
           @click.prevent="vote(option.id)"
         >
           <span

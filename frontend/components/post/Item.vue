@@ -4,7 +4,7 @@
       v-if="post.type !== 'system'"
       class="box-shadow"
       :class="[
-        post.type === 'playlist' ? `text-${textColor} highlight-bg` : '',
+        post.type === 'playlist' ? `highlight-bg text-$highlight-contrast` : '',
       ]"
     >
       <PostHead
@@ -132,6 +132,7 @@ export default defineComponent({
     }
 
     const campaignContrastColor = computed(() => {
+      console.log(test1 + ' - ' + test2)
       return (test1 < test2) ? '#222329' : '#FFFFFF'
     })
 

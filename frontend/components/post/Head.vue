@@ -9,11 +9,11 @@
         "
         class="flex flex-row focus:outline-none group"
       >
-        <UserProfileImage :user="post.author" class="mr-4" :class="post.type !== 'playlist' ? 'group-focus-visible:(ring-$highlight ring-2)' :`border-2 border-contrast group-focus-visible:(ring-contrast ring-2)`" />
+        <UserProfileImage :user="post.author" class="mr-4" :class="post.type !== 'playlist' ? 'group-focus-visible:(ring-$highlight ring-2)' :`border-2 border-$highlight-contrast group-focus-visible:(ring-$highlight-contrast ring-2)`" />
         <div class="flex flex-col">
-          <span class="text-lg" :class="post.type !== 'playlist' ? 'group-focus-visible:(text-$highlight)' : `text-contrast group-focus-visible:(text-${textColor})`">{{ $userName(post.author) }}</span>
+          <span class="text-lg" :class="post.type !== 'playlist' ? 'group-focus-visible:(text-$highlight)' : `text-$highlight-contrast group-focus-visible:(text-${textColor})`">{{ $userName(post.author) }}</span>
           <span
-            :class="post.type !== 'playlist' ? 'text-$highlight' : 'text-contrast'"
+            :class="post.type !== 'playlist' ? 'text-$highlight' : 'text-$highlight-contrast'"
             class="text-sm mt-1"
             >{{
               $dayjs.duration($dayjs().diff($dayjs(post.created))).days() > 2
@@ -27,7 +27,7 @@
         <UtilitiesThreeDots
           class="cursor-pointer"
           :aria-label="$t('post.actions.button')"
-          :text-color="post.type === 'playlist' ? 'contrast' : 'white'"
+          :text-color="post.type === 'playlist' ? '$highlight-contrast' : 'white'"
         />
       </button>
     </div>
