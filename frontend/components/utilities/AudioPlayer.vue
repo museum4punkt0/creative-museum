@@ -268,11 +268,6 @@ export default {
 
     play() {
       this.isLoading = true
-
-      this.$nextTick(() => {
-        this.$refs.pauseButton.focus()
-      })
-
       const handlePlay = () => {
         this.$refs.audio
           .play()

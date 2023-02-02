@@ -147,7 +147,12 @@
       },
       "audio": {
         "button": "Audio",
-        "headline": "Audio erstellen"
+        "headline": "Audio erstellen",
+        "mode": "oder direkt aufzeichnen",
+        "uploader": {
+          "add": "Audio hinzufügen",
+          "replace": "Audio ersetzen"
+        }
       },
       "video": {
         "button": "Video",
