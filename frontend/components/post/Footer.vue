@@ -34,7 +34,7 @@
       class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
       :class="
         post.type === 'playlist'
-          ? 'text-$highlight-contrast border-$highlight-contrast hover:(bg-$highlight-contrast text-white border-contrast) focus-visible:(bg-contrast text-white border-$highlight-contrast)'
+          ? 'text-$highlight-contrast border-$highlight-contrast hover:(bg-$highlight-contrast text-$highlight white border-contrast) focus-visible:(bg-contrast text-$highlight border-$highlight-contrast)'
           : post.rated
           ? 'text-$highlight border-$highlight focus-visible:(!text-white !border-white)'
           : ''

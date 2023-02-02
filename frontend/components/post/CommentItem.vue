@@ -4,7 +4,7 @@
     <p>{{ comment.body }}</p>
     <span
       class="block"
-      :class="postType !== 'playlist' ? 'highlight-text' : ''"
+      :class="postType !== 'playlist' ? 'text-$highlight' : ''"
       >{{
         $dayjs.duration($dayjs().diff($dayjs(comment.created))).days() > 2
           ? $dayjs(comment.created).format( $t('dateFormat') )
