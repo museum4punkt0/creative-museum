@@ -23,25 +23,22 @@
         />
       </div>
 
-      <div class="flex flex-col flex-grow mt-4 relative">
-        <textarea
+      <div class="flex flex-col flex-grow mt-4 pb-4 relative">
+        <UtilitiesRichTextEditor
           v-model="postBody"
-          type="text"
-          class="input-text flex-grow pr-21"
-          aria-required="true"
-          :placeholder="$t('post.placeholder.body') + ' *'"
-          :maxlength="1000"
-        ></textarea>
-        <UtilitiesCountDown
+          :placeholder="$t('post.placeholder.body')" class="input-text flex-grow"
+          @update:modelValue="updateModelValue"/>
+        <UtilitiesCountDownRichText
           :max-count="1000"
-          :text="postBody"
-          class="absolute bottom-1 right-2"
+          :count="postBodyLength"
+          class="absolute bottom-5 right-2"
         />
       </div>
+
       <button
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full"
+        class="btn-highlight disabled:opacity-30 w-full"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -65,6 +62,7 @@ export default defineComponent({
 
     const postTitle = ref('')
     const postBody = ref('')
+    const postBodyLength = ref(0)
     const submitting = ref(false)
 
     const disableSubmitButton = computed(() => {
@@ -94,13 +92,20 @@ export default defineComponent({
       context.emit('abortPost')
     }
 
+    function updateModelValue(content) {
+      postBody.value = content.text
+      postBodyLength.value = content.count
+    }
+
     return {
       postTitle,
       postBody,
+      postBodyLength,
       disableSubmitButton,
       submitting,
       abortPost,
       submitPost,
+      updateModelValue
     }
   },
 })

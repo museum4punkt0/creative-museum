@@ -132,7 +132,6 @@ export default defineComponent({
     }
 
     const campaignContrastColor = computed(() => {
-      console.log(test1 + ' - ' + test2)
       return (test1 < test2) ? '#222329' : '#FFFFFF'
     })
 
