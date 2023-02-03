@@ -11,12 +11,10 @@ namespace App\MessageHandler;
 
 use App\Entity\Campaign;
 use App\Entity\Notification;
-use App\Enum\MailType;
 use App\Enum\NotificationType;
 use App\Message\NotifyUsersAboutNewCampaign;
 use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
-use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -26,7 +24,6 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
         private readonly UserRepository $userRepository,
         private readonly CampaignRepository $campaignRepository,
         private readonly EntityManagerInterface $entityManager,
-        private readonly MailService $mailService
     ){}
 
     /**

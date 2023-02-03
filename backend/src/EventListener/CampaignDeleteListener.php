@@ -7,7 +7,6 @@ namespace App\EventListener;
 use App\Entity\Campaign;
 use App\Entity\CampaignMember;
 use App\Entity\Notification;
-use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 

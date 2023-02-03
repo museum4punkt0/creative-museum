@@ -4,12 +4,10 @@ namespace App\EventSubscriber;
 
 use App\Entity\Badge;
 use App\Enum\BadgeType;
-use App\Enum\MailType;
 use App\Event\CheckForBadgesEvent;
 use App\Message\NotifyNewBadgeReceived;
 use App\Repository\CampaignMemberRepository;
 use App\Service\BadgeService;
-use App\Service\MailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -21,7 +19,6 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
         private readonly BadgeService $badgeService,
         private readonly MessageBusInterface $bus,
         private readonly LockFactory $lockFactory,
-        private readonly MailService $mailService
     ) {}
 
     /**
