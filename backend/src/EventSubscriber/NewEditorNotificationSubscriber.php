@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Notification;
-use App\Entity\PostFeedback;
 use App\Enum\MailType;
 use App\Service\MailService;
 use JetBrains\PhpStorm\ArrayShape;

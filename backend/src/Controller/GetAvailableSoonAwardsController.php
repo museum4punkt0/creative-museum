@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Campaign;
 use App\Entity\User;
 use App\Repository\CampaignRepository;
 use App\Service\AwardService;

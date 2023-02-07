@@ -17,7 +17,6 @@ use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 class HandleEditorMessage implements MessageHandlerInterface
 {

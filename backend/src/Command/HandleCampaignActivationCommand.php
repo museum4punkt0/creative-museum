@@ -2,9 +2,7 @@
 
 namespace App\Command;
 
-use App\Enum\MailType;
 use App\Repository\CampaignRepository;
-use App\Service\MailService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,20 +22,16 @@ class HandleCampaignActivationCommand extends Command
 
     private EntityManagerInterface $entityManager;
 
-    private MailService $mailService;
-
     public function __construct
     (
         CampaignRepository     $campaignRepository,
         EntityManagerInterface $entityManager,
-        MailService $mailService,
         string                 $name = null
     )
     {
         parent::__construct($name);
         $this->campaignRepository = $campaignRepository;
         $this->entityManager = $entityManager;
-        $this->mailService = $mailService;
     }
 
     protected function configure(): void

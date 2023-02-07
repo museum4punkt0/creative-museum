@@ -2,7 +2,6 @@
 
 namespace App\Event;
 
-use App\Entity\CampaignMember;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class CheckForBadgesEvent extends Event
