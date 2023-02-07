@@ -1,7 +1,7 @@
 <template>
   <div v-if="comment" class="text-xs mt-4">
     <strong class="block">{{ $userName(comment.author) }}</strong>
-    <p>{{ comment.body }}</p>
+    <div v-html="comment.body" />
     <span
       class="block"
       :class="postType !== 'playlist' ? 'text-$highlight' : ''"

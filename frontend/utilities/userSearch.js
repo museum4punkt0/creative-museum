@@ -1,27 +1,33 @@
 import { VueRenderer } from '@tiptap/vue-2'
 import tippy from 'tippy.js'
 
-import MentionList from '~/components/utilities/MentionList.vue'
-
+import MentionList from './MentionList.vue'
 export default {
-  items: ({ query }) => {
-    return [
-      'Lea Thompson', 'Cyndi Lauper', 'Tom Cruise', 'Madonna', 'Jerry Hall', 'Joan Collins', 'Winona Ryder', 'Christina Applegate', 'Alyssa Milano', 'Molly Ringwald', 'Ally Sheedy', 'Debbie Harry', 'Olivia Newton-John', 'Elton John', 'Michael J. Fox', 'Axl Rose', 'Emilio Estevez', 'Ralph Macchio', 'Rob Lowe', 'Jennifer Grey', 'Mickey Rourke', 'John Cusack', 'Matthew Broderick', 'Justine Bateman', 'Lisa Bonet',
-    ].filter(item => item.toLowerCase().startsWith(query.toLowerCase())).slice(0, 5)
+  items: async ({ query }) => {
+      if (process.client) {
+        const response = await window.$nuxt.$axios.get(`users?and[or][][fullName]=${query}&and[or][][email]=${query}&and[or][][username]=${query}&and[deleted]=0`, {
+          headers: {
+            'Accept': 'application/json'
+          }
+        })
+        const output = response.data.map(user => {
+          return {
+              'id': user.uuid,
+              'label': user.username
+          }
+        });
+        return output.slice(0, 5)
+      }
   },
-
   render: () => {
     let component
     let popup
-
     return {
       onStart: props => {
         component = new VueRenderer(MentionList, {
           // using vue 2:
-          // parent: this,
-          // propsData: props,
-          props,
-          editor: props.editor,
+          parent: this,
+          propsData: props,
         })
 
         if (!props.clientRect) {
@@ -52,6 +58,7 @@ export default {
       },
 
       onKeyDown(props) {
+        console.log(props)
         if (props.event.key === 'Escape') {
           popup[0].hide()
 
@@ -66,5 +73,5 @@ export default {
         component.destroy()
       },
     }
-  },
+  }
 }

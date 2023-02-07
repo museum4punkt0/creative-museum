@@ -1,19 +1,5 @@
 <template>
   <div>
-    <div
-      v-if="editor && menubar"
-      class="float-right relative -top-3 p-3 rounded-b-xl bg-grey box-shadow-bottom tiptap-menu"
-    >
-      <button class="btn btn-outline inline-block py-1 text-xs font-bold" :class="{ 'bg-$highlight border-$highlight': editor.isActive('bold') }" @click="editor.chain().focus().toggleBold().run()">
-        B
-      </button>
-      <button class="btn btn-outline inline-block py-1 text-xs italic" :class="{ 'bg-$highlight border-$highlight': editor.isActive('italic') }" @click="editor.chain().focus().toggleItalic().run()">
-        I
-      </button>
-      <button class="btn btn-outline inline-block py-1 text-xs line-through" :class="{ 'bg-$highlight border-$highlight': editor.isActive('strike') }" @click="editor.chain().focus().toggleStrike().run()">
-        S
-      </button>
-    </div>
     <editor-content :editor="editor" />
   </div>
 </template>
@@ -39,10 +25,6 @@ export default {
     limit: {
       type: Number,
       default: 1000
-    },
-    menubar: {
-      type: Boolean,
-      default: true
     },
     placeholder: {
       type: String,
@@ -92,6 +74,11 @@ export default {
         }),
       ],
       editorProps: {
+        handleKeyDown: (_view, e) => {
+          if (e.code === 'Enter' && e.shiftKey === true) {
+            this.$emit('submitForm')
+          };
+        },
         attributes: {
           class: 'richtext prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none lg:max-h-2xl overflow-scroll'
         }

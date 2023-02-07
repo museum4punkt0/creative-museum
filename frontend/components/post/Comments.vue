@@ -49,15 +49,17 @@
         @submit.prevent="submitComment"
       >
         <div class="container lg:container-none relative">
-          <textarea
+          <UtilitiesRichTextEditorComments
             v-model="commentBody"
-            v-autogrow
             class="input-text px-4 py-2 pr-8 text-white text-base resize-none"
-            rows="1"
+            :menubar="false"
+            :model-value="commentBody"
             :placeholder="$t('post.commentPlaceholder')"
             @keydown.enter.prevent="submitComment"
+            @submitForm="submitComment"
+            @update:modelValue="updateModelValue"
             @click.prevent="showLoginIfNotLoggedIn"
-          ></textarea>
+          ></UtilitiesRichTextEditorComments>
           <button
             class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 focus:outline-none focus-visible:text-white"
             :aria-label="$t('post.postCommentSend')"
@@ -144,6 +146,10 @@ export default defineComponent({
       }
     }
 
+    function updateModelValue(content) {
+      commentBody.value = content.text
+    }
+
     return {
       comments,
       newComments,
@@ -154,6 +160,7 @@ export default defineComponent({
       fetchComments,
       submitComment,
       showLoginIfNotLoggedIn,
+      updateModelValue
     }
   },
 })

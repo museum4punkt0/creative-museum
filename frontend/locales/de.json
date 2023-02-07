@@ -26,6 +26,9 @@
     "open": "Menü öffnen",
     "close": "Menü schließen"
   },
+  "mentions": {
+    "noresults": "Keine Übereinstimmung"
+  },
   "globalLogin": {
     "header": "Login",
     "text": "Du bist gerade nicht eingeloggt. Melde Dich an und verdiene Punkte mit Deinen Aktionen.",

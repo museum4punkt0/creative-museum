@@ -1,18 +1,20 @@
 <template>
   <div class="items">
-    <template v-if="items.length">
-      <button
-        class="item"
-        :class="{ 'is-selected': index === selectedIndex }"
-        v-for="(item, index) in items"
-        :key="index"
-        @click="selectItem(index)"
-      >
-        {{ item }}
-      </button>
+    <template v-if="items">
+      <div class="mention-items">
+        <button
+          v-for="(item, index) in items"
+          :key="index"
+          class="mention-item"
+          :class="{ 'is-selected': index === selectedIndex }"
+          @click="selectItem(index)"
+        >
+          {{ item.label ?? item }}
+        </button>
+      </div>
     </template>
     <div class="item" v-else>
-      No result
+      {{ $t('mentions.noresults') }}
     </div>
   </div>
 </template>
@@ -76,10 +78,13 @@ export default {
     },
 
     selectItem(index) {
-      const item = this.items[index]
-
-      if (item) {
-        this.command({ id: item })
+      const item = this.items[index];
+      // object
+      if (item && item instanceof Object) {
+        this.command(item);
+      } else {
+        // string or number
+        this.command({ id: item });
       }
     },
   },
@@ -87,21 +92,21 @@ export default {
 </script>
 
 <style lang="scss">
-.items {
+.mention-items {
   padding: 0.2rem;
   position: relative;
   border-radius: 0.5rem;
   background: #FFF;
   color: rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.05),
     0px 10px 20px rgba(0, 0, 0, 0.1),
   ;
 }
 
-.item {
+.mention-item {
   display: block;
   margin: 0;
   width: 100%;
