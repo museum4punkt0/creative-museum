@@ -7,7 +7,7 @@
         post.type === 'playlist' ? `highlight-bg text-$highlight-contrast` : '',
       ]"
     >
-      <PostHead
+      <KioskPostHead
         :post="post"
         class="mb-4"
         :text-color="textColor"
@@ -17,12 +17,11 @@
         :post="post"
         class="mb-4"
       />
-      <PostFooter
+      <KioskPostFooter
         :post="post"
         :text-color="textColor"
-        @triggerFeedback="triggerFeedback"
       />
-      <PostComments
+      <KioskPostComments
         :post="post"
       />
     </div>

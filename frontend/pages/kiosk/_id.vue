@@ -29,24 +29,17 @@
             {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
           </p>
         </div>
-
-        <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" />
-        <KioskPostList
-          v-if="posts && posts.length"
-          :posts="posts"
-          source="campaign"
-        />
-        <UtilitiesLoadingIndicator
-          v-else-if="!posts"
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-        />
-        <div v-else>
-          <button
-            class="btn-highlight w-full mt-10"
-            @click.prevent="showAddModal"
-          >
-            {{ $t('post.new') }}
-          </button>
+        <div class="relative">
+          <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="absolute l-0 t-0 r-0 b-0 w-full z-[999] bg-grey" />
+          <KioskPostList
+            v-if="posts && posts.length"
+            :posts="posts"
+            source="campaign"
+          />
+          <UtilitiesLoadingIndicator
+            v-else-if="!posts"
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          />
         </div>
       </div>
       <div v-else>

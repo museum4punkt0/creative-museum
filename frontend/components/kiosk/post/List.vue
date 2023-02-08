@@ -1,9 +1,10 @@
 <template>
-  <div class="relative pb-10">
+  <div>
     <KioskPostItem
       v-for="post in posts"
       :key="post.id"
       :post="post"
+      class="absolute l-0 t-0 r-0 b-0 w-full bg-grey"
     />
   </div>
 </template>
