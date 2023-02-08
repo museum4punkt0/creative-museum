@@ -1,53 +1,56 @@
 <template>
-  <div>
-    <div class="lg:grid lg:grid-cols-12 lg:gap-4">
-      <div class="lg:col-span-3 pr-5">
-        <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" />
+  <div v-if="campaign"  class="p-10 grid grid-cols-12 w-full">
+    <style type="text/css">
+      body {
+        --highlight: {{ campaign.color }};
+      }
+    </style>
+    <div class="col-span-3">
+      <div class="text-$highlight">
+        <Logo
+          class="h-15 mb-10 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
+          aria-label="Creative Museum Logo"
+        />
+        <div class="box-shadow-inset inline-block p-4 rounded-lg">
+          <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" />
+        </div>
       </div>
-      <div class="lg:col-span-6">
-        <div v-if="campaign">
-          <CampaignHead v-if="campaign" :campaign="campaign" />
-          <h2 class="sr-only">{{ $t('campaign.posts') }}</h2>
-          <transition
-            enter-active-class="duration-300 ease-out opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="duration-200 ease-in"
-            leave-class="opacity-100"
-            leave-to-class="opacity-0"
+    </div>
+    <div class="col-span-9">
+      <div v-if="campaign">
+
+        <div class="mb-6">
+          <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
+          <p class="text-lg">
+            <span class="capitalize">{{ $t('till') }}</span>
+            {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
+          </p>
+        </div>
+
+        <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" />
+        <PostList
+          v-if="posts && posts.length"
+          :posts="posts"
+          source="campaign"
+        />
+        <UtilitiesLoadingIndicator
+          v-else-if="!posts"
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        />
+        <div v-else>
+          <button
+            class="btn-highlight w-full mt-10"
+            @click.prevent="showAddModal"
           >
-            <button
-              v-if="newPostsAvailable"
-              class="btn-outline mx-auto px-6"
-              @click.prevent="showNewPosts"
-            >
-              {{ $t('campaign.newPosts') }}
-            </button>
-          </transition>
-          <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" />
-          <PostList
-            v-if="posts && posts.length"
-            :posts="posts"
-            source="campaign"
-          />
+            {{ $t('post.new') }}
+          </button>
+        </div>
+      </div>
+      <div v-else>
+        <div class="container text-center min-h-2xl relative">
           <UtilitiesLoadingIndicator
-            v-else-if="!posts"
             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
           />
-          <div v-else>
-            <button
-              class="btn-highlight w-full mt-10"
-              @click.prevent="showAddModal"
-            >
-              {{ $t('post.new') }}
-            </button>
-          </div>
-        </div>
-        <div v-else>
-          <div class="container text-center min-h-2xl relative">
-            <UtilitiesLoadingIndicator
-              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -68,13 +71,18 @@ import {
   onUnmounted,
   useMeta,
 } from '@nuxtjs/composition-api'
+import { TinyColor, readability } from '@ctrl/tinycolor'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
+import Logo from '@/assets/images/logo.svg?inline'
 
 export default defineComponent({
-  name: 'CampaignPage',
+  name: 'KioskPage',
+  components: {
+    Logo
+  },
   layout: 'Kiosk',
-  setup() {
+  setup(props) {
     const route = useRoute()
     const router = useRouter()
     const { i18n } = useContext()
@@ -124,13 +132,8 @@ export default defineComponent({
           if (campaign.value && campaign.value.error) {
             router.push('/404')
           } else {
-            store.dispatch('setCurrentCampaign', route.value.params.id)
-            if (campaign.value.active && !campaign.value.closed) {
-              store.dispatch('showAddButton')
-            } else {
-              store.dispatch('hideAddButton')
-              campaignResult.value = await fetchCampaignResult(route.value.params.id)
-            }
+            store.dispatch('hideAddButton')
+            campaignResult.value = await fetchCampaignResult(route.value.params.id)
             title.value = campaign.value.title + ' | ' + i18n.t('pageTitle')
           }
         }
