@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div tabindex="0">
     <OverlaysLogin v-if="!$auth.loggedIn" />
     <OverlaysTutorial />
     <OverlaysProfileUpdate v-if="$auth.loggedIn" />

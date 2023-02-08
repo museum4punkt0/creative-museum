@@ -1,5 +1,5 @@
 <template>
-  <div role="dialog" aria-hidden="false" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keyup.esc="$emit('closeModal')">
+  <div id="cm_modal" role="dialog" aria-hidden="false" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keyup.esc="$emit('closeModal')">
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none"
     ></div>
@@ -47,6 +47,7 @@ export default defineComponent({
       if (process.client) {
         const body = document.querySelector('body')
         body.classList.add('modal-open')
+        document.getElementById('cm_modal').focus()
       }
     })
     onUnmounted(() => {
