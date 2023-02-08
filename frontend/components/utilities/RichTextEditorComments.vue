@@ -80,7 +80,7 @@ export default {
           };
         },
         attributes: {
-          class: 'richtext prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none lg:max-h-2xl overflow-scroll'
+          class: 'richtext prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none lg:max-h-2xl overflow-scroll scrollbar-hide'
         }
       },
       content: this.modelValue,
