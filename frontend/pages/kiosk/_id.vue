@@ -11,12 +11,15 @@
           class="h-15 mb-10 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
           aria-label="Creative Museum Logo"
         />
-        <div class="box-shadow-inset inline-block p-4 rounded-lg">
-          <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" />
+        <div class="pl-10 pr-16">
+          <div class="box-shadow-inset w-full p-4 rounded-lg mb-10">
+            <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" size="400" />
+          </div>
+          <KioskFilter :campaign="campaign" />
         </div>
       </div>
     </div>
-    <div class="col-span-9">
+    <div class="col-span-9 h-full">
       <div v-if="campaign">
 
         <div class="mb-6">
@@ -28,7 +31,7 @@
         </div>
 
         <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" />
-        <PostList
+        <KioskPostList
           v-if="posts && posts.length"
           :posts="posts"
           source="campaign"
