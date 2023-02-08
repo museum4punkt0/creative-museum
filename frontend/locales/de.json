@@ -110,6 +110,8 @@
     }
   },
   "post": {
+    "voteDown": "Downvoten",
+    "votUp": "Upvoten",
     "upvotes": "Upvote(s)",
     "downvotes": "Downvote(s)",
     "voting": "Voting des Beitrags: ",
