@@ -49,9 +49,10 @@
         @submit.prevent="submitComment"
       >
         <div class="container lg:container-none relative">
+          <div v-if="!$auth.loggedIn" role="button" class="absolute t-0 l-0 b-0 r-0 w-full h-full z-10" @click="showLoginIfNotLoggedIn"></div>
           <UtilitiesRichTextEditorComments
             v-model="commentBody"
-            class="input-text px-4 py-2 pr-8 text-white text-base resize-none"
+            class="input-text px-4 py-2 pr-8 text-white text-base resize-none z-0"
             :menubar="false"
             :model-value="commentBody"
             :placeholder="$t('post.commentPlaceholder')"
