@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 nuxt",
-    "build": "nuxt build --modern=server",
+    "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.ts,.vue\" --ignore-path .gitignore .",
@@ -67,7 +67,7 @@
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-vue": "^9.1.0",
     "nodemon": "^2.0.16",
-    "nuxt-windicss": "^2.5.5",
+    "nuxt-windicss": "^2.6.0",
     "prettier": "^2.5.1",
     "sass": "^1.52.1",
     "sass-loader": "^10.2.1",
