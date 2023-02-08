@@ -43,6 +43,7 @@
     "vue": "^2.6.14",
     "vue-clipboard2": "^0.3.3",
     "vue-infinite-loading": "^2.4.5",
+    "vue-qrcode-component": "^2.1.1",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
     "vue-textarea-autogrow-directive": "^0.2.0",
