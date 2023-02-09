@@ -80,14 +80,14 @@ export default defineComponent({
       showItem.value = 0
       const itemCount = items.value.length
 
-      stepDuration.value = (itemCount + 1) * props.timeout
+      stepDuration.value = (itemCount) * props.timeout
       context.emit('updateDuration', { duration: stepDuration.value, itemCount })
 
       if (items && items.value.length > 1) {
         items.value.forEach((item, index) => {
           setTimeout(function(){
+            context.emit('updateProgress', { progress : ((index + 1) / itemCount) * 100 })
             showItem.value = index + 1
-            context.emit('updateProgress', { progress : Math.ceil(((index + 1) / itemCount) * 100) })
           }, props.timeout * (index + 1))
 
         })
