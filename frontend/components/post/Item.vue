@@ -28,6 +28,7 @@
       />
       <PostComments
         :post="post"
+        :expand-comments="expandComments"
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
@@ -94,6 +95,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    expandComments: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['updatePost', 'postDeleted'],
   setup(props, context) {

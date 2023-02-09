@@ -87,6 +87,8 @@ import {
   ref,
   useContext,
   useStore,
+  useRoute,
+  nextTick
 } from '@nuxtjs/composition-api'
 import { TextareaAutogrowDirective } from 'vue-textarea-autogrow-directive'
 import { postApi } from '@/api/post'
@@ -104,6 +106,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    expandComments: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['commentsLoaded'],
   setup(props, context) {
@@ -114,12 +120,21 @@ export default defineComponent({
     const commentBody = ref('')
     const { $auth, i18n } = useContext()
     const store = useStore()
+    const route = useRoute()
 
     const { fetchPostsByPost, submitCommentByPost } = postApi()
 
     async function fetchComments() {
       comments.value = await fetchPostsByPost(props.post.id)
       showCommentForm.value = true
+      showComments.value = true
+      await nextTick()
+      const el = document.querySelector(route.value.hash)
+      el && el.scrollIntoView()
+    }
+
+    if (props.expandComments === true) {
+      fetchComments()
       showComments.value = true
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="comment" class="text-xs mt-4">
+  <div :id="`comment-${comment.id}`" v-if="comment" class="text-xs mt-4">
     <strong class="block">{{ $userName(comment.author) }}</strong>
     <div v-html="comment.body" />
     <span
@@ -27,6 +27,5 @@ export default defineComponent({
       default: () => {},
     },
   },
-  setup() {},
 })
 </script>

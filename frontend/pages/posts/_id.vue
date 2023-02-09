@@ -16,7 +16,7 @@
             {{ campaign.title }}
           </NuxtLink>
         </div>
-        <PostItem v-if="post" :post="post"></PostItem>
+        <PostItem v-if="post" :post="post" :expand-comments="true"></PostItem>
       </div>
       <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
