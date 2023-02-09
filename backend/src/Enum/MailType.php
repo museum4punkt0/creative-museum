@@ -13,4 +13,8 @@ enum MailType: string
     CASE POST_REPORTED = 'post_reported';
 
     case SYSTEM = 'system';
+
+    case POST_MENTION = 'post_mention';
+
+    case COMMENT_MENTION = 'comment_mention';
 }
