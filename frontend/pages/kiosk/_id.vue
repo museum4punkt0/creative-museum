@@ -1,16 +1,33 @@
 <template>
-  <div v-if="campaign"  class="p-10 grid grid-cols-12 w-full">
+  <div v-if="campaign" class="flex flex-col items-stretch flex-1 h-screen overflow-hidden">
     <style type="text/css">
       body {
         --highlight: {{ campaign.color }};
       }
     </style>
-    <div class="col-span-3">
-      <div class="text-$highlight">
-        <Logo
-          class="h-15 mb-10 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
-          aria-label="Creative Museum Logo"
-        />
+    <div class="p-10 grid grid-cols-12 w-full">
+      <div class="col-span-3">
+        <div class="text-$highlight">
+          <Logo
+            class="h-15 mb-10 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
+            aria-label="Creative Museum Logo"
+          />
+        </div>
+      </div>
+      <div class="col-span-9">
+        <div v-if="campaign">
+          <div class="mb-6">
+            <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
+            <p class="text-lg">
+              <span class="capitalize">{{ $t('till') }}</span>
+              {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 w-full h-full flex flex-grow-1">
+      <div class="col-span-3">
         <div class="pl-10 pr-16">
           <div class="box-shadow-inset w-full p-4 rounded-lg mb-10">
             <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" :size="400" />
@@ -18,34 +35,36 @@
           <KioskFilter :campaign="campaign" />
         </div>
       </div>
-    </div>
-    <div class="col-span-9 h-full">
-      <div v-if="campaign">
-
-        <div class="mb-6">
-          <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
-          <p class="text-lg">
-            <span class="capitalize">{{ $t('till') }}</span>
-            {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
-          </p>
+      <div class="col-span-9 h-full overflow-scroll pt-10 -mt-10 pl-6">
+        <div v-if="campaign">
+          <div class="relative mr-6">
+            <KioskPostList
+              v-if="posts && posts.length"
+              :posts="[campaignResult, posts]"
+              :campaign="campaign"
+              source="campaign"
+            />
+            <UtilitiesLoadingIndicator
+              v-else-if="!posts"
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
         </div>
-        <div class="relative">
-          <KioskPostList
-            v-if="posts && posts.length"
-            :posts="[campaignResult, posts]"
-            :campaign="campaign"
-            source="campaign"
-          />
-          <UtilitiesLoadingIndicator
-            v-else-if="!posts"
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          />
+        <div v-else>
+          <div class="container text-center min-h-2xl relative">
+            <UtilitiesLoadingIndicator
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
         </div>
       </div>
-      <div v-else>
-        <div class="container text-center min-h-2xl relative">
-          <UtilitiesLoadingIndicator
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    </div>
+    <div class="grid grid-cols-12 py-10 bg-grey">
+      <div class="col-span-9 col-start-4">
+        <div class="box-shadow-inset rounded-xl ml-6 mr-6">
+          <div
+            class="bg-$highlight rounded-xl h-5 text-$highlight-contrast text-center"
+            :style="`width: ${progress}%`"
           />
         </div>
       </div>
@@ -89,6 +108,8 @@ export default defineComponent({
     const campaign = ref(null)
     const campaignResult = ref(null)
     const { title } = useMeta()
+
+    const progress = ref(0)
 
     let refetchInterval = null
 
@@ -179,6 +200,7 @@ export default defineComponent({
           campaignResult,
           newPost,
           newPostsAvailable,
+          progress,
           showAddModal,
           refetchPosts,
           showNewPosts

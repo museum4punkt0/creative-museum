@@ -111,7 +111,7 @@
   },
   "post": {
     "voteDown": "Downvoten",
-    "votUp": "Upvoten",
+    "voteUp": "Upvoten",
     "upvotes": "Upvote(s)",
     "downvotes": "Downvote(s)",
     "voting": "Voting des Beitrags: ",

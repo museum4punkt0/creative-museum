@@ -1,6 +1,6 @@
 <template>
   <div v-if="campaignResult" class="mt-10" :style="styleAttr">
-    <div class="box-shadow">
+    <div class="box-shadow bg-grey">
       <div class="flex flex-row justify-start mb-4">
         <div class="rounded-full w-8 h-8 bg-$highlight mr-4" />
         <div class="flex flex-col">

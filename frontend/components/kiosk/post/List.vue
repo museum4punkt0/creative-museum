@@ -7,13 +7,13 @@
       <div
         v-if="index === 0 && posts[0] && posts[0].length > 0"
         ref="item"
-        class="absolute l-0 t-0 r-0 b-0 w-full z-100 bg-grey"
+        class="absolute l-0 t-0 r-0 b-0 w-full z-100"
       >
-        <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop"/>
+        <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
       </div>
       <div
         ref="item"
-        class="absolute l-0 t-0 r-0 b-0 w-full bg-grey"
+        class="absolute l-0 t-0 r-0 b-0 w-full"
         :class="`z-${99 - index}`"
       >
         <KioskPostItem

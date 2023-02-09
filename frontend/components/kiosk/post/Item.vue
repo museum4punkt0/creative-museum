@@ -1,10 +1,10 @@
 <template>
-  <div class="mt-10" :style="styleAttr">
+  <div :style="styleAttr">
     <div
       v-if="post.type !== 'system'"
       class="box-shadow"
       :class="[
-        post.type === 'playlist' ? `highlight-bg text-$highlight-contrast` : '',
+        post.type === 'playlist' ? `highlight-bg text-$highlight-contrast` : 'bg-grey',
       ]"
     >
       <KioskPostHead
