@@ -4,8 +4,6 @@
       v-for="(post, index) in filteredPosts"
       :key="index"
     >
-
-
         <div
           v-if="index === 0 && posts[0] && posts[0].length > 0"
           v-show="showItem === 0"
@@ -15,7 +13,7 @@
           <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
         </div>
         <div
-          v-show="showItem === index + 1"
+          v-show="posts[0] && posts[0].length > 0 ? showItem === index + 1 : showItem === index"
           ref="items"
           class="absolute l-0 t-0 r-0 b-0 w-full"
           :class="`z-${99 - index}`"

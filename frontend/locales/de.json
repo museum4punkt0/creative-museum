@@ -503,5 +503,8 @@
   },
   "footer": {
     "title": "Seitenbetreiber und Service-Navigation"
+  },
+  "kiosk": {
+    "qrHeadline": "Hier mitmachen:"
   }
 }
