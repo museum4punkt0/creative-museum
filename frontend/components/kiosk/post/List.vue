@@ -10,15 +10,13 @@
           ref="items"
           class="absolute l-0 t-0 r-0 b-0 w-full z-100"
         >
-          <transition name="fade">
-            <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
-          </transition>
+          <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
         </div>
         <div
           v-show="posts[0] && posts[0].length > 0 ? showItem === index + 1 : showItem === index"
           ref="items"
           class="absolute l-0 t-0 r-0 b-0 w-full"
-          :class="`z-${99 - index}`"
+          :class="`z-${90 - index}`"
         >
           <KioskPostItem
             :post="post"
@@ -64,6 +62,7 @@ export default defineComponent({
     const items = ref(null)
     const showItem = ref(0)
     const progressRef = toRef(props, 'progress')
+    const stepDuration = ref(0)
 
     watch(progressRef, (newProgress) => {
       if (newProgress === 0) {
@@ -81,11 +80,14 @@ export default defineComponent({
       showItem.value = 0
       const itemCount = items.value.length
 
+      stepDuration.value = (itemCount + 1) * props.timeout
+      context.emit('updateDuration', { duration: stepDuration.value, itemCount })
+
       if (items && items.value.length > 1) {
         items.value.forEach((item, index) => {
           setTimeout(function(){
             showItem.value = index + 1
-            context.emit('updateProgress', { progress : ((index + 1) / itemCount) * 100 })
+            context.emit('updateProgress', { progress : Math.ceil(((index + 1) / itemCount) * 100) })
           }, props.timeout * (index + 1))
 
         })
@@ -103,6 +105,7 @@ export default defineComponent({
       progressRef,
       showItem,
       filteredPosts,
+      stepDuration,
       animateItems
     }
 

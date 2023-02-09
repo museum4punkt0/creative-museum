@@ -47,6 +47,7 @@
               :timeout="timeout"
               :progress="progress"
               @updateProgress="updateProgress"
+              @updateDuration="updateStepDuration"
             />
             <UtilitiesLoadingIndicator
               v-else-if="!posts"
@@ -65,10 +66,14 @@
     </div>
     <div class="grid grid-cols-12 py-10 bg-grey">
       <div class="col-span-9 col-start-4">
-        <div class="box-shadow-inset rounded-xl ml-6 mr-6">
+        <div class="box-shadow-inset rounded-xl ml-6 mr-6 relative">
           <div
-            class="bg-$highlight rounded-xl h-5 text-$highlight-contrast text-center transition-all ease-in-out duration-200"
-            :style="`width: ${progress}%`"
+            class="absolute z-20 left-0 top-0 bg-$highlight opacity-50 rounded-xl h-5 text-center transition-all ease-linear"
+            :style="`width: ${fullWidth}%; transition-duration: ${stepDuration}ms;`"
+          />
+          <div
+            class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-in-out duration-300 delay-300"
+            :style="`width: ${progress}%;`"
           />
         </div>
       </div>
@@ -112,9 +117,13 @@ export default defineComponent({
     const campaignResult = ref(null)
     const { title } = useMeta()
     const step = ref(0)
+    const stepDuration = ref(0)
+    const stepDurationInProgress = ref(0)
     const nextSorting = ref('votestotal')
+    const fullWidth = ref(0)
+    const itemCount = ref(0)
 
-    const timeout = 10000
+    const timeout = 5000
 
     const progress = ref(0)
 
@@ -125,7 +134,8 @@ export default defineComponent({
     watch(progress, (newProgress) => {
 
       if (newProgress === 100) {
-
+        fullWidth.value = 0
+        stepDuration.value = 0
         if (step.value === 1) {
           nextSorting.value = 'controversial'
         }
@@ -178,12 +188,11 @@ export default defineComponent({
           store.state.currentSorting,
           store.state.currentSortingDirection,
           1
-          )
+        )
 
           if (campaign.value && campaign.value.error) {
             router.push('/404')
           } else {
-            store.dispatch('hideAddButton')
             campaignResult.value = await fetchCampaignResult(route.value.params.id)
             title.value = campaign.value.title + ' | ' + i18n.t('pageTitle')
           }
@@ -205,24 +214,20 @@ export default defineComponent({
           }
         }
 
-        function showNewPosts() {
-          if (newPosts && newPosts.value.length) {
-            posts.value = newPosts.value
-            newPostsAvailable.value = false
-          }
-        }
-
-        function showAddModal() {
-          store.dispatch('showAddModal')
-        }
-
         function updateProgress(emitValue) {
-          console.log(emitValue)
           progress.value = emitValue.progress
+        }
+
+        function updateStepDuration(emitValue) {
+          console.log(emitValue.duration)
+          stepDuration.value = emitValue.duration
+          itemCount.value = emitValue.itemCount
+          fullWidth.value = 100
         }
 
         onMounted(async () => {
           await loadCampaign()
+          fullWidth.value = '100'
 
           refetchInterval = setInterval(() => {
             refetchPosts()
@@ -242,10 +247,13 @@ export default defineComponent({
           progress,
           timeout,
           nextSorting,
-          showAddModal,
+          stepDuration,
+          stepDurationInProgress,
+          fullWidth,
+          itemCount,
           refetchPosts,
-          showNewPosts,
-          updateProgress
+          updateProgress,
+          updateStepDuration
         }
       },
       head: {}

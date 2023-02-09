@@ -13,6 +13,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    displayMode: {
+      type: String,
+      default: 'Web'
+    }
   },
   setup() {},
 })
