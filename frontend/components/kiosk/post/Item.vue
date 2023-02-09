@@ -15,6 +15,7 @@
       <component
         :is="componentName"
         :post="post"
+        display-mode="Kiosk"
         class="mb-4"
       />
       <KioskPostFooter

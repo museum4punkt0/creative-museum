@@ -4,7 +4,7 @@
     <p class="break-words">{{ post.body }}</p>
 
     <div
-      v-if="!post.userChoiced && (post.campaign.active || !post.campaign.closed)"
+      v-if="(!post.userChoiced && (post.campaign.active || !post.campaign.closed)) && displayMode !== 'Kiosk'"
       class="poll-options mt-4 grid lg:grid-cols-2 gap-4"
     >
       <div v-for="(option, key) of post.pollOptions" :key="key">
@@ -62,6 +62,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    displayMode: {
+      type: String,
+      default: 'Web'
+    }
   },
   emits: ['updatePost'],
   setup(_, context) {

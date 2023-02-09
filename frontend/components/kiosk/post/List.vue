@@ -10,7 +10,9 @@
           ref="items"
           class="absolute l-0 t-0 r-0 b-0 w-full z-100"
         >
-          <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
+          <transition name="fade">
+            <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
+          </transition>
         </div>
         <div
           v-show="posts[0] && posts[0].length > 0 ? showItem === index + 1 : showItem === index"

@@ -31,7 +31,7 @@
         <div class="pl-10 pr-16">
           <h2 class="text-white text-xl mb-3">{{ $t('kiosk.qrHeadline') }}</h2>
           <div class="box-shadow-inset w-full p-4 rounded-lg mb-10">
-            <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" :size="400" />
+            <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" :size="800" />
           </div>
           <KioskFilter :campaign="campaign" />
         </div>
