@@ -11,9 +11,11 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Enum\MailType;
 use App\Enum\PointsReceivedType;
 use App\Event\CampaignPointsReceivedEvent;
+use App\Repository\UserRepository;
 use App\Service\MailService;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -26,8 +28,11 @@ class PostCreatedSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly MailService $mailService
-    ) {}
+        private readonly MailService $mailService,
+        private readonly UserRepository $userRepository
+    )
+    {
+    }
 
     /**
      * @return array[]
@@ -55,17 +60,49 @@ class PostCreatedSubscriber implements EventSubscriberInterface
                 $post->getAuthor()->getId(),
                 PointsReceivedType::COMMENT_CREATED->value
             );
-            if ($post->getAuthor() !== $post->getParent()->getAuthor()){
-                $this->mailService->sendMail(MailType::POST_COMMENTED->value,$post->getParent()->getAuthor(),['comment' => $post]);
+            if ($post->getAuthor() !== $post->getParent()->getAuthor()) {
+                $this->mailService->sendMail(MailType::POST_COMMENTED->value, $post->getParent()->getAuthor(), ['comment' => $post]);
             }
+            $this->checkForMention($post, MailType::COMMENT_MENTION);
         } else {
             $postPointsEvent = new CampaignPointsReceivedEvent(
                 $post->getCampaign()->getId(),
                 $post->getAuthor()->getId(),
                 PointsReceivedType::POST_CREATED->value
             );
+            $this->checkForMention($post, MailType::POST_MENTION);
         }
 
         $this->eventDispatcher->dispatch($postPointsEvent, CampaignPointsReceivedEvent::NAME);
+    }
+
+    protected function checkForMention(Post $post, MailType $mailType): void
+    {
+        preg_match_all('/data-label="(.*?)"/', $post->getBody(), $mentions);
+        $mentions = array_unique($mentions[1]);
+
+        if (count($mentions) === 0) {
+            return;
+        }
+
+        foreach ($mentions as $mention) {
+            $mentionedUser = $this->userRepository->findOneBy([
+                'username' => $mention,
+                'active' => 1,
+                'deleted' => 0,
+            ]);
+
+            if (!($mentionedUser instanceof User)) {
+                continue;
+            }
+
+            $this->mailService->sendMail(
+                $mailType->value,
+                $mentionedUser,
+                [
+                    'post' => $post,
+                ]
+            );
+        }
     }
 }

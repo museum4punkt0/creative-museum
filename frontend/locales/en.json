@@ -350,7 +350,9 @@
       "post_commented": "New Comment",
       "post_reported": "New Post Reported",
       "post_reported_author": "Your post has been reported",
-      "system": "You have received a message from the Creative Museum"
+      "system": "You have received a message from the Creative Museum",
+      "post_mention": "New post mention",
+      "comment_mention": "New comment mention"
     }
   },
   "today": "Today",
