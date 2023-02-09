@@ -43,6 +43,9 @@
               :posts="[campaignResult, posts]"
               :campaign="campaign"
               source="campaign"
+              :timeout="timeout"
+              :progress="progress"
+              @updateProgress="updateProgress"
             />
             <UtilitiesLoadingIndicator
               v-else-if="!posts"
@@ -63,7 +66,7 @@
       <div class="col-span-9 col-start-4">
         <div class="box-shadow-inset rounded-xl ml-6 mr-6">
           <div
-            class="bg-$highlight rounded-xl h-5 text-$highlight-contrast text-center"
+            class="bg-$highlight rounded-xl h-5 text-$highlight-contrast text-center transition-all ease-in-out duration-200"
             :style="`width: ${progress}%`"
           />
         </div>
@@ -86,7 +89,6 @@ import {
   onUnmounted,
   useMeta,
 } from '@nuxtjs/composition-api'
-import { TinyColor, readability } from '@ctrl/tinycolor'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import Logo from '@/assets/images/logo.svg?inline'
@@ -97,7 +99,7 @@ export default defineComponent({
     Logo
   },
   layout: 'Kiosk',
-  setup(props) {
+  setup(_, context) {
     const route = useRoute()
     const router = useRouter()
     const { i18n } = useContext()
@@ -108,12 +110,43 @@ export default defineComponent({
     const campaign = ref(null)
     const campaignResult = ref(null)
     const { title } = useMeta()
+    const step = ref(0)
+    const nextSorting = ref('votestotal')
+
+    const timeout = 10000
 
     const progress = ref(0)
 
     let refetchInterval = null
 
     const newPost = computed(() => store.state.newPostOnCampaign)
+
+    watch(progress, (newProgress) => {
+
+      if (newProgress === 100) {
+
+        if (step.value === 1) {
+          nextSorting.value = 'controversial'
+        }
+
+        setTimeout(() => {
+          store.dispatch('setCurrentSortingWithDirection', [
+            nextSorting.value,
+            'desc',
+          ])
+          progress.value = 0
+        }, timeout)
+
+
+        if (step.value === 2) {
+          step.value = 0
+          nextSorting.value = 'date'
+        } else {
+          step.value++
+        }
+
+      }
+    });
 
     const sortingKey = computed(
       () =>
@@ -182,6 +215,11 @@ export default defineComponent({
           store.dispatch('showAddModal')
         }
 
+        function updateProgress(emitValue) {
+          console.log(emitValue)
+          progress.value = emitValue.progress
+        }
+
         onMounted(async () => {
           await loadCampaign()
 
@@ -201,9 +239,12 @@ export default defineComponent({
           newPost,
           newPostsAvailable,
           progress,
+          timeout,
+          nextSorting,
           showAddModal,
           refetchPosts,
-          showNewPosts
+          showNewPosts,
+          updateProgress
         }
       },
       head: {}

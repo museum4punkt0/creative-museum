@@ -13,7 +13,7 @@ export default defineConfig({
     'btn-outline':
       'block rounded-3xl border-1 p-2 text-center bg-transparent border-white text-white',
   },
-  safelist: 'bg-white bg-black bg-contrast bg-$highlight-contrast btn-dropdown ring-black border-black text-black ring-white text-white text-contrast text-$higlight-contrast fill-white fill-contrast fill-$highlight-contrast',
+  safelist: 'bg-white bg-black bg-contrast bg-$highlight-contrast btn-dropdown ring-black border-black text-black ring-white text-white text-contrast text-$higlight-contrast fill-white fill-contrast fill-$highlight-contrast opacity-100',
   theme: {
     container: {
       center: true,

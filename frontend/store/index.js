@@ -216,5 +216,8 @@ export const getters = {
   },
   currentAlert(state) {
     return state.currentAlert
+  },
+  currentSorting(state) {
+    return state.currentSorting
   }
 }
