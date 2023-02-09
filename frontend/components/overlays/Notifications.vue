@@ -10,7 +10,9 @@
       <UtilitiesModal :aria-label=" $t('modal.notificationDetail')">
         <OverlaysNotificationItem
           :notification="notifications[0]"
+          :notification-count="notifications.length"
           @refetchNotifications="getNotifications"
+          @clearAllNotifications="clearAllNotifications"
         />
       </UtilitiesModal>
     </transition>
@@ -35,7 +37,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const { fetchUnviewedNotifications } = notificationApi()
+    const { fetchUnviewedNotifications, updateNotificationAsViewed } = notificationApi()
     const notifications = ref(null)
 
     watch(
@@ -56,9 +58,17 @@ export default defineComponent({
       store.dispatch('updatedNotifications', notifications.value.length)
     }
 
+    async function clearAllNotifications() {
+      await notifications.value.forEach((item) => {
+        updateNotificationAsViewed(item.id)
+      })
+      notifications.value = []
+    }
+
     return {
       notifications,
       getNotifications,
+      clearAllNotifications
     }
   },
 })

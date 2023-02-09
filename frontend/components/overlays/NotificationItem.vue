@@ -55,8 +55,11 @@
         </p>
       </div>
     </div>
-    <button id="notificationCloseButton" class="btn-outline m-6 mb-safe" @click.prevent="markNotificationAsViewed">
+    <button id="notificationCloseButton" class="btn-outline mx-6 mt-6" :class="notificationCount === 1 ? 'mb-6 mb-safe' : ''" @click.prevent="markNotificationAsViewed">
       {{ $t('close') }}
+    </button>
+    <button v-if="notificationCount > 1" class="btn-highlight text-highlight-contrast m-6 mb-safe" @click.prevent="$emit('clearAllNotifications')">
+      {{ $t('notifications.closeAll') }}
     </button>
   </div>
 </template>
@@ -70,7 +73,14 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    notificationCount: {
+      type: Number,
+      required: true
+    }
   },
+  emits: [
+    'clearAllNotifications'
+  ],
   setup(props, context) {
     const { $config } = useContext()
 

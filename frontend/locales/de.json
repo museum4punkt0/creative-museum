@@ -421,6 +421,7 @@
   },
   "notifications": {
     "showAll": "Alle Mitteilungen anzeigen",
+    "closeAll": "Alle schließen",
     "1662032613": {
       "title": "Award Strike",
       "text": "Du hast {points} Punkte für das Verschenken eines Awards in der Kampagne \"{campaign}\" erhalten!"

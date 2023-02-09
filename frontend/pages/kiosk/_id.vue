@@ -13,7 +13,7 @@
         />
         <div class="pl-10 pr-16">
           <div class="box-shadow-inset w-full p-4 rounded-lg mb-10">
-            <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" size="400" />
+            <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" :size="400" />
           </div>
           <KioskFilter :campaign="campaign" />
         </div>
@@ -30,10 +30,10 @@
           </p>
         </div>
         <div class="relative">
-          <CampaignResult v-if="campaignResult" :campaign-title="campaign.title" :campaign-result="campaignResult" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="absolute l-0 t-0 r-0 b-0 w-full z-[999] bg-grey" />
           <KioskPostList
             v-if="posts && posts.length"
-            :posts="posts"
+            :posts="[campaignResult, posts]"
+            :campaign="campaign"
             source="campaign"
           />
           <UtilitiesLoadingIndicator
