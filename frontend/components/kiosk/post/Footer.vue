@@ -3,7 +3,7 @@
     <span class="flex flex-row items-center text-sm">
       <button
         v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
-        class="mr-2 -my-1 -ml-1 p-1 w-auto cursor-pointer transform-gpu rounded-md focus:outline-none focus-visible:bg-contrast"
+        class="mr-2 -my-1 -ml-1 p-1 w-8 h-8 cursor-pointer transform-gpu rounded-md focus:outline-none focus-visible:bg-contrast"
         :aria-label="$t('post.voteDown')"
         :class="
           myVote === 'up' && post.type != 'playlist'
@@ -18,7 +18,7 @@
       <span class="sr-only">$t('post.voting')</span> {{ votesTotal }}
       <button
         v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
-        class="ml-2 -my-1 p-1 w-auto transform-gpu rotate-180 cursor-pointer rounded-md focus:outline-none focus-visible:bg-contrast"
+        class="ml-2 -my-1 p-1 w-8 h-8 transform-gpu rotate-180 cursor-pointer rounded-md focus:outline-none focus-visible:bg-contrast"
         :aria-label="$t('post.voteUp')"
         :class="
           myVote === 'down' && post.type != 'playlist'

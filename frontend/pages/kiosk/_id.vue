@@ -72,7 +72,7 @@
             :style="`width: ${fullWidth}%; transition-duration: ${stepDuration}ms;`"
           />
           <div
-            class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-in-out duration-300 delay-300"
+            class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-in-out duration-300"
             :style="`width: ${progress}%;`"
           />
         </div>
@@ -123,7 +123,7 @@ export default defineComponent({
     const fullWidth = ref(0)
     const itemCount = ref(0)
 
-    const timeout = 5000
+    const timeout = 1000
 
     const progress = ref(0)
 
@@ -132,8 +132,7 @@ export default defineComponent({
     const newPost = computed(() => store.state.newPostOnCampaign)
 
     watch(progress, (newProgress) => {
-
-      if (newProgress === 100) {
+      if (Math.floor(newProgress) === 100) {
         fullWidth.value = 0
         stepDuration.value = 0
         if (step.value === 1) {
@@ -219,7 +218,6 @@ export default defineComponent({
         }
 
         function updateStepDuration(emitValue) {
-          console.log(emitValue.duration)
           stepDuration.value = emitValue.duration
           itemCount.value = emitValue.itemCount
           fullWidth.value = 100

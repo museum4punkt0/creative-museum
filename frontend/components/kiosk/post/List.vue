@@ -1,17 +1,17 @@
 <template>
   <div>
     <div
-      v-for="(post, index) in filteredPosts"
-      :key="index"
-    >
-        <div
-          v-if="index === 0 && posts[0] && posts[0].length > 0"
+          v-if="posts[0] && posts[0].length > 0"
           v-show="showItem === 0"
           ref="items"
           class="absolute l-0 t-0 r-0 b-0 w-full z-100"
         >
           <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
         </div>
+    <div
+      v-for="(post, index) in filteredPosts"
+      :key="index"
+    >
         <div
           v-show="posts[0] && posts[0].length > 0 ? showItem === index + 1 : showItem === index"
           ref="items"
@@ -79,15 +79,15 @@ export default defineComponent({
     function animateItems() {
       showItem.value = 0
       const itemCount = items.value.length
-
-      stepDuration.value = (itemCount) * props.timeout
-      context.emit('updateDuration', { duration: stepDuration.value, itemCount })
-
       if (items && items.value.length > 1) {
+
+        stepDuration.value = (itemCount) * props.timeout
+        context.emit('updateDuration', { duration: stepDuration.value, itemCount })
+        
         items.value.forEach((item, index) => {
           setTimeout(function(){
-            context.emit('updateProgress', { progress : ((index + 1) / itemCount) * 100 })
             showItem.value = index + 1
+            context.emit('updateProgress', { progress : ((index + 1) / itemCount) * 100 })
           }, props.timeout * (index + 1))
 
         })
@@ -95,7 +95,6 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      context.emit('updateProgress', { progress : 0 })
       animateItems()
     })
 
