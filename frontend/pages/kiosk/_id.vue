@@ -1,5 +1,8 @@
 <template>
-  <div v-if="campaign" class="flex flex-col items-stretch flex-1 h-screen overflow-hidden">
+  <div
+    v-if="campaign"
+    class="flex flex-col items-stretch flex-1 h-screen overflow-hidden"
+  >
     <style type="text/css">
       body {
         --highlight: {{ campaign.color }};
@@ -31,7 +34,12 @@
         <div class="pl-10 pr-16">
           <h2 class="text-white text-xl mb-3">{{ $t('kiosk.qrHeadline') }}</h2>
           <div class="box-shadow-inset w-full p-4 rounded-lg mb-10">
-            <qr-code v-if="campaign" :text="`${$config.baseURL}/campaigns/${campaign.id}`" class="w-full" :size="800" />
+            <qr-code
+              v-if="campaign"
+              :text="`${$config.baseURL}/campaigns/${campaign.id}`"
+              class="w-full"
+              :size="800"
+            />
           </div>
           <KioskFilter :campaign="campaign" />
         </div>
@@ -102,7 +110,7 @@ import Logo from '@/assets/images/logo.svg?inline'
 export default defineComponent({
   name: 'KioskPage',
   components: {
-    Logo
+    Logo,
   },
   layout: 'Kiosk',
   setup(_, context) {
@@ -147,40 +155,32 @@ export default defineComponent({
           progress.value = 0
         }, timeout)
 
-
         if (step.value === 2) {
           step.value = 0
           nextSorting.value = 'date'
         } else {
           step.value++
         }
-
       }
-    });
+    })
 
-    const sortingKey = computed(
-      () =>
-      store.state.currentSorting +
-      store.state.currentSortingDirection +
-      store.state.filterId
+    const sortingKey = computed(() => {
+      return (
+        store.state.currentSorting +
+        store.state.currentSortingDirection +
+        store.state.filterId
       )
+    })
 
-      watch(newPost, (newValue) => {
-        if (newValue === route.value.params.id) {
-          loadCampaign()
-          store.dispatch('resetNewPostOnCampaign')
-        }
-      })
+    watch(sortingKey, () => {
+      loadCampaign()
+    })
 
-      watch(sortingKey, () => {
-        loadCampaign()
-      })
+    const { fetchCampaign, fetchCampaignResult } = campaignApi()
+    const { fetchPostsByCampaign } = postApi()
 
-      const { fetchCampaign, fetchCampaignResult } = campaignApi()
-      const { fetchPostsByCampaign } = postApi()
-
-      async function loadCampaign() {
-        if (route.value.params.id) {
+    async function loadCampaign() {
+      if (route.value.params.id) {
         campaign.value = await fetchCampaign(route.value.params.id)
         posts.value = await fetchPostsByCampaign(
           route.value.params.id,
@@ -189,71 +189,53 @@ export default defineComponent({
           1
         )
 
-          if (campaign.value && campaign.value.error) {
-            router.push('/404')
-          } else {
-            campaignResult.value = await fetchCampaignResult(route.value.params.id)
-            title.value = campaign.value.title + ' | ' + i18n.t('pageTitle')
-          }
+        if (campaign.value && campaign.value.error) {
+          router.push('/404')
+        } else {
+          campaignResult.value = await fetchCampaignResult(
+            route.value.params.id
+          )
+          title.value = campaign.value.title + ' | ' + i18n.t('pageTitle')
         }
       }
+    }
 
-      async function refetchPosts() {
-        if (route.value.params.id) {
-          newPosts.value = await fetchPostsByCampaign(
-            route.value.params.id,
-            store.state.currentSorting,
-            store.state.currentSortingDirection,
-            1
-            )
+    function updateProgress(emitValue) {
+      progress.value = emitValue.progress
+    }
 
-            if (newPosts.value[0].id !== posts.value[0].id) {
-              newPostsAvailable.value = true
-            }
-          }
-        }
+    function updateStepDuration(emitValue) {
+      stepDuration.value = emitValue.duration
+      itemCount.value = emitValue.itemCount
+      fullWidth.value = 100
+    }
 
-        function updateProgress(emitValue) {
-          progress.value = emitValue.progress
-        }
-
-        function updateStepDuration(emitValue) {
-          stepDuration.value = emitValue.duration
-          itemCount.value = emitValue.itemCount
-          fullWidth.value = 100
-        }
-
-        onMounted(async () => {
-          await loadCampaign()
-          fullWidth.value = '100'
-
-          refetchInterval = setInterval(() => {
-            refetchPosts()
-          }, 2500)
-        })
-
-        onUnmounted(function() {
-          clearInterval(refetchInterval)
-        })
-
-        return {
-          campaign,
-          posts,
-          campaignResult,
-          newPost,
-          newPostsAvailable,
-          progress,
-          timeout,
-          nextSorting,
-          stepDuration,
-          stepDurationInProgress,
-          fullWidth,
-          itemCount,
-          refetchPosts,
-          updateProgress,
-          updateStepDuration
-        }
-      },
-      head: {}
+    onMounted(async () => {
+      await loadCampaign()
+      fullWidth.value = '100'
     })
-  </script>
+
+    onUnmounted(function () {
+      clearInterval(refetchInterval)
+    })
+
+    return {
+      campaign,
+      posts,
+      campaignResult,
+      newPost,
+      newPostsAvailable,
+      progress,
+      timeout,
+      nextSorting,
+      stepDuration,
+      stepDurationInProgress,
+      fullWidth,
+      itemCount,
+      updateProgress,
+      updateStepDuration,
+    }
+  },
+  head: {},
+})
+</script>

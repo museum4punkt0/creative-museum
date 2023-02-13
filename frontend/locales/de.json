@@ -69,7 +69,7 @@
     },
     "step3": {
       "title": "Beiträge erstellen",
-      "text": "Im Creative Museum kannst Du Deine eigenen Inhalte teilen und mit anderen interagieren. Poste einen Bild-, Text-, Video- oder Audiobeitrag, eine eigene Umfrage oder erstelle eine Playlist aus mehreren Beiträgen!"
+      "text": "Im Creative Museum kannst Du Deine eigenen Inhalte teilen und mit anderen interagieren. Poste einen Bild-, Text-, Video- oder Audiobeitrag, eine eigene Umfrage oder erstelle eine Sammlung aus mehreren Beiträgen!"
     },
     "step4": {
       "title": "Awards",
@@ -168,8 +168,8 @@
         }
       },
       "playlist": {
-        "button": "Playlist",
-        "headline": "Playlist hinzufügen"
+        "button": "Sammlung",
+        "headline": "Sammlung hinzufügen"
       }
     },
     "new": "Neuer Beitrag",
@@ -194,13 +194,13 @@
       "button": "Weitere Aktionen",
       "addBookmark": "Hinzufügen zur Merkliste",
       "removeBookmark": "Von Merkliste entfernen",
-      "addToPlaylist": "Zu Playlist hinzufügen",
+      "addToPlaylist": "Zu Sammlung hinzufügen",
       "assignAward": "Award verleihen",
       "playlist": {
         "createNew": {
-          "cta": "Neue Playlist erstellen",
-          "submitButton": "Playlist erstellen",
-          "placeholder": "Name der Playlist"
+          "cta": "Neue Sammlung erstellen",
+          "submitButton": "Sammlung erstellen",
+          "placeholder": "Name der Sammlung"
         }
       },
       "delete": {
@@ -226,9 +226,9 @@
     }
   },
   "playlist": {
-    "addTo": "Zu Playlist hinzufügen",
-    "createNew": "Neue Playlist erstellen",
-    "new": "Neue Playlist"
+    "addTo": "Zu Sammlung hinzufügen",
+    "createNew": "Neue Sammlung erstellen",
+    "new": "Neue Sammlung"
   },
   "points": "Punkte",
   "score": "Punktestand",
@@ -248,7 +248,7 @@
         "headline": "Aktivitäten",
         "posts": "Beiträge",
         "bookmarks": "Merkliste",
-        "playlists": "Playlists",
+        "playlists": "Sammlungen",
         "awards": "Awards",
         "notifications": "Neueste Mitteilungen"
       },
@@ -339,7 +339,7 @@
     "newest": "Neu",
     "relevant": "Relevant",
     "controversial": "Kontrovers",
-    "playlist": "Playlists",
+    "playlist": "Sammlungen",
     "order": {
       "reverse": "Sortierung umkehren"
     }
@@ -498,7 +498,7 @@
     "tutorial": "Tutorial",
     "newPost": "Neuer Beitrag",
     "setUsername": "Benuternamen festlegen",
-    "showPlaylist": "Playlist",
+    "showPlaylist": "Sammlung",
     "campaignClosed": "Kampagne beendet",
     "login": "Einloggen um teilzunehmen",
     "feedback": "Feedback abgeben"
