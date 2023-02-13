@@ -8,16 +8,14 @@
       :alt="
         post.files[0].description
           ? post.files[0].description
-          : post.title
-          ? post.title
-          : post.body
+          : ''
       "
     />
     <div class="my-3">
       <p v-if="post.title" class="text-lg font-bold mb-2">
         {{ post.title }}
       </p>
-      <p class="break-words">{{ post.body }}</p>
+      <div class="break-words richtext" v-html="post.body" />
     </div>
   </div>
 </template>
@@ -31,6 +29,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    displayMode: {
+      type: String,
+      default: 'Web'
+    }
   },
   setup() {
     const context = useContext()

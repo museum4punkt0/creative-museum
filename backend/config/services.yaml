@@ -14,9 +14,9 @@ parameters:
     upvoteScorePoints: 2000
     feedBackScorePoints: 3000
 
-    textPostBodyLength: 1000
-    imagePostBodyLength: 1000
-    videoPostBodyLength: 2000
+    textPostBodyLength: 1500
+    imagePostBodyLength: 1500
+    videoPostBodyLength: 3000
     postQuestionLength: 100
 
     fromMail: 'noreply@creativemuseum.landesmuseum.net'
@@ -142,6 +142,7 @@ services:
     App\Service\MailService:
         arguments:
             - '%fromMail%'
+            - '%env(DOMAIN)%'
     App\EventSubscriber\PostReportedSubscriber:
         arguments:
             - '%editorMail%'

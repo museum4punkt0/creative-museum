@@ -7,7 +7,8 @@ define([
     'TYPO3/CMS/Creativemuseum/BadgeHandling',
     'TYPO3/CMS/Creativemuseum/AwardHandling',
     'TYPO3/CMS/Creativemuseum/PartnerHandling',
-    'TYPO3/CMS/Creativemuseum/FeedbackOptionHandling'
+    'TYPO3/CMS/Creativemuseum/FeedbackOptionHandling',
+    'ckeditor'
 ], function(
     $,
     Modal,
@@ -17,7 +18,8 @@ define([
     BadgeHandler,
     AwardHandler,
     PartnerHandler,
-    FeedbackOptionHandling
+    FeedbackOptionHandling,
+    CKEDITOR
 ) {
 
     const colorPickerElement = document.querySelector('.t3js-colorpicker');
@@ -40,6 +42,16 @@ define([
         });
 
         field.parentNode.insertBefore(charCountDiv, field.nextSibling);
+    }
+
+    CKEDITOR.timestamp += '-' + Math.floor(Date.now() / 1000);
+
+    const fields = [
+        'campaign-description-html-rte',
+    ];
+
+    for (const field of fields) {
+        CKEDITOR.replace(field, {});
     }
 
     $('#campaign-form').on('submit', function(ev) {

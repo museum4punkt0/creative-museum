@@ -1,5 +1,5 @@
 <template>
-  <div role="dialog" aria-hidden="false" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keyup.esc="$emit('closeModal')">
+  <div id="cm_modal" role="dialog" aria-hidden="false" tabindex="0" class="fixed top-0 left-0 right-0 bottom-0 z-50" @keyup.esc="$emit('closeModal')">
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none"
     ></div>
@@ -14,7 +14,7 @@
           v-if="closable"
           autofocus
           :aria-label="$t('modal.close')"
-          class="close-btn block h-4 w-4 absolute right-5 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
+          class="close-btn block h-4 w-4 absolute z-50 right-5 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
           type="button"
           @click.prevent="$emit('closeModal')"
         ></button>
@@ -47,6 +47,7 @@ export default defineComponent({
       if (process.client) {
         const body = document.querySelector('body')
         body.classList.add('modal-open')
+        document.getElementById('cm_modal').focus()
       }
     })
     onUnmounted(() => {

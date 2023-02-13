@@ -1,35 +1,42 @@
 <template>
-  <div class="flex flex-row justify-between">
+  <div class="flex flex-row justify-between" :class="post.type === 'playlist' ? 'text-$highlight-contrast' : 'text-white'">
     <span class="flex flex-row items-center text-sm">
-      <LibraryIcon
+      <button
         v-tooltip="`${post.upvotes} ${$t('post.upvotes')}`"
-        class="mr-2 w-auto cursor-pointer focus:outline-none"
+        class="mr-2 -my-1 -ml-1 p-1 w-8 h-8 cursor-pointer transform-gpu rounded-md focus:outline-none focus-visible:bg-contrast"
+        :aria-label="$t('post.voteDown')"
         :class="
           myVote === 'up' && post.type != 'playlist'
-            ? 'text-$highlight focus-visible:text-white'
-            : 'fill-white focus-visible:text-$highlight'
+            ? 'text-$highlight focus-visible:text-$highlight-contrast'
+            : 'fill-$highlight-contrast focus-visible:text-$highlight'
         "
         @click.prevent="doVotePost('up')"
         @keyup.enter.prevent="doVotePost('up')"
-      />
-      {{ votesTotal }}
-      <LibraryIcon
+      >
+        <LibraryIcon />
+      </button>
+      <span class="sr-only">$t('post.voting')</span> {{ votesTotal }}
+      <button
         v-tooltip="`${post.downvotes} ${$t('post.downvotes')}`"
-        class="ml-2 w-auto transform-gpu rotate-180 cursor-pointer focus:outline-none"
+        class="ml-2 -my-1 p-1 w-8 h-8 transform-gpu rotate-180 cursor-pointer rounded-md focus:outline-none focus-visible:bg-contrast"
+        :aria-label="$t('post.voteUp')"
         :class="
           myVote === 'down' && post.type != 'playlist'
-            ? 'text-$highlight focus-visible:text-white'
-            : 'fill-white focus-visible:text-$highlight'
+            ? 'text-$highlight focus-visible:text-$highlight-contrast'
+            : 'fill-$highlight-contrast focus-visible:text-$highlight'
         "
         @click.prevent="doVotePost('down')"
         @keyup.enter.prevent="doVotePost('down')"
-      />
+      >
+        <LibraryIcon
+        />
+      </button>
     </span>
     <button
       class="btn-outline text-sm ml-4 overflow-hidden overflow-ellipsis whitespace-nowrap"
       :class="
         post.type === 'playlist'
-          ? `btn-text-${textColor}`
+          ? 'text-$highlight-contrast border-$highlight-contrast hover:(bg-$highlight-contrast text-$highlight white border-contrast) focus-visible:(bg-contrast text-$highlight border-$highlight-contrast)'
           : post.rated
           ? 'text-$highlight border-$highlight focus-visible:(!text-white !border-white)'
           : ''

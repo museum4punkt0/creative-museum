@@ -1,10 +1,10 @@
 <template>
-  <div v-if="comment" class="text-xs mt-4">
+  <div :id="`comment-${comment.id}`" v-if="comment" class="text-xs mt-4">
     <strong class="block">{{ $userName(comment.author) }}</strong>
-    <p>{{ comment.body }}</p>
+    <div v-html="comment.body" />
     <span
       class="block"
-      :class="postType !== 'playlist' ? 'highlight-text' : ''"
+      :class="postType !== 'playlist' ? 'text-$highlight' : ''"
       >{{
         $dayjs.duration($dayjs().diff($dayjs(comment.created))).days() > 2
           ? $dayjs(comment.created).format( $t('dateFormat') )
@@ -27,6 +27,5 @@ export default defineComponent({
       default: () => {},
     },
   },
-  setup() {},
 })
 </script>

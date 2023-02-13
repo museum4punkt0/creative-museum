@@ -16,5 +16,12 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'WithoutFooter',
+  head() {
+      return {
+          htmlAttrs: {
+              lang: this.$i18n.locale
+          }
+      }
+  },
 })
 </script>

@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace App\EventSubscriber;
 
 use App\Event\FeedbackCreatedEvent;
-use App\Repository\PostFeedbackRepository;
 use App\Service\PostFeedbackService;
 use Doctrine\ORM\EntityManagerInterface;
 use JetBrains\PhpStorm\ArrayShape;

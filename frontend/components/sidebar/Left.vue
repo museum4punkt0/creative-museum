@@ -46,7 +46,7 @@
       <div v-if="userData.memberships.length">
         <h2 class="font-bold mb-3 mt-12">{{ $t('score') }}</h2>
         <ul>
-          <li v-for="(membership, key) in userData.memberships" :key="key">
+          <li v-for="(membership, key) in userData.memberships" :key="key" class="mb-4">
             <NuxtLink
               :to="localePath('/campaigns/' + membership.campaign.id)"
               class="self-stretch md:self-start mt-4"

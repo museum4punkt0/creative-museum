@@ -16,7 +16,7 @@
             {{ campaign.title }}
           </NuxtLink>
         </div>
-        <PostItem v-if="post" :post="post"></PostItem>
+        <PostItem v-if="post" :post="post" :expand-comments="true"></PostItem>
       </div>
       <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
@@ -50,9 +50,9 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { title } = useMeta()
+    const { meta, title } = useMeta()
     const store = useStore()
-    const { $breakpoints, i18n } = useContext()
+    const { $config, $breakpoints, i18n } = useContext()
 
     const post = ref(null)
     const campaign = ref(null)
@@ -80,6 +80,49 @@ export default defineComponent({
           } else {
 
             title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
+
+            post.value.files.forEach((item) => {
+              if (item.type === 'image') {
+                meta.value = [
+                  {
+                    hid: 'og:image',
+                    property: 'og:image',
+                    content: $config.backendURL + item.contentUrl
+                  },
+                ]
+              }
+            })
+
+            if (!meta.value[0]) {
+              meta.value = [
+                {
+                  hid: 'og:image',
+                  property: 'og:image',
+                  content: $config.baseURL + '/og_logo.png'
+                }
+              ]
+            }
+
+            if (post.value.title) {
+              meta.value.push(
+                {
+                    hid: 'og:title',
+                    property: 'og:title',
+                    content: post.value.title
+                }
+              )
+            }
+
+            if (post.value.body) {
+              meta.value.push(
+                {
+                    hid: 'og:description',
+                    property: 'og:description',
+                    content: post.value.body
+                }
+              )
+            }
+
             store.dispatch('setCurrentCampaign', response.campaign.id)
 
             document.documentElement.style.setProperty(

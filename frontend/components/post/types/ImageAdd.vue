@@ -29,7 +29,7 @@
               $t(
                 'post.types.image.uploader.' +
                   (files.length ? 'replace' : 'add')
-              )
+              ) + ' *'
             }}
             <svg
               class="w-6 h-6 ml-2"
@@ -90,31 +90,28 @@
         />
       </div>
 
-      <div class="flex flex-col flex-grow relative mt-4">
-        <textarea
+      <div class="flex flex-col flex-grow mt-4 pb-4 relative">
+        <UtilitiesRichTextEditor
           v-model="postBody"
-          type="text"
-          class="input-text flex-grow pr-21"
-          aria-required="true"
-          :placeholder="$t('post.placeholder.body')"
-          :maxlength="1000"
-        ></textarea>
-        <UtilitiesCountDown
+          :placeholder="$t('post.placeholder.body')" class="input-text flex-grow"
+          @update:modelValue="updateModelValue"/>
+        <UtilitiesCountDownRichText
           :max-count="1000"
-          :text="postBody"
-          class="absolute bottom-1 right-2"
+          :count="postBodyLength"
+          class="absolute bottom-5 right-2"
         />
       </div>
       <button
         v-if="files.length"
-        class="btn-outline mt-4"
+        class="btn-outline"
         @click.prevent="triggerInput"
       >{{ $t('post.types.image.uploader.replace') }}</button>
       <button
         ref="submitButton"
         type="submit"
         :disabled="disableSubmitButton"
-        class="btn-highlight disabled:opacity-30 mt-4 w-full mb-12 md:mb-0"
+        class="btn-highlight disabled:opacity-30 w-full mb-12 md:mb-0"
+        :class="files.length ? 'mt-4' : ''"
         @click.prevent="submitPost"
       >
         {{ $t('post.share') }}
@@ -137,12 +134,13 @@ export default defineComponent({
   },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
 
     const files = ref([])
     const edit = ref(false)
     const postTitle = ref('')
     const postBody = ref('')
+    const postBodyLength = ref(0)
     const imgAlt = ref('')
     const submitting = ref(false)
     const upload = ref({});
@@ -179,6 +177,7 @@ export default defineComponent({
         submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        store.dispatch('currentAlert', i18n.t('alert.postSubmitted'))
       })
     }
 
@@ -212,6 +211,11 @@ export default defineComponent({
       }
     }
 
+    function updateModelValue(content: any) {
+      postBody.value = content.text
+      postBodyLength.value = content.count
+    }
+
     return {
       abortPost,
       submitPost,
@@ -222,10 +226,12 @@ export default defineComponent({
       files,
       postTitle,
       postBody,
+      postBodyLength,
       imgAlt,
       disableSubmitButton,
       submitting,
-      triggerInput
+      triggerInput,
+      updateModelValue
     }
   },
 })

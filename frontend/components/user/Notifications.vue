@@ -7,6 +7,7 @@
           (notifications.length > 3)
         "
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
+        :aria-label="$t('notifications.showAll')"
         @click.prevent="showAllNotifications = !showAllNotifications"
       >
         <ArrowIcon

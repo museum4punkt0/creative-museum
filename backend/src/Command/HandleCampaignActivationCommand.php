@@ -2,9 +2,7 @@
 
 namespace App\Command;
 
-use App\Enum\MailType;
 use App\Repository\CampaignRepository;
-use App\Service\MailService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -24,20 +22,16 @@ class HandleCampaignActivationCommand extends Command
 
     private EntityManagerInterface $entityManager;
 
-    private MailService $mailService;
-
     public function __construct
     (
         CampaignRepository     $campaignRepository,
         EntityManagerInterface $entityManager,
-        MailService $mailService,
         string                 $name = null
     )
     {
         parent::__construct($name);
         $this->campaignRepository = $campaignRepository;
         $this->entityManager = $entityManager;
-        $this->mailService = $mailService;
     }
 
     protected function configure(): void
@@ -60,10 +54,8 @@ class HandleCampaignActivationCommand extends Command
             if (Carbon::now()->between($startDate, $endDate) && !$campaign->getActive()) {
                 $campaign->setActive(true);
                 $campaign->setClosed(false);
-                $this->mailService->sendMail(MailType::NEW_CAMPAIGN->value,null,['campaign' => $campaign]);
             } elseif (Carbon::now()->greaterThan($endDate) && !$campaign->getClosed()) {
                 $campaign->setClosed(true);
-                $this->mailService->sendMail(MailType::CAMPAIGN_CLOSED->value,null,['campaign' => $campaign]);
             }
             $this->entityManager->persist($campaign);
         }

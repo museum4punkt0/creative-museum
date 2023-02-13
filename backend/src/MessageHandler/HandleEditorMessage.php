@@ -42,6 +42,8 @@ class HandleEditorMessage implements MessageHandlerInterface
 
     public function __invoke(EditorMessageReceived $editorMessageReceived)
     {
+
+
         if ($editorMessageReceived->getUserUuid() !== null) {
             $this->handleUserNotification($editorMessageReceived);
             return;
@@ -106,7 +108,7 @@ class HandleEditorMessage implements MessageHandlerInterface
 
     private function handleGlobalNotification(EditorMessageReceived $message): void
     {
-        $users = $this->userRepository->findBy(['deleted' => false, 'hidden' => false]);
+        $users = $this->userRepository->findBy(['deleted' => false, 'active' => true]);
 
         $i = 0;
         foreach ($users as $user) {

@@ -1,14 +1,14 @@
 <template>
   <div>
     <div
-      id="globalHeader"
-      ref="globalHeader"
-      class="relative container flex flex-row justify-between z-20 items-center"
+    id="globalHeader"
+    ref="globalHeader"
+    class="relative container flex flex-row justify-between z-20 items-center"
     >
       <NuxtLink id="pageLogo" :to="localePath('/')" class="text-white/50 hover:text-$highlight focus:text-$highlight focus:outline-none">
         <Logo
           class="h-9 my-2 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
-          alt="Creative Museum Logo"
+          aria-label="Creative Museum Logo"
         />
       </NuxtLink>
       <button
@@ -24,8 +24,11 @@
       <div class="flex flex-row mr-5 space-x-4 items-center">
         <PageHeaderUserInfo />
         <button
+          id="menuButton"
           class="h-6 w-6 transform-gpu hover:scale-125 transition-all duration-300 ease-in-out focus:outline-none group"
           :aria-label="isMenuVisible ? $t('menu.close') : $t('menu.open')"
+          aria-haspopup="true"
+          aria-controls="menu"
           type="button"
           :class="
             isMenuVisible
@@ -74,10 +77,15 @@
         leave-active-class="duration-200 ease-in"
         leave-class="opacity-100"
         leave-to-class="opacity-0"
+        tag="div"
       >
         <div
           v-show="isMenuVisible"
+          id="menu"
           key="0"
+          aria-labelledby="menuButton"
+          :aria-expanded="isMenuVisible ? 'true' : 'false'"
+          role="menu"
           class="absolute top-12 md:top-13 left-0 right-0 pt-10 md:pt-20 b-10 min-h-sm h-[calc(100vh-48px)] md:h-auto bg-grey shadow-lg shadow-black/20 z-50 md:max-h-full overflow-y-scroll scrollbar-hide"
         >
           <PageHeaderMainMenu @closeMenu="isMenuVisible = false" />
@@ -106,6 +114,7 @@
         </UtilitiesModal>
       </transition>
     </div>
+    <div class="sr-only" role="alert">{{ alertText }}</div>
   </div>
 </template>
 <script>
@@ -113,6 +122,7 @@ import {
   defineComponent,
   ref,
   useStore,
+  useContext,
   computed,
   watch,
 } from '@nuxtjs/composition-api'
@@ -125,10 +135,12 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const { i18n } = useContext()
 
     const isAddVisible = ref(false)
     const isMenuVisible = ref(false)
     const openAddModalType = ref('')
+    const alertText = ref('')
 
     const addComponentName = computed(() => {
       return openAddModalType.value !== ''
@@ -173,6 +185,7 @@ export default defineComponent({
       isMenuVisible,
       openAddModalType,
       addComponentName,
+      alertText: computed(() => store.state.currentAlert),
       openAddModal,
       closeAddModal,
       abortPost,

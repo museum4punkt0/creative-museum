@@ -11,18 +11,16 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 class MailService
 {
     public function __construct
     (
         private readonly string $fromMail,
+        private readonly string $domain,
         private readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
         private readonly UserRepository $userRepository,
-        private readonly RouterInterface $router
     )
     {
     }
@@ -68,13 +66,6 @@ class MailService
             case MailType::AWARD_RECEIVED->value:
                 $subject = sprintf($subject, $parameters['awarded']->getAward()->getTitle());
                 break;
-            case MailType::BADGE_RECEIVED->value:
-                $subject = sprintf($subject, $parameters['badged']->getBadge()->getTitle());
-                break;
-            case MailType::NEW_CAMPAIGN->value:
-            case MailType::CAMPAIGN_CLOSED->value:
-                $subject = sprintf($subject, $parameters['campaign']->getTitle());
-                break;
         }
 
         return $subject;
@@ -82,9 +73,8 @@ class MailService
 
     protected function prepareMail(string $identifier, User $receiver, array $parameters = []): TemplatedEmail
     {
-        $parameters['domain'] = $this->router->generate('start', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $parameters['domain'] = $this->domain;
         $parameters['receiver'] = $receiver;
-
 
         $subject = $this->getSubject($identifier, $parameters);
 

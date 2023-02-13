@@ -16,40 +16,50 @@
       </div>
       <div class="flex flex-col flex-grow">
         <p v-if="notification.text" class="mb-1">
-          {{
-            $t(`notifications.${notification.text}.title`, {
-              award: notification.award ? notification.award.title : '',
-              badge: notification.badge ? notification.badge.title : '',
-            })
-          }}
+          <template v-if="notification.editorNotification">
+            {{ notification.text }}
+          </template>
+          <template v-else>
+            {{
+              $t(`notifications.${notification.text}.title`, {
+                award: notification.award ? notification.award.title : '',
+                badge: notification.badge ? notification.badge.title : '',
+              })
+            }}
+          </template>
         </p>
         <p v-if="notification.text" class="text-$highlight text-sm">
-          {{
-            $t(`notifications.${notification.text}.text`, {
-              campaign: notification.campaign
-                ? notification.campaign.title
-                : '',
-              points: notification.scorePoints
-                ? notification.scorePoints.toLocaleString()
-                : '',
-              author: notification.post
-                ? $userName(notification.post.author)
-                : '',
-              badge: notification.badge ? notification.badge.title : '',
-              award: notification.award ? notification.award.title : '',
-              awardGiver: notification.award
-                ? $userName(notification.awardGiver)
-                : '',
-              awardWinner: notification.award
-                ? $userName(notification.awardWinner)
-                : '',
-            })
-          }}
+          <template v-if="!notification.editorNotification">
+            {{
+              $t(`notifications.${notification.text}.text`, {
+                campaign: notification.campaign
+                  ? notification.campaign.title
+                  : '',
+                points: notification.scorePoints
+                  ? notification.scorePoints.toLocaleString()
+                  : '',
+                author: notification.post
+                  ? $userName(notification.post.author)
+                  : '',
+                badge: notification.badge ? notification.badge.title : '',
+                award: notification.award ? notification.award.title : '',
+                awardGiver: notification.award
+                  ? $userName(notification.awardGiver)
+                  : '',
+                awardWinner: notification.award
+                  ? $userName(notification.awardWinner)
+                  : '',
+              })
+            }}
+          </template>
         </p>
       </div>
     </div>
-    <button id="notificationCloseButton" class="btn-outline m-6 mb-safe" @click.prevent="markNotificationAsViewed">
+    <button id="notificationCloseButton" class="btn-outline mx-6 mt-6" :class="notificationCount === 1 ? 'mb-6 mb-safe' : ''" @click.prevent="markNotificationAsViewed">
       {{ $t('close') }}
+    </button>
+    <button v-if="notificationCount > 1" class="btn-highlight text-highlight-contrast m-6 mb-safe" @click.prevent="$emit('clearAllNotifications')">
+      {{ $t('notifications.closeAll') }}
     </button>
   </div>
 </template>
@@ -63,7 +73,14 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    notificationCount: {
+      type: Number,
+      required: true
+    }
   },
+  emits: [
+    'clearAllNotifications'
+  ],
   setup(props, context) {
     const { $config } = useContext()
 
@@ -89,7 +106,6 @@ export default defineComponent({
 
     onMounted(() => {
       if (process.client) {
-        console.log(document.querySelector('#notificationCloseButton'))
         document.querySelector('#notificationCloseButton').focus()
       }
     })

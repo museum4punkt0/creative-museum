@@ -11,7 +11,6 @@ namespace App\Service;
 
 use App\Entity\PollOption;
 use App\Entity\PollOptionChoice;
-use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr;
 

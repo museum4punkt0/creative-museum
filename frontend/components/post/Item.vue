@@ -4,7 +4,7 @@
       v-if="post.type !== 'system'"
       class="box-shadow"
       :class="[
-        post.type === 'playlist' ? `text-${textColor} highlight-bg` : '',
+        post.type === 'playlist' ? `highlight-bg text-$highlight-contrast` : '',
       ]"
     >
       <PostHead
@@ -28,6 +28,7 @@
       />
       <PostComments
         :post="post"
+        :expand-comments="expandComments"
         @commentsLoaded="$emit('updatePost', post.id)"
       />
     </div>
@@ -94,6 +95,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    expandComments: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['updatePost', 'postDeleted'],
   setup(props, context) {
@@ -122,14 +127,18 @@ export default defineComponent({
 
     const bgColor = new TinyColor(props.post.campaign.color)
     const fgColor = new TinyColor('#FFFFFF')
+    const altfgColor = new TinyColor('#222329')
 
-    const campaignContrastColor = computed(() => {
-      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
-    })
+    const test1 = readability(bgColor, fgColor)
+    const test2 = readability(bgColor, altfgColor)
 
     function getContrastColorClass() {
-      return readability(bgColor, fgColor) > 2 ? 'white' : 'black'
+      return (test1 < test2) ? 'contrast' : 'white'
     }
+
+    const campaignContrastColor = computed(() => {
+      return (test1 < test2) ? '#222329' : '#FFFFFF'
+    })
 
     const styleAttr = computed(() => {
       return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
@@ -177,6 +186,7 @@ export default defineComponent({
       getContrastColorClass,
       triggerFeedback,
       voteOption,
+      campaignContrastColor,
       componentName,
       textColor,
       styleAttr,

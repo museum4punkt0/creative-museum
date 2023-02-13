@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <p>Hallo {{ receiver.fullName }},</p>
+    <p>du wurdest in einem Kommentar erwähnt!</p>
+    <p>
+        Sieh dir den Kommentar <a href="{{ domain }}posts/{{ post.parent.id }}#comment-{{ post.id }}">hier</a> an.
+    </p>
+
+    <p>
+        Bis gleich im Creative Museum!<br/>
+        <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>
+    </p>
+{% endblock %}
+

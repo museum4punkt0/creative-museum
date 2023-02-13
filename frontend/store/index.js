@@ -16,6 +16,7 @@ export const state = () => ({
   notificationsCount: 0,
   splashscreenShown: false,
   awardsChange: false,
+  currentAlert: ''
 })
 
 export const mutations = {
@@ -90,6 +91,9 @@ export const mutations = {
   },
   AWARDS_CHANGED(state) {
     state.awardsChange = false
+  },
+  CURRENT_ALERT(state, text) {
+    state.currentAlert = text
   }
 }
 
@@ -167,6 +171,9 @@ export const actions = {
   },
   awardsChanged({ commit }) {
     commit('AWARDS_CHANGED')
+  },
+  currentAlert({ commit }, text) {
+    commit('CURRENT_ALERT', text)
   }
 }
 
@@ -206,5 +213,11 @@ export const getters = {
   },
   notificationsCount(state) {
     return state.notificationsCount
+  },
+  currentAlert(state) {
+    return state.currentAlert
+  },
+  currentSorting(state) {
+    return state.currentSorting
   }
 }

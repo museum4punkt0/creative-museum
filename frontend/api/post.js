@@ -182,6 +182,7 @@ export const postApi = () => {
   }
 
   async function createAudioPost(campaignId, title, audio, image) {
+
     const postBody = {
       author: `/v1/users/${$auth.user.uuid}`,
       campaign: `/v1/campaigns/${campaignId}`,
@@ -192,8 +193,13 @@ export const postApi = () => {
 
     if (audio) {
       const formAudio = new FormData()
-      formAudio.append('file', audio, 'voicemessage.wav')
       formAudio.append('type', 'audio')
+
+      if (audio instanceof Blob) {
+        formAudio.append('file', audio, 'voicemessage.wav')
+      } else {
+        formAudio.append('file', audio.file)
+      }
       const responseAudio = await $api.post('media_objects', formAudio)
       const audioFileId = responseAudio.id
       postBody.files.push(`/v1/media_objects/` + audioFileId)

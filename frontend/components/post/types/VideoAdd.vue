@@ -30,7 +30,7 @@
               $t(
                 'post.types.video.uploader.' +
                   (videos.length ? 'replace' : 'add')
-              )
+              )  + ' *'
             }}
             <svg
               class="w-6 h-6 ml-2"
@@ -61,6 +61,7 @@
         </file-upload>
       </client-only>
       <div class="relative mt-4">
+
         <input
           v-model="postTitle"
           type="text"
@@ -75,21 +76,18 @@
         />
       </div>
 
-      <div class="flex flex-col flex-grow relative mt-4">
-        <textarea
+      <div class="flex flex-col flex-grow mt-4 pb-4 relative">
+        <UtilitiesRichTextEditor
           v-model="postBody"
-          type="text"
-          class="input-text flex-grow pr-21"
-          aria-required="true"
-          :placeholder="$t('post.placeholder.body')"
-          :maxlength="1000"
-        ></textarea>
-        <UtilitiesCountDown
-          :max-count="1000"
-          :text="postBody"
-          class="absolute bottom-1 right-2"
+          :placeholder="$t('post.placeholder.body')" class="input-text flex-grow"
+          @update:modelValue="updateModelValue"/>
+        <UtilitiesCountDownRichText
+          :max-count="2000"
+          :count="postBodyLength"
+          class="absolute bottom-5 right-2"
         />
       </div>
+
       <div class="relative mt-4">
         <input
           v-model="videoAlt"
@@ -104,11 +102,13 @@
           class="absolute bottom-1 right-2"
         />
       </div>
+
       <button
         v-if="videos.length"
         class="btn-outline mt-4"
         @click.prevent="triggerInput"
       >{{ $t('post.types.video.uploader.replace') }}</button>
+
       <button
         type="submit"
         :disabled="disableSubmitButton"
@@ -117,6 +117,7 @@
       >
         {{ $t('post.share') }}
       </button>
+
     </div>
   </div>
 </template>
@@ -135,9 +136,10 @@ export default defineComponent({
   },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
     const postTitle = ref('')
     const postBody = ref('')
+    const postBodyLength = ref(0)
     const videoAlt = ref('')
     const videos = ref([])
     const submitting = ref(false)
@@ -192,6 +194,7 @@ export default defineComponent({
         submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        store.dispatch('alertNewPostSubmitted', i18n.t('alert.postSubmitted'))
       })
     }
 
@@ -204,9 +207,15 @@ export default defineComponent({
       }
     }
 
+    function updateModelValue(content: any) {
+      postBody.value = content.text
+      postBodyLength.value = content.count
+    }
+
     return {
       postTitle,
       postBody,
+      postBodyLength,
       videos,
       videoAlt,
       submitting,
@@ -215,7 +224,8 @@ export default defineComponent({
       inputFilter,
       abortPost,
       submitPost,
-      triggerInput
+      triggerInput,
+      updateModelValue
     }
   },
 })

@@ -9,7 +9,6 @@ export const notificationApi = () => {
         `notifications?campaign=${campaign}&receiver=${$auth.user.id}`
       )
     }
-
     return await $api.get(`notifications?receiver=${$auth.user.id}`)
   }
 

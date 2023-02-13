@@ -9,8 +9,58 @@
       class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
       <client-only>
-        <div class="box-shadow mb-6">
-          <UtilitiesAudioRecorder @audioFile="inputAudioFile" />
+        <file-upload
+          ref="uploadAudio"
+          v-if="!(fileToSubmit && uploadedAudio.length === 0)"
+          input-id="file1"
+          v-model="uploadedAudio"
+          accept="audio/*"
+          aria-required="true"
+          extensions="wav,mp3,ogg"
+          @input-file="inputUploadedAudioFile"
+          @input-filter="inputAudioFilter"
+        >
+          <div
+            class="box-shadow-inset pt-2 pr-2 pb-10 pl-4 rounded-xl text-left flex flex-row"
+          >
+            {{
+              $t(
+                'post.types.audio.uploader.' +
+                  (fileToSubmit ? 'replace' : 'add')
+              )  + ' *'
+            }}
+            <svg
+              class="w-6 h-6 ml-2"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="#FFFFFF"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+              />
+              <path
+                d="M12 5.28571V18.7143"
+                stroke="#FFFFFF"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+              />
+              <path
+                d="M18.7137 11.8514H5.28516"
+                stroke="#FFFFFF"
+                stroke-miterlimit="10"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </file-upload>
+        <div v-if="uploadedAudio.length === 0">
+          <h3 v-if="!fileToSubmit" class="mb-4">{{ $t('post.types.audio.mode')}}</h3>
+          <div class="box-shadow mb-6">
+            <UtilitiesAudioRecorder @audioFile="inputAudioFile" />
+          </div>
         </div>
         <div class="relative">
           <input
@@ -27,10 +77,12 @@
           class="max-h-1/3 lg:max-h-48 w-auto rounded self-center"
         />
         <file-upload
-          ref="upload"
+          ref="uploadImage"
+          input-id="file2"
           v-model="images"
           accept="image/png,image/gif,image/jpeg"
           class="block"
+          extensions="jpg,jpeg png,bmp,gif"
           @input-file="inputFile"
           @input-filter="inputFilter"
         >
@@ -97,9 +149,10 @@ export default defineComponent({
   },
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
     const postTitle = ref('')
     const fileToSubmit: any | null = ref(null)
+    const uploadedAudio = ref([])
     const images = ref([])
     const submitting = ref(false)
 
@@ -113,8 +166,18 @@ export default defineComponent({
       fileToSubmit.value = audioFile
     }
 
-    function abortPost() {
-      context.emit('abortPost')
+    function inputUploadedAudioFile(newFile: any, oldFile: any) {
+      if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+        newFile.blob = ''
+        const URL = window.URL || window.webkitURL
+        if (URL && URL.createObjectURL) {
+          newFile.blob = URL.createObjectURL(newFile.file)
+        }
+      }
+      if (!newFile && oldFile) {
+        uploadedAudio.value = []
+      }
+      fileToSubmit.value = newFile
     }
 
     function inputFile(newFile: any, oldFile: any) {
@@ -130,6 +193,15 @@ export default defineComponent({
       }
     }
 
+    function inputAudioFilter(newFile: any) {
+      console.log('inputFilter')
+      if (newFile) {
+        if (!/\.(wav|mp3|ogg)$/i.test(newFile.name)) {
+          console.log('Your choice is not a picture')
+        }
+      }
+    }
+
     function inputFilter(newFile: any) {
       console.log('inputFilter')
       if (newFile) {
@@ -137,6 +209,10 @@ export default defineComponent({
           console.log('Your choice is not a picture')
         }
       }
+    }
+
+    function abortPost() {
+      context.emit('abortPost')
     }
 
     function submitPost() {
@@ -156,17 +232,21 @@ export default defineComponent({
         submitting.value = false
         context.emit('closeAddModal')
         store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+        store.dispatch('currentAlert', i18n.t('alert.postSubmitted'))
       })
     }
 
     return {
       postTitle,
       images,
+      uploadedAudio,
       fileToSubmit,
       submitting,
       disableSubmitButton,
       inputAudioFile,
       inputFile,
+      inputUploadedAudioFile,
+      inputAudioFilter,
       inputFilter,
       abortPost,
       submitPost,

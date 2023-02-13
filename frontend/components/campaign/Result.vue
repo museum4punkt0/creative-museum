@@ -1,6 +1,6 @@
 <template>
   <div v-if="campaignResult" class="mt-10" :style="styleAttr">
-    <div class="box-shadow">
+    <div class="box-shadow bg-grey">
       <div class="flex flex-row justify-start mb-4">
         <div class="rounded-full w-8 h-8 bg-$highlight mr-4" />
         <div class="flex flex-col">
@@ -72,13 +72,18 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const bgColor = new TinyColor(props.campaignColor)
-    const fgColor = new TinyColor('#FFFFFF')
 
     const showAllResults = ref(false)
 
+    const bgColor = new TinyColor(props.campaignColor)
+    const fgColor = new TinyColor('#FFFFFF')
+    const altfgColor = new TinyColor('#222329')
+
+    const test1 = readability(bgColor, fgColor)
+    const test2 = readability(bgColor, altfgColor)
+
     const campaignContrastColor = computed(() => {
-      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+      return (test1 < test2) ? '#222329' : '#FFFFFF'
     })
 
     const campaignResulTop5 = computed(() => {

@@ -26,7 +26,7 @@ import { postApi } from '@/api/post'
 export default defineComponent({
   emits: ['abortPost', 'closeAddModal'],
   setup(_, context) {
-    const { store } = useContext()
+    const { store, i18n } = useContext()
     const postBody = ref('')
     const { createPlaylistPost } = postApi()
 
@@ -35,6 +35,7 @@ export default defineComponent({
         function () {
           context.emit('closeAddModal')
           store.dispatch('setNewPostOnCampaign', store.state.currentCampaign)
+          store.dispatch('currentAlert', i18n.t('alert.postSubmitted'))
         }
       )
     }

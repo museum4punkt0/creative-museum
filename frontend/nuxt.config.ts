@@ -2,7 +2,6 @@ export default {
   head: {
     title: 'Creative Museum - Badisches Landesmuseum',
     meta: [
-      { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
@@ -10,7 +9,6 @@ export default {
     script: [
       {
         id: 'usercentrics-cmp',
-        type: 'application/javascript',
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
         'data-settings-id': process.env.USER_CENTRICS_ID,
         async: true,
@@ -37,7 +35,8 @@ export default {
     '~/plugins/user',
     { src: '~/plugins/updater', mode: 'client' },
     { src: '~/plugins/tooltip', mode: 'client' },
-    { src: '~/plugins/clipboard', mode: 'client' }
+    { src: '~/plugins/clipboard', mode: 'client' },
+    { src: '~/plugins/qrCode', mode: 'client' }
   ],
   buildModules: [
     '@nuxt/typescript-build',

@@ -1,5 +1,5 @@
 <template>
-  <div role="dialog" aria-hidden="false" tabindex="1" @keydown.esc="$emit('closeModal')">
+  <div id="cm_slideup" role="dialog" aria-hidden="false" tabindex="0" @keydown.esc="$emit('closeModal')">
     <div
       class="fixed top-0 left-0 right-0 bottom-0 pointer-events-none touch-none z-30"
     ></div>
@@ -13,7 +13,7 @@
         <button
           v-if="closable"
           :aria-label="$t('modal.close')"
-          class="close-btn block h-4 w-4 absolute right-4 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
+          class="close-btn block h-4 w-4 absolute z-50 right-4 top-5 transform -translate-x-1/2 border rounded-full border-white rotate-45"
           @click.prevent="$emit('closeModal')"
         ></button>
         <div
@@ -44,6 +44,7 @@ export default defineComponent({
       if (process.client) {
         const body = document.querySelector('body')
         body.classList.add('modal-open')
+        document.getElementById('cm_slideup').focus()
       }
     })
     onUnmounted(() => {

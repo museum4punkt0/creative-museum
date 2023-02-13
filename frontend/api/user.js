@@ -1,4 +1,4 @@
-import { useContext, useStore } from '@nuxtjs/composition-api'
+import { useContext } from '@nuxtjs/composition-api'
 
 export const userApi = () => {
   const { $api, $auth } = useContext()

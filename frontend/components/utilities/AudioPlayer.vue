@@ -10,20 +10,22 @@
       </div>
 
       <div v-else class="cursor-pointer">
-        <div
-          v-if="!isPlaying"
+        <button
+          v-show="!isPlaying"
+          ref="playButton"
           class="transform translate-y-[-3px]"
           @click.stop="play"
         >
           <PlayIcon class="fill-white" />
-        </div>
+        </button>
 
-        <div
-          v-else
+        <button
+          v-show="isPlaying"
+          ref="pauseButton"
           @click.stop="pause"
         >
           <PauseIcon class="fill-white" />
-        </div>
+        </button>
       </div>
     </div>
     <div
@@ -266,7 +268,6 @@ export default {
 
     play() {
       this.isLoading = true
-
       const handlePlay = () => {
         this.$refs.audio
           .play()
@@ -319,7 +320,9 @@ export default {
 
     pause() {
       this.$refs.audio.pause()
+
       this.$nextTick(() => {
+        this.$refs.playButton.focus()
         this.clearTimer()
         this.isPlaying = false
         this.$emit('pause')

@@ -24,6 +24,8 @@
           `,
           opacity: campaign.opacity,
         }"
+        @click="gotoStackItem(campaign.id, localePath('/campaigns/' + campaign.id))"
+        @keydown.enter="gotoStackItem(campaign.id, localePath('/campaigns/' + campaign.id))"
       >
         <CampaignStackItem :campaign="campaign" />
       </div>
@@ -207,7 +209,12 @@ export default {
     getContrastColor(color) {
       const bgColor = new TinyColor(color)
       const fgColor = new TinyColor('#FFFFFF')
-      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+      const altfgColor = new TinyColor('#222329')
+
+      const test1 = readability(bgColor, fgColor)
+      const test2 = readability(bgColor, altfgColor)
+
+      return (test1 < test2) ? '#222329' : '#FFFFFF'
     },
     init() {
       this.stack = this.campaigns
@@ -337,7 +344,6 @@ export default {
       return this.isTouch ? e.touches[0].clientY : e.clientY
     },
     onTouchStart(e) {
-      this.touchElement = e.target.getAttribute('data-href')
       this.isDragging = true
       this.dragStartX = this.getDragXPos(e) - this.elementXPosOffset
       this.dragStartY = this.getDragYPos(e) - this.elementYPosOffset
@@ -351,7 +357,6 @@ export default {
       ) {
         this.$router.push(this.touchElement)
       }
-
       this.isDragging = false
       this.dragStartX = 0
       this.dragStartY = 0
@@ -365,6 +370,15 @@ export default {
       this.isDraggingPrevious = dragXPos > this.dragStartX
       this.moveStack(dragXPos)
     },
+    gotoStackItem(campaignId, url) {
+      if (campaignId !== this.stack[0].id) {
+        do {
+          this.onNext()
+        } while ( this.stack[0].id !== campaignId)
+      } else {
+        this.$router.push(url)
+      }
+    }
   },
 }
 </script>

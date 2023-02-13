@@ -17,7 +17,7 @@
           />
           <span
             v-if="campaignScore"
-            class="highlight-bg absolute top-1 py-0.5 px-2 -mr-1 right-full rounded-xl text-xs text-black whitespace-nowrap"
+            class="highlight-bg absolute top-1 py-0.5 px-2 -mr-1 right-full rounded-xl text-xs text-$highlight-contrast whitespace-nowrap"
             >{{ campaignScore.toLocaleString() }} P</span
           >
         </div>

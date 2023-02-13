@@ -1,7 +1,7 @@
 <template>
   <div>
     <p v-if="post.title" class="text-lg font-bold mb-2">{{ post.title }}</p>
-    <p class="break-words">{{ post.body }}</p>
+    <div class="break-words richtext" v-html="post.body" />
   </div>
 </template>
 <script lang="ts">
@@ -13,6 +13,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    displayMode: {
+      type: String,
+      default: 'Web'
+    }
   },
   setup() {},
 })

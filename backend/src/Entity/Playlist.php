@@ -39,7 +39,11 @@ class Playlist
     #[Groups(['user:me:read', 'post:read', 'playlist:read', 'users:read'])]
     private $title;
 
-    #[ORM\ManyToMany(targetEntity: Post::class)]
+    #[ORM\OneToMany(targetEntity: PlaylistPost::class, mappedBy: 'playlist',cascade: ["persist", "remove"])]
+    #[Groups(['playlist:read'])]
+    #[ORM\OrderBy(['id' => 'DESC'])]
+    private $playlistPosts;
+
     #[Groups(['playlist:read'])]
     private $posts;
 
@@ -50,6 +54,7 @@ class Playlist
 
     public function __construct()
     {
+        $this->playlistPosts = new ArrayCollection();
         $this->posts = new ArrayCollection();
     }
 
@@ -71,28 +76,84 @@ class Playlist
     }
 
     /**
+     * @return Collection|PlaylistPost[]
+     */
+    public function getPlaylistPosts(): Collection
+    {
+        return $this->playlistPosts;
+    }
+
+    /**
+     * @param PlaylistPost $playlistPost
+     * @return Playlist
+     */
+    public function addPlaylistPost(PlaylistPost $playlistPost): self
+    {
+        if (!$this->playlistPosts->contains($playlistPost)) {
+            $this->playlistPosts[] = $playlistPost;
+            $playlistPost->setPlaylist($this);
+        }
+        return $this;
+    }
+
+    /**
+     * @param PlaylistPost $playlistPost
+     * @return Playlist
+     */
+    public function removePlaylistPost(PlaylistPost $playlistPost): self
+    {
+        if ($this->playlistPosts->contains($playlistPost)) {
+            $this->playlistPosts->removeElement($playlistPost);
+            if ($playlistPost->getPlaylist() === $this) {
+                $playlistPost->setPlaylist(null);
+            }
+        }
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Post>
      */
     public function getPosts(): Collection
     {
-        return $this->posts;
+        $posts = new ArrayCollection();
+
+        foreach ($this->playlistPosts as $playlistPost) {
+            $posts->add($playlistPost->getPost());
+        }
+
+        return $posts;
     }
 
     public function addPost(Post $post): self
     {
-        if (!$this->posts->contains($post)) {
-            $this->posts[] = $post;
+        foreach ($this->playlistPosts as $playlistPost) {
+            if ($playlistPost->getPost() === $post) {
+                return $this;
+            }
+        }
+
+        $playlistPost = new PlaylistPost();
+        $playlistPost->setPlaylist($this);
+        $playlistPost->setPost($post);
+        $this->playlistPosts[] = $playlistPost;
+
+        return $this;
+    }
+
+
+    public function removePost(Post $post): self
+    {
+        foreach ($this->playlistPosts as $key => $playlistPost) {
+            if ($playlistPost->getPost() === $post) {
+                $this->playlistPosts->remove($key);
+                break;
+            }
         }
 
         return $this;
     }
 
-    public function removePost(Post $post): self
-    {
-        $this->posts->removeElement($post);
-
-        return $this;
-    }
 
     public function getCreator(): ?User
     {

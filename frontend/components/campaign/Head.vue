@@ -8,26 +8,26 @@
     </style>
     <div class="mb-6">
       <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
-      <div class="text-lg">
+      <p class="text-lg">
         <span class="capitalize">{{ $t('till') }}</span>
         {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
-      </div>
+      </p>
     </div>
     <div v-show="!showLongDescription">
-      <p class="mb-6" v-html="formattedShortDescription" />
+      <div class="mb-6" :class="formattedShortDescription !== formattedDescription ? 'max-h-[5em] overflow-hidden relative richtext campaign-description-short' : ''" v-html="campaign.description" />
       <button
         v-if="formattedShortDescription !== formattedDescription"
         class="highlight-text"
-        href="#"
+        :aria-label="$t('readMoreLong')"
         @click.prevent="showLongDescription = true"
         >{{ $t('readMore') }}</button
       >
     </div>
     <div v-show="showLongDescription">
-      <p class="mb-6" v-html="formattedDescription" />
+      <div class="mb-6 richtext" v-html="campaign.description" />
       <button
         class="highlight-text"
-        href="#"
+        :aria-label="$t('readLessLong')"
         @click.prevent="showLongDescription = false"
         >{{ $t('readLess') }}</button
       >
@@ -86,9 +86,13 @@ export default defineComponent({
 
     const bgColor = new TinyColor(props.campaign.color)
     const fgColor = new TinyColor('#FFFFFF')
+    const altfgColor = new TinyColor('#222329')
+
+    const test1 = readability(bgColor, fgColor)
+    const test2 = readability(bgColor, altfgColor)
 
     const campaignContrastColor = computed(() => {
-      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
+      return (test1 < test2) ? '#222329' : '#FFFFFF'
     })
 
     return {

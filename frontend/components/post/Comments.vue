@@ -2,7 +2,7 @@
   <div>
     <button
       class="cursor-pointer text-sm focus:outline-none"
-      :class="post.type !== 'playlist' ? 'text-$highlight focus-visible:text-white' : ''"
+      :class="post.type !== 'playlist' ? 'text-$highlight focus-visible:text-white' : 'text-$highlight-contrast focus-visible:(text-contrast underline)'"
       @click.prevent="
         !showComments
           ? fetchComments()
@@ -35,7 +35,7 @@
     </button>
 
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
-      <div v-if="comments && showComments">
+      <div v-if="comments && showComments" aria-expanded="true">
         <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
         <ul>
           <li v-for="(comment, key) in comments" :key="key">
@@ -49,15 +49,18 @@
         @submit.prevent="submitComment"
       >
         <div class="container lg:container-none relative">
-          <textarea
+          <div v-if="!$auth.loggedIn" role="button" class="absolute t-0 l-0 b-0 r-0 w-full h-full z-10" @click="showLoginIfNotLoggedIn"></div>
+          <UtilitiesRichTextEditorComments
             v-model="commentBody"
-            v-autogrow
-            class="input-text px-4 py-2 pr-8 text-white text-base resize-none"
-            rows="1"
+            class="input-text px-4 py-2 pr-8 text-white text-base resize-none z-0"
+            :menubar="false"
+            :model-value="commentBody"
             :placeholder="$t('post.commentPlaceholder')"
             @keydown.enter.prevent="submitComment"
+            @submitForm="submitComment"
+            @update:modelValue="updateModelValue"
             @click.prevent="showLoginIfNotLoggedIn"
-          ></textarea>
+          ></UtilitiesRichTextEditorComments>
           <button
             class="absolute w-3 right-3 top-2.5 max-h-3xl transform-gpu rotate-180 text-white/50 focus:outline-none focus-visible:text-white"
             :aria-label="$t('post.postCommentSend')"
@@ -84,6 +87,8 @@ import {
   ref,
   useContext,
   useStore,
+  useRoute,
+  nextTick
 } from '@nuxtjs/composition-api'
 import { TextareaAutogrowDirective } from 'vue-textarea-autogrow-directive'
 import { postApi } from '@/api/post'
@@ -101,6 +106,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    expandComments: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['commentsLoaded'],
   setup(props, context) {
@@ -109,14 +118,23 @@ export default defineComponent({
     const showComments = ref(false)
     const showCommentForm = ref(false)
     const commentBody = ref('')
-    const { $auth } = useContext()
+    const { $auth, i18n } = useContext()
     const store = useStore()
+    const route = useRoute()
 
     const { fetchPostsByPost, submitCommentByPost } = postApi()
 
     async function fetchComments() {
       comments.value = await fetchPostsByPost(props.post.id)
       showCommentForm.value = true
+      showComments.value = true
+      await nextTick()
+      const el = document.querySelector(route.value.hash)
+      el && el.scrollIntoView()
+    }
+
+    if (props.expandComments === true) {
+      fetchComments()
       showComments.value = true
     }
 
@@ -130,6 +148,7 @@ export default defineComponent({
           commentBody.value = ''
           fetchComments()
           context.emit('commentsLoaded', props.post.id)
+          store.dispatch('currentAlert', i18n.t('alert.commentSubmitted'))
         })
         $auth.fetchUser()
       } else {
@@ -143,6 +162,10 @@ export default defineComponent({
       }
     }
 
+    function updateModelValue(content) {
+      commentBody.value = content.text
+    }
+
     return {
       comments,
       newComments,
@@ -153,6 +176,7 @@ export default defineComponent({
       fetchComments,
       submitComment,
       showLoginIfNotLoggedIn,
+      updateModelValue
     }
   },
 })

@@ -132,11 +132,11 @@ class Post
     private $id;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $created;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['post:write', 'post:read', 'post:comment:write'])]
+    #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
@@ -189,7 +189,7 @@ class Post
     #[Groups(['post:write', 'post:read', 'post:comment:write', 'playlist:read'])]
     private $campaign;
 
-    #[ORM\ManyToMany(targetEntity: Playlist::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: PlaylistPost::class, mappedBy: 'post', cascade: ['persist', 'remove'])]
     #[Groups(['post:write', 'post:read'])]
     private $playlist;
 

@@ -27,6 +27,13 @@ export default defineComponent({
         console.log('sw-updated from layout setup')
       })
     }
-  }
+  },
+  head() {
+      return {
+          htmlAttrs: {
+              lang: this.$i18n.locale
+          }
+      }
+  },
 })
 </script>
