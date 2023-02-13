@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p>Hallo {{ receiver.fullName}},</p>
+    {% if empty receiver.firstname %}
+        <p>Hallo {{ receiver.username}},</p>
+    {% else %}
+        <p>Hallo {{ receiver.firstname}},</p>
+    {% endif%}
     <p>Herzlichen Glückwunsch!</p>
     <p>
         {{ awarded.giver.username }} hat dir den Award {{ awarded.award.title }} aus der Kampagne {{ awarded.award.campaign.title }} geschenkt.

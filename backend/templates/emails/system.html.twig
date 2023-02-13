@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-   <p>Hallo {{ receiver.firstName}},</p>
+    {% if empty receiver.firstname %}
+        <p>Hallo {{ receiver.username}},</p>
+    {% else %}
+        <p>Hallo {{ receiver.firstname}},</p>
+    {% endif%}
     <p>{{ notification.text }}</p>
     <p>
         Bis gleich im Creative Museum!<br />
