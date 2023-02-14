@@ -17,4 +17,6 @@ enum MailType: string
     case POST_MENTION = 'post_mention';
 
     case COMMENT_MENTION = 'comment_mention';
+
+    case EDITOR = 'editor';
 }

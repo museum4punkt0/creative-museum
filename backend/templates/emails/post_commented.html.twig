@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {% if empty comment.parent.author.firstname %}
+    {% if comment.parent.author.firstname is null or comment.parent.author.firstname is empty %}
         <p>Hallo {{ comment.parent.author.username}},</p>
     {% else %}
         <p>Hallo {{ comment.parent.author.firstname}},</p>

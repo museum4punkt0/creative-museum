@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {% if empty receiver.firstname %}
+    {% if receiver.firstname is null or receiver.firstname is empty %}
         <p>Hallo {{ receiver.username}},</p>
     {% else %}
         <p>Hallo {{ receiver.firstname}},</p>

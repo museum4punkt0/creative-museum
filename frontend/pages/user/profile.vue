@@ -55,11 +55,14 @@
           <a
             v-for="(playlist, key) in playlists"
             :key="key"
-            class="btn-primary cursor-pointer"
+            class="relative btn-primary cursor-pointer"
             @click.prevent="showPlaylist = playlist.id"
           >
             <span class="h-30 flex flex-col align-center justify-center">
               {{ playlist.title }}
+            </span>
+            <span role="button w-5 h-5 inline-block" class="absolute top-1 right-1 p-2" @click.stop="onDeletePlaylist(playlist.id)">
+              <TrashIcon class="h-3 w-3 fill-$highlight-contrast" />
             </span>
           </a>
 
@@ -112,25 +115,32 @@ import {
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
 import { playlistApi } from '@/api/playlist'
+import TrashIcon from '@/assets/icons/trash.svg?inline'
 
 export default defineComponent({
   name: 'ProfilePage',
+  components: {
+    TrashIcon
+  },
   layout: 'BreakScrollDefault',
   setup() {
     const { fetchUserPosts, fetchUserBookmarks } = postApi()
-    const { fetchPlaylist } = playlistApi()
+    const { fetchPlaylist, deletePlaylist } = playlistApi()
     const mode = ref('posts')
     const store = useStore()
     const router = useRouter()
-    const { $config, $auth, $breakpoints, i18n } = useContext()
+    const { $config, $auth, $breakpoints, i18n, $confirm } = useContext()
     const posts = ref(null)
-    const playlists = ref(null)
     const playlistPosts = ref(null)
     const bookmarks = ref(null)
     const showPlaylist = ref(0)
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
+    })
+
+    const playlists = computed(() => {
+      return $auth.user.playlists
     })
 
     useMeta({
@@ -145,9 +155,9 @@ export default defineComponent({
 
     onMounted(async () => {
       posts.value = await fetchUserPosts($auth.user.id, 1)
-      playlists.value = $auth.user.playlists
       bookmarks.value = await fetchUserBookmarks()
     })
+
 
     watch(showPlaylist, (currentValue) => {
       if (currentValue > 0) {
@@ -166,11 +176,16 @@ export default defineComponent({
       mode.value = 'bookmarks'
     }
     function showPlaylists() {
+      playlists.value = $auth.user.playlists
       mode.value = 'playlists'
     }
 
     async function loadPlaylist() {
       playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
+    }
+
+    async function onDeletePlaylist(playlistId) {
+      await deletePlaylist(playlistId)
     }
 
     function backButton() {}
@@ -183,6 +198,7 @@ export default defineComponent({
       showPlaylists,
       loadPlaylist,
       refetchBookmarks,
+      onDeletePlaylist,
       posts,
       playlists,
       playlistPosts,
