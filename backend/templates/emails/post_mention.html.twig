@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p>Hallo {{ receiver.fullName}},</p>
+    {% if empty receiver.firstname %}
+        <p>Hallo {{ receiver.username}},</p>
+    {% else %}
+        <p>Hallo {{ receiver.firstname}},</p>
+    {% endif%}
     <p>du wurdest in einem Post erwähnt!</p>
     <p>
         Sieh dir den Post <a href="{{ domain }}posts/{{ post.id }}">hier</a> an.

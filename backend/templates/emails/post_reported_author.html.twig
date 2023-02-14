@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p>Hallo {{ receiver.firstName }},<p>
+    {% if empty receiver.firstname %}
+        <p>Hallo {{ receiver.username}},</p>
+    {% else %}
+        <p>Hallo {{ receiver.firstname}},</p>
+    {% endif%}
     <p>dein Beitrag in der Kampange {{ post.campaign.title }} wurde gemeldet!</p>
     <p>Wir werden das prüfen und den Beitrag gegebenenfalls entfernen.</p>
     <p>Du kannst dir den Beitrag <a href="{{ domain }}posts/{{ post.id }}">hier</a> ansehen.</p>

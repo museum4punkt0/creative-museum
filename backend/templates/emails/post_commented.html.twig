@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <p>Hallo {{ comment.parent.author.firstName }},</p>
+    {% if empty comment.parent.author.firstname %}
+        <p>Hallo {{ comment.parent.author.username}},</p>
+    {% else %}
+        <p>Hallo {{ comment.parent.author.firstname}},</p>
+    {% endif%}
     <p>{{ comment.author.username }} hat deinen Beitrag in der Kampagne {{ comment.campaign.title }} kommentiert. Schau dir den Kommentar hier an: <a href="{{ domain }}posts/{{ comment.parent.id }}" >hier</a>.</p>
     <p>
         Bis gleich im Creative Museum! <br />
