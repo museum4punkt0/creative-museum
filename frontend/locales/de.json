@@ -169,7 +169,11 @@
       },
       "playlist": {
         "button": "Sammlung",
-        "headline": "Sammlung hinzufügen"
+        "headline": "Sammlung hinzufügen",
+        "noplaylists": {
+          "title": "Tut uns leid! Aktuell hast du noch keine Sammlungen, die Du posten könntest.",
+          "text": "Füge einzelne Beiträge direkt über das Dreipunktemenü zu einer neuen Sammlung hinzu und gib ihr einen Titel. Schon kannst du hier Deine neue Sammlung sehen und posten."
+        }
       }
     },
     "new": "Neuer Beitrag",

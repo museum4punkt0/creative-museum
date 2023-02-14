@@ -143,7 +143,11 @@
       },
       "playlist": {
         "button": "Playlist",
-        "headline": "Add Playlist"
+        "headline": "Add Playlist",
+        "noplaylists": {
+          "title": "Sorry! You don't have any collections to post yet.",
+          "text": "Add individual posts to a new collection via the three-point menu and give it a title. You will be able to see and post your new collection here."
+        }
       }
     },
     "new": "New Post",

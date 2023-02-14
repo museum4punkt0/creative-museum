@@ -6,6 +6,7 @@
       </button>
     </div>
     <div
+      v-if="$auth.user.playlists.length"
       class="flex flex-col flex-1 h-full justify-between pr-6 pb-12 md:pb-6 pl-6"
     >
       <div>
@@ -16,6 +17,10 @@
           @selectPlaylist="selectPlaylist"
         />
       </div>
+    </div>
+    <div v-else class="p-6">
+      <p class="mb-6">{{ $t('post.types.playlist.noplaylists.title') }}</p>
+      <p>{{ $t('post.types.playlist.noplaylists.text') }}</p>
     </div>
   </div>
 </template>
