@@ -1,4 +1,4 @@
-set :stage, :staging
+set :stage, :production
 
 server 'vpro0803.proserver.punkt.de',
    user: 'proserver',
