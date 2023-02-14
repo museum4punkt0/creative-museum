@@ -10,11 +10,13 @@
 namespace App\MessageHandler;
 
 use App\Entity\Notification;
+use App\Enum\MailType;
 use App\Enum\NotificationType;
 use App\Message\EditorMessageReceived;
 use App\Repository\CampaignMemberRepository;
 use App\Repository\CampaignRepository;
 use App\Repository\UserRepository;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -28,16 +30,20 @@ class HandleEditorMessage implements MessageHandlerInterface
 
     private EntityManagerInterface $entityManager;
 
+    private MailService $mailService;
+
     public function __construct(
         UserRepository $userRepository,
         CampaignRepository $campaignRepository,
         CampaignMemberRepository $memberRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MailService $mailService
     ) {
         $this->userRepository = $userRepository;
         $this->campaignRepository = $campaignRepository;
         $this->memberRepository = $memberRepository;
         $this->entityManager = $entityManager;
+        $this->mailService = $mailService;
     }
 
     public function __invoke(EditorMessageReceived $editorMessageReceived)
@@ -73,6 +79,7 @@ class HandleEditorMessage implements MessageHandlerInterface
             ->setEditorNotification(true);
 
         $this->entityManager->persist($notification);
+        $this->mailService->sendMail(MailType::EDITOR->value, $user, ['notification' => $notification]);
         $this->entityManager->flush();
     }
 
@@ -98,6 +105,7 @@ class HandleEditorMessage implements MessageHandlerInterface
                 ->setSilent(NotificationType::NONE === $member->getUser()->getNotificationSettings())
                 ->setEditorNotification(true);
             $this->entityManager->persist($notification);
+            $this->mailService->sendMail(MailType::EDITOR->value, $member->getUser(), ['notification' => $notification]);
 
             if ($i % 100 === 0) {
                 $this->entityManager->flush();
@@ -120,7 +128,7 @@ class HandleEditorMessage implements MessageHandlerInterface
                 ->setSilent(NotificationType::NONE === $user->getNotificationSettings())
                 ->setEditorNotification(true);
             $this->entityManager->persist($notification);
-
+            $this->mailService->sendMail(MailType::EDITOR->value, $user, ['notification' => $notification]);
             if ($i % 100 === 0) {
                 $this->entityManager->flush();
             }

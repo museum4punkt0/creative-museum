@@ -413,7 +413,8 @@
       "post_reported_author": "Dein Beitrag wurde gemeldet",
       "system": "Du hast eine Nachricht vom Creative Museum erhalten",
       "post_mention": "Neue Post Erwähnung",
-      "comment_mention": "Neue Kommentar Erwähnung"
+      "comment_mention": "Neue Kommentar Erwähnung",
+      "editor": "Neue Nachricht vom Systemeditor"
     }
   },
   "today": "Heute",
