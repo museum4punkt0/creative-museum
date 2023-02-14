@@ -98,7 +98,7 @@ export default defineComponent({
       backLink,
       step,
       newPlaylistName,
-      createPlaylistWithPost,
+      createPlaylistWithPost
     }
   },
 })
