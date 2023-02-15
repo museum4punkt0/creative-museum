@@ -218,6 +218,10 @@ class AdministrationController extends ActionController
         $propertyMapping->allowCreationForSubProperty('feedbackOptions.*');
         $propertyMapping->allowModificationForSubProperty('feedbackOptions.*');
 
+        $propertyMapping->forProperty('partners.*')->allowProperties('id','title','pictureIRI','link');
+        $propertyMapping->allowCreationForSubProperty('partners.*');
+        $propertyMapping->allowModificationForSubProperty('partners.*');
+
         if (! empty($campaignDto['start'])) {
             $propertyMapping->forProperty('start')->setTypeConverterOption(
                 DateTimeConverter::class,
