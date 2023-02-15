@@ -99,9 +99,9 @@ pipelines:
 
             - step:
                 name: Deployment
-                deployment: staging
+                deployment: production
                 image: rubygem/capistrano:3.7.2
                 script:
                     - gem install capistrano-composer
                     - gem install capistrano-scm-copy
-                    - cap staging deploy
+                    - cap production deploy
