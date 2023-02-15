@@ -66,14 +66,17 @@ export default defineComponent({
             postsRef.value[key].commentCount = response.commentCount
             postsRef.value[key].upvotes = response.upvotes
             postsRef.value[key].downvotes = response.downvotes
+            postsRef.value[key].comments = response.comments
             if (
               response.userChoiced &&
               response.pollOptions &&
-              response.choicesTotal
+              response.choicesTotal &&
+              response.comments
             ) {
               postsRef.value[key].choicesTotal = response.choicesTotal
               postsRef.value[key].userChoiced = response.userChoiced
               postsRef.value[key].pollOptions = response.pollOptions
+              postsRef.value[key].comments = response.comments
             }
             if (response.rated && response.my_feedback) {
               postsRef.value[key].rated = response.rated
