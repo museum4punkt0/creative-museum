@@ -240,6 +240,10 @@ export const postApi = () => {
     return await $api.delete(`posts/${postId}`)
   }
 
+  async function deleteCommentById(postId) {
+    return await $api.delete(`posts/${postId}`)
+  }
+
   async function reportPostById(postId) {
     const response = await $api.patch(`posts/${postId}/report`, {})
 
@@ -268,6 +272,7 @@ export const postApi = () => {
     fetchUserPosts,
     fetchUserBookmarks,
     deletePostById,
+    deleteCommentById,
     reportPostById
   }
 }

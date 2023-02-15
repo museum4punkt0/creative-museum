@@ -30,6 +30,7 @@
         :post="post"
         :expand-comments="expandComments"
         @commentsLoaded="$emit('updatePost', post.id)"
+        @commentDeleted="$emit('updatePost', post.id)"
       />
     </div>
     <h2 v-else class="highlight-text text-center text-sm">

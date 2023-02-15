@@ -39,7 +39,7 @@
         <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
         <ul>
           <li v-for="(comment, key) in comments" :key="key">
-            <PostCommentItem :comment="comment" :post-type="post.type" />
+            <PostCommentItem :comment="comment" :post-type="post.type" @commentDeleted="deleteComment"/>
           </li>
         </ul>
       </div>
@@ -75,7 +75,7 @@
       <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
       <ul>
         <li v-for="(comment, key) in post.comments" :key="key">
-          <PostCommentItem :comment="comment" :post-type="post.type" />
+          <PostCommentItem :comment="comment" :post-type="post.type" @commentDeleted="$emit('commentDeleted')" />
         </li>
       </ul>
     </div>
@@ -111,7 +111,7 @@ export default defineComponent({
       default: false
     }
   },
-  emits: ['commentsLoaded'],
+  emits: ['commentsLoaded', 'commentDeleted'],
   setup(props, context) {
     const comments = ref([])
     const newComments = ref([])
@@ -129,8 +129,10 @@ export default defineComponent({
       showCommentForm.value = true
       showComments.value = true
       await nextTick()
-      const el = document.querySelector(route.value.hash)
-      el && el.scrollIntoView()
+      if (route.value.hash) {
+        const el = document.querySelector(route.value.hash)
+        el && el.scrollIntoView()
+      }
     }
 
     if (props.expandComments === true) {
@@ -166,6 +168,11 @@ export default defineComponent({
       commentBody.value = content.text
     }
 
+    function deleteComment() {
+      fetchComments()
+      context.emit('commentDeleted')
+    }
+
     return {
       comments,
       newComments,
@@ -176,7 +183,8 @@ export default defineComponent({
       fetchComments,
       submitComment,
       showLoginIfNotLoggedIn,
-      updateModelValue
+      updateModelValue,
+      deleteComment
     }
   },
 })

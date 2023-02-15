@@ -98,6 +98,40 @@
     <div v-if="!isLargerThanLg" class="xl:hidden">
       <PageFooter />
     </div>
+    <UtilitiesModal
+        v-if="showDeleteModal"
+        class="flex flex-col h-full"
+        :closable="true"
+        tabindex="0"
+        @closeModal="showDeleteModal = false"
+      >
+      <div
+        class="flex flex-col flex-1 h-full justify-between"
+      >
+        <div>
+          <div class="page-header px-6">
+            <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.delete.headline') }}</a>
+          </div>
+          <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
+            {{ $t('post.actions.delete.confirmation') }}
+          </div>
+        </div>
+        <div class="mx-6 mb-6">
+          <button
+            class="btn-primary bg-$highlight text-$highlight-contrast border-$highlight w-full mb-4"
+            @click.prevent="confirmDeletePlaylist"
+          >
+            {{ $t('post.actions.delete.button') }}
+          </button>
+          <button
+            class="btn-outline w-full"
+            @click.prevent="showDeleteModal = false"
+          >
+            {{ $t('close') }}
+          </button>
+        </div>
+      </div>
+    </UtilitiesModal>
   </div>
 </template>
 
@@ -134,6 +168,8 @@ export default defineComponent({
     const playlistPosts = ref(null)
     const bookmarks = ref(null)
     const showPlaylist = ref(0)
+    const showDeleteModal = ref(false)
+    const playlistToDelete = ref(0)
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
@@ -184,8 +220,16 @@ export default defineComponent({
       playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
     }
 
-    async function onDeletePlaylist(playlistId) {
-      await deletePlaylist(playlistId)
+    function onDeletePlaylist(playlistId) {
+      showDeleteModal.value = true
+      playlistToDelete.value = playlistId
+    }
+
+    async function confirmDeletePlaylist() {
+      await deletePlaylist(playlistToDelete.value).then(() => {
+        playlistToDelete.value = 0
+        showDeleteModal.value = false
+      })
     }
 
     function backButton() {}
@@ -193,12 +237,14 @@ export default defineComponent({
       backButton,
       mode,
       showPlaylist,
+      showDeleteModal,
       showPosts,
       showBookmarks,
       showPlaylists,
       loadPlaylist,
       refetchBookmarks,
       onDeletePlaylist,
+      confirmDeletePlaylist,
       posts,
       playlists,
       playlistPosts,
