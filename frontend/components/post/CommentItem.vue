@@ -77,6 +77,7 @@ export default defineComponent({
     const { deleteCommentById } = postApi()
 
     async function deleteComment() {
+      showDeleteModal.value = false
       await deleteCommentById(props.comment.id).then(() => {
         context.emit('commentDeleted', props.comment.id)
       })
