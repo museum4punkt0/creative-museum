@@ -37,11 +37,18 @@
     <div v-if="(comments && showComments) || showCommentForm" class="relative">
       <div v-if="comments && showComments" aria-expanded="true">
         <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
-        <ul>
+        <transition-group
+          enter-active-class="duration-300 ease-out opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="duration-200 ease-in"
+          leave-class="opacity-100"
+          leave-to-class="opacity-0"
+          tag="ul"
+        >
           <li v-for="(comment, key) in comments" :key="key">
             <PostCommentItem :comment="comment" :post-type="post.type" @commentDeleted="deleteComment"/>
           </li>
-        </ul>
+        </transition-group>
       </div>
       <form
         v-if="(post.campaign.active || !post.campaign.closed) && showCommentForm"
@@ -73,11 +80,18 @@
     </div>
     <div v-else-if="post.comments && !showComments">
       <h3 class="sr-only">{{ $t('post.postComments') }}</h3>
-      <ul>
+      <transition-group
+        enter-active-class="duration-300 ease-out opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
+        tag="ul"
+      >
         <li v-for="(comment, key) in post.comments" :key="key">
           <PostCommentItem :comment="comment" :post-type="post.type" @commentDeleted="$emit('commentDeleted')" />
         </li>
-      </ul>
+      </transition-group>
     </div>
   </div>
 </template>
