@@ -1,22 +1,17 @@
 <template>
   <div v-if="filteredPosts">
-    <div
-      v-if="posts[0] && posts[0].length > 0"
-      v-show="showItem === 0"
-      ref="items"
-      class="absolute l-0 t-0 r-0 b-0 w-full z-100"
-    >
-      <CampaignResult :campaign-title="campaign.title" :campaign-result="posts[0]" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
-    </div>
+
     <div
       v-for="(post, index) in filteredPosts"
-      v-show="posts[0] && posts[0].length > 0 ? showItem === index + 1 : showItem === index"
+      v-show="showItem === index"
       :key="index"
       ref="items"
       class="absolute l-0 t-0 r-0 b-0 w-full"
       :class="`z-${90 - index}`"
     >
+      <CampaignResult v-if="post.type === 'result'" :campaign-title="campaign.title" :campaign-result="filteredPosts[0].post" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
       <KioskPostItem
+        v-else
         :post="post"
       />
     </div>
@@ -68,30 +63,37 @@ export default defineComponent({
     })
 
     const filteredPosts = computed(() => {
-      return props.posts[1].filter((item) => {
-        return item.type !== 'system'
+      const items = []
+      if (props.posts[0]) {
+        items[0] = {
+          type: 'result',
+          post: props.posts[0]
+        }
+      }
+      props.posts[1].forEach((item) => {
+        if (item.type !== 'system') {
+          items.push(item)
+        }
       })
+      return items
+
     })
 
     function animateItems() {
       showItem.value = 0
-      const itemCount = items.value.length
-      if (items && itemCount > 1) {
 
-        stepDuration = (itemCount) * props.timeout
-        context.emit('updateDuration', { duration: stepDuration, itemCount })
+      if (items.value && items.value.length > 1) {
+
+        stepDuration = items.value.length * props.timeout
+
+        context.emit('updateProgress', { progress : ( 1 / items.value.length) * 100, duration: props.timeout })
 
         items.value.forEach((_, index) => {
-          setTimeout(function(){
+          setTimeout(() => {
             showItem.value = index + 1
-            context.emit('updateProgress', { progress : ((index + 1) / itemCount) * 100 })
+              context.emit('updateProgress', { progress : ((index + 2) / items.value.length) * 100, duration: props.timeout })
           }, props.timeout * (index + 1))
-
         })
-      } else {
-        setTimeout(function(){
-          animateItems()
-        }, 1000)
       }
     }
 
