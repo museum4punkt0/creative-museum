@@ -55,7 +55,6 @@
               :timeout="timeout"
               :progress="progress"
               @updateProgress="updateProgress"
-              @updateDuration="updateStepDuration"
             />
             <UtilitiesLoadingIndicator
               v-else-if="!posts"
@@ -76,11 +75,7 @@
       <div class="col-span-9 col-start-4">
         <div class="box-shadow-inset rounded-xl ml-6 mr-6 relative">
           <div
-            class="absolute z-20 left-0 top-0 bg-$highlight opacity-50 rounded-xl h-5 text-center transition-all ease-linear"
-            :style="`width: ${fullWidth}%; transition-duration: ${stepDuration}ms;`"
-          />
-          <div
-            class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-in-out duration-300"
+            class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-linear duration-200 max-w-full"
             :style="`width: ${progress}%;`"
           />
         </div>
@@ -100,7 +95,6 @@ import {
   useStore,
   watch,
   onMounted,
-  onUnmounted,
   useMeta,
 } from '@nuxtjs/composition-api'
 import { campaignApi } from '@/api/campaign'
@@ -113,46 +107,36 @@ export default defineComponent({
     Logo,
   },
   layout: 'Kiosk',
-  setup(_, context) {
+  setup() {
     const route = useRoute()
     const router = useRouter()
     const { i18n } = useContext()
     const store = useStore()
+    const { title } = useMeta()
+
     const posts = ref(null)
-    const newPosts = ref(null)
-    const newPostsAvailable = ref(false)
     const campaign = ref(null)
     const campaignResult = ref(null)
-    const { title } = useMeta()
     const step = ref(0)
-    const stepDuration = ref(0)
-    const stepDurationInProgress = ref(0)
     const nextSorting = ref('votestotal')
-    const fullWidth = ref(0)
     const itemCount = ref(0)
-
-    const timeout = 1000
-
+    const duration = ref(0)
     const progress = ref(0)
 
-    let refetchInterval = null
+    const timeout = 5000
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
     watch(progress, (newProgress) => {
       if (Math.floor(newProgress) === 100) {
-        fullWidth.value = 0
-        stepDuration.value = 0
         if (step.value === 1) {
           nextSorting.value = 'controversial'
         }
-
         setTimeout(() => {
           store.dispatch('setCurrentSortingWithDirection', [
             nextSorting.value,
             'desc',
           ])
-          progress.value = 0
         }, timeout)
 
         if (step.value === 2) {
@@ -180,6 +164,8 @@ export default defineComponent({
     const { fetchPostsByCampaign } = postApi()
 
     async function loadCampaign() {
+      progress.value = 0
+
       if (route.value.params.id) {
         campaign.value = await fetchCampaign(route.value.params.id)
         posts.value = await fetchPostsByCampaign(
@@ -188,7 +174,6 @@ export default defineComponent({
           store.state.currentSortingDirection,
           1
         )
-
         if (campaign.value && campaign.value.error) {
           router.push('/404')
         } else {
@@ -201,22 +186,12 @@ export default defineComponent({
     }
 
     function updateProgress(emitValue) {
+      duration.value = emitValue.duration
       progress.value = emitValue.progress
-    }
-
-    function updateStepDuration(emitValue) {
-      stepDuration.value = emitValue.duration
-      itemCount.value = emitValue.itemCount
-      fullWidth.value = 100
     }
 
     onMounted(async () => {
       await loadCampaign()
-      fullWidth.value = '100'
-    })
-
-    onUnmounted(function () {
-      clearInterval(refetchInterval)
     })
 
     return {
@@ -224,16 +199,12 @@ export default defineComponent({
       posts,
       campaignResult,
       newPost,
-      newPostsAvailable,
       progress,
       timeout,
       nextSorting,
-      stepDuration,
-      stepDurationInProgress,
-      fullWidth,
       itemCount,
-      updateProgress,
-      updateStepDuration,
+      duration,
+      updateProgress
     }
   },
   head: {},
