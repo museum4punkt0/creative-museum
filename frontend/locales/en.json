@@ -394,10 +394,6 @@
       "title": "Voting Score",
       "text": "You have received {points} points for your voting in the campaign ´{campaign}´!"
     },
-    "1662033266": {
-      "title": "Breaking News",
-      "text": "New post in the campaign ´{campaign}´ by {author}!"
-    },
     "1662033328": {
       "title": "{badge}",
       "text": "You have received the badge {badge}!"

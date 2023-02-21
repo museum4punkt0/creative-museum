@@ -34,6 +34,10 @@ class GetAvailableSoonAwardsController extends AbstractController
 
         $campaign = $this->campaignRepository->find($campaign);
 
+        if ($campaign->getClosed() || !$campaign->getActive()){
+            return null;
+        }
+
         return $this->awardService->getAvailableSoonByCampaign($campaign, $user);
     }
 }
