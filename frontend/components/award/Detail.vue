@@ -8,7 +8,7 @@
       </div>
       <div class="flex-1">
         <div class="box-shadow relative m-6">
-          <AwardBadgeDetailText type="Award" :title="award.title" :text="award.description" :image="award.picture" :link="award.link" :price="award.price" />
+          <AwardBadgeDetailText type="Award" :title="award.title" :text="award.description" :image="award.picture" :link="award.link" :price="award.price" :campaign="award.campaign"/>
         </div>
       </div>
       <div class="mx-6 mb-6">

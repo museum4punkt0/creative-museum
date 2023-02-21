@@ -1,6 +1,7 @@
 <template>
   <div>
     <component :is="`${type}Icon`" v-if="image && !showLongDesc" :image="image" :title="title" class="h-40 w-auto mx-auto" />
+    <a class="text-$highlight" :href="'/campaigns/' + campaign.id">{{ campaign.title }}</a>
     <h1 class="text-2xl">{{ title }}</h1>
     <div v-if="formattedShortDescription !== formattedDescription">
       <p v-html="showLongDesc ? formattedDescription : formattedShortDescription" />
@@ -43,7 +44,11 @@ export default defineComponent({
     price: {
       type: Number,
       default: 0
-    }
+    },
+    campaign: {
+      type: Object,
+      default: () => {}
+    },
   },
   setup(props) {
     const showLongDesc = ref(false)
