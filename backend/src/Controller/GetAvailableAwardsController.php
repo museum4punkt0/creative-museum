@@ -32,7 +32,11 @@ class GetAvailableAwardsController extends AbstractController
         }
 
         $campaign = $this->campaignRepository->find($campaign);
-        return $this->awardService->getAvailableByCampaign($campaign, $user);
 
+        if ($campaign->getClosed() || !$campaign->getActive()){
+            return null;
+        }
+
+        return $this->awardService->getAvailableByCampaign($campaign, $user);
     }
 }
