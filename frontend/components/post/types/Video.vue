@@ -4,14 +4,16 @@
       class="rounded-lg max-h-xl overflow-hidden"
       @click="playVideo('video-' + post.id)"
     >
-      <VueVideoThumbnail
-        v-if="!showVideo"
-        :video-src="`${backendURL}/${post.files[0].contentUrl}`"
-        show-play-button
-        :width="688"
-        :height="388"
-        class="!w-full"
-      />
+      <client-only>
+        <VueVideoThumbnail
+          v-if="!showVideo"
+          :video-src="`${backendURL}/${post.files[0].contentUrl}`"
+          show-play-button
+          :width="688"
+          :height="388"
+          class="!w-full"
+        />
+      </client-only>
     </div>
     <video
       v-show="post.files.length && showVideo"
