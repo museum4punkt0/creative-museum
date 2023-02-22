@@ -45,7 +45,7 @@
           leave-to-class="opacity-0"
           tag="ul"
         >
-          <li v-for="(comment, key) in comments" :key="key+1">
+          <li v-for="(comment, key) in comments" :key="key + 0">
             <PostCommentItem :comment="comment" :post-type="post.type" @commentDeleted="deleteComment"/>
           </li>
         </transition-group>
@@ -88,7 +88,7 @@
         leave-to-class="opacity-0"
         tag="ul"
       >
-        <li v-for="(comment, key) in post.comments" :key="key+1">
+        <li v-for="(comment, key) in post.comments" :key="key + 0">
           <PostCommentItem :comment="comment" :post-type="post.type" @commentDeleted="$emit('commentDeleted')" />
         </li>
       </transition-group>
