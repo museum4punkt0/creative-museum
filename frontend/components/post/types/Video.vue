@@ -6,7 +6,7 @@
     >
       <VueVideoThumbnail
         v-if="!showVideo"
-        :video-src="`${backendURL}${post.files[0].contentUrl}`"
+        :video-src="`${backendURL}/${post.files[0].contentUrl}`"
         show-play-button
         :width="688"
         :height="388"
