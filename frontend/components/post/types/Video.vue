@@ -7,7 +7,7 @@
       <client-only>
         <VueVideoThumbnail
           v-if="!showVideo"
-          :video-src="`${backendURL}${post.files[0].contentUrl}`"
+          :video-src="`/backend/${post.files[0].contentUrl}`"
           show-play-button
           :width="688"
           :height="388"
@@ -21,7 +21,7 @@
       class="w-full h-auto rounded-lg max-h-xl"
       controls
     >
-      <source :src="`${backendURL}${post.files[0].contentUrl}`" />
+      <source :src="`/backend/${post.files[0].contentUrl}`" />
       <p v-if="post.files[0].description">{{ post.files[0].description }}</p>
     </video>
     <div class="my-3">
@@ -63,6 +63,7 @@ export default defineComponent({
       video,
       showVideo,
       backendURL: context.$config.backendURL,
+      frontendURL: context.$config.frontendURL,
       playVideo
     }
   },
