@@ -2,7 +2,7 @@
   <div :id="`comment-${comment.id}`" v-if="comment" class="relative text-xs mt-4">
     <span v-if="$auth && $auth.user && ($auth.user.uuid === comment.author.uuid)" class="w-5 h-5 p-2 absolute top-1 right-1 cursor-pointer" role="button"><TrashIcon class="w-3 h-3" :class="postType === 'playlist' ? 'fill-$highlight-contrast' : 'fill-white'" @click.stop="showDeleteModal = true" /></span>
     <strong class="block">{{ $userName(comment.author) }}</strong>
-    <div v-html="comment.body" />
+    <div class="break-words" v-html="comment.body" />
     <span
       class="block"
       :class="postType !== 'playlist' ? 'text-$highlight' : ''"
