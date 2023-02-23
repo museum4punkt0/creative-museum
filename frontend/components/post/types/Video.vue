@@ -12,7 +12,6 @@
           :width="688"
           :height="388"
           class="!w-full"
-          :cors="true"
         />
       </client-only>
     </div>
