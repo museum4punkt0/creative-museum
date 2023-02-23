@@ -36,8 +36,7 @@ export default {
     { src: '~/plugins/updater', mode: 'client' },
     { src: '~/plugins/tooltip', mode: 'client' },
     { src: '~/plugins/clipboard', mode: 'client' },
-    { src: '~/plugins/qrCode', mode: 'client' },
-    { src: '~/plugins/videoThumbnail', mode: 'client' }
+    { src: '~/plugins/qrCode', mode: 'client' }
   ],
   buildModules: [
     '@nuxt/typescript-build',
