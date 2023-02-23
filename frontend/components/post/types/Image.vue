@@ -2,8 +2,8 @@
   <div>
     <img
       v-if="post.files.length"
-      :src="`${backendURL}/${post.files[0].contentUrl}`"
-      :data-url="`${backendURL}/${post.files[0].contentUrl}`"
+      :src="`${backendURL}${post.files[0].contentUrl}`"
+      :data-url="`${backendURL}${post.files[0].contentUrl}`"
       class="rounded mx-auto max-h-xl"
       :alt="
         post.files[0].description
