@@ -2,10 +2,11 @@
   <div
     role="button"
     tabindex="0"
-    class="shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none focus:outline-none focus-visible:(shadow-lg shadow-black/75)"
+    class="relative overflow-hidden shadow-md shadow-black/50 h-xl lg:h-3xl py-6 px-4 rounded-2xl block lg:pointer-events-none focus:outline-none focus-visible:(shadow-lg shadow-black/75)"
     :style="`background-color: ${campaign.color}`"
   >
-    <article class="flex flex-col h-full" :class="`text-${textColor}`" role="article">
+  <span v-if="campaign.closed" class="absolute left-[-40px] top-[30px] w-[160px] transform -rotate-45 bg-black shadow-md text-sm uppercase text-center text-white py-1">{{ $t('campaign.closed.badge') }}</span>
+  <article class="flex flex-col h-full" :class="`text-${textColor}`" role="article">
       <header>
         <div class="text-right">
           <span class="border border-current rounded-full py-1 px-2">
