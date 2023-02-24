@@ -41,7 +41,7 @@ web_environment:
   # TYPO3 SYS
   - TYPO3_SYS_TRUSTED_HOSTS_PATTERN=.*
 nodejs_version: "16"
-webimage_extra_packages: [openssl, build-essential, sendmail, python]
+webimage_extra_packages: [openssl, build-essential, sendmail, python, ffmpeg]
 hooks:
   post-start:
   - exec: mysql -uroot -proot -hdb -e "CREATE DATABASE IF NOT EXISTS typo3; GRANT ALL ON typo3.* TO 'db'@'%';"

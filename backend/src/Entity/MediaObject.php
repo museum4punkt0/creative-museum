@@ -93,6 +93,10 @@ class MediaObject
     #[Groups(['media_object:read', 'post:read', 'playlist:read'])]
     private FileType $type = FileType::IMAGE;
 
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
+    #[Groups(['media_object:read','media_object_create', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read'. 'users:read', 'awarded:read', 'badge:read', 'playlist:read','badged:read'])]
+    public ?MediaObject $thumbnail = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,7 +107,7 @@ class MediaObject
         return $this->contentUrl;
     }
 
-    public function setContentUrl(string $contentUrl): self
+    public function setContentUrl(string $contentUrl): MediaObject
     {
         $this->contentUrl = $contentUrl;
 
@@ -115,7 +119,7 @@ class MediaObject
         return $this->filepath;
     }
 
-    public function setFilepath(?string $filepath): self
+    public function setFilepath(?string $filepath): MediaObject
     {
         $this->filepath = $filepath;
 
@@ -129,7 +133,7 @@ class MediaObject
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
-    public function setUpdatedAt(): self
+    public function setUpdatedAt(): MediaObject
     {
         $this->updatedAt = new \DateTimeImmutable();
 
@@ -141,7 +145,7 @@ class MediaObject
         return $this->file;
     }
 
-    public function setFile(?File $file): self
+    public function setFile(?File $file): MediaObject
     {
         $this->file = $file;
 
@@ -153,7 +157,7 @@ class MediaObject
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(?string $description): MediaObject
     {
         $this->description = $description;
 
@@ -165,9 +169,21 @@ class MediaObject
         return $this->type;
     }
 
-    public function setType(FileType $type): self
+    public function setType(FileType $type): MediaObject
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getThumbnail(): ?MediaObject
+    {
+        return $this->thumbnail;
+    }
+
+    public function setThumbnail(?MediaObject $thumbnail): MediaObject
+    {
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
