@@ -258,7 +258,7 @@
       },
       "headline": "Profil",
       "self": {
-        "headline": "Hallo {firstName}",
+        "headline": "Hallo {userName}",
         "badges": {
           "points": {
             "scoring": "Du hast {threshold} Punkte gesammelt.",

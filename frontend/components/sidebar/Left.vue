@@ -5,7 +5,7 @@
         {{
           $auth.loggedIn
             ? $t('user.profile.self.headline', {
-                username: `@${$auth.user.username}`,
+                userName: `@${$auth.user.username}`,
               })
             : userData && !userData.deleted
             ? $t('user.profile.headline')
