@@ -54,7 +54,6 @@ export default defineComponent({
     const items = ref(null)
     const showItem = ref(0)
     const progressRef = toRef(props, 'progress')
-    let stepDuration = 0
 
     watch(progressRef, (newProgress) => {
       if (newProgress === 0) {
@@ -84,14 +83,14 @@ export default defineComponent({
 
       if (items.value && items.value.length > 1) {
 
-        stepDuration = items.value.length * props.timeout
-
-        context.emit('updateProgress', { progress : ( 1 / items.value.length) * 100, duration: props.timeout })
+        context.emit('updateProgress', { progress : ( 1 / items.value.length) * 100 })
+        context.emit('initItems', { itemCount: items.value.length })
 
         items.value.forEach((_, index) => {
           setTimeout(() => {
             showItem.value = index + 1
-              context.emit('updateProgress', { progress : ((index + 2) / items.value.length) * 100, duration: props.timeout })
+            context.emit('initItems', { itemCount: items.value.length })
+            context.emit('updateProgress', { progress : ((index + 2) / items.value.length) * 100 })
           }, props.timeout * (index + 1))
         })
       }
@@ -106,7 +105,6 @@ export default defineComponent({
       progressRef,
       showItem,
       filteredPosts,
-      stepDuration,
       animateItems
     }
 
