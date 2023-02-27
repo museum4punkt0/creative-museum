@@ -4,6 +4,7 @@
       v-show="post.files.length"
       class="w-full h-auto rounded-lg max-h-xl"
       controls
+      :poster="post.files[0].thumbnail ? `${backendURL}${post.files[0].thumbnail.contentUrl}`: null"
       :src="`${backendURL}${post.files[0].contentUrl}`"
     >
     </video>
