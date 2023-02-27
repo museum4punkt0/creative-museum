@@ -94,7 +94,7 @@ class MediaObject
     private FileType $type = FileType::IMAGE;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['media_object:read','media_object_create', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read'. 'users:read', 'awarded:read', 'badge:read', 'playlist:read','badged:read'])]
+    #[Groups(['media_object:read','media_object_create', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read', 'users:read', 'awarded:read', 'badge:read', 'playlist:read','badged:read'])]
     public ?MediaObject $thumbnail = null;
 
     public function getId(): ?int
