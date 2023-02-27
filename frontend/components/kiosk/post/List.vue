@@ -64,7 +64,7 @@ export default defineComponent({
 
     const filteredPosts = computed(() => {
       const items = []
-      if (props.posts[0]) {
+      if (props.posts[0] && props.posts[0].length) {
         items[0] = {
           type: 'result',
           post: props.posts[0]
@@ -75,6 +75,8 @@ export default defineComponent({
           items.push(item)
         }
       })
+
+      console.log(items)
       return items
 
     })
