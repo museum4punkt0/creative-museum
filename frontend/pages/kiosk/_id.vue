@@ -44,7 +44,7 @@
           <KioskFilter :campaign="campaign" />
         </div>
       </div>
-      <div class="relative col-span-9 h-full overflow-hidden pt-10 -mt-10 pl-6 after:content-[''] after:block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-16 after:bg-gradient-to-t after:from-red-500">
+      <div class="relative col-span-9 h-full overflow-hidden pt-10 -mt-10 pl-6 kiosk-content">
         <div v-if="campaign">
           <div class="relative mr-6">
             <KioskPostList
@@ -210,3 +210,8 @@ export default defineComponent({
   head: {},
 })
 </script>
+<style scoped>
+.kiosk-content {
+  @apply after:content-[''] after:block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-16 after:bg-gradient-to-t after:from-grey;
+}
+</style>
