@@ -44,7 +44,7 @@
           <KioskFilter :campaign="campaign" />
         </div>
       </div>
-      <div class="col-span-9 h-full overflow-scroll pt-10 -mt-10 pl-6">
+      <div class="relative col-span-9 h-full overflow-hidden pt-10 -mt-10 pl-6 kiosk-content">
         <div v-if="campaign">
           <div class="relative mr-6">
             <KioskPostList
@@ -210,3 +210,14 @@ export default defineComponent({
   head: {},
 })
 </script>
+<style scoped>
+.kiosk-content:after {
+  content: '';
+  background-image: linear-gradient(to top, rgba(46,46,46,1), rgba(46,46,46,0));
+  position: absolute;
+  height: 50px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+</style>
