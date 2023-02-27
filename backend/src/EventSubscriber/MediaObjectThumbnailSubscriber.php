@@ -21,7 +21,9 @@ class MediaObjectThumbnailSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly FFMpeg $ffmpeg,
         private readonly EntityManagerInterface $entityManager,
-    ){}
+    )
+    {
+    }
 
     /**
      * @return array[]
@@ -42,11 +44,11 @@ class MediaObjectThumbnailSubscriber implements EventSubscriberInterface
         if (!$videoMediaObject instanceof MediaObject || Request::METHOD_POST !== $method || $videoMediaObject->getType() !== FileType::VIDEO) {
             return;
         }
-        
+
         $video = $this->ffmpeg->open($videoMediaObject->getFile()->getPathname());
         $duration = $this->ffmpeg->getFFProbe()->format($video->getPathfile())->get('duration');
         $halfDuration = (int)round($duration / 2, 0, PHP_ROUND_HALF_DOWN);
-        $fileName = 'thumbnail' . time() . '.png';
+        $fileName = 'thumbnail' . time() . $videoMediaObject->getId() . '.png';
         $path = $videoMediaObject->getFile()->getPath() . '/' . $fileName;
         $video->frame(TimeCode::fromSeconds($halfDuration))->save($path);
 
