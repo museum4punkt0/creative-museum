@@ -1,6 +1,5 @@
 <template>
   <div v-if="filteredPosts">
-
     <div
       v-for="(post, index) in filteredPosts"
       v-show="showItem === index"
@@ -9,7 +8,7 @@
       class="absolute l-0 t-0 r-0 b-0 w-full"
       :class="`z-${90 - index}`"
     >
-      <CampaignResult v-if="post.type === 'result'" :campaign-title="campaign.title" :campaign-result="filteredPosts[0].post" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
+      <CampaignResult v-if="campaign && post.type === 'result'" :campaign-title="campaign.title" :campaign-result="filteredPosts[0].post" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
       <KioskPostItem
         v-else
         :post="post"
@@ -107,7 +106,6 @@ export default defineComponent({
       filteredPosts,
       animateItems
     }
-
   }
 })
 </script>

@@ -109,7 +109,7 @@ export default defineComponent({
       badges.value.forEach(function (item) {
         if (achievementIds.value.includes(item.id)) {
           badgesAndAchievements.value = [item, ...badgesAndAchievements.value]
-        } else if (!props.campaign.closed) {
+        } else if (props.campaign && !props.campaign.closed) {
           badgesAndAchievements.value = [...badgesAndAchievements.value, item]
         }
       })
