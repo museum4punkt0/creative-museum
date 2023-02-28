@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="post">
     <div class="lg:grid lg:grid-cols-12 lg:gap-4">
       <div class="lg:col-span-3 pr-5">
         <div v-if="isLargerThanLg">
@@ -16,7 +16,7 @@
             {{ campaign.title }}
           </NuxtLink>
         </div>
-        <PostItem v-if="post" :post="post" :expand-comments="true"></PostItem>
+        <PostItem v-if="post && campaign" :post="post" :expand-comments="true"></PostItem>
       </div>
       <div class="lg:col-span-3 pl-5">
         <div v-if="isLargerThanLg">
@@ -35,12 +35,12 @@ import {
   defineComponent,
   computed,
   ref,
-  onMounted,
   useRoute,
   useRouter,
   useContext,
   useStore,
-  useMeta
+  useMeta,
+  useAsync
 } from '@nuxtjs/composition-api'
 
 import { campaignApi } from '@/api/campaign'
@@ -54,8 +54,8 @@ export default defineComponent({
     const store = useStore()
     const { $config, $breakpoints, i18n } = useContext()
 
-    const post = ref(null)
     const campaign = ref(null)
+    const post = ref(null)
 
     const { fetchCampaign } = campaignApi()
     const { fetchPost } = postApi()
@@ -70,84 +70,82 @@ export default defineComponent({
       return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
     }
 
-    async function loadPost() {
-      if (route.value.params.id) {
-        await fetchPost(route.value.params.id).then(async function (response) {
-          post.value = response
-          campaign.value = await fetchCampaign(response.campaign.id)
-          if (post.value && post.value.error) {
-            router.push('/404')
-          } else {
+    async function loadCampaign() {
+      campaign.value = await fetchCampaign(post.value.campaign.id)
+      if (process.client) {
+        document.documentElement.style.setProperty(
+          '--highlight',
+          post.value.campaign.color
+        )
 
-            title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
-
-            post.value.files.forEach((item) => {
-              if (item.type === 'image') {
-                meta.value = [
-                  {
-                    hid: 'og:image',
-                    property: 'og:image',
-                    content: $config.backendURL + item.contentUrl
-                  },
-                ]
-              }
-            })
-
-            if (!meta.value[0]) {
-              meta.value = [
-                {
-                  hid: 'og:image',
-                  property: 'og:image',
-                  content: $config.baseURL + '/og_logo.png'
-                }
-              ]
-            }
-
-            if (post.value.title) {
-              meta.value.push(
-                {
-                    hid: 'og:title',
-                    property: 'og:title',
-                    content: post.value.title
-                }
-              )
-            }
-
-            if (post.value.body) {
-              meta.value.push(
-                {
-                    hid: 'og:description',
-                    property: 'og:description',
-                    content: post.value.body
-                }
-              )
-            }
-
-            store.dispatch('setCurrentCampaign', response.campaign.id)
-
-            document.documentElement.style.setProperty(
-              '--highlight',
-              response.campaign.color
-            )
-
-            document.documentElement.style.setProperty(
-              '--highlight-contrast',
-              getContrastColor(response.campaign.color)
-            )
-          }
-        })
+        document.documentElement.style.setProperty(
+          '--highlight-contrast',
+          getContrastColor(post.value.campaign.color)
+        )
       }
     }
 
-    onMounted(async () => {
-      await loadPost()
+    useAsync(async () => {
+      await fetchPost(route.value.params.id).then((response) => {
+        post.value = response
+        if (post.value && post.value.error) {
+          router.push('/404')
+        }
+        title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
+
+        post.value.files.forEach((item) => {
+          if (item.type === 'image') {
+            meta.value = [
+              {
+                hid: 'og:image',
+                property: 'og:image',
+                content: $config.backendURL + item.contentUrl
+              },
+            ]
+          }
+        })
+
+        if (!meta.value[0]) {
+          meta.value = [
+            {
+              hid: 'og:image',
+              property: 'og:image',
+              content: $config.baseURL + '/og_logo.png'
+            }
+          ]
+        }
+
+        if (post.value.title) {
+          meta.value.push(
+            {
+                hid: 'og:title',
+                property: 'og:title',
+                content: post.value.title
+            }
+          )
+        }
+
+        if (post.value.body) {
+          meta.value.push(
+            {
+                hid: 'og:description',
+                property: 'og:description',
+                content: post.value.body
+            }
+          )
+        }
+
+        store.dispatch('setCurrentCampaign', post.value.campaign.id)
+
+        loadCampaign()
+      })
     })
 
     return {
       post,
       campaign,
       isLargerThanLg,
-      loadPost,
+      loadCampaign,
       getContrastColor,
     }
   },

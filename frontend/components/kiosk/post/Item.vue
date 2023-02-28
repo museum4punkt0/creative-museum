@@ -72,13 +72,13 @@ export default defineComponent({
     const test1 = readability(bgColor, fgColor)
     const test2 = readability(bgColor, altfgColor)
 
-    function getContrastColorClass() {
-      return (test1 < test2) ? 'contrast' : 'white'
-    }
-
     const campaignContrastColor = computed(() => {
       return (test1 < test2) ? '#222329' : '#FFFFFF'
     })
+
+    function getContrastColorClass() {
+      return (test1 < test2) ? 'contrast' : 'white'
+    }
 
     const styleAttr = computed(() => {
       return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
