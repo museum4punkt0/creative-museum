@@ -60,7 +60,7 @@
     <div class="mt-2">
       <button
         v-if="reversable"
-        class="text-xs text-$highlight flex flex-row items-center justify-end cursor-pointer"
+        class="text-xs text-$highlight flex flex-row items-center justify-end cursor-pointer border border-transparent rounded-xl p-1 -mt-1 -mb-1 focus-visible:border focus-visible:border-white"
         @click.prevent="changeSortDirection"
       >
         <ReverseSortingIcon class="h-4 w-auto inline-block mr-2 transform-gpu duration-200" :class="currentSortingDirection === 'asc' ? 'rotate-180' : ''" />

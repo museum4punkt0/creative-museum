@@ -8,7 +8,7 @@
           (campaign && badgesAndAchievements.length > 2) ||
           (user && user.achievements.length > 2)
         "
-        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
+        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap border border-transparent rounded-xl p-1 -mt-1 -mb-1 focus-visible:border focus-visible:border-white"
         @click.prevent="showMoreBadges = !showMoreBadges"
       >
         <ArrowIcon
