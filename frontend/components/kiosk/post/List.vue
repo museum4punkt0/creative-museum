@@ -39,11 +39,11 @@ export default defineComponent({
     },
     timeout: {
       type: Number,
-      default: 1000
+      default: 5000
     },
     progress: {
       type: Number,
-      default: 1000
+      default: 0
     },
     source: {
       type: String,
