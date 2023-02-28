@@ -3,13 +3,7 @@
     <div class="page-header md:hidden">
       <button type="button" class="back-btn" @click.prevent="backButton">
         {{
-          $auth.loggedIn
-            ? $t('user.profile.self.headline', {
-                username: `@${$auth.user.username}`,
-              })
-            : userData && !userData.deleted
-            ? $t('user.profile.headline')
-            : ''
+          $t('prev')
         }}
       </button>
     </div>

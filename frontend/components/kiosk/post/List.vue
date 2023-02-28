@@ -1,6 +1,5 @@
 <template>
   <div v-if="filteredPosts">
-
     <div
       v-for="(post, index) in filteredPosts"
       v-show="showItem === index"
@@ -9,7 +8,7 @@
       class="absolute l-0 t-0 r-0 b-0 w-full"
       :class="`z-${90 - index}`"
     >
-      <CampaignResult v-if="post.type === 'result'" :campaign-title="campaign.title" :campaign-result="filteredPosts[0].post" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
+      <CampaignResult v-if="campaign && post.type === 'result'" :campaign-title="campaign.title" :campaign-result="filteredPosts[0].post" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
       <KioskPostItem
         v-else
         :post="post"
@@ -39,11 +38,11 @@ export default defineComponent({
     },
     timeout: {
       type: Number,
-      default: 1000
+      default: 5000
     },
     progress: {
       type: Number,
-      default: 1000
+      default: 0
     },
     source: {
       type: String,
@@ -54,7 +53,6 @@ export default defineComponent({
     const items = ref(null)
     const showItem = ref(0)
     const progressRef = toRef(props, 'progress')
-    let stepDuration = 0
 
     watch(progressRef, (newProgress) => {
       if (newProgress === 0) {
@@ -64,7 +62,7 @@ export default defineComponent({
 
     const filteredPosts = computed(() => {
       const items = []
-      if (props.posts[0]) {
+      if (props.posts[0] && props.posts[0].length) {
         items[0] = {
           type: 'result',
           post: props.posts[0]
@@ -84,14 +82,14 @@ export default defineComponent({
 
       if (items.value && items.value.length > 1) {
 
-        stepDuration = items.value.length * props.timeout
-
-        context.emit('updateProgress', { progress : ( 1 / items.value.length) * 100, duration: props.timeout })
+        context.emit('updateProgress', { progress : ( 1 / items.value.length) * 100 })
+        context.emit('initItems', { itemCount: items.value.length })
 
         items.value.forEach((_, index) => {
           setTimeout(() => {
             showItem.value = index + 1
-              context.emit('updateProgress', { progress : ((index + 2) / items.value.length) * 100, duration: props.timeout })
+            context.emit('initItems', { itemCount: items.value.length })
+            context.emit('updateProgress', { progress : ((index + 2) / items.value.length) * 100 })
           }, props.timeout * (index + 1))
         })
       }
@@ -106,10 +104,8 @@ export default defineComponent({
       progressRef,
       showItem,
       filteredPosts,
-      stepDuration,
       animateItems
     }
-
   }
 })
 </script>

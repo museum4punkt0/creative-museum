@@ -18,7 +18,7 @@
             <img
               v-if="files.length"
               :src="typeof files[0] === 'string' ? files[0] : files[0].blob"
-              class="object-center w-32 h-32"
+              class="object-center object-cover w-32 h-32"
             />
           </div>
           <file-upload

@@ -8,9 +8,12 @@
     </div>
     <div class="lg:col-span-6 lg:pr-10 lg:order-2">
       <div class="flex flex-row content-between">
-        <h2 class="text-2xl">
+        <h2 class="text-2xl md:hidden">
           {{ $t('user.profile.activities.headline') }}
         </h2>
+        <button type="button" class="text-2xl mb-6 back-btn hidden md:block" @click.prevent="backButton">
+          {{ $t('user.profile.activities.headline') }}
+        </button>
       </div>
       <div class="filter flex flex-row flex-wrap mt-6">
         <button
@@ -156,15 +159,18 @@ export default defineComponent({
       playlistPosts.value = await fetchPlaylist(showPlaylist.value, 1)
     }
 
-    function backButton() {}
+    function backButton() {
+      history.back()
+    }
+
     return {
       user,
-      backButton,
       mode,
       showPlaylist,
       showPosts,
       showPlaylists,
       loadPlaylist,
+      backButton,
       posts,
       playlists,
       playlistPosts,

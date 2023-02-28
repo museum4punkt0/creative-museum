@@ -6,6 +6,7 @@
     <style type="text/css">
       body {
         --highlight: {{ campaign.color }};
+        --highlight-contrast: {{ campaignContrastColor }};
       }
     </style>
     <div class="p-10 grid grid-cols-12 w-full">
@@ -44,7 +45,7 @@
           <KioskFilter :campaign="campaign" />
         </div>
       </div>
-      <div class="col-span-9 h-full overflow-scroll pt-10 -mt-10 pl-6">
+      <div class="relative col-span-9 h-full overflow-hidden pt-10 -mt-10 pl-6 kiosk-content">
         <div v-if="campaign">
           <div class="relative mr-6">
             <KioskPostList
@@ -55,6 +56,7 @@
               :timeout="timeout"
               :progress="progress"
               @updateProgress="updateProgress"
+              @initItems="initItems"
             />
             <UtilitiesLoadingIndicator
               v-else-if="!posts"
@@ -76,8 +78,9 @@
         <div class="box-shadow-inset rounded-xl ml-6 mr-6 relative">
           <div
             class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-linear duration-200 max-w-full"
-            :style="`width: ${progress}%;`"
+            :style="`width: ${reset ? '0' : progress}%; transition-duration: ${reset ? '0' : timeout}ms`"
           />
+          <span v-for="index in itemCount" :key="index+0" class="absolute rounded-full w-1 h-1 bg-white/30 block top-2 transform -translate-x-1" :class="index === 1 ? 'hidden' : ''" :style="`left: ${((index - 1) / itemCount) * 100}%`" />
         </div>
       </div>
     </div>
@@ -97,6 +100,7 @@ import {
   onMounted,
   useMeta,
 } from '@nuxtjs/composition-api'
+import { TinyColor, readability } from '@ctrl/tinycolor'
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
 import Logo from '@/assets/images/logo.svg?inline'
@@ -118,34 +122,61 @@ export default defineComponent({
     const campaign = ref(null)
     const campaignResult = ref(null)
     const step = ref(0)
+    const reset = ref(false)
     const nextSorting = ref('votestotal')
-    const itemCount = ref(0)
-    const duration = ref(0)
     const progress = ref(0)
-
+    const itemCount = ref(0)
     const timeout = 5000
 
     const newPost = computed(() => store.state.newPostOnCampaign)
 
+    const campaignContrastColor = ref('#222329')
+
+    function checkCampaignContrast() {
+      const bgColor = new TinyColor(campaign.value.color)
+      const fgColor = new TinyColor('#FFFFFF')
+      const altfgColor = new TinyColor('#222329')
+
+      const test1 = readability(bgColor, fgColor)
+      const test2 = readability(bgColor, altfgColor)
+      campaignContrastColor.value = (test1 < test2) ? '#222329' : '#FFFFFF'
+    }
+
     watch(progress, (newProgress) => {
       if (Math.floor(newProgress) === 100) {
-        if (step.value === 1) {
-          nextSorting.value = 'controversial'
-        }
         setTimeout(() => {
+          if (step.value === 0) {
+            nextSorting.value = 'votestotal'
+          }
+
+          if (step.value === 1) {
+            nextSorting.value = 'controversial'
+          }
+
+          if (step.value === 2) {
+            nextSorting.value = 'date'
+          }
+
           store.dispatch('setCurrentSortingWithDirection', [
             nextSorting.value,
             'desc',
           ])
+
+          if (step.value < 2) {
+            step.value++
+          } else {
+            step.value = 0
+          }
+          reset.value = true
+
+          setTimeout(() => {
+            reset.value = false
+          }, 1)
+
         }, timeout)
 
-        if (step.value === 2) {
-          step.value = 0
-          nextSorting.value = 'date'
-        } else {
-          step.value++
-        }
       }
+
     })
 
     const sortingKey = computed(() => {
@@ -180,13 +211,17 @@ export default defineComponent({
           campaignResult.value = await fetchCampaignResult(
             route.value.params.id
           )
+          checkCampaignContrast()
           title.value = campaign.value.title + ' | ' + i18n.t('pageTitle')
         }
       }
     }
 
+    function initItems(emitValue) {
+      itemCount.value = emitValue.itemCount
+    }
+
     function updateProgress(emitValue) {
-      duration.value = emitValue.duration
       progress.value = emitValue.progress
     }
 
@@ -195,6 +230,7 @@ export default defineComponent({
     })
 
     return {
+      step,
       campaign,
       posts,
       campaignResult,
@@ -202,11 +238,18 @@ export default defineComponent({
       progress,
       timeout,
       nextSorting,
+      reset,
+      campaignContrastColor,
       itemCount,
-      duration,
-      updateProgress
+      updateProgress,
+      initItems
     }
   },
   head: {},
 })
 </script>
+<style scoped>
+.kiosk-content {
+  @apply after:content-[''] after:block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-16 after:bg-gradient-to-t after:from-grey;
+}
+</style>

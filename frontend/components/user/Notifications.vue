@@ -6,7 +6,7 @@
         v-if="
           (notifications.length > 3)
         "
-        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap"
+        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap border border-transparent rounded-xl p-1 -mt-1 -mb-1 focus-visible:border focus-visible:border-white"
         :aria-label="$t('notifications.showAll')"
         @click.prevent="showAllNotifications = !showAllNotifications"
       >

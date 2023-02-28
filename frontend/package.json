@@ -37,6 +37,7 @@
     "nuxt": "^2.15.8",
     "nuxt-breakpoints": "^1.1.9",
     "nuxt-i18n": "^6.28.1",
+    "nuxt-video-player": "^1.0.17",
     "tippy.js": "^6.3.7",
     "v-click-outside": "^3.2.0",
     "v-tooltip": "^2.1.3",

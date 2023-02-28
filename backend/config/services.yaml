@@ -151,3 +151,7 @@ services:
     App\EventSubscriber\PostReportedSubscriber:
         arguments:
             - '%editorMail%'
+
+    App\EventSubscriber\MediaObjectThumbnailSubscriber:
+        arguments:
+            $ffmpeg: '@dubture_ffmpeg.ffmpeg'
