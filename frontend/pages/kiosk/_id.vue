@@ -80,7 +80,7 @@
             class="relative z-10 bg-$highlight rounded-xl h-5 text-center transition-all ease-linear duration-200 max-w-full"
             :style="`width: ${reset ? '0' : progress}%; transition-duration: ${reset ? '0' : timeout}ms`"
           />
-          <span v-for="index in itemCount" :key="index+0" class="absolute rounded-full w-5 h-5 bg-white/10 block top-0 transform -translate-x-5" :class="index === 1 ? 'hidden' : ''" :style="`left: ${((index - 1) / itemCount) * 100}%`" />
+          <span v-for="index in itemCount" :key="index+0" class="absolute rounded-full w-1 h-1 bg-white/30 block top-2 transform -translate-x-1" :class="index === 1 ? 'hidden' : ''" :style="`left: ${((index - 1) / itemCount) * 100}%`" />
         </div>
       </div>
     </div>
