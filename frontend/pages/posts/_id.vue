@@ -88,9 +88,11 @@ export default defineComponent({
     useAsync(async () => {
       await fetchPost(route.value.params.id).then((response) => {
         post.value = response
+
         if (post.value && post.value.error) {
           router.push('/404')
         }
+
         title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
 
         post.value.files.forEach((item) => {
@@ -100,6 +102,14 @@ export default defineComponent({
                 hid: 'og:image',
                 property: 'og:image',
                 content: $config.backendURL + item.contentUrl
+              },
+            ]
+          } else if (item.type === 'video') {
+            meta.value = [
+              {
+                hid: 'og:image',
+                property: 'og:image',
+                content: $config.backendURL + item.thumbnail.contentUrl
               },
             ]
           }
@@ -138,6 +148,7 @@ export default defineComponent({
         store.dispatch('setCurrentCampaign', post.value.campaign.id)
 
         loadCampaign()
+
       })
     })
 
