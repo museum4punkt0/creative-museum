@@ -3,7 +3,7 @@
     <div class="page-header md:hidden">
       <button type="button" class="back-btn" @click.prevent="backButton">
         {{
-          $t('prev')
+          $t('profile')
         }}
       </button>
     </div>
