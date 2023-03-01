@@ -1,7 +1,7 @@
 
 <style lang="postcss" scoped>
 div /deep/ .content {
-  h1 {
+  h1 a {
     @apply font-medium text-3xl my-6 relative pl-10 block;
     &:before {
       @apply content-[''] block absolute w-6 h-[3px] bg-white left-0 top-1/2 transform -translate-y-[-3px];
