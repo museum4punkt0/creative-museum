@@ -22,6 +22,13 @@ export const userApi = () => {
     return res
   }
 
+  async function fetchUserMemberships(userId) {
+    const res = await $api.get(
+      `campaign_members?user=${userId}&campaign.published=1&campaign.active=1`
+    )
+    return res
+  }
+
   async function fetchUserInfoByCampaign(campaignId) {
     const res = await $api.get(
       `campaign_members?user=${$auth.user.id}&campaign=${campaignId}`
@@ -84,6 +91,7 @@ export const userApi = () => {
     supplyUsername,
     fetchUser,
     fetchUserInfoByCampaign,
+    fetchUserMemberships,
     updateUser,
     deleteUser,
     searchUser,
