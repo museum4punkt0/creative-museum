@@ -22,11 +22,11 @@ export const userApi = () => {
     return res
   }
 
-  async function fetchUserInfoByCampaign(campaignId) {
+  async function fetchUserMemberships(userId) {
     const res = await $api.get(
-      `campaign_members?user=${$auth.user.id}&campaign=${campaignId}`
+      `campaign_members?user=${userId}&campaign.published=1&campaign.active=1`
     )
-    return res[0]
+    return res
   }
 
   async function searchUser(searchString) {
@@ -83,7 +83,7 @@ export const userApi = () => {
     finishTutorial,
     supplyUsername,
     fetchUser,
-    fetchUserInfoByCampaign,
+    fetchUserMemberships,
     updateUser,
     deleteUser,
     searchUser,

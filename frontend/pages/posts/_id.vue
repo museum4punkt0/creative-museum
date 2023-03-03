@@ -91,63 +91,62 @@ export default defineComponent({
 
         if (post.value && post.value.error) {
           router.push('/404')
-        }
+        } else {
+          title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
+          post.value.files.forEach((item) => {
+            if (item.type === 'image') {
+              meta.value = [
+                {
+                  hid: 'og:image',
+                  property: 'og:image',
+                  content: $config.backendURL + item.contentUrl
+                },
+              ]
+            } else if (item.type === 'video') {
+              meta.value = [
+                {
+                  hid: 'og:image',
+                  property: 'og:image',
+                  content: $config.backendURL + item.thumbnail.contentUrl
+                },
+              ]
+            }
+          })
 
-        title.value = i18n.t('post.details') + ' | ' + i18n.t('pageTitle')
-
-        post.value.files.forEach((item) => {
-          if (item.type === 'image') {
+          if (!meta.value[0]) {
             meta.value = [
               {
                 hid: 'og:image',
                 property: 'og:image',
-                content: $config.backendURL + item.contentUrl
-              },
-            ]
-          } else if (item.type === 'video') {
-            meta.value = [
-              {
-                hid: 'og:image',
-                property: 'og:image',
-                content: $config.backendURL + item.thumbnail.contentUrl
-              },
+                content: $config.baseURL + '/og_logo.png'
+              }
             ]
           }
-        })
 
-        if (!meta.value[0]) {
-          meta.value = [
-            {
-              hid: 'og:image',
-              property: 'og:image',
-              content: $config.baseURL + '/og_logo.png'
-            }
-          ]
+          if (post.value.title) {
+            meta.value.push(
+              {
+                  hid: 'og:title',
+                  property: 'og:title',
+                  content: post.value.title
+              }
+            )
+          }
+
+          if (post.value.body) {
+            meta.value.push(
+              {
+                  hid: 'og:description',
+                  property: 'og:description',
+                  content: post.value.body
+              }
+            )
+          }
+
+          store.dispatch('setCurrentCampaign', post.value.campaign.id)
+
+          loadCampaign()
         }
-
-        if (post.value.title) {
-          meta.value.push(
-            {
-                hid: 'og:title',
-                property: 'og:title',
-                content: post.value.title
-            }
-          )
-        }
-
-        if (post.value.body) {
-          meta.value.push(
-            {
-                hid: 'og:description',
-                property: 'og:description',
-                content: post.value.body
-            }
-          )
-        }
-
-        store.dispatch('setCurrentCampaign', post.value.campaign.id)
-
-        loadCampaign()
 
       })
     })

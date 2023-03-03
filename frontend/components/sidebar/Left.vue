@@ -3,7 +3,7 @@
     <div class="page-header md:hidden">
       <button type="button" class="back-btn" @click.prevent="backButton">
         {{
-          $t('profile')
+          $t('profile.title')
         }}
       </button>
     </div>
@@ -37,10 +37,10 @@
         {{ $t('user.editProfile') }}</button
       >
 
-      <div v-if="userData.memberships.length">
+      <div v-if="memberships">
         <h2 class="font-bold mb-3 mt-12">{{ $t('score') }}</h2>
         <ul>
-          <li v-for="(membership, key) in userData.memberships" :key="key" class="mb-4">
+          <li v-for="(membership, key) in memberships" :key="key" class="mb-4">
             <NuxtLink
               :to="localePath('/campaigns/' + membership.campaign.id)"
               class="self-stretch md:self-start mt-4"
@@ -75,7 +75,10 @@ import {
   useContext,
   computed,
   useStore,
+  onMounted,
+  ref
 } from '@nuxtjs/composition-api'
+import { userApi } from '@/api/user'
 
 export default defineComponent({
   props: {
@@ -87,6 +90,9 @@ export default defineComponent({
   setup(props) {
     const { $auth, $config, $breakpoints } = useContext()
     const store = useStore()
+    const memberships = ref(null)
+
+    const { fetchUserMemberships } = userApi()
 
     const isLargerThanLg = computed(() => {
       return $breakpoints.lLg
@@ -110,8 +116,17 @@ export default defineComponent({
       history.back()
     }
 
+    async function loadUserMemberships() {
+      memberships.value = await fetchUserMemberships(userData.value.id)
+    }
+
+    onMounted(() => {
+      loadUserMemberships()
+    })
+
     return {
       userData,
+      memberships,
       isLargerThanLg,
       backendURL: $config.backendURL,
       showProfileUpdate,

@@ -17,10 +17,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignMemberRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact', 'campaign' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact', 'campaign' => 'exact', 'campaign.active' => 'exact', 'campaign.published' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
-        'get',
+        'get' => ['normalization_context' => ['groups' => 'memberships:read']],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.user == user"],
     ],
     itemOperations: [
@@ -37,20 +37,20 @@ class CampaignMember
 
     #[ORM\ManyToOne(targetEntity: Campaign::class)]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['user:me:read', 'users:read'])]
+    #[Groups(['user:me:read', 'users:read', 'memberships:read'])]
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read', 'users:read','campaign:result:get'])]
+    #[Groups(['user:me:read', 'users:read','campaign:result:get', 'memberships:read'])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['campaign:result:get'])]
+    #[Groups(['campaign:result:get', 'memberships:read'])]
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['user:me:read', 'users:read','campaign:result:get'])]
+    #[Groups(['user:me:read', 'users:read','campaign:result:get', 'memberships:read'])]
     private $rewardPoints = 0;
 
     public function getId(): ?int
