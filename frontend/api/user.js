@@ -29,13 +29,6 @@ export const userApi = () => {
     return res
   }
 
-  async function fetchUserInfoByCampaign(campaignId) {
-    const res = await $api.get(
-      `campaign_members?user=${$auth.user.id}&campaign=${campaignId}`
-    )
-    return res[0]
-  }
-
   async function searchUser(searchString) {
     return await $api.get(
       `users?and[or][][fullName]=${searchString}&and[or][][email]=${searchString}&and[or][][username]=${searchString}&and[deleted]=0`
@@ -90,7 +83,6 @@ export const userApi = () => {
     finishTutorial,
     supplyUsername,
     fetchUser,
-    fetchUserInfoByCampaign,
     fetchUserMemberships,
     updateUser,
     deleteUser,

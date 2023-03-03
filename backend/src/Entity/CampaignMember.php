@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CampaignMemberRepository::class)]
-#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact', 'campaign' => 'exact', 'campaign.active' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['user' => 'exact', 'campaign' => 'exact', 'campaign.active' => 'exact', 'campaign.published' => 'exact'])]
 #[ApiResource(
     collectionOperations: [
         'get' => ['normalization_context' => ['groups' => 'memberships:read']],
