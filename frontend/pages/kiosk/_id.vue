@@ -9,7 +9,7 @@
         --highlight-contrast: {{ campaignContrastColor }};
       }
     </style>
-    <div class="p-10 grid grid-cols-12 w-full">
+    <div class="p-10 pb-0 grid grid-cols-12 w-full">
       <div class="col-span-3">
         <div class="text-$highlight">
           <Logo
@@ -20,19 +20,17 @@
       </div>
       <div class="col-span-9">
         <div v-if="campaign">
-          <div class="mb-6">
-            <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
-            <p class="text-lg">
-              <span class="capitalize">{{ $t('till') }}</span>
-              {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
-            </p>
-          </div>
+          <h1 class="page-header lg:mt-0 mb-1">{{ campaign.title }}</h1>
+          <p class="text-lg">
+            <span class="capitalize">{{ $t('till') }}</span>
+            {{ $dayjs(campaign.stop).format($t('dateFormat')) }}
+          </p>
         </div>
       </div>
     </div>
     <div class="grid grid-cols-12 w-full h-full flex flex-grow-1">
       <div class="col-span-3">
-        <div class="pl-10 pr-16">
+        <div class="pl-24 pr-16">
           <h2 class="text-white text-xl mb-3">{{ $t('kiosk.qrHeadline') }}</h2>
           <div class="box-shadow-inset w-full p-4 rounded-lg mb-10">
             <qr-code
@@ -45,7 +43,7 @@
           <KioskFilter :campaign="campaign" />
         </div>
       </div>
-      <div class="relative col-span-9 h-full overflow-hidden pt-10 -mt-10 pl-6 kiosk-content">
+      <div class="relative col-span-9 h-full overflow-hidden pl-6 kiosk-content">
         <div v-if="campaign">
           <div class="relative mr-6">
             <KioskPostList
@@ -73,7 +71,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-12 py-10 bg-grey">
+    <div class="grid grid-cols-12 pt-4 pb-10 bg-grey">
       <div class="col-span-9 col-start-4">
         <div class="box-shadow-inset rounded-xl ml-6 mr-6 relative">
           <div
@@ -248,8 +246,3 @@ export default defineComponent({
   head: {},
 })
 </script>
-<style scoped>
-.kiosk-content {
-  @apply after:content-[''] after:block after:absolute after:bottom-0 after:left-0 after:right-0 after:h-16 after:bg-gradient-to-t after:from-grey;
-}
-</style>
