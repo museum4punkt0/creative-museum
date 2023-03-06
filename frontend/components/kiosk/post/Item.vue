@@ -2,7 +2,7 @@
   <div :style="styleAttr">
     <div
       v-if="post.type !== 'system'"
-      class="box-shadow"
+      class="box-shadow max-h-[calc(100vh-15rem)] overflow-hidden"
       :class="[
         post.type === 'playlist' ? `highlight-bg text-$highlight-contrast` : 'bg-grey',
       ]"

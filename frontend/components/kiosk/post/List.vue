@@ -2,11 +2,10 @@
   <div v-if="filteredPosts">
     <div
       v-for="(post, index) in filteredPosts"
-      v-show="showItem === index"
       :key="index"
       ref="items"
-      class="absolute l-0 t-0 r-0 b-0 w-full"
-      :class="`z-${90 - index}`"
+      class="absolute l-0 t-0 r-0 b-0 pt-4 w-full max-w-3xl transform-gpu transition-all"
+      :style="getItemStyles(index)"
     >
       <CampaignResult v-if="campaign && post.type === 'result'" :campaign-title="campaign.title" :campaign-result="filteredPosts[0].post" :campaign-color="campaign.color" :campaign-closed="campaign.stop" class="mt-0" />
       <KioskPostItem
@@ -48,6 +47,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    offset: {
+      type: Number,
+      default: 6
+    }
   },
   setup(props, context) {
     const items = ref(null)
@@ -70,12 +73,27 @@ export default defineComponent({
       }
       props.posts[1].forEach((item) => {
         if (item.type !== 'system') {
-          items.push(item)
+          if (items.length < 5) {
+            items.push(item)
+          }
         }
       })
       return items
 
     })
+
+    const getItemStyles = (index) => {
+      if (items.value) {
+
+        const translateX = showItem.value === index ? 0 : index > showItem.value ? (index - showItem.value) * props.offset : (items.value.length - index - 1) * props.offset;
+        const zIndex = showItem.value === index ? 100 : (index > showItem.value ? 100 - index : index);
+
+        return {
+          'transform': `translateX(${translateX}rem)`,
+          'z-index': zIndex
+        };
+      }
+    };
 
     function animateItems() {
       showItem.value = 0
@@ -104,7 +122,8 @@ export default defineComponent({
       progressRef,
       showItem,
       filteredPosts,
-      animateItems
+      animateItems,
+      getItemStyles
     }
   }
 })
