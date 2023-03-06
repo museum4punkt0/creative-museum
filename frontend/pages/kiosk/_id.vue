@@ -169,7 +169,7 @@ export default defineComponent({
 
           setTimeout(() => {
             reset.value = false
-          }, 1)
+          }, 100)
 
         }, timeout)
 
