@@ -180,7 +180,7 @@ export default defineComponent({
 
           refetchInterval = setInterval(() => {
             refetchPosts()
-          }, 2500)
+          }, 10000)
         })
 
         onUnmounted(function() {
