@@ -11,9 +11,9 @@
         <h2 class="text-2xl md:hidden">
           {{ $t('user.profile.self.activities.headline') }}
         </h2>
-        <button type="button" class="text-2xl mb-6 back-btn hidden md:block" @click.prevent="backButton">
+        <UtilitiesBackButton class="hidden md:block">
           {{ $t('user.profile.self.activities.headline') }}
-        </button>
+        </UtilitiesBackButton>
       </div>
       <div class="filter flex flex-row flex-wrap mt-6">
         <button
@@ -235,9 +235,6 @@ export default defineComponent({
       })
     }
 
-    function backButton() {
-      history.back()
-    }
     return {
       mode,
       showPlaylist,
@@ -249,7 +246,6 @@ export default defineComponent({
       refetchBookmarks,
       onDeletePlaylist,
       confirmDeletePlaylist,
-      backButton,
       posts,
       playlists,
       playlistPosts,

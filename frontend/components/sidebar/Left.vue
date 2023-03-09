@@ -1,11 +1,7 @@
 <template>
   <div>
     <div class="page-header md:hidden">
-      <button type="button" class="back-btn" @click.prevent="backButton">
-        {{
-          $t('profile.title')
-        }}
-      </button>
+      <UtilitiesBackButton>{{ $t('profile.title') }}</UtilitiesBackButton>
     </div>
 
     <template v-if="$auth.loggedIn || userData">
@@ -112,10 +108,6 @@ export default defineComponent({
       store.dispatch('showProfileUpdate')
     }
 
-    function backButton() {
-      history.back()
-    }
-
     async function loadUserMemberships() {
       memberships.value = await fetchUserMemberships(userData.value.id)
     }
@@ -130,7 +122,6 @@ export default defineComponent({
       isLargerThanLg,
       backendURL: $config.backendURL,
       showProfileUpdate,
-      backButton,
     }
   },
 })
