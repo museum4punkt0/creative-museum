@@ -56,7 +56,7 @@ class HandleNotifyAboutLoginPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("1662032913")
+            ->setText('1662032913')
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setScorePoints($points);

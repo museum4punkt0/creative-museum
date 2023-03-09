@@ -55,7 +55,7 @@ class HandleNotifyUserAboutReportingSuccess implements MessageHandlerInterface
         $reporterNotification
             ->setReceiver($reporter)
             ->setPost($post)
-            ->setText("1662033562")
+            ->setText('1662033562')
             ->setSilent(NotificationType::NONE === $reporter->getNotificationSettings());
         $this->entityManager->persist($reporterNotification);
 

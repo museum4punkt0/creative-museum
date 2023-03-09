@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\Award;
@@ -22,6 +29,7 @@ class AwardService
     public function getAvailableByCampaign(Campaign $campaign, User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
+
         return $qb->select('award')
             ->from(Award::class, 'award')
             ->andWhere(
@@ -54,6 +62,7 @@ class AwardService
     public function getAllAvailable(User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
+
         return $qb->select('award')
             ->from(Award::class, 'award')
             ->andWhere(
@@ -95,6 +104,7 @@ class AwardService
     public function getAvailableSoonByCampaign(Campaign $campaign, User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
+
         return $qb->select('award')
             ->from(Award::class, 'award')
             ->andWhere(
@@ -128,6 +138,7 @@ class AwardService
     public function getAllAvailableSoon(User $user)
     {
         $qb = $this->entityManager->createQueryBuilder();
+
         return $qb->select('award')
             ->from(Award::class, 'award')
             ->andWhere(

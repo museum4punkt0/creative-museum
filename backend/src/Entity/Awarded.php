@@ -26,7 +26,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     order: ['id' => 'DESC'],
     collectionOperations: [
-        'get' => ['normalization_context' => ['groups' => ['awarded:read']],],
+        'get' => ['normalization_context' => ['groups' => ['awarded:read']]],
         'post' => ['security_post_denormalize' => "is_granted('ROLE_ADMIN') or object.giver == user"],
     ],
     itemOperations: [
@@ -41,7 +41,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'winner' => 'exact',
         'giver' => 'exact',
         'award' => 'exact',
-        'award.campaign' => 'exact'
+        'award.campaign' => 'exact',
     ]
 )]
 #[ORM\HasLifecycleCallbacks]

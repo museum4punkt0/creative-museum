@@ -68,7 +68,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'username' => 'partial',
         'fullName' => 'partial',
         'email' => 'partial',
-        'deleted' => 'exact'
+        'deleted' => 'exact',
     ]
 )]
 #[ApiFilter(FilterLogic::class)]
@@ -94,7 +94,7 @@ class User implements UserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Post::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $posts;
 
-    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class,cascade: ['remove'] ,orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Playlist::class, cascade: ['remove'], orphanRemoval: true)]
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $playlists;
 
@@ -114,7 +114,7 @@ class User implements UserInterface
     #[Groups(['user:me:read'])]
     private int $score = 0;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class,cascade: ['remove'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CampaignMember::class, cascade: ['remove'], orphanRemoval: true)]
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $memberships;
 
@@ -123,7 +123,7 @@ class User implements UserInterface
     #[Groups(['user:me:read', 'users:read'])]
     private Collection $achievements;
 
-    #[ORM\ManyToMany(targetEntity: Post::class,cascade: ['remove'])]
+    #[ORM\ManyToMany(targetEntity: Post::class, cascade: ['remove'])]
     #[ORM\JoinTable(name: 'user_bookmark')]
     #[ApiSubresource(maxDepth: 1)]
     private Collection $bookmarks;
@@ -137,7 +137,7 @@ class User implements UserInterface
     private string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read', 'notifications:read', 'campaign:result:get','awarded:read'])]
+    #[Groups(['user:me:read', 'write:me', 'post:read', 'users:read', 'playlist:read', 'notifications:read', 'campaign:result:get', 'awarded:read'])]
     private ?string $username;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -162,7 +162,7 @@ class User implements UserInterface
     private $fullName;
 
     #[ORM\Column(type: 'boolean')]
-    #[Groups(['user:me:read', 'write:me', 'users:read', 'post:read', 'notifications:read','campaign:result:get'])]
+    #[Groups(['user:me:read', 'write:me', 'users:read', 'post:read', 'notifications:read', 'campaign:result:get'])]
     private $deleted = 0;
 
     #[Groups(['write:me', 'user:me:read', 'users:read', 'post:read'])]
@@ -189,7 +189,7 @@ class User implements UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string)$this->uuid;
+        return (string) $this->uuid;
     }
 
     /**
@@ -460,6 +460,7 @@ class User implements UserInterface
     public static function createWithEmail(string $email)
     {
         $user = new User();
+
         return $user->setEmail($email);
     }
 
@@ -508,7 +509,7 @@ class User implements UserInterface
     #[ORM\PreUpdate]
     public function setFullName(): self
     {
-        $this->fullName = $this->getFirstName() . ' ' . $this->getLastName();
+        $this->fullName = $this->getFirstName().' '.$this->getLastName();
 
         return $this;
     }

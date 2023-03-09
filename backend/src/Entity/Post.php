@@ -34,7 +34,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Secured resource.
  *
  * @PlaylistType
+ *
  * @PollType
+ *
  * @\App\Validator\Constraints\PostBodyLength
  * @\App\Validator\Constraints\CampaignInactive
  */
@@ -250,10 +252,10 @@ class Post
     #[Groups(['post:read'])]
     private $postMetadata;
 
-    #[ORM\OneToMany(mappedBy: 'post',targetEntity: Vote::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: Vote::class, cascade: ['remove'])]
     private $votes;
 
-    #[ORM\OneToMany(mappedBy: 'post',targetEntity: PostFeedback::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PostFeedback::class, cascade: ['remove'])]
     private $feedbacks;
 
     public function __construct()
@@ -632,9 +634,6 @@ class Post
         return $this->myVote;
     }
 
-    /**
-     * @return Post
-     */
     public function setMyVote(Vote $myVote): self
     {
         $this->myVote = $myVote;
@@ -650,13 +649,10 @@ class Post
         return $this->myFeedback;
     }
 
-    /**
-     * @param CampaignFeedbackOption $myFeedback
-     * @return Post
-     */
     public function setMyFeedback(CampaignFeedbackOption $myFeedback): self
     {
         $this->myFeedback = $myFeedback;
+
         return $this;
     }
 

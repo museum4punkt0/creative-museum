@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\MessageHandler;
 
 use App\Entity\Awarded;
@@ -45,7 +52,7 @@ class HandleNotifyAboutNewAwarded implements MessageHandlerInterface
             ->setReceiver($awarded->getWinner())
             ->setAwardGiver($awarded->getGiver())
             ->setCampaign($awarded->getAward()->getCampaign())
-            ->setText("1662033414")
+            ->setText('1662033414')
             ->setSilent(NotificationType::NONE === $awarded->getWinner()->getNotificationSettings())
             ->setAward($awarded->getAward());
 
@@ -55,7 +62,7 @@ class HandleNotifyAboutNewAwarded implements MessageHandlerInterface
         $giverNotification
             ->setReceiver($awarded->getGiver())
             ->setAwardWinner($awarded->getWinner())
-            ->setText("1662114293")
+            ->setText('1662114293')
             ->setCampaign($awarded->getAward()->getCampaign())
             ->setSilent(NotificationType::NONE === $awarded->getGiver()->getNotificationSettings())
             ->setAward($awarded->getAward());

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventListener;
 
 use App\Entity\Awarded;
@@ -10,15 +17,14 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-
 class UserDeleteListener
 {
-    public function __construct
-    (
+    public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly TokenStorageInterface $tokenStorage,
         private readonly RequestStack $requestStack
-    ){}
+    ) {
+    }
 
     public function preRemove(User $user, LifecycleEventArgs $event): void
     {

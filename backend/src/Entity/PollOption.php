@@ -11,12 +11,11 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\PollOptionRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\Collection;
-
 
 #[ORM\Entity(repositoryClass: PollOptionRepository::class)]
 #[ApiResource(
@@ -51,7 +50,7 @@ class PollOption
     #[Groups(['post:read'])]
     private $myChoice = false;
 
-    #[ORM\OneToMany(mappedBy: 'pollOption',targetEntity: PollOptionChoice::class, cascade: ['remove'])]
+    #[ORM\OneToMany(mappedBy: 'pollOption', targetEntity: PollOptionChoice::class, cascade: ['remove'])]
     private $choices;
 
     public function getId(): ?int
@@ -82,7 +81,6 @@ class PollOption
 
         return $this;
     }
-
 
     public function getVotes(): int
     {

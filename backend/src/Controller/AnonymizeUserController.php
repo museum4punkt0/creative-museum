@@ -1,22 +1,29 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Request;
 
 class AnonymizeUserController extends AbstractController
 {
-    public function __construct
-    (
+    public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly Security               $security,
+        private readonly Security $security,
         private readonly TokenStorageInterface $tokenStorage
-    ){}
+    ) {
+    }
 
     public function __invoke(Request $request)
     {

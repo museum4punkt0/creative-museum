@@ -124,7 +124,7 @@ class IdpAuthenticator extends AbstractAuthenticator
                     return $existingUser;
                 }
 
-                if ($token['sub'] === '' && in_array('api', $token['scopes'])) {
+                if ('' === $token['sub'] && in_array('api', $token['scopes'])) {
                     $apiUser = new User();
                     $apiUser->setUuid(Uuid::v6());
                     $apiUser->setRoles(['ROLE_ADMIN', 'ROLE_USER']);

@@ -42,7 +42,6 @@ class PostBodyLengthValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-
         if (!$value instanceof Post) {
             return;
         }
@@ -50,7 +49,7 @@ class PostBodyLengthValidator extends ConstraintValidator
 
         switch ($value->getPostType()) {
             case PostType::TEXT:
-                $this->validateBodyLength($value->getBody(), PostType::TEXT->value, $this->textPostBodyLength,1);
+                $this->validateBodyLength($value->getBody(), PostType::TEXT->value, $this->textPostBodyLength, 1);
                 break;
             case PostType::IMAGE:
                 $this->validateBodyLength($value->getBody(), PostType::IMAGE->value, $this->imagePostBodyLength);
@@ -69,7 +68,7 @@ class PostBodyLengthValidator extends ConstraintValidator
                 ->setParameter('%max%', $maxLength)
                 ->setCode(1657590177)
                 ->addViolation();
-        }elseif (strlen($bodyValue) < $minLength){
+        } elseif (strlen($bodyValue) < $minLength) {
             $this->context->buildViolation($this->constraint->tooShortBodyMessage)
                 ->setParameter('%min%', $minLength)
                 ->setCode(1662115657)

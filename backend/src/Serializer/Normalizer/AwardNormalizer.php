@@ -25,7 +25,8 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
         private ObjectNormalizer $normalizer,
         private Security $security,
         private AwardedRepository $awardedRepository,
-    ) {}
+    ) {
+    }
 
     public function normalize($object, $format = null, array $context = []): array
     {
@@ -38,7 +39,7 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
         }
 
         $memberships = $user->getMemberships()->filter(function ($membership) use ($object) {
-            /** @var CampaignMember $membership */
+            /* @var CampaignMember $membership */
             return $membership->getCampaign()->getId() === $object->getCampaign()->getId();
         });
 
@@ -50,7 +51,7 @@ class AwardNormalizer implements NormalizerInterface, CacheableSupportsMethodInt
 
         $awarded = $this->awardedRepository->findOneBy([
             'award' => $object,
-            'giver' => $this->security->getUser()
+            'giver' => $this->security->getUser(),
         ]);
 
         if ($awarded instanceof Awarded) {

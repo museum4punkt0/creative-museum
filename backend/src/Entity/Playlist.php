@@ -43,7 +43,7 @@ class Playlist
     #[Groups(['user:me:read', 'post:read', 'playlist:read', 'users:read'])]
     private $title;
 
-    #[ORM\OneToMany(targetEntity: PlaylistPost::class, mappedBy: 'playlist',cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(targetEntity: PlaylistPost::class, mappedBy: 'playlist', cascade: ['persist', 'remove'])]
     #[Groups(['playlist:read'])]
     #[ORM\OrderBy(['id' => 'DESC'])]
     private $playlistPosts;
@@ -87,23 +87,16 @@ class Playlist
         return $this->playlistPosts;
     }
 
-    /**
-     * @param PlaylistPost $playlistPost
-     * @return Playlist
-     */
     public function addPlaylistPost(PlaylistPost $playlistPost): self
     {
         if (!$this->playlistPosts->contains($playlistPost)) {
             $this->playlistPosts[] = $playlistPost;
             $playlistPost->setPlaylist($this);
         }
+
         return $this;
     }
 
-    /**
-     * @param PlaylistPost $playlistPost
-     * @return Playlist
-     */
     public function removePlaylistPost(PlaylistPost $playlistPost): self
     {
         if ($this->playlistPosts->contains($playlistPost)) {
@@ -112,6 +105,7 @@ class Playlist
                 $playlistPost->setPlaylist(null);
             }
         }
+
         return $this;
     }
 
@@ -145,7 +139,6 @@ class Playlist
         return $this;
     }
 
-
     public function removePost(Post $post): self
     {
         foreach ($this->playlistPosts as $key => $playlistPost) {
@@ -157,7 +150,6 @@ class Playlist
 
         return $this;
     }
-
 
     public function getCreator(): ?User
     {

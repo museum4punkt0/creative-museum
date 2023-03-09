@@ -56,7 +56,7 @@ class HandleNotifyAboutUpvotePoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("1662033222")
+            ->setText('1662033222')
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setScorePoints($points);

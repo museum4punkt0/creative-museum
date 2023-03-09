@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Serializer\Normalizer;
 
 use App\Entity\User;
@@ -10,17 +17,17 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class UserNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
-    public function __construct
-    (
+    public function __construct(
         private readonly ObjectNormalizer $normalizer,
         private readonly BadgeService $badgeService
-    ){}
+    ) {
+    }
 
     public function normalize($object, $format = null, array $context = []): array
     {
         $data = $this->normalizer->normalize($object, $format, $context);
         $lastBadge = $this->badgeService->getLastBadge($object->getId());
-        $data['lastBadge'] = $lastBadge ? $this->normalizer->normalize($lastBadge,$format,$context) : null;
+        $data['lastBadge'] = $lastBadge ? $this->normalizer->normalize($lastBadge, $format, $context) : null;
 
         return $data;
     }

@@ -21,7 +21,6 @@ class PostBodyLength extends Constraint
 
     public $tooShortBodyMessage = 'The value of field body is too short (Min. %min%).';
 
-
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;

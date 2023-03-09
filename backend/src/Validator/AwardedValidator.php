@@ -24,25 +24,25 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 final class AwardedValidator extends ConstraintValidator
 {
-    const VIOLATION_CODE_SELF = 1661952434;
+    public const VIOLATION_CODE_SELF = 1661952434;
 
-    const VIOLATION_CODE_NO_CAMPAIGN_MEMBER = 1661952502;
+    public const VIOLATION_CODE_NO_CAMPAIGN_MEMBER = 1661952502;
 
-    const VIOLATION_CODE_INSUFFICIENT_POINTS = 1661952537;
+    public const VIOLATION_CODE_INSUFFICIENT_POINTS = 1661952537;
 
-    const VIOLATION_CODE_ALREADY_AWARDED = 1661952565;
+    public const VIOLATION_CODE_ALREADY_AWARDED = 1661952565;
 
-    const VIOLATION_CODE_USER_DELETED = 1664887726;
+    public const VIOLATION_CODE_USER_DELETED = 1664887726;
 
     public function __construct(
         private readonly CampaignMemberRepository $campaignMemberRepository,
         private readonly AwardedRepository $awardedRepository,
         private readonly Security $security
-    ) {}
+    ) {
+    }
 
     /**
      * @param Awarded $value
-     * @param Constraint $constraint
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -51,10 +51,9 @@ final class AwardedValidator extends ConstraintValidator
         }
 
         /**
-         * @var Awarded $value
+         * @var Awarded             $value
          * @var Constraints\Awarded $constraint
          */
-
         $campaign = $value->getAward()->getCampaign();
 
         if ($value->getWinner() === $this->security->getUser()) {
@@ -62,21 +61,23 @@ final class AwardedValidator extends ConstraintValidator
                 ->buildViolation($constraint->canNotAwardSelf)
                 ->setCode(self::VIOLATION_CODE_SELF)
                 ->addViolation();
+
             return;
         }
 
-        if ($value->getWinner()->getDeleted() == 1){
+        if (1 == $value->getWinner()->getDeleted()) {
             $this->context
                 ->buildViolation($constraint->canNotAwardDeleted)
                 ->setCode(self::VIOLATION_CODE_USER_DELETED)
                 ->addViolation();
         }
 
-        if (! $this->isCampaignMember($campaign, $value->getGiver())) {
+        if (!$this->isCampaignMember($campaign, $value->getGiver())) {
             $this->context
                 ->buildViolation($constraint->giverNotCampaignMember)
                 ->setCode(self::VIOLATION_CODE_NO_CAMPAIGN_MEMBER)
                 ->addViolation();
+
             return;
         }
 
@@ -85,6 +86,7 @@ final class AwardedValidator extends ConstraintValidator
                 ->buildViolation($constraint->notEnoughPoints)
                 ->setCode(self::VIOLATION_CODE_INSUFFICIENT_POINTS)
                 ->addViolation();
+
             return;
         }
 
@@ -123,6 +125,6 @@ final class AwardedValidator extends ConstraintValidator
             'award' => $award->getId(),
         ]);
 
-        return $awarded !== null;
+        return null !== $awarded;
     }
 }

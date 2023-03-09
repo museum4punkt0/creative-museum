@@ -1,31 +1,36 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\User;
 use App\Enum\MailType;
 use App\Enum\NotificationType;
 use App\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Psr\Log\LoggerInterface;
 
 class MailService
 {
-    public function __construct
-    (
+    public function __construct(
         private readonly string $fromMail,
         private readonly string $domain,
         private readonly MailerInterface $mailer,
         private readonly LoggerInterface $logger,
         private readonly UserRepository $userRepository,
-    )
-    {
+    ) {
     }
 
-    public function sendMail(string $identifier,string|User $receiver = null, array $parameters = [])
+    public function sendMail(string $identifier, string|User $receiver = null, array $parameters = [])
     {
         if ($receiver instanceof User && $receiver?->getDeleted()) {
             return;
@@ -38,20 +43,20 @@ class MailService
         if (is_null($receiver)) {
             $receivers = $this->userRepository->findBy([
                 'active' => 1,
-                'deleted' => 0
+                'deleted' => 0,
             ]);
 
             foreach ($receivers as $receiver) {
                 $email = $this->prepareMail($identifier, $receiver, $parameters);
 
-                if ($receiver->getNotificationSettings() !== NotificationType::NONE) {
+                if (NotificationType::NONE !== $receiver->getNotificationSettings()) {
                     $this->send($email);
                 }
             }
         } else {
             $email = $this->prepareMail($identifier, $receiver, $parameters);
 
-            if ($receiver->getNotificationSettings() !== NotificationType::NONE) {
+            if (NotificationType::NONE !== $receiver->getNotificationSettings()) {
                 $this->send($email);
             }
         }
@@ -59,7 +64,7 @@ class MailService
 
     protected function getSubject(string $mailIdentifier, array $parameters = []): string
     {
-        $translations = json_decode(file_get_contents(__DIR__ . '/../../../frontend/locales/de.json'), true);
+        $translations = json_decode(file_get_contents(__DIR__.'/../../../frontend/locales/de.json'), true);
         $subject = $translations['mailings']['subjects'][$mailIdentifier];
 
         switch ($mailIdentifier) {
@@ -88,7 +93,7 @@ class MailService
         return $email;
     }
 
-    protected function send(TemplatedEmail $email,)
+    protected function send(TemplatedEmail $email)
     {
         try {
             $this->mailer->send($email);

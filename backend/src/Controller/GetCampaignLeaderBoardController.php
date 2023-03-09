@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Campaign;
@@ -13,12 +20,10 @@ class GetCampaignLeaderBoardController extends AbstractController
 
     private CampaignRepository $campaignRepository;
 
-    public function __construct
-    (
+    public function __construct(
         CampaignMemberRepository $campaignMemberRepository,
         CampaignRepository $campaignRepository
-    )
-    {
+    ) {
         $this->campaignMemberRepository = $campaignMemberRepository;
         $this->campaignRepository = $campaignRepository;
     }
@@ -28,7 +33,7 @@ class GetCampaignLeaderBoardController extends AbstractController
         $campaign = $this->campaignRepository->find($campaignId);
         $campaignLeaders = [];
 
-        if ($campaign instanceof Campaign && $campaign->getClosed()){
+        if ($campaign instanceof Campaign && $campaign->getClosed()) {
             $campaignLeaders = $this->campaignMemberRepository->getCampaignLeaders($campaignId);
         }
 

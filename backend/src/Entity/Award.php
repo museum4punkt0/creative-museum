@@ -55,7 +55,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(
     BooleanFilter::class,
     properties: [
-        'campaign.active'
+        'campaign.active',
     ]
 )]
 #[ApiFilter(
@@ -187,6 +187,7 @@ class Award
     public function setAvailable(bool $available): self
     {
         $this->available = $available;
+
         return $this;
     }
 
