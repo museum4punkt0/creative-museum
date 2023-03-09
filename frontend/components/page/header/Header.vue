@@ -122,7 +122,6 @@ import {
   defineComponent,
   ref,
   useStore,
-  useContext,
   computed,
   watch,
 } from '@nuxtjs/composition-api'
@@ -135,12 +134,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const { i18n } = useContext()
 
     const isAddVisible = ref(false)
     const isMenuVisible = ref(false)
     const openAddModalType = ref('')
-    const alertText = ref('')
 
     const addComponentName = computed(() => {
       return openAddModalType.value !== ''

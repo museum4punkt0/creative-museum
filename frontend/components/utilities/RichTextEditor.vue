@@ -21,9 +21,9 @@
 <script>
 import { Editor, EditorContent } from '@tiptap/vue-2'
 import { StarterKit } from '@tiptap/starter-kit'
-import { CustomMention } from '@/utilities/CustomMention'
 import { Placeholder } from '@tiptap/extension-placeholder'
 import { CharacterCount } from '@tiptap/extension-character-count'
+import { CustomMention } from '@/utilities/CustomMention'
 
 import userSearch from '@/utilities/userSearch'
 

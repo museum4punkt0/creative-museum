@@ -117,6 +117,7 @@ export default defineComponent({
         return group
       }
     })
+
     watch(
       () => store.getters.notificationsUpdated,
       async function (newVal) {

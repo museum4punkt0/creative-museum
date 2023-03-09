@@ -179,6 +179,7 @@ export default {
       second = second.length === 1 ? '0' + second : second
       return hour + ':' + second
     },
+
     onEnded(event) {
       window.setTimeout(() => {
         this.pause()
