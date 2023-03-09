@@ -30,7 +30,6 @@
   </div>
 </template>
 <script>
-import { TinyColor, readability } from '@ctrl/tinycolor'
 import {
   defineComponent,
   computed,
@@ -42,6 +41,7 @@ import {
   useMeta,
   useAsync
 } from '@nuxtjs/composition-api'
+import { useContrastColor } from '~/mixins/components/ContrastColor'
 
 import { campaignApi } from '@/api/campaign'
 import { postApi } from '@/api/post'
@@ -64,12 +64,6 @@ export default defineComponent({
       return $breakpoints.lLg
     })
 
-    function getContrastColor(color) {
-      const bgColor = new TinyColor(color)
-      const fgColor = new TinyColor('#FFFFFF')
-      return readability(bgColor, fgColor) > 2 ? '#FFFFFF' : '#000000'
-    }
-
     async function loadCampaign() {
       campaign.value = await fetchCampaign(post.value.campaign.id)
       if (process.client) {
@@ -80,7 +74,7 @@ export default defineComponent({
 
         document.documentElement.style.setProperty(
           '--highlight-contrast',
-          getContrastColor(post.value.campaign.color)
+          useContrastColor(post.value.campaign.color)
         )
       }
     }
@@ -156,7 +150,6 @@ export default defineComponent({
       campaign,
       isLargerThanLg,
       loadCampaign,
-      getContrastColor,
     }
   },
   head: {}

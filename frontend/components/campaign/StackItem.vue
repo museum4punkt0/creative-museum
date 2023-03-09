@@ -51,8 +51,8 @@
   </div>
 </template>
 <script>
-import { TinyColor, readability } from '@ctrl/tinycolor'
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { useContrastColorClass } from '~/mixins/components/ContrastColor'
 export default defineComponent({
   props: {
     campaign: {
@@ -61,19 +61,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const textColor = getContrastColorClass()
+    const textColor = useContrastColorClass(props.campaign.color)
     const { $config } = useContext()
-
-    function getContrastColorClass() {
-      const bgColor = new TinyColor(props.campaign.color)
-      const fgColor = new TinyColor('#FFFFFF')
-      const altfgColor = new TinyColor('#222329')
-
-      const test1 = readability(bgColor, fgColor)
-      const test2 = readability(bgColor, altfgColor)
-
-      return (test1 < test2) ? 'contrast' : 'white'
-    }
 
     const campaignShortDescriptionParagraphs = props.campaign.shortDescription.split(/(?:\r\n|\r|\n)/g);
 
@@ -83,7 +72,6 @@ export default defineComponent({
       textColor,
       backendURL: $config.backendURL,
       campaignShortDescription,
-      getContrastColorClass,
     }
   },
 })

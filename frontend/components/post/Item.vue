@@ -87,8 +87,8 @@
 </template>
 <script>
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
-import { TinyColor, readability } from '@ctrl/tinycolor'
 import { feedbackApi } from '@/api/feedback'
+import { useContrastColor, useContrastColorClass} from '~/mixins/components/ContrastColor'
 
 export default defineComponent({
   props: {
@@ -124,22 +124,8 @@ export default defineComponent({
       return JSON.parse(props.post.postMetadata)
     })
 
-    const textColor = getContrastColorClass()
-
-    const bgColor = new TinyColor(props.post.campaign.color)
-    const fgColor = new TinyColor('#FFFFFF')
-    const altfgColor = new TinyColor('#222329')
-
-    const test1 = readability(bgColor, fgColor)
-    const test2 = readability(bgColor, altfgColor)
-
-    const campaignContrastColor = computed(() => {
-      return (test1 < test2) ? '#222329' : '#FFFFFF'
-    })
-
-    function getContrastColorClass() {
-      return (test1 < test2) ? 'contrast' : 'white'
-    }
+    const textColor = useContrastColorClass(props.post.campaignColor)
+    const campaignContrastColor = useContrastColor(props.post.campaignColor)
 
     const styleAttr = computed(() => {
       return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
@@ -184,7 +170,6 @@ export default defineComponent({
     }
 
     return {
-      getContrastColorClass,
       triggerFeedback,
       voteOption,
       campaignContrastColor,

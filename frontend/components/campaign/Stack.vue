@@ -33,8 +33,8 @@
   </div>
 </template>
 <script>
-import { TinyColor, readability } from '@ctrl/tinycolor'
 import { debounce } from '@/utilities/debounce'
+import { useContrastColor } from '~/mixins/components/ContrastColor.js'
 
 export default {
   name: 'CampaignStack',
@@ -206,16 +206,6 @@ export default {
     document.addEventListener(this.touchEndEvent, this.onTouchEnd)
   },
   methods: {
-    getContrastColor(color) {
-      const bgColor = new TinyColor(color)
-      const fgColor = new TinyColor('#FFFFFF')
-      const altfgColor = new TinyColor('#222329')
-
-      const test1 = readability(bgColor, fgColor)
-      const test2 = readability(bgColor, altfgColor)
-
-      return (test1 < test2) ? '#222329' : '#FFFFFF'
-    },
     init() {
       this.stack = this.campaigns
 
@@ -229,7 +219,7 @@ export default {
 
       document.documentElement.style.setProperty(
         '--highlight-contrast',
-        this.getContrastColor(this.stack[this.stack.length-1].color)
+        useContrastColor(this.stack[this.stack.length-1].color)
       )
 
       this.stack.unshift(this.stack.pop())
@@ -261,7 +251,7 @@ export default {
             )
             document.documentElement.style.setProperty(
               '--highlight-contrast',
-              this.getContrastColor(card.color)
+              useContrastColor(card.color)
             )
           }
           return {
