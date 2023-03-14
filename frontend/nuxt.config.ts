@@ -56,6 +56,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/i18n',
     '@nuxtjs/dayjs',
+    '@nuxtjs/gtm',
     'nuxt-breakpoints',
   ],
   breakpoints: {
@@ -162,6 +163,9 @@ export default {
       home: '/',
       callback: '/verify'
     },
+  },
+  gtm: {
+    id: 'G-S1033Y62HB'
   },
   router: {
     middleware: ['user'],

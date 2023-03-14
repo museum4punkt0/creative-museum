@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use App\Entity\Badge;
@@ -19,7 +26,8 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
         private readonly BadgeService $badgeService,
         private readonly MessageBusInterface $bus,
         private readonly LockFactory $lockFactory,
-    ) {}
+    ) {
+    }
 
     /**
      * @return string[]
@@ -36,17 +44,17 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
         $event->stopPropagation();
 
         $lock = $this->lockFactory->createLock(
-            'check-badges-' . $event->getCampaignId() . '-' . $event->getUserId(),
+            'check-badges-'.$event->getCampaignId().'-'.$event->getUserId(),
             300,
             false
         );
 
         $i = 0;
-        while (!$lock->acquire() && $i <= 5){
+        while (!$lock->acquire() && $i <= 5) {
             usleep(100000);
-            $i++;
+            ++$i;
         }
-        if ($i > 5){
+        if ($i > 5) {
             return;
         }
 
@@ -54,7 +62,7 @@ class CheckForBadgesSubscriber implements EventSubscriberInterface
 
         $campaignMember = $this->campaignMemberRepository->findOneBy([
             'user' => $event->getUserId(),
-            'campaign' => $event->getCampaignId()
+            'campaign' => $event->getCampaignId(),
         ]);
 
         $unbadged = $this->badgeService->getUnbadged($campaignMember->getCampaign(), $campaignMember->getUser());

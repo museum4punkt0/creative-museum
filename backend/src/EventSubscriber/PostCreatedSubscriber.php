@@ -30,8 +30,7 @@ class PostCreatedSubscriber implements EventSubscriberInterface
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly MailService $mailService,
         private readonly UserRepository $userRepository
-    )
-    {
+    ) {
     }
 
     /**
@@ -81,7 +80,7 @@ class PostCreatedSubscriber implements EventSubscriberInterface
         preg_match_all('/data-label="(.*?)"/', $post->getBody(), $mentions);
         $mentions = array_unique($mentions[1]);
 
-        if (count($mentions) === 0) {
+        if (0 === count($mentions)) {
             return;
         }
 

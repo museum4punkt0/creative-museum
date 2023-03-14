@@ -22,7 +22,8 @@ class DeterminePrimaryFeedbackSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly PostFeedbackService $postFeedbackService
-    ) {}
+    ) {
+    }
 
     #[ArrayShape([FeedbackCreatedEvent::NAME => 'string'])]
     public static function getSubscribedEvents(): array

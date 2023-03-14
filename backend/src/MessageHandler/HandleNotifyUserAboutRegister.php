@@ -44,7 +44,7 @@ class HandleNotifyUserAboutRegister implements MessageHandlerInterface
         $notification = new Notification();
         $notification
             ->setReceiver($user)
-            ->setText("1662033487")
+            ->setText('1662033487')
             ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
         $this->entityManager->persist($notification);
         $this->entityManager->flush();

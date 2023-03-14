@@ -29,7 +29,7 @@ class CampaignMemberChanged
             return;
         }
 
-        $checkForBadgesEvent = new CheckForBadgesEvent($campaignMember->getUser()->getId(),$campaignMember->getCampaign()->getId());
+        $checkForBadgesEvent = new CheckForBadgesEvent($campaignMember->getUser()->getId(), $campaignMember->getCampaign()->getId());
         $this->eventDispatcher->dispatch($checkForBadgesEvent, CheckForBadgesEvent::NAME);
     }
 }

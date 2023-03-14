@@ -22,12 +22,11 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 class AwardedNotificationSubscriber implements EventSubscriberInterface
 {
-
-    public function __construct
-    (
+    public function __construct(
         private readonly MessageBusInterface $bus,
         private readonly MailService $mailService
-    ){}
+    ) {
+    }
 
     /**
      * @return array[]
@@ -51,6 +50,6 @@ class AwardedNotificationSubscriber implements EventSubscriberInterface
         $notification = new NotifyAboutNewAwarded($awarded->getId());
         $this->bus->dispatch($notification);
 
-        $this->mailService->sendMail(MailType::AWARD_RECEIVED->value,$awarded->getWinner(),['awarded' => $awarded]);
+        $this->mailService->sendMail(MailType::AWARD_RECEIVED->value, $awarded->getWinner(), ['awarded' => $awarded]);
     }
 }

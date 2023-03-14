@@ -56,7 +56,7 @@ class HandleNotifyAboutFeedbackPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("1662032840")
+            ->setText('1662032840')
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setScorePoints($points);

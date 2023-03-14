@@ -19,7 +19,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class AwardReceivedSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager) {}
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
 
     public static function getSubscribedEvents(): array
     {
@@ -32,7 +34,7 @@ class AwardReceivedSubscriber implements EventSubscriberInterface
     {
         $subject = $event->getControllerResult();
 
-        if (! $subject instanceof Awarded) {
+        if (!$subject instanceof Awarded) {
             return;
         }
 
@@ -40,7 +42,7 @@ class AwardReceivedSubscriber implements EventSubscriberInterface
 
         $member = $campaignMemberRepository->findOneBy([
             'user' => $subject->getWinner(),
-            'campaign' => $subject->getAward()->getCampaign()
+            'campaign' => $subject->getAward()->getCampaign(),
         ]);
 
         if ($member instanceof CampaignMember) {

@@ -41,15 +41,14 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
     private Security $security;
 
     public function __construct(
-        ObjectNormalizer           $normalizer,
-        PostRepository             $postRepository,
-        PostFeedbackRepository     $feedbackRepository,
-        VoteRepository             $votesRepository,
+        ObjectNormalizer $normalizer,
+        PostRepository $postRepository,
+        PostFeedbackRepository $feedbackRepository,
+        VoteRepository $votesRepository,
         PollOptionChoiceRepository $pollOptionChoiceRepository,
-        PollOptionRepository       $pollOptionRepository,
-        Security                   $security
-    )
-    {
+        PollOptionRepository $pollOptionRepository,
+        Security $security
+    ) {
         $this->normalizer = $normalizer;
         $this->postRepository = $postRepository;
         $this->security = $security;
@@ -72,7 +71,7 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
             }
         }
 
-        if ($this->security->getUser() !== null) {
+        if (null !== $this->security->getUser()) {
             /** @var User $user */
             $user = $this->security->getUser();
 
@@ -97,13 +96,13 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
             $choicesTotal = 0;
             $pollOptions = $this->pollOptionRepository->findBy(
                 [
-                    'post' => $data['id']
+                    'post' => $data['id'],
                 ]
             );
 
             foreach ($pollOptions as $index => $pollOption) {
                 $choices = $this->pollOptionChoiceRepository->findBy([
-                    'pollOption' => $pollOption->getId()
+                    'pollOption' => $pollOption->getId(),
                 ]);
                 $optionChoicesCount = count($choices);
                 $pollOption->setVotes($optionChoicesCount);
@@ -115,13 +114,13 @@ class PostNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
                         $pollOption->getId()
                     );
 
-                    if ($choiced){
+                    if ($choiced) {
                         $data['userChoiced'] = true;
                     }
 
                     $pollOption->setMyChoice($choiced);
                 }
-                $pollOptions[$index] = $this->normalizer->normalize($pollOption,$format,$context);
+                $pollOptions[$index] = $this->normalizer->normalize($pollOption, $format, $context);
             }
 
             $data['choicesTotal'] = $choicesTotal;

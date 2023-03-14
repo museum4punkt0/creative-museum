@@ -37,7 +37,7 @@ class CampaignFeedbackOption
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read', 'read:feedbacks', 'post:read','playlist:read'])]
+    #[Groups(['campaigns:read', 'read:feedbacks', 'post:read', 'playlist:read'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'feedbackOptions')]

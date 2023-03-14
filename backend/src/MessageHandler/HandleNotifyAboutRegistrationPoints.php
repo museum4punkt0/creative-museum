@@ -56,7 +56,7 @@ class HandleNotifyAboutRegistrationPoints implements MessageHandlerInterface
 
         $pointsNotification
             ->setReceiver($receiver)
-            ->setText("1662033166")
+            ->setText('1662033166')
             ->setCampaign($campaign)
             ->setSilent(NotificationType::NONE === $receiver->getNotificationSettings())
             ->setScorePoints($points);

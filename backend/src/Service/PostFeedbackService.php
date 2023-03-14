@@ -21,7 +21,8 @@ class PostFeedbackService
     public function __construct(
         private EntityManagerInterface $em,
         private readonly PostFeedbackRepository $postFeedbackRepository
-    ) {}
+    ) {
+    }
 
     public function getFeedbackResultsForPost(int $postId): array
     {
@@ -72,10 +73,8 @@ class PostFeedbackService
     }
 
     /**
-     * @param Post $post
      * @param CampaignFeedbackOption|null $excludedOption
-     * The option to be excluded from the calculation @see CampaignFeedbackOptionDeleteListener
-     * @return array|null
+     *                                                    The option to be excluded from the calculation @see CampaignFeedbackOptionDeleteListener
      */
     public function getLeadingFeedbackWithCount(Post $post, ?CampaignFeedbackOption $excludedOption = null): ?array
     {

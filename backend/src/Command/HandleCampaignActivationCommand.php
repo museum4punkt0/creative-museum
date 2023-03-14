@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Command;
 
 use App\Repository\CampaignRepository;
@@ -9,7 +16,6 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 
 #[AsCommand(
     name: 'app:campaign-activation',
@@ -22,13 +28,11 @@ class HandleCampaignActivationCommand extends Command
 
     private EntityManagerInterface $entityManager;
 
-    public function __construct
-    (
-        CampaignRepository     $campaignRepository,
+    public function __construct(
+        CampaignRepository $campaignRepository,
         EntityManagerInterface $entityManager,
-        string                 $name = null
-    )
-    {
+        string $name = null
+    ) {
         parent::__construct($name);
         $this->campaignRepository = $campaignRepository;
         $this->entityManager = $entityManager;
@@ -44,7 +48,7 @@ class HandleCampaignActivationCommand extends Command
     {
         $campaigns = $this->campaignRepository->findBy([
             'closed' => false,
-            'published' => true
+            'published' => true,
         ]);
 
         foreach ($campaigns as $campaign) {

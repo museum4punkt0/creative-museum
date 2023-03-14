@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
@@ -48,7 +55,7 @@ class AwardedSystemNotificationSubscriber implements EventSubscriberInterface
         $awardedSystemNotification = new Post();
         $awardedSystemNotification->setPostType(PostType::SYSTEM);
         $awardedSystemNotification->setCampaign($awarded->getAward()->getCampaign());
-        $awardedSystemNotification->setBody("1663764951");
+        $awardedSystemNotification->setBody('1663764951');
         $awardedSystemNotification->setPostMetadata($metaData);
         $this->postRepository->add($awardedSystemNotification);
     }

@@ -1,5 +1,13 @@
 <?php
+
 declare(strict_types=1);
+
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
 
 namespace App\Message;
 
@@ -18,25 +26,16 @@ class EditorMessageReceived
         $this->userUuid = $userUuid;
     }
 
-    /**
-     * @return int|null
-     */
     public function getCampaignId(): ?int
     {
         return $this->campaignId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getUserUuid(): ?string
     {
         return $this->userUuid;
     }
 
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;

@@ -120,15 +120,18 @@ export default {
         await register(await connect())
       }
     },
+
     async checkPermission() {
       const status = await navigator.permissions.query({ name: 'microphone' })
       this.permissionStatus = status.state
     },
+
     clearAudio() {
       const timer = this.$refs.audioTimer
       this.initialTime = Date.now()
       timer.innerText = ''
     },
+
     checkAudioTime() {
       const timer = this.$refs.audioTimer
       const timeDifference = Date.now() - this.initialTime
@@ -146,6 +149,7 @@ export default {
         this.stopRecordAudio()
       }
     },
+
     convertAudioTime(miliseconds) {
       const totalSeconds = Math.floor(miliseconds / 1000)
       const minutes = Math.floor(totalSeconds / 60)
@@ -153,6 +157,7 @@ export default {
       const sec = seconds < 10 ? `0${seconds}` : seconds
       return `${minutes}:${sec}`
     },
+
     recordAudio() {
       this.clearAudio()
       try {
@@ -186,11 +191,13 @@ export default {
         console.error('Audio error: ', err)
       }
     },
+
     stopRecordAudio() {
       clearInterval(this.audioInterval)
       this.recorder.stop()
       this.recordAudioState = false
     },
+
     deleteAudioFile() {
       if (this.recordAudioState === false) {
         this.audioFile = null

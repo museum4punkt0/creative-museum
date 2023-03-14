@@ -55,7 +55,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(
     DateFilter::class,
     strategy: DateFilter::PARAMETER_BEFORE,
-    properties: ['start']),
+    properties: ['start']
+),
 ]
 #[ApiFilter(
     SearchFilter::class,
@@ -70,7 +71,7 @@ class Campaign
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['campaigns:read', 'post:read', 'user:me:read', 'awards:read', 'badge:read', 'playlist:read','awarded:read','badged:read', 'memberships:read'])]
+    #[Groups(['campaigns:read', 'post:read', 'user:me:read', 'awards:read', 'badge:read', 'playlist:read', 'awarded:read', 'badged:read', 'memberships:read'])]
     private $id;
 
     #[ORM\Column(type: 'boolean')]
@@ -105,15 +106,15 @@ class Campaign
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $description;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, cascade: ["persist","remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Award::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $awards;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, cascade: ["persist","remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Badge::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['campaigns:read', 'campaign:write'])]
     private $badges;
 
-    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class,cascade: ["persist","remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'campaign', targetEntity: Partner::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     #[Groups(['campaigns:read', 'campaign:read', 'campaign:write'])]
     private $partners;
 

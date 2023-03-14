@@ -48,15 +48,15 @@ class HandleEditorMessage implements MessageHandlerInterface
 
     public function __invoke(EditorMessageReceived $editorMessageReceived)
     {
-
-
-        if ($editorMessageReceived->getUserUuid() !== null) {
+        if (null !== $editorMessageReceived->getUserUuid()) {
             $this->handleUserNotification($editorMessageReceived);
+
             return;
         }
 
-        if ($editorMessageReceived->getCampaignId() !== null) {
+        if (null !== $editorMessageReceived->getCampaignId()) {
             $this->handleCampaignNotification($editorMessageReceived);
+
             return;
         }
 
@@ -93,7 +93,7 @@ class HandleEditorMessage implements MessageHandlerInterface
         }
 
         $i = 0;
-        foreach($campaignMembers as $member) {
+        foreach ($campaignMembers as $member) {
             ++$i;
             if (!$member->getUser()->getActive() || $member->getUser()->getDeleted()) {
                 continue;
@@ -107,7 +107,7 @@ class HandleEditorMessage implements MessageHandlerInterface
             $this->entityManager->persist($notification);
             $this->mailService->sendMail(MailType::EDITOR->value, $member->getUser(), ['notification' => $notification]);
 
-            if ($i % 100 === 0) {
+            if (0 === $i % 100) {
                 $this->entityManager->flush();
             }
         }
@@ -129,7 +129,7 @@ class HandleEditorMessage implements MessageHandlerInterface
                 ->setEditorNotification(true);
             $this->entityManager->persist($notification);
             $this->mailService->sendMail(MailType::EDITOR->value, $user, ['notification' => $notification]);
-            if ($i % 100 === 0) {
+            if (0 === $i % 100) {
                 $this->entityManager->flush();
             }
         }

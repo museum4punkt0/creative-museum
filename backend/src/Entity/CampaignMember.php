@@ -41,7 +41,7 @@ class CampaignMember
     private $campaign;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['user:me:read', 'users:read','campaign:result:get', 'memberships:read'])]
+    #[Groups(['user:me:read', 'users:read', 'campaign:result:get', 'memberships:read'])]
     private $score = 0;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'memberships')]
@@ -50,7 +50,7 @@ class CampaignMember
     private $user;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Groups(['user:me:read', 'users:read','campaign:result:get', 'memberships:read'])]
+    #[Groups(['user:me:read', 'users:read', 'campaign:result:get', 'memberships:read'])]
     private $rewardPoints = 0;
 
     public function getId(): ?int
@@ -106,12 +106,14 @@ class CampaignMember
         return $this;
     }
 
-    public static function create(Campaign $campaign, User $user): CampaignMember {
+    public static function create(Campaign $campaign, User $user): CampaignMember
+    {
         $member = new self();
         $member->setCampaign($campaign);
         $member->setUser($user);
         $member->setScore(0);
         $member->setRewardPoints(0);
+
         return $member;
     }
 }

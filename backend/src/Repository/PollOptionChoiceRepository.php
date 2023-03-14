@@ -58,7 +58,7 @@ class PollOptionChoiceRepository extends ServiceEntityRepository
     {
         $choice = $this->findOneBy([
             'user' => $userId,
-            'pollOption' => $pollOptionId
+            'pollOption' => $pollOptionId,
         ]);
 
         return !empty($choice);

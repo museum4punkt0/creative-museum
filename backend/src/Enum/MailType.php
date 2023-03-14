@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Enum;
 
 enum MailType: string
@@ -8,9 +15,9 @@ enum MailType: string
 
     case POST_COMMENTED = 'post_commented';
 
-    CASE POST_REPORTED_AUTHOR = 'post_reported_author';
+    case POST_REPORTED_AUTHOR = 'post_reported_author';
 
-    CASE POST_REPORTED = 'post_reported';
+    case POST_REPORTED = 'post_reported';
 
     case SYSTEM = 'system';
 

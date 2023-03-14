@@ -1,9 +1,16 @@
 <?php
 
+/*
+ * This file is part of the jwied/creative-museum.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
-use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
 class PlaylistPost
@@ -14,12 +21,12 @@ class PlaylistPost
     #[Groups(['user:me:read', 'post:read', 'playlist:read', 'users:read'])]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Playlist::class, inversedBy: "posts")]
-    #[ORM\JoinColumn(name: "playlist_id", referencedColumnName: "id")]
+    #[ORM\ManyToOne(targetEntity: Playlist::class, inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'playlist_id', referencedColumnName: 'id')]
     private $playlist;
 
-    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy:"playlist")]
-    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'playlist')]
+    #[ORM\JoinColumn(name: 'post_id', referencedColumnName: 'id')]
     private $post;
 
     public function getId(): ?int
@@ -35,6 +42,7 @@ class PlaylistPost
     public function setPlaylist(?Playlist $playlist): self
     {
         $this->playlist = $playlist;
+
         return $this;
     }
 
@@ -46,6 +54,7 @@ class PlaylistPost
     public function setPost(?Post $post): self
     {
         $this->post = $post;
+
         return $this;
     }
 }

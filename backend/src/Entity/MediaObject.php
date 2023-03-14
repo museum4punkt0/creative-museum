@@ -63,18 +63,18 @@ class MediaObject
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read'. 'users:read', 'awarded:read', 'badge:read', 'playlist:read','badged:read'])]
+    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read'.'users:read', 'awarded:read', 'badge:read', 'playlist:read', 'badged:read'])]
     private ?int $id = null;
 
     #[ApiProperty(iri: 'http://schema.org/contentUrl')]
-    #[Groups(['media_object:read', 'post:read', 'user:me:read', 'campaigns:read', 'campaign:read', 'awards:read', 'users:read', 'awarded:read', 'badge:read', 'playlist:read', 'notifications:read','badged:read'])]
+    #[Groups(['media_object:read', 'post:read', 'user:me:read', 'campaigns:read', 'campaign:read', 'awards:read', 'users:read', 'awarded:read', 'badge:read', 'playlist:read', 'notifications:read', 'badged:read'])]
     public ?string $contentUrl = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     public ?string $filepath = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read', 'awarded:read', 'badge:read', 'playlist:read','badged:read'])]
+    #[Groups(['media_object:read', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read', 'awarded:read', 'badge:read', 'playlist:read', 'badged:read'])]
     public string $description;
 
     #[ORM\Column(type: 'datetime_immutable')]
@@ -94,7 +94,7 @@ class MediaObject
     private FileType $type = FileType::IMAGE;
 
     #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'])]
-    #[Groups(['media_object:read','media_object_create', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read', 'users:read', 'awarded:read', 'badge:read', 'playlist:read','badged:read'])]
+    #[Groups(['media_object:read', 'media_object_create', 'post:read', 'campaigns:read', 'campaign:read', 'awards:read', 'users:read', 'awarded:read', 'badge:read', 'playlist:read', 'badged:read'])]
     public ?MediaObject $thumbnail = null;
 
     public function getId(): ?int

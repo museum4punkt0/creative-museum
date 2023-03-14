@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(
     SearchFilter::class,
     properties: [
-        'campaign' => 'exact'
+        'campaign' => 'exact',
     ]
 )]
 #[ApiFilter(
@@ -64,28 +64,28 @@ class Badge
     private PostType $postType = PostType::TEXT;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write','post:read','badged:read'])]
+    #[Groups(['user:me:read', 'users:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write', 'post:read', 'badged:read'])]
     private $title;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write','badged:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write', 'badged:read'])]
     private $description;
 
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'badges')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['user:me:read', 'badge:read','badged:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'badged:read'])]
     private $campaign;
 
-    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist','remove'], orphanRemoval: true)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write','badged:read'])]
+    #[ORM\OneToOne(targetEntity: MediaObject::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'notifications:read', 'campaign:write', 'badged:read'])]
     private $picture;
 
     #[ORM\Column(type: 'text')]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write','badged:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write', 'badged:read'])]
     private $shortDescription;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write','badged:read'])]
+    #[Groups(['user:me:read', 'badge:read', 'campaigns:read', 'campaign:write', 'badged:read'])]
     private $link;
 
     public function getId(): ?int
@@ -120,9 +120,6 @@ class Badge
         return $this;
     }
 
-    /**
-     * @return PostType
-     */
     public function getPostType(): PostType
     {
         return $this->postType;

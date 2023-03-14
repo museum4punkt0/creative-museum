@@ -57,6 +57,7 @@ class CampaignMemberRepository extends ServiceEntityRepository
     public function getCampaignLeaders(int $campaignId)
     {
         $qb = $this->_em->createQueryBuilder();
+
         return $qb
             ->select('members')
             ->from(CampaignMember::class, 'members')

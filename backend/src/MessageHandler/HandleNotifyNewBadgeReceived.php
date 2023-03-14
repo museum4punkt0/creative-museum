@@ -49,7 +49,7 @@ class HandleNotifyNewBadgeReceived implements MessageHandlerInterface
         $notification = new Notification();
         $notification
             ->setReceiver($badged->getUser())
-            ->setText("1662033328")
+            ->setText('1662033328')
             ->setSilent(NotificationType::NONE === $badged->getUser()->getNotificationSettings())
             ->setCampaign($badged->getBadge()->getCampaign())
             ->setBadge($badged->getBadge());

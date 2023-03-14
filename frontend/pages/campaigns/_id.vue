@@ -150,7 +150,7 @@ export default defineComponent({
       }
 
       async function refetchPosts() {
-        if (route.value.params.id) {
+        if (route.value.params.id && store.state.showAddButton) {
           newPosts.value = await fetchPostsByCampaign(
             route.value.params.id,
             store.state.currentSorting,
@@ -177,7 +177,6 @@ export default defineComponent({
 
         onMounted(async () => {
           await loadCampaign()
-
           refetchInterval = setInterval(() => {
             refetchPosts()
           }, 2500)

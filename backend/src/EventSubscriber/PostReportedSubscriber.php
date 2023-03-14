@@ -24,14 +24,12 @@ use Symfony\Component\Security\Core\Security;
 
 class PostReportedSubscriber implements EventSubscriberInterface
 {
-    public function __construct
-    (
+    public function __construct(
         private readonly string $editorMail,
         private readonly MessageBusInterface $bus,
         private readonly Security $security,
         private readonly MailService $mailService,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -59,10 +57,8 @@ class PostReportedSubscriber implements EventSubscriberInterface
             return null;
         }
 
-
         $this->mailService->sendMail(MailType::POST_REPORTED_AUTHOR->value, $post->getAuthor(), ['post' => $post]);
         $this->mailService->sendMail(MailType::POST_REPORTED->value, $this->editorMail, ['post' => $post]);
-
 
         $notification = new NotifyUserAboutReportingSuccess($user->getId(), $post->getId());
         $this->bus->dispatch($notification);

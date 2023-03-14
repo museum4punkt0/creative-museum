@@ -24,7 +24,8 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
         private readonly UserRepository $userRepository,
         private readonly CampaignRepository $campaignRepository,
         private readonly EntityManagerInterface $entityManager,
-    ){}
+    ) {
+    }
 
     /**
      * @return void
@@ -48,7 +49,7 @@ class HandleNotifyNewCampaign implements MessageHandlerInterface
             $notification = new Notification();
             $notification
                 ->setReceiver($user)
-                ->setText("1662033370")
+                ->setText('1662033370')
                 ->setCampaign($campaign)
                 ->setSilent(NotificationType::NONE === $user->getNotificationSettings());
             $this->entityManager->persist($notification);
