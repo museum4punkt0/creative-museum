@@ -303,7 +303,7 @@
     "newPosts": "Neue Beiträge",
     "filter": "Beiträge filtern und sortieren",
     "closed": {
-      "badge": "Geschlossen",
+      "badge": "Archiv",
       "result": {
         "description": "Die Kampagne \"{campaign}\" ist beendet. Die Nutzer*innen, die die meisten Awards verliehen haben, sind:"
       }
