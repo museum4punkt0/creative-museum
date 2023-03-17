@@ -50,7 +50,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
-import { TinyColor, readability } from '@ctrl/tinycolor'
+import { useContrastColor } from '~/mixins/components/ContrastColor'
 
 export default defineComponent({
   props: {
@@ -75,23 +75,14 @@ export default defineComponent({
 
     const showAllResults = ref(false)
 
-    const bgColor = new TinyColor(props.campaignColor)
-    const fgColor = new TinyColor('#FFFFFF')
-    const altfgColor = new TinyColor('#222329')
-
-    const test1 = readability(bgColor, fgColor)
-    const test2 = readability(bgColor, altfgColor)
-
-    const campaignContrastColor = computed(() => {
-      return (test1 < test2) ? '#222329' : '#FFFFFF'
-    })
+    const campaignContrastColor = useContrastColor(props.campaignColor)
 
     const campaignResulTop5 = computed(() => {
       return props.campaignResult.slice(0,4)
     })
 
     const styleAttr = computed(() => {
-      return `--highlight: ${props.campaignColor}; --highlight-contrast: ${campaignContrastColor.value};`
+      return `--highlight: ${props.campaignColor}; --highlight-contrast: ${campaignContrastColor};`
     })
 
     return {
