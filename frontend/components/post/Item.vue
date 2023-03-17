@@ -127,8 +127,10 @@ export default defineComponent({
     const textColor = useContrastColorClass(props.post.campaignColor)
     const campaignContrastColor = useContrastColor(props.post.campaignColor)
 
+    console.log(campaignContrastColor)
+
     const styleAttr = computed(() => {
-      return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor.value};`
+      return `--highlight: ${props.post.campaign.color}; --highlight-contrast: ${campaignContrastColor};`
     })
 
     async function getResults() {
