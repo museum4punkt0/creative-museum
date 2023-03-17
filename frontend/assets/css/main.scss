@@ -1,6 +1,6 @@
 :root {
   --highlight: #ffff00;
-  --highlight-contrast: #000000;
+  --highlight-contrast: #222329;
 }
 
 body {
@@ -205,6 +205,12 @@ h3 {
   @apply font-medium text-3xl my-6;
   button {
     @apply text-left;
+  }
+}
+
+.logo {
+  &:hover svg .text {
+    fill: var(--highlight-contrast);
   }
 }
 

@@ -8,7 +8,7 @@ export const useContrastColor = (color) => {
   const test1 = readability(bgColor, fgColor)
   const test2 = readability(bgColor, altfgColor)
 
-  return (test1 > test2) ? '#222329' : '#FFFFFF'
+  return (test1 < test2) ? '#222329' : '#FFFFFF'
 }
 
 export const useContrastColorClass = (color) => {

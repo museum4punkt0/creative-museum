@@ -5,7 +5,7 @@
     ref="globalHeader"
     class="relative container flex flex-row justify-between z-20 items-center"
     >
-      <NuxtLink id="pageLogo" :to="localePath('/')" class="text-white/50 hover:text-$highlight focus:text-$highlight focus:outline-none">
+      <NuxtLink id="pageLogo" :to="localePath('/')" class="text-white/50 hover:text-$highlight focus:text-$highlight focus:outline-none logo">
         <Logo
           class="h-9 my-2 w-auto ml-5 transform-gpu transition-all duration-300 ease-in-out cursor-pointer"
           aria-label="Creative Museum Logo"
