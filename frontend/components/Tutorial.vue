@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col flex-1 h-full">
     <div class="page-header px-6">
-      <a class="back-btn" @click.prevent="$emit('closeModal')">{{
+      <button class="back-btn" @click.prevent="$emit('closeModal')">{{
         $t('tutorial.firstSteps')
-      }}</a>
+      }}</button>
     </div>
     <div class="box-shadow-mobile relative m-6 lg:m-0 p-6 text-center">
       <div v-show="step === 1">

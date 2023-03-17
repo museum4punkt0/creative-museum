@@ -13,6 +13,7 @@
             <button
               type="button"
               class="back-btn"
+              role="button"
               @click.prevent="showPlaylist = false"
             >
               {{ $t('post.types.playlist.button') }}

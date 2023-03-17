@@ -10,10 +10,10 @@
     >
       <client-only>
         <file-upload
-          ref="uploadAudio"
           v-if="!(fileToSubmit && uploadedAudio.length === 0)"
-          input-id="file1"
+          ref="uploadAudio"
           v-model="uploadedAudio"
+          input-id="file1"
           accept="audio/*"
           aria-required="true"
           extensions="wav,mp3,ogg"

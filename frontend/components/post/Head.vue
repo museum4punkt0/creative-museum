@@ -153,7 +153,7 @@
           >
             <div>
               <div class="page-header px-6">
-                <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.delete.headline') }}</a>
+                <button class="back-btn" @click="additionalPage = false">{{ $t('post.actions.delete.headline') }}</button>
               </div>
               <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
                 {{ $t('post.actions.delete.confirmation') }}
@@ -183,7 +183,7 @@
           >
             <div>
               <div class="page-header px-6">
-                <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.report.headline') }}</a>
+                <button class="back-btn" @click="additionalPage = false">{{ $t('post.actions.report.headline') }}</button>
               </div>
               <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
                 {{ $t('post.actions.report.confirmation') }}
