@@ -25,7 +25,7 @@ use Symfony\Component\Security\Core\Security;
 class PostReportedSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly string $editorMail,
+        private readonly string $museumInfoMail,
         private readonly MessageBusInterface $bus,
         private readonly Security $security,
         private readonly MailService $mailService,
@@ -58,7 +58,7 @@ class PostReportedSubscriber implements EventSubscriberInterface
         }
 
         $this->mailService->sendMail(MailType::POST_REPORTED_AUTHOR->value, $post->getAuthor(), ['post' => $post]);
-        $this->mailService->sendMail(MailType::POST_REPORTED->value, $this->editorMail, ['post' => $post]);
+        $this->mailService->sendMail(MailType::POST_REPORTED->value, $this->museumInfoMail, ['post' => $post]);
 
         $notification = new NotifyUserAboutReportingSuccess($user->getId(), $post->getId());
         $this->bus->dispatch($notification);
