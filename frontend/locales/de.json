@@ -13,7 +13,7 @@
   "close": "Schließen",
   "till": "bis",
   "readLess": "Weniger lesen",
-  "readLessLong": "Werniger Kampagnenbeschreibungstext anzeigen",
+  "readLessLong": "Weniger Kampagnenbeschreibungstext anzeigen",
   "readMore": "Mehr lesen...",
   "readMoreLong": "Den kompletten Kampagnenbeschreibungstext anzeigen",
   "showAll": "Alle anzeigen",
@@ -61,7 +61,7 @@
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
       "title": "Willkommen im Creative Museum!",
-      "text": "Das Creative Museum ist eine Partizipationsplattform für Debatte und Austausch. Wir stellen Dir in den folgenden Schritten die wichtigsten Funktionen vor."
+      "text": "Das Creative Museum ist eine Plattform für Austausch und Debatte. Wir stellen Dir in den folgenden Schritten die wichtigsten Funktionen vor."
     },
     "step2": {
       "title": "Punkte",
@@ -96,7 +96,7 @@
     "profile": {
       "header": "Profil",
       "settings": "Einstellungen",
-      "search": "Profil suchen",
+      "search": "User suchen",
       "invite": "Freunde einladen"
     },
     "museum": {
@@ -186,7 +186,7 @@
       }
     },
     "share": "Teilen",
-    "feedback": "Feedback",
+    "feedback": "Reaktion",
     "postComment": "Kommentar...",
     "postComments": "Kommentare",
     "postCommentSend": "Kommentar Senden",
@@ -309,7 +309,7 @@
       }
     },
     "systemMessages": {
-      "1663764951": "Applaus!!! {giver} hat {winner} den Award, \"{award}\", verliehen"
+      "1663764951": "{giver} hat {winner} den Award, \"{award}\", verliehen"
     }
   },
   "awards": {
@@ -412,7 +412,7 @@
     "subjects": {
       "award_received": "Award %s erhalten",
       "badge_received": "Badge %s erhalten",
-      "new_campaign": "Kampagne %s startet",
+      "new_campaign": "Kampagne %s gestartet",
       "campaign_closed": "Kampagne %s beendet",
       "post_commented": "Neuer Kommentar",
       "post_reported": "Neuer gemeldeter Beitrag",
@@ -420,7 +420,7 @@
       "system": "Du hast eine Nachricht vom Creative Museum erhalten",
       "post_mention": "Neue Post Erwähnung",
       "comment_mention": "Neue Kommentar Erwähnung",
-      "editor": "Neue Nachricht vom Systemeditor"
+      "editor": "Neue Nachricht vom Creative Museum Team"
     }
   },
   "today": "Heute",
@@ -444,8 +444,8 @@
       "text": "Du hast {points} Punkte für Deinen Kommentar in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032840": {
-      "title": "Feedback Score",
-      "text": "Du hast {points} Punkte für Dein Feedback in der Kampagne \"{campaign}\" erhalten!"
+      "title": "Reaktion Score",
+      "text": "Du hast {points} Punkte für Deine Reaktion in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032913": {
       "title": "Login Strike",
@@ -500,11 +500,11 @@
     "profileUpdate": "Profil bearbeiten",
     "tutorial": "Tutorial",
     "newPost": "Neuer Beitrag",
-    "setUsername": "Benuternamen festlegen",
+    "setUsername": "Benutzernamen festlegen",
     "showPlaylist": "Sammlung",
     "campaignClosed": "Kampagne beendet",
-    "login": "Einloggen um teilzunehmen",
-    "feedback": "Feedback abgeben"
+    "login": "Einloggen, um teilzunehmen",
+    "feedback": "Reaktion geben"
   },
   "footer": {
     "title": "Seitenbetreiber und Service-Navigation"

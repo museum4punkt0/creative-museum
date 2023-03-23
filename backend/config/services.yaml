@@ -21,6 +21,7 @@ parameters:
 
     fromMail: 'noreply@creativemuseum.landesmuseum.net'
     editorMail: 'noreply@creativemuseum.landesmuseum.net'
+    museumInfoMail: 'creative@landesmuseum.de'
 
 services:
     # default configuration for services in *this* file
@@ -150,7 +151,7 @@ services:
             - '%env(DOMAIN)%'
     App\EventSubscriber\PostReportedSubscriber:
         arguments:
-            - '%editorMail%'
+            - '%museumInfoMail%'
 
     App\EventSubscriber\MediaObjectThumbnailSubscriber:
         arguments:
