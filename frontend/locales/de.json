@@ -444,8 +444,8 @@
       "text": "Du hast {points} Punkte für Deinen Kommentar in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032840": {
-      "title": "Feedback Score",
-      "text": "Du hast {points} Punkte für Dein Feedback in der Kampagne \"{campaign}\" erhalten!"
+      "title": "Reaktion Score",
+      "text": "Du hast {points} Punkte für Deine Reaktion in der Kampagne \"{campaign}\" erhalten!"
     },
     "1662032913": {
       "title": "Login Strike",
