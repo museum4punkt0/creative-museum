@@ -70,13 +70,11 @@ export default defineComponent({
             if (
               response.userChoiced &&
               response.pollOptions &&
-              response.choicesTotal &&
-              response.comments
+              response.choicesTotal
             ) {
               postsRef.value[key].choicesTotal = response.choicesTotal
               postsRef.value[key].userChoiced = response.userChoiced
               postsRef.value[key].pollOptions = response.pollOptions
-              postsRef.value[key].comments = response.comments
             }
             if (response.rated && response.my_feedback) {
               postsRef.value[key].rated = response.rated
