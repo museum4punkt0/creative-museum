@@ -4,15 +4,11 @@
 }
 
 body {
-  position: relative;
-
   &.modal-open {
+    position: fixed;
     height: 100vh;
-    overflow: hidden;
-    .page-inner {
-      height: 100vh;
-      overflow: hidden;
-    }
+    width: 100vw;
+    overflow-y: hidden;
   }
 }
 

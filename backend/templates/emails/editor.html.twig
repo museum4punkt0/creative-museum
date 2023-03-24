@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <h3>{{ notification.headline }}</h3>
     {% if receiver.firstname is null or receiver.firstname is empty %}
-        <p>Hallo {{ receiver.username}},</p>
+        <p>Hallo {{ receiver.username }},</p>
     {% else %}
-        <p>Hallo {{ receiver.firstname}},</p>
-    {% endif%}
+        <p>Hallo {{ receiver.firstname }},</p>
+    {% endif %}
+
     <p>{{ notification.text }}</p>
     <p>
-        Bis gleich im Creative Museum!<br />
+        Bis gleich im Creative Museum!<br/>
         <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>
     </p>
 {% endblock %}

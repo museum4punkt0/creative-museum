@@ -13,29 +13,29 @@ class NotificationService extends CmApiService
 {
     const ENDPOINT = 'v1/notifications';
 
-    public function sendGlobalNotification(string $message): bool
+    public function sendGlobalNotification(string $message, string $headline): bool
     {
         if (empty($message)) {
             return false;
         }
-        return $this->sendNotification(['text' => $message]);
+        return $this->sendNotification(['text' => $message, 'headline' => $headline]);
     }
 
-    public function sendCampaignNotification(int $campaignId, string $message): bool
+    public function sendCampaignNotification(int $campaignId, string $message, string $headline): bool
     {
         if (empty($message)) {
             return false;
         }
-        return $this->sendNotification(['text' => $message, 'campaign' => "/v1/campaigns/{$campaignId}"]);
+        return $this->sendNotification(['text' => $message, 'headline' => $headline, 'campaign' => "/v1/campaigns/{$campaignId}"]);
     }
 
-    public function sendUserNotification(string $userUuid, string $message): bool
+    public function sendUserNotification(string $userUuid, string $message, string $headline): bool
     {
         if (empty($message) || empty($userUuid)) {
             return false;
         }
 
-        return $this->sendNotification(['text' => $message, 'receiver' => "/v1/users/{$userUuid}"]);
+        return $this->sendNotification(['text' => $message, 'headline' => $headline, 'receiver' => "/v1/users/{$userUuid}"]);
     }
 
     public function sendNotification(array $data): bool

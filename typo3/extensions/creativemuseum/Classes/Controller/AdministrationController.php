@@ -255,9 +255,14 @@ class AdministrationController extends ActionController
 
     }
 
-    public function notificationGlobalSendAction(string $message)
+    public function notificationUserCreateAction()
     {
-        $success = $this->notificationService->sendGlobalNotification($message);
+
+    }
+
+    public function notificationGlobalSendAction(string $message, string $headline)
+    {
+        $success = $this->notificationService->sendGlobalNotification($message,$headline);
         $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
         $this->redirect('notificationIndex');
     }
@@ -268,21 +273,16 @@ class AdministrationController extends ActionController
         $this->view->assign('campaigns', $campaigns);
     }
 
-    public function notificationCampaignSendAction(int $campaign, string $message)
+    public function notificationCampaignSendAction(int $campaign, string $message, string $headline)
     {
-        $success = $this->notificationService->sendCampaignNotification($campaign, $message);
+        $success = $this->notificationService->sendCampaignNotification($campaign, $message, $headline);
         $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
         $this->redirect('notificationIndex');
     }
 
-    public function notificationUserCreateAction()
+    public function notificationUserSendAction(string $user, string $message, string $headline)
     {
-
-    }
-
-    public function notificationUserSendAction(string $user, string $message)
-    {
-        $success = $this->notificationService->sendUserNotification($user, $message);
+        $success = $this->notificationService->sendUserNotification($user, $message, $headline);
         $this->addFlashMessage($success ? 'Benachrichtigung erfolgreich versendet' : 'Es ist ein Fehler aufgetreten.');
         $this->redirect('notificationIndex');
     }
