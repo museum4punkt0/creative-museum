@@ -9,11 +9,15 @@
       class="flex flex-col flex-1 h-full justify-between pr-6 pb-18 md:pb-6 pl-6"
     >
       <client-only>
+        <NoteIcon
+          v-if="fileToSubmit"
+          class="h-30 w-30 max-h-1/3 lg:max-h-48 mb-4 w-auto rounded self-center"
+        />
         <file-upload
-          ref="uploadAudio"
           v-if="!(fileToSubmit && uploadedAudio.length === 0)"
-          input-id="file1"
+          ref="uploadAudio"
           v-model="uploadedAudio"
+          input-id="file1"
           accept="audio/*"
           aria-required="true"
           extensions="wav,mp3,ogg"
@@ -78,8 +82,8 @@
         />
         <file-upload
           ref="uploadImage"
-          input-id="file2"
           v-model="images"
+          input-id="file2"
           accept="image/png,image/gif,image/jpeg"
           class="block"
           extensions="jpg,jpeg png,bmp,gif"
@@ -123,14 +127,22 @@
           </div>
         </file-upload>
       </client-only>
-      <button
-        type="submit"
-        class="btn-highlight disabled:opacity-30 mt-6 w-full mb-12 md:mb-0"
-        :disabled="disableSubmitButton"
-        @click.prevent="submitPost"
-      >
-        {{ $t('post.share') }}
-      </button>
+      <div>
+        <button
+          v-if="fileToSubmit"
+          class="btn-outline w-full"
+          @click.prevent="triggerInput"
+        >{{ $t('post.types.audio.uploader.replace') }}</button>
+        <button
+          type="submit"
+          class="btn-highlight disabled:opacity-30 w-full mb-12 md:mb-0"
+          :class="fileToSubmit ? 'mt-4' : ''"
+          :disabled="disableSubmitButton"
+          @click.prevent="submitPost"
+        >
+          {{ $t('post.share') }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -142,9 +154,11 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { postApi } from '@/api/post'
+import NoteIcon from '@/assets/icons/note.svg?inline'
 
 export default defineComponent({
   components: {
+    NoteIcon,
     FileUpload: () => import('vue-upload-component'),
   },
   emits: ['abortPost', 'closeAddModal'],
@@ -180,6 +194,15 @@ export default defineComponent({
       fileToSubmit.value = newFile
     }
 
+    function triggerInput() {
+      if (process.client) {
+        const fileInput = window.document.getElementById('file1')
+        if (fileInput !== null) {
+          fileInput.click()
+        }
+      }
+    }
+
     function inputFile(newFile: any, oldFile: any) {
       if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
         newFile.blob = ''
@@ -197,7 +220,7 @@ export default defineComponent({
       console.log('inputFilter')
       if (newFile) {
         if (!/\.(wav|mp3|ogg)$/i.test(newFile.name)) {
-          console.log('Your choice is not a picture')
+          console.log('Your choice is not a audio file')
         }
       }
     }
@@ -243,6 +266,7 @@ export default defineComponent({
       fileToSubmit,
       submitting,
       disableSubmitButton,
+      triggerInput,
       inputAudioFile,
       inputFile,
       inputUploadedAudioFile,
