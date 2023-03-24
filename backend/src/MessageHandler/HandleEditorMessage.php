@@ -75,6 +75,7 @@ class HandleEditorMessage implements MessageHandlerInterface
         $notification
             ->setReceiver($user)
             ->setText($message->getMessage())
+            ->setHeadline($message->getHeadline())
             ->setSilent(NotificationType::NONE === $user->getNotificationSettings())
             ->setEditorNotification(true);
 
@@ -101,6 +102,7 @@ class HandleEditorMessage implements MessageHandlerInterface
             $notification = new Notification();
             $notification->setReceiver($member->getUser())
                 ->setText($message->getMessage())
+                ->setHeadline($message->getHeadline())
                 ->setCampaign($campaign)
                 ->setSilent(NotificationType::NONE === $member->getUser()->getNotificationSettings())
                 ->setEditorNotification(true);
@@ -125,6 +127,7 @@ class HandleEditorMessage implements MessageHandlerInterface
             $notification = new Notification();
             $notification->setReceiver($user)
                 ->setText($message->getMessage())
+                ->setHeadline($message->getHeadline())
                 ->setSilent(NotificationType::NONE === $user->getNotificationSettings())
                 ->setEditorNotification(true);
             $this->entityManager->persist($notification);

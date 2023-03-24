@@ -28,6 +28,7 @@ class CreateEditorNotificationController extends AbstractController
     {
         $message = new EditorMessageReceived(
             $data->getText(),
+            $data->getHeadline(),
             $data->getCampaign()?->getId(),
             $data->getReceiver()?->getUuid()
         );
