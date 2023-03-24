@@ -54,7 +54,7 @@
     "skipTutorial": "Straight to Creative Museum",
     "step1": {
       "title": "Welcome to Creative Museum!",
-      "text": "The Creative Museum is a participatory platform for debate and exchange. In the following steps, we will introduce you to the most important functions."
+      "text": "The Creative Museum is a platform for exchange and debate. In the following steps, we will introduce you to the most important functions."
     },
     "step2": {
       "title": "Points",
@@ -77,7 +77,7 @@
     "profile": {
       "header": "Profile",
       "settings": "Settings",
-      "search": "Search Profiles",
+      "search": "Search Users",
       "invite": "Invite Friends"
     },
     "museum": {
@@ -142,8 +142,8 @@
         }
       },
       "playlist": {
-        "button": "Playlist",
-        "headline": "Add Playlist",
+        "button": "Collection",
+        "headline": "Add Collection",
         "noplaylists": {
           "title": "Sorry! You don't have any collections to post yet.",
           "text": "Add individual posts to a new collection via the three-point menu and give it a title. You will be able to see and post your new collection here."
@@ -159,7 +159,7 @@
       }
     },
     "share": "Share",
-    "feedback": "Feedback",
+    "feedback": "Reaction",
     "postComment": "Comment...",
     "showComments": "Show All {count} Comments",
     "hideComments": "Hide All {count} Comments",
@@ -168,13 +168,13 @@
     "actions": {
       "addBookmark": "Add to Watchlist",
       "removeBookmark": "Remove from Watchlist",
-      "addToPlaylist": "Add to Playlist",
+      "addToPlaylist": "Add to Collection",
       "assignAward": "Give Award",
       "playlist": {
         "createNew": {
-          "cta": "Create New Playlist",
-          "submitButton": "Create Playlist",
-          "placeholder": "Playlist Name"
+          "cta": "Create New Collection",
+          "submitButton": "Create Collection",
+          "placeholder": "Collection Name"
         }
       },
       "delete": {
@@ -200,9 +200,9 @@
     }
   },
   "playlist": {
-    "addTo": "Add to Playlist",
-    "createNew": "Create New Playlist",
-    "new": "New Playlist"
+    "addTo": "Add to Collection",
+    "createNew": "Create New Collection",
+    "new": "New Collection"
   },
   "points": "Points",
   "score": "Score",
@@ -222,7 +222,7 @@
         "headline": "Activities",
         "posts": "Posts",
         "bookmarks": "Watchlist",
-        "playlists": "Playlists",
+        "playlists": "Collections",
         "awards": "Awards",
         "notifications": "Latest Notifications"
       },
@@ -273,7 +273,7 @@
     }
   },
   "systemMessages": {
-    "1663764951": "Applause!!! {giver} has given {winner} the award ´{award}´"
+    "1663764951": "{giver} has given {winner} the award \"{award}\""
   },
   "awards": {
     "from": "from",
@@ -307,8 +307,8 @@
   "filter": {
     "newest": "New",
     "relevant": "Relevant",
-    "controversial": "Kontroversial",
-    "playlist": "Playlists",
+    "controversial": "Controversial",
+    "playlist": "Collections",
     "order": {
       "reverse": "Reverse Sorting Order"
     }
@@ -333,15 +333,15 @@
       },
       "instagram": {
         "title": "Instagram",
-        "url": "https://www.instagram.com/?hl=de"
+        "url": "https://www.instagram.com/badischeslandesmuseum/"
       },
       "twitter": {
         "title": "Twitter",
-        "url": "https://twitter.com/?lang=de"
+        "url": "https://twitter.com/BLM_Karlsruhe"
       },
       "facebook": {
         "title": "Facebook",
-        "url": "https://www.facebook.com/"
+        "url": "https://www.facebook.com/BadischesLandesmuseum/"
       }
     }
   },
@@ -353,46 +353,46 @@
       "campaign_closed": "Campaign %s Ended",
       "post_commented": "New Comment",
       "post_reported": "New Post Reported",
-      "post_reported_author": "Your post has been reported",
-      "system": "You have received a message from the Creative Museum",
-      "post_mention": "New post mention",
-      "comment_mention": "New comment mention",
-      "editor": "New message from the system editor"
+      "post_reported_author": "Your Post has been Reported",
+      "system": "You have eceived a message from the Creative Museum",
+      "post_mention": "New Post Mention",
+      "comment_mention": "New Comment Mention",
+      "editor": "New Message from the Creative Museum Team"
     }
   },
   "today": "Today",
   "notifications": {
     "1662032613": {
       "title": "Award Strike",
-      "text": "You have earned {points} points for giving away an award in the ´{campaign}´ campaign!"
+      "text": "You have earned {points} points for giving away an award in the \"{campaign}\" campaign!"
     },
     "1662032722": {
       "title": "Award Strike",
-      "text": "You have earned {points} points because you have been awarded an award in the ´{campaign}´ campaign!"
+      "text": "You have earned {points} points because you have been awarded an award in the \"{campaign}\" campaign!"
     },
     "1662032767": {
       "title": "Comment Score",
-      "text": "You have received {points} points for your comment in the ´{campaign}´ campaign!"
+      "text": "You have received {points} points for your comment in the \"{campaign}\" campaign!"
     },
     "1662032840": {
-      "title": "Feedback Score",
-      "text": "You have received {points} points for your feedback in the ´{campaign}´ campaign!"
+      "title": "Reaction Score",
+      "text": "You have received {points} points for your reaction in the \"{campaign}\" campaign!"
     },
     "1662032913": {
       "title": "Login Strike",
-      "text": "You have received {points} points for your login in the campaign ´{campaign}´!"
+      "text": "You have received {points} points for your login in the campaign \"{campaign}\"!"
     },
     "1662032958": {
       "title": "Post Score",
-      "text": "You have earned {points} points for your post in the ´{campaign}´ campaign!"
+      "text": "You have earned {points} points for your post in the \"{campaign}\" campaign!"
     },
     "1662033166": {
       "title": "Registration Strike",
-      "text": "You have received {points} points in the campaign ´{campaign}´ for your registration in the Creative Museum!"
+      "text": "You have received {points} points in the campaign \"{campaign}\" for your registration in the Creative Museum!"
     },
     "1662033222": {
       "title": "Voting Score",
-      "text": "You have received {points} points for your voting in the campaign ´{campaign}´!"
+      "text": "You have received {points} points for your voting in the campaign \"{campaign}\"!"
     },
     "1662033328": {
       "title": "{badge}",
@@ -400,11 +400,11 @@
     },
     "1662033370": {
       "title": "New Campaign",
-      "text": "The campaign ´{campaign}´ is available now!"
+      "text": "The campaign \"{campaign}\" is available now!"
     },
     "1662033414": {
       "title": "{award}",
-      "text": "You have received the {award} award from {awardGiver}!"
+      "text": "You have received the award {award} from {awardGiver}!"
     },
     "1662033487": {
       "title": "Welcome",

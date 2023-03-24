@@ -5,6 +5,7 @@
 
 body {
   position: relative;
+  overflow: hidden;
 
   &.modal-open {
     height: 100vh;

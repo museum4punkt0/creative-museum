@@ -15,6 +15,7 @@
       >
       </div>
       <div class="flex flex-col flex-grow">
+        <h3 v-if="notification.editorNotification">{{ notification.headline }}</h3>
         <p v-if="notification.text" class="mb-1">
           <template v-if="notification.editorNotification">
             {{ notification.text }}
