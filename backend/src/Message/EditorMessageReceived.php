@@ -15,15 +15,18 @@ class EditorMessageReceived
 {
     private string $message;
 
+    private string $headline;
+
     private ?int $campaignId;
 
     private ?string $userUuid;
 
-    public function __construct(string $message, ?int $campaignId = null, ?string $userUuid = null)
+    public function __construct(string $message, string $headline, ?int $campaignId = null, ?string $userUuid = null)
     {
         $this->message = $message;
         $this->campaignId = $campaignId;
         $this->userUuid = $userUuid;
+        $this->headline = $headline;
     }
 
     public function getCampaignId(): ?int
@@ -39,5 +42,10 @@ class EditorMessageReceived
     public function getMessage(): string
     {
         return $this->message;
+    }
+
+    public function getHeadline(): string
+    {
+        return $this->headline;
     }
 }

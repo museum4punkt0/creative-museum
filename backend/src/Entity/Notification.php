@@ -101,6 +101,10 @@ class Notification
     #[Groups(['notifications:read', 'notification:write'])]
     private ?bool $editorNotification = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['notifications:read', 'notification:write'])]
+    private ?string $headline;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -259,6 +263,18 @@ class Notification
     public function setEditorNotification(?bool $editorNotification): self
     {
         $this->editorNotification = $editorNotification;
+
+        return $this;
+    }
+
+    public function getHeadline(): ?string
+    {
+        return $this->headline;
+    }
+
+    public function setHeadline(?string $headline): self
+    {
+        $this->headline = $headline;
 
         return $this;
     }
