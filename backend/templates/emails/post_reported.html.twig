@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <p>Ein Beitrag in der Kampange {{ post.campaign.title }} wurde gemeldet!</p>
-    <p>Der Beitrag kann <a href="{{ domain }}posts/{{ post.id }}">hier</a> eingesehen werden.</p>
+    <p>Der Beitrag kann hier eingesehen werden: <a href="{{ domain }}posts/{{ post.id }}">hier</a>.</p>
+
+    <p>Bitte um Kontrolle, gegebenenfalls Löschung und Information an den*die Autor*in per Systemnachricht.</p>
+
     <p>
         Bis gleich im Creative Museum!<br />
         <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>
