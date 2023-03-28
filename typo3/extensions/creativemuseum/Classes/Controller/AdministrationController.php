@@ -24,6 +24,7 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Buttons\InputButton;
 use TYPO3\CMS\Backend\Template\Components\Buttons\LinkButton;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Page\AssetCollector;
@@ -289,6 +290,10 @@ class AdministrationController extends ActionController
 
     public function cmsContentAction()
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         $about = $this->cmsContentService->getContentForIdentifier('about');
         $faq = $this->cmsContentService->getContentForIdentifier('faq');
         $simpleLanguage = $this->cmsContentService->getContentForIdentifier('simpleLanguage');
@@ -302,6 +307,10 @@ class AdministrationController extends ActionController
 
     public function cmsContentUpdateAction(CmsContentDto $cmsContentDto)
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         $this->cmsContentService->updateContent($cmsContentDto);
         $this->addFlashMessage('Inhalte erfolgreich aktualisiert');
         $this->redirect('cmsContent');
@@ -420,6 +429,10 @@ class AdministrationController extends ActionController
      */
     public function deleteCampaignAction(CampaignDto $campaignDto)
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         $this->campaignService->removeCampaign($campaignDto);
         $this->addFlashMessage('Die Kampagne "' . $campaignDto->getTitle() . '" wurde gelöscht.');
         $this->forward('index');
@@ -431,6 +444,10 @@ class AdministrationController extends ActionController
      */
     public function userOverviewAction(?UserListFilterDto $filter = null)
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         if (null === $filter) {
             $filter = new UserListFilterDto();
         }
@@ -465,6 +482,10 @@ class AdministrationController extends ActionController
      */
     public function userDetailAction(UserDto $user, ?UserListFilterDto $filter = null): void
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         if (null === $filter) {
             $filter = new UserListFilterDto();
         }
@@ -482,6 +503,10 @@ class AdministrationController extends ActionController
      */
     public function toggleUserActiveAction(UserDto $user, ?UserListFilterDto $filter = null): void
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         if (null === $filter) {
             $filter = new UserListFilterDto();
         }
@@ -505,6 +530,10 @@ class AdministrationController extends ActionController
      */
     public function deleteUserAction(UserDto $user, UserListFilterDto $filter = null): void
     {
+        if (!$this->isAdmin()){
+            $this->throwStatus(403);
+        }
+
         if (null === $filter) {
             $filter = new UserListFilterDto();
         }
@@ -619,7 +648,14 @@ class AdministrationController extends ActionController
         $menu = $menuRegistry->makeMenu();
         $menu->setIdentifier('creativeMuseumModuleMenu');
 
-        $menuItems = ['Administration' => ['index', 'userOverview', 'postOverview', 'notificationIndex', 'cmsContent']];
+        $menuItems = ['Administration' => ['index', 'postOverview', 'notificationIndex']];
+
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        if ($context->getPropertyFromAspect('backend.user', 'isAdmin')){
+            $menuItems['Administration'][] ='userOverview';
+            $menuItems['Administration'][] ='cmsContent';
+        }
 
         foreach ($menuItems as $controller => $actions) {
             $underscoredControllerName = GeneralUtility::camelCaseToLowerCaseUnderscored($controller);
@@ -876,5 +912,12 @@ class AdministrationController extends ActionController
             ->setShowLabelText(true);
 
         $buttonBar->addButton($backButton);
+    }
+
+    private function isAdmin(): bool
+    {
+        $context = GeneralUtility::makeInstance(Context::class);
+
+        return $context->getPropertyFromAspect('backend.user', 'isAdmin');
     }
 }
