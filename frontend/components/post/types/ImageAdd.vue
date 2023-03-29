@@ -93,7 +93,7 @@
       <div class="flex flex-col flex-grow mt-4 pb-4 relative">
         <UtilitiesRichTextEditor
           v-model="postBody"
-          :placeholder="`${$t('post.placeholder.body')} *`" class="input-text flex-grow"
+          :placeholder="$t('post.placeholder.body')" class="input-text flex-grow"
           @update:modelValue="updateModelValue"/>
         <UtilitiesCountDownRichText
           :max-count="1000"
@@ -148,9 +148,7 @@ export default defineComponent({
 
     const disableSubmitButton = computed(() => {
       return (
-        files.value.length === 0 ||
-        postBody.value.length === 0 ||
-        submitting.value
+        files.value.length === 0 || submitting.value
       )
     })
 
