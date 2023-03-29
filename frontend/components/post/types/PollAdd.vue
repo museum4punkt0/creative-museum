@@ -15,7 +15,7 @@
             v-model="question"
             type="text"
             class="input-text pr-20"
-            :placeholder="$t('post.types.poll.pollTitle')"
+            :placeholder="`${$t('post.types.poll.pollTitle')} *`"
             :maxlength="100"
           />
           <UtilitiesCountDown
@@ -29,7 +29,7 @@
             v-model="description"
             type="text"
             class="input-text h-full pr-20"
-            :placeholder="$t('post.types.poll.pollDescription')"
+            :placeholder="`${$t('post.types.poll.pollDescription')} *`"
             :maxlength="100"
           />
           <UtilitiesCountDown
@@ -41,7 +41,7 @@
         <div v-for="(option, key) of options" :key="key" class="mt-4">
           <label class="block pb-1">{{
             $t('post.types.poll.option.' + key)
-          }}</label>
+          }} {{ (key < 2) ? '*' : '' }}</label>
           <div class="flex flex-row justify-between items-center">
             <div class="relative flex-1">
               <input

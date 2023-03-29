@@ -93,7 +93,7 @@
       <div class="flex flex-col flex-grow mt-4 pb-4 relative">
         <UtilitiesRichTextEditor
           v-model="postBody"
-          :placeholder="$t('post.placeholder.body')" class="input-text flex-grow"
+          :placeholder="`${$t('post.placeholder.body')} *`" class="input-text flex-grow"
           @update:modelValue="updateModelValue"/>
         <UtilitiesCountDownRichText
           :max-count="1000"

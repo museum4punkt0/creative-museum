@@ -179,10 +179,10 @@
     },
     "new": "Neuer Beitrag",
     "placeholder": {
-      "title": "Titel hinzufügen (optional)",
+      "title": "Titel hinzufügen",
       "body": "Text hinzufügen",
       "image": {
-        "alttext": "Bild-Beschreibung (optional)"
+        "alttext": "Bild-Beschreibung"
       }
     },
     "share": "Teilen",
