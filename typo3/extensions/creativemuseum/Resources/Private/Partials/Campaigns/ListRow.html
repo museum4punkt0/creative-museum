@@ -1,3 +1,5 @@
+{namespace creativemuseum=JWIED\Creativemuseum\ViewHelpers}
+
 <tr class="t3js-entity" data-l10nparent="0" data-table="be_groups" data-uid="1" title="id=1">
     <td class="col-title col-responsive nowrap">
         <a aria-label="Kampagne editieren" data-bs-original-title="Kampagne editieren"
@@ -46,13 +48,15 @@
                     </f:if>
                 </a>
             </f:if>
-            <button aria-haspopup="dialog" aria-label="Kampagne löschen" class="btn btn-default t3js-record-delete"
-                data-button-ok-text="Kampagne löschen" data-l10parent=""
-                data-message="Bist du dir sicher, dass du die Kampagne '{row.title}' löschen möchtest?"
-                data-link="{f:uri.action(action: 'deleteCampaign', arguments:{campaignDto: row.id})}"
-                title="Kampagne löschen" type="button">
-                <core:icon identifier="actions-edit-delete" size="small" />
-            </button>
+            <creativemuseum:isAdmin>
+                <button aria-haspopup="dialog" aria-label="Kampagne löschen" class="btn btn-default t3js-record-delete"
+                    data-button-ok-text="Kampagne löschen" data-l10parent=""
+                    data-message="Bist du dir sicher, dass du die Kampagne '{row.title}' löschen möchtest?"
+                    data-link="{f:uri.action(action: 'deleteCampaign', arguments:{campaignDto: row.id})}"
+                    title="Kampagne löschen" type="button">
+                    <core:icon identifier="actions-edit-delete" size="small" />
+                </button>
+            </creativemuseum:isAdmin>
         </div>
     </td>
 </tr>

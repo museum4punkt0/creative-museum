@@ -41,7 +41,7 @@
         "
         ref="feedbacksDropdown"
         :options="campaign.feedbackOptions"
-        label="Feedback"
+        :label="$t('filter.feedbacks')"
         class="ml-3 lg:ml-0"
         @dropdownState="setHeight"
         @dropdownChange="setFeedbackFilter"
