@@ -1,10 +1,3 @@
-# Förderung #
-Das Projekt museum4punkt0 wird gefördert durch die Beauftragte der Bundesregierung für Kultur und Medien aufgrund eines Beschlusses des Deutschen Bundestages. Weitere Informationen: www.museum4punkt0.de
-
-The project museum4punkt0 is funded by the Federal Government Commissioner for Culture and the Media in accordance with a resolution issued by the German Bundestag (Parliament of the Federal Republic of Germany). Further information: www.museum4punkt0.de
-![image](https://github.com/museum4punkt0/creative-museum/assets/129384233/0157ca7e-b812-4d3e-8ec0-d7716769fc99)
-
-
 # Install instructions #
 
 ## Requirements ##
