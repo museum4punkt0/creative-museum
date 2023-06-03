@@ -9,14 +9,10 @@ Das Projekt museum4punkt0 wird gefördert durch die Beauftragte der Bundesregier
 
 # Technische Dokumentation der Programmierung #
 
-## Kampagnen ##
+1. Kampagnen
 Jeder von Nutzer:innen generierte Inhalt im Creative Museum ist in thematischen Kampagnen organisiert. So können durch die Redaktion Themenräume zu aktuellen Veranstaltungen oder gesellschaftlichen Diskursen geöffnet werden.
-
-### Kampagnen-Menü ###
-Auf der Startseite können Nutzer:innen über Wischgesten einen Stapel mit verschiedenen Kampagnenkarten steuern. Jede Kampagne zeigt ein Start- und Enddatum, Titel, Beschreibung und Logos von Partnerinstitutionen der Kampagne an. Es können sowohl aktive, als auch archivierte Kampagnen angezeigt werden. Die oberste Karte ermöglicht per Tap oder Klick das Öffnen des Kampagnenfeeds.
-
-### Kampagnen-Feed ###
-Über den Feed sind alle User-Interaktionen zugänglich. Registrierte und angemeldete User können über ein Text-, Bild-, Umfrage-, Audio-, Video- und Sammlungs-Modul Inhalte posten und alle Inhalte über ein Voting-, Reaktions-, und Kommentar-Modul bewerten oder kommentieren. Inhalte können zusätzliche in Sammlungen gespeichert werden und als solche zusammen mit anderen als eigenes Content-Modul gepostet werden.
+- Kampagnen-Menü: Auf der Startseite können Nutzer:innen über Wischgesten einen Stapel mit verschiedenen Kampagnenkarten steuern. Jede Kampagne zeigt ein Start- und Enddatum, Titel, Beschreibung und Logos von Partnerinstitutionen der Kampagne an. Es können sowohl aktive, als auch archivierte Kampagnen angezeigt werden. Die oberste Karte ermöglicht per Tap oder Klick das Öffnen des Kampagnenfeeds.
+- Kampagnen-Feed: Über den Feed sind alle User-Interaktionen zugänglich. Registrierte und angemeldete User können über ein Text-, Bild-, Umfrage-, Audio-, Video- und Sammlungs-Modul Inhalte posten und alle Inhalte über ein Voting-, Reaktions-, und Kommentar-Modul bewerten oder kommentieren. Inhalte können zusätzliche in Sammlungen gespeichert werden und als solche zusammen mit anderen als eigenes Content-Modul gepostet werden.
 
 ## Content-Module ##
 Alle Content-Module sind mit begrenzter Inhaltslänge verfügbar. Jedes Modul kann unterschiedliche Pflichtfelder haben. Bild- und Video-Module verfügen über einen Alternativtextfeld.
