@@ -123,25 +123,24 @@ ddev frontend-dev
 ```
 
 # Benutzung #
-
-Start Screen: Kampagnenauswahl und Öffnen des Feeds
-Einführung in die Kampagne: Der/Die Nutzer:in liest den Einführungstext zur Kampagne und versteht den thematischen Rahmen.
-Content-Module: Der/Die Nutzer:in sieht die unterschiedlichen Beitragsarten und vertieft sich in einzelne Beiträge.
-Onboarding I: Alle Inhalte sind frei zugänglich. Der/Die Nutzer:in möchte sich zu einem Beitrag verhalten. Durch Tap oder anklicken eines Interaktionsmoduls wird das Login-Overlay mit der Aufforderung zur Registrierung angezeigt.
-Onboarding II: Registrierung des Nutzer:innenaccounts per Double Opt-in oder Social Media Login und Reward durch Login-Strike mit erstem Punktegewinn.
-Onboarding III: In den vier Onboarding-Overlays wird die grundsätzliche Funktionsweise der App beschrieben.
-Content-Beitrag oder Feedback: Der/die Nutzer:in entscheidet sich, die vorgegebenen Feedback-Funktionen zu nutzen oder trägt selbst Inhalte zum Feed bei. Jede Aktion bringt Punkte.
-Nutzer:innenprofile: Der/Die Nutzer:in sieht sich Profile andere Nutzer:innen an und erhält einen Überblick über die unterschiedlichen Fortschritte im Creative Museum.
-Onboarding IV: Gewinn des ersten Badges und Aufforderung weitere Punkte durch Interaktion zu erhalten, um höhere Fortschritte freizuschalten.
-Sammlung-Modul: Ansehen der hervorgehobenen Sammlung-Beiträge im Feed. Erkennen der Funktion und Anlegen einer eigenen Sammlung.
-Notifications und e-Mails: Der/Die Nutzer:in erhält in seiner/ihrer Abwesenheit eine E-Mail mit der Benachrichtigung, dass er/sie einen Award durch einen/eine anderen/andere Nutzer:in erhalten hat. Er/Sie kehrt über die Web-App ins Creative Museum zurück und sieht sich den Award und den/die Nutzer:in an.
-Award-Vergabe: Durch weitere Interaktion wird ein erster Award zur eigenen Vergabe freigeschaltet. Der/Die Nutzer:in vergibt ihn an einen/eine anderen/andere Nutzer:in und erhält dafür weitere Punkte. 
-Ein Motivationskreislauf von vergebenen und erhaltenen Awards, Punkten, Kommentaren, Votings und Reaktionen entsteht. 
-Finale einer Kampagne: Der/Die Nutzer:in erhält eine E-Mail und In-App Notification durch die Redaktion, dass die Kampagne bald endet und wird aufgefordert, noch nicht vergeben Awards zu verschenken.
-Abschluss einer Kampagne: Per E-Mail und In-App Notification wird das Ende einer Kampagne verkündet. Der/Die Nutzer:in öffnet den Feed, um das finale Kampagnenranking anzusehen. Beiträge sind nicht mehr möglich. Der/Die Nutzer:in kann weiterhin alle Inhalte ansehen und filtern oder sortieren.
-Neue Kampagne: Der/Die Nutzer:in wird per auf eine neue Kampagne aufmerksam gemacht und sieht sich die Beschreibung an, um seinen/ihren Beitrag zu verfassen oder andere zu kommentieren.
-Nutzer:innenprofil: Das Profil ist über die obere Bedienleiste immer erreichbar und bietet folgende Funktionen: Namen eintragen/ändern, Bild/Avatar aufnehmen oder hochladen, Persönliche Daten eintragen/ändern, Persönliche Benachrichtigungen (Erhaltene Kommentare, Awards und Badges, gemeldete Beiträge) aktivieren/deaktivieren, Creative Museum Benachrichtigungen (Neue Kampagne verfügbar, Kampagne beendet) aktivieren/deaktivieren, Profil löschen.
-Hauptmenü: Das Profil ist über die obere Bedienleiste immer erreichbar und bietet folgende Funktionen: Profil (Einstellungen ansehen/ändern, Profil suchen, Freunde einladen), Creative Museum (Über Creative Museum lesen, Erste Schritte ansehen, FAQ lesen), Sprachauswahl einstellen (Deutsch/Englisch), Leichte Sprache Text lesen, DGS Video ansehen.
+1. Start Screen: Kampagnenauswahl und Öffnen des Feeds
+2. Einführung in die Kampagne: Der/Die Nutzer:in liest den Einführungstext zur Kampagne und versteht den thematischen Rahmen.
+3. Content-Module: Der/Die Nutzer:in sieht die unterschiedlichen Beitragsarten und vertieft sich in einzelne Beiträge.
+4. Onboarding I: Alle Inhalte sind frei zugänglich. Der/Die Nutzer:in möchte sich zu einem Beitrag verhalten. Durch Tap oder anklicken eines Interaktionsmoduls wird das Login-Overlay mit der Aufforderung zur Registrierung angezeigt.
+5. Onboarding II: Registrierung des Nutzer:innenaccounts per Double Opt-in oder Social Media Login und Reward durch Login-Strike mit erstem Punktegewinn.
+6. Onboarding III: In den vier Onboarding-Overlays wird die grundsätzliche Funktionsweise der App beschrieben.
+7. Content-Beitrag oder Feedback: Der/die Nutzer:in entscheidet sich, die vorgegebenen Feedback-Funktionen zu nutzen oder trägt selbst Inhalte zum Feed bei. Jede Aktion bringt Punkte.
+8. Nutzer:innenprofile: Der/Die Nutzer:in sieht sich Profile andere Nutzer:innen an und erhält einen Überblick über die unterschiedlichen Fortschritte im Creative Museum.
+9. Onboarding IV: Gewinn des ersten Badges und Aufforderung weitere Punkte durch Interaktion zu erhalten, um höhere Fortschritte freizuschalten.
+10. Sammlung-Modul: Ansehen der hervorgehobenen Sammlung-Beiträge im Feed. Erkennen der Funktion und Anlegen einer eigenen Sammlung.
+11. Notifications und e-Mails: Der/Die Nutzer:in erhält in seiner/ihrer Abwesenheit eine E-Mail mit der Benachrichtigung, dass er/sie einen Award durch einen/eine anderen/andere Nutzer:in erhalten hat. Er/Sie kehrt über die Web-App ins Creative Museum zurück und sieht sich den Award und den/die Nutzer:in an.
+12. Award-Vergabe: Durch weitere Interaktion wird ein erster Award zur eigenen Vergabe freigeschaltet. Der/Die Nutzer:in vergibt ihn an einen/eine anderen/andere Nutzer:in und erhält dafür weitere Punkte. 
+13. Ein Motivationskreislauf von vergebenen und erhaltenen Awards, Punkten, Kommentaren, Votings und Reaktionen entsteht. 
+14. Finale einer Kampagne: Der/Die Nutzer:in erhält eine E-Mail und In-App Notification durch die Redaktion, dass die Kampagne bald endet und wird aufgefordert, noch nicht vergeben Awards zu verschenken.
+15. Abschluss einer Kampagne: Per E-Mail und In-App Notification wird das Ende einer Kampagne verkündet. Der/Die Nutzer:in öffnet den Feed, um das finale Kampagnenranking anzusehen. Beiträge sind nicht mehr möglich. Der/Die Nutzer:in kann weiterhin alle Inhalte ansehen und filtern oder sortieren.
+16. Neue Kampagne: Der/Die Nutzer:in wird per auf eine neue Kampagne aufmerksam gemacht und sieht sich die Beschreibung an, um seinen/ihren Beitrag zu verfassen oder andere zu kommentieren.
+17. Nutzer:innenprofil: Das Profil ist über die obere Bedienleiste immer erreichbar und bietet folgende Funktionen: Namen eintragen/ändern, Bild/Avatar aufnehmen oder hochladen, Persönliche Daten eintragen/ändern, Persönliche Benachrichtigungen (Erhaltene Kommentare, Awards und Badges, gemeldete Beiträge) aktivieren/deaktivieren, Creative Museum Benachrichtigungen (Neue Kampagne verfügbar, Kampagne beendet) aktivieren/deaktivieren, Profil löschen.
+18. Hauptmenü: Das Profil ist über die obere Bedienleiste immer erreichbar und bietet folgende Funktionen: Profil (Einstellungen ansehen/ändern, Profil suchen, Freunde einladen), Creative Museum (Über Creative Museum lesen, Erste Schritte ansehen, FAQ lesen), Sprachauswahl einstellen (Deutsch/Englisch), Leichte Sprache Text lesen, DGS Video ansehen.
 
 # Credits #
 Auftraggeberin/Rechteinhaberin: Badisches Landesmuseum Karlsruhe
