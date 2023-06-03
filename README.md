@@ -9,58 +9,32 @@ Das Projekt museum4punkt0 wird gefördert durch die Beauftragte der Bundesregier
 
 # Technische Dokumentation der Programmierung #
 
-1. Kampagnen
+## Kampagnen ##
 Jeder von Nutzer:innen generierte Inhalt im Creative Museum ist in thematischen Kampagnen organisiert. So können durch die Redaktion Themenräume zu aktuellen Veranstaltungen oder gesellschaftlichen Diskursen geöffnet werden.
 - Kampagnen-Menü: Auf der Startseite können Nutzer:innen über Wischgesten einen Stapel mit verschiedenen Kampagnenkarten steuern. Jede Kampagne zeigt ein Start- und Enddatum, Titel, Beschreibung und Logos von Partnerinstitutionen der Kampagne an. Es können sowohl aktive, als auch archivierte Kampagnen angezeigt werden. Die oberste Karte ermöglicht per Tap oder Klick das Öffnen des Kampagnenfeeds.
 - Kampagnen-Feed: Über den Feed sind alle User-Interaktionen zugänglich. Registrierte und angemeldete User können über ein Text-, Bild-, Umfrage-, Audio-, Video- und Sammlungs-Modul Inhalte posten und alle Inhalte über ein Voting-, Reaktions-, und Kommentar-Modul bewerten oder kommentieren. Inhalte können zusätzliche in Sammlungen gespeichert werden und als solche zusammen mit anderen als eigenes Content-Modul gepostet werden.
 
 ## Content-Module ##
 Alle Content-Module sind mit begrenzter Inhaltslänge verfügbar. Jedes Modul kann unterschiedliche Pflichtfelder haben. Bild- und Video-Module verfügen über einen Alternativtextfeld.
-
-### Text-Modul ###
-Inhalte über das Text-Modul können als formatierter Text mit begrenzter Zeichenanzahl und Titel im Feed angezeigt werden.
- 
-### Bild-Modul ###
-Bild-Inhalte können formatunabhängig verwendet werden. Die angezeigte Größe richtet sich nach der Bildbreite.
-
-### Umfrage-Modul ###
-Für das Umfrage-Modul sind, neben Frage und Beschreibungstext, zwischen zwei und fünf Antwort-Vorgaben möglich. Nach der Auswahl einer Option wird der Zwischenstand der Umfrage angezeigt. 
- 
-### Audio-Modul ###
-Audio-Inhalte können als Datei in den Feed geladen oder direkt aufgenommen werden. Optional kann dem Audio-Inhalt ein Bild/Cover hinzugefügt werden.
- 
-### Video-Modul ###
-Video-Inhalte können aus der Medien-Bibliothek des Smartphones, dem Datei-Browser ausgewählt oder direkt aufgenommen werden.
- 
-### Sammlung-Modul ###
-Über die Beitragsoptionen eines jeden Posts kann jeder Inhaltstyp zu Sammlungen hinzugefügt werden. Nutzer:innen können so Beiträge von verschiedenen anderen Nutzer:innen und von sich selbst zu einem selbstgewählten Thema zusammentragen. Voneinander unabhängig kreierte Inhalte erhalten so eine neue Bedeutung. 
+- Text-Modul: Inhalte über das Text-Modul können als formatierter Text mit begrenzter Zeichenanzahl und Titel im Feed angezeigt werden.
+- Bild-Modul: Bild-Inhalte können formatunabhängig verwendet werden. Die angezeigte Größe richtet sich nach der Bildbreite.
+- Umfrage-Modul: Für das Umfrage-Modul sind, neben Frage und Beschreibungstext, zwischen zwei und fünf Antwort-Vorgaben möglich. Nach der Auswahl einer Option wird der Zwischenstand der Umfrage angezeigt.
+- Audio-Modul: Audio-Inhalte können als Datei in den Feed geladen oder direkt aufgenommen werden. Optional kann dem Audio-Inhalt ein Bild/Cover hinzugefügt werden.
+- Video-Modul: Video-Inhalte können aus der Medien-Bibliothek des Smartphones, dem Datei-Browser ausgewählt oder direkt aufgenommen werden.
+- Sammlung-Modul: Über die Beitragsoptionen eines jeden Posts kann jeder Inhaltstyp zu Sammlungen hinzugefügt werden. Nutzer:innen können so Beiträge von verschiedenen anderen Nutzer:innen und von sich selbst zu einem selbstgewählten Thema zusammentragen. Voneinander unabhängig kreierte Inhalte erhalten so eine neue Bedeutung. 
 
 ## Interaktionsmodule ##
 Neben eigenen Inhalten, können Nutzer:innen auf die Inhalte anderer reagieren. Inhalte können nach ihrer Relevanz bewertet, mit einer Reaktion oder mit Text kommentiert werden. Über die Sortieren-Funktionen können die einnzelnen Bewertungskriterien ab- oder aufsteigend sortiert werden.
- 
-### Relevanz-Modul ### 
-Inhalte können über ein hoch/runter Icon nach Relevanz bewertet werden. So können Nutzer:innen Einfluss auf alle Inhalte nehmen. Beiträge der Redaktion werden so einer ehrlichen Prüfung der Community unterzogen. Der kuratorische Einfluss wird aufgehoben.
- 
-### Kommentar-Modul ###
-Nutzer:innen können Inhalte mit Text und Emojis kommentieren. So kann ein freier Diskurs über die Beiträge entstehen und niedrigschwellige Feedbacks wie Relevanz-Voting und Reaktionen differenziert werden.
- 
-### Reaktion-Modul ###
-Die Redaktion kann fünf vorgegebene direkte Reaktionen einstellen. Nutzer*innen können so mit einem Tap oder Klick einen Beitrag inhaltlich bewerten. Die vorgegebenen Reaktionen können sich inhaltlich auf das Kampagnenthema beziehen und bilden so eine Klammer zwischen Kampagnenthema und Funktionen.
+- Relevanz-Modul: Inhalte können über ein hoch/runter Icon nach Relevanz bewertet werden. So können Nutzer:innen Einfluss auf alle Inhalte nehmen. Beiträge der Redaktion werden so einer ehrlichen Prüfung der Community unterzogen. Der kuratorische Einfluss wird aufgehoben.
+- Kommentar-Modul: Nutzer:innen können Inhalte mit Text und Emojis kommentieren. So kann ein freier Diskurs über die Beiträge entstehen und niedrigschwellige Feedbacks wie Relevanz-Voting und Reaktionen differenziert werden.
+- Reaktion-Modul: Die Redaktion kann fünf vorgegebene direkte Reaktionen einstellen. Nutzer*innen können so mit einem Tap oder Klick einen Beitrag inhaltlich bewerten. Die vorgegebenen Reaktionen können sich inhaltlich auf das Kampagnenthema beziehen und bilden so eine Klammer zwischen Kampagnenthema und Funktionen.
 
 ## Game-Engine ## 
-Alle Aktionen der User:innen im Creative Museum generieren Punkte, die den spielerischen Wettbewerb innerhalb der Kampagnen entscheiden. Am Ende einer Kampagne entscheiden die verschenkten Awards an andere Nutzer:innen. 
-                  
-### Punkte ###
-Über das CMS-Plugin kann die Redaktion Punktelevel für die zu erreichenden Badges und Awards einstellen. Dadurch lässt sich die Dramaturgie auf die Laufzeit einer Kampagne anpassen.
- 
-### Badges ###
-Titel und Icons von Badges und Awards lassen sich im CMS-Plugin einstellen. Je nach Thematik kann die Redaktion hierdurch die Tonalität der Kampagne bestimmen. Ob witzig oder ernst framen Titel und Icons der Badges und Awards die kommunikative Richtung einer Kampagne. Badges fungieren als Meilensteine der Beteiligung von Nutzer:innen. Der zuletzt erreichte Badge wird als Status neben dem Nutzer:innennamen im Profil angezeigt. Der Status mit höheren Badge-Levels motiviert andere Nutzer:innen zur stärkeren Beteiligung.
- 
-### Awards ###
-Höhere Punktelevels schalten Awards frei. Awards können dann durch Nutzer*innen an andere Nutzer*innen verschenkt werden. Je nach Titel des Awards, können damit Komplimente verteilt werden, aber auch Kritik geäußert werden.
- 
-### Score ###
-Punkte sind die Währung im Creative Museum. Die Punkte sind mit den Accounts der Nutzer:innen verknüpft. Die Punkte können so perspektivisch mit realen Angeboten einer Institution verknüpft werden. Z.B. als Zahlungsmittel für Shop, Onlineshop, Ticketoffice oder exklusive Zusatzfeatures in Ausstellungen freischalten.
+Alle Aktionen der User:innen im Creative Museum generieren Punkte, die den spielerischen Wettbewerb innerhalb der Kampagnen entscheiden. Am Ende einer Kampagne entscheiden die verschenkten Awards an andere Nutzer:innen.
+- Punkte: Über das CMS-Plugin kann die Redaktion Punktelevel für die zu erreichenden Badges und Awards einstellen. Dadurch lässt sich die Dramaturgie auf die Laufzeit einer Kampagne anpassen.
+- Badges: Titel und Icons von Badges und Awards lassen sich im CMS-Plugin einstellen. Je nach Thematik kann die Redaktion hierdurch die Tonalität der Kampagne bestimmen. Ob witzig oder ernst framen Titel und Icons der Badges und Awards die kommunikative Richtung einer Kampagne. Badges fungieren als Meilensteine der Beteiligung von Nutzer:innen. Der zuletzt erreichte Badge wird als Status neben dem Nutzer:innennamen im Profil angezeigt. Der Status mit höheren Badge-Levels motiviert andere Nutzer:innen zur stärkeren Beteiligung.
+- Awards: Höhere Punktelevels schalten Awards frei. Awards können dann durch Nutzer*innen an andere Nutzer*innen verschenkt werden. Je nach Titel des Awards, können damit Komplimente verteilt werden, aber auch Kritik geäußert werden.
+- Score: Punkte sind die Währung im Creative Museum. Die Punkte sind mit den Accounts der Nutzer:innen verknüpft. Die Punkte können so perspektivisch mit realen Angeboten einer Institution verknüpft werden. Z.B. als Zahlungsmittel für Shop, Onlineshop, Ticketoffice oder exklusive Zusatzfeatures in Ausstellungen freischalten.
 
 # Install instructions #
 
