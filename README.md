@@ -27,14 +27,17 @@ Alle Content-Module sind mit begrenzter Inhaltslänge verfügbar. Jedes Modul ka
 Neben eigenen Inhalten, können Nutzer:innen auf die Inhalte anderer reagieren. Inhalte können nach ihrer Relevanz bewertet, mit einer Reaktion oder mit Text kommentiert werden. Über die Sortieren-Funktionen können die einnzelnen Bewertungskriterien ab- oder aufsteigend sortiert werden.
 - Relevanz-Modul: Inhalte können über ein hoch/runter Icon nach Relevanz bewertet werden. So können Nutzer:innen Einfluss auf alle Inhalte nehmen. Beiträge der Redaktion werden so einer ehrlichen Prüfung der Community unterzogen. Der kuratorische Einfluss wird aufgehoben.
 - Kommentar-Modul: Nutzer:innen können Inhalte mit Text und Emojis kommentieren. So kann ein freier Diskurs über die Beiträge entstehen und niedrigschwellige Feedbacks wie Relevanz-Voting und Reaktionen differenziert werden.
-- Reaktion-Modul: Die Redaktion kann fünf vorgegebene direkte Reaktionen einstellen. Nutzer*innen können so mit einem Tap oder Klick einen Beitrag inhaltlich bewerten. Die vorgegebenen Reaktionen können sich inhaltlich auf das Kampagnenthema beziehen und bilden so eine Klammer zwischen Kampagnenthema und Funktionen.
+- Reaktion-Modul: Die Redaktion kann fünf vorgegebene direkte Reaktionen einstellen. Nutzer:innen können so mit einem Tap oder Klick einen Beitrag inhaltlich bewerten. Die vorgegebenen Reaktionen können sich inhaltlich auf das Kampagnenthema beziehen und bilden so eine Klammer zwischen Kampagnenthema und Funktionen.
 
 ## Game-Engine ## 
 Alle Aktionen der User:innen im Creative Museum generieren Punkte, die den spielerischen Wettbewerb innerhalb der Kampagnen entscheiden. Am Ende einer Kampagne entscheiden die verschenkten Awards an andere Nutzer:innen.
 - Punkte: Über das CMS-Plugin kann die Redaktion Punktelevel für die zu erreichenden Badges und Awards einstellen. Dadurch lässt sich die Dramaturgie auf die Laufzeit einer Kampagne anpassen.
 - Badges: Titel und Icons von Badges und Awards lassen sich im CMS-Plugin einstellen. Je nach Thematik kann die Redaktion hierdurch die Tonalität der Kampagne bestimmen. Ob witzig oder ernst framen Titel und Icons der Badges und Awards die kommunikative Richtung einer Kampagne. Badges fungieren als Meilensteine der Beteiligung von Nutzer:innen. Der zuletzt erreichte Badge wird als Status neben dem Nutzer:innennamen im Profil angezeigt. Der Status mit höheren Badge-Levels motiviert andere Nutzer:innen zur stärkeren Beteiligung.
-- Awards: Höhere Punktelevels schalten Awards frei. Awards können dann durch Nutzer*innen an andere Nutzer*innen verschenkt werden. Je nach Titel des Awards, können damit Komplimente verteilt werden, aber auch Kritik geäußert werden.
+- Awards: Höhere Punktelevels schalten Awards frei. Awards können dann durch Nutzer:innen an andere Nutzer:innen verschenkt werden. Je nach Titel des Awards, können damit Komplimente verteilt werden, aber auch Kritik geäußert werden.
 - Score: Punkte sind die Währung im Creative Museum. Die Punkte sind mit den Accounts der Nutzer:innen verknüpft. Die Punkte können so perspektivisch mit realen Angeboten einer Institution verknüpft werden. Z.B. als Zahlungsmittel für Shop, Onlineshop, Ticketoffice oder exklusive Zusatzfeatures in Ausstellungen freischalten.
+
+## Nutzer:innenprofil ##
+tbc
 
 # Install instructions #
 
