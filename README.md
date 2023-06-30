@@ -124,6 +124,11 @@ ddev frontend-dev
 Auftraggeberin/Rechteinhaberin: Badisches Landesmuseum Karlsruhe
 Urheber:innen: Christiane Lindner, Johannes Bernhardt, anschlaege.de, jwied
 
+# Markenname # 
+„Creative Museum“ ist eine Marke des Badischen Landesmuseums Karlsruhe. Die Marke kann von anderen gemeinnützigen Körperschaften für Software genutzt werden, die auf dem veröffentlichten Code (Repositorium) basiert. In diesem Fall wird um Angabe des folgenden Nachweises gebeten:
+
+„Creative Museum“ ist eine Marke des Badischen Landesmuseums Karlsruhe."
+
 # Lizenz # 
 Creative Museum Copyright © 2023 Badisches Landesmuseum Karlsruhe; entwickelt von Badisches Landesmuseum Karlsruhe, Christiane Lindner, Johannes Bernhardt, anschlaege.de und jwied, im Rahmen des Verbundprojekts museum4punkt0.
 In allen Referenzen auf die Software muss das folgende Copyright genannt werden:
