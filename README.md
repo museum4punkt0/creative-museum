@@ -42,7 +42,7 @@ Alle Aktionen der User:innen im Creative Museum generieren Punkte, die den spiel
 - Score: Punkte sind die Währung im Creative Museum. Die Punkte sind mit den Accounts der Nutzer:innen verknüpft. Die Punkte können so perspektivisch mit realen Angeboten einer Institution verknüpft werden. Z.B. als Zahlungsmittel für Shop, Onlineshop, Ticketoffice oder exklusive Zusatzfeatures in Ausstellungen freischalten.
 
 ## Nutzer:innenprofil ##
-tbc
+Für die aktive Teilnahme am Creative Museum erstellen User*:innen ein Profil. Hier werden ihre erstellten Inhalte, Sammlungen und Merkliste, sowie die erspielten Punkte, Badges und Awards angezeigt. Userprofile sind öffentlich einsehbar. User:innen können sich mit Profilbild und Profilbeschreibung anderen vorstellen.
 
 # Install instructions #
 
