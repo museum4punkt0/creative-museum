@@ -10,7 +10,7 @@ api_platform:
                 name: Authorization
                 type: header
     eager_loading:
-        max_joins: 10
+        max_joins: 20
     defaults:
         pagination_items_per_page: 30
 

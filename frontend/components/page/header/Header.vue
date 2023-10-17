@@ -13,7 +13,7 @@
       </NuxtLink>
       <button
         v-show="isAddButtonVisible"
-        class="add-btn absolute left-1/2 -translate-x-1/2 block rounded-full border border-white h-6 w-6 text-white focus:outline-none focus-visible:border-$highlight focus-visible:text-$highlight"
+        class="add-btn absolute left-1/2 -translate-x-1/2 block rounded-full bg-$highlight border border-$highlight h-6 w-6 text-white focus:outline-none focus-visible:border-$highlight focus-visible:text-$highlight"
         :class="isAddVisible ? 'visible' : ''"
         :aria-label="$t('post.new')"
         @click.prevent="

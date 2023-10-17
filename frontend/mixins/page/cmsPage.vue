@@ -19,8 +19,16 @@ div /deep/ .content {
       @apply text-$highlight;
     }
   }
-  ul li {
-    @apply mb-6;
+  ol, ul {
+    li {
+      @apply mb-6;
+    }
+  }
+  ol {
+    @apply list-decimal pl-[26px];
+  }
+  ul {
+    @apply list-disc pl-[18px];
   }
 }
 </style>

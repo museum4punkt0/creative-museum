@@ -61,23 +61,23 @@
     "skipTutorial": "Direkt ins Creative Museum",
     "step1": {
       "title": "Willkommen im Creative Museum!",
-      "text": "Das Creative Museum ist eine Plattform für Austausch und Debatte. Wir stellen Dir in den folgenden Schritten die wichtigsten Funktionen vor."
+      "text": "Das Creative Museum ist die neue Partizipationsplattform des Badischen Landesmuseums. Angelehnt an die sozialen Medien bietet es einen digitalen Raum für Austausch und Debatte."
     },
     "step2": {
-      "title": "Punkte",
-      "text": "Mit allen Aktionen, die du hier im Creative Museum machst, sammelst du Punkte. Deine Punkte kannst Du später für Awards einlösen, die Du an andere User verschenkst. Also los geht’s: Fang an zu sammeln!"
+      "title": "Beiträge erstellen",
+      "text": "Die Debatten sind für alle Interessierten offen! In thematischen Feeds kannst Du Dir Beiträge von anderen ansehen, eigene Inhalte teilen oder per Voting, Reaktion und Kommentar direkt in die Diskussion einsteigen."
     },
     "step3": {
-      "title": "Beiträge erstellen",
-      "text": "Im Creative Museum kannst Du Deine eigenen Inhalte teilen und mit anderen interagieren. Poste einen Bild-, Text-, Video- oder Audiobeitrag, eine eigene Umfrage oder erstelle eine Sammlung aus mehreren Beiträgen!"
+      "title": "Punkte erhalten",
+      "text": "Mit Deinen Interaktionen generierst Du Punkte und erhältst Badges als Auszeichnungen für Deinen Fortschritt. Deine Punkte kannst Du für Awards einlösen, die Du an andere Nutzer*innen verleihen kannst."
     },
     "step4": {
-      "title": "Awards",
-      "text": "Du kannst in jeder Kampagne verschiedene Awards freischalten und diese dann an andere Teilnehmer*innen verleihen, indem Du Deine erspielten Punkte einlöst."
+      "title": "Awards verleihen",
+      "text": "Mit dem Verschenken von Awards kannst Du anderen Nutzer*innen Deine Wertschätzung zeigen. Am Ende einer Debatte werden die Nutzer*innen, die die meisten Awards verschenkt haben, in einer Bestenliste veröffentlicht."
     },
     "step5": {
-      "title": "Badges",
-      "text": "Badges werden Dir verliehen, indem Du verschiedenste Aktivitäten im Creative Museum durchführst. Versuche es doch gleich mal und vergib Dein Votings bei drei Posts!"
+      "title": "Nutzer*innenprofile ansehen",
+      "text": "Bei der Registrierung erstellst Du Dein eigenes Nutzer*innenprofil. Deine Beiträge, Punkte, Badges und Awards werden darin gespeichert und sind öffentlich einsehbar. Du kannst Dir die Profile von anderen Nutzer*innen ansehen und Dich mit ihnen vernetzen."
     }
   },
   "profile": {
@@ -96,7 +96,7 @@
     "profile": {
       "header": "Profil",
       "settings": "Einstellungen",
-      "search": "User suchen",
+      "search": "Profil suchen",
       "invite": "Freunde einladen"
     },
     "museum": {
@@ -107,7 +107,8 @@
     },
     "language": {
       "easyLanguage": "Leichte Sprache",
-      "signLanguage": "Deutsche Gebärdensprache (DGS)"
+      "signLanguage": "Deutsche Gebärdensprache (DGS)",
+      "accessibility": "Erklärung zur Barrierefreiheit"
     }
   },
   "post": {
@@ -172,8 +173,8 @@
         "button": "Sammlung",
         "headline": "Sammlung hinzufügen",
         "noplaylists": {
-          "title": "Tut uns leid! Aktuell hast du noch keine Sammlungen, die Du posten könntest.",
-          "text": "Füge einzelne Beiträge direkt über das Dreipunktemenü zu einer neuen Sammlung hinzu und gib ihr einen Titel. Schon kannst du hier Deine neue Sammlung sehen und posten."
+          "title": "Tut uns leid! Aktuell hast Du noch keine Sammlungen, die Du posten könntest.",
+          "text": "Füge einzelne Beiträge direkt über das Dreipunktemenü zu einer neuen Sammlung hinzu und gib ihr einen Titel. Schon kannst Du hier Deine neue Sammlung sehen und posten."
         }
       }
     },
@@ -182,7 +183,7 @@
       "title": "Titel hinzufügen",
       "body": "Text hinzufügen",
       "image": {
-        "alttext": "Bild-Beschreibung"
+        "alttext": "Beschreibung für Personen mit Sehbehinderung"
       }
     },
     "share": "Teilen",
@@ -197,8 +198,8 @@
     "moreActions": "Weitere Aktionen",
     "actions": {
       "button": "Weitere Aktionen",
-      "addBookmark": "Hinzufügen zur Merkliste",
-      "removeBookmark": "Von Merkliste entfernen",
+      "addBookmark": "Zur Merkliste hinzufügen",
+      "removeBookmark": "Von der Merkliste entfernen",
       "addToPlaylist": "Zu Sammlung hinzufügen",
       "assignAward": "Award verleihen",
       "playlist": {
@@ -250,7 +251,7 @@
         "headline": "Badges"
       },
       "activities": {
-        "headline": "Aktivitäten",
+        "headline": "Profil",
         "posts": "Beiträge",
         "bookmarks": "Merkliste",
         "playlists": "Sammlungen",
@@ -270,7 +271,7 @@
           }
         },
         "activities": {
-          "headline": "Meine Aktivitäten"
+          "headline": "Profil"
         },
         "edit": {
           "personalData": "Persönliche Einstellungen",
@@ -309,7 +310,7 @@
       }
     },
     "systemMessages": {
-      "1663764951": "{giver} hat {winner} den Award, \"{award}\", verliehen"
+      "1663764951": "{giver} hat {winner} den Award \"{award}\" verliehen"
     }
   },
   "awards": {
@@ -338,7 +339,7 @@
     }
   },
   "badges": {
-    "detailHeadline": "Badges",
+    "detailHeadline": "Badge",
     "linkToCatalog": "Objekt im Digitalen Katalog anzeigen"
   },
   "filter": {
@@ -362,7 +363,7 @@
       "title": "Dein Profil"
     },
     "privacy": {
-      "title": "Datenschutz"
+      "title": "Datenschutzerklärung"
     },
     "privacySettings": {
       "title": "Datenschutz-Einstellungen"
@@ -384,13 +385,21 @@
         "title": "Suche nach Nutzer*innen"
       }
     },
-    "signLanguage" : {
+    "signLanguage": {
       "title": "Deutsche Gebärdensprache"
     },
-    "simpleLanguage" : {
+    "simpleLanguage": {
       "title": "Einfache Sprache"
     },
     "external": {
+      "accessibility": {
+        "title": "Erklärung zur Barrierefreiheit",
+        "url": "https://www.landesmuseum.de/erklaerung-zur-barrierefreiheit"
+      },
+      "termsOfUse": {
+        "title": "Nutzungsbedingungen",
+        "url": "https://www.landesmuseum.de/nutzungsbedingungen"
+      },
       "stateMuseum": {
         "title": "Badisches Landesmuseum",
         "url": "https://www.landesmuseum.de/museum"
@@ -438,7 +447,7 @@
     },
     "1662032722": {
       "title": "Award Strike",
-      "text": "Du hast {points} Punkte erhalten, weil dir ein Award in der Kampagne \"{campaign}\" verliehen wurde!"
+      "text": "Du hast {points} Punkte erhalten, weil Dir ein Award in der Kampagne \"{campaign}\" verliehen wurde!"
     },
     "1662032767": {
       "title": "Kommentar Score",
@@ -482,7 +491,7 @@
     },
     "1662033562": {
       "title": "Beitrag gemeldet",
-      "text": "Danke für deine Meldung! Wir prüfen den Beitrag auf Unangemessenheit."
+      "text": "Danke für Deine Meldung! Wir prüfen den Beitrag auf Unangemessenheit."
     },
     "1662114392": {
       "title": "Beitrag gemeldet",
@@ -491,7 +500,9 @@
     "1662114293": {
       "title": "{award}",
       "text": "Du hast den Award {award} an {awardWinner} vergeben!"
-    }
+    },
+    "openBadgeDetails": "Schau Dir Dein Badge hier an...",
+    "openAwardDetails": "Schau Dir Deinen Award hier an..."
   },
   "modal": {
     "close": "Schließen",

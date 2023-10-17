@@ -1,12 +1,13 @@
 <template>
-  <div class="lg:grid lg:grid-cols-12 lg:gap-4 ">
-    <div v-if="$auth.loggedIn" class="lg:col-span-3 lg:pr-10 lg:order-1 mb-6 lg:mb-0">
-      <SidebarLeft />
-    </div>
-    <div :class="['content', $auth.loggedIn ? 'lg:col-span-9 lg:pr-10 lg:order-2' : 'lg:col-span-12']">
+  <div class="grid lg:grid-cols-12 lg:gap-4">
+    {{ /* Content */ }}
+    <div class="content col-span-12 pt-5 lg:pt-0">
       <div class="my-3" v-html="signLanguage" />
+      <PageVideo v-if="video" :video="video" />
     </div>
-    <div v-if="!isLargerThanLg || !$auth.loggedIn" :class="['lg:col-span-12' ,$auth.loggedIn ? 'xl:hidden' : '']">
+
+    {{ /* Footer */ }}
+    <div class="col-span-12">
       <PageFooter />
     </div>
   </div>
@@ -19,6 +20,7 @@ import { cmsApi } from '~/api/cms'
 
 export default defineComponent({
   mixins: [cmsPage],
+  name: 'SignLanguagePage',
   setup() {
     const store = useStore()
     const { fetchSignLanguage } = cmsApi()
@@ -30,14 +32,16 @@ export default defineComponent({
     })
 
     const signLanguage = ref(null)
+    const video = ref(null)
 
     useMeta({
       title: i18n.t('pages.signLanguage.title') + ' | ' + i18n.t('pageTitle')
     })
 
     async function getSignLanguagePage() {
-      const aboutData = await fetchSignLanguage()
-      signLanguage.value = JSON.parse(aboutData.content)
+      const data = await fetchSignLanguage()
+      signLanguage.value = JSON.parse(data.content)
+      video.value = JSON.parse(data.video)
     }
 
     onMounted(() => {
@@ -49,6 +53,7 @@ export default defineComponent({
 
     return {
       signLanguage,
+      video,
       isLargerThanLg
     }
   },

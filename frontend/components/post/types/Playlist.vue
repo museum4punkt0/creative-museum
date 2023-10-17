@@ -1,7 +1,11 @@
 <template>
   <div v-if="post.linkedPlaylist">
+    <div class="block leading-5 pt-2">
+      <span class="align-top h-5 inline-block mx-0.5 w-5"><PlaylistIcon /></span>
+      <span class="align-top inline-block leading-5 text-sm">{{ $t('post.types.playlist.button') }}</span>
+    </div>
     <button
-      class="text-2xl py-2 block"
+      class="block py-2 text-left text-2xl w-full"
       @click.prevent="!post.disableLink && onShowPlaylist()"
     >
       {{ post.linkedPlaylist.title }}
@@ -35,8 +39,12 @@
 <script>
 import { defineComponent, ref, reactive } from '@nuxtjs/composition-api'
 import { playlistApi } from '@/api/playlist'
+import PlaylistIcon from '@/assets/icons/playlist.svg?inline'
 
 export default defineComponent({
+  components: {
+    PlaylistIcon,
+  },
   props: {
     post: {
       type: Object,
