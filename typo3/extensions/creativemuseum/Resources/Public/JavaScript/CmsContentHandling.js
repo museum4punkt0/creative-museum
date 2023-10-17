@@ -12,6 +12,7 @@ define(['jquery', 'TYPO3/CMS/Backend/Modal', 'ckeditor'], function($, Modal, CKE
             'faq-html-rte',
             'simplelanguage-html-rte',
             'signlanguage-html-rte',
+            'accessibility-html-rte',
             'imprint-html-rte',
         ];
 

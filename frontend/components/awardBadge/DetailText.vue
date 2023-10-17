@@ -5,15 +5,15 @@
     <h1 class="text-2xl">{{ title }}</h1>
     <div v-if="formattedShortDescription !== formattedDescription">
       <p v-html="showLongDesc ? formattedDescription : formattedShortDescription" />
-      <button class="text-$highlight text-sm mt-2" @click.prevent="showLongDesc = ! showLongDesc">{{ showLongDesc ? $t('readLess') : $t('readMore') }}</button>
+      <button class="text-$highlight text-sm mt-4" @click.prevent="showLongDesc = ! showLongDesc">{{ showLongDesc ? $t('readLess') : $t('readMore') }}</button>
     </div>
     <div v-else>
       <p v-html="formattedDescription" />
     </div>
-    <div v-if="type === 'Award'" class="text-$highlight">
+    <div v-if="type === 'Award'" class="text-$highlight mt-4">
       {{ price.toLocaleString() + ' ' + $t('points') }}
     </div>
-    <a v-if="link && showLongDesc" :href="link" class="link-arrow block mt-2" target="_blank">{{ $t('badges.linkToCatalog') }}</a>
+    <a v-if="link" :href="link" class="link-arrow block mt-4" target="_blank">{{ $t('badges.linkToCatalog') }}</a>
   </div>
 </template>
 <script>

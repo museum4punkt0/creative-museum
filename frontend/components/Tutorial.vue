@@ -6,6 +6,7 @@
       }}</button>
     </div>
     <div class="box-shadow-mobile relative m-6 lg:m-0 p-6 text-center">
+      {{ /* Step 1 */ }}
       <div v-show="step === 1">
         <div class="h-30">
           <Logo class="text-white/50 h-20 mx-auto my-6" />
@@ -16,7 +17,27 @@
         </div>
         <div class="absolute left-6 bottom-6 text-color1 text-sm">1/5</div>
       </div>
+
+      {{ /* Step 2 */ }}
       <div v-show="step === 2">
+        <div class="h-30">
+          <div class="lg:inline-block max-w-full">
+            <div
+              class="box-shadow px-4 py-2 rounded-none flex flex-row items-end justify-center"
+            >
+              <img src="/images/tutorialCreate.png" class="mx-auto" height="45" width="259" />
+            </div>
+          </div>
+        </div>
+        <div class="text-left mb-10">
+          <h2>{{ $t('tutorial.step2.title') }}</h2>
+          <p>{{ $t('tutorial.step2.text') }}</p>
+        </div>
+        <div class="absolute left-6 bottom-6 text-color1 text-sm">2/5</div>
+      </div>
+
+      {{ /* Step 3 */ }}
+      <div v-show="step === 3">
         <div class="h-30">
           <div class="lg:max-w-1/2 mx-auto">
             <div
@@ -30,21 +51,13 @@
           </div>
         </div>
         <div class="text-left mb-10">
-          <h2>{{ $t('tutorial.step2.title') }}</h2>
-          <p>{{ $t('tutorial.step2.text') }}</p>
-        </div>
-        <div class="absolute left-6 bottom-6 text-color1 text-sm">2/5</div>
-      </div>
-      <div v-show="step === 3">
-        <div class="h-30">
-          <img src="/images/tutorialCreate.svg" class="text-white/50 h-20 mx-auto my-6" />
-        </div>
-        <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step3.title') }}</h2>
           <p>{{ $t('tutorial.step3.text') }}</p>
         </div>
         <div class="absolute left-6 bottom-6 text-color1 text-sm">3/5</div>
       </div>
+
+      {{ /* Step 4 */ }}
       <div v-show="step === 4">
         <div class="h-30">
           <img src="/images/tutorialAward.svg" class="mx-auto my-6 max-h-30" />
@@ -55,9 +68,11 @@
         </div>
         <div class="absolute left-6 bottom-6 text-color1 text-sm">4/5</div>
       </div>
+
+      {{ /* Step 5 */ }}
       <div v-show="step === 5">
-        <div class="h-30">
-          <img src="/images/tutorialBadge.svg" class="mx-auto my-6 max-h-30" />
+        <div>
+          <img src="/images/tutorialBadge.png" class="mx-auto mt-[.563rem] mb-[.5rem] max-h-[7.938rem]" />
         </div>
         <div class="text-left mb-10">
           <h2>{{ $t('tutorial.step5.title') }}</h2>
@@ -65,6 +80,7 @@
         </div>
         <div class="absolute left-6 bottom-6 text-color1 text-sm">5/5</div>
       </div>
+
     </div>
     <div>
       <div class="p-6 mt-10">

@@ -295,12 +295,19 @@ class AdministrationController extends ActionController
         }
 
         $about = $this->cmsContentService->getContentForIdentifier('about');
+        $aboutVideo = $this->cmsContentService->getVideoForIdentifier('about');
         $faq = $this->cmsContentService->getContentForIdentifier('faq');
+        $faqVideo = $this->cmsContentService->getVideoForIdentifier('faq');
         $simpleLanguage = $this->cmsContentService->getContentForIdentifier('simpleLanguage');
+        $simpleLanguageVideo = $this->cmsContentService->getVideoForIdentifier('simpleLanguage');
         $signLanguage = $this->cmsContentService->getContentForIdentifier('signLanguage');
+        $signLanguageVideo = $this->cmsContentService->getVideoForIdentifier('signLanguage');
+        $accessibility = $this->cmsContentService->getContentForIdentifier('accessibility');
+        $accessibilityVideo = $this->cmsContentService->getVideoForIdentifier('accessibility');
         $imprint = $this->cmsContentService->getContentForIdentifier('imprint');
+        $imprintVideo = $this->cmsContentService->getVideoForIdentifier('imprint');
 
-        $cmsContentDto = new CmsContentDto($about, $simpleLanguage, $signLanguage, $faq, $imprint);
+        $cmsContentDto = new CmsContentDto($about, $aboutVideo, $simpleLanguage,$simpleLanguageVideo, $signLanguage,$signLanguageVideo, $faq,$faqVideo, $imprint,$imprintVideo, $accessibility, $accessibilityVideo);
 
         $this->view->assign('cmsContentDto', $cmsContentDto);
     }

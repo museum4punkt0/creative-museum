@@ -24,11 +24,16 @@ export const cmsApi = () => {
     return await $api.get(`cms_contents/simpleLanguage`)
   }
 
+  async function fetchAccessibility() {
+    return await $api.get(`cms_contents/accessibility`)
+  }
+
   return {
     fetchImprint,
     fetchAbout,
     fetchFaq,
     fetchSignLanguage,
-    fetchSimpleLanguage
+    fetchSimpleLanguage,
+    fetchAccessibility
   }
 }

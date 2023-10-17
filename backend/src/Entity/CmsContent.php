@@ -34,6 +34,9 @@ class CmsContent
     #[ORM\Column(type: Types::TEXT)]
     private string $content = '';
 
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $video = '';
+
     #[ORM\ManyToOne]
     private ?MediaObject $mediaObject = null;
 
@@ -62,6 +65,18 @@ class CmsContent
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(string $video): self
+    {
+        $this->video = $video;
 
         return $this;
     }

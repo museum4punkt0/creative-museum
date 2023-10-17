@@ -136,6 +136,7 @@
         <SignLanguageIcon class="w-6 h-6 mr-4" />
         <NuxtLink to="/signLanguage" @click.native="closeMenu">{{ $t('navigation.language.signLanguage') }}</NuxtLink>
       </div>
+
     </div>
   </nav>
 </template>

@@ -54,30 +54,30 @@
     "skipTutorial": "Straight to Creative Museum",
     "step1": {
       "title": "Welcome to Creative Museum!",
-      "text": "The Creative Museum is a platform for exchange and debate. In the following steps, we will introduce you to the most important functions."
+      "text": "Creative Museum is Badisches Landesmuseum's new participation platform. Inspired by social media, it offers a digital space for exchange and debate."
     },
     "step2": {
-      "title": "Points",
-      "text": "With all your actions in the Creative Museum, you collect points. You can later spend your points on awards to give away to other users. So here we go: Start collecting!"
+      "title": "Create Posts",
+      "text": "The debates are open to everyone who is interested! In thematic feeds you can view posts from others, share your own content or directly join the discussion via voting, reaction and comment."
     },
     "step3": {
-      "title": "Create Posts",
-      "text": "In the Creative Museum, you can share your own content and interact with others. Post a picture, text, video or audio contribution, your own survey or create a playlist from several contributions!"
+      "title": "Earn Points",
+      "text": "With your interactions you generate points and receive badges as rewards for your progress. You can exchange your points for awards that you can give to other users."
     },
     "step4": {
-      "title": "Awards",
-      "text": "You can unlock different awards in each campaign by collecting points and then awarding them to other participants"
+      "title": "Give Awards",
+      "text": "By giving awards you can show your appreciation to other users. At the end of a debate, the users who have given the most awards will be published in a leaderboard."
     },
     "step5": {
-      "title": "Badges",
-      "text": "Badges are awarded to you by completing various activities in Creative Museum. Why not try it now and comment on three posts!"
+      "title": "View User Profiles",
+      "text": "When you register, you create your own user profile. Your posts, points, badges and awards are stored in it and are publicly viewable. You can view the profiles of other users and network with them."
     }
   },
   "navigation": {
     "profile": {
       "header": "Profile",
       "settings": "Settings",
-      "search": "Search Users",
+      "search": "Search Profile",
       "invite": "Invite Friends"
     },
     "museum": {
@@ -88,7 +88,8 @@
     },
     "language": {
       "easyLanguage": "Easy German Language",
-      "signLanguage": "German Sign Language (DGS)"
+      "signLanguage": "German Sign Language (DGS)",
+      "accessibility": "Accessibility declaration"
     }
   },
   "post": {
@@ -152,10 +153,10 @@
     },
     "new": "New Post",
     "placeholder": {
-      "title": "Add Title (optional)",
+      "title": "Add Title",
       "body": "Add Text",
       "image": {
-        "alttext": "Visual description (optional)"
+        "alttext": "Description for persons with visual impairment"
       }
     },
     "share": "Share",
@@ -219,7 +220,7 @@
         "headline": "Badges"
       },
       "activities": {
-        "headline": "Activities",
+        "headline": "Profile",
         "posts": "Posts",
         "bookmarks": "Watchlist",
         "playlists": "Collections",
@@ -239,7 +240,7 @@
           }
         },
         "activities": {
-          "headline": "My Activities"
+          "headline": "Profile"
         },
         "edit": {
           "personalData": "Personal Data",
@@ -268,7 +269,7 @@
     "newPosts": "New Posts",
     "closed": {
       "result": {
-        "description": "This campaign \"{campaign}\" has ended. The users who have given the most awards are:"
+        "description": "The campaign \"{campaign}\" has ended. The users who have given the most awards are:"
       }
     }
   },
@@ -301,7 +302,7 @@
     }
   },
   "badges": {
-    "detailHeadline": "Badges",
+    "detailHeadline": "Badge",
     "linkToCatalog": "Show Object in Digital Catalog"
   },
   "filter": {
@@ -319,7 +320,7 @@
       "title": "Imprint"
     },
     "privacy": {
-      "title": "Privacy"
+      "title": "Privacy Statement"
     },
     "privacySettings": {
       "title": "Privacy Settings"
@@ -328,6 +329,14 @@
       "title": "Accessibility Statement"
     },
     "external": {
+      "accessibility": {
+        "title": "Accessibility declaration",
+        "url": "https://www.landesmuseum.de/en/declaration-on-accessibility"
+      },
+      "termsOfUse": {
+        "title": "Terms Of Use",
+        "url": "https://www.landesmuseum.de/nutzungsbedingungen"
+      },
       "stateMuseum": {
         "title": "Badisches Landesmuseum",
         "url": "https://www.landesmuseum.de/en/museum"
@@ -355,7 +364,7 @@
       "post_commented": "New Comment",
       "post_reported": "New Post Reported",
       "post_reported_author": "Your Post has been Reported",
-      "system": "You have eceived a message from the Creative Museum",
+      "system": "You have received a message from the Creative Museum",
       "post_mention": "New Post Mention",
       "comment_mention": "New Comment Mention",
       "editor": "New Message from the Creative Museum Team"
@@ -422,6 +431,8 @@
     "1662114293": {
       "title": "{award}",
       "text": "You have given the {award} award to {awardWinner}!"
-    }
+    },
+    "openBadgeDetails": "View your badge here",
+    "openAwardDetails": "View your award here"
   }
 }

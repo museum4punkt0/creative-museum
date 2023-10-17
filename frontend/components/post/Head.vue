@@ -68,17 +68,17 @@
             <li class="my-6">
               <button
                 class="block btn-right"
-                @click.prevent="openAdditionalPage('awardAssign')"
+                @click.prevent="openAdditionalPage('playlistSelection')"
               >
-                {{ $t('post.actions.assignAward') }}
+                {{ $t('post.actions.addToPlaylist') }}
               </button>
             </li>
             <li class="my-6">
               <button
                 class="block btn-right"
-                @click.prevent="openAdditionalPage('playlistSelection')"
+                @click.prevent="openAdditionalPage('awardAssign')"
               >
-                {{ $t('post.actions.addToPlaylist') }}
+                {{ $t('post.actions.assignAward') }}
               </button>
             </li>
             <li

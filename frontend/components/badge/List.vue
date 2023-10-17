@@ -1,12 +1,13 @@
 <template>
-  <div v-if="$auth.loggedIn && badges && badges.length">
+  <div v-if="(!$auth.loggedIn && badges && badges.length) || ($auth.loggedIn && badgesAndAchievements.length) || ($auth.loggedIn && badges && badges.length && !campaign)">
     <div class="flex flex-row justify-between mb-10">
       <h2 class="text-2xl">{{ $t('user.profile.badges.headline') }}</h2>
       <button
         v-if="
           ($auth.loggedIn && !user  && (!campaign && $auth.user.achievements.length > 2)) ||
           (campaign && badgesAndAchievements.length > 2) ||
-          (user && user.achievements.length > 2)
+          (user && user.achievements.length > 2) ||
+          (!user && !$auth.loggedIn && badges.length > 2)
         "
         class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer whitespace-nowrap border border-transparent rounded-xl p-1 -mt-1 -mb-1 focus-visible:border focus-visible:border-white"
         @click.prevent="showMoreBadges = !showMoreBadges"
@@ -20,12 +21,12 @@
       </button>
     </div>
     <div v-if="user">
-        <div v-for="(achievement, key) in badges" :key="key">
-          <div v-if="key < 2 || showMoreBadges">
-            <BadgeItem :badge="achievement.badge" />
-          </div>
+      <div v-for="(achievement, key) in badges" :key="key">
+        <div v-if="key < 2 || showMoreBadges">
+          <BadgeItem :badge="achievement.badge" />
         </div>
       </div>
+    </div>
     <div v-else-if="($auth.loggedIn && !campaign) || user">
       <div v-for="(achievement, key) in $auth.user.achievements" :key="key">
         <div v-if="key < 2 || showMoreBadges">
@@ -109,8 +110,6 @@ export default defineComponent({
       badges.value.forEach(function (item) {
         if (achievementIds.value.includes(item.id)) {
           badgesAndAchievements.value = [item, ...badgesAndAchievements.value]
-        } else if (props.campaign && !props.campaign.closed) {
-          badgesAndAchievements.value = [...badgesAndAchievements.value, item]
         }
       })
     })
