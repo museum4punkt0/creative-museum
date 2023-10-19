@@ -5,9 +5,8 @@
     {% else %}
         <p>Hallo {{ receiver.firstname}},</p>
     {% endif%}
-    <p>Dein Beitrag in der Kampange {{ post.campaign.title }} wurde gemeldet!</p>
-    <p>Wir werden den Beitrag überprüfen und ihn gegebenenfalls entfernen.</p>
-    <p>Du kannst Dir Deinen Beitrag hier ansehen: <a href="{{ domain }}posts/{{ post.id }}">hier</a>
+    <p>Dein Beitrag in der Kampagne {{ post.campaign.title }} wurde gemeldet!</p>
+    <p>Wir werden den Beitrag überprüfen und ihn gegebenenfalls entfernen. Du kannst Dir Deinen Beitrag hier ansehen: <a href="{{ domain }}posts/{{ post.id }}">hier</a></p>
     <p>
         Bis gleich im Creative Museum!<br />
         <a href="{{ domain }}">creativemuseum.landesmuseum.de</a>

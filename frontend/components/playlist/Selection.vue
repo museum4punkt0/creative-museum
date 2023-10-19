@@ -2,7 +2,7 @@
   <div class="flex flex-col flex-1">
     <div v-show="step === 1" class="flex flex-col flex-1">
       <div v-if="headline" class="page-header px-6">
-        <a class="back-btn" @click="backLink">{{ $t('playlist.addTo') }}</a>
+        <button class="back-btn" @click="backLink">{{ $t('playlist.addTo') }}</button>
       </div>
       <div class="p-6 grid grid-cols-2 gap-6 mx-h-lg">
         <template v-if="'playlists' in $auth.user">
@@ -30,9 +30,9 @@
     <div v-show="step === 2" class="flex flex-col flex-1 justify-between">
       <div>
         <div class="p-6 page-header">
-          <a class="back-btn" @click="backLink">{{
+          <button class="back-btn" @click="backLink">{{
             $t('playlist.createNew')
-          }}</a>
+          }}</button>
         </div>
         <div class="p-6">
           <input

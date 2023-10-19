@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col flex-1">
     <div class="page-header px-6 self-start">
-      <a class="back-btn" @click.prevent="$emit('closeModal')">
+      <button class="back-btn" @click.prevent="$emit('closeModal')">
         {{ $t('awards.select') }}
-      </a>
+      </button>
     </div>
     <div v-if="availableAwards && availableAwards.length" class="p-6">
       <h2 class="text-$highlight text-sm mb-2">

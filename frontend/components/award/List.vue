@@ -8,6 +8,20 @@
   >
     <div class="flex flex-row justify-between mb-10">
       <h2 class="text-2xl">{{ $t('campaign.awards') }}</h2>
+      <button
+        v-if="
+          (!$auth.loggedIn && unavailableAwards.length > 3)
+        "
+        class="highlight-text text-sm flex flex-row items-center leading-none cursor-pointer border border-transparent rounded-xl p-1 -mt-1 -mb-1 focus-visible:border focus-visible:border-white"
+        @click.prevent="showMoreAwards = !showMoreAwards"
+      >
+        <ArrowIcon
+          class="relative w-2 top-0 mr-0.5 inline-block transition-all duration-200"
+          :class="showMoreAwards ? 'transform-gpu rotate-180' : ''"
+        />
+        <span v-if="!showMoreAwards">{{ $t('showAll') }}</span>
+        <span v-else>{{ $t('hide') }}</span>
+      </button>
     </div>
     <div v-if="availableAwards.length" class="mb-6">
       <h2 class="text-$highlight text-sm mb-2">
@@ -32,11 +46,13 @@
             : $t('awards.loginToReceiveAwards')
         }}
       </h2>
-      <ul>
-        <li>
-          <AwardItem
-            :award="unavailableAwards[0]"
-          />
+      <ul v-if="unavailableAwards">
+        <li v-for="(award, key) in unavailableAwards" :key="key">
+          <div v-if="key < 3 || showMoreAwards">
+            <AwardItem
+              :award="award"
+            />
+          </div>
         </li>
       </ul>
     </div>
@@ -70,7 +86,7 @@
             />
           </div>
         </li>
-    </ul>
+      </ul>
     </div>
     <div v-if="receivedAwards.length" class="mb-6">
       <div class="flex flex-row justify-between">
@@ -143,6 +159,7 @@ export default defineComponent({
     const receivedAwards = ref([])
     const showMoreGifted = ref(false)
     const showMoreReceived = ref(false)
+    const showMoreAwards = ref(false)
 
     onMounted(async () => {
       await fetchAllAwards()
@@ -191,6 +208,7 @@ export default defineComponent({
       receivedAwards,
       showMoreGifted,
       showMoreReceived,
+      showMoreAwards,
       fetchAllAwards,
     }
   },

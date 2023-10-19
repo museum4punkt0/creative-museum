@@ -2,9 +2,9 @@
   <div :style="styleAttr" class="flex flex-col flex-1 justify-between h-full">
     <template v-if="mode === 'detail'">
       <div class="page-header px-6 self-start">
-        <a class="back-btn" @click.prevent="$emit('closeAwardDetail')">
+        <button class="back-btn" @click.prevent="$emit('closeAwardDetail')">
           {{ $t('awards.detailHeadline') }}
-        </a>
+        </button>
       </div>
       <div class="flex-1">
         <div class="box-shadow relative m-6">
@@ -29,9 +29,9 @@
     </template>
     <template v-if="mode === 'giveaway'">
       <div class="page-header px-6 pb-0">
-        <a class="back-btn" @click.prevent="mode = 'detail'">
+        <button class="back-btn" @click.prevent="mode = 'detail'">
           {{ $t('selectProfile') }}
-        </a>
+        </button>
       </div>
 
       <div class="relative px-6 flex-auto">

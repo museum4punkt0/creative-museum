@@ -1,13 +1,13 @@
 <template>
-  <div class="grid lg:grid-cols-12 lg:gap-4">
-    {{ /* Content */ }}
-    <div class="content col-span-12 pt-5 lg:pt-0">
-      <div class="my-3" v-html="faq" />
+  <div class="lg:grid lg:grid-cols-12 lg:gap-4 ">
+    <div v-if="$auth.loggedIn" class="lg:col-span-3 lg:pr-10 lg:order-1 mb-6 lg:mb-0">
+      <SidebarLeft />
+    </div>
+    <div :class="['content', $auth.loggedIn ? 'lg:col-span-9 lg:pr-10 lg:order-2' : 'lg:col-span-12']">
+      <div class="my-3" v-html="accessibility" />
       <PageVideo v-if="video" :video="video" />
     </div>
-
-    {{ /* Footer */ }}
-    <div class="col-span-12">
+    <div v-if="!isLargerThanLg || !$auth.loggedIn" :class="['lg:col-span-12' ,$auth.loggedIn ? 'xl:hidden' : '']">
       <PageFooter />
     </div>
   </div>
@@ -20,10 +20,10 @@ import { cmsApi } from '~/api/cms'
 
 export default defineComponent({
   mixins: [cmsPage],
-  name: 'FaqPage',
+  name: 'AccessibilityPage',
   setup() {
     const store = useStore()
-    const { fetchFaq } = cmsApi()
+    const { fetchAccessibility } = cmsApi()
 
     const { $breakpoints, i18n } = useContext()
 
@@ -31,29 +31,28 @@ export default defineComponent({
       return $breakpoints.lLg
     })
 
-    const faq = ref(null)
+    const accessibility = ref(null)
     const video = ref(null)
 
     useMeta({
-      title: i18n.t('pages.faq.title') + ' | ' + i18n.t('pageTitle')
+      title: i18n.t('pages.accessibility.title') + ' | ' + i18n.t('pageTitle')
     })
 
-    async function getFaqPage() {
-      const data = await fetchFaq()
-      faq.value = JSON.parse(data.content)
+    async function getAccessibilityPage() {
+      const data = await fetchAccessibility()
+      accessibility.value = JSON.parse(data.content)
       video.value = JSON.parse(data.video)
     }
 
     onMounted(() => {
-      getFaqPage()
+      getAccessibilityPage()
     })
 
     store.dispatch('hideAddButton')
     store.dispatch('setCurrentCampaign', null)
 
-
     return {
-      faq,
+      accessibility,
       video,
       isLargerThanLg
     }

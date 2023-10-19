@@ -54,6 +54,8 @@
             }}
           </template>
         </p>
+        <BadgeItem v-if="notification.badge" :badge="notification.badge" :link-only="true" />
+        <AwardItem v-if="notification.award" :award="notification.award" :link-only="true" />
       </div>
     </div>
     <button id="notificationCloseButton" class="btn-outline mx-6 mt-6" :class="notificationCount === 1 ? 'mb-6 mb-safe' : ''" @click.prevent="markNotificationAsViewed">

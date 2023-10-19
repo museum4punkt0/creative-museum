@@ -148,9 +148,7 @@ export default defineComponent({
 
     const disableSubmitButton = computed(() => {
       return (
-        files.value.length === 0 ||
-        postBody.value.length === 0 ||
-        submitting.value
+        files.value.length === 0 || submitting.value
       )
     })
 

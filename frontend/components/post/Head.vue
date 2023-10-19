@@ -68,17 +68,17 @@
             <li class="my-6">
               <button
                 class="block btn-right"
-                @click.prevent="openAdditionalPage('awardAssign')"
+                @click.prevent="openAdditionalPage('playlistSelection')"
               >
-                {{ $t('post.actions.assignAward') }}
+                {{ $t('post.actions.addToPlaylist') }}
               </button>
             </li>
             <li class="my-6">
               <button
                 class="block btn-right"
-                @click.prevent="openAdditionalPage('playlistSelection')"
+                @click.prevent="openAdditionalPage('awardAssign')"
               >
-                {{ $t('post.actions.addToPlaylist') }}
+                {{ $t('post.actions.assignAward') }}
               </button>
             </li>
             <li
@@ -153,7 +153,7 @@
           >
             <div>
               <div class="page-header px-6">
-                <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.delete.headline') }}</a>
+                <button class="back-btn" @click="additionalPage = false">{{ $t('post.actions.delete.headline') }}</button>
               </div>
               <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
                 {{ $t('post.actions.delete.confirmation') }}
@@ -183,7 +183,7 @@
           >
             <div>
               <div class="page-header px-6">
-                <a class="back-btn" @click="additionalPage = false">{{ $t('post.actions.report.headline') }}</a>
+                <button class="back-btn" @click="additionalPage = false">{{ $t('post.actions.report.headline') }}</button>
               </div>
               <div class="box-shadow-mobile relative m-6 lg:m-0 p-6">
                 {{ $t('post.actions.report.confirmation') }}

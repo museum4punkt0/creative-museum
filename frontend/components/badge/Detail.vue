@@ -1,9 +1,9 @@
 <template>
   <div :style="styleAttr" class="flex flex-col flex-1 justify-between h-full">
     <div class="page-header px-6 self-start">
-      <a class="back-btn" @click.prevent="$emit('closebadgeDetail')">
+      <button @click.prevent="$emit('closebadgeDetail')">
         {{ $t('badges.detailHeadline') }}
-      </a>
+      </button>
     </div>
     <div class="flex-1">
       <div class="box-shadow relative m-6">

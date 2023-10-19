@@ -211,11 +211,9 @@ h3 {
 }
 
 .add-btn {
-  box-shadow: 0 0 1px 0 theme('colors.white') inset,
-    0 0 1px 0 theme('colors.white');
   @apply transform duration-200 ease-in-out -translate-x-1/2 cursor-pointer
-    before:(block content-[''] w-px h-4 bg-current absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
-    after:(block content-[''] w-4 h-px bg-current absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
+    before:(block content-[''] w-px h-[1.063rem] bg-contrast absolute top-1/2 transform -translate-x-px translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
+    after:(block content-[''] w-[1.063rem] h-px bg-contrast absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
   &:hover {
     @apply rotate-180 scale-125;
   }
@@ -226,8 +224,8 @@ h3 {
 
 .add-btn-inline {
   @apply inline-block transform duration-200 ease-in-out -translate-x-1/2
-  before:(block content-[''] w-px h-4 bg-current absolute top-1/2 transform -translate-x-px  translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
-  after:(block content-[''] w-4 h-px bg-current absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
+    before:(block content-[''] w-px h-4 bg-current absolute top-1/2 transform -translate-x-px translate-x-[-.5px] left-1/2 -translate-y-1/2 transition-all duration-200)
+    after:(block content-[''] w-4 h-px bg-current absolute top-1/2 transform translate-y-[-.5px] left-1/2 -translate-x-1/2);
 }
 
 .close-btn {
@@ -242,7 +240,7 @@ h3 {
 }
 
 .back-btn {
-  @apply relative pl-10 block;
+  @apply relative pl-10 block focus-visible:text-$highlight focus-visible:before:bg-$highlight focus-visible:after:border-$highlight;
   &:before {
     @apply content-[''] block absolute w-6 h-[3px] bg-white left-0 top-1/2 transform -translate-y-[-3px];
   }
@@ -366,7 +364,7 @@ h3 {
 // **********************************************************************************
 .tooltip {
   display: block !important;
-  z-index: 10000;
+  z-index: 10;
   font-size: 11px;
 }
 

@@ -7,8 +7,8 @@
   >
     <div class="flex flex-col flex-1 h-full justify-between">
       <div class="page-header px-6">
-        <a class="back-btn" @click.prevent="showLogin = false">
-          {{ $t('globalLogin.header') }}</a
+        <button class="back-btn" @click.prevent="showLogin = false">
+          {{ $t('globalLogin.header') }}</button
         >
       </div>
       <div class="p-6">

@@ -6,8 +6,8 @@
   >
     <form v-show="!showDeleteUser" class="px-6 pb-6">
       <div class="page-header">
-        <a class="back-btn" @click.prevent="showProfileUpdate = false">
-          {{ $t('globalProfileUpdate.header') }}</a
+        <button class="back-btn" @click.prevent="showProfileUpdate = false">
+          {{ $t('globalProfileUpdate.header') }}</button
         >
       </div>
       <client-only>
@@ -273,9 +273,9 @@
     >
       <div>
         <h1 class="page-header">
-          <a class="back-btn" @click.prevent="showDeleteUser = false">
+          <button class="back-btn" @click.prevent="showDeleteUser = false">
             {{ $t('globalProfileUpdate.deleteUser.header') }}
-          </a>
+          </button>
         </h1>
         <div class="box-shadow-mobile p-6 md:p-0 mb-4">
           <p class="text-xl mb-4">

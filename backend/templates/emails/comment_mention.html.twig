@@ -5,9 +5,8 @@
     {% else %}
         <p>Hallo {{ receiver.firstname}},</p>
     {% endif%}
-    <p>{{ post.parent.author.username }}} hat Dich in einem Kommentar erwähnt.</p>
     <p>
-        Schau Dir den Kommentar hier an: <a href="{{ domain }}posts/{{ post.parent.id }}#comment-{{ post.id }}">hier</a>
+        {{ post.parent.author.username }} hat Dich in einem Kommentar erwähnt. Schau Dir den Kommentar hier an: <a href="{{ domain }}posts/{{ post.parent.id }}#comment-{{ post.id }}">hier</a>
     </p>
 
     <p>

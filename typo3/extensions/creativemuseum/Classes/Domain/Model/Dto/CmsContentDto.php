@@ -9,34 +9,62 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class CmsContentDto extends AbstractEntity
 {
     protected string $aboutHtml = '';
+    protected string $aboutVideo = '';
 
     protected string $simpleLanguageHtml = '';
+    protected string $simpleLanguageVideo = '';
 
     protected string $signLanguageHtml = '';
+    protected string $signLanguageVideo = '';
 
     protected string $faqHtml = '';
+    protected string $faqVideo = '';
 
     protected string $imprintHtml = '';
+    protected string $imprintVideo = '';
 
+    protected string $accessibilityHtml = '';
+    protected string $accessibilityVideo = '';
     /**
      * @param string $aboutHtml
+     * @param string $aboutVideo
      * @param string $simpleLanguageHtml
+     * @param string $simpleLanguageVideo
      * @param string $signLanguageHtml
+     * @param string $signLanguageVideo
      * @param string $faqHtml
+     * @param string $faqVideo
      * @param string $imprintHtml
+     * @param string $imprintVideo
+     * @param string $accessibilityHtml
+     * @param string $accessibilityVideo
      */
     public function __construct(
         string $aboutHtml = '',
+        string $aboutVideo = '',
         string $simpleLanguageHtml = '',
+        string $simpleLanguageVideo = '',
         string $signLanguageHtml = '',
+        string $signLanguageVideo = '',
         string $faqHtml = '',
-        string $imprintHtml = ''
+        string $faqVideo = '',
+        string $imprintHtml = '',
+        string $imprintVideo = '',
+        string $accessibilityHtml = '',
+        string $accessibilityVideo = ''
     ) {
         $this->aboutHtml = $aboutHtml;
+        $this->aboutVideo = $aboutVideo;
         $this->simpleLanguageHtml = $simpleLanguageHtml;
+        $this->simpleLanguageVideo = $simpleLanguageVideo;
         $this->signLanguageHtml = $signLanguageHtml;
+        $this->signLanguageVideo = $signLanguageVideo;
         $this->faqHtml = $faqHtml;
+        $this->faqVideo = $faqVideo;
         $this->imprintHtml = $imprintHtml;
+        $this->imprintVideo = $imprintVideo;
+        $this->accessibilityHtml = $accessibilityHtml;
+        $this->accessibilityVideo = $accessibilityVideo;
     }
 
     /**
@@ -48,12 +76,30 @@ class CmsContentDto extends AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getAboutVideo(): string
+    {
+        return $this->aboutVideo;
+    }
+
+    /**
      * @param string $aboutHtml
      * @return CmsContentDto
      */
     public function setAboutHtml(string $aboutHtml): CmsContentDto
     {
         $this->aboutHtml = $aboutHtml;
+        return $this;
+    }
+
+    /**
+     * @param string $aboutVideo
+     * @return CmsContentDto
+     */
+    public function setAboutVideo(string $aboutVideo): CmsContentDto
+    {
+        $this->aboutVideo = $aboutVideo;
         return $this;
     }
 
@@ -128,4 +174,121 @@ class CmsContentDto extends AbstractEntity
         $this->imprintHtml = $imprintHtml;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getAccessibilityHtml(): string
+    {
+        return $this->accessibilityHtml;
+    }
+
+    /**
+     * @param string $accessibilityHtml
+     * @return CmsContentDto
+     */
+    public function setAccessibilityHtml(string $accessibilityHtml): CmsContentDto
+    {
+        $this->accessibilityHtml = $accessibilityHtml;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     *
+     */
+    public function getSimpleLanguageVideo(): string
+    {
+        return $this->simpleLanguageVideo;
+
+    }
+
+    /**
+     * @param string $simpleLanguageVideo
+     */
+    public function setSimpleLanguageVideo(string $simpleLanguageVideo): CmsContentDto
+    {
+        $this->simpleLanguageVideo = $simpleLanguageVideo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     *
+     */
+    public function getSignLanguageVideo(): string
+    {
+        return $this->signLanguageVideo;
+
+    }
+
+    /**
+     * @param string $signLanguageVideo
+     * @return CmsContentDto
+     */
+    public function setSignLanguageVideo(string $signLanguageVideo): CmsContentDto
+    {
+        $this->signLanguageVideo = $signLanguageVideo;
+        return $this;
+    }
+
+
+    /**
+     *
+     * @return string
+     */
+    public function getFaqVideo(): string
+    {
+        return $this->faqVideo;
+    }
+
+
+    /**
+     * @param string $faqVideo
+     * @return CmsContentDto
+     */
+    public function setFaqVideo(string $faqVideo): CmsContentDto
+    {
+        $this->faqVideo = $faqVideo;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getImprintVideo(): string
+    {
+        return $this->imprintVideo;
+
+    }
+
+    /**
+     * @param string $imprintVideo
+     */
+    public function setImprintVideo(string $imprintVideo): CmsContentDto
+    {
+        $this->imprintVideo = $imprintVideo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccessibilityVideo(): string
+    {
+        return $this->accessibilityVideo;
+    }
+
+    /**
+     * @param string $accessibilityVideo
+     * @return CmsContentDto
+     */
+    public function setAccessibilityVideo(string $accessibilityVideo): CmsContentDto
+    {
+        $this->accessibilityVideo = $accessibilityVideo;
+        return $this;
+    }
+
 }
